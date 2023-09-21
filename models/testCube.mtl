@@ -1,0 +1,32 @@
+##
+## testCube.mtl
+##
+## This file was generated using the OpenModeler program
+## created by Manu Kristian Kolehmainen and Andres Maldonado-Martin.
+## There is no copyright attributed to this file.
+##
+
+newmtl red
+Ka 0.2 0.2 0.2
+Kd 1 0 0
+
+newmtl green
+Ka 0.2 0.2 0.2
+Kd 0 1 0
+
+newmtl blue
+Ka 0.2 0.2 0.2
+Kd 0 0 1
+
+newmtl cyan
+Ka 0.2 0.2 0.2
+Kd 0 1 1
+
+newmtl purple
+Ka 0.2 0.2 0.2
+Kd 1 0 1
+
+newmtl yellow
+Ka 0.2 0.2 0.2
+Kd 1 1 0
+

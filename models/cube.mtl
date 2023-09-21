@@ -1,0 +1,12 @@
+##
+## cube.mtl
+##
+## This file was generated using the OpenModeler program
+## created by Manu Kristian Kolehmainen and Andres Maldonado-Martin.
+## There is no copyright attributed to this file.
+##
+
+newmtl red
+Ka 0.2 0.2 0.2
+Kd 1 0 0
+

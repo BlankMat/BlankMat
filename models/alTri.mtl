@@ -1,0 +1,151 @@
+#
+#  al.mtl
+#
+
+newmtl al_shoe1L
+Ka 0.2 0.2 0.2
+Kd 0.1 0.1 0.1
+
+newmtl al_shoe2L
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+
+newmtl al_shoe3L
+Ka 0.2 0.2 0.2
+Kd 0.3 0.2 0.1
+
+newmtl al_shoe4L
+Ka 0.2 0.2 0.2
+Kd 0.2 0.2 0.2
+
+newmtl al_lowlegL
+Ka 0.2 0.2 0.2
+Kd 0.1 0.1 0.1
+
+newmtl al_uplegL
+Ka 0.2 0.2 0.2
+Kd 0.1 0.1 0.1
+
+newmtl al_lowarmL
+Ka 0.2 0.2 0.2
+Kd 0.1 0.1 0.2
+map_Kd textures/fabric1.rgb
+
+newmtl al_sleaveL
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+
+newmtl al_handL
+Ka 0.2 0.2 0.2
+Kd 0.9 0.5 0.4
+
+newmtl al_uparmL
+Ka 0.2 0.2 0.2
+Kd 0.1 0.1 0.2
+map_Kd textures/fabric1.rgb
+
+newmtl al_shoe1R
+Ka 0.2 0.2 0.2
+Kd 0.1 0.1 0.1
+
+newmtl al_shoe2R
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+
+newmtl al_shoe3R
+Ka 0.2 0.2 0.2
+Kd 0.3 0.2 0.1
+
+newmtl al_shoe4R
+Ka 0.2 0.2 0.2
+Kd 0.2 0.2 0.2
+
+newmtl al_lowlegR
+Ka 0.2 0.2 0.2
+Kd 0.1 0.1 0.1
+
+newmtl al_uplegR
+Ka 0.2 0.2 0.2
+Kd 0.1 0.1 0.1
+
+newmtl al_pelvis
+Ka 0.2 0.2 0.2
+Kd 0.1 0.1 0.1
+
+newmtl al_lowarmR
+Ka 0.2 0.2 0.2
+Kd 0.1 0.1 0.2
+map_Kd textures/fabric1.rgb
+
+newmtl al_sleaveR
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+
+newmtl al_handR
+Ka 0.2 0.2 0.2
+Kd 0.9 0.5 0.4
+
+newmtl al_coat
+Ka 0.2 0.2 0.2
+Kd 0.1 0.1 0.2
+map_Kd textures/fabric1.rgb
+
+newmtl al_shirt
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+
+newmtl al_tie
+Ka 0.2 0.2 0.2
+Kd 0.5 0 0
+map_Kd textures/fantasy.rgb
+
+newmtl al_buttons
+Ka 0.2 0.2 0.2
+Kd 0.4 0.4 0.4
+map_Kd textures/brass.rgb
+
+newmtl al_uparmR
+Ka 0.2 0.2 0.2
+Kd 0.1 0.1 0.2
+map_Kd textures/fabric1.rgb
+
+newmtl al_hat
+Ka 0.2 0.2 0.2
+Kd 0.2 0.2 0.2
+
+newmtl al_band
+Ka 0.2 0.2 0.2
+Kd 0.1 0.1 0.3
+map_Kd textures/fantasy.rgb
+
+newmtl al_face
+Ka 0.2 0.2 0.2
+Kd 0.9 0.5 0.4
+
+newmtl al_hair
+Ka 0.2 0.2 0.2
+Kd 0.3 0.2 0.1
+
+newmtl al_irisR
+Ka 0.2 0.2 0.2
+Kd 0.2 0.2 0.4
+
+newmtl al_eyewhiteR
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+
+newmtl al_pupilR
+Ka 0.2 0.2 0.2
+Kd 0 0 0
+
+newmtl al_irisL
+Ka 0.2 0.2 0.2
+Kd 0.2 0.2 0.4
+
+newmtl al_eyewhiteL
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+
+newmtl al_pupilL
+Ka 0.2 0.2 0.2
+Kd 0 0 0
