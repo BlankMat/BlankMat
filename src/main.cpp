@@ -4,13 +4,13 @@
 int main()
 {
     // Init window
-    GLFWwindow* window = OpenGLInitWindow(SCR_WIDTH, SCR_HEIGHT, "OpenModeler");
+    GLFWwindow* window = OpenGLInitWindow(SCR_WIDTH, SCR_HEIGHT, "BlankMat");
     if (window == nullptr)
         return -1;
 
     // Read Options
     // ------------
-    Options options = ReadOptions("../config.txt");
+    Options options = ReadOptions(CONFIG_FILE);
 
     // Build and compile shader program
     // ------------------------------------
@@ -34,7 +34,7 @@ int main()
     Mesh* displayMesh = scene->GetMeshes()->GetAll().begin()->second;
 
     // Read mesh from file
-    ReadObjFromFile(displayMesh, scene->GetMats(), "../models/", options.objName);
+    ReadObjFromFile(displayMesh, scene->GetMats(), MODELS_DIR, options.objName);
     displayMesh->Scale(glm::vec3(options.objScale, options.objScale, options.objScale));
     displayMesh->SetPos(options.objPos);
     displayMesh->CalcPivot();

@@ -9,7 +9,7 @@ std::string ReadShaderFromFile(std::string fileName)
     std::string shader = "";
 
     // Open the given file
-    std::ifstream file(fileName);
+    std::ifstream file(SHADER_DIR + fileName);
     if (file.is_open())
     {
         // Read each individual line of the file
@@ -130,8 +130,8 @@ unsigned int LoadShaderProgram(bool isPhong)
 {
     // Load phong shader
     if (isPhong)
-        return LoadShaders("../shaders/phongShader.vert", "../shaders/phongShader.geom", "../shaders/phongShader.frag");
+        return LoadShaders("phongShader.vert", "phongShader.geom", "phongShader.frag");
     // Load gouraud shader
     else
-        return LoadShaders("../shaders/gouraudShader.vert", "../shaders/gouraudShader.geom", "../shaders/gouraudShader.frag");
+        return LoadShaders("gouraudShader.vert", "gouraudShader.geom", "gouraudShader.frag");
 }
