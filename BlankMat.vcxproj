@@ -211,6 +211,7 @@
     <ClInclude Include="src\vertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="README.md" />
     <None Include="shaders\gouraudShader.frag" />
     <None Include="shaders\gouraudShader.geom" />
     <None Include="shaders\gouraudShader.vert" />
