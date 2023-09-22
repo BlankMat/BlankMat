@@ -1,5 +1,6 @@
 #include "oldmesh.h"
 #include "openGLHelper.h"
+#include <iostream>
 
 void OldMesh::CalcBasis()
 {
@@ -143,7 +144,6 @@ std::vector<std::string>& OldMesh::GetMatsForVert(std::vector<std::string>& _mat
 	return _mats;
 }
 
-#include <iostream>
 void OldMesh::ReorientTris(std::vector<Triangle>& _tris)
 {
 	for (int i = 0; i < _tris.size(); i++) {

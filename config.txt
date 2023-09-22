@@ -1,5 +1,5 @@
 # Which object should be loaded by the program
-object = cube
+object = backpack/backpack
 
 # Scale of the object in the program
 scale = 0.6

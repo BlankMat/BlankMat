@@ -20,3 +20,18 @@ bool IsCCW(glm::vec3 a, glm::vec3 b, glm::vec3 c)
 {
 	return ((b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y)) > 0;
 }
+
+glm::vec3 Vec3FromAssimp(aiVector3D vec)
+{
+	return glm::vec3(vec.x, vec.y, vec.z);
+}
+
+glm::vec2 Vec2FromAssimp(aiVector2D vec)
+{
+	return glm::vec2(vec.x, vec.y);
+}
+
+glm::vec2 Vec2FromAssimp(aiVector3D vec)
+{
+	return glm::vec2(vec.x, vec.y);
+}

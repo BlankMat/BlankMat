@@ -41,7 +41,7 @@ int main()
 
     // Load up model into vertice and indice structures
     // Get vertices
-    int vertsSize = scene->GetVertCount() * 10;
+    int vertsSize = scene->GetVertCount() * VERT_SHADER_SIZE;
     int indicesSize = scene->GetIndexCount();
     float* vertices = new float[vertsSize];
     unsigned int* indices = new unsigned int[indicesSize];
@@ -51,7 +51,7 @@ int main()
 
     // Print vertices and indices
     if (options.print == 1) {
-        PrintArray("Printing vertices:", vertices, vertsSize, 10);
+        PrintArray("Printing vertices:", vertices, vertsSize, VERT_SHADER_SIZE);
         PrintArray("Printing indices:", indices, indicesSize, 3);
     }
 
