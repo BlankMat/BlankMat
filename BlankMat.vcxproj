@@ -72,19 +72,27 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>bin\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>bin\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>C:\Users\manu2\source\repos\BlankMat\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\manu2\source\repos\BlankMat\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>bin\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>C:\Users\manu2\source\repos\BlankMat\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\manu2\source\repos\BlankMat\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>bin\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -145,22 +153,61 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\camera.cpp" />
+    <ClCompile Include="src\face.cpp" />
     <ClCompile Include="src\fileHelper.cpp" />
+    <ClCompile Include="src\glad.c" />
+    <ClCompile Include="src\indexStructs.cpp" />
+    <ClCompile Include="src\input.cpp" />
+    <ClCompile Include="src\itriangle.cpp" />
+    <ClCompile Include="src\light.cpp" />
     <ClCompile Include="src\loadShader.cpp" />
+    <ClCompile Include="src\lodepng.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\material.cpp" />
+    <ClCompile Include="src\materialStorage.cpp" />
+    <ClCompile Include="src\math.cpp" />
+    <ClCompile Include="src\mesh.cpp" />
+    <ClCompile Include="src\meshStorage.cpp" />
+    <ClCompile Include="src\objReader.cpp" />
+    <ClCompile Include="src\objWriter.cpp" />
     <ClCompile Include="src\openGLHelper.cpp" />
     <ClCompile Include="src\options.cpp" />
+    <ClCompile Include="src\pngWriter.cpp" />
+    <ClCompile Include="src\ray.cpp" />
+    <ClCompile Include="src\rayTracer.cpp" />
+    <ClCompile Include="src\scene.cpp" />
+    <ClCompile Include="src\selection.cpp" />
+    <ClCompile Include="src\triangle.cpp" />
     <ClCompile Include="src\vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\camera.h" />
+    <ClInclude Include="src\face.h" />
     <ClInclude Include="src\fileHelper.h" />
     <ClInclude Include="src\glIncludes.h" />
+    <ClInclude Include="src\indexStructs.h" />
+    <ClInclude Include="src\input.h" />
+    <ClInclude Include="src\itriangle.h" />
+    <ClInclude Include="src\light.h" />
     <ClInclude Include="src\loadShader.h" />
+    <ClInclude Include="src\lodepng.h" />
     <ClInclude Include="src\main.h" />
     <ClInclude Include="src\material.h" />
+    <ClInclude Include="src\materialStorage.h" />
+    <ClInclude Include="src\math.h" />
+    <ClInclude Include="src\mesh.h" />
+    <ClInclude Include="src\meshStorage.h" />
+    <ClInclude Include="src\objReader.h" />
+    <ClInclude Include="src\objWriter.h" />
     <ClInclude Include="src\openGLHelper.h" />
     <ClInclude Include="src\options.h" />
+    <ClInclude Include="src\pngWriter.h" />
+    <ClInclude Include="src\ray.h" />
+    <ClInclude Include="src\rayTracer.h" />
+    <ClInclude Include="src\scene.h" />
+    <ClInclude Include="src\selection.h" />
+    <ClInclude Include="src\triangle.h" />
     <ClInclude Include="src\vertex.h" />
   </ItemGroup>
   <ItemGroup>

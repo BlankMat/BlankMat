@@ -36,7 +36,7 @@ void ParseStringByDelim(std::vector<std::string>& out, std::string str, std::str
 }
 
 // Reads a vector 3 from the given strings, skipping ahead the given offset. Strings must have size >= 4 + offset to be read, and the first element + offset are ignored
-glm::vec3 ReadVec3FromStrings(std::vector<std::string>& strings, int offset = 0)
+glm::vec3 ReadVec3FromStrings(std::vector<std::string>& strings, int offset)
 {
     // Avoid errors
     if (strings.size() >= 4 + offset)
