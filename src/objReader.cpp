@@ -2,7 +2,7 @@
 
 // Reads the mesh from the .obj (and potentially .mtl) file at the given location
 // ------------------------------------------------------------------------------
-void ReadObjFromFile(Mesh* mesh, MaterialStorage* materials, std::string location, std::string fileName)
+void ReadObjFromFile(OldMesh* mesh, MaterialStorage* materials, std::string location, std::string fileName)
 {
     std::string objLoc = location + fileName + ".obj";
     std::string mtlLoc = "";
@@ -254,7 +254,7 @@ void ReadObjFromFile(Mesh* mesh, MaterialStorage* materials, std::string locatio
 }
 
 // Builds an indexed triangle mesh from the provided data
-void BuildMesh(Mesh* mesh, std::vector<FaceData>& tempFaces, MaterialStorage* tempMaterials, std::vector<IndVertex>& tempVertices, float scale)
+void BuildMesh(OldMesh* mesh, std::vector<FaceData>& tempFaces, MaterialStorage* tempMaterials, std::vector<IndVertex>& tempVertices, float scale)
 {
     // Build faces from vertices
     for (int faceIndex = 0; faceIndex < tempFaces.size(); faceIndex++) {

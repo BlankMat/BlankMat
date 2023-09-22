@@ -10,7 +10,7 @@ void WriteObjToFile(Scene* scene, std::string location, std::string fileName)
 		counter++;
 	}
 
-	Mesh* mesh = scene->GetMeshes()->GetAll().begin()->second;
+	OldMesh* mesh = scene->GetMeshes()->GetAll().begin()->second;
 	auto verts = mesh->GetVerts();
 	auto faces = mesh->GetFaces();
 

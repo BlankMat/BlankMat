@@ -1,6 +1,6 @@
 #pragma once
 #include "glIncludes.h"
-#include "mesh.h"
+#include "oldmesh.h"
 #include "indexStructs.h"
 #include <iostream>
 #include <set>
@@ -17,7 +17,7 @@ private:
 	glm::vec3 pivot;
 	std::set<int> selVerts;
 	std::set<int> selFaces;
-	Mesh* selMesh;
+	OldMesh* selMesh;
 
 	Tool tool;
 	SelMode selMode;
@@ -35,7 +35,7 @@ public:
 	// Selects the vertex with the given ID
 	void SelectVert(int _id, bool _deselect = false);
 	// Selects the given mesh
-	void SelectMesh(Mesh* mesh);
+	void SelectMesh(OldMesh* mesh);
 	// Deselects the face with the given ID
 	void DeselectFace(int _id);
 	// Deselects the vertex with the given ID
@@ -64,7 +64,7 @@ public:
 	// Returns the selection mode
 	SelMode GetSelMode();
 	// Returns the selected mesh
-	Mesh* GetSelectedMesh();
+	OldMesh* GetSelectedMesh();
 	// Returns whether the given vertex is selected
 	bool IsVertSelected(int _id);
 	// Returns whether the given face is selected
@@ -74,7 +74,7 @@ public:
 	Selection();
 
 	// Returns the nearest mesh to the clicked position
-	static Mesh* GetNearestMesh(Scene* scene, int i, int j);
+	static OldMesh* GetNearestMesh(Scene* scene, int i, int j);
 	// Returns the nearest vertex to the clicked position
 	static int GetNearestVert(Scene* scene, int i, int j);
 	// Returns the nearest face to the clicked position

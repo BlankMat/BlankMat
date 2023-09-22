@@ -31,7 +31,7 @@ int main()
 
     // Read mesh
     // ---------
-    Mesh* displayMesh = scene->GetMeshes()->GetAll().begin()->second;
+    OldMesh* displayMesh = scene->GetMeshes()->GetAll().begin()->second;
 
     // Read mesh from file
     ReadObjFromFile(displayMesh, scene->GetMats(), MODELS_DIR, options.objName);

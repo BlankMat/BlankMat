@@ -61,7 +61,7 @@ void Selection::SelectVert(int _id, bool _deselect)
 }
 
 // Selects the given mesh
-void Selection::SelectMesh(Mesh* mesh)
+void Selection::SelectMesh(OldMesh* mesh)
 {
 	if (mesh == nullptr)
 		return;
@@ -185,7 +185,7 @@ Tool Selection::GetTool() { return tool; }
 // Returns the selection mode
 SelMode Selection::GetSelMode() { return selMode; }
 // Returns the selected mesh
-Mesh* Selection::GetSelectedMesh() { return selMesh; }
+OldMesh* Selection::GetSelectedMesh() { return selMesh; }
 
 // Storage container for information on all selections
 Selection::Selection()
@@ -197,7 +197,7 @@ Selection::Selection()
 }
 
 // Returns the nearest mesh to the clicked position
-Mesh* Selection::GetNearestMesh(Scene* scene, int i, int j)
+OldMesh* Selection::GetNearestMesh(Scene* scene, int i, int j)
 {
 	//std::cout << "Clicked [" << i << ", " << j << "]\n";
 	float u = (j + 0.5f) / SCR_WIDTH;

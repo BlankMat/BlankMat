@@ -1,16 +1,16 @@
 #include "meshStorage.h"
 
-void MeshStorage::AddMesh(std::string key, Mesh* mat)
+void MeshStorage::AddMesh(std::string key, OldMesh* mat)
 {
 	meshes.emplace(key, mat);
 }
 
-Mesh* MeshStorage::Get(std::string key)
+OldMesh* MeshStorage::Get(std::string key)
 {
 	return meshes[key];
 }
 
-std::unordered_map<std::string, Mesh*>& MeshStorage::GetAll()
+std::unordered_map<std::string, OldMesh*>& MeshStorage::GetAll()
 {
 	return meshes;
 }
@@ -25,7 +25,7 @@ void MeshStorage::Clear()
 
 MeshStorage::MeshStorage()
 {
-	meshes = std::unordered_map<std::string, Mesh*>();
+	meshes = std::unordered_map<std::string, OldMesh*>();
 }
 
 MeshStorage::~MeshStorage()

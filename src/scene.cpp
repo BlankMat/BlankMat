@@ -13,7 +13,7 @@ void Scene::GetVAO(float* vertices, int vertsSize, unsigned int* indices, int in
 		_sel->GetSelectedVerts(selectedVerts);
 
 	for (auto iter = GetMeshes()->GetAll().begin(); iter != GetMeshes()->GetAll().end(); ++iter) {
-		Mesh* curMesh = iter->second;
+		OldMesh* curMesh = iter->second;
 		std::unordered_map<int, Vertex> verts = curMesh->GetVerts();
 		glm::vec3 pos = curMesh->GetPos();
 		// Track out indices separate from loop
@@ -74,7 +74,7 @@ void Scene::CalcRenderTris()
 	// Calculate new tris
 	int mi = 0;
 	for (auto iter = meshes->GetAll().begin(); iter != meshes->GetAll().end(); ++iter) {
-		Mesh* tempMesh = meshes->Get(iter->first);
+		OldMesh* tempMesh = meshes->Get(iter->first);
 		std::vector<Triangle> tempTris;
 		tempMesh->GetTris(tempTris);
 
@@ -187,7 +187,7 @@ Scene::Scene()
 	mats = new MaterialStorage();
 	meshes = new MeshStorage();
 
-	meshes->AddMesh("defaultMesh", new Mesh());
+	meshes->AddMesh("defaultMesh", new OldMesh());
 }
 
 Scene::~Scene()
@@ -218,7 +218,7 @@ glm::mat4 Scene::CalcInvMVP()
 // Returns the projection matrix of the given camera
 glm::mat4 Scene::GetProjectionMatrix()
 {
-	Mesh* mesh = GetMeshes()->GetAll().begin()->second;
+	OldMesh* mesh = GetMeshes()->GetAll().begin()->second;
 	Camera* camera = GetCamera();
 
 	// Projection
@@ -249,7 +249,7 @@ glm::mat4 Scene::GetViewMatrix()
 // Returns the model matrix of the given mesh
 glm::mat4 Scene::GetModelMatrix()
 {
-	Mesh* mesh = GetMeshes()->GetAll().begin()->second;
+	OldMesh* mesh = GetMeshes()->GetAll().begin()->second;
 
 	// Model position
 	glm::vec3 scale = mesh->GetScale();
