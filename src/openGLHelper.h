@@ -11,17 +11,6 @@ struct ProgramIDs
 	unsigned int VAO;
 	unsigned int VBO;
 	unsigned int EBO;
-	unsigned int matrixID;
-	unsigned int modelID;
-	unsigned int normalModelID;
-	unsigned int lightPosID;
-	unsigned int lightColorID;
-	unsigned int viewPosID;
-	unsigned int ambientStrengthID;
-	unsigned int specularStrengthID;
-	unsigned int winScaleID;
-
-	void GetUniformIDs();
 };
 
 // OpenGL helper functions
