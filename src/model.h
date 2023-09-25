@@ -3,7 +3,7 @@
 #include "mesh.h"
 #include "texture.h"
 #include "shader.h"
-#include "math.h"
+#include "mathLib.h"
 #include <vector>
 #include <string>
 

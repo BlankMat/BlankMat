@@ -2,7 +2,7 @@
 #include "vertex.h"
 #include "material.h"
 #include "indexStructs.h"
-#include "math.h"
+#include "mathLib.h"
 #include <vector>
 #include <unordered_map>
 

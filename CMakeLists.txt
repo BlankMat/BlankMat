@@ -34,6 +34,7 @@ file(GLOB CONFIG_FILES
     ${CMAKE_SOURCE_DIR}/.gitignore)
 file(GLOB_RECURSE RESOURCE_FILES
     ${CMAKE_SOURCE_DIR}/resources/models/*)
+set_source_files_properties(${RESOURCE_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
 
 # Group up files to make IDE look nice
 source_group("Sources" FILES ${SOURCE_FILES})

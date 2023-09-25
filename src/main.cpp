@@ -10,6 +10,7 @@ int main()
 
     // Read Options
     // ------------
+    std::cout << "Starting program, reading options from " << CONFIG_FILE << std::endl;
     Options options = ReadOptions(CONFIG_FILE);
 
     // Build and compile shader program

@@ -5,7 +5,7 @@
 #include <iomanip>
 #include <fstream>
 
-#define SHADER_DIR "resources/shaders/"
+#define SHADER_DIR ROOT_DIR "resources/shaders/"
 
 std::string ReadShaderFromFile(std::string filename);
 unsigned int LoadShaders(std::string vertexFile, std::string geometryFile, std::string fragmentFile);

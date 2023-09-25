@@ -9,6 +9,7 @@ std::string ReadShaderFromFile(std::string fileName)
     std::string shader = "";
 
     // Open the given file
+    std::cout << "Reading shader from file " << SHADER_DIR + fileName << std::endl;
     std::ifstream file(SHADER_DIR + fileName);
     if (file.is_open())
     {

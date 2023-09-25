@@ -1,7 +1,7 @@
 #pragma once
 #include "triangle.h"
 #include "face.h"
-#include "math.h"
+#include "mathLib.h"
 #include <vector>
 #include <unordered_map>
 #include <set>
