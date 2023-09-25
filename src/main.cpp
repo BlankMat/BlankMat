@@ -16,13 +16,13 @@ int main()
     // Build and compile shader program
     // ------------------------------------
     ProgramIDs ids = ProgramIDs();
-    ids.shaderProgram = LoadShaderProgram(options.phong == 1);
-    Shader mainShader = Shader(options.phong == 1 ? "phongShader" : "gouraudShader");
+    //Shader mainShader(options.phong == 1 ? "phongShader" : "gouraudShader");
 
     // Create scene
     // ------------
     Scene* scene = new Scene();
     scene->SetCameraFromOptions(&options);
+    scene->CreateShader(options.phong == 1 ? "phongShader" : "gouraudShader", true);
     scene->SetLight(new Light(
         glm::vec3(5.0f, 5.0f, 5.0f),        // Light pos
         glm::vec3(-1.0f, -1.0f, -1.0f),     // Light dir

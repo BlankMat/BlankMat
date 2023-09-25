@@ -8,6 +8,7 @@
 #include "ray.h"
 #include "selection.h"
 #include "vertex.h"
+#include "shader.h"
 
 class Scene
 {
@@ -16,12 +17,16 @@ private:
 	Camera* camera;
 	MaterialStorage* mats;
 	MeshStorage* meshes;
+	Shader* shader;
 	std::unordered_map<int, Vertex> verts;
 	std::vector<Triangle> tris;
 	std::vector<ITriangle> renderTris;
 	glm::mat4 invMVP;
 public:
 	glm::vec3 bgColor = glm::vec3(230, 230, 230);
+
+	void Draw();
+	void CreateShader(std::string shaderPath, bool loadGeom);
 
 	void GetVAO(float* vertices, int vertsSize, unsigned int* indices, int indicesSize, Selection* _sel = nullptr);
 	void CalcRenderTris();
@@ -37,6 +42,7 @@ public:
 	Light* GetLight();
 	MaterialStorage* GetMats();
 	MeshStorage* GetMeshes();
+	Shader* GetShader();
 
 	void SetCameraFromOptions(Options* options);
 	void SetCamera(Camera* _cam);

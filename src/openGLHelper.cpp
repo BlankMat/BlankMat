@@ -100,7 +100,8 @@ void OpenGLDraw(Scene* scene, Selection* sel, ProgramIDs* ids, int indicesSize, 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Draw the object
-    glUseProgram(ids->shaderProgram);
+    Shader* curShader = scene->GetShader();
+    scene->Draw();
 
     // Apply MVP
     scene->CalcInvMVP();
@@ -109,20 +110,29 @@ void OpenGLDraw(Scene* scene, Selection* sel, ProgramIDs* ids, int indicesSize, 
     glm::mat4 projection = scene->GetProjectionMatrix();
     glm::mat3 normalModel = glm::mat3(glm::transpose(glm::inverse(model)));
     glm::mat4 mvp = projection * view * model;
-    glUniformMatrix4fv(ids->matrixID, 1, GL_FALSE, &mvp[0][0]);
-    glUniformMatrix4fv(ids->modelID, 1, GL_FALSE, &model[0][0]);
-    glUniformMatrix3fv(ids->normalModelID, 1, GL_FALSE, &normalModel[0][0]);
+    curShader->setMat4("MVP", mvp);
+    curShader->setMat4("Model", model);
+    curShader->setMat3("NormalModel", normalModel);
+    //glUniformMatrix4fv(ids->matrixID, 1, GL_FALSE, &mvp[0][0]);
+    //glUniformMatrix4fv(ids->modelID, 1, GL_FALSE, &model[0][0]);
+    //glUniformMatrix3fv(ids->normalModelID, 1, GL_FALSE, &normalModel[0][0]);
 
     // Send window scale
     glm::vec2 winScale = glm::vec2(SCR_WIDTH, SCR_HEIGHT);
-    glUniform2fv(ids->winScaleID, 1, &winScale[0]);
+    curShader->setVec2("WIN_SCALE", winScale);
+    //glUniform2fv(ids->winScaleID, 1, &winScale[0]);
 
     // Apply lighting
-    glUniform1f(ids->ambientStrengthID, scene->GetLight()->ka);
-    glUniform1f(ids->specularStrengthID, scene->GetLight()->ks);
-    glUniform3fv(ids->lightPosID, 1, &scene->GetLight()->pos[0]);
-    glUniform3fv(ids->lightColorID, 1, &scene->GetLight()->color[0]);
-    glUniform3fv(ids->viewPosID, 1, &scene->GetCamera()->pos[0]);
+    curShader->setFloat("AmbientStrength", scene->GetLight()->ka);
+    curShader->setFloat("SpecularStrength", scene->GetLight()->ks);
+    curShader->setVec3("LightPos", scene->GetLight()->pos);
+    curShader->setVec3("LightColor", scene->GetLight()->color);
+    curShader->setVec3("ViewPos", scene->GetCamera()->pos);
+    //glUniform1f(ids->ambientStrengthID, scene->GetLight()->ka);
+    //glUniform1f(ids->specularStrengthID, scene->GetLight()->ks);
+    //glUniform3fv(ids->lightPosID, 1, &scene->GetLight()->pos[0]);
+    //glUniform3fv(ids->lightColorID, 1, &scene->GetLight()->color[0]);
+    //glUniform3fv(ids->viewPosID, 1, &scene->GetCamera()->pos[0]);
     glBindVertexArray(ids->VAO);
 
     // Draw indexed EBO

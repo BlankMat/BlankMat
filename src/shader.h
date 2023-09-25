@@ -20,7 +20,7 @@ public:
     unsigned int ID;
 
     // constructor generates the shader on the fly
-    Shader(std::string path);
+    Shader(std::string path, bool loadGeom = false);
     // constructor generates the shader on the fly
     Shader(const char* vertexPath, const char* fragmentPath, const char* geometryPath = nullptr);
     // activate the shader

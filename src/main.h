@@ -2,7 +2,6 @@
 #include "objReader.h"
 #include "options.h"
 #include "fileHelper.h"
-#include "loadShader.h"
 #include "shader.h"
 #include "input.h"
 

@@ -1,6 +1,17 @@
 #include "scene.h"
 #include "openGLHelper.h"
 
+void Scene::Draw()
+{
+	if (shader != nullptr)
+		shader->use();
+}
+
+void Scene::CreateShader(std::string shaderName, bool loadGeom)
+{
+	shader = new Shader(shaderName, loadGeom);
+}
+
 void Scene::GetVAO(float* vertices, int vertsSize, unsigned int* indices, int indicesSize, Selection* _sel)
 {
 	//std::cout << "Writing " << vertsSize << " vertices to VAO, " << verts.size() << " exist" << std::endl;
@@ -150,6 +161,7 @@ Camera* Scene::GetCamera() { return camera; }
 Light* Scene::GetLight() { return light; }
 MaterialStorage* Scene::GetMats() { return mats; }
 MeshStorage* Scene::GetMeshes() { return meshes; }
+Shader* Scene::GetShader() { return shader; }
 
 void Scene::SetCameraFromOptions(Options* options) { camera->SetFromOptions(options); }
 void Scene::SetCamera(Camera* _cam)
@@ -186,6 +198,8 @@ Scene::Scene()
 	light = new Light();
 	mats = new MaterialStorage();
 	meshes = new MeshStorage();
+	shader = nullptr;
+	invMVP = glm::mat4();
 
 	meshes->AddMesh("defaultMesh", new OldMesh());
 }
@@ -196,6 +210,7 @@ Scene::~Scene()
 	delete light;
 	delete mats;
 	delete meshes;
+	delete shader;
 
 	renderTris.clear();
 	tris.clear();
