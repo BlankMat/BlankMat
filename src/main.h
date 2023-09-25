@@ -6,4 +6,4 @@
 #include "input.h"
 
 #define CONFIG_FILE "config.txt"
-#define MODELS_DIR "models/"
+#define MODELS_DIR "resources/models/"
