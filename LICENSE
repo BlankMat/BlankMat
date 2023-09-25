@@ -1,29 +1,3 @@
-# BlankMat
-BlankMat is a free open-source application for creating high-quality textures for 3D models.
-
-# Building
-## Building on Windows (64-bit)
-
-### Prerequisites
-
-Install the following dependencies
-
-- CMake (to download click [here](https://cmake.org/download/))
-- IDE (e.g. [Visual Studio](https://visualstudio.microsoft.com/vs/community/))
-
-### Build instructions
-
-1. Make sure that CMake is installed and added to the system PATH variable.
-2. Open a terminal in the CMakeLists.txt directory and run:
-
-```
-  mkdir build
-  cd build
-  cmake -A x64 ..
-```
----
-
-# License
 MIT License
 
 Copyright (c) 2023 BlankMat
