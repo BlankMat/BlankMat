@@ -5,6 +5,8 @@
 #include <sstream>
 #include <iostream>
 
+#define SHADER_DIR ROOT_DIR "resources/shaders/"
+
 // Shader utility class borrowed from
 // CC BY-NC 4.0 license https://creativecommons.org/licenses/by-nc/4.0/
 // https://learnopengl.com/code_viewer_gh.php?code=includes/learnopengl/shader.h
@@ -17,6 +19,8 @@ private:
 public:
     unsigned int ID;
 
+    // constructor generates the shader on the fly
+    Shader(std::string path);
     // constructor generates the shader on the fly
     Shader(const char* vertexPath, const char* fragmentPath, const char* geometryPath = nullptr);
     // activate the shader

@@ -3,6 +3,7 @@
 #include "options.h"
 #include "fileHelper.h"
 #include "loadShader.h"
+#include "shader.h"
 #include "input.h"
 
 #define CONFIG_FILE_PP "config.txt"

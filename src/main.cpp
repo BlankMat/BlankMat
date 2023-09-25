@@ -17,6 +17,7 @@ int main()
     // ------------------------------------
     ProgramIDs ids = ProgramIDs();
     ids.shaderProgram = LoadShaderProgram(options.phong == 1);
+    Shader mainShader = Shader(options.phong == 1 ? "phongShader" : "gouraudShader");
 
     // Create scene
     // ------------

@@ -2,6 +2,10 @@
 
 // constructor generates the shader on the fly
 // ------------------------------------------------------------------------
+Shader::Shader(std::string path)
+    : Shader((path + ".vert").c_str(), (path + ".frag").c_str(), (path + ".geom").c_str()) {}
+// constructor generates the shader on the fly
+// ------------------------------------------------------------------------
 Shader::Shader(const char* vertexPath, const char* fragmentPath, const char* geometryPath)
 {
     // 1. retrieve the vertex/fragment source code from filePath
@@ -18,8 +22,8 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath, const char* geo
     try
     {
         // open files
-        vShaderFile.open(vertexPath);
-        fShaderFile.open(fragmentPath);
+        vShaderFile.open(SHADER_DIR + std::string(vertexPath));
+        fShaderFile.open(SHADER_DIR + std::string(fragmentPath));
         std::stringstream vShaderStream, fShaderStream;
         // read file's buffer contents into streams
         vShaderStream << vShaderFile.rdbuf();
@@ -33,7 +37,7 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath, const char* geo
         // if geometry shader path is present, also load a geometry shader
         if (geometryPath != nullptr)
         {
-            gShaderFile.open(geometryPath);
+            gShaderFile.open(SHADER_DIR + std::string(geometryPath));
             std::stringstream gShaderStream;
             gShaderStream << gShaderFile.rdbuf();
             gShaderFile.close();
