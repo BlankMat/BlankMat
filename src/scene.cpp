@@ -1,15 +1,16 @@
 #include "scene.h"
 #include "openGLHelper.h"
 
-void Scene::Draw()
+void Scene::Draw(std::string name)
 {
-	if (shader != nullptr)
-		shader->use();
+	if (shaders.find(name) != shaders.end() && shaders[name] != nullptr)
+		shaders[name]->use();
 }
 
-void Scene::CreateShader(std::string shaderName, bool loadGeom)
+void Scene::CreateShader(std::string name, bool loadGeom)
 {
-	shader = new Shader(shaderName, loadGeom);
+	if (shaders.find(name) == shaders.end())
+		shaders.emplace(name, new Shader(name, loadGeom));
 }
 
 void Scene::GetVAO(float* vertices, int vertsSize, unsigned int* indices, int indicesSize, Selection* _sel)
@@ -161,7 +162,7 @@ Camera* Scene::GetCamera() { return camera; }
 Light* Scene::GetLight() { return light; }
 MaterialStorage* Scene::GetMats() { return mats; }
 MeshStorage* Scene::GetMeshes() { return meshes; }
-Shader* Scene::GetShader() { return shader; }
+Shader* Scene::GetShader(std::string name) { return shaders[name]; }
 
 void Scene::SetCameraFromOptions(Options* options) { camera->SetFromOptions(options); }
 void Scene::SetCamera(Camera* _cam)
@@ -198,7 +199,7 @@ Scene::Scene()
 	light = new Light();
 	mats = new MaterialStorage();
 	meshes = new MeshStorage();
-	shader = nullptr;
+	shaders = std::unordered_map<std::string, Shader*>();
 	invMVP = glm::mat4();
 
 	meshes->AddMesh("defaultMesh", new OldMesh());
@@ -210,8 +211,10 @@ Scene::~Scene()
 	delete light;
 	delete mats;
 	delete meshes;
-	delete shader;
 
+	for (auto iter = shaders.begin(); iter != shaders.end(); ++iter)
+		delete iter->second;
+	shaders.clear();
 	renderTris.clear();
 	tris.clear();
 	verts.clear();

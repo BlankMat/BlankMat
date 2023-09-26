@@ -17,7 +17,7 @@ private:
 	Camera* camera;
 	MaterialStorage* mats;
 	MeshStorage* meshes;
-	Shader* shader;
+	std::unordered_map<std::string, Shader*> shaders;
 	std::unordered_map<int, Vertex> verts;
 	std::vector<Triangle> tris;
 	std::vector<ITriangle> renderTris;
@@ -25,8 +25,8 @@ private:
 public:
 	glm::vec3 bgColor = glm::vec3(230, 230, 230);
 
-	void Draw();
-	void CreateShader(std::string shaderPath, bool loadGeom);
+	void Draw(std::string name);
+	void CreateShader(std::string name, bool loadGeom);
 
 	void GetVAO(float* vertices, int vertsSize, unsigned int* indices, int indicesSize, Selection* _sel = nullptr);
 	void CalcRenderTris();
@@ -42,7 +42,7 @@ public:
 	Light* GetLight();
 	MaterialStorage* GetMats();
 	MeshStorage* GetMeshes();
-	Shader* GetShader();
+	Shader* GetShader(std::string);
 
 	void SetCameraFromOptions(Options* options);
 	void SetCamera(Camera* _cam);

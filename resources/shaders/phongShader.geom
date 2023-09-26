@@ -2,6 +2,9 @@
 layout (triangles) in;
 layout (triangle_strip, max_vertices = 3) out;
 
+// Source:
+// http://strattonbrazil.blogspot.com/2011/09/single-pass-wireframe-rendering_11.html
+
 in VS
 {
 	vec3 geoVertColor;

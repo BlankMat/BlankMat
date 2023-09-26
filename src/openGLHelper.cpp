@@ -82,8 +82,8 @@ void OpenGLDraw(Scene* scene, Selection* sel, ProgramIDs* ids, int indicesSize, 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Draw the object
-    Shader* curShader = scene->GetShader();
-    scene->Draw();
+    Shader* curShader = scene->GetShader("phongShader");
+    scene->Draw("phongShader");
 
     // Apply MVP
     scene->CalcInvMVP();
