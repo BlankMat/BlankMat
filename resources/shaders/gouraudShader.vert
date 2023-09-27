@@ -3,6 +3,7 @@ layout (location = 0) in float isSelected;
 layout (location = 1) in vec3 aPos;
 layout (location = 2) in vec3 aNorm;
 layout (location = 3) in vec3 aColor;
+layout (location = 4) in vec2 aTexCoords;
 
 out VS
 {

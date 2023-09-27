@@ -27,6 +27,7 @@ public:
 
 	void Draw(std::string name);
 	void CreateShader(std::string name, bool loadGeom);
+	void CreateShader(std::string name, std::string source, bool loadGeom);
 
 	void GetVAO(float* vertices, int vertsSize, unsigned int* indices, int indicesSize, Selection* _sel = nullptr);
 	void CalcRenderTris();

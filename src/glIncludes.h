@@ -11,4 +11,4 @@
 constexpr float PI = 3.14159f;
 constexpr float HALF_PI = 1.57079f;
 
-#define VERT_SHADER_SIZE 10
+#define VERT_SHADER_SIZE 12

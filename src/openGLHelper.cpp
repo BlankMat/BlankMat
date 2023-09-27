@@ -69,6 +69,9 @@ void OpenGLInitBuffers(ProgramIDs* ids, int vertsSize, float* vertices, int indi
     // Color
     glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, VERT_SHADER_SIZE * sizeof(float), (void*)(7 * sizeof(float)));
     glEnableVertexAttribArray(3);
+    // TexCoord
+    glVertexAttribPointer(4, 2, GL_FLOAT, GL_FALSE, VERT_SHADER_SIZE * sizeof(float), (void*)(10 * sizeof(float)));
+    glEnableVertexAttribArray(4);
     glBindVertexArray(0);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -82,16 +85,14 @@ void OpenGLDraw(Scene* scene, Selection* sel, ProgramIDs* ids, int indicesSize, 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Draw the object
-    Shader* curShader = scene->GetShader("phongShader");
-    scene->Draw("phongShader");
+    Shader* curShader = scene->GetShader("default");
+    scene->Draw("default");
 
     // Apply MVP
     scene->CalcInvMVP();
     glm::mat4 model = scene->GetModelMatrix();
-    glm::mat4 view = scene->GetViewMatrix();
-    glm::mat4 projection = scene->GetProjectionMatrix();
     glm::mat3 normalModel = glm::mat3(glm::transpose(glm::inverse(model)));
-    glm::mat4 mvp = projection * view * model;
+    glm::mat4 mvp = scene->CalcMVP();
     curShader->setMat4("MVP", mvp);
     curShader->setMat4("Model", model);
     curShader->setMat3("NormalModel", normalModel);

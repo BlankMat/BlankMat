@@ -16,8 +16,8 @@ wireframe = 0
 # Should the model information be printed in the console? [0] No, [1] Yes
 print = 0
 
-# Should the model be rendered using Gouraud [0] or Phong [1] shading
-phong = 1
+# Which shader file should be used for the scene and whether to include Geom [1] or not [0]. 
+shader = phongDefaultShader 0
 
 # Camera options
 # Camera start position. This is the position of the camera by default

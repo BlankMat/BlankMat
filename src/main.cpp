@@ -22,7 +22,7 @@ int main()
     // ------------
     Scene* scene = new Scene();
     scene->SetCameraFromOptions(&options);
-    scene->CreateShader(options.phong == 1 ? "phongShader" : "gouraudShader", true);
+    scene->CreateShader("default", options.shader, options.shaderGeom);
     scene->SetLight(new Light(
         glm::vec3(5.0f, 5.0f, 5.0f),        // Light pos
         glm::vec3(-1.0f, -1.0f, -1.0f),     // Light dir

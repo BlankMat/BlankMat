@@ -54,8 +54,11 @@ Options ReadOptions(std::string fileName)
                     options.print = std::stoi(tempParse[2]);
                 }
                 // Check for phonh
-                else if (tempParse[0] == "phong") {
-                    options.phong = std::stoi(tempParse[2]);
+                else if (tempParse[0] == "shader") {
+                    options.shader = tempParse[2];
+                    if (tempParse.size() > 3) {
+                        options.shaderGeom = std::stoi(tempParse[3]) == 1;
+                    }
                 }
                 // Check for perspective
                 else if (tempParse[0] == "perspective") {

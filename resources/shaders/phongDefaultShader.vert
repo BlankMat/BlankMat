@@ -5,14 +5,10 @@ layout (location = 2) in vec3 aNorm;
 layout (location = 3) in vec3 aColor;
 layout (location = 4) in vec2 aTexCoords;
 
-out VS
-{
-	vec3 geoVertColor;
-	vec3 geoFragPos;
-	vec3 geoNormal;
-	vec2 texCoords;
-	float vertExcludeEdge;
-};
+out vec3 FragPos;
+out vec3 VertColor;
+out vec3 Normal;
+out vec2 TexCoords;
 
 uniform mat4 MVP;
 uniform mat4 Model;
@@ -20,13 +16,9 @@ uniform mat3 NormalModel;
 
 void main()
 {
-	texCoords = aTexCoords;
+	TexCoords = aTexCoords;
+	VertColor = aColor;
+	FragPos = vec3(Model * vec4(aPos, 1.0));
+	Normal = NormalModel * aNorm;
 	gl_Position = MVP * vec4(aPos, 1.0);
-	geoVertColor = aColor;
-	geoNormal = NormalModel * aNorm;
-	if (isSelected == 1.0)
-		vertExcludeEdge = 0.0;
-	else
-		vertExcludeEdge = 1.0;
-	geoFragPos = vec3(Model * vec4(aPos, 1.0f));
 }

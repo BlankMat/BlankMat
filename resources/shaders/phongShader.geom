@@ -10,6 +10,7 @@ in VS
 	vec3 geoVertColor;
 	vec3 geoFragPos;
 	vec3 geoNormal;
+	vec2 texCoords;
 	float vertExcludeEdge;
 } gs_in[];
 
@@ -18,6 +19,7 @@ out GS
 	vec3 VertColor;
 	vec3 FragPos;
 	vec3 Normal;
+	vec2 TexCoords;
 	vec3 dist;
 } gs_out;
 
@@ -43,6 +45,7 @@ void main()
 	gs_out.VertColor = gs_in[0].geoVertColor;
 	gs_out.FragPos = gs_in[0].geoFragPos;
 	gs_out.Normal = gs_in[0].geoNormal;
+	gs_out.TexCoords = gs_in[0].texCoords;
 	EmitVertex();
 	
 	res1 = clamp(gs_in[1].vertExcludeEdge + gs_in[0].vertExcludeEdge, 0, 1);
@@ -52,16 +55,17 @@ void main()
 	gs_out.VertColor = gs_in[1].geoVertColor;
 	gs_out.FragPos = gs_in[1].geoFragPos;
 	gs_out.Normal = gs_in[1].geoNormal;
+	gs_out.TexCoords = gs_in[1].texCoords;
 	EmitVertex();
 	
 	res1 = clamp(gs_in[2].vertExcludeEdge + gs_in[0].vertExcludeEdge, 0, 1);
 	res2 = clamp(gs_in[2].vertExcludeEdge + gs_in[1].vertExcludeEdge, 0, 1);
 	gs_out.dist = vec3(res1*MEW,res2*MEW,area/length(v2));
+	gl_Position = gl_in[2].gl_Position;
 	gs_out.VertColor = gs_in[2].geoVertColor;
 	gs_out.FragPos = gs_in[2].geoFragPos;
 	gs_out.Normal = gs_in[2].geoNormal;
-	gl_Position = gl_in[2].gl_Position;
-	
+	gs_out.TexCoords = gs_in[2].texCoords;
 	EmitVertex();
 	EndPrimitive();
 }

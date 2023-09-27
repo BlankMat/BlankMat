@@ -11,7 +11,8 @@ struct Options {
 	int vertexModel;
 	int wireframe;
 	int print;
-	int phong;
+	std::string shader;
+	bool shaderGeom;
 
 	// Camera options
 	glm::vec3 camPos;

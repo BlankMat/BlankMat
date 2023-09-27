@@ -13,6 +13,12 @@ void Scene::CreateShader(std::string name, bool loadGeom)
 		shaders.emplace(name, new Shader(name, loadGeom));
 }
 
+void Scene::CreateShader(std::string name, std::string source, bool loadGeom)
+{
+	if (shaders.find(name) == shaders.end())
+		shaders.emplace(name, new Shader(source, loadGeom));
+}
+
 void Scene::GetVAO(float* vertices, int vertsSize, unsigned int* indices, int indicesSize, Selection* _sel)
 {
 	//std::cout << "Writing " << vertsSize << " vertices to VAO, " << verts.size() << " exist" << std::endl;
@@ -33,6 +39,7 @@ void Scene::GetVAO(float* vertices, int vertsSize, unsigned int* indices, int in
 			int i = viter->first;
 			glm::vec3 vertPos = verts[i].pos;
 			glm::vec3 vertNorm = verts[i].normal;
+			glm::vec2 vertTexCoord = verts[i].texCoords;
 
 			// Get all mats for vertex
 			std::vector<std::string> _matKeys;
@@ -60,6 +67,10 @@ void Scene::GetVAO(float* vertices, int vertsSize, unsigned int* indices, int in
 			vertices[startIndex + VERT_SHADER_SIZE * i + 7] = glm::clamp(vertMat.kd.r + vertMat.ka.r, 0.0f, 1.0f);
 			vertices[startIndex + VERT_SHADER_SIZE * i + 8] = glm::clamp(vertMat.kd.g + vertMat.ka.g, 0.0f, 1.0f);
 			vertices[startIndex + VERT_SHADER_SIZE * i + 9] = glm::clamp(vertMat.kd.b + vertMat.ka.b, 0.0f, 1.0f);
+
+			// TexCoord
+			vertices[startIndex + VERT_SHADER_SIZE * i + 10] = vertTexCoord.x;
+			vertices[startIndex + VERT_SHADER_SIZE * i + 11] = vertTexCoord.y;
 
 			tempHighIndex = VERT_SHADER_SIZE * i + (VERT_SHADER_SIZE - 1);
 		}
