@@ -41,6 +41,10 @@ Options ReadOptions(std::string fileName)
                 else if (tempParse[0] == "dcolor") {
                     options.defaultColor = Material(glm::vec3(0.2, 0.2, 0.2), ReadVec3FromStrings(tempParse, 1));
                 }
+                // Check for background color
+                else if (tempParse[0] == "bgcolor") {
+                    options.bgColor = ReadVec3FromStrings(tempParse, 1);
+                }
                 // Check for vertex model setting
                 else if (tempParse[0] == "vertexmodel") {
                     options.vertexModel = std::stoi(tempParse[2]);

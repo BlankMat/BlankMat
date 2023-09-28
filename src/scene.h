@@ -23,7 +23,7 @@ private:
 	std::vector<ITriangle> renderTris;
 	glm::mat4 invMVP;
 public:
-	glm::vec3 bgColor = glm::vec3(230, 230, 230);
+	glm::vec3 bgColor = glm::vec3(200, 200, 200);
 
 	void Draw(std::string name);
 	void CreateShader(std::string name, bool loadGeom);

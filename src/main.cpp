@@ -23,12 +23,15 @@ int main()
     Scene* scene = new Scene();
     scene->SetCameraFromOptions(&options);
     scene->CreateShader("default", options.shader, options.shaderGeom);
-    scene->SetLight(new Light(
+    LightCube* light = new LightCube(
+        "lightCube",
         glm::vec3(5.0f, 5.0f, 5.0f),        // Light pos
         glm::vec3(-1.0f, -1.0f, -1.0f),     // Light dir
         glm::vec3(1.0f, 1.0f, 1.0f),        // Light color
         0.1f,                               // Ambient strength
-        7.0f));                             // Specular strength);
+        7.0f);                              // Specular strength
+    scene->SetLight(light);
+    scene->bgColor = options.bgColor;
     scene->GetMats()->AddMat("default", options.defaultColor);
 
     // Read mesh

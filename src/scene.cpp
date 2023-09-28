@@ -247,7 +247,6 @@ glm::mat4 Scene::CalcInvMVP()
 // Returns the projection matrix of the given camera
 glm::mat4 Scene::GetProjectionMatrix()
 {
-	OldMesh* mesh = GetMeshes()->GetAll().begin()->second;
 	Camera* camera = GetCamera();
 
 	// Projection

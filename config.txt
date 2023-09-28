@@ -10,6 +10,9 @@ position = 0.0 0.0 0.0
 # Default color
 dcolor = 0.8 0.8 0.8
 
+# Background color
+bgcolor = 0.7 0.7 0.7
+
 # Should model be drawn in wireframe? [0] No, [1] Yes
 wireframe = 0
 

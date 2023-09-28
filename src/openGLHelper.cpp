@@ -90,16 +90,15 @@ void OpenGLDraw(Scene* scene, Selection* sel, ProgramIDs* ids, int indicesSize, 
 
     // Apply MVP
     scene->CalcInvMVP();
+    glm::mat4 mvp = scene->CalcMVP();
     glm::mat4 model = scene->GetModelMatrix();
     glm::mat3 normalModel = glm::mat3(glm::transpose(glm::inverse(model)));
-    glm::mat4 mvp = scene->CalcMVP();
     curShader->setMat4("MVP", mvp);
     curShader->setMat4("Model", model);
     curShader->setMat3("NormalModel", normalModel);
 
     // Send window scale
-    glm::vec2 winScale = glm::vec2(SCR_WIDTH, SCR_HEIGHT);
-    curShader->setVec2("WIN_SCALE", winScale);
+    curShader->setVec2("WIN_SCALE", glm::vec2(SCR_WIDTH, SCR_HEIGHT));
 
     // Apply lighting
     curShader->setFloat("AmbientStrength", scene->GetLight()->ka);
@@ -112,6 +111,9 @@ void OpenGLDraw(Scene* scene, Selection* sel, ProgramIDs* ids, int indicesSize, 
     // Draw indexed EBO
     glDrawElements(GL_TRIANGLES, indicesSize * sizeof(indices[0]), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+
+    // Draw light, if needed
+    scene->GetLight()->Draw(scene->GetProjectionMatrix() * scene->GetViewMatrix());
 }
 
 // De-allocate all resources once they've outlived their purpose:

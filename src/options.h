@@ -8,6 +8,7 @@ struct Options {
 	float objScale;
 	glm::vec3 objPos;
 	Material defaultColor;
+	glm::vec3 bgColor;
 	int vertexModel;
 	int wireframe;
 	int print;
