@@ -19,9 +19,9 @@ int main()
     scene->CreateShader("default", options.shader, options.shaderGeom);
     LightCube* light = new LightCube(
         "lightCube",
-        glm::vec3(5.0f, 5.0f, 5.0f),        // Light pos
+        glm::vec3(-2.0f, -2.0f, -2.0f),        // Light pos
         glm::vec3(-1.0f, -1.0f, -1.0f),     // Light dir
-        glm::vec3(1.0f, 1.0f, 1.0f),        // Light color
+        glm::vec3(0.5f, 0.5f, 1.0f),        // Light color
         0.1f,                               // Ambient strength
         7.0f);                              // Specular strength
     scene->SetLight(light);
@@ -113,7 +113,7 @@ void OpenGLDraw(Window* window, Scene* scene, Selection* sel)
 
     // Apply lighting
     glm::vec3 lightOffset = scene->GetLight()->offset;
-    scene->GetLight()->pos = glm::vec3(lightOffset.x * sin(glfwGetTime()), lightOffset.y, lightOffset.z * cos(glfwGetTime()));
+    //scene->GetLight()->pos = glm::vec3(lightOffset.x * sin(glfwGetTime()), lightOffset.y, lightOffset.z * cos(glfwGetTime()));
     curShader->SetFloat("AmbientStrength", scene->GetLight()->ka);
     curShader->SetFloat("SpecularStrength", scene->GetLight()->ks);
     curShader->SetVec3("LightPos", scene->GetLight()->pos);

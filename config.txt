@@ -24,10 +24,10 @@ shader = phongDefaultShader 0
 
 # Camera options
 # Camera start position. This is the position of the camera by default
-cameraStartPos = 0.0 0.0 1.0
+cameraStartPos = 0.0 1.0 1.0
 
 # Camera look at direction. This is what the camera looks at by default
-cameraStartLookAt = 0.0 0.0 0.0
+cameraStartLookAt = 0.0 -1.0 -1.0
 
 # Camera up direction. (Only change this if you really know what you're doing)
 cameraStartUp = 0.0 1.0 0.0
