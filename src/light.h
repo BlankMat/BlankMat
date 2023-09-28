@@ -1,7 +1,8 @@
 #pragma once
 #include "glIncludes.h"
+#include "drawable.h"
 
-struct Light 
+struct Light : public Drawable
 {
 	glm::vec3 pos;
 	glm::vec3 offset;
@@ -10,7 +11,7 @@ struct Light
 	float ka;
 	float ks;
 
-	virtual void Draw(glm::mat4 viewProj) {}
+	void Draw(glm::mat4 viewProj) {}
 
 	Light(glm::vec3 _pos = glm::vec3(1.0f), glm::vec3 _dir = glm::vec3(-1.0f), glm::vec3 _color = glm::vec3(1.0f), 
 		float _ka = 0.1f, float _ks = 0.5f) : pos(_pos), dir(_dir), color(_color), ka(_ka), ks(_ks), offset(_pos) {}

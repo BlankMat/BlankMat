@@ -38,6 +38,10 @@ Options ReadOptions(std::string fileName)
                 else if (tempParse[0] == "position") {
                     options.objPos = ReadVec3FromStrings(tempParse, 1);
                 }
+                // Check for light position setting
+                else if (tempParse[0] == "lightPos") {
+                    options.lightPos = ReadVec3FromStrings(tempParse, 1);
+                }
                 // Check for default color
                 else if (tempParse[0] == "dcolor") {
                     options.defaultColor = Material(glm::vec3(0.2, 0.2, 0.2), ReadVec3FromStrings(tempParse, 1));

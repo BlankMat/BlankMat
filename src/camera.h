@@ -67,6 +67,7 @@ struct Camera
         orthSize = options->camSize;
         isPerspective = options->isPerspective;
         rotation = glm::vec3(PI, 0.0f, 0.0f);
+        bgColor = options->bgColor;
 
         CalcBasis();
     }

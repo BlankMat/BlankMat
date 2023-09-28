@@ -7,12 +7,17 @@ Model::Model(std::string path)
 }
 
 // Draws each mesh in the model onto the screen
-void Model::Draw(Shader& shader, glm::mat4 viewProj)
+void Model::Draw(glm::mat4 viewProj)
 {
 	for (unsigned int i = 0; i < meshes.size(); i++)
-	{
-		meshes[i].Draw(shader, viewProj);
-	}
+		meshes[i].Draw(viewProj);
+}
+
+// Sets the shader for all the meshes of the model
+void Model::SetMeshShaders(Shader* shader)
+{
+	for (unsigned int i = 0; i < meshes.size(); i++)
+		meshes[i].SetShader(shader);
 }
 
 // Loads the model at the given path

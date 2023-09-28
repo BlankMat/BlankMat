@@ -84,7 +84,7 @@ void Mesh::SetupMesh()
 }
 
 // Render the mesh
-void Mesh::Draw(Shader& shader, glm::mat4 viewProj)
+void Mesh::Draw(glm::mat4 viewProj)
 {
     // Bind all textures
     unsigned int diffuseNum = 1;
@@ -107,7 +107,7 @@ void Mesh::Draw(Shader& shader, glm::mat4 viewProj)
             number = std::to_string(heightNum++); // transfer unsigned int to string
 
         // now set the sampler to the correct texture unit
-        shader.SetInt(("material." + name + number).c_str(), i);
+        shader->SetInt(("material." + name + number).c_str(), i);
         glBindTexture(GL_TEXTURE_2D, textures[i].id);
     }
 
@@ -115,9 +115,9 @@ void Mesh::Draw(Shader& shader, glm::mat4 viewProj)
     glm::mat4 modelMatrix = GetModelMatrix();
     glm::mat4 mvp = viewProj * modelMatrix;
     glm::mat3 normalModel = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
-    shader.SetMat4("MVP", mvp);
-    shader.SetMat4("Model", modelMatrix);
-    shader.SetMat3("NormalModel", normalModel);
+    shader->SetMat4("MVP", mvp);
+    shader->SetMat4("Model", modelMatrix);
+    shader->SetMat3("NormalModel", normalModel);
 
     // Draw mesh
     glBindVertexArray(VAO);

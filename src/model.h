@@ -3,10 +3,11 @@
 #include "mesh.h"
 #include "texture.h"
 #include "shader.h"
+#include "drawable.h"
 #include <vector>
 #include <string>
 
-class Model
+class Model : public Drawable
 {
 private:
 	int defaultTextureIndex = -1;
@@ -21,7 +22,8 @@ private:
 	std::vector<Texture> LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
 public:
 	Model(std::string path);
-	void Draw(Shader& shader, glm::mat4 viewProj);
+	void Draw(glm::mat4 viewProj);
+	void SetMeshShaders(Shader* shader);
 };
 
 unsigned int TextureFromFile(const char* path, const std::string& directory, bool gamma = false);

@@ -15,17 +15,21 @@ int main()
     // Create scene
     // ------------
     Scene* scene = new Scene();
-    scene->SetCamera(&options);
     scene->CreateShader("default", options.shader, options.shaderGeom);
+    scene->CreateShader("line", false);
+    scene->SetCamera(&options);
+
     LightCube* light = new LightCube(
         "lightCube",
-        glm::vec3(-2.0f, -2.0f, -2.0f),        // Light pos
+        options.lightPos,
         glm::vec3(-1.0f, -1.0f, -1.0f),     // Light dir
         glm::vec3(0.5f, 0.5f, 1.0f),        // Light color
         0.1f,                               // Ambient strength
         7.0f);                              // Specular strength
     scene->SetLight(light);
-    scene->GetCamera()->bgColor = options.bgColor;
+
+    scene->AddDrawable(new Grid(5, 1, 10, glm::vec3(0.2f), scene->GetShader("line")));
+    scene->AddDrawable(new TransformHandle(glm::vec3(0), 5, 0.5, scene->GetShader("line")));
 
     // Read mesh
     // ---------

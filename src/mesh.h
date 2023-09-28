@@ -3,6 +3,7 @@
 #include "texture.h"
 #include "vertex.h"
 #include "shader.h"
+#include "drawable.h"
 #include <vector>
 
 class Mesh
@@ -20,6 +21,8 @@ private:
 	glm::vec3 right;
 	glm::vec3 up;
 	glm::vec3 worldUp;
+
+	Shader* shader;
 
 	std::vector<Vertex> vertices;
 	std::vector<unsigned int> indices;
@@ -47,7 +50,8 @@ public:
 
 	void CalcBasis();
 	void SetWorldUp(glm::vec3 _worldUp) { worldUp = _worldUp; }
+	void SetShader(Shader* _shader) { shader = _shader; }
 
 	Mesh(std::vector<Vertex>& _vertices, std::vector<unsigned int>& indices, std::vector<Texture>& textures);
-	void Draw(Shader& shader, glm::mat4 viewProj);
+	void Draw(glm::mat4 viewProj);
 };

@@ -4,6 +4,7 @@
 #include "window.h"
 #include "shader.h"
 #include "lightCube.h"
+#include "transformHandle.h"
 #include "model.h"
 #include "input.h"
 

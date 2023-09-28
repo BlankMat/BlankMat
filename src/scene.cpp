@@ -6,10 +6,14 @@ void Scene::Draw(Window* window)
 	glm::mat4 viewProj = GetProjectionMatrix(window->GetAspect()) * GetViewMatrix();
 	if (curShader == "")
 		UseShader("default");
-	if (model != nullptr)
-		model->Draw(*shaders[curShader], viewProj);
 	if (light != nullptr)
 		light->Draw(viewProj);
+	if (model != nullptr) {
+		model->SetMeshShaders(shaders[curShader]);
+		model->Draw(viewProj);
+	}
+	for (unsigned int i = 0; i < drawables.size(); i++)
+		drawables[i]->Draw(viewProj);
 }
 
 void Scene::UseShader(std::string name)
@@ -52,5 +56,7 @@ Scene::~Scene()
 
 	for (auto iter = shaders.begin(); iter != shaders.end(); ++iter)
 		delete iter->second;
+	for (unsigned int i = 0; i < drawables.size(); i++)
+		delete drawables[i];
 	shaders.clear();
 }

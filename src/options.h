@@ -6,6 +6,7 @@ struct Options {
 	std::string objName;
 	float objScale;
 	glm::vec3 objPos;
+	glm::vec3 lightPos;
 	Material defaultColor;
 	glm::vec3 bgColor;
 	int vertexModel;

@@ -3,6 +3,7 @@
 #include "shader.h"
 #include "vertex.h"
 #include "window.h"
+#include "grid.h"
 #include "light.h"
 #include "camera.h"
 #include "model.h"
@@ -16,6 +17,7 @@ private:
 	Light* light;
 	Camera* camera;
 	Model* model;
+	std::vector<Drawable*> drawables;
 	std::unordered_map<std::string, Shader*> shaders;
 public:
 	// Renders the current scene
@@ -44,6 +46,8 @@ public:
 	void SetLight(Light* _light) { if (light != nullptr) { delete light; } light = _light; }
 	// Sets the scene's model to the given model
 	void SetModel(Model* _model) { if (model != nullptr) { delete model; } model = _model; }
+	// Adds a drawable to the scene's render list
+	void AddDrawable(Drawable* _drawable) { drawables.push_back(_drawable); }
 
 	// Returns the projection matrix of the scene's camera
 	glm::mat4 GetProjectionMatrix(float aspect) { return GetCamera()->GetProjection(aspect); }
