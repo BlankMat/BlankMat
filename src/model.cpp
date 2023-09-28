@@ -1,4 +1,5 @@
 #include "model.h"
+#include "mathLib.h"
 
 Model::Model(std::string path)
 {
@@ -6,11 +7,11 @@ Model::Model(std::string path)
 }
 
 // Draws each mesh in the model onto the screen
-void Model::Draw(Shader& shader)
+void Model::Draw(Shader& shader, glm::mat4 viewProj)
 {
 	for (unsigned int i = 0; i < meshes.size(); i++)
 	{
-		meshes[i].Draw(shader);
+		meshes[i].Draw(shader, viewProj);
 	}
 }
 
@@ -92,11 +93,11 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 		textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 	}
 	// If the model does not have a texture, use the default texture
-	else
+	if (textures.size() == 0)
 	{
 		LoadDefaultTexture();
 		textures.push_back(texturesLoaded[defaultTextureIndex]);
-		std::cout << "  - Mesh has no texture, loading default texture" << std::endl;
+		std::cout << "  - Mesh has no texture, using default texture" << std::endl;
 	}
 	return Mesh(vertices, indices, textures);
 }
@@ -110,7 +111,8 @@ void Model::LoadDefaultTexture()
 
 	std::string defaultPath = "default.png";
 	unsigned int textureID = TextureFromFile(defaultPath.c_str(), FileSystem::GetPath("resources/textures"));
-	defaultTextureIndex = texturesLoaded.size();
+	std::cout << "  - Loaded default texture from " << FileSystem::GetPath("resources/textures/") << defaultPath << std::endl;
+	defaultTextureIndex = (int)texturesLoaded.size();
 	texturesLoaded.push_back(Texture(textureID, "texture_diffuse", defaultPath));
 }
 
@@ -142,7 +144,8 @@ std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* mat, aiTextureType 
 			unsigned int textureId = TextureFromFile(str.C_Str(), this->directory);
 			Texture texture = Texture(textureId, typeName, str.C_Str());
 			textures.push_back(texture);
-			texturesLoaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecessary load duplicate textures.
+			// store it as texture loaded for entire model, to ensure we won't unnecessary load duplicate textures.
+			texturesLoaded.push_back(texture);
 			std::cout << "  - Loaded texture " << str.C_Str() << std::endl;
 		}
 	}

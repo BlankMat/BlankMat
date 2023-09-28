@@ -1,10 +1,9 @@
 #include "main.h"
-#include "openGLHelper.h"
 
 int main()
 {
     // Init window
-    GLFWwindow* window = OpenGLInitWindow(SCR_WIDTH, SCR_HEIGHT, "BlankMat");
+    Window* window = new Window(SCR_WIDTH, SCR_HEIGHT, "BlankMat");
     if (window == nullptr)
         return -1;
 
@@ -13,15 +12,10 @@ int main()
     std::cout << "Starting program, reading options from " << FileSystem::GetPath(CONFIG_FILE) << std::endl;
     Options options = ReadOptions(FileSystem::GetPath(CONFIG_FILE));
 
-    // Build and compile shader program
-    // ------------------------------------
-    ProgramIDs ids = ProgramIDs();
-    //Shader mainShader(options.phong == 1 ? "phongShader" : "gouraudShader");
-
     // Create scene
     // ------------
     Scene* scene = new Scene();
-    scene->SetCameraFromOptions(&options);
+    scene->SetCamera(&options);
     scene->CreateShader("default", options.shader, options.shaderGeom);
     LightCube* light = new LightCube(
         "lightCube",
@@ -31,39 +25,11 @@ int main()
         0.1f,                               // Ambient strength
         7.0f);                              // Specular strength
     scene->SetLight(light);
-    scene->bgColor = options.bgColor;
-    scene->GetMats()->AddMat("default", options.defaultColor);
+    scene->GetCamera()->bgColor = options.bgColor;
 
     // Read mesh
     // ---------
     Model* curModel = new Model(FileSystem::GetPath(MODELS_DIR + options.objName));
-    /*
-    OldMesh* displayMesh = scene->GetMeshes()->GetAll().begin()->second;
-
-    // Read mesh from file
-    ReadObjFromFile(displayMesh, scene->GetMats(), MODELS_DIR, options.objName);
-    displayMesh->Scale(glm::vec3(options.objScale, options.objScale, options.objScale));
-    displayMesh->SetPos(options.objPos);
-    displayMesh->CalcPivot();
-    */
-    // Load up model into vertice and indice structures
-    // Get vertices
-    //int vertsSize = scene->GetVertCount() * VERT_SHADER_SIZE;
-    //int indicesSize = scene->GetIndexCount();
-    //float* vertices = new float[vertsSize];
-    //unsigned int* indices = new unsigned int[indicesSize];
-    //scene->CalcRenderTris();
-    //scene->GetVAO(vertices, vertsSize, indices, indicesSize);
-    //scene->CalcInvMVP();
-
-    // Print vertices and indices
-    //if (options.print == 1) {
-    //    PrintArray("Printing vertices:", vertices, vertsSize, VERT_SHADER_SIZE);
-    //    PrintArray("Printing indices:", indices, indicesSize, 3);
-    //}
-
-    // Init VAO, VBO, and EBO
-    //OpenGLInitBuffers(&ids, vertsSize, vertices, indicesSize, indices);
 
     // Enable wireframe if requested in options
     OpenGLEnableWireframe(options.wireframe == 1);
@@ -87,7 +53,7 @@ int main()
 
     // render loop
     // -----------
-    while (!glfwWindowShouldClose(window))
+    while (!glfwWindowShouldClose(window->GetWindow()))
     {
         // Get deltaTime
         lastTime = currentTime;
@@ -99,72 +65,61 @@ int main()
 
         // Process changes in selections
         if (sel.newSelVerts.size() != 0 || sel.removedSelVerts.size() != 0) {
-            /*
-            std::set<int> selVerts;
-            sel.GetSelectedVerts(selVerts);
-            std::unordered_map<int, Vertex> verts = scene->GetMeshes()->GetAll().begin()->second->GetVerts();
-            for (auto viter = verts.begin(); viter != verts.end(); ++viter) {
-                vertices[viter->first * VERT_SHADER_SIZE] = (selVerts.find(viter->first) != selVerts.end()) ? 1.0f : 0.0f;
-                std::cout << "Checking if " << viter->first << " is selected: " << (selVerts.find(viter->first) != selVerts.end() ? "true" : "false") << "\n";
-            }
-            */
-            //std::cout << "Selecting [" << sel.newSelVerts.size() << "] new verts, removing [" << sel.removedSelVerts.size() << "]\n";
-
-            //for (auto iter = sel.newSelVerts.begin(); iter != sel.newSelVerts.end(); ++iter) {
-            //    vertices[*iter * VERT_SHADER_SIZE] = 1.0f;
-            //}
-            //for (auto iter = sel.removedSelVerts.begin(); iter != sel.removedSelVerts.end(); ++iter) {
-            //    vertices[*iter * VERT_SHADER_SIZE] = 0.0f;
-            //}
-            //sel.newSelVerts.clear();
-            //sel.removedSelVerts.clear();
-            //sel.CalcSelPivot();
-            //
-            //glBindBuffer(GL_ARRAY_BUFFER, ids.VBO);
-            //glBufferSubData(GL_ARRAY_BUFFER, 0, vertsSize * sizeof(vertices[0]), vertices);
             locks.reselect = false;
-
-            //PrintArray("Testing vertex data", vertices, vertsSize, 10);
         }
 
         // Update VAO on rerender call
         if (locks.rerender) {
-            // Clear previous data
-            //delete[] vertices;
-            //delete[] indices;
-
-            // Set new data
-            //vertsSize = scene->GetVertCount() * 10;
-            //indicesSize = scene->GetIndexCount();
-            //vertices = new float[vertsSize];
-            //indices = new unsigned int[indicesSize];
-
-            //scene->GetVAO(vertices, vertsSize, indices, indicesSize, &sel);
-            //OpenGLInitBuffers(&ids, vertsSize, vertices, indicesSize, indices);
-
             // Reset rerender
             locks.rerender = false;
         }
 
         // Render
-        OpenGLDraw(curModel, scene, &sel, &ids);
+        OpenGLDraw(window, scene, &sel);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(window->GetWindow());
         glfwPollEvents();
     }
 
     // Clear up dynamic memory usage
     // -----------------------------
-    OpenGLCleanup(&ids);
-    //delete[] vertices;
-    //delete[] indices;
     delete curModel;
     delete scene;
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
     glfwTerminate();
+    delete window;
     return 0;
+}
+
+// Draws the current scene
+// -----------------------
+void OpenGLDraw(Window* window, Scene* scene, Selection* sel)
+{
+    glm::vec3 bgColor = scene->GetCamera()->bgColor;
+    glClearColor(bgColor.r / 255.0f, bgColor.g / 255.0f, bgColor.b / 255.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // Draw the object
+    Shader* curShader = scene->GetShader("default");
+    scene->UseShader("default");
+
+    // Send window scale
+    window->CalcWindowSize();
+    curShader->SetVec2("WIN_SCALE", glm::vec2(window->GetWidth(), window->GetHeight()));
+
+    // Apply lighting
+    glm::vec3 lightOffset = scene->GetLight()->offset;
+    scene->GetLight()->pos = glm::vec3(lightOffset.x * sin(glfwGetTime()), lightOffset.y, lightOffset.z * cos(glfwGetTime()));
+    curShader->SetFloat("AmbientStrength", scene->GetLight()->ka);
+    curShader->SetFloat("SpecularStrength", scene->GetLight()->ks);
+    curShader->SetVec3("LightPos", scene->GetLight()->pos);
+    curShader->SetVec3("LightColor", scene->GetLight()->color);
+    curShader->SetVec3("ViewPos", scene->GetCamera()->pos);
+
+    // Draw the scene
+    scene->Draw(window);
 }

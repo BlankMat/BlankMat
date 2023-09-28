@@ -6,11 +6,58 @@ Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, st
     this->indices = indices;
     this->textures = textures;
 
+    worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
     SetupMesh();
+}
+
+glm::vec3 Mesh::CalcCenter()
+{
+    glm::vec3 center = glm::vec3(0.0f);
+    for (unsigned int i = 0; i < vertices.size(); i++)
+        center += vertices[i].pos;
+    return center;
+}
+
+void Mesh::CalcBasis()
+{
+    forward = glm::vec3(
+        cos(rotation.x) * cos(rotation.y),
+        sin(rotation.y),
+        sin(rotation.x) * cos(rotation.y)
+    );
+
+    // Right vector
+    right = glm::normalize(glm::cross(forward, worldUp));
+
+    // Up vector : perpendicular to both direction and right
+    up = glm::cross(right, forward);
+}
+
+glm::mat4 Mesh::GetModelMatrix()
+{
+    glm::mat4 identity = glm::mat4(1.0f);
+
+    glm::mat4 rotateX = glm::rotate(glm::mat4(1.0f), glm::radians(rotation.x), glm::vec3(0, 1, 0));
+    glm::mat4 rotateY = glm::rotate(glm::mat4(1.0f), glm::radians(rotation.y), glm::vec3(1, 0, 0));
+    glm::mat4 rotateZ = glm::rotate(glm::mat4(1.0f), glm::radians(rotation.z), glm::vec3(0, 0, 1));
+
+    glm::mat4 rotate = rotateZ * rotateY * rotateX;
+    return glm::scale(glm::translate(rotate, position), scale);
+}
+
+Vertex* Mesh::GetVertex(unsigned int index)
+{
+    if (index < vertices.size())
+        return nullptr;
+    return &vertices[index];
 }
 
 void Mesh::SetupMesh()
 {
+    position = CalcCenter();
+    rotation = glm::vec3(0.0f);
+    scale = glm::vec3(1.0f);
+
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
@@ -37,7 +84,7 @@ void Mesh::SetupMesh()
 }
 
 // Render the mesh
-void Mesh::Draw(Shader& shader)
+void Mesh::Draw(Shader& shader, glm::mat4 viewProj)
 {
     // Bind all textures
     unsigned int diffuseNum = 1;
@@ -63,6 +110,14 @@ void Mesh::Draw(Shader& shader)
         shader.SetInt(("material." + name + number).c_str(), i);
         glBindTexture(GL_TEXTURE_2D, textures[i].id);
     }
+
+    // Set uniforms for this draw
+    glm::mat4 modelMatrix = GetModelMatrix();
+    glm::mat4 mvp = viewProj * modelMatrix;
+    glm::mat3 normalModel = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
+    shader.SetMat4("MVP", mvp);
+    shader.SetMat4("Model", modelMatrix);
+    shader.SetMat3("NormalModel", normalModel);
 
     // Draw mesh
     glBindVertexArray(VAO);

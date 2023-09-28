@@ -1,36 +1,37 @@
 #include "input.h"
-#include "openGLHelper.h"
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
-bool ProcessInput(GLFWwindow* window, Scene* scene, Selection* sel, InputLocks* locks, Options* options, SpeedConsts* speeds, float deltaTime, int* prevX, int* prevY)
+bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* locks, Options* options, SpeedConsts* speeds, float deltaTime, int* prevX, int* prevY)
 {
     // TODO: Replace mesh reference with proper reference
     Camera* camera = scene->GetCamera();
-    OldMesh* mesh = scene->GetMeshes()->GetAll().begin()->second;
-    std::set<int> selVerts;
+    Mesh* selMesh = sel->GetSelectedMesh();
+    std::set<unsigned int> selVerts;
     sel->GetSelectedVerts(selVerts);
     bool didReceiveInput = false;
 
     // Get window width and height
-    int width, height;
-    glfwGetWindowSize(window, &width, &height);
-    double halfWidth = width * 0.5f;
-    double halfHeight = height * 0.5f;
+    window->CalcWindowSize();
+    int width = window->GetWidth();
+    int height = window->GetHeight();
+    GLFWwindow* glfwWindow = window->GetWindow();
+    float halfWidth = width * 0.5f;
+    float halfHeight = height * 0.5f;
 
 
 
     /* ==================================================== Window Stuff ===================================================== */
     // Exit window
     if (ESC_PRESS) {
-        glfwSetWindowShouldClose(window, true);
+        glfwSetWindowShouldClose(glfwWindow, true);
         return true;
     }
     // Focus object
     if (F_PRESS && !CTRL_PRESS) {
         // Only focus when not locked
         if (!locks->lockF) {
-            glm::vec3 targetDir = glm::normalize(mesh->GetPos() - camera->pos);
+            glm::vec3 targetDir = glm::normalize(selMesh->GetPos() - camera->pos);
             float rotY = asin(targetDir.y);
             float rotX = atan2(targetDir.x, targetDir.z);
             camera->rotation = glm::vec3(rotX, rotY, 0.0f);
@@ -126,14 +127,17 @@ bool ProcessInput(GLFWwindow* window, Scene* scene, Selection* sel, InputLocks* 
                 break;
                 /* ========== Handle moving ================= */
             case Tool::MOVE:
-                glm::vec3 moveVec = inputVec.x * mesh->GetForward() + inputVec.y * mesh->GetRight() + inputVec.z * mesh->GetUp();
+                if (selMesh == nullptr)
+                    break;
+
+                glm::vec3 moveVec = inputVec.x * selMesh->GetForward() + inputVec.y * selMesh->GetRight() + inputVec.z * selMesh->GetUp();
                 switch (sel->GetSelMode()) {
                 case SelMode::MESH:
-                    mesh->Translate(moveVec * deltaTime * speeds->modelMoveSpeed);
+                    selMesh->Translate(moveVec * deltaTime * speeds->modelMoveSpeed);
                     break;
                 case SelMode::FACE:
                 case SelMode::VERT:
-                    mesh->Translate(selVerts, moveVec * deltaTime * speeds->modelMoveSpeed);
+                    //selMesh->Translate(selVerts, moveVec * deltaTime * speeds->modelMoveSpeed);
                     locks->rerender = true;
                     break;
                 default:
@@ -142,19 +146,22 @@ bool ProcessInput(GLFWwindow* window, Scene* scene, Selection* sel, InputLocks* 
                 break;
                 /* ========== Handle scaling ================= */
             case Tool::SCALE:
+                if (selMesh == nullptr)
+                    break;
+
                 switch (sel->GetSelMode()) {
                 case SelMode::MESH:
                     if (SHIFT_PRESS)
-                        mesh->SetScale(mesh->GetScale() + glm::clamp(inputVec.x + inputVec.y + inputVec.z, -1.0f, 1.0f) * speeds->modelScaleRate * deltaTime * mesh->GetScale());
+                        selMesh->SetScale(selMesh->GetScale() + glm::clamp(inputVec.x + inputVec.y + inputVec.z, -1.0f, 1.0f) * speeds->modelScaleRate * deltaTime * selMesh->GetScale());
                     else
-                        mesh->SetScale(mesh->GetScale() + inputVec * speeds->modelScaleRate * deltaTime * mesh->GetScale());
+                        selMesh->SetScale(selMesh->GetScale() + inputVec * speeds->modelScaleRate * deltaTime * selMesh->GetScale());
                     break;
                 case SelMode::FACE:
                 case SelMode::VERT:
-                    if (SHIFT_PRESS)
-                        mesh->Scale(selVerts, glm::vec3(1.0f) + glm::vec3(glm::clamp(inputVec.x + inputVec.y + inputVec.z, -1.0f, 1.0f) * speeds->modelScaleRate * deltaTime), sel->GetSelectionPivot());
-                    else
-                        mesh->Scale(selVerts, glm::vec3(1.0f) + inputVec * speeds->modelScaleRate * deltaTime, sel->GetSelectionPivot());
+                    //if (SHIFT_PRESS)
+                    //    selMesh->Scale(selVerts, glm::vec3(1.0f) + glm::vec3(glm::clamp(inputVec.x + inputVec.y + inputVec.z, -1.0f, 1.0f) * speeds->modelScaleRate * deltaTime), sel->GetSelectionPivot());
+                    //else
+                    //    selMesh->Scale(selVerts, glm::vec3(1.0f) + inputVec * speeds->modelScaleRate * deltaTime, sel->GetSelectionPivot());
                     locks->rerender = true;
                     break;
                 default:
@@ -163,13 +170,16 @@ bool ProcessInput(GLFWwindow* window, Scene* scene, Selection* sel, InputLocks* 
                 break;
                 /* ========== Handle rotating ================ */
             case Tool::ROTATE:
+                if (selMesh == nullptr)
+                    break;
+
                 switch (sel->GetSelMode()) {
                 case SelMode::MESH:
-                    mesh->Rotate(glm::vec3(inputVec.y, inputVec.x, inputVec.z) * speeds->modelTurnSpeed * deltaTime);
+                    selMesh->Rotate(glm::vec3(inputVec.y, inputVec.x, inputVec.z) * speeds->modelTurnSpeed * deltaTime);
                     break;
                 case SelMode::FACE:
                 case SelMode::VERT:
-                    mesh->Rotate(selVerts, glm::vec3(inputVec.y, inputVec.x, inputVec.z) * speeds->modelTurnSpeed * deltaTime, sel->GetSelectionPivot());
+                    //selMesh->Rotate(selVerts, glm::vec3(inputVec.y, inputVec.x, inputVec.z) * speeds->modelTurnSpeed * deltaTime, sel->GetSelectionPivot());
                     locks->rerender = true;
                     break;
                 default:
@@ -210,9 +220,11 @@ bool ProcessInput(GLFWwindow* window, Scene* scene, Selection* sel, InputLocks* 
     if (MOUSE_PRESS) {
         // Track mouse movement
         double mouseX, mouseY;
-        glfwGetCursorPos(window, &mouseX, &mouseY);
+        glfwGetCursorPos(glfwWindow, &mouseX, &mouseY);
         int xPos = (int)glm::floor(mouseX);
         int yPos = (int)glm::floor(mouseY);
+        float u = (xPos + 0.5f) / width;
+        float v = (yPos + 0.5f) / height;
 
         // Reset previous positions
         if (*prevX < 0)
@@ -241,22 +253,22 @@ bool ProcessInput(GLFWwindow* window, Scene* scene, Selection* sel, InputLocks* 
             locks->lockLeftMouse = true;
 
             // Handle selection
-            OldMesh* tempMesh;
+            Mesh* tempMesh;
             int tempFace;
             int tempVert;
             switch (sel->GetSelMode()) {
             case SelMode::MESH:
-                tempMesh = Selection::GetNearestMesh(scene, *prevX, *prevY);
+                tempMesh = Selection::GetNearestMesh(scene, u, v);
                 if (tempMesh == sel->GetSelectedMesh())
                     sel->DeselectMesh();
                 else
                     sel->SelectMesh(tempMesh);
                 break;
             case SelMode::FACE:
-                if (sel->GetSelectedMesh() == nullptr)
+                if (selMesh == nullptr)
                     break;
 
-                tempFace = Selection::GetNearestFace(scene, *prevX, *prevY);
+                tempFace = Selection::GetNearestFace(scene, u, v);
                 if (sel->IsFaceSelected(tempFace))
                     sel->DeselectFace(tempFace);
                 else
@@ -264,10 +276,10 @@ bool ProcessInput(GLFWwindow* window, Scene* scene, Selection* sel, InputLocks* 
                 locks->reselect = true;
                 break;
             case SelMode::VERT:
-                if (sel->GetSelectedMesh() == nullptr)
+                if (selMesh == nullptr)
                     break;
 
-                tempVert = Selection::GetNearestVert(scene, *prevX, *prevY);
+                tempVert = Selection::GetNearestVert(scene, u, v);
                 if (sel->IsVertSelected(tempVert))
                     sel->DeselectVert(tempVert);
                 else
@@ -276,7 +288,7 @@ bool ProcessInput(GLFWwindow* window, Scene* scene, Selection* sel, InputLocks* 
                 break;
             }
 
-            std::set<int> newSelVerts;
+            std::set<unsigned int> newSelVerts;
             sel->GetSelectedVerts(newSelVerts);
 
             for (auto iter = newSelVerts.begin(); iter != newSelVerts.end(); ++iter) {
@@ -290,7 +302,7 @@ bool ProcessInput(GLFWwindow* window, Scene* scene, Selection* sel, InputLocks* 
         }
 
         // Keep mouse where it was clicked
-        glfwSetCursorPos(window, (float)(*prevX), (float)(*prevY));
+        glfwSetCursorPos(window->GetWindow(), (float)(*prevX), (float)(*prevY));
         didReceiveInput = true;
     }
     // Reset previous click location when there 
@@ -307,47 +319,53 @@ bool ProcessInput(GLFWwindow* window, Scene* scene, Selection* sel, InputLocks* 
     // Recalculate camera basis if any input was received
     if (didReceiveInput) {
         camera->CalcBasis();
-        mesh->CalcBasis();
     }
     // If no input was received, clear all input locks
     else {
         locks->ClearLocks();
     }
 
+    // Recalculate the selected mesh if changes were made
+    if (locks->rerender && selMesh != nullptr) {
+        selMesh->CalcBasis();
+    }
+
     return didReceiveInput;
 }
 
 // Returns the combined input vector of arrow keys
-glm::vec3 GetArrow(GLFWwindow* window)
+glm::vec3 GetArrow(Window* window)
 {
+    GLFWwindow* glfwWindow = window->GetWindow();
     glm::vec3 output = glm::vec3(0, 0, 0);
-    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+    if (glfwGetKey(glfwWindow, GLFW_KEY_UP) == GLFW_PRESS)
         output += glm::vec3(0, 1, 0);
-    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+    if (glfwGetKey(glfwWindow, GLFW_KEY_DOWN) == GLFW_PRESS)
         output += glm::vec3(0, -1, 0);
-    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+    if (glfwGetKey(glfwWindow, GLFW_KEY_RIGHT) == GLFW_PRESS)
         output += glm::vec3(-1, 0, 0);
-    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+    if (glfwGetKey(glfwWindow, GLFW_KEY_LEFT) == GLFW_PRESS)
         output += glm::vec3(1, 0, 0);
 
     return output;
 }
 
 // Returns the combined input vector of WASDZX
-glm::vec3 GetWASDZX(GLFWwindow* window)
+glm::vec3 GetWASDZX(Window* window)
 {
+    GLFWwindow* glfwWindow = window->GetWindow();
     glm::vec3 output = glm::vec3(0, 0, 0);
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+    if (glfwGetKey(glfwWindow, GLFW_KEY_W) == GLFW_PRESS)
         output += glm::vec3(1, 0, 0);
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+    if (glfwGetKey(glfwWindow, GLFW_KEY_S) == GLFW_PRESS)
         output += glm::vec3(-1, 0, 0);
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+    if (glfwGetKey(glfwWindow, GLFW_KEY_D) == GLFW_PRESS)
         output += glm::vec3(0, 1, 0);
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+    if (glfwGetKey(glfwWindow, GLFW_KEY_A) == GLFW_PRESS)
         output += glm::vec3(0, -1, 0);
-    if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
+    if (glfwGetKey(glfwWindow, GLFW_KEY_Z) == GLFW_PRESS)
         output += glm::vec3(0, 0, 1);
-    if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
+    if (glfwGetKey(glfwWindow, GLFW_KEY_X) == GLFW_PRESS)
         output += glm::vec3(0, 0, -1);
 
     return output;

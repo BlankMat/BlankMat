@@ -3,14 +3,13 @@
 #include "mesh.h"
 #include "texture.h"
 #include "shader.h"
-#include "mathLib.h"
 #include <vector>
 #include <string>
 
 class Model
 {
 private:
-	unsigned int defaultTextureIndex = -1;
+	int defaultTextureIndex = -1;
 	std::vector<Mesh> meshes;
 	std::vector<Texture> texturesLoaded;
 	std::string directory;
@@ -22,7 +21,7 @@ private:
 	std::vector<Texture> LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
 public:
 	Model(std::string path);
-	void Draw(Shader& shader);
+	void Draw(Shader& shader, glm::mat4 viewProj);
 };
 
 unsigned int TextureFromFile(const char* path, const std::string& directory, bool gamma = false);

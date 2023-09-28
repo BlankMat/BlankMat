@@ -1,5 +1,4 @@
 #pragma once
-#include "fileHelper.h"
 #include "material.h"
 
 // Storage of all options for the program

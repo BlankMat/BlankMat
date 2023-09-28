@@ -1,4 +1,5 @@
 #include "options.h"
+#include "mathLib.h"
 
 // Reads the options file at the given position
 Options ReadOptions(std::string fileName)
