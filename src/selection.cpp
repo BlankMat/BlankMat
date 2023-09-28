@@ -203,7 +203,7 @@ OldMesh* Selection::GetNearestMesh(Scene* scene, int i, int j)
 	float u = (j + 0.5f) / SCR_WIDTH;
 	float v = (i + 0.5f) / SCR_HEIGHT;
 	//std::cout << "Transformed click [" << u << ", " << v << "]\n";
-	Ray ray = RayTracer::generateRay(scene, u, v, false);
+	Ray ray = RayTracer::GenerateRay(scene, u, v, false);
 	if (ray.DoesIntersect(scene->GetRenderTris()))
 		return scene->GetMeshes()->GetAll().begin()->second;
 	else
@@ -215,7 +215,7 @@ int Selection::GetNearestVert(Scene* scene, int i, int j)
 {
 	float u = (j + 0.5f) / SCR_WIDTH;
 	float v = (i + 0.5f) / SCR_HEIGHT;
-	Ray ray = RayTracer::generateRay(scene, u, v, false);
+	Ray ray = RayTracer::GenerateRay(scene, u, v, false);
 	IndVertex res = ray.GetClosestVertex(scene->GetRenderTris());
 	return res.id;
 }
@@ -225,7 +225,7 @@ int Selection::GetNearestFace(Scene* scene, int i, int j)
 {
 	float u = (j + 0.5f) / SCR_WIDTH;
 	float v = (i + 0.5f) / SCR_HEIGHT;
-	Ray ray = RayTracer::generateRay(scene, u, v, false);
+	Ray ray = RayTracer::GenerateRay(scene, u, v, false);
 	ITriangle res = ray.GetClosestTriangle(scene->GetRenderTris());
 	return res.triIndex;
 }

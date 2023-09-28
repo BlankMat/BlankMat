@@ -7,16 +7,13 @@ void LightCube::Draw(glm::mat4 viewProj)
 		// Setup shader for use
 		glm::mat4 model = glm::translate(glm::mat4(1.0f), pos);
 
-		lightShader->use();
-		lightShader->setMat4("MVP", viewProj * model);
-		lightShader->setVec3("LightColor", color);
+		lightShader->Use();
+		lightShader->SetMat4("MVP", viewProj * model);
+		lightShader->SetVec3("LightColor", color);
 
 		// Render the light cube
 		glBindVertexArray(lightCubeVAO);
         glDrawArrays(GL_TRIANGLES, 0, 36);
-	}
-	else {
-		std::cout << "Error: Attempted to draw lightcube with no shader" << std::endl;
 	}
 }
 

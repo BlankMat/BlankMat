@@ -10,17 +10,19 @@
 class Model
 {
 private:
+	unsigned int defaultTextureIndex = -1;
 	std::vector<Mesh> meshes;
 	std::vector<Texture> texturesLoaded;
 	std::string directory;
 
-	void loadModel(std::string path);
-	void processNode(aiNode* node, const aiScene* scene);
-	Mesh processMesh(aiMesh* mesh, const aiScene* scene);
-	std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
+	void LoadModel(std::string path);
+	void ProcessNode(aiNode* node, const aiScene* scene);
+	Mesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
+	void LoadDefaultTexture();
+	std::vector<Texture> LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
 public:
-	Model(char* path);
-	void draw(Shader& shader);
+	Model(std::string path);
+	void Draw(Shader& shader);
 };
 
 unsigned int TextureFromFile(const char* path, const std::string& directory, bool gamma = false);

@@ -5,17 +5,13 @@
 void OldMesh::CalcBasis()
 {
 	forward = glm::vec3(
-		cos(rotation.y) * sin(rotation.x),
+		cos(rotation.x) * cos(rotation.y),
 		sin(rotation.y),
-		cos(rotation.y) * cos(rotation.x)
+		sin(rotation.x) * cos(rotation.y)
 	);
 
 	// Right vector
-	right = glm::vec3(
-		sin(rotation.x - HALF_PI),
-		0,
-		cos(rotation.x - HALF_PI)
-	);
+	right = glm::normalize(glm::cross(forward, glm::vec3(0.0, 1.0, 0.0)));
 
 	// Up vector : perpendicular to both direction and right
 	up = glm::cross(right, forward);

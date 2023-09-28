@@ -10,6 +10,7 @@ struct Camera
 
 	glm::vec3 pos;
 	glm::vec3 rotation;
+	glm::vec3 worldUp;
 
 	glm::vec3 dir;
 	glm::vec3 up;
@@ -17,6 +18,9 @@ struct Camera
 
 	glm::vec2 orthSize;
 	bool isPerspective;
+
+	glm::mat4 GetView();
+	glm::mat4 GetProjection(float aspect);
 
 	void CalcBasis();
 	void SetFromOptions(Options* options);

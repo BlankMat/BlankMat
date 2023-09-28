@@ -1,20 +1,23 @@
 #include "model.h"
 
-Model::Model(char* path)
+Model::Model(std::string path)
 {
-	loadModel(path);
+	LoadModel(path);
 }
 
 // Draws each mesh in the model onto the screen
-void Model::draw(Shader& shader)
+void Model::Draw(Shader& shader)
 {
 	for (unsigned int i = 0; i < meshes.size(); i++)
-		meshes[i].draw(shader);
+	{
+		meshes[i].Draw(shader);
+	}
 }
 
 // Loads the model at the given path
-void Model::loadModel(std::string path)
+void Model::LoadModel(std::string path)
 {
+	std::cout << "Reading model from file " << path << std::endl;
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
 
@@ -24,27 +27,34 @@ void Model::loadModel(std::string path)
 		return;
 	}
 	directory = path.substr(0, path.find_last_of('/'));
-	processNode(scene->mRootNode, scene);
+
+	// Load default texture regardless of whether it's used or not
+	LoadDefaultTexture();
+
+	// Process model
+	ProcessNode(scene->mRootNode, scene);
+	std::cout << "Read model from file " << path << " successfully, new directory is " << directory << std::endl;
 }
 
 // Recursively processes the meshes in the given node and all its children
-void Model::processNode(aiNode* node, const aiScene* scene)
+void Model::ProcessNode(aiNode* node, const aiScene* scene)
 {
+	std::cout << " - Reading node " << node->mName.C_Str() << std::endl;
 	// Process all the node's meshes (if any)
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		meshes.push_back(processMesh(mesh, scene));
+		meshes.push_back(ProcessMesh(mesh, scene));
 	}
 	// Process each of the children
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
-		processNode(node->mChildren[i], scene);
+		ProcessNode(node->mChildren[i], scene);
 	}
 }
 
 // Process the vertices, indices, and textures of the given mesh
-Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
+Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 {
 	std::vector<Vertex> vertices;
 	std::vector<unsigned int> indices;
@@ -68,16 +78,44 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	if (mesh->mMaterialIndex >= 0)
 	{
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-		std::vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+		// 1. diffuse maps
+		std::vector<Texture> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
 		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-		std::vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+		// 2. specular maps
+		std::vector<Texture> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+		// 3. normal maps
+		std::vector<Texture> normalMaps = LoadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
+		textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
+		// 4. height maps
+		std::vector<Texture> heightMaps = LoadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
+		textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
+	}
+	// If the model does not have a texture, use the default texture
+	else
+	{
+		LoadDefaultTexture();
+		textures.push_back(texturesLoaded[defaultTextureIndex]);
+		std::cout << "  - Mesh has no texture, loading default texture" << std::endl;
 	}
 	return Mesh(vertices, indices, textures);
 }
 
+// Loads the default texture
+void Model::LoadDefaultTexture()
+{
+	// If the default texture is loaded already, exit
+	if (defaultTextureIndex >= 0 && defaultTextureIndex < texturesLoaded.size())
+		return;
+
+	std::string defaultPath = "default.png";
+	unsigned int textureID = TextureFromFile(defaultPath.c_str(), FileSystem::GetPath("resources/textures"));
+	defaultTextureIndex = texturesLoaded.size();
+	texturesLoaded.push_back(Texture(textureID, "texture_diffuse", defaultPath));
+}
+
 // Load
-std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
+std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
 {
 	std::vector<Texture> textures;
 	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
@@ -90,7 +128,7 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType 
 		for (unsigned int j = 0; j < texturesLoaded.size(); j++)
 		{
 			// If the texture is already loaded, add it to the mesh
-			if (std::strcmp(texturesLoaded[j].path.data(), str.C_Str()) == 0)
+			if (std::strcmp(texturesLoaded[j].path.c_str(), str.C_Str()) == 0)
 			{
 				textures.push_back(texturesLoaded[j]);
 				skip = true;
@@ -98,11 +136,15 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType 
 			}
 		}
 		// Skip to the next texture if already loaded
-		if (skip)
-			continue;
-
-		unsigned int id = TextureFromFile(str.C_Str(), directory);
-		textures.push_back(Texture(id, typeName, str.C_Str()));
+		if (!skip)
+		{
+			// if texture hasn't been loaded already, load it
+			unsigned int textureId = TextureFromFile(str.C_Str(), this->directory);
+			Texture texture = Texture(textureId, typeName, str.C_Str());
+			textures.push_back(texture);
+			texturesLoaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecessary load duplicate textures.
+			std::cout << "  - Loaded texture " << str.C_Str() << std::endl;
+		}
 	}
 	return textures;
 }

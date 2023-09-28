@@ -1,5 +1,5 @@
 # Which object should be loaded by the program
-object = cube
+object = backpack/backpack.obj
 
 # Scale of the object in the program
 scale = 0.6
@@ -11,7 +11,7 @@ position = 0.0 0.0 0.0
 dcolor = 0.8 0.8 0.8
 
 # Background color
-bgcolor = 0.7 0.7 0.7
+bgcolor = 80 100 100
 
 # Should model be drawn in wireframe? [0] No, [1] Yes
 wireframe = 0

@@ -1,12 +1,12 @@
 #pragma once
 #include "objReader.h"
 #include "options.h"
+#include "fileSystem.h"
 #include "fileHelper.h"
 #include "shader.h"
+#include "model.h"
 #include "lightCube.h"
 #include "input.h"
 
-#define CONFIG_FILE_PP "config.txt"
-#define CONFIG_FILE ROOT_DIR CONFIG_FILE_PP
-#define MODELS_DIR_PP "resources/models/"
-#define MODELS_DIR ROOT_DIR MODELS_DIR_PP
+#define CONFIG_FILE "config.txt"
+#define MODELS_DIR "resources/models/"
