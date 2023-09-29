@@ -21,6 +21,22 @@ protected:
 public:
 	// Draws the object to the screen
 	virtual void Draw(glm::mat4 viewProj) = 0;
+	// Gets the position of the object
+	virtual glm::vec3 GetPos() { return mPos; }
+	// Gets the rotation of the object
+	virtual glm::vec3 GetRot() { return mRot; }
+	// Gets the scale of the object
+	virtual glm::vec3 GetScale() { return mScale; }
+	// Gets the color of the object
+	virtual glm::vec3 GetColor() { return mColor; }
+	// Sets the position of the object
+	virtual void SetPos(glm::vec3 pos) { mPos = pos; }
+	// Sets the rotation of the object
+	virtual void SetRot(glm::vec3 rot) { mRot = rot; }
+	// Sets the scale of the object
+	virtual void SetScale(glm::vec3 scale) { mScale = scale; }
+	// Sets the scale of the object
+	virtual void SetColor(glm::vec3 color) { mColor = color; }
 
 	// Returns the model matrix for the object
 	glm::mat4 GetModelMatrix()

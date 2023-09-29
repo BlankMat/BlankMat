@@ -62,6 +62,24 @@ bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* lock
         }
         didReceiveInput = true;
     }
+    // Toggle disco light
+    if (T_PRESS && ALT_PRESS && !CTRL_PRESS) {
+        if (!locks->lockAltT) {
+            options->isDiscoLight = !options->isDiscoLight;
+            std::cout << "Turned disco light " << (options->isDiscoLight ? "on" : "off") << "\n";
+            locks->lockAltT = true;
+        }
+        didReceiveInput = true;
+    }
+    // Toggle rotating light
+    if (R_PRESS && ALT_PRESS && !CTRL_PRESS) {
+        if (!locks->lockAltR) {
+            options->isRotatingLight = !options->isRotatingLight;
+            std::cout << "Turned rotating light " << (options->isRotatingLight ? "on" : "off") << "\n";
+            locks->lockAltR = true;
+        }
+        didReceiveInput = true;
+    }
 
 
 
@@ -402,6 +420,9 @@ void InputLocks::ClearLocks()
     lockDel = false;        // Delete
     lockKey4 = false;
     lockKey5 = false;
+
+    lockAltT = false;       // Disco light
+    lockAltR = false;       // Rotating light
 
     rerender = false;
 }

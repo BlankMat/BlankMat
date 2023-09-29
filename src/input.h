@@ -17,6 +17,7 @@
 #define T_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_T) == GLFW_PRESS)
 #define S_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_S) == GLFW_PRESS)
 #define F_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_F) == GLFW_PRESS)
+#define D_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_D) == GLFW_PRESS)
 #define ESC_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 #define WASDZX_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_W) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_A) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_S) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_D) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_Z) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_X) == GLFW_PRESS)
 #define ARROW_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_UP) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_DOWN) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_LEFT) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_RIGHT) == GLFW_PRESS)
@@ -41,6 +42,9 @@ struct InputLocks {
 	bool lockCtrlR = false;		// Render
 	bool lockCtrlT = false;		// Triangulate
 	bool lockCtrlS = false;		// Save
+
+	bool lockAltT = false;		// Disco light
+	bool lockAltR = false;		// Rotating light
 
 	bool lockDel = false;		// Delete
 	bool lockLeftMouse = false;

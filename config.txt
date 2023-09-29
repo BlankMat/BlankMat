@@ -8,7 +8,7 @@ scale = 0.6
 position = 0.0 0.0 0.0
 
 # Light position
-lightPos = 4.0 4.0 4.0
+lightPos = -4.0 4.0 4.0
 
 # Light direction
 lightDir = -1.0 -1.0 -1.0
@@ -39,10 +39,10 @@ shader = phongDefaultShader 0
 
 # Camera options
 # Camera start position. This is the position of the camera by default
-cameraStartPos = -5.0 5.0 -5.0
+cameraStartPos = 5.0 7.0 7.0
 
 # Camera look at direction. This is what the camera looks at by default
-cameraStartLookAt = 5.0 -5.0 5.0
+cameraStartLookAt = -5.0 -7.0 -7.0
 
 # Camera up direction. (Only change this if you really know what you're doing)
 cameraStartUp = 0.0 1.0 0.0

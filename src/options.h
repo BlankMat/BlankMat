@@ -14,6 +14,8 @@ struct Options {
 	glm::vec3 lightColor;
 	float lightKA;
 	float lightKS;
+	bool isDiscoLight;
+	bool isRotatingLight;
 
 	Material defaultColor;
 	glm::vec3 bgColor;

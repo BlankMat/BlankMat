@@ -73,7 +73,7 @@ int main()
         }
 
         // Render
-        OpenGLDraw(window, scene, &sel);
+        OpenGLDraw(window, scene, &sel, &options);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -94,7 +94,7 @@ int main()
 
 // Draws the current scene
 // -----------------------
-void OpenGLDraw(Window* window, Scene* scene, Selection* sel)
+void OpenGLDraw(Window* window, Scene* scene, Selection* sel, Options* options)
 {
     glm::vec3 bgColor = scene->GetCamera()->GetBGColor();
     glClearColor(bgColor.r, bgColor.g, bgColor.b, 1.0f);
@@ -110,7 +110,15 @@ void OpenGLDraw(Window* window, Scene* scene, Selection* sel)
 
     // Apply lighting
     glm::vec3 lightOffset = scene->GetLight()->GetOffset();
-    //scene->GetLight()->pos = glm::vec3(lightOffset.x * sin(glfwGetTime()), lightOffset.y, lightOffset.z * cos(glfwGetTime()));
+    scene->GetLight()->SetPos(options->isRotatingLight
+        ? glm::vec3(lightOffset.x * sin(glfwGetTime()), lightOffset.y, lightOffset.z * cos(glfwGetTime()))
+        : lightOffset);
+    glm::vec3 lightColor = scene->GetLight()->GetBaseColor();
+    scene->GetLight()->SetColor(options->isDiscoLight
+        ? glm::vec3(lightColor.x * sin(glfwGetTime()-PI*0.5f), lightColor.y * sin(glfwGetTime()), lightColor.z * sin(glfwGetTime()+PI*0.5f))
+        : lightColor);
+
+    // Set lighting uniforms
     curShader->SetFloat("AmbientStrength", scene->GetLight()->GetKA());
     curShader->SetFloat("SpecularStrength", scene->GetLight()->GetKS());
     curShader->SetVec3("LightPos", scene->GetLight()->GetPos());

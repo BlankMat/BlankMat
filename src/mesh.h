@@ -24,17 +24,10 @@ public:
 	Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, std::vector<Texture>& textures);
 	void Draw(glm::mat4 viewProj);
 
-	glm::vec3 GetPos() { return mPos; }
-	glm::vec3 GetRotation() { return mRot; }
-	glm::vec3 GetScale() { return mScale; }
 	glm::vec3 GetUp() { return mUp; }
 	glm::vec3 GetRight() { return mRight; }
 	glm::vec3 GetFront() { return mFront; }
 	Vertex* GetVertex(unsigned int index);
-
-	void SetPos(glm::vec3 pos) { mPos = pos; }
-	void SetRotation(glm::vec3 rot) { mRot = rot; }
-	void SetScale(glm::vec3 scale) { mScale = scale; }
 
 	void Translate(glm::vec3 delta) { mPos += delta; }
 	void Rotate(glm::vec3 delta) { mRot += delta; }

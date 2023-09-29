@@ -84,7 +84,7 @@ public:
     void LookAt(glm::vec3 targetPos)
     {
         glm::vec3 lookDir = glm::normalize(targetPos - mPos);
-        mRot = glm::normalize(glm::vec3(atan2(lookDir.z, lookDir.x), asin(lookDir.y), 0.0f));
+        mRot = glm::vec3(atan2(lookDir.x, lookDir.z), asin(lookDir.y), 0.0f);
         CalcBasis();
     }
 
@@ -98,7 +98,7 @@ public:
     // Rotates the camera by the given euler angles
     void Rotate(glm::vec3 delta)
     {
-        mRot = glm::vec3(mRot.x + delta.x, glm::clamp(mRot.y + delta.y, -89.0f, 89.0f), mRot.z);
+        mRot = glm::vec3(mRot.x + delta.x, glm::clamp(mRot.y + delta.y, -PI*0.5f, PI*0.5f), mRot.z);
         CalcBasis();
     }
 
