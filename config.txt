@@ -10,6 +10,18 @@ position = 0.0 0.0 0.0
 # Light position
 lightPos = 4.0 4.0 4.0
 
+# Light direction
+lightDir = -1.0 -1.0 -1.0
+
+# Light color
+lightColor = 255 255 255
+
+# Light ambient strength
+lightKA = 0.1
+
+# Light specular strength
+lightKS = 7.0
+
 # Default color
 dcolor = 0.8 0.8 0.8
 

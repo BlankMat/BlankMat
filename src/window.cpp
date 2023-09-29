@@ -33,7 +33,8 @@ Window::Window(int width, int height, std::string name)
         return;
     }
     glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
+    glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback); 
+    stbi_set_flip_vertically_on_load(true);
 
     // // glad: load all OpenGL function pointers
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))

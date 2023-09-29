@@ -6,12 +6,10 @@ void Scene::Draw(Window* window)
 	glm::mat4 viewProj = GetProjectionMatrix(window->GetAspect()) * GetViewMatrix();
 	if (mCurShader == "")
 		UseShader("default");
+	if (mCurModel != nullptr)
+		mCurModel->Draw(viewProj);
 	if (mGlobalLight != nullptr)
 		mGlobalLight->Draw(viewProj);
-	if (mCurModel != nullptr) {
-		mCurModel->SetMeshShaders(mShaderList[mCurShader]);
-		mCurModel->Draw(viewProj);
-	}
 	for (unsigned int i = 0; i < mRenderList.size(); i++)
 		mRenderList[i]->Draw(viewProj);
 }
