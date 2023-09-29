@@ -1,55 +1,61 @@
 #pragma once
 #include "glIncludes.h"
+#include "shader.h"
+#include "vertex.h"
+#include "window.h"
+#include "grid.h"
 #include "light.h"
 #include "camera.h"
-#include "materialStorage.h"
-#include "meshStorage.h"
-#include "itriangle.h"
-#include "ray.h"
+#include "model.h"
 #include "selection.h"
-#include "vertex.h"
+#include <unordered_map>
 
 class Scene
 {
 private:
-	Light* light;
-	Camera* camera;
-	MaterialStorage* mats;
-	MeshStorage* meshes;
-	std::unordered_map<int, Vertex> verts;
-	std::vector<Triangle> tris;
-	std::vector<ITriangle> renderTris;
-	glm::mat4 invMVP;
+	std::string mCurShader;
+	Light* mGlobalLight;
+	Camera* mMainCamera;
+	Model* mCurModel;
+	std::vector<Drawable*> mRenderList;
+	std::unordered_map<std::string, Shader*> mShaderList;
 public:
-	glm::vec3 bgColor = glm::vec3(230, 230, 230);
+	// Renders the current scene
+	void Draw(Window* window);
+	// Activates the shader with the given name for the scene
+	void UseShader(std::string name);
+	// Creates a shader for the scene with the given name from the source file of the given name
+	void CreateShader(std::string name, bool loadGeom);
+	// Creates a shader for the scene with the given name, loading it from a different source than the name
+	void CreateShader(std::string name, std::string source, bool loadGeom);
 
-	void GetVAO(float* vertices, int vertsSize, unsigned int* indices, int indicesSize, Selection* _sel = nullptr);
-	void CalcRenderTris();
-	float GetVertSelection(std::set<int>& verts, int i);
+	// Returns the scene's camera
+	Camera* GetCamera() { return mMainCamera; }
+	// Returns the scene's light
+	Light* GetLight() { return mGlobalLight; }
+	// Returns the scene's model
+	Model* GetModel() { return mCurModel; }
+	// Returns the shader with the given name
+	Shader* GetShader(std::string name) { return mShaderList[name]; }
 
-	std::unordered_map<int, Vertex>& GetVerts();
-	std::vector<Triangle>& GetTris();
-	std::vector<ITriangle>& GetRenderTris();
-	int GetVertCount();
-	int GetIndexCount();
+	// Sets up the scene's camera with the given options
+	void SetCamera(Options* options) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = new Camera(options); }
+	// Sets the scene's camera to the given camera
+	void SetCamera(Camera* cam) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = cam; }
+	// Sets the scene's light to the given light
+	void SetLight(Light* light) { if (mGlobalLight != nullptr) { delete mGlobalLight; } mGlobalLight = light; }
+	// Sets the scene's model to the given model
+	void SetModel(Model* model) { if (mCurModel != nullptr) { delete mCurModel; } mCurModel = model; }
+	// Adds a drawable to the scene's render list
+	void AddDrawable(Drawable* drawable) { mRenderList.push_back(drawable); }
 
-	Camera* GetCamera();
-	Light* GetLight();
-	MaterialStorage* GetMats();
-	MeshStorage* GetMeshes();
+	// Returns the projection matrix of the scene's camera
+	glm::mat4 GetProjectionMatrix(float aspect) { return GetCamera()->GetProjection(aspect); }
+	// Returns the view matrix of the scene's camera
+	glm::mat4 GetViewMatrix() { return GetCamera()->GetView(); }
 
-	void SetCameraFromOptions(Options* options);
-	void SetCamera(Camera* _cam);
-	void SetLight(Light* _light);
-	void SetMats(MaterialStorage* _mats);
-	void SetMeshes(MeshStorage* _meshes);
-
-	glm::mat4 CalcMVP();
-	glm::mat4 CalcInvMVP();
-	glm::mat4 GetProjectionMatrix();
-	glm::mat4 GetViewMatrix();
-	glm::mat4 GetModelMatrix();
-
+	// Constructs the scene, getting everything ready for manual setting
 	Scene();
+	// Destructs scene and cleans up all memory used
 	~Scene();
 };

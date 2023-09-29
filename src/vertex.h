@@ -4,7 +4,8 @@
 struct Vertex {
 	glm::vec3 pos;
 	glm::vec3 normal;
-	glm::vec3 texture;
+	glm::vec2 texCoords;
 
-	Vertex(glm::vec3 _pos = glm::vec3(), glm::vec3 _normal = glm::vec3(), glm::vec3 _text = glm::vec3());
+	Vertex(glm::vec3 _pos = glm::vec3(), glm::vec3 _normal = glm::vec3(), glm::vec2 _texCoords = glm::vec2())
+		: pos(_pos), normal(_normal), texCoords(_texCoords) {}
 };

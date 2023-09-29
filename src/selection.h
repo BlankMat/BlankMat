@@ -1,7 +1,7 @@
 #pragma once
 #include "glIncludes.h"
 #include "mesh.h"
-#include "indexStructs.h"
+#include <vector>
 #include <iostream>
 #include <set>
 
@@ -15,31 +15,31 @@ struct Selection
 {
 private:
 	glm::vec3 pivot;
-	std::set<int> selVerts;
-	std::set<int> selFaces;
+	std::set<unsigned int> selVerts;
+	std::set<unsigned int> selFaces;
 	Mesh* selMesh;
 
 	Tool tool;
 	SelMode selMode;
 public:
-	std::set<int> newSelVerts;
-	std::set<int> removedSelVerts;
+	std::set<unsigned int> newSelVerts;
+	std::set<unsigned int> removedSelVerts;
 
 	// Returns the entire selection as a selection of vertices
-	void GetSelectedVerts(std::vector<int>& _verts);
+	void GetSelectedVerts(std::vector<unsigned int>& _verts);
 	// Returns the entire selection as a selection of vertices
-	void GetSelectedVerts(std::set<int>& _verts);
+	void GetSelectedVerts(std::set<unsigned int>& _verts);
 
 	// Selects the face with the given ID
-	void SelectFace(int _id, bool _deselect = false);
+	void SelectFace(unsigned int _id, bool _deselect = false);
 	// Selects the vertex with the given ID
-	void SelectVert(int _id, bool _deselect = false);
+	void SelectVert(unsigned int _id, bool _deselect = false);
 	// Selects the given mesh
 	void SelectMesh(Mesh* mesh);
 	// Deselects the face with the given ID
-	void DeselectFace(int _id);
+	void DeselectFace(unsigned int _id);
 	// Deselects the vertex with the given ID
-	void DeselectVert(int _id);
+	void DeselectVert(unsigned int _id);
 	// Deselects the currently selected mesh
 	void DeselectMesh();
 
@@ -66,17 +66,17 @@ public:
 	// Returns the selected mesh
 	Mesh* GetSelectedMesh();
 	// Returns whether the given vertex is selected
-	bool IsVertSelected(int _id);
+	bool IsVertSelected(unsigned int _id);
 	// Returns whether the given face is selected
-	bool IsFaceSelected(int _id);
+	bool IsFaceSelected(unsigned int _id);
 
 	// Storage container for information on all selections
 	Selection();
 
 	// Returns the nearest mesh to the clicked position
-	static Mesh* GetNearestMesh(Scene* scene, int i, int j);
+	static Mesh* GetNearestMesh(Scene* scene, float u, float v);
 	// Returns the nearest vertex to the clicked position
-	static int GetNearestVert(Scene* scene, int i, int j);
+	static int GetNearestVert(Scene* scene, float u, float v);
 	// Returns the nearest face to the clicked position
-	static int GetNearestFace(Scene* scene, int i, int j);
+	static int GetNearestFace(Scene* scene, float u, float v);
 };
