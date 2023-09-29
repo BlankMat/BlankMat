@@ -97,7 +97,7 @@ int main()
 void OpenGLDraw(Window* window, Scene* scene, Selection* sel)
 {
     glm::vec3 bgColor = scene->GetCamera()->GetBGColor();
-    glClearColor(bgColor.r / 255.0f, bgColor.g / 255.0f, bgColor.b / 255.0f, 1.0f);
+    glClearColor(bgColor.r, bgColor.g, bgColor.b, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Draw the object

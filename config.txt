@@ -14,7 +14,7 @@ lightPos = 4.0 4.0 4.0
 lightDir = -1.0 -1.0 -1.0
 
 # Light color
-lightColor = 255 255 255
+lightColor = 1.0 1.0 1.0
 
 # Light ambient strength
 lightKA = 0.1
@@ -26,7 +26,7 @@ lightKS = 0.5
 dcolor = 0.8 0.8 0.8
 
 # Background color
-bgcolor = 80 100 100
+bgcolor = 0.3 0.4 0.4
 
 # Should model be drawn in wireframe? [0] No, [1] Yes
 wireframe = 0
