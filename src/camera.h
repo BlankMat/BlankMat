@@ -43,7 +43,7 @@ private:
         mDir = glm::normalize(glm::vec3(
             cos(mRot.y) * sin(mRot.x),
             sin(mRot.y),
-            cos(mRot.y) * cos(mRot.z)
+            cos(mRot.y) * cos(mRot.x)
         ));
 
         // Right vector

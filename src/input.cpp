@@ -241,8 +241,8 @@ bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* lock
         if (*prevY < 0)
             *prevY = yPos;
 
-        float deltaX = float(xPos - *prevX);
-        float deltaY = float(yPos - *prevY);
+        float deltaX = float(*prevX - xPos);
+        float deltaY = float(*prevY - yPos);
 
         // Handle moving with mouse
         // Alt + LMB to rotate
@@ -253,7 +253,7 @@ bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* lock
         // Alt + RMB to move
         else if (RIGHT_MOUSE_PRESS && ALT_PRESS) {
             // Apply changes to camera
-            camera->Translate(speeds->mouseMoveSpeed * deltaTime * glm::vec3(deltaX, deltaY, 0.0f));
+            camera->Translate(speeds->mouseMoveSpeed * deltaTime * glm::vec3(0.0f, deltaX, deltaY));
         }
         // Handle selection/deselection
         else if (LEFT_MOUSE_PRESS && !locks->lockLeftMouse) {
