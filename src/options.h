@@ -17,7 +17,7 @@ struct Options {
 	bool isDiscoLight;
 	bool isRotatingLight;
 
-	Material defaultColor;
+	Material defaultMat;
 	glm::vec3 bgColor;
 	int vertexModel;
 	int wireframe;

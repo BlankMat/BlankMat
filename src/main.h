@@ -5,6 +5,7 @@
 #include "shader.h"
 #include "lightCube.h"
 #include "transformHandle.h"
+#include "plane.h"
 #include "model.h"
 #include "input.h"
 

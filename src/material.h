@@ -1,5 +1,6 @@
 #pragma once
 #include "glIncludes.h"
+#include "shader.h"
 #include <string>
 #include <vector>
 
@@ -7,14 +8,34 @@ struct Material {
 	glm::vec3 ka;
 	glm::vec3 kd;
 	glm::vec3 ks;
+	glm::vec3 ke;
 	float ns;
 	float ni;
 	float d;
-	std::string mapkd;
+	int illum;
 
-	void Reset();
+	std::string map_ka;
+	std::string map_kd;
+	std::string map_ks;
+	std::string map_bump;
+	std::string map_ns;
+	std::string map_d;
 
-	Material(glm::vec3 _ka=glm::vec3(), glm::vec3 _kd=glm::vec3(), glm::vec3 _ks=glm::vec3(), float _ns=0, float _ni=1, float _d=1, std::string _mapkd="");
+	// Updates the given shader with the material's values
+	void UpdateShader(Shader* shader)
+	{
+		shader->SetVec3("material.ambient", ka);
+		shader->SetVec3("material.diffuse", kd);
+		shader->SetVec3("material.specular", ks);
+		shader->SetFloat("material.shininess", ns);
+	}
+
+	Material(glm::vec3 _ka = glm::vec3(), glm::vec3 _kd = glm::vec3(), glm::vec3 _ks = glm::vec3(),
+		float _ns = 0, float _ni = 1, float _d = 1, glm::vec3 _ke = glm::vec3(),
+		std::string _map_kd = "default", std::string _map_ka = "default", std::string _map_ks = "default", std::string _map_bump = "default",
+		std::string _map_ns = "default", std::string _map_d = "default", int _illum = 2)
+		: ka(_ka), kd(_kd), ks(_ks), ke(_ke), ns(_ns), ni(_ni), d(_d), illum(_illum), 
+		map_ka(_map_ka), map_kd(_map_kd), map_ks(_map_ks), map_bump(_map_bump), map_ns(_map_ns), map_d(_map_d) {}
 
 	static Material Average(std::vector<Material*>& _mats)
 	{

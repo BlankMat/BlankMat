@@ -23,6 +23,7 @@ int main()
 
     scene->AddDrawable(new Grid(5, 1.0f, scene->GetShader("line"), glm::vec3(0.2f), 2, glm::vec3(0.0f)));
     scene->AddDrawable(new TransformHandle(0.5f, scene->GetShader("line"), 6, glm::vec3(0.0f)));
+    scene->AddDrawable(new Plane(20.0f, true, scene->GetShader("line"), options.defaultMat.kd));
 
     // Read mesh
     // ---------
@@ -119,10 +120,7 @@ void OpenGLDraw(Window* window, Scene* scene, Selection* sel, Options* options)
         : lightColor);
 
     // Set lighting uniforms
-    curShader->SetFloat("AmbientStrength", scene->GetLight()->GetKA());
-    curShader->SetFloat("SpecularStrength", scene->GetLight()->GetKS());
-    curShader->SetVec3("LightPos", scene->GetLight()->GetPos());
-    curShader->SetVec3("LightColor", scene->GetLight()->GetColor());
+    scene->GetLight()->UpdateShader(curShader);
     curShader->SetVec3("ViewPos", scene->GetCamera()->GetPos());
 
     // Draw the scene

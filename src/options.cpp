@@ -60,7 +60,7 @@ Options ReadOptions(std::string fileName)
                 }
                 // Check for default color
                 else if (tempParse[0] == "dcolor") {
-                    options.defaultColor = Material(glm::vec3(0.2, 0.2, 0.2), ReadVec3FromStrings(tempParse, 1));
+                    options.defaultMat = Material(glm::vec3(0.2, 0.2, 0.2), ReadVec3FromStrings(tempParse, 1));
                 }
                 // Check for background color
                 else if (tempParse[0] == "bgcolor") {

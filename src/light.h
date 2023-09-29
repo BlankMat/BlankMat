@@ -16,6 +16,15 @@ protected:
 public:
 	void Draw(glm::mat4 viewProj) override {}
 
+	// Updates the lighting values of the given shader
+	void UpdateShader(Shader* shader)
+	{
+		shader->SetVec3("light.diffuse", mColor);
+		shader->SetVec3("light.ambient", mColor * m_ka);
+		shader->SetVec3("light.specular", glm::vec3(1.0f) * m_ks);
+		shader->SetVec3("light.position", mPos);
+	}
+
 	glm::vec3 GetBaseColor() { return mBaseColor; }
 	glm::vec3 GetOffset() { return mOffset; }
 	glm::vec3 GetDir() { return mDir; }
