@@ -1,6 +1,24 @@
 #include "scene.h"
 #include "openGLHelper.h"
 
+void Scene::Draw(std::string name)
+{
+	if (shaders.find(name) != shaders.end() && shaders[name] != nullptr)
+		shaders[name]->Use();
+}
+
+void Scene::CreateShader(std::string name, bool loadGeom)
+{
+	if (shaders.find(name) == shaders.end())
+		shaders.emplace(name, new Shader(name, loadGeom));
+}
+
+void Scene::CreateShader(std::string name, std::string source, bool loadGeom)
+{
+	if (shaders.find(name) == shaders.end())
+		shaders.emplace(name, new Shader(source, loadGeom));
+}
+
 void Scene::GetVAO(float* vertices, int vertsSize, unsigned int* indices, int indicesSize, Selection* _sel)
 {
 	//std::cout << "Writing " << vertsSize << " vertices to VAO, " << verts.size() << " exist" << std::endl;
@@ -13,7 +31,7 @@ void Scene::GetVAO(float* vertices, int vertsSize, unsigned int* indices, int in
 		_sel->GetSelectedVerts(selectedVerts);
 
 	for (auto iter = GetMeshes()->GetAll().begin(); iter != GetMeshes()->GetAll().end(); ++iter) {
-		Mesh* curMesh = iter->second;
+		OldMesh* curMesh = iter->second;
 		std::unordered_map<int, Vertex> verts = curMesh->GetVerts();
 		glm::vec3 pos = curMesh->GetPos();
 		// Track out indices separate from loop
@@ -21,6 +39,7 @@ void Scene::GetVAO(float* vertices, int vertsSize, unsigned int* indices, int in
 			int i = viter->first;
 			glm::vec3 vertPos = verts[i].pos;
 			glm::vec3 vertNorm = verts[i].normal;
+			glm::vec2 vertTexCoord = verts[i].texCoords;
 
 			// Get all mats for vertex
 			std::vector<std::string> _matKeys;
@@ -49,6 +68,10 @@ void Scene::GetVAO(float* vertices, int vertsSize, unsigned int* indices, int in
 			vertices[startIndex + VERT_SHADER_SIZE * i + 8] = glm::clamp(vertMat.kd.g + vertMat.ka.g, 0.0f, 1.0f);
 			vertices[startIndex + VERT_SHADER_SIZE * i + 9] = glm::clamp(vertMat.kd.b + vertMat.ka.b, 0.0f, 1.0f);
 
+			// TexCoord
+			vertices[startIndex + VERT_SHADER_SIZE * i + 10] = vertTexCoord.x;
+			vertices[startIndex + VERT_SHADER_SIZE * i + 11] = vertTexCoord.y;
+
 			tempHighIndex = VERT_SHADER_SIZE * i + (VERT_SHADER_SIZE - 1);
 		}
 		startIndex += (int)verts.size();
@@ -74,7 +97,7 @@ void Scene::CalcRenderTris()
 	// Calculate new tris
 	int mi = 0;
 	for (auto iter = meshes->GetAll().begin(); iter != meshes->GetAll().end(); ++iter) {
-		Mesh* tempMesh = meshes->Get(iter->first);
+		OldMesh* tempMesh = meshes->Get(iter->first);
 		std::vector<Triangle> tempTris;
 		tempMesh->GetTris(tempTris);
 
@@ -150,6 +173,7 @@ Camera* Scene::GetCamera() { return camera; }
 Light* Scene::GetLight() { return light; }
 MaterialStorage* Scene::GetMats() { return mats; }
 MeshStorage* Scene::GetMeshes() { return meshes; }
+Shader* Scene::GetShader(std::string name) { return shaders[name]; }
 
 void Scene::SetCameraFromOptions(Options* options) { camera->SetFromOptions(options); }
 void Scene::SetCamera(Camera* _cam)
@@ -186,8 +210,10 @@ Scene::Scene()
 	light = new Light();
 	mats = new MaterialStorage();
 	meshes = new MeshStorage();
+	shaders = std::unordered_map<std::string, Shader*>();
+	invMVP = glm::mat4();
 
-	meshes->AddMesh("defaultMesh", new Mesh());
+	meshes->AddMesh("defaultMesh", new OldMesh());
 }
 
 Scene::~Scene()
@@ -197,6 +223,9 @@ Scene::~Scene()
 	delete mats;
 	delete meshes;
 
+	for (auto iter = shaders.begin(); iter != shaders.end(); ++iter)
+		delete iter->second;
+	shaders.clear();
 	renderTris.clear();
 	tris.clear();
 	verts.clear();
@@ -218,38 +247,19 @@ glm::mat4 Scene::CalcInvMVP()
 // Returns the projection matrix of the given camera
 glm::mat4 Scene::GetProjectionMatrix()
 {
-	Mesh* mesh = GetMeshes()->GetAll().begin()->second;
-	Camera* camera = GetCamera();
-
-	// Projection
-	glm::mat4 projection = glm::mat4(1.0f);
-
-	// Perspective projection
-	if ((*camera).isPerspective) {
-		projection = glm::perspective(glm::radians((*camera).fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, (*camera).nearClip, (*camera).farClip);
-	}
-	// Orthographic projection
-	else {
-		glm::mat4 projection = glm::ortho(-(*camera).orthSize.x, (*camera).orthSize.x, -(*camera).orthSize.y, (*camera).orthSize.y,
-			(*camera).nearClip, (*camera).farClip);
-	}
-
-	return projection;
+	return GetCamera()->GetProjection((float)SCR_WIDTH / (float)SCR_HEIGHT);
 }
 
 // Returns the view matrix of the given camera
 glm::mat4 Scene::GetViewMatrix()
 {
-	Camera* camera = GetCamera();
-
-	// Camera view
-	return glm::lookAt((*camera).pos, (*camera).pos + (*camera).dir, (*camera).up);
+	return GetCamera()->GetView();
 }
 
 // Returns the model matrix of the given mesh
 glm::mat4 Scene::GetModelMatrix()
 {
-	Mesh* mesh = GetMeshes()->GetAll().begin()->second;
+	OldMesh* mesh = GetMeshes()->GetAll().begin()->second;
 
 	// Model position
 	glm::vec3 scale = mesh->GetScale();

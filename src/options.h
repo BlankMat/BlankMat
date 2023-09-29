@@ -8,10 +8,12 @@ struct Options {
 	float objScale;
 	glm::vec3 objPos;
 	Material defaultColor;
+	glm::vec3 bgColor;
 	int vertexModel;
 	int wireframe;
 	int print;
-	int phong;
+	std::string shader;
+	bool shaderGeom;
 
 	// Camera options
 	glm::vec3 camPos;

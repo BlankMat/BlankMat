@@ -7,7 +7,7 @@ bool ProcessInput(GLFWwindow* window, Scene* scene, Selection* sel, InputLocks* 
 {
     // TODO: Replace mesh reference with proper reference
     Camera* camera = scene->GetCamera();
-    Mesh* mesh = scene->GetMeshes()->GetAll().begin()->second;
+    OldMesh* mesh = scene->GetMeshes()->GetAll().begin()->second;
     std::set<int> selVerts;
     sel->GetSelectedVerts(selVerts);
     bool didReceiveInput = false;
@@ -197,7 +197,7 @@ bool ProcessInput(GLFWwindow* window, Scene* scene, Selection* sel, InputLocks* 
     /* ========== Handle saving ============== */
     if (S_PRESS && CTRL_PRESS) {
         if (!locks->lockCtrlS) {
-            WriteObjToFile(scene, "../models/", mesh->GetName());
+            // TODO: Save file
             locks->lockCtrlS = true;
         }
         didReceiveInput = true;
@@ -220,8 +220,8 @@ bool ProcessInput(GLFWwindow* window, Scene* scene, Selection* sel, InputLocks* 
         if (*prevY < 0)
             *prevY = yPos;
 
-        float deltaX = float(*prevX - xPos);
-        float deltaY = float(*prevY - yPos);
+        float deltaX = float(xPos - *prevX);
+        float deltaY = float(yPos - *prevY);
 
         // Handle moving with mouse
         // Alt + LMB to rotate
@@ -241,7 +241,7 @@ bool ProcessInput(GLFWwindow* window, Scene* scene, Selection* sel, InputLocks* 
             locks->lockLeftMouse = true;
 
             // Handle selection
-            Mesh* tempMesh;
+            OldMesh* tempMesh;
             int tempFace;
             int tempVert;
             switch (sel->GetSelMode()) {

@@ -1,20 +1,5 @@
 #include "openGLHelper.h"
 
-// Sets the OpenGL Uniform Location IDs
-// ------------------------------------
-void ProgramIDs::GetUniformIDs()
-{
-    matrixID = glGetUniformLocation(shaderProgram, "MVP");
-    modelID = glGetUniformLocation(shaderProgram, "Model");
-    normalModelID = glGetUniformLocation(shaderProgram, "NormalModel");
-    lightPosID = glGetUniformLocation(shaderProgram, "LightPos");
-    lightColorID = glGetUniformLocation(shaderProgram, "LightColor");
-    viewPosID = glGetUniformLocation(shaderProgram, "ViewPos");
-    ambientStrengthID = glGetUniformLocation(shaderProgram, "AmbientStrength");
-    specularStrengthID = glGetUniformLocation(shaderProgram, "SpecularStrength");
-    winScaleID = glGetUniformLocation(shaderProgram, "WIN_SCALE");
-}
-
 // Opens a OpenGL window with the given name
 // -----------------------------------------
 GLFWwindow* OpenGLInitWindow(int width, int height, std::string name)
@@ -84,50 +69,55 @@ void OpenGLInitBuffers(ProgramIDs* ids, int vertsSize, float* vertices, int indi
     // Color
     glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, VERT_SHADER_SIZE * sizeof(float), (void*)(7 * sizeof(float)));
     glEnableVertexAttribArray(3);
+    // TexCoord
+    glVertexAttribPointer(4, 2, GL_FLOAT, GL_FALSE, VERT_SHADER_SIZE * sizeof(float), (void*)(10 * sizeof(float)));
+    glEnableVertexAttribArray(4);
     glBindVertexArray(0);
-
-    // Get uniform locations
-    ids->GetUniformIDs();
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 // Draws the current scene
 // -----------------------
-void OpenGLDraw(Scene* scene, Selection* sel, ProgramIDs* ids, int indicesSize, unsigned int* indices)
+void OpenGLDraw(Model* model, Scene* scene, Selection* sel, ProgramIDs* ids)
 {
     glClearColor(scene->bgColor.r / 255.0f, scene->bgColor.g / 255.0f, scene->bgColor.b / 255.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Draw the object
-    glUseProgram(ids->shaderProgram);
+    Shader* curShader = scene->GetShader("default");
+    scene->Draw("default");
 
     // Apply MVP
-    scene->CalcInvMVP();
-    glm::mat4 model = scene->GetModelMatrix();
-    glm::mat4 view = scene->GetViewMatrix();
-    glm::mat4 projection = scene->GetProjectionMatrix();
-    glm::mat3 normalModel = glm::mat3(glm::transpose(glm::inverse(model)));
-    glm::mat4 mvp = projection * view * model;
-    glUniformMatrix4fv(ids->matrixID, 1, GL_FALSE, &mvp[0][0]);
-    glUniformMatrix4fv(ids->modelID, 1, GL_FALSE, &model[0][0]);
-    glUniformMatrix3fv(ids->normalModelID, 1, GL_FALSE, &normalModel[0][0]);
+    //scene->CalcInvMVP();
+    glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f));
+    glm::mat4 mvp = scene->GetProjectionMatrix() * scene->GetViewMatrix() * modelMatrix;
+    glm::mat3 normalModel = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
+    curShader->SetMat4("MVP", mvp);
+    curShader->SetMat4("Model", modelMatrix);
+    curShader->SetMat3("NormalModel", normalModel);
 
     // Send window scale
-    glm::vec2 winScale = glm::vec2(SCR_WIDTH, SCR_HEIGHT);
-    glUniform2fv(ids->winScaleID, 1, &winScale[0]);
+    curShader->SetVec2("WIN_SCALE", glm::vec2(SCR_WIDTH, SCR_HEIGHT));
 
     // Apply lighting
-    glUniform1f(ids->ambientStrengthID, scene->GetLight()->ka);
-    glUniform1f(ids->specularStrengthID, scene->GetLight()->ks);
-    glUniform3fv(ids->lightPosID, 1, &scene->GetLight()->pos[0]);
-    glUniform3fv(ids->lightColorID, 1, &scene->GetLight()->color[0]);
-    glUniform3fv(ids->viewPosID, 1, &scene->GetCamera()->pos[0]);
-    glBindVertexArray(ids->VAO);
+    curShader->SetFloat("AmbientStrength", scene->GetLight()->ka);
+    curShader->SetFloat("SpecularStrength", scene->GetLight()->ks);
+    curShader->SetVec3("LightPos", scene->GetLight()->pos);
+    curShader->SetVec3("LightColor", scene->GetLight()->color);
+    curShader->SetVec3("ViewPos", scene->GetCamera()->pos);
+    
+    // Draw the scene
+    model->Draw(*curShader);
+    
+    //glBindVertexArray(ids->VAO);
 
     // Draw indexed EBO
-    glDrawElements(GL_TRIANGLES, indicesSize * sizeof(indices[0]), GL_UNSIGNED_INT, 0);
-    glBindVertexArray(0);
+    //glDrawElements(GL_TRIANGLES, indicesSize * sizeof(indices[0]), GL_UNSIGNED_INT, 0);
+    //glBindVertexArray(0);
+
+    // Draw light, if needed
+    scene->GetLight()->Draw(scene->GetProjectionMatrix() * scene->GetViewMatrix());
 }
 
 // De-allocate all resources once they've outlived their purpose:

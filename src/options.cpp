@@ -41,6 +41,10 @@ Options ReadOptions(std::string fileName)
                 else if (tempParse[0] == "dcolor") {
                     options.defaultColor = Material(glm::vec3(0.2, 0.2, 0.2), ReadVec3FromStrings(tempParse, 1));
                 }
+                // Check for background color
+                else if (tempParse[0] == "bgcolor") {
+                    options.bgColor = ReadVec3FromStrings(tempParse, 1);
+                }
                 // Check for vertex model setting
                 else if (tempParse[0] == "vertexmodel") {
                     options.vertexModel = std::stoi(tempParse[2]);
@@ -54,8 +58,11 @@ Options ReadOptions(std::string fileName)
                     options.print = std::stoi(tempParse[2]);
                 }
                 // Check for phonh
-                else if (tempParse[0] == "phong") {
-                    options.phong = std::stoi(tempParse[2]);
+                else if (tempParse[0] == "shader") {
+                    options.shader = tempParse[2];
+                    if (tempParse.size() > 3) {
+                        options.shaderGeom = std::stoi(tempParse[3]) == 1;
+                    }
                 }
                 // Check for perspective
                 else if (tempParse[0] == "perspective") {

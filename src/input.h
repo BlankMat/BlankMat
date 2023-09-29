@@ -1,7 +1,6 @@
 #pragma once
 #include "scene.h"
 #include "options.h"
-#include "objWriter.h"
 #include "selection.h"
 #include "rayTracer.h"
 

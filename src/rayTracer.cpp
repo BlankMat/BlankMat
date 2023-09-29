@@ -2,7 +2,7 @@
 #include "openGLHelper.h"
 
 //Returns a view ray
-Ray RayTracer::generateRay(Scene* scene, float u, float v, bool print)
+Ray RayTracer::GenerateRay(Scene* scene, float u, float v, bool print)
 {
 	Camera* camera = scene->GetCamera();
 
@@ -35,13 +35,13 @@ Ray RayTracer::generateRay(Scene* scene, float u, float v, bool print)
 }
 
 //Returns bisector of given vectors
-glm::vec3 RayTracer::bisector(glm::vec3 a, glm::vec3 b)
+glm::vec3 RayTracer::Bisector(glm::vec3 a, glm::vec3 b)
 {
 	return (a + b) / length(a + b);
 }
 
 //Returns the color of the current pixel with the given ray
-glm::vec3 RayTracer::getPixelColor(Scene* scene, Ray& r, int count)
+glm::vec3 RayTracer::GetPixelColor(Scene* scene, Ray& r, int count)
 {
 	std::vector<ITriangle> tris = scene->GetRenderTris();
 
@@ -56,7 +56,7 @@ glm::vec3 RayTracer::getPixelColor(Scene* scene, Ray& r, int count)
 
 		glm::vec3 p = r.origin + (r.GetT(foundTriangle) * r.direction);
 		glm::vec3 n = foundTriangle.normal;
-		glm::vec3 h = glm::normalize(bisector(p, -light->dir));
+		glm::vec3 h = glm::normalize(Bisector(p, -light->dir));
 
 		glm::vec3 ambient = mat->ka * light->ka;
 		glm::vec3 diffuse = mat->kd * glm::max(0.0f, glm::dot(n, glm::normalize(-light->dir)));
@@ -66,13 +66,13 @@ glm::vec3 RayTracer::getPixelColor(Scene* scene, Ray& r, int count)
 	}
 }
 
-glm::vec3 RayTracer::normal(std::vector<glm::vec3>& vPos)
+glm::vec3 RayTracer::Normal(std::vector<glm::vec3>& vPos)
 {
 	return glm::vec3();
 }
 
 //Returns a pointer to an array that defines each pixel in the ray traced scene
-void RayTracer::raytrace(Scene* scene, std::vector<glm::vec4>& result)
+void RayTracer::Raytrace(Scene* scene, std::vector<glm::vec4>& result)
 {
 	std::cout << "Started rendering scene\n";
 	scene->CalcInvMVP();
@@ -91,8 +91,8 @@ void RayTracer::raytrace(Scene* scene, std::vector<glm::vec4>& result)
 			float u = left + (right - left) * (j + 0.5f) / (float)SCR_WIDTH;
 			float v = bottom + (top - bottom) * (i + 0.5f) / (float)SCR_HEIGHT;
 
-			Ray viewRay = generateRay(scene, u, v, false);
-			result[i * SCR_WIDTH + j] = glm::vec4(getPixelColor(scene, viewRay, 0), 255.0f);
+			Ray viewRay = GenerateRay(scene, u, v, false);
+			result[i * SCR_WIDTH + j] = glm::vec4(GetPixelColor(scene, viewRay, 0), 255.0f);
 
 			lowestDir = glm::min(lowestDir, viewRay.direction);
 			highestDir = glm::max(highestDir, viewRay.direction);
