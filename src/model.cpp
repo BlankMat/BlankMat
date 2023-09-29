@@ -9,15 +9,15 @@ Model::Model(std::string path)
 // Draws each mesh in the model onto the screen
 void Model::Draw(glm::mat4 viewProj)
 {
-	for (unsigned int i = 0; i < meshes.size(); i++)
-		meshes[i].Draw(viewProj);
+	for (unsigned int i = 0; i < mMeshList.size(); i++)
+		mMeshList[i].Draw(viewProj);
 }
 
 // Sets the shader for all the meshes of the model
 void Model::SetMeshShaders(Shader* shader)
 {
-	for (unsigned int i = 0; i < meshes.size(); i++)
-		meshes[i].SetShader(shader);
+	for (unsigned int i = 0; i < mMeshList.size(); i++)
+		mMeshList[i].SetShader(shader);
 }
 
 // Loads the model at the given path
@@ -32,14 +32,14 @@ void Model::LoadModel(std::string path)
 		std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
 		return;
 	}
-	directory = path.substr(0, path.find_last_of('/'));
+	mDirectory = path.substr(0, path.find_last_of('/'));
 
 	// Load default texture regardless of whether it's used or not
 	LoadDefaultTexture();
 
 	// Process model
 	ProcessNode(scene->mRootNode, scene);
-	std::cout << "Read model from file " << path << " successfully, new directory is " << directory << std::endl;
+	std::cout << "Read model from file " << path << " successfully, new directory is " << mDirectory << std::endl;
 }
 
 // Recursively processes the meshes in the given node and all its children
@@ -50,7 +50,7 @@ void Model::ProcessNode(aiNode* node, const aiScene* scene)
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		meshes.push_back(ProcessMesh(mesh, scene));
+		mMeshList.push_back(ProcessMesh(mesh, scene));
 	}
 	// Process each of the children
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
@@ -101,7 +101,7 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 	if (textures.size() == 0)
 	{
 		LoadDefaultTexture();
-		textures.push_back(texturesLoaded[defaultTextureIndex]);
+		textures.push_back(mLoadedTextureList[mDefaultTextureIndex]);
 		std::cout << "  - Mesh has no texture, using default texture" << std::endl;
 	}
 	return Mesh(vertices, indices, textures);
@@ -111,14 +111,14 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 void Model::LoadDefaultTexture()
 {
 	// If the default texture is loaded already, exit
-	if (defaultTextureIndex >= 0 && defaultTextureIndex < texturesLoaded.size())
+	if (mDefaultTextureIndex >= 0 && mDefaultTextureIndex < mLoadedTextureList.size())
 		return;
 
 	std::string defaultPath = "default.png";
 	unsigned int textureID = TextureFromFile(defaultPath.c_str(), FileSystem::GetPath("resources/textures"));
 	std::cout << "  - Loaded default texture from " << FileSystem::GetPath("resources/textures/") << defaultPath << std::endl;
-	defaultTextureIndex = (int)texturesLoaded.size();
-	texturesLoaded.push_back(Texture(textureID, "texture_diffuse", defaultPath));
+	mDefaultTextureIndex = (int)mLoadedTextureList.size();
+	mLoadedTextureList.push_back(Texture(textureID, "texture_diffuse", defaultPath));
 }
 
 // Load
@@ -132,12 +132,12 @@ std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* mat, aiTextureType 
 
 		// Check if texture is loaded already
 		bool skip = false;
-		for (unsigned int j = 0; j < texturesLoaded.size(); j++)
+		for (unsigned int j = 0; j < mLoadedTextureList.size(); j++)
 		{
 			// If the texture is already loaded, add it to the mesh
-			if (std::strcmp(texturesLoaded[j].path.c_str(), str.C_Str()) == 0)
+			if (std::strcmp(mLoadedTextureList[j].path.c_str(), str.C_Str()) == 0)
 			{
-				textures.push_back(texturesLoaded[j]);
+				textures.push_back(mLoadedTextureList[j]);
 				skip = true;
 				break;
 			}
@@ -146,11 +146,11 @@ std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* mat, aiTextureType 
 		if (!skip)
 		{
 			// if texture hasn't been loaded already, load it
-			unsigned int textureId = TextureFromFile(str.C_Str(), this->directory);
+			unsigned int textureId = TextureFromFile(str.C_Str(), this->mDirectory);
 			Texture texture = Texture(textureId, typeName, str.C_Str());
 			textures.push_back(texture);
 			// store it as texture loaded for entire model, to ensure we won't unnecessary load duplicate textures.
-			texturesLoaded.push_back(texture);
+			mLoadedTextureList.push_back(texture);
 			std::cout << "  - Loaded texture " << str.C_Str() << std::endl;
 		}
 	}

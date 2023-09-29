@@ -4,59 +4,59 @@ void Scene::Draw(Window* window)
 {
 	window->CalcWindowSize();
 	glm::mat4 viewProj = GetProjectionMatrix(window->GetAspect()) * GetViewMatrix();
-	if (curShader == "")
+	if (mCurShader == "")
 		UseShader("default");
-	if (light != nullptr)
-		light->Draw(viewProj);
-	if (model != nullptr) {
-		model->SetMeshShaders(shaders[curShader]);
-		model->Draw(viewProj);
+	if (mGlobalLight != nullptr)
+		mGlobalLight->Draw(viewProj);
+	if (mCurModel != nullptr) {
+		mCurModel->SetMeshShaders(mShaderList[mCurShader]);
+		mCurModel->Draw(viewProj);
 	}
-	for (unsigned int i = 0; i < drawables.size(); i++)
-		drawables[i]->Draw(viewProj);
+	for (unsigned int i = 0; i < mRenderList.size(); i++)
+		mRenderList[i]->Draw(viewProj);
 }
 
 void Scene::UseShader(std::string name)
 {
-	if (shaders.find(name) != shaders.end() && shaders[name] != nullptr)
+	if (mShaderList.find(name) != mShaderList.end() && mShaderList[name] != nullptr)
 	{
-		shaders[name]->Use();
-		curShader = name;
+		mShaderList[name]->Use();
+		mCurShader = name;
 	}
 }
 
 void Scene::CreateShader(std::string name, bool loadGeom)
 {
-	if (shaders.find(name) == shaders.end())
-		shaders.emplace(name, new Shader(name, loadGeom));
+	if (mShaderList.find(name) == mShaderList.end())
+		mShaderList.emplace(name, new Shader(name, loadGeom));
 }
 
 void Scene::CreateShader(std::string name, std::string source, bool loadGeom)
 {
-	if (shaders.find(name) == shaders.end())
-		shaders.emplace(name, new Shader(source, loadGeom));
+	if (mShaderList.find(name) == mShaderList.end())
+		mShaderList.emplace(name, new Shader(source, loadGeom));
 }
 
 Scene::Scene()
 {
-	camera = nullptr;
-	light = nullptr;
-	model = nullptr;
-	shaders = std::unordered_map<std::string, Shader*>();
+	mMainCamera = nullptr;
+	mGlobalLight = nullptr;
+	mCurModel = nullptr;
+	mShaderList = std::unordered_map<std::string, Shader*>();
 }
 
 Scene::~Scene()
 {
-	if (camera != nullptr)
-		delete camera;
-	if (light != nullptr)
-		delete light;
-	if (model != nullptr)
-		delete model;
+	if (mMainCamera != nullptr)
+		delete mMainCamera;
+	if (mGlobalLight != nullptr)
+		delete mGlobalLight;
+	if (mCurModel != nullptr)
+		delete mCurModel;
 
-	for (auto iter = shaders.begin(); iter != shaders.end(); ++iter)
+	for (auto iter = mShaderList.begin(); iter != mShaderList.end(); ++iter)
 		delete iter->second;
-	for (unsigned int i = 0; i < drawables.size(); i++)
-		delete drawables[i];
-	shaders.clear();
+	for (unsigned int i = 0; i < mRenderList.size(); i++)
+		delete mRenderList[i];
+	mShaderList.clear();
 }

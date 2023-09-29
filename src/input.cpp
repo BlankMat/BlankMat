@@ -31,13 +31,24 @@ bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* lock
     if (F_PRESS && !CTRL_PRESS) {
         // Only focus when not locked
         if (!locks->lockF) {
-            glm::vec3 targetDir = glm::normalize(selMesh->GetPos() - camera->pos);
+            glm::vec3 targetPos = (selMesh != nullptr) ? selMesh->GetPos() : glm::vec3(0.0f);
+            glm::vec3 targetDir = glm::normalize(targetPos - camera->GetPos());
             float rotY = asin(targetDir.y);
             float rotX = atan2(targetDir.x, targetDir.z);
-            camera->rotation = glm::vec3(rotX, rotY, 0.0f);
-            camera->CalcBasis();
+            //camera->SetRot(glm::vec3(rotX, rotY, 0.0f));
+            camera->LookAt(targetPos);
 
             locks->lockF = true;
+        }
+        didReceiveInput = true;
+    }
+    // Toggle perspective
+    if (KEY4_PRESS && !CTRL_PRESS) {
+        if (!locks->lockKey4) {
+            options->isPerspective = !options->isPerspective;
+            camera->SetPerspective(options->isPerspective);
+            std::cout << "Enabled " << (options->isPerspective == 1 ? "perspective" : "orthographic") << " view\n";
+            locks->lockKey4 = true;
         }
         didReceiveInput = true;
     }
@@ -113,9 +124,7 @@ bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* lock
 
         // Only move camera on ALT
         if (ALT_PRESS) {
-            camera->pos += inputVec.x * camera->dir * deltaTime * speeds->cameraMoveSpeed;
-            camera->pos += inputVec.y * camera->right * deltaTime * speeds->cameraMoveSpeed;
-            camera->pos += inputVec.z * camera->up * deltaTime * speeds->cameraMoveSpeed;
+            camera->Translate(deltaTime * speeds->cameraMoveSpeed * inputVec);
         }
         // Handle tools on any other input
         else {
@@ -130,7 +139,7 @@ bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* lock
                 if (selMesh == nullptr)
                     break;
 
-                glm::vec3 moveVec = inputVec.x * selMesh->GetForward() + inputVec.y * selMesh->GetRight() + inputVec.z * selMesh->GetUp();
+                glm::vec3 moveVec = inputVec.x * selMesh->GetFront() + inputVec.y * selMesh->GetRight() + inputVec.z * selMesh->GetUp();
                 switch (sel->GetSelMode()) {
                 case SelMode::MESH:
                     selMesh->Translate(moveVec * deltaTime * speeds->modelMoveSpeed);
@@ -199,7 +208,7 @@ bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* lock
     /* =================================== Handle camera ================================== */
     if (ARROW_PRESS && !CTRL_PRESS && ALT_PRESS) {
         // Rotate camera
-        camera->rotation += GetArrow(window) * speeds->cameraTurnSpeed * deltaTime;
+        camera->Rotate(GetArrow(window) * speeds->cameraTurnSpeed * deltaTime);
         didReceiveInput = true;
     }
 
@@ -239,14 +248,12 @@ bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* lock
         // Alt + LMB to rotate
         if (LEFT_MOUSE_PRESS && ALT_PRESS) {
             // Apply changes to camera
-            camera->rotation.x += speeds->mouseTurnSpeed * deltaTime * deltaX;
-            camera->rotation.y += speeds->mouseTurnSpeed * deltaTime * deltaY;
+            camera->Rotate(speeds->mouseTurnSpeed * deltaTime * glm::vec3(deltaX, deltaY, 0.0f));
         }
         // Alt + RMB to move
         else if (RIGHT_MOUSE_PRESS && ALT_PRESS) {
             // Apply changes to camera
-            camera->pos += camera->right * speeds->mouseMoveSpeed * deltaTime * deltaX;
-            camera->pos += camera->up * speeds->mouseMoveSpeed * deltaTime * deltaY;
+            camera->Translate(speeds->mouseMoveSpeed * deltaTime * glm::vec3(deltaX, deltaY, 0.0f));
         }
         // Handle selection/deselection
         else if (LEFT_MOUSE_PRESS && !locks->lockLeftMouse) {
@@ -317,11 +324,8 @@ bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* lock
 
     /* ==================================================== Process Input ===================================================== */
     // Recalculate camera basis if any input was received
-    if (didReceiveInput) {
-        camera->CalcBasis();
-    }
     // If no input was received, clear all input locks
-    else {
+    if (!didReceiveInput) {
         locks->ClearLocks();
     }
 
@@ -396,6 +400,7 @@ void InputLocks::ClearLocks()
     lockCtrlT = false;		// Triangulate
     lockCtrlS = false;		// Save
     lockDel = false;        // Delete
+    lockKey4 = false;
     lockKey5 = false;
 
     rerender = false;

@@ -13,12 +13,12 @@
 class Scene
 {
 private:
-	std::string curShader;
-	Light* light;
-	Camera* camera;
-	Model* model;
-	std::vector<Drawable*> drawables;
-	std::unordered_map<std::string, Shader*> shaders;
+	std::string mCurShader;
+	Light* mGlobalLight;
+	Camera* mMainCamera;
+	Model* mCurModel;
+	std::vector<Drawable*> mRenderList;
+	std::unordered_map<std::string, Shader*> mShaderList;
 public:
 	// Renders the current scene
 	void Draw(Window* window);
@@ -30,24 +30,24 @@ public:
 	void CreateShader(std::string name, std::string source, bool loadGeom);
 
 	// Returns the scene's camera
-	Camera* GetCamera() { return camera; }
+	Camera* GetCamera() { return mMainCamera; }
 	// Returns the scene's light
-	Light* GetLight() { return light; }
+	Light* GetLight() { return mGlobalLight; }
 	// Returns the scene's model
-	Model* GetModel() { return model; }
+	Model* GetModel() { return mCurModel; }
 	// Returns the shader with the given name
-	Shader* GetShader(std::string name) { return shaders[name]; }
+	Shader* GetShader(std::string name) { return mShaderList[name]; }
 
 	// Sets up the scene's camera with the given options
-	void SetCamera(Options* options) { if (camera != nullptr) { delete camera; } camera = new Camera(options); }
+	void SetCamera(Options* options) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = new Camera(options); }
 	// Sets the scene's camera to the given camera
-	void SetCamera(Camera* _cam) { if (camera != nullptr) { delete camera; } camera = _cam; }
+	void SetCamera(Camera* cam) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = cam; }
 	// Sets the scene's light to the given light
-	void SetLight(Light* _light) { if (light != nullptr) { delete light; } light = _light; }
+	void SetLight(Light* light) { if (mGlobalLight != nullptr) { delete mGlobalLight; } mGlobalLight = light; }
 	// Sets the scene's model to the given model
-	void SetModel(Model* _model) { if (model != nullptr) { delete model; } model = _model; }
+	void SetModel(Model* model) { if (mCurModel != nullptr) { delete mCurModel; } mCurModel = model; }
 	// Adds a drawable to the scene's render list
-	void AddDrawable(Drawable* _drawable) { drawables.push_back(_drawable); }
+	void AddDrawable(Drawable* drawable) { mRenderList.push_back(drawable); }
 
 	// Returns the projection matrix of the scene's camera
 	glm::mat4 GetProjectionMatrix(float aspect) { return GetCamera()->GetProjection(aspect); }

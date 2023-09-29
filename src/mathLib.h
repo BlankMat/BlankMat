@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
+#include <sstream>
 #include <vector>
 
 // Taken from https://gamedev.stackexchange.com/questions/115032/how-should-i-rotate-vertices-around-the-origin-on-the-cpu
@@ -69,6 +70,13 @@ static const glm::vec3 ReadVec3FromStrings(std::vector<std::string>& strings, in
 static const bool IsCCW(glm::vec3 a, glm::vec3 b, glm::vec3 c)
 {
 	return ((b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y)) > 0;
+}
+
+static const std::string Vec3ToString(glm::vec3 vec)
+{
+    std::ostringstream ss;
+    ss << "[" << vec.x << ", " << vec.y << ", " << vec.z << "]";
+    return ss.str();
 }
 
 static const glm::vec3 Vec3FromAssimp(aiVector3D vec)

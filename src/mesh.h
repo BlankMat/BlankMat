@@ -6,52 +6,41 @@
 #include "drawable.h"
 #include <vector>
 
-class Mesh
+class Mesh : public Drawable
 {
-private:
-	unsigned int VAO;
-	unsigned int VBO;
-	unsigned int EBO;
+protected:
+	glm::vec3 mFront;
+	glm::vec3 mRight;
+	glm::vec3 mUp;
+	glm::vec3 mWorldUp;
 
-	glm::vec3 position;
-	glm::vec3 rotation;
-	glm::vec3 scale;
+	std::vector<Vertex> mVertices;
+	std::vector<unsigned int> mIndices;
+	std::vector<Texture> mTextures;
 
-	glm::vec3 forward;
-	glm::vec3 right;
-	glm::vec3 up;
-	glm::vec3 worldUp;
-
-	Shader* shader;
-
-	std::vector<Vertex> vertices;
-	std::vector<unsigned int> indices;
-	std::vector<Texture> textures;
-
-	void SetupMesh();
+	void GenBuffers() override;
 	glm::vec3 CalcCenter();
 public:
-	glm::vec3 GetPos() { return position; }
-	glm::vec3 GetRotation() { return rotation; }
-	glm::vec3 GetScale() { return scale; }
-	glm::vec3 GetUp() { return up; }
-	glm::vec3 GetRight() { return right; }
-	glm::vec3 GetForward() { return forward; }
-	glm::mat4 GetModelMatrix();
+	Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, std::vector<Texture>& textures);
+	void Draw(glm::mat4 viewProj);
+
+	glm::vec3 GetPos() { return mPos; }
+	glm::vec3 GetRotation() { return mRot; }
+	glm::vec3 GetScale() { return mScale; }
+	glm::vec3 GetUp() { return mUp; }
+	glm::vec3 GetRight() { return mRight; }
+	glm::vec3 GetFront() { return mFront; }
 	Vertex* GetVertex(unsigned int index);
 
-	void SetPos(glm::vec3 _pos) { position = _pos; }
-	void SetRotation(glm::vec3 _rot) { rotation = _rot; }
-	void SetScale(glm::vec3 _scale) { scale = _scale; }
+	void SetPos(glm::vec3 pos) { mPos = pos; }
+	void SetRotation(glm::vec3 rot) { mRot = rot; }
+	void SetScale(glm::vec3 scale) { mScale = scale; }
 
-	void Translate(glm::vec3 delta) { position += delta; }
-	void Rotate(glm::vec3 delta) { rotation += delta; }
-	void Scale(glm::vec3 delta) { scale += delta; }
+	void Translate(glm::vec3 delta) { mPos += delta; }
+	void Rotate(glm::vec3 delta) { mRot += delta; }
+	void Scale(glm::vec3 delta) { mScale += delta; }
 
 	void CalcBasis();
-	void SetWorldUp(glm::vec3 _worldUp) { worldUp = _worldUp; }
-	void SetShader(Shader* _shader) { shader = _shader; }
-
-	Mesh(std::vector<Vertex>& _vertices, std::vector<unsigned int>& indices, std::vector<Texture>& textures);
-	void Draw(glm::mat4 viewProj);
+	void SetWorldUp(glm::vec3 worldUp) { mWorldUp = worldUp; }
+	void SetShader(Shader* shader) { mShader = shader; }
 };

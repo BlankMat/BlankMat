@@ -2,13 +2,13 @@
 
 // Opens a OpenGL window with the given name
 // -----------------------------------------
-Window::Window(int _width, int _height, std::string _name)
+Window::Window(int width, int height, std::string name)
 {
     // Set class variables
     // ---------------------------
-    width = _width;
-    height = _height;
-    name = _name;
+    mWidth = width;
+    mHeight = height;
+    mName = name;
 
     // glfw: initialize and configure
     // ------------------------------
@@ -24,8 +24,8 @@ Window::Window(int _width, int _height, std::string _name)
 
     // glfw window creation
     // --------------------
-    const char* windowName = name.c_str();
-    window = glfwCreateWindow(width, height, windowName, NULL, NULL);
+    const char* windowName = mName.c_str();
+    window = glfwCreateWindow(mWidth, mHeight, windowName, NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;

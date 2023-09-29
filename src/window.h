@@ -5,26 +5,26 @@
 
 class Window {
 private:
-	int width;
-	int height;
-	std::string name;
+	int mWidth;
+	int mHeight;
+	std::string mName;
 	GLFWwindow* window;
 public:
 	// Opens a OpenGL window with the given name
 	// -----------------------------------------
-	Window(int _width, int _height, std::string _name);
+	Window(int width, int height, std::string name);
 
 	// Gets and stores the current window size
-	void CalcWindowSize() { glfwGetWindowSize(window, &width, &height); }
+	void CalcWindowSize() { glfwGetWindowSize(window, &mWidth, &mHeight); }
 
 	// Returns the GLFW window reference
 	GLFWwindow* GetWindow() { return window; }
 	// Returns the width of the window, currently
-	int GetWidth() { return width; }
+	int GetWidth() { return mWidth; }
 	// Returns the height of the window, currently
-	int GetHeight() { return height; }
+	int GetHeight() { return mHeight; }
 	// Returns the aspect ratio of the screen
-	float GetAspect() { return (float)width / (float)height; }
+	float GetAspect() { return (float)mWidth / (float)mHeight; }
 };
 
 void OpenGLEnableWireframe(bool enable);

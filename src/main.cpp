@@ -16,11 +16,13 @@ int main()
     // ------------
     Scene* scene = new Scene();
     scene->CreateShader("default", options.shader, options.shaderGeom);
+    scene->CreateShader("lightCube", false);
     scene->CreateShader("line", false);
     scene->SetCamera(&options);
 
     LightCube* light = new LightCube(
-        "lightCube",
+        1.0f,
+        scene->GetShader("lightCube"),
         options.lightPos,
         glm::vec3(-1.0f, -1.0f, -1.0f),     // Light dir
         glm::vec3(0.5f, 0.5f, 1.0f),        // Light color
@@ -28,8 +30,8 @@ int main()
         7.0f);                              // Specular strength
     scene->SetLight(light);
 
-    scene->AddDrawable(new Grid(5, 1, 10, glm::vec3(0.2f), scene->GetShader("line")));
-    scene->AddDrawable(new TransformHandle(glm::vec3(0), 5, 0.5, scene->GetShader("line")));
+    scene->AddDrawable(new Grid(5, 1.0f, scene->GetShader("line"), glm::vec3(0.2f), 2, glm::vec3(0.0f)));
+    scene->AddDrawable(new TransformHandle(0.5f, scene->GetShader("line"), 6, glm::vec3(0.0f)));
 
     // Read mesh
     // ---------
@@ -103,7 +105,7 @@ int main()
 // -----------------------
 void OpenGLDraw(Window* window, Scene* scene, Selection* sel)
 {
-    glm::vec3 bgColor = scene->GetCamera()->bgColor;
+    glm::vec3 bgColor = scene->GetCamera()->GetBGColor();
     glClearColor(bgColor.r / 255.0f, bgColor.g / 255.0f, bgColor.b / 255.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -116,13 +118,13 @@ void OpenGLDraw(Window* window, Scene* scene, Selection* sel)
     curShader->SetVec2("WIN_SCALE", glm::vec2(window->GetWidth(), window->GetHeight()));
 
     // Apply lighting
-    glm::vec3 lightOffset = scene->GetLight()->offset;
+    glm::vec3 lightOffset = scene->GetLight()->GetOffset();
     //scene->GetLight()->pos = glm::vec3(lightOffset.x * sin(glfwGetTime()), lightOffset.y, lightOffset.z * cos(glfwGetTime()));
-    curShader->SetFloat("AmbientStrength", scene->GetLight()->ka);
-    curShader->SetFloat("SpecularStrength", scene->GetLight()->ks);
-    curShader->SetVec3("LightPos", scene->GetLight()->pos);
-    curShader->SetVec3("LightColor", scene->GetLight()->color);
-    curShader->SetVec3("ViewPos", scene->GetCamera()->pos);
+    curShader->SetFloat("AmbientStrength", scene->GetLight()->GetKA());
+    curShader->SetFloat("SpecularStrength", scene->GetLight()->GetKS());
+    curShader->SetVec3("LightPos", scene->GetLight()->GetPos());
+    curShader->SetVec3("LightColor", scene->GetLight()->GetColor());
+    curShader->SetVec3("ViewPos", scene->GetCamera()->GetPos());
 
     // Draw the scene
     scene->Draw(window);

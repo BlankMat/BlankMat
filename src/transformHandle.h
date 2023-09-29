@@ -1,38 +1,62 @@
 #pragma once
-#include "line.h"
 #include "drawable.h"
+#include "primitive.h"
+#include "line.h"
+#include "wireCube.h"
 
-class TransformHandle : public Drawable {
-private:
-	Line* xHandle;
-	Line* yHandle;
-	Line* zHandle;
+class TransformHandle : public Drawable
+{
+protected:
+	Line* mXHandle;
+	Line* mYHandle;
+	Line* mZHandle;
+	WireCube* mAllHandle;
 
-	glm::vec3 pos;
+	bool mXHeld = false;
+	bool mYHeld = false;
+	bool mZHeld = false;
+	bool mAllHeld = false;
 
+	void GenBuffers() override {}
 public:
 
 	void Draw(glm::mat4 viewProj)
 	{
-		glm::mat4 MVP = viewProj * glm::translate(glm::mat4(1.0f), pos);
-		xHandle->Draw(MVP);
-		yHandle->Draw(MVP);
-		zHandle->Draw(MVP);
+		glDisable(GL_DEPTH_TEST);
+		glm::mat4 MVP = viewProj * Drawable::GetModelMatrix();
+		if (!(mYHeld || mZHeld || mAllHeld))
+			mXHandle->Draw(MVP);
+		if (!(mXHeld || mZHeld || mAllHeld))
+			mYHandle->Draw(MVP);
+		if (!(mXHeld || mYHeld || mAllHeld))
+			mZHandle->Draw(MVP);
+		if (!(mXHeld || mYHeld || mZHeld))
+			mAllHandle->Draw(MVP);
+		glEnable(GL_DEPTH_TEST);
 	}
 
-	TransformHandle(glm::vec3 _pos, float width, float len, Shader* shader, 
+	TransformHandle(float len, Shader* shader, float lineWidth,
+		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f),
+		glm::vec3 allColor = glm::vec3(1, 1, 0),
 		glm::vec3 xColor = glm::vec3(1,0,0), glm::vec3 yColor = glm::vec3(0,1,0), glm::vec3 zColor = glm::vec3(0,0,1))
+		: Drawable(shader, allColor, pos, rot, scale)
 	{
-		xHandle = new Line(glm::vec3(0), glm::vec3(len,0,0), xColor, width, shader);
-		yHandle = new Line(glm::vec3(0), glm::vec3(0,len,0), yColor, width, shader);
-		zHandle = new Line(glm::vec3(0), glm::vec3(0,0,len), zColor, width, shader);
-		pos = _pos;
+		mXHandle = new Line(glm::vec3(len*0.05f,0,0), glm::vec3(len,0,0), shader, xColor, lineWidth);
+		mYHandle = new Line(glm::vec3(0,len*0.05f,0), glm::vec3(0,len,0), shader, yColor, lineWidth);
+		mZHandle = new Line(glm::vec3(0,0,len*0.05f), glm::vec3(0,0,len), shader, zColor, lineWidth);
+		mAllHandle = new WireCube(len*0.1f, shader, allColor, lineWidth*0.5f);
+
+		mXHeld = false;
+		mYHeld = false;
+		mZHeld = false;
+		mAllHeld = false;
 	}
 
 	~TransformHandle()
 	{
-		delete xHandle;
-		delete yHandle;
-		delete zHandle;
+		delete mXHandle;
+		delete mYHandle;
+		delete mZHandle;
+		delete mAllHandle;
 	}
 };
