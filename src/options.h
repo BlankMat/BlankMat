@@ -3,10 +3,18 @@
 
 // Storage of all options for the program
 struct Options {
+	// Object
 	std::string objName;
 	float objScale;
 	glm::vec3 objPos;
+
+	// Light
 	glm::vec3 lightPos;
+	glm::vec3 lightDir;
+	glm::vec3 lightColor;
+	float lightKA;
+	float lightKS;
+
 	Material defaultColor;
 	glm::vec3 bgColor;
 	int vertexModel;

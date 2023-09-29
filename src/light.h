@@ -1,5 +1,6 @@
 #pragma once
 #include "glIncludes.h"
+#include "options.h"
 #include "drawable.h"
 
 class Light : public Drawable
@@ -23,4 +24,6 @@ public:
 
 	Light(glm::vec3 pos = glm::vec3(1.0f), glm::vec3 dir = glm::vec3(-1.0f), glm::vec3 color = glm::vec3(1.0f), 
 		float ka = 0.1f, float ks = 0.5f) : Drawable(nullptr, color, pos), mDir(dir), m_ka(ka), m_ks(ks), mOffset(pos) {}
+	Light(Options* options)
+		: Light(options->lightPos, options->lightDir, options->lightColor, options->lightKA, options->lightKS) {}
 };

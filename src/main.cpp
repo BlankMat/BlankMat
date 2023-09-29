@@ -20,14 +20,7 @@ int main()
     scene->CreateShader("line", false);
     scene->SetCamera(&options);
 
-    LightCube* light = new LightCube(
-        1.0f,
-        scene->GetShader("lightCube"),
-        options.lightPos,
-        glm::vec3(-1.0f, -1.0f, -1.0f),     // Light dir
-        glm::vec3(0.5f, 0.5f, 1.0f),        // Light color
-        0.1f,                               // Ambient strength
-        7.0f);                              // Specular strength
+    LightCube* light = new LightCube(1.0f, scene->GetShader("lightCube"), &options);
     scene->SetLight(light);
 
     scene->AddDrawable(new Grid(5, 1.0f, scene->GetShader("line"), glm::vec3(0.2f), 2, glm::vec3(0.0f)));
@@ -35,7 +28,8 @@ int main()
 
     // Read mesh
     // ---------
-    Model* curModel = new Model(FileSystem::GetPath(MODELS_DIR + options.objName));
+    scene->SetModel(new Model(FileSystem::GetPath(MODELS_DIR + options.objName)));
+    scene->GetModel()->SetMeshShaders(scene->GetShader("default"));
 
     // Enable wireframe if requested in options
     OpenGLEnableWireframe(options.wireframe == 1);
@@ -91,7 +85,6 @@ int main()
 
     // Clear up dynamic memory usage
     // -----------------------------
-    delete curModel;
     delete scene;
 
     // glfw: terminate, clearing all previously allocated GLFW resources.

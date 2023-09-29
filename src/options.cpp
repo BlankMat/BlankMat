@@ -42,6 +42,22 @@ Options ReadOptions(std::string fileName)
                 else if (tempParse[0] == "lightPos") {
                     options.lightPos = ReadVec3FromStrings(tempParse, 1);
                 }
+                // Check for light position setting
+                else if (tempParse[0] == "lightDir") {
+                    options.lightDir = ReadVec3FromStrings(tempParse, 1);
+                }
+                // Check for light position setting
+                else if (tempParse[0] == "lightColor") {
+                    options.lightColor = ReadVec3FromStrings(tempParse, 1);
+                }
+                // Check for light ambient
+                else if (tempParse[0] == "lightKA") {
+                    options.lightKA = std::stof(tempParse[2]);
+                }
+                // Check for light specular
+                else if (tempParse[0] == "lightKS") {
+                    options.lightKS = std::stof(tempParse[2]);
+                }
                 // Check for default color
                 else if (tempParse[0] == "dcolor") {
                     options.defaultColor = Material(glm::vec3(0.2, 0.2, 0.2), ReadVec3FromStrings(tempParse, 1));

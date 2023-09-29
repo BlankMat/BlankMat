@@ -1,4 +1,5 @@
 #pragma once
+#include "options.h"
 #include "light.h"
 #include "shader.h"
 #include "cube.h"
@@ -19,6 +20,9 @@ public:
     {
         mCube = new Cube(size, shader, color, 0.0f, pos);
     }
+
+    LightCube(float size, Shader* shader, Options* options)
+        : LightCube(size, shader, options->lightPos, options->lightDir, options->lightColor, options->lightKA, options->lightKS) {}
 
     ~LightCube()
     {
