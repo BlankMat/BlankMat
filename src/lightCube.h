@@ -1,67 +1,44 @@
 #pragma once
+#include "options.h"
 #include "light.h"
 #include "shader.h"
+#include "cube.h"
 
-struct LightCube : public Light
+class LightCube : public Light
 {
-    float vertices[108] = {
-        -0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f, -0.5f,
-         0.5f,  0.5f, -0.5f,
-         0.5f,  0.5f, -0.5f,
-        -0.5f,  0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
+protected:
+    Cube* mCube;
+public:
+    void Draw(glm::mat4 viewProj)
+    {
+        mCube->Draw(viewProj);
+    }
 
-        -0.5f, -0.5f,  0.5f,
-         0.5f, -0.5f,  0.5f,
-         0.5f,  0.5f,  0.5f,
-         0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f,  0.5f,
-        -0.5f, -0.5f,  0.5f,
+    void SetPos(glm::vec3 pos) override
+    {
+        mPos = pos;
+        mCube->SetPos(pos);
+    }
 
-        -0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
-        -0.5f, -0.5f,  0.5f,
-        -0.5f,  0.5f,  0.5f,
+    void SetColor(glm::vec3 color) override
+    {
+        mColor = color;
+        mCube->SetColor(color);
+    }
 
-         0.5f,  0.5f,  0.5f,
-         0.5f,  0.5f, -0.5f,
-         0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f,  0.5f,
-         0.5f,  0.5f,  0.5f,
+	LightCube(float size, Shader* shader, glm::vec3 pos = glm::vec3(1.0f), glm::vec3 dir = glm::vec3(-1.0f), glm::vec3 color = glm::vec3(1.0f),
+		float ka = 0.1f, float ks = 0.5f)
+        : Light(pos, dir, color, ka, ks)
+    {
+        mCube = new Cube(size, shader, color, 0.0f, pos);
+    }
 
-        -0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f,  0.5f,
-         0.5f, -0.5f,  0.5f,
-        -0.5f, -0.5f,  0.5f,
-        -0.5f, -0.5f, -0.5f,
+    LightCube(float size, Shader* shader, Options* options)
+        : LightCube(size, shader, options->lightPos, options->lightDir, options->lightColor, options->lightKA, options->lightKS) {}
 
-        -0.5f,  0.5f, -0.5f,
-         0.5f,  0.5f, -0.5f,
-         0.5f,  0.5f,  0.5f,
-         0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f, -0.5f
-    };
-    unsigned int lightCubeVAO;
-    unsigned int lightCubeVBO;
-
-	Shader* lightShader;
-
-	void Draw(glm::mat4 viewProj) override;
-	void LoadShader(std::string name);
-
-	LightCube(std::string _shaderName = "", glm::vec3 _pos = glm::vec3(1.0f), glm::vec3 _dir = glm::vec3(-1.0f), glm::vec3 _color = glm::vec3(1.0f),
-		float _ka = 0.1f, float _ks = 0.5f) : Light(_pos, _dir, _color, _ka, _ks)
-	{
-        lightCubeVAO = 0;
-        lightCubeVBO = 0;
-		lightShader = nullptr;
-        LoadShader(_shaderName);
-	}
-	~LightCube();
+    void Cleanup() override
+    {
+        delete mCube;
+        Drawable::Cleanup();
+    }
 };

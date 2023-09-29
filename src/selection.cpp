@@ -1,10 +1,10 @@
 #include "selection.h"
-#include "rayTracer.h"
-#include "openGLHelper.h"
+#include "scene.h"
 
 // Returns the entire selection as a selection of vertices
-void Selection::GetSelectedVerts(std::vector<int>& _verts)
+void Selection::GetSelectedVerts(std::vector<unsigned int>& _verts)
 {
+	/*
 	// Add all faces to selection
 	for (auto iter = selFaces.begin(); iter != selFaces.end(); ++iter) {
 		Face tempFace = selMesh->GetFace(*iter);
@@ -17,11 +17,13 @@ void Selection::GetSelectedVerts(std::vector<int>& _verts)
 	for (auto iter = selVerts.begin(); iter != selVerts.end(); ++iter) {
 		_verts.push_back(*iter);
 	}
+	*/
 }
 
 // Returns the entire selection as a selection of vertices
-void Selection::GetSelectedVerts(std::set<int>& _verts)
+void Selection::GetSelectedVerts(std::set<unsigned int>& _verts)
 {
+	/*
 	// Add all faces to selection
 	for (auto iter = selFaces.begin(); iter != selFaces.end(); ++iter) {
 		Face tempFace = selMesh->GetFace(*iter);
@@ -34,10 +36,11 @@ void Selection::GetSelectedVerts(std::set<int>& _verts)
 	for (auto iter = selVerts.begin(); iter != selVerts.end(); ++iter) {
 		_verts.emplace(*iter);
 	}
+	*/
 }
 
 // Selects the face with the given ID
-void Selection::SelectFace(int _id, bool _deselect)
+void Selection::SelectFace(unsigned int _id, bool _deselect)
 {
 	if (_id < 0)
 		return;
@@ -49,7 +52,7 @@ void Selection::SelectFace(int _id, bool _deselect)
 }
 
 // Selects the vertex with the given ID
-void Selection::SelectVert(int _id, bool _deselect)
+void Selection::SelectVert(unsigned int _id, bool _deselect)
 {
 	if (_id < 0)
 		return;
@@ -61,7 +64,7 @@ void Selection::SelectVert(int _id, bool _deselect)
 }
 
 // Selects the given mesh
-void Selection::SelectMesh(OldMesh* mesh)
+void Selection::SelectMesh(Mesh* mesh)
 {
 	if (mesh == nullptr)
 		return;
@@ -71,14 +74,14 @@ void Selection::SelectMesh(OldMesh* mesh)
 }
 
 // Deselects the face with the given ID
-void Selection::DeselectFace(int _id)
+void Selection::DeselectFace(unsigned int _id)
 {
 	selFaces.erase(_id);
 	std::cout << "Deselected face [" << _id << "].\n";
 }
 
 // Deselects the vertex with the given ID
-void Selection::DeselectVert(int _id)
+void Selection::DeselectVert(unsigned int _id)
 {
 	selVerts.erase(_id);
 	std::cout << "Deselected vertex [" << _id << "].\n";
@@ -114,20 +117,16 @@ void Selection::CalcSelPivot()
 		pivot = glm::vec3(0, 0, 0);
 	// Use mesh pivot as center
 	else if (selVerts.size() == 0 && selFaces.size() == 0)
-		pivot = selMesh->GetPivot();
+		pivot = selMesh->GetPos();
 	// Calculate center for face selection
 	else if (selFaces.size() != 0) {
-		pivot = glm::vec3(0, 0, 0);
-		for (auto iter = selFaces.begin(); iter != selFaces.end(); ++iter) {
-			pivot += selMesh->GetFace(*iter).center;
-		}
-		pivot /= (float)selFaces.size();
+		pivot = selMesh->GetPos();
 	}
 	// Calculate center for vertex selection
 	else if (selVerts.size() != 0) {
 		pivot = glm::vec3(0, 0, 0);
 		for (auto iter = selVerts.begin(); iter != selVerts.end(); ++iter) {
-			pivot += selMesh->GetVert(*iter).pos;
+			pivot += selMesh->GetVertex(*iter)->pos;
 		}
 		pivot /= (float)selVerts.size();
 	}
@@ -176,16 +175,16 @@ void Selection::SetSelMode(SelMode _sel)
 }
 
 // Returns whether the given vertex is selected
-bool Selection::IsVertSelected(int _id) { return selVerts.find(_id) != selVerts.end(); }
+bool Selection::IsVertSelected(unsigned int _id) { return selVerts.find(_id) != selVerts.end(); }
 // Returns whether the given face is selected
-bool Selection::IsFaceSelected(int _id) { return selFaces.find(_id) != selFaces.end(); }
+bool Selection::IsFaceSelected(unsigned int _id) { return selFaces.find(_id) != selFaces.end(); }
 
 // Returns the tool selection
 Tool Selection::GetTool() { return tool; }
 // Returns the selection mode
 SelMode Selection::GetSelMode() { return selMode; }
 // Returns the selected mesh
-OldMesh* Selection::GetSelectedMesh() { return selMesh; }
+Mesh* Selection::GetSelectedMesh() { return selMesh; }
 
 // Storage container for information on all selections
 Selection::Selection()
@@ -197,35 +196,31 @@ Selection::Selection()
 }
 
 // Returns the nearest mesh to the clicked position
-OldMesh* Selection::GetNearestMesh(Scene* scene, int i, int j)
+Mesh* Selection::GetNearestMesh(Scene* scene, float u, float v)
 {
-	//std::cout << "Clicked [" << i << ", " << j << "]\n";
-	float u = (j + 0.5f) / SCR_WIDTH;
-	float v = (i + 0.5f) / SCR_HEIGHT;
 	//std::cout << "Transformed click [" << u << ", " << v << "]\n";
-	Ray ray = RayTracer::GenerateRay(scene, u, v, false);
-	if (ray.DoesIntersect(scene->GetRenderTris()))
-		return scene->GetMeshes()->GetAll().begin()->second;
-	else
-		return nullptr;
+	//Ray ray = RayTracer::GenerateRay(scene, u, v, false);
+	//if (ray.DoesIntersect(scene->GetRenderTris()))
+	//	return scene->GetMeshes()->GetAll().begin()->second;
+	//else
+	//	return nullptr;
+	return nullptr;
 }
 
 // Returns the nearest vertex to the clicked position
-int Selection::GetNearestVert(Scene* scene, int i, int j)
+int Selection::GetNearestVert(Scene* scene, float u, float v)
 {
-	float u = (j + 0.5f) / SCR_WIDTH;
-	float v = (i + 0.5f) / SCR_HEIGHT;
-	Ray ray = RayTracer::GenerateRay(scene, u, v, false);
-	IndVertex res = ray.GetClosestVertex(scene->GetRenderTris());
-	return res.id;
+	//Ray ray = RayTracer::GenerateRay(scene, u, v, false);
+	//IndVertex res = ray.GetClosestVertex(scene->GetRenderTris());
+	//return res.id;
+	return -1;
 }
 
 // Returns the nearest face to the clicked position
-int Selection::GetNearestFace(Scene* scene, int i, int j)
+int Selection::GetNearestFace(Scene* scene, float u, float v)
 {
-	float u = (j + 0.5f) / SCR_WIDTH;
-	float v = (i + 0.5f) / SCR_HEIGHT;
-	Ray ray = RayTracer::GenerateRay(scene, u, v, false);
-	ITriangle res = ray.GetClosestTriangle(scene->GetRenderTris());
-	return res.triIndex;
+	//Ray ray = RayTracer::GenerateRay(scene, u, v, false);
+	//ITriangle res = ray.GetClosestTriangle(scene->GetRenderTris());
+	//return res.triIndex;
+	return -1;
 }

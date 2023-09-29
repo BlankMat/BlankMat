@@ -117,6 +117,11 @@ void Shader::CheckCompileErrors(GLuint shader, std::string type)
     }
 }
 
+Shader::~Shader()
+{
+    glDeleteProgram(ID);
+}
+
 // activate the shader
 // ------------------------------------------------------------------------
 void Shader::Use()

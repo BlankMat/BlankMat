@@ -1,4 +1,5 @@
 #include "options.h"
+#include "mathLib.h"
 
 // Reads the options file at the given position
 Options ReadOptions(std::string fileName)
@@ -36,6 +37,26 @@ Options ReadOptions(std::string fileName)
                 // Check for position setting
                 else if (tempParse[0] == "position") {
                     options.objPos = ReadVec3FromStrings(tempParse, 1);
+                }
+                // Check for light position setting
+                else if (tempParse[0] == "lightPos") {
+                    options.lightPos = ReadVec3FromStrings(tempParse, 1);
+                }
+                // Check for light position setting
+                else if (tempParse[0] == "lightDir") {
+                    options.lightDir = ReadVec3FromStrings(tempParse, 1);
+                }
+                // Check for light position setting
+                else if (tempParse[0] == "lightColor") {
+                    options.lightColor = ReadVec3FromStrings(tempParse, 1);
+                }
+                // Check for light ambient
+                else if (tempParse[0] == "lightKA") {
+                    options.lightKA = std::stof(tempParse[2]);
+                }
+                // Check for light specular
+                else if (tempParse[0] == "lightKS") {
+                    options.lightKS = std::stof(tempParse[2]);
                 }
                 // Check for default color
                 else if (tempParse[0] == "dcolor") {
