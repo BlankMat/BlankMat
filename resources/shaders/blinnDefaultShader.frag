@@ -30,8 +30,8 @@ void main()
 
     // Specular
     vec3 viewDir = normalize(ViewPos - FragPos);
-    vec3 reflectDir = reflect(-lightDir, norm);
-    vec3 specular = pow(max(dot(viewDir, reflectDir), 0.0), SpecularStrength) * LightColor;
+    vec3 halfwayDir = normalize(lightDir + viewDir);
+    vec3 specular = pow(max(dot(norm, halfwayDir), 0.0), SpecularStrength) * LightColor;
 	
     // Result
     vec3 textureColor = vec3(texture(texture_diffuse1, TexCoords));

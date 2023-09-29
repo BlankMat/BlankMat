@@ -17,10 +17,10 @@ lightDir = -1.0 -1.0 -1.0
 lightColor = 1.0 1.0 1.0
 
 # Light ambient strength
-lightKA = 0.1
+lightKA = 0.1 
 
 # Light specular strength
-lightKS = 0.5
+lightKS = 16.0
 
 # Default color
 dcolor = 0.8 0.8 0.8
@@ -35,7 +35,7 @@ wireframe = 0
 print = 0
 
 # Which shader file should be used for the scene and whether to include Geom [1] or not [0]. 
-shader = phongDefaultShader 0
+shader = blinnDefaultShader 0
 
 # Camera options
 # Camera start position. This is the position of the camera by default
