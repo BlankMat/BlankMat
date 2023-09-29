@@ -24,8 +24,9 @@ public:
     LightCube(float size, Shader* shader, Options* options)
         : LightCube(size, shader, options->lightPos, options->lightDir, options->lightColor, options->lightKA, options->lightKS) {}
 
-    ~LightCube()
+    void Cleanup() override
     {
         delete mCube;
+        Drawable::Cleanup();
     }
 };

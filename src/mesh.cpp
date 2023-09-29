@@ -7,11 +7,11 @@ Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, st
     mTextures = textures;
 
     mWorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
-    mPos = CalcCenter();
+    mPos = glm::vec3(0.0f); //CalcCenter();
     mRot = glm::vec3(0.0f);
     mScale = glm::vec3(1.0f);
 
-    GenBuffers();
+    Mesh::GenBuffers();
 }
 
 // Render the mesh
@@ -91,6 +91,7 @@ Vertex* Mesh::GetVertex(unsigned int index)
 
 void Mesh::GenBuffers()
 {
+    mVAO = mVBO = mEBO = 0;
     glGenVertexArrays(1, &mVAO);
     glGenBuffers(1, &mVBO);
     glGenBuffers(1, &mEBO);

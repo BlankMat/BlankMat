@@ -20,7 +20,7 @@ lightColor = 255 255 255
 lightKA = 0.1
 
 # Light specular strength
-lightKS = 7.0
+lightKS = 0.5
 
 # Default color
 dcolor = 0.8 0.8 0.8

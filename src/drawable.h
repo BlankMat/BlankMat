@@ -41,7 +41,7 @@ public:
 		mVAO = mVBO = mEBO = 0;
 	}
 
-	~Drawable()
+	virtual void Cleanup()
 	{
 		glDeleteVertexArrays(1, &mVAO);
 		glDeleteBuffers(1, &mVBO);

@@ -19,9 +19,7 @@ int main()
     scene->CreateShader("lightCube", false);
     scene->CreateShader("line", false);
     scene->SetCamera(&options);
-
-    LightCube* light = new LightCube(1.0f, scene->GetShader("lightCube"), &options);
-    scene->SetLight(light);
+    scene->SetLight(new LightCube(1.0f, scene->GetShader("lightCube"), &options));
 
     scene->AddDrawable(new Grid(5, 1.0f, scene->GetShader("line"), glm::vec3(0.2f), 2, glm::vec3(0.0f)));
     scene->AddDrawable(new TransformHandle(0.5f, scene->GetShader("line"), 6, glm::vec3(0.0f)));

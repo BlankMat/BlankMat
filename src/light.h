@@ -11,7 +11,7 @@ protected:
 	float m_ka;
 	float m_ks;
 
-	void GenBuffers() override {}
+	void GenBuffers() override { mVAO = mVBO = mEBO = 0; }
 public:
 	glm::vec3 GetColor() { return mColor; }
 	glm::vec3 GetPos() { return mPos; }

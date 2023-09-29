@@ -10,14 +10,14 @@ Model::Model(std::string path)
 void Model::Draw(glm::mat4 viewProj)
 {
 	for (unsigned int i = 0; i < mMeshList.size(); i++)
-		mMeshList[i].Draw(viewProj);
+		mMeshList[i]->Draw(viewProj);
 }
 
 // Sets the shader for all the meshes of the model
 void Model::SetMeshShaders(Shader* shader)
 {
 	for (unsigned int i = 0; i < mMeshList.size(); i++)
-		mMeshList[i].SetShader(shader);
+		mMeshList[i]->SetShader(shader);
 }
 
 // Loads the model at the given path
@@ -60,7 +60,7 @@ void Model::ProcessNode(aiNode* node, const aiScene* scene)
 }
 
 // Process the vertices, indices, and textures of the given mesh
-Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
+Mesh* Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 {
 	std::vector<Vertex> vertices;
 	std::vector<unsigned int> indices;
@@ -104,7 +104,7 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 		textures.push_back(mLoadedTextureList[mDefaultTextureIndex]);
 		std::cout << "  - Mesh has no texture, using default texture" << std::endl;
 	}
-	return Mesh(vertices, indices, textures);
+	return new Mesh(vertices, indices, textures);
 }
 
 // Loads the default texture
@@ -196,4 +196,11 @@ unsigned int TextureFromFile(const char* path, const std::string& directory, boo
 	}
 
 	return textureID;
+}
+
+Model::~Model()
+{
+	for (unsigned int i = 0; i < mMeshList.size(); i++)
+		if (mMeshList[i] != nullptr)
+			delete mMeshList[i];
 }

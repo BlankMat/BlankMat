@@ -53,8 +53,18 @@ Scene::~Scene()
 		delete mCurModel;
 
 	for (auto iter = mShaderList.begin(); iter != mShaderList.end(); ++iter)
-		delete iter->second;
+	{
+		if (iter->second != nullptr)
+			delete iter->second;
+	}
 	for (unsigned int i = 0; i < mRenderList.size(); i++)
-		delete mRenderList[i];
+	{
+		if (mRenderList[i] != nullptr)
+		{
+			mRenderList[i]->Cleanup();
+			delete mRenderList[i];
+		}
+	}
 	mShaderList.clear();
+	mRenderList.clear();
 }

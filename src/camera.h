@@ -98,7 +98,7 @@ public:
     // Rotates the camera by the given euler angles
     void Rotate(glm::vec3 delta)
     {
-        mRot += delta;
+        mRot = glm::vec3(mRot.x + delta.x, glm::clamp(mRot.y + delta.y, -89.0f, 89.0f), mRot.z);
         CalcBasis();
     }
 
