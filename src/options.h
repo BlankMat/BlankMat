@@ -16,13 +16,12 @@ struct Options {
 	float lightKS;
 	bool isDiscoLight;
 	bool isRotatingLight;
+	bool gamma;
 
 	Material defaultMat;
 	glm::vec3 bgColor;
-	int vertexModel;
-	int wireframe;
-	int print;
 	std::string shader;
+	bool wireframe;
 	bool shaderGeom;
 
 	// Camera options

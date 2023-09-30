@@ -9,13 +9,15 @@ Model::Model(std::string path)
 // Draws each mesh in the model onto the screen
 void Model::Draw(glm::mat4 viewProj)
 {
+	mShader->Use();
 	for (unsigned int i = 0; i < mMeshList.size(); i++)
-		mMeshList[i]->Draw(viewProj);
+		mMeshList[i]->Draw(viewProj * GetModelMatrix());
 }
 
 // Sets the shader for all the meshes of the model
 void Model::SetMeshShaders(Shader* shader)
 {
+	mShader = shader;
 	for (unsigned int i = 0; i < mMeshList.size(); i++)
 		mMeshList[i]->SetShader(shader);
 }

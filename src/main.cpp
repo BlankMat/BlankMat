@@ -3,7 +3,7 @@
 int main()
 {
     // Init window
-    Window* window = new Window(SCR_WIDTH, SCR_HEIGHT, "BlankMat");
+    Window* window = new Window(SCR_WIDTH, SCR_HEIGHT, APP_NAME);
     if (window == nullptr)
         return -1;
 
@@ -15,23 +15,33 @@ int main()
     // Create scene
     // ------------
     Scene* scene = new Scene();
-    scene->CreateShader("default", options.shader, options.shaderGeom);
-    scene->CreateShader("lightCube", false);
-    scene->CreateShader("line", false);
+    scene->CreateShader(DEFAULT_SHADER, options.shader, options.shaderGeom);
+    scene->CreateShader(LIGHT_CUBE_SHADER, false);
+    scene->CreateShader(LINE_SHADER, false);
     scene->SetCamera(&options);
-    scene->SetLight(new LightCube(1.0f, scene->GetShader("lightCube"), &options));
+    scene->SetLight(new LightCube(1.0f, scene->GetShader(LIGHT_CUBE_SHADER), &options));
 
-    scene->AddDrawable(new Grid(5, 1.0f, scene->GetShader("line"), glm::vec3(0.2f), 2, glm::vec3(0.0f)));
-    scene->AddDrawable(new TransformHandle(0.5f, scene->GetShader("line"), 6, glm::vec3(0.0f)));
-    scene->AddDrawable(new Plane(20.0f, true, scene->GetShader("line"), options.defaultMat.kd));
+    scene->AddDrawable(BG_PLANE_OBJ, new Plane(20.0f, true, scene->GetShader(DEFAULT_SHADER), options.defaultMat.kd, false), true);
+    scene->AddDrawable(GRID_OBJ, new Grid(5, 1.0f, scene->GetShader(LINE_SHADER), glm::vec3(0.2f), 2, true, glm::vec3(0.0f)), true);
+    scene->AddDrawable(TRANSFORM_HANDLE, new TransformHandle(0.5f, scene->GetShader(LINE_SHADER), 6, true, glm::vec3(0.0f)));
+    scene->AddDrawable(CAMERA_AXIS_HANDLE, new TransformHandle(45.0f, scene->GetShader(LINE_SHADER), 6, false, glm::vec3(50, 50, 0)));
+    //scene->AddDrawable(CAMERA_AXIS_HANDLE, new Cube(15.0f, scene->GetShader(LINE_SHADER), glm::vec3(1.0f), 6, true, glm::vec3(100, 100, 0)));
+    scene->AddDrawable("cube1", new Cube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(0,1,0), 0.0f, false, glm::vec3(-5, 0, -5), glm::vec3(0, 45, 0), glm::vec3(1, 2, 1)));
+    scene->AddDrawable("cube2", new Cube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(1,0,0), 0.0f, false, glm::vec3(-5, 0, -3), glm::vec3(45, 0, 0), glm::vec3(2, 1, 1)));
+    scene->AddDrawable("cube3", new Cube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(0,0,1), 0.0f, false, glm::vec3(-5, 0, -1), glm::vec3(0, 0, 45), glm::vec3(1, 1, 2)));
+    scene->AddDrawable("cube4", new Cube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(0,1,1), 0.0f, false, glm::vec3(-5, 0, 1), glm::vec3(0, 45, 45), glm::vec3(1, 2, 2)));
+    scene->AddDrawable("cube5", new Cube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(1,0,1), 0.0f, false, glm::vec3(-5, 0, 3), glm::vec3(45, 0, 45), glm::vec3(2, 1, 2)));
+    scene->AddDrawable("cube6", new Cube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(1,1,0), 0.0f, false, glm::vec3(-5, 0, 5), glm::vec3(45, 45, 0), glm::vec3(2, 2, 1)));
 
     // Read mesh
     // ---------
-    scene->SetModel(new Model(FileSystem::GetPath(MODELS_DIR + options.objName)));
-    scene->GetModel()->SetMeshShaders(scene->GetShader("default"));
+    Model* curModel = new Model(FileSystem::GetPath(MODELS_DIR + options.objName));
+    scene->SetModel(curModel);
+    curModel->SetMeshShaders(scene->GetShader(DEFAULT_SHADER));
+    curModel->SetPos(options.objPos);
 
     // Enable wireframe if requested in options
-    OpenGLEnableWireframe(options.wireframe == 1);
+    OpenGLEnableWireframe(options.wireframe);
 
     // Init variables to track user input. Speed constants declared in order:
     // CamMove, CamTurn, ModelMove, ModelTurn, ModelScale, MouseMove, MouseTurn
@@ -50,6 +60,8 @@ int main()
     double currentTime = glfwGetTime();
     float deltaTime = 0.0f;
 
+    float gammaKeyPressed = false;
+
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window->GetWindow()))
@@ -61,7 +73,15 @@ int main()
 
         // Process input and render
         ProcessInput(window, scene, &sel, &locks, &options, &speeds, deltaTime, &prevX, &prevY);
-
+        if (glfwGetKey(window->GetWindow(), GLFW_KEY_SPACE) == GLFW_PRESS && !gammaKeyPressed)
+        {
+            options.gamma = !options.gamma;
+            gammaKeyPressed = true;
+        }
+        if (glfwGetKey(window->GetWindow(), GLFW_KEY_SPACE) == GLFW_RELEASE)
+        {
+            gammaKeyPressed = false;
+        }
         // Process changes in selections
         if (sel.newSelVerts.size() != 0 || sel.removedSelVerts.size() != 0) {
             locks.reselect = false;
@@ -102,8 +122,8 @@ void OpenGLDraw(Window* window, Scene* scene, Selection* sel, Options* options)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Draw the object
-    Shader* curShader = scene->GetShader("default");
-    scene->UseShader("default");
+    Shader* curShader = scene->GetShader(DEFAULT_SHADER);
+    scene->UseShader(DEFAULT_SHADER);
 
     // Send window scale
     window->CalcWindowSize();
@@ -121,7 +141,8 @@ void OpenGLDraw(Window* window, Scene* scene, Selection* sel, Options* options)
 
     // Set lighting uniforms
     scene->GetLight()->UpdateShader(curShader);
-    curShader->SetVec3("ViewPos", scene->GetCamera()->GetPos());
+    curShader->SetBool("gamma", options->gamma);
+    curShader->SetVec3("viewPos", scene->GetCamera()->GetPos());
 
     // Draw the scene
     scene->Draw(window);

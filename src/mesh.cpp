@@ -17,6 +17,10 @@ Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, st
 // Render the mesh
 void Mesh::Draw(glm::mat4 viewProj)
 {
+    // Don't draw disabled meshes
+    if (!mIsEnabled)
+        return;
+
     // Bind all textures
     unsigned int diffuseNum = 1;
     unsigned int specularNum = 1;

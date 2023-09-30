@@ -25,9 +25,12 @@
 #define SHIFT_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS)
 #define ALT_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_LEFT_ALT) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_RIGHT_ALT) == GLFW_PRESS)
 #define CTRL_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS)
-#define MOUSE_PRESS (glfwGetMouseButton(glfwWindow, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS || glfwGetMouseButton(glfwWindow, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
 #define LEFT_MOUSE_PRESS (glfwGetMouseButton(glfwWindow, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
 #define RIGHT_MOUSE_PRESS (glfwGetMouseButton(glfwWindow, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
+#define MOUSE_PRESS (LEFT_MOUSE_PRESS || RIGHT_MOUSE_PRESS)
+#define LEFT_MOUSE_RELEASE (glfwGetMouseButton(glfwWindow, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE)
+#define RIGHT_MOUSE_RELEASE (glfwGetMouseButton(glfwWindow, GLFW_MOUSE_BUTTON_RIGHT) == GLFLW_RELEASE)
+#define MOUSE_RELEASE (glfwGetMouseButton(glfwWindow, GLFW_MOUSE_BUTTON_RIGHT) == GLFLW_RELEASE)
 
 // Input lock structure to separate presses from holding keyes
 struct InputLocks {

@@ -10,6 +10,11 @@
 #include "selection.h"
 #include <unordered_map>
 
+#define GRID_OBJ "grid"
+#define BG_PLANE_OBJ "bgPlane"
+#define TRANSFORM_HANDLE "transformHandle"
+#define CAMERA_AXIS_HANDLE "cameraAxisHandle"
+
 class Scene
 {
 private:
@@ -17,7 +22,8 @@ private:
 	Light* mGlobalLight;
 	Camera* mMainCamera;
 	Model* mCurModel;
-	std::vector<Drawable*> mRenderList;
+	std::unordered_map<std::string, Drawable*> mPreRenderList;
+	std::unordered_map<std::string, Drawable*> mRenderList;
 	std::unordered_map<std::string, Shader*> mShaderList;
 public:
 	// Renders the current scene
@@ -36,7 +42,21 @@ public:
 	// Returns the scene's model
 	Model* GetModel() { return mCurModel; }
 	// Returns the shader with the given name
-	Shader* GetShader(std::string name) { return mShaderList[name]; }
+	Shader* GetShader(std::string name)
+	{
+		if (mShaderList.find(name) != mShaderList.end())
+			return mShaderList[name];
+		return nullptr;
+	}
+	// Returns the drawable with the given name
+	Drawable* GetDrawable(std::string name)
+	{
+		if (mPreRenderList.find(name) != mPreRenderList.end())
+			return mPreRenderList[name];
+		else if (mRenderList.find(name) != mRenderList.end())
+			return mRenderList[name];
+		return nullptr;
+	}
 
 	// Sets up the scene's camera with the given options
 	void SetCamera(Options* options) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = new Camera(options); }
@@ -47,7 +67,8 @@ public:
 	// Sets the scene's model to the given model
 	void SetModel(Model* model) { if (mCurModel != nullptr) { delete mCurModel; } mCurModel = model; }
 	// Adds a drawable to the scene's render list
-	void AddDrawable(Drawable* drawable) { mRenderList.push_back(drawable); }
+	void AddDrawable(std::string name, Drawable* drawable, bool preRender = false) 
+		{ (preRender ? mPreRenderList : mRenderList).emplace(name, drawable); }
 
 	// Returns the projection matrix of the scene's camera
 	glm::mat4 GetProjectionMatrix(float aspect) { return GetCamera()->GetProjection(aspect); }

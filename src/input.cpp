@@ -248,6 +248,7 @@ bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* lock
         // Track mouse movement
         double mouseX, mouseY;
         glfwGetCursorPos(glfwWindow, &mouseX, &mouseY);
+        glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
         int xPos = (int)glm::floor(mouseX);
         int yPos = (int)glm::floor(mouseY);
         float u = (xPos + 0.5f) / width;
@@ -267,6 +268,7 @@ bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* lock
         if (LEFT_MOUSE_PRESS && ALT_PRESS) {
             // Apply changes to camera
             camera->Rotate(speeds->mouseTurnSpeed * deltaTime * glm::vec3(deltaX, deltaY, 0.0f));
+            locks->lockLeftMouse = true;
         }
         // Alt + RMB to move
         else if (RIGHT_MOUSE_PRESS && ALT_PRESS) {
@@ -276,6 +278,9 @@ bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* lock
         // Handle selection/deselection
         else if (LEFT_MOUSE_PRESS && !locks->lockLeftMouse) {
             locks->lockLeftMouse = true;
+            Drawable* transformHandle = scene->GetDrawable(TRANSFORM_HANDLE);
+            if (transformHandle != nullptr)
+                transformHandle->ToggleEnabled();
 
             // Handle selection
             Mesh* tempMesh;
@@ -334,6 +339,7 @@ bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* lock
     else {
         locks->lockLeftMouse = false;
         locks->lockRightMouse = false;
+        glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         *prevX = -1;
         *prevY = -1;
     }

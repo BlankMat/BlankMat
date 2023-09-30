@@ -7,9 +7,9 @@
 class Grid : public Primitive<glm::vec3, glm::uvec2>
 {
 public:
-    Grid(int gridSize, float unitSize, Shader* shader, glm::vec3 color, float lineWidth, 
+    Grid(int gridSize, float unitSize, Shader* shader, glm::vec3 color, float lineWidth, bool drawOver = true,
         glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
-        : Primitive(shader, color, lineWidth, pos, rot, scale)
+        : Primitive(shader, color, lineWidth, drawOver, pos, rot, scale)
     {
         // Generate x lines for grid
         for (int x = -gridSize; x <= gridSize; x++) {

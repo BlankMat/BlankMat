@@ -7,9 +7,9 @@
 class WireCube : public Primitive<glm::vec3, glm::uvec4>
 {
 public:
-	WireCube(float size, Shader* shader, glm::vec3 color, float lineWidth,
+	WireCube(float size, Shader* shader, glm::vec3 color, float lineWidth, bool drawOver = true,
 		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
-		: Primitive(shader, color, lineWidth, pos, rot, scale)
+		: Primitive(shader, color, lineWidth, drawOver, pos, rot, scale)
 	{
 		float h = size * 0.5f;
 		// Generate verts of cube

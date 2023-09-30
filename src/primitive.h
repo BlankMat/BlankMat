@@ -42,20 +42,27 @@ public:
 	// Draws the object to the screen
 	virtual void Draw(glm::mat4 viewProj)
 	{
+		// Don't draw disabled objects
+		if (!mIsEnabled)
+			return;
+
 		mShader->Use();
 		mShader->SetMat4("MVP", viewProj * GetModelMatrix());
 		mShader->SetVec3("Color", mColor);
 
+		if (mDrawOver)
+			glDisable(GL_DEPTH_TEST);
 		glBindVertexArray(mVAO);
 		if (mIsWireframe)
 			glLineWidth(mLineWidth);
 		glDrawElements(mIsWireframe ? GL_LINES : GL_TRIANGLES, (GLuint)mIndexLen, GL_UNSIGNED_INT, NULL);
 		glBindVertexArray(0);
+		glEnable(GL_DEPTH_TEST);
 	}
 
-	Primitive(Shader* shader = nullptr, glm::vec3 color = glm::vec3(), float lineWidth = 0.1f,
+	Primitive(Shader* shader = nullptr, glm::vec3 color = glm::vec3(), float lineWidth = 0.1f, bool drawOver = false,
 		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
-		: Drawable(shader, color, pos, rot, scale), mLineWidth(lineWidth)
+		: Drawable(shader, color, drawOver, pos, rot, scale), mLineWidth(lineWidth)
 	{
 		// If the lineWidth is positive, draw wireframe
 		mIsWireframe = lineWidth > 0.0f;

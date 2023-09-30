@@ -30,7 +30,7 @@ public:
 		float ka = 0.1f, float ks = 0.5f)
         : Light(pos, dir, color, ka, ks)
     {
-        mCube = new Cube(size, shader, color, 0.0f, pos);
+        mCube = new Cube(size, shader, color, 0.0f, false, pos);
     }
 
     LightCube(float size, Shader* shader, Options* options)

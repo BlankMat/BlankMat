@@ -6,19 +6,19 @@
 class Camera
 {
 private:
-	float mFOV;
-	float mNearClip;
-	float mFarClip;
+    float mFOV;
+    float mNearClip;
+    float mFarClip;
 
-	glm::vec3 mPos;
-	glm::vec3 mRot;
+    glm::vec3 mPos;
+    glm::vec3 mRot;
 
-	glm::vec3 mDir;
-	glm::vec3 mUp;
-	glm::vec3 mRight;
+    glm::vec3 mDir;
+    glm::vec3 mUp;
+    glm::vec3 mRight;
 
-	glm::vec2 mOrthSize;
-	bool mIsPerspective;
+    glm::vec2 mOrthSize;
+    bool mIsPerspective;
 
     glm::vec3 mBGColor;
 
@@ -55,13 +55,16 @@ private:
 public:
     // Returns the position of the camera
     glm::vec3 GetPos() { return mPos; }
-
+    // Returns the rotation of the camera
+    glm::vec3 GetRot() { return mRot; }
     // Returns the background color of the camera
     glm::vec3 GetBGColor() { return mBGColor; }
-
     // Returns the view matrix of the camera
     glm::mat4 GetView() { return glm::lookAt(mPos, mPos + mDir, mUp); }
-
+    // Returns the camera's rotation matrix
+    glm::mat4 GetRotationMatrix() { return glm::mat4(glm::vec4(mRight, 0), glm::vec4(mUp, 0), glm::vec4(-mDir, 0), glm::vec4(0, 0, 0, 1)); }
+    // Returns the camera's rotation in degrees
+    glm::vec3 GetRotationDegrees() { return glm::degrees(glm::vec3(mRot.y, mRot.x, mRot.y)); }
     // Returns the projection matrix of the camera
     glm::mat4 GetProjection(float aspect)
     {

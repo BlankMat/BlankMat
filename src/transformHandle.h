@@ -22,7 +22,10 @@ public:
 
 	void Draw(glm::mat4 viewProj)
 	{
-		glDisable(GL_DEPTH_TEST);
+		// Don't draw any part of the object if not enabled
+		if (!mIsEnabled)
+			return;
+
 		glm::mat4 MVP = viewProj * Drawable::GetModelMatrix();
 		if (!(mYHeld || mZHeld || mAllHeld))
 			mXHandle->Draw(MVP);
@@ -32,19 +35,18 @@ public:
 			mZHandle->Draw(MVP);
 		if (!(mXHeld || mYHeld || mZHeld))
 			mAllHandle->Draw(MVP);
-		glEnable(GL_DEPTH_TEST);
 	}
 
-	TransformHandle(float len, Shader* shader, float lineWidth,
+	TransformHandle(float len, Shader* shader, float lineWidth, bool drawOver,
 		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f),
 		glm::vec3 allColor = glm::vec3(1, 1, 0),
 		glm::vec3 xColor = glm::vec3(1,0,0), glm::vec3 yColor = glm::vec3(0,1,0), glm::vec3 zColor = glm::vec3(0,0,1))
-		: Drawable(shader, allColor, pos, rot, scale)
+		: Drawable(shader, allColor, drawOver, pos, rot, scale)
 	{
-		mXHandle = new Line(glm::vec3(len*0.05f,0,0), glm::vec3(len,0,0), shader, xColor, lineWidth);
-		mYHandle = new Line(glm::vec3(0,len*0.05f,0), glm::vec3(0,len,0), shader, yColor, lineWidth);
-		mZHandle = new Line(glm::vec3(0,0,len*0.05f), glm::vec3(0,0,len), shader, zColor, lineWidth);
-		mAllHandle = new WireCube(len*0.1f, shader, allColor, lineWidth*0.5f);
+		mXHandle = new Line(glm::vec3(len*0.05f,0,0), glm::vec3(len,0,0), shader, xColor, lineWidth, drawOver);
+		mYHandle = new Line(glm::vec3(0,len*0.05f,0), glm::vec3(0,len,0), shader, yColor, lineWidth, drawOver);
+		mZHandle = new Line(glm::vec3(0,0,len*0.05f), glm::vec3(0,0,len), shader, zColor, lineWidth, drawOver);
+		mAllHandle = new WireCube(len*0.1f, shader, allColor, lineWidth*0.5f, drawOver);
 
 		mXHeld = false;
 		mYHeld = false;

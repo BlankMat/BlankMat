@@ -4,9 +4,9 @@
 class Plane : public Primitive<glm::vec3, glm::uvec3>
 {
 public:
-    Plane(float size, bool doubleSided, Shader* shader, glm::vec3 color,
+    Plane(float size, bool doubleSided, Shader* shader, glm::vec3 color, bool drawOver,
         glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
-        : Primitive(shader, color, 0.0f, pos, rot, scale)
+        : Primitive(shader, color, 0.0f, drawOver, pos, rot, scale)
     {
         // Generate verts of plane
         float h = size * 0.5f;

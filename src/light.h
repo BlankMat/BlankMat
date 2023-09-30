@@ -11,6 +11,7 @@ protected:
 	glm::vec3 mDir;
 	float m_ka;
 	float m_ks;
+	bool mGamma;
 
 	void GenBuffers() override { mVAO = mVBO = mEBO = 0; }
 public:
@@ -23,6 +24,7 @@ public:
 		shader->SetVec3("light.ambient", mColor * m_ka);
 		shader->SetVec3("light.specular", glm::vec3(1.0f) * m_ks);
 		shader->SetVec3("light.position", mPos);
+		shader->SetBool("gamma", mGamma);
 	}
 
 	glm::vec3 GetBaseColor() { return mBaseColor; }
@@ -32,7 +34,8 @@ public:
 	float GetKS() { return m_ks; }
 
 	Light(glm::vec3 pos = glm::vec3(1.0f), glm::vec3 dir = glm::vec3(-1.0f), glm::vec3 color = glm::vec3(1.0f), 
-		float ka = 0.1f, float ks = 0.5f) : Drawable(nullptr, color, pos), mBaseColor(color), mDir(dir), m_ka(ka), m_ks(ks), mOffset(pos) {}
+		float ka = 0.1f, float ks = 0.5f, bool gamma = true) 
+		: Drawable(nullptr, color, false, pos), mBaseColor(color), mDir(dir), m_ka(ka), m_ks(ks), mOffset(pos), mGamma(gamma) {}
 	Light(Options* options)
-		: Light(options->lightPos, options->lightDir, options->lightColor, options->lightKA, options->lightKS) {}
+		: Light(options->lightPos, options->lightDir, options->lightColor, options->lightKA, options->lightKS, options->gamma) {}
 };

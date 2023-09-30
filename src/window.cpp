@@ -33,7 +33,8 @@ Window::Window(int width, int height, std::string name)
         return;
     }
     glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback); 
+    glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     stbi_set_flip_vertically_on_load(true);
 
     // // glad: load all OpenGL function pointers
@@ -54,6 +55,8 @@ void OpenGLEnableWireframe(bool enable)
         // Disable culling
         glDisable(GL_CULL_FACE);
         glDisable(GL_DEPTH_TEST);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
     else {
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -63,6 +66,8 @@ void OpenGLEnableWireframe(bool enable)
         // Enable depth buffer
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LESS);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 }
 
