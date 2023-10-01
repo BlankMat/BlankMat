@@ -22,8 +22,8 @@ private:
 	Light* mGlobalLight;
 	Camera* mMainCamera;
 	Model* mCurModel;
-	std::unordered_map<std::string, Drawable*> mPreRenderList;
-	std::unordered_map<std::string, Drawable*> mRenderList;
+	std::unordered_map<std::string, Entity*> mPreRenderList;
+	std::unordered_map<std::string, Entity*> mRenderList;
 	std::unordered_map<std::string, Shader*> mShaderList;
 public:
 	// Renders the current scene
@@ -48,8 +48,8 @@ public:
 			return mShaderList[name];
 		return nullptr;
 	}
-	// Returns the drawable with the given name
-	Drawable* GetDrawable(std::string name)
+	// Returns the entity with the given name
+	Entity* Getentity(std::string name)
 	{
 		if (mPreRenderList.find(name) != mPreRenderList.end())
 			return mPreRenderList[name];
@@ -66,9 +66,9 @@ public:
 	void SetLight(Light* light) { if (mGlobalLight != nullptr) { delete mGlobalLight; } mGlobalLight = light; }
 	// Sets the scene's model to the given model
 	void SetModel(Model* model) { if (mCurModel != nullptr) { delete mCurModel; } mCurModel = model; }
-	// Adds a drawable to the scene's render list
-	void AddDrawable(std::string name, Drawable* drawable, bool preRender = false) 
-		{ (preRender ? mPreRenderList : mRenderList).emplace(name, drawable); }
+	// Adds an entity to the scene's render list
+	void AddEntity(std::string name, Entity* entity, bool preRender = false) 
+		{ (preRender ? mPreRenderList : mRenderList).emplace(name, entity); }
 
 	// Returns the projection matrix of the scene's camera
 	glm::mat4 GetProjectionMatrix(float aspect) { return GetCamera()->GetProjection(aspect); }

@@ -3,10 +3,10 @@
 #include "texture.h"
 #include "vertex.h"
 #include "shader.h"
-#include "drawable.h"
+#include "entity.h"
 #include <vector>
 
-class Mesh : public Drawable
+class Mesh : public Entity
 {
 protected:
 	glm::vec3 mFront;

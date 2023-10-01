@@ -2,7 +2,7 @@
 #include "glIncludes.h"
 #include "shader.h"
 
-class Drawable {
+class Entity {
 protected:
 	unsigned int mVAO;
 	unsigned int mVBO;
@@ -64,7 +64,7 @@ public:
 		return translate * rotate * scale;
 	}
 
-	Drawable(Shader* shader = nullptr, glm::vec3 color = glm::vec3(), bool drawOver = false,
+	Entity(Shader* shader = nullptr, glm::vec3 color = glm::vec3(), bool drawOver = false,
 		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
 		: mShader(shader), mColor(color), mDrawOver(drawOver), mPos(pos), mRot(rot), mScale(scale)
 	{

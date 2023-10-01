@@ -64,7 +64,13 @@ public:
     // Returns the camera's rotation matrix
     glm::mat4 GetRotationMatrix() { return glm::mat4(glm::vec4(mRight, 0), glm::vec4(mUp, 0), glm::vec4(-mDir, 0), glm::vec4(0, 0, 0, 1)); }
     // Returns the camera's rotation in degrees
-    glm::vec3 GetRotationDegrees() { return glm::degrees(glm::vec3(mRot.y, mRot.x, mRot.y)); }
+    glm::vec3 GetRotationDegrees()
+    {
+        float rotX = asinf(-mDir.y);
+        if (cosf(rotX) > 0.0001)
+            return glm::degrees(glm::vec3(rotX, atan2f(-mDir.x, -mDir.z), atan2f(mRight.y, mUp.y)));
+        return glm::degrees(glm::vec3(rotX, 0.0f, atan2f(-mUp.x, mRight.x)));
+    }
     // Returns the projection matrix of the camera
     glm::mat4 GetProjection(float aspect)
     {
@@ -101,7 +107,7 @@ public:
     // Rotates the camera by the given euler angles
     void Rotate(glm::vec3 delta)
     {
-        mRot = glm::vec3(mRot.x + delta.x, glm::clamp(mRot.y + delta.y, -PI*0.5f, PI*0.5f), mRot.z);
+        mRot = glm::vec3(mRot.x + delta.x, glm::clamp(mRot.y + delta.y, -PI*0.499f, PI*0.499f), mRot.z);
         CalcBasis();
     }
 

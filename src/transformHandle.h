@@ -1,10 +1,10 @@
 #pragma once
-#include "drawable.h"
+#include "entity.h"
 #include "primitive.h"
 #include "line.h"
 #include "wireCube.h"
 
-class TransformHandle : public Drawable
+class TransformHandle : public Entity
 {
 protected:
 	Line* mXHandle;
@@ -26,7 +26,7 @@ public:
 		if (!mIsEnabled)
 			return;
 
-		glm::mat4 MVP = viewProj * Drawable::GetModelMatrix();
+		glm::mat4 MVP = viewProj * Entity::GetModelMatrix();
 		if (!(mYHeld || mZHeld || mAllHeld))
 			mXHandle->Draw(MVP);
 		if (!(mXHeld || mZHeld || mAllHeld))
@@ -41,7 +41,7 @@ public:
 		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f),
 		glm::vec3 allColor = glm::vec3(1, 1, 0),
 		glm::vec3 xColor = glm::vec3(1,0,0), glm::vec3 yColor = glm::vec3(0,1,0), glm::vec3 zColor = glm::vec3(0,0,1))
-		: Drawable(shader, allColor, drawOver, pos, rot, scale)
+		: Entity(shader, allColor, drawOver, pos, rot, scale)
 	{
 		mXHandle = new Line(glm::vec3(len*0.05f,0,0), glm::vec3(len,0,0), shader, xColor, lineWidth, drawOver);
 		mYHandle = new Line(glm::vec3(0,len*0.05f,0), glm::vec3(0,len,0), shader, yColor, lineWidth, drawOver);

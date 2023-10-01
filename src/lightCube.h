@@ -39,6 +39,6 @@ public:
     void Cleanup() override
     {
         delete mCube;
-        Drawable::Cleanup();
+        Entity::Cleanup();
     }
 };

@@ -40,7 +40,8 @@ void main()
     // Simple attenuation
     float maxDistance = 1.5;
     float dist = length(light.position - FragPos);
-	float attenuation = 1.0f / (gamma ? dist * dist : dist);
+	//TODO: float attenuation = 1.0f / (gamma ? dist * dist : dist);
+    float attenuation = 1.0f;
     diffuse *= attenuation;
     specular *= attenuation;
 

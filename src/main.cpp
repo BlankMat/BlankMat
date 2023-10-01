@@ -21,17 +21,17 @@ int main()
     scene->SetCamera(&options);
     scene->SetLight(new LightCube(1.0f, scene->GetShader(LIGHT_CUBE_SHADER), &options));
 
-    scene->AddDrawable(BG_PLANE_OBJ, new Plane(20.0f, true, scene->GetShader(DEFAULT_SHADER), options.defaultMat.kd, false), true);
-    scene->AddDrawable(GRID_OBJ, new Grid(5, 1.0f, scene->GetShader(LINE_SHADER), glm::vec3(0.2f), 2, true, glm::vec3(0.0f)), true);
-    scene->AddDrawable(TRANSFORM_HANDLE, new TransformHandle(0.5f, scene->GetShader(LINE_SHADER), 6, true, glm::vec3(0.0f)));
-    scene->AddDrawable(CAMERA_AXIS_HANDLE, new TransformHandle(45.0f, scene->GetShader(LINE_SHADER), 6, false, glm::vec3(50, 50, 0)));
-    //scene->AddDrawable(CAMERA_AXIS_HANDLE, new Cube(15.0f, scene->GetShader(LINE_SHADER), glm::vec3(1.0f), 6, true, glm::vec3(100, 100, 0)));
-    scene->AddDrawable("cube1", new Cube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(0,1,0), 0.0f, false, glm::vec3(-5, 0, -5), glm::vec3(0, 45, 0), glm::vec3(1, 2, 1)));
-    scene->AddDrawable("cube2", new Cube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(1,0,0), 0.0f, false, glm::vec3(-5, 0, -3), glm::vec3(45, 0, 0), glm::vec3(2, 1, 1)));
-    scene->AddDrawable("cube3", new Cube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(0,0,1), 0.0f, false, glm::vec3(-5, 0, -1), glm::vec3(0, 0, 45), glm::vec3(1, 1, 2)));
-    scene->AddDrawable("cube4", new Cube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(0,1,1), 0.0f, false, glm::vec3(-5, 0, 1), glm::vec3(0, 45, 45), glm::vec3(1, 2, 2)));
-    scene->AddDrawable("cube5", new Cube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(1,0,1), 0.0f, false, glm::vec3(-5, 0, 3), glm::vec3(45, 0, 45), glm::vec3(2, 1, 2)));
-    scene->AddDrawable("cube6", new Cube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(1,1,0), 0.0f, false, glm::vec3(-5, 0, 5), glm::vec3(45, 45, 0), glm::vec3(2, 2, 1)));
+    scene->AddEntity(BG_PLANE_OBJ, new Plane(20.0f, true, scene->GetShader(DEFAULT_SHADER), options.defaultMat.kd, false), true);
+    scene->AddEntity(GRID_OBJ, new Grid(5, 1.0f, scene->GetShader(LINE_SHADER), glm::vec3(0.2f), 2, true, glm::vec3(0.0f)), true);
+    scene->AddEntity(TRANSFORM_HANDLE, new TransformHandle(0.5f, scene->GetShader(LINE_SHADER), 6, true, glm::vec3(0.0f)));
+    scene->AddEntity(CAMERA_AXIS_HANDLE, new TransformHandle(45.0f, scene->GetShader(LINE_SHADER), 6, false, glm::vec3(50, 50, 0)));
+    //scene->Addentity(CAMERA_AXIS_HANDLE, new Cube(15.0f, scene->GetShader(LINE_SHADER), glm::vec3(1.0f), 6, true, glm::vec3(100, 100, 0)));
+    scene->AddEntity("cube1", new Cube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(0,1,0), 0.0f, false, glm::vec3(-5, 0, -5), glm::vec3(0, 45, 0), glm::vec3(1, 2, 1)));
+    scene->AddEntity("cube2", new Cube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(1,0,0), 0.0f, false, glm::vec3(-5, 0, -3), glm::vec3(45, 0, 0), glm::vec3(2, 1, 1)));
+    scene->AddEntity("cube3", new Cube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(0,0,1), 0.0f, false, glm::vec3(-5, 0, -1), glm::vec3(0, 0, 45), glm::vec3(1, 1, 2)));
+    scene->AddEntity("cube4", new Cube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(0,1,1), 0.0f, false, glm::vec3(-5, 0, 1), glm::vec3(0, 45, 45), glm::vec3(1, 2, 2)));
+    scene->AddEntity("cube5", new Cube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(1,0,1), 0.0f, false, glm::vec3(-5, 0, 3), glm::vec3(45, 0, 45), glm::vec3(2, 1, 2)));
+    scene->AddEntity("cube6", new Cube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(1,1,0), 0.0f, false, glm::vec3(-5, 0, 5), glm::vec3(45, 45, 0), glm::vec3(2, 2, 1)));
 
     // Read mesh
     // ---------
