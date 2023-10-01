@@ -5,21 +5,21 @@
 #include <vector>
 
 struct Material {
-	glm::vec3 ka;
-	glm::vec3 kd;
-	glm::vec3 ks;
-	glm::vec3 ke;
-	float ns;
-	float ni;
-	float d;
-	int illum;
+	glm::vec3 ka;			// ambient color
+	glm::vec3 kd;			// diffuse color
+	glm::vec3 ks;			// specular color
+	glm::vec3 ke;			// emissive color
+	float ns;				// specular exponent
+	float ni;				// index of refraction
+	float d;				// dissolve, AKA. transparency
+	int illum;				// Illumination mode
 
-	std::string map_ka;
-	std::string map_kd;
-	std::string map_ks;
-	std::string map_bump;
-	std::string map_ns;
-	std::string map_d;
+	std::string map_ka;		// ambient color texture
+	std::string map_kd;		// diffuse color texture
+	std::string map_ks;		// specular color texture
+	std::string map_bump;	// bump/normal texture
+	std::string map_ns;		// specular highlight texture
+	std::string map_d;		// alpha (dissolve) texture
 
 	// Updates the given shader with the material's values
 	void UpdateShader(Shader* shader)
