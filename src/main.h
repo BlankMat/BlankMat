@@ -16,4 +16,5 @@
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 720;
 
+int main();
 void OpenGLDraw(Window* window, Scene* scene, Selection* sel, Options* options);
