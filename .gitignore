@@ -413,3 +413,6 @@ FodyWeavers.xsd
 
 # 3D obj Files
 !models/*
+!resources/models/*
+!resources/shaders/*
+!resources/textures/*
