@@ -1,13 +1,13 @@
 #pragma once
 #include "glIncludes.h"
 #include "shader.h"
-#include "iprimitive.h"
+#include "iPrimitive.h"
 #include <vector>
 
-class Grid : public IPrimitive<glm::vec3, glm::uvec2>
+class PGrid : public IPrimitive<glm::vec3, glm::uvec2>
 {
 public:
-    Grid(int gridSize, float unitSize, Shader* shader, glm::vec3 color, float lineWidth, bool drawOver = true,
+    PGrid(int gridSize, float unitSize, Shader* shader, glm::vec3 color, float lineWidth, bool drawOver = true,
         glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
         : IPrimitive(shader, color, lineWidth, drawOver, pos, rot, scale)
     {

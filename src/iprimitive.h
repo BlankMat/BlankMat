@@ -1,6 +1,6 @@
 #pragma once
 #include "glIncludes.h"
-#include "ientity.h"
+#include "iEntity.h"
 #include "shader.h"
 #include <vector>
 

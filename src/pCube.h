@@ -1,13 +1,13 @@
 #pragma once
 #include "glIncludes.h"
 #include "shader.h"
-#include "iprimitive.h"
+#include "iPrimitive.h"
 #include <vector>
 
-class Cube : public IPrimitive<glm::vec3, glm::uvec3>
+class PCube : public IPrimitive<glm::vec3, glm::uvec3>
 {
 public:
-	Cube(float size, Shader* shader, glm::vec3 color, float lineWidth, bool drawOver = false,
+	PCube(float size, Shader* shader, glm::vec3 color, float lineWidth, bool drawOver = false,
 		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
 		: IPrimitive(shader, color, lineWidth, drawOver, pos, rot, scale)
 	{

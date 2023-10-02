@@ -61,7 +61,7 @@ static const void ParseStringByDelim(std::vector<std::string>& out, std::string 
 static const glm::vec3 ReadVec3FromStrings(std::vector<std::string>& strings, int offset)
 {
     // Avoid errors
-    if (strings.size() >= 4 + offset)
+    if ((int)strings.size() >= 4 + offset)
         return glm::vec3(std::stof(strings[1 + offset]), std::stof(strings[2 + offset]), std::stof(strings[3 + offset]));
     else
         return glm::vec3();

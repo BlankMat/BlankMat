@@ -62,7 +62,7 @@ void Model::ProcessNode(aiNode* node, const aiScene* scene)
 }
 
 // Process the vertices, indices, and textures of the given mesh
-Mesh* Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
+ModelMesh* Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 {
 	std::vector<Vertex> vertices;
 	std::vector<unsigned int> indices;
@@ -106,7 +106,7 @@ Mesh* Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 		textures.push_back(mLoadedTextureList[mDefaultTextureIndex]);
 		std::cout << "  - Mesh has no texture, using default texture" << std::endl;
 	}
-	return new Mesh(vertices, indices, textures);
+	return new ModelMesh(vertices, indices, textures);
 }
 
 // Loads the default texture

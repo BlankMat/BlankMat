@@ -1,16 +1,16 @@
 #pragma once
-#include "ientity.h"
-#include "iprimitive.h"
-#include "line.h"
-#include "wireCube.h"
+#include "iEntity.h"
+#include "iPrimitive.h"
+#include "pLine.h"
+#include "pWireCube.h"
 
-class TransformHandle : public IEntity
+class PHandle : public IEntity
 {
 protected:
-	Line* mXHandle;
-	Line* mYHandle;
-	Line* mZHandle;
-	WireCube* mAllHandle;
+	PLine* mXHandle;
+	PLine* mYHandle;
+	PLine* mZHandle;
+	PWireCube* mAllHandle;
 
 	bool mXHeld = false;
 	bool mYHeld = false;
@@ -37,16 +37,16 @@ public:
 			mAllHandle->Draw(MVP);
 	}
 
-	TransformHandle(float len, Shader* shader, float lineWidth, bool drawOver,
+	PHandle(float len, Shader* shader, float lineWidth, bool drawOver,
 		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f),
 		glm::vec3 allColor = glm::vec3(1, 1, 0),
 		glm::vec3 xColor = glm::vec3(1,0,0), glm::vec3 yColor = glm::vec3(0,1,0), glm::vec3 zColor = glm::vec3(0,0,1))
 		: IEntity(shader, allColor, drawOver, pos, rot, scale)
 	{
-		mXHandle = new Line(glm::vec3(len*0.05f,0,0), glm::vec3(len,0,0), shader, xColor, lineWidth, drawOver);
-		mYHandle = new Line(glm::vec3(0,len*0.05f,0), glm::vec3(0,len,0), shader, yColor, lineWidth, drawOver);
-		mZHandle = new Line(glm::vec3(0,0,len*0.05f), glm::vec3(0,0,len), shader, zColor, lineWidth, drawOver);
-		mAllHandle = new WireCube(len*0.1f, shader, allColor, lineWidth*0.5f, drawOver);
+		mXHandle = new PLine(glm::vec3(len*0.05f,0,0), glm::vec3(len,0,0), shader, xColor, lineWidth, drawOver);
+		mYHandle = new PLine(glm::vec3(0,len*0.05f,0), glm::vec3(0,len,0), shader, yColor, lineWidth, drawOver);
+		mZHandle = new PLine(glm::vec3(0,0,len*0.05f), glm::vec3(0,0,len), shader, zColor, lineWidth, drawOver);
+		mAllHandle = new PWireCube(len*0.1f, shader, allColor, lineWidth*0.5f, drawOver);
 
 		mXHeld = false;
 		mYHeld = false;
@@ -54,7 +54,7 @@ public:
 		mAllHeld = false;
 	}
 
-	~TransformHandle()
+	~PHandle()
 	{
 		delete mXHandle;
 		delete mYHandle;

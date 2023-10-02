@@ -1,9 +1,9 @@
 #pragma once
 #include "glIncludes.h"
 #include "options.h"
-#include "ientity.h"
+#include "iEntity.h"
 
-class Light : public IEntity
+class ILight : public IEntity
 {
 protected:
 	glm::vec3 mBaseColor;
@@ -33,9 +33,9 @@ public:
 	float GetKA() { return m_ka; }
 	float GetKS() { return m_ks; }
 
-	Light(glm::vec3 pos = glm::vec3(1.0f), glm::vec3 dir = glm::vec3(-1.0f), glm::vec3 color = glm::vec3(1.0f), 
+	ILight(glm::vec3 pos = glm::vec3(1.0f), glm::vec3 dir = glm::vec3(-1.0f), glm::vec3 color = glm::vec3(1.0f), 
 		float ka = 0.1f, float ks = 0.5f, bool gamma = true) 
 		: IEntity(nullptr, color, false, pos), mBaseColor(color), mDir(dir), m_ka(ka), m_ks(ks), mOffset(pos), mGamma(gamma) {}
-	Light(Options* options)
-		: Light(options->lightPos, options->lightDir, options->lightColor, options->lightKA, options->lightKS, options->gamma) {}
+	ILight(Options* options)
+		: ILight(options->lightPos, options->lightDir, options->lightColor, options->lightKA, options->lightKS, options->gamma) {}
 };

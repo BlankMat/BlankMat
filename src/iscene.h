@@ -2,7 +2,7 @@
 #include "glIncludes.h"
 #include "shader.h"
 #include "window.h"
-#include "light.h"
+#include "iLight.h"
 #include "camera.h"
 #include "material.h"
 #include <unordered_map>
@@ -11,7 +11,7 @@ class IScene
 {
 protected:
 	std::string mCurShader;
-	Light* mGlobalLight;
+	ILight* mGlobalLight;
 	Camera* mMainCamera;
 
 	std::unordered_map<std::string, IEntity*> mPreRenderList;
@@ -50,7 +50,7 @@ public:
 	Camera* GetCamera() { return mMainCamera; }
 
 	// Returns the scene's light
-	Light* GetLight() { return mGlobalLight; }
+	ILight* GetLight() { return mGlobalLight; }
 
 	// Returns the shader with the given name
 	Shader* GetShader(std::string name)
@@ -77,7 +77,7 @@ public:
 	void SetCamera(Camera* cam) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = cam; }
 
 	// Sets the scene's light to the given light
-	void SetLight(Light* light) { if (mGlobalLight != nullptr) { delete mGlobalLight; } mGlobalLight = light; }
+	void SetLight(ILight* light) { if (mGlobalLight != nullptr) { delete mGlobalLight; } mGlobalLight = light; }
 
 	// Adds an entity to the scene's render list
 	IEntity* AddEntity(std::string name, IEntity* entity, bool preRender = false)

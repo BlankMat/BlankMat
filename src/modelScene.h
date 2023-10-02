@@ -1,6 +1,6 @@
 #pragma once
 #include "glIncludes.h"
-#include "iscene.h"
+#include "iScene.h"
 #include "model.h"
 
 class ModelScene : public IScene

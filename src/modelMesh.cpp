@@ -1,6 +1,6 @@
-#include "mesh.h"
+#include "modelMesh.h"
 
-Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, std::vector<Texture>& textures)
+ModelMesh::ModelMesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, std::vector<Texture>& textures)
 {
     mVertices = vertices;
     mIndices = indices;
@@ -10,11 +10,11 @@ Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, st
     mRot = glm::vec3(0.0f);
     mScale = glm::vec3(1.0f);
 
-    Mesh::GenBuffers();
+    ModelMesh::GenBuffers();
 }
 
 // Render the mesh
-void Mesh::Draw(glm::mat4 viewProj)
+void ModelMesh::Draw(glm::mat4 viewProj)
 {
     // Don't draw disabled meshes
     if (!mIsEnabled)
@@ -62,7 +62,7 @@ void Mesh::Draw(glm::mat4 viewProj)
     glActiveTexture(GL_TEXTURE0);
 }
 
-glm::vec3 Mesh::CalcCenter()
+glm::vec3 ModelMesh::CalcCenter()
 {
     glm::vec3 center = glm::vec3(0.0f);
     for (unsigned int i = 0; i < mVertices.size(); i++)
@@ -70,14 +70,14 @@ glm::vec3 Mesh::CalcCenter()
     return center;
 }
 
-Vertex* Mesh::GetVertex(unsigned int index)
+Vertex* ModelMesh::GetVertex(unsigned int index)
 {
     if (index < mVertices.size())
         return nullptr;
     return &mVertices[index];
 }
 
-void Mesh::GenBuffers()
+void ModelMesh::GenBuffers()
 {
     mVAO = mVBO = mEBO = 0;
     glGenVertexArrays(1, &mVAO);

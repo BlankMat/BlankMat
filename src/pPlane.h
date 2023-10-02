@@ -1,10 +1,10 @@
 #pragma once
-#include "iprimitive.h"
+#include "iPrimitive.h"
 
-class Plane : public IPrimitive<glm::vec3, glm::uvec3>
+class PPlane : public IPrimitive<glm::vec3, glm::uvec3>
 {
 public:
-    Plane(float size, bool doubleSided, Shader* shader, glm::vec3 color, bool drawOver,
+    PPlane(float size, bool doubleSided, Shader* shader, glm::vec3 color, bool drawOver,
         glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
         : IPrimitive(shader, color, 0.0f, drawOver, pos, rot, scale)
     {
