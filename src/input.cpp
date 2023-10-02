@@ -2,11 +2,11 @@
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
-bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* locks, Options* options, SpeedConsts* speeds, float deltaTime, int* prevX, int* prevY)
+bool ProcessInput(Window* window, IScene* scene, Selection* sel, InputLocks* locks, Options* options, SpeedConsts* speeds, float deltaTime, int* prevX, int* prevY)
 {
     // TODO: Replace mesh reference with proper reference
     Camera* camera = scene->GetCamera();
-    Mesh* selMesh = sel->GetSelectedMesh();
+    IMesh* selMesh = sel->GetSelectedMesh();
     std::set<unsigned int> selVerts;
     sel->GetSelectedVerts(selVerts);
     bool didReceiveInput = false;
@@ -278,12 +278,12 @@ bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* lock
         // Handle selection/deselection
         else if (LEFT_MOUSE_PRESS && !locks->lockLeftMouse) {
             locks->lockLeftMouse = true;
-            Entity* transformHandle = scene->GetEntity(TRANSFORM_HANDLE);
+            IEntity* transformHandle = scene->GetEntity(TRANSFORM_HANDLE);
             if (transformHandle != nullptr)
                 transformHandle->ToggleEnabled();
 
             // Handle selection
-            Mesh* tempMesh;
+            IMesh* tempMesh;
             int tempFace;
             int tempVert;
             switch (sel->GetSelMode()) {

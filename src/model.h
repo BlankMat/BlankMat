@@ -1,13 +1,13 @@
 #pragma once
 #include "glIncludes.h"
-#include "entity.h"
+#include "ientity.h"
 #include "texture.h"
 #include "shader.h"
 #include "mesh.h"
 #include <vector>
 #include <string>
 
-class Model : public Entity
+class Model : public IEntity
 {
 protected:
 	int mDefaultTextureIndex = -1;

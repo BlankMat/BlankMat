@@ -39,6 +39,6 @@ public:
     void Cleanup() override
     {
         delete mCube;
-        Entity::Cleanup();
+        IEntity::Cleanup();
     }
 };

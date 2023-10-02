@@ -6,8 +6,7 @@ Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, st
     mIndices = indices;
     mTextures = textures;
 
-    mWorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
-    mPos = glm::vec3(0.0f); //CalcCenter();
+    mPos = glm::vec3(0.0f);
     mRot = glm::vec3(0.0f);
     mScale = glm::vec3(1.0f);
 
@@ -69,21 +68,6 @@ glm::vec3 Mesh::CalcCenter()
     for (unsigned int i = 0; i < mVertices.size(); i++)
         center += mVertices[i].pos;
     return center;
-}
-
-void Mesh::CalcBasis()
-{
-    mFront = glm::vec3(
-        cos(mRot.x) * cos(mRot.y),
-        sin(mRot.y),
-        sin(mRot.x) * cos(mRot.y)
-    );
-
-    // Right vector
-    mRight = glm::normalize(glm::cross(mFront, mWorldUp));
-
-    // Up vector : perpendicular to both direction and right
-    mUp = glm::cross(mRight, mFront);
 }
 
 Vertex* Mesh::GetVertex(unsigned int index)

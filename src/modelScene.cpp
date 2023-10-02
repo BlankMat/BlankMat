@@ -1,6 +1,6 @@
-#include "scene.h"
+#include "modelScene.h"
 
-void Scene::Draw(Window* window)
+void ModelScene::Draw(Window* window)
 {
 	window->CalcWindowSize();
 	glm::mat4 viewProj = GetProjectionMatrix(window->GetAspect()) * GetViewMatrix();
@@ -26,36 +26,19 @@ void Scene::Draw(Window* window)
 	}
 }
 
-void Scene::UseShader(std::string name)
+ModelScene::ModelScene()
 {
-	if (mShaderList.find(name) != mShaderList.end() && mShaderList[name] != nullptr)
-	{
-		mShaderList[name]->Use();
-		mCurShader = name;
-	}
-}
-
-void Scene::CreateShader(std::string name, bool loadGeom)
-{
-	if (mShaderList.find(name) == mShaderList.end())
-		mShaderList.emplace(name, new Shader(name, loadGeom));
-}
-
-void Scene::CreateShader(std::string name, std::string source, bool loadGeom)
-{
-	if (mShaderList.find(name) == mShaderList.end())
-		mShaderList.emplace(name, new Shader(source, loadGeom));
-}
-
-Scene::Scene()
-{
+	mCurShader = "";
 	mMainCamera = nullptr;
 	mGlobalLight = nullptr;
 	mCurModel = nullptr;
+	mRenderList = std::unordered_map<std::string, IEntity*>();
+	mPreRenderList = std::unordered_map<std::string, IEntity*>();
 	mShaderList = std::unordered_map<std::string, Shader*>();
+	mMaterialList = std::unordered_map<std::string, Material*>();
 }
 
-Scene::~Scene()
+ModelScene::~ModelScene()
 {
 	if (mMainCamera != nullptr)
 		delete mMainCamera;
@@ -83,7 +66,13 @@ Scene::~Scene()
 			delete iter->second;
 		}
 	}
+	for (auto iter = mMaterialList.begin(); iter != mMaterialList.end(); ++iter)
+	{
+		if (iter->second != nullptr)
+			delete iter->second;
+	}
 	mShaderList.clear();
 	mPreRenderList.clear();
 	mRenderList.clear();
+	mMaterialList.clear();
 }

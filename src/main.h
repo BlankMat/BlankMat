@@ -3,11 +3,12 @@
 #include "options.h"
 #include "window.h"
 #include "shader.h"
-#include "lightCube.h"
-#include "transformHandle.h"
-#include "plane.h"
 #include "model.h"
 #include "input.h"
+#include "plane.h"
+#include "grid.h"
+#include "lightCube.h"
+#include "transformHandle.h"
 
 #define CONFIG_FILE "config.txt"
 #define MODELS_DIR "resources/models/"
@@ -17,4 +18,4 @@ const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 720;
 
 int main();
-void OpenGLDraw(Window* window, Scene* scene, Selection* sel, Options* options);
+void OpenGLDraw(Window* window, IScene* scene, Selection* sel, Options* options);

@@ -1,11 +1,11 @@
 #pragma once
 #include "glIncludes.h"
-#include "entity.h"
+#include "ientity.h"
 #include "shader.h"
 #include <vector>
 
 template <typename V, typename I>
-class Primitive : public Entity
+class IPrimitive : public IEntity
 {
 protected:
 	float mLineWidth;
@@ -60,9 +60,9 @@ public:
 		glEnable(GL_DEPTH_TEST);
 	}
 
-	Primitive(Shader* shader = nullptr, glm::vec3 color = glm::vec3(), float lineWidth = 0.1f, bool drawOver = false,
+	IPrimitive(Shader* shader = nullptr, glm::vec3 color = glm::vec3(), float lineWidth = 0.1f, bool drawOver = false,
 		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
-		: Entity(shader, color, drawOver, pos, rot, scale), mLineWidth(lineWidth)
+		: IEntity(shader, color, drawOver, pos, rot, scale), mLineWidth(lineWidth)
 	{
 		// If the lineWidth is positive, draw wireframe
 		mIsWireframe = lineWidth > 0.0f;

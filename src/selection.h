@@ -1,15 +1,18 @@
 #pragma once
 #include "glIncludes.h"
-#include "mesh.h"
+#include "imesh.h"
+#include "iscene.h"
 #include <vector>
 #include <iostream>
 #include <set>
 
+#define GRID_OBJ "grid"
+#define BG_PLANE_OBJ "bgPlane"
+#define TRANSFORM_HANDLE "transformHandle"
+#define CAMERA_AXIS_HANDLE "cameraAxisHandle"
+
 enum class Tool { NONE = 0, SELECT = 1, MOVE = 2, ROTATE = 3, SCALE = 4, EXTRUDE = 5 };
 enum class SelMode { MESH = 0, VERT = 1, FACE = 2 };
-
-// Define scene to prevent circular dependency
-class Scene;
 
 struct Selection
 {
@@ -17,7 +20,7 @@ private:
 	glm::vec3 pivot;
 	std::set<unsigned int> selVerts;
 	std::set<unsigned int> selFaces;
-	Mesh* selMesh;
+	IMesh* selMesh;
 
 	Tool tool;
 	SelMode selMode;
@@ -35,7 +38,7 @@ public:
 	// Selects the vertex with the given ID
 	void SelectVert(unsigned int _id, bool _deselect = false);
 	// Selects the given mesh
-	void SelectMesh(Mesh* mesh);
+	void SelectMesh(IMesh* mesh);
 	// Deselects the face with the given ID
 	void DeselectFace(unsigned int _id);
 	// Deselects the vertex with the given ID
@@ -64,7 +67,7 @@ public:
 	// Returns the selection mode
 	SelMode GetSelMode();
 	// Returns the selected mesh
-	Mesh* GetSelectedMesh();
+	IMesh* GetSelectedMesh();
 	// Returns whether the given vertex is selected
 	bool IsVertSelected(unsigned int _id);
 	// Returns whether the given face is selected
@@ -74,9 +77,9 @@ public:
 	Selection();
 
 	// Returns the nearest mesh to the clicked position
-	static Mesh* GetNearestMesh(Scene* scene, float u, float v);
+	static IMesh* GetNearestMesh(IScene* scene, float u, float v);
 	// Returns the nearest vertex to the clicked position
-	static int GetNearestVert(Scene* scene, float u, float v);
+	static int GetNearestVert(IScene* scene, float u, float v);
 	// Returns the nearest face to the clicked position
-	static int GetNearestFace(Scene* scene, float u, float v);
+	static int GetNearestFace(IScene* scene, float u, float v);
 };

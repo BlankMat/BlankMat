@@ -2,7 +2,8 @@
 #include "glIncludes.h"
 #include "options.h"
 #include "selection.h"
-#include "scene.h"
+#include "imesh.h"
+#include "iscene.h"
 #include "window.h"
 
 #define KEY1_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_1) == GLFW_PRESS)
@@ -66,6 +67,6 @@ struct InputLocks {
 	void LockTool(Tool _tool);
 };
 
-bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* locks, Options* options, SpeedConsts* speeds, float deltaTime, int* prevX, int* prevY);
+bool ProcessInput(Window* window, IScene* scene, Selection* sel, InputLocks* locks, Options* options, SpeedConsts* speeds, float deltaTime, int* prevX, int* prevY);
 glm::vec3 GetWASDZX(Window* window);
 glm::vec3 GetArrow(Window* window);

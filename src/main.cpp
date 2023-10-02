@@ -14,7 +14,7 @@ int main()
 
     // Create scene
     // ------------
-    Scene* scene = new Scene();
+    ModelScene* scene = new ModelScene();
     scene->CreateShader(DEFAULT_SHADER, options.shader, options.shaderGeom);
     scene->CreateShader(LIGHT_CUBE_SHADER, false);
     scene->CreateShader(LINE_SHADER, false);
@@ -115,7 +115,7 @@ int main()
 
 // Draws the current scene
 // -----------------------
-void OpenGLDraw(Window* window, Scene* scene, Selection* sel, Options* options)
+void OpenGLDraw(Window* window, IScene* scene, Selection* sel, Options* options)
 {
     glm::vec3 bgColor = scene->GetCamera()->GetBGColor();
     glClearColor(bgColor.r, bgColor.g, bgColor.b, 1.0f);
