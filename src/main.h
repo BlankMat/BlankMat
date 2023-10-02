@@ -4,6 +4,7 @@
 #include "window.h"
 #include "shader.h"
 #include "model.h"
+#include "modelScene.h"
 #include "input.h"
 #include "plane.h"
 #include "grid.h"

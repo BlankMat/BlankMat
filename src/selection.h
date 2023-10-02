@@ -6,11 +6,6 @@
 #include <iostream>
 #include <set>
 
-#define GRID_OBJ "grid"
-#define BG_PLANE_OBJ "bgPlane"
-#define TRANSFORM_HANDLE "transformHandle"
-#define CAMERA_AXIS_HANDLE "cameraAxisHandle"
-
 enum class Tool { NONE = 0, SELECT = 1, MOVE = 2, ROTATE = 3, SCALE = 4, EXTRUDE = 5 };
 enum class SelMode { MESH = 0, VERT = 1, FACE = 2 };
 

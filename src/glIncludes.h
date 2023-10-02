@@ -13,3 +13,8 @@ constexpr float PI = 3.14159f;
 constexpr float HALF_PI = 1.57079f;
 
 #define VERT_SHADER_SIZE 12
+
+#define GRID_OBJ "grid"
+#define BG_PLANE_OBJ "bgPlane"
+#define TRANSFORM_HANDLE "transformHandle"
+#define CAMERA_AXIS_HANDLE "cameraAxisHandle"
