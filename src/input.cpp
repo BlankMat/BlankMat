@@ -278,7 +278,7 @@ bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* lock
         // Handle selection/deselection
         else if (LEFT_MOUSE_PRESS && !locks->lockLeftMouse) {
             locks->lockLeftMouse = true;
-            Entity* transformHandle = scene->Getentity(TRANSFORM_HANDLE);
+            Entity* transformHandle = scene->GetEntity(TRANSFORM_HANDLE);
             if (transformHandle != nullptr)
                 transformHandle->ToggleEnabled();
 

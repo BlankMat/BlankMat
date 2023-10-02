@@ -7,6 +7,7 @@
 #include "light.h"
 #include "camera.h"
 #include "model.h"
+#include "material.h"
 #include "selection.h"
 #include <unordered_map>
 
@@ -25,6 +26,7 @@ private:
 	std::unordered_map<std::string, Entity*> mPreRenderList;
 	std::unordered_map<std::string, Entity*> mRenderList;
 	std::unordered_map<std::string, Shader*> mShaderList;
+	std::unordered_map<std::string, Material*> mMaterialList;
 public:
 	// Renders the current scene
 	void Draw(Window* window);
@@ -49,7 +51,7 @@ public:
 		return nullptr;
 	}
 	// Returns the entity with the given name
-	Entity* Getentity(std::string name)
+	Entity* GetEntity(std::string name)
 	{
 		if (mPreRenderList.find(name) != mPreRenderList.end())
 			return mPreRenderList[name];
@@ -67,8 +69,20 @@ public:
 	// Sets the scene's model to the given model
 	void SetModel(Model* model) { if (mCurModel != nullptr) { delete mCurModel; } mCurModel = model; }
 	// Adds an entity to the scene's render list
-	void AddEntity(std::string name, Entity* entity, bool preRender = false) 
-		{ (preRender ? mPreRenderList : mRenderList).emplace(name, entity); }
+	Entity* AddEntity(std::string name, Entity* entity, bool preRender = false) 
+	{
+		std::unordered_map<std::string, Entity*>* tempList = &(preRender ? mPreRenderList : mRenderList);
+		if (tempList->find(name) == tempList->end())
+			tempList->emplace(name, entity);
+		return entity;
+	}
+	// Adds a material to the scene's matreial list
+	Material* AddMaterial(std::string name, Material* material)
+	{
+		if(mMaterialList.find(name) == mMaterialList.end())
+			mMaterialList.emplace(name, material);
+		return material;
+	}
 
 	// Returns the projection matrix of the scene's camera
 	glm::mat4 GetProjectionMatrix(float aspect) { return GetCamera()->GetProjection(aspect); }
