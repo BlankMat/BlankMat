@@ -1,64 +1,106 @@
 #pragma once
-#include "glIncludes.h"
-#include "shader.h"
-#include <string>
-#include <vector>
+#include "iMaterial.h"
+#include "texture.h"
 
-struct Material {
-	glm::vec3 ka;			// ambient color
-	glm::vec3 kd;			// diffuse color
-	glm::vec3 ks;			// specular color
-	glm::vec3 ke;			// emissive color
-	float ns;				// specular exponent
-	float ni;				// index of refraction
-	float d;				// dissolve, AKA. transparency
-	int illum;				// Illumination mode
-
-	std::string map_ka;		// ambient color texture
-	std::string map_kd;		// diffuse color texture
-	std::string map_ks;		// specular color texture
-	std::string map_bump;	// bump/normal texture
-	std::string map_ns;		// specular highlight texture
-	std::string map_d;		// alpha (dissolve) texture
-
-	// Updates the given shader with the material's values
-	void UpdateShader(Shader* shader)
+struct Material : public IMaterial<Texture>
+{
+protected:
+	std::vector<Texture> mTextures;
+public:
+    // Updates the given shader with this material's properties
+	void UpdateShader(Shader* shader) override
 	{
 		shader->SetVec3("material.ambient", ka);
 		shader->SetVec3("material.diffuse", kd);
 		shader->SetVec3("material.specular", ks);
+		shader->SetVec3("material.emissive", ke);
 		shader->SetFloat("material.shininess", ns);
+		shader->SetFloat("material.refraction", ni);
+		shader->SetFloat("material.alpha", d);
+		shader->SetInt("material.mode", illum);
+		
+		// Bind all textures
+        unsigned int diffuseNum = 1;
+        unsigned int specularNum = 1;
+        unsigned int normalNum = 1;
+        unsigned int heightNum = 1;
+        unsigned int alphaNum = 1;
+        for (unsigned int i = 0; i < mTextures.size(); i++)
+        {
+            // Activate proper texture unit before binding
+            glActiveTexture(GL_TEXTURE0 + i);
+            // Retrieve texture number (the N in diffuse_textureN)
+            std::string number;
+            std::string name = mTextures[i].type;
+            if (name == "texture_diffuse")
+                number = std::to_string(diffuseNum++);
+            else if (name == "texture_specular")
+                number = std::to_string(specularNum++);
+            else if (name == "texture_normal")
+                number = std::to_string(normalNum++);
+            else if (name == "texture_height")
+                number = std::to_string(heightNum++);
+            else if (name == "texture_alpha")
+                number = std::to_string(alphaNum++);
+
+            // Set the sampler to the correct texture unit
+            shader->SetInt(("material." + name + number).c_str(), i);
+            glBindTexture(GL_TEXTURE_2D, mTextures[i].id);
+        }
+        glActiveTexture(GL_TEXTURE0);
 	}
 
-	Material(glm::vec3 _ka = glm::vec3(), glm::vec3 _kd = glm::vec3(), glm::vec3 _ks = glm::vec3(),
-		float _ns = 0, float _ni = 1, float _d = 1, glm::vec3 _ke = glm::vec3(),
-		std::string _map_kd = "default", std::string _map_ka = "default", std::string _map_ks = "default", std::string _map_bump = "default",
-		std::string _map_ns = "default", std::string _map_d = "default", int _illum = 2)
-		: ka(_ka), kd(_kd), ks(_ks), ke(_ke), ns(_ns), ni(_ni), d(_d), illum(_illum), 
-		map_ka(_map_ka), map_kd(_map_kd), map_ks(_map_ks), map_bump(_map_bump), map_ns(_map_ns), map_d(_map_d) {}
+    // Add all textures to texture list
+    void LoadTextures()
+    {
+        mTextures.clear();
+        mTextures.push_back(map_kd);
+        mTextures.push_back(map_ka);
+        mTextures.push_back(map_ks);
+        mTextures.push_back(map_bump);
+        mTextures.push_back(map_ns);
+        mTextures.push_back(map_d);
+    }
 
-	static Material Average(std::vector<Material*>& _mats)
-	{
-		// Init values
-		float n = 1.0f / _mats.size();
-		glm::vec3 _ka = glm::vec3();
-		glm::vec3 _kd = glm::vec3();
-		glm::vec3 _ks = glm::vec3();
-		float _ns = 0.0f;
-		float _ni = 0.0f;
-		float _d = 0.0f;
+	Material(Texture defaultTexture, 
+        glm::vec3 _ka = glm::vec3(), glm::vec3 _kd = glm::vec3(), glm::vec3 _ks = glm::vec3(),
+		float _ns = 0, float _ni = 1, float _d = 1,
+		Texture _map_kd = Texture(0, "texture_diffuse", ""), 
+        Texture _map_ka = Texture(0, "texture_ambient", ""),
+        Texture _map_ks = Texture(0, "texture_specular", ""),
+        Texture _map_bump = Texture(0, "texture_normal", ""),
+		Texture _map_ns = Texture(0, "texture_height", ""),
+        Texture _map_d = Texture(0, "texture_alpha", ""),
+        glm::vec3 _ke = glm::vec3(), int _illum = 2)
+		: IMaterial(_ka, _kd, _ks, _ns, _ni, _d, _ke, _illum)
+    {
+        map_kd = _map_kd;
+        map_ka = _map_ka;
+        map_ks = _map_ks;
+        map_bump = _map_bump;
+        map_ns = _map_ns;
+        map_d = _map_d;
 
-		// Add values
-		for (int i = 0; i < _mats.size(); i++) {
-			_ka += _mats[i]->ka;
-			_kd += _mats[i]->kd;
-			_ks += _mats[i]->ks;
-			_ns += _mats[i]->ns;
-			_ni += _mats[i]->ni;
-			_d += _mats[i]->d;
-		}
+        // If textures were not provided, use default texture
+        if (map_kd.id == 0)
+            map_kd = Texture(defaultTexture.id, "texture_diffuse", defaultTexture.path);
+        if (map_ka.id == 0)
+            map_ka = Texture(defaultTexture.id, "texture_ambient", defaultTexture.path);
+        if (map_ks.id == 0)
+            map_ks = Texture(defaultTexture.id, "texture_specular", defaultTexture.path);
+        if (map_bump.id == 0)
+            map_bump = Texture(defaultTexture.id, "texture_normal", defaultTexture.path);
+        if (map_ns.id == 0)
+            map_ns = Texture(defaultTexture.id, "texture_height", defaultTexture.path);
+        if (map_d.id == 0)
+            map_d = Texture(defaultTexture.id, "texture_alpha", defaultTexture.path);
+        LoadTextures();
+    }
 
-		// Average values
-		return Material(_ka * n, _kd * n, _ks * n, _ns * n, _ni * n, _d * n);
-	}
+    Material(IMaterial<std::string>* material)
+        : IMaterial(material->ka, material->kd, material->ks, material->ns, material->ni, material->d, material->ke, material->illum)
+    {
+        // TODO: Load material textures
+        LoadTextures();
+    }
 };

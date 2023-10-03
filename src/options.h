@@ -1,5 +1,5 @@
 #pragma once
-#include "material.h"
+#include "dataMaterial.h"
 
 // Storage of all options for the program
 struct Options {
@@ -18,7 +18,7 @@ struct Options {
 	bool isRotatingLight;
 	bool gamma;
 
-	Material defaultMat;
+	DataMaterial defaultMat;
 	glm::vec3 bgColor;
 	std::string shader;
 	bool wireframe;

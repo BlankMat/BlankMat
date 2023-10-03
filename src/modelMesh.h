@@ -8,15 +8,18 @@
 class ModelMesh : public IMesh
 {
 protected:
-	std::vector<Vertex> mVertices;
-	std::vector<unsigned int> mIndices;
 	std::vector<Texture> mTextures;
 
-	void GenBuffers() override;
+	// Calculates the center of the mesh
 	glm::vec3 CalcCenter();
 public:
+	// Instantiates a mesh with the given vertices, indices, and textures
 	ModelMesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, std::vector<Texture>& textures);
-	void Draw(glm::mat4 viewProj);
+	// Draws the mesh
+	void Draw(glm::mat4 viewProj) override;
+	// Sets the shader of the mesh
+	void SetShader(Shader* shader) override { mShader = shader; }
 
-	Vertex* GetVertex(unsigned int index) override;
+	// Cleans up the mesh
+	~ModelMesh();
 };

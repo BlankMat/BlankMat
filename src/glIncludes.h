@@ -7,6 +7,7 @@
 #include <glm/gtx/quaternion.hpp>
 #include <stb_image.h>
 #include <assimp/Importer.hpp>
+#include <assimp/Exporter.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 constexpr float PI = 3.14159f;

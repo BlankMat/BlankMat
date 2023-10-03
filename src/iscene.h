@@ -5,6 +5,7 @@
 #include "iLight.h"
 #include "camera.h"
 #include "material.h"
+#include "dataMaterial.h"
 #include <unordered_map>
 
 class IScene
@@ -18,6 +19,7 @@ protected:
 	std::unordered_map<std::string, IEntity*> mRenderList;
 	std::unordered_map<std::string, Shader*> mShaderList;
 	std::unordered_map<std::string, Material*> mMaterialList;
+	std::unordered_map<std::string, Texture*> mTextureList;
 public:
 	// Renders the current scene
 	virtual void Draw(Window* window) = 0;
@@ -60,6 +62,22 @@ public:
 		return nullptr;
 	}
 
+	// Returns the material with the given name
+	Material* GetMaterial(std::string name)
+	{
+		if (mMaterialList.find(name) != mMaterialList.end())
+			return mMaterialList[name];
+		return nullptr;
+	}
+
+	// Returns the material with the given name
+	Texture* GetTexture(std::string name)
+	{
+		if (mTextureList.find(name) != mTextureList.end())
+			return mTextureList[name];
+		return nullptr;
+	}
+
 	// Returns the entity with the given name
 	IEntity* GetEntity(std::string name)
 	{
@@ -88,11 +106,27 @@ public:
 		return entity;
 	}
 
-	// Adds a material to the scene's matreial list
+	// Adds a texture to the scene's texture list
+	Texture* AddMaterial(std::string name, Texture* texture)
+	{
+		if (mTextureList.find(name) == mTextureList.end())
+			mTextureList.emplace(name, texture);
+		return texture;
+	}
+
+	// Adds a material to the scene's material list
 	Material* AddMaterial(std::string name, Material* material)
 	{
 		if (mMaterialList.find(name) == mMaterialList.end())
 			mMaterialList.emplace(name, material);
+		return material;
+	}
+
+	// Adds a material to the scene's material list
+	DataMaterial* AddMaterial(std::string name, DataMaterial* material)
+	{
+		if (mMaterialList.find(name) == mMaterialList.end())
+			mMaterialList.emplace(name, new Material(material));
 		return material;
 	}
 

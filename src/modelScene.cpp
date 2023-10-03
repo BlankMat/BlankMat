@@ -36,6 +36,7 @@ ModelScene::ModelScene()
 	mPreRenderList = std::unordered_map<std::string, IEntity*>();
 	mShaderList = std::unordered_map<std::string, Shader*>();
 	mMaterialList = std::unordered_map<std::string, Material*>();
+	mTextureList = std::unordered_map<std::string, Texture*>();
 }
 
 ModelScene::~ModelScene()
@@ -71,8 +72,14 @@ ModelScene::~ModelScene()
 		if (iter->second != nullptr)
 			delete iter->second;
 	}
+	for (auto iter = mTextureList.begin(); iter != mTextureList.end(); ++iter)
+	{
+		if (iter->second != nullptr)
+			delete iter->second;
+	}
 	mShaderList.clear();
 	mPreRenderList.clear();
 	mRenderList.clear();
 	mMaterialList.clear();
+	mTextureList.clear();
 }
