@@ -71,6 +71,15 @@ int main()
         currentTime = glfwGetTime();
         deltaTime = float(currentTime - lastTime);
 
+        // Start the Dear ImGUI frame
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+        ImGui::Begin("BlankMat");
+        ImGui::Text("Testing ImGUI");
+        ImGui::End();
+        // TODO: implement equivalent of ImGui::ShowDemoWindw();
+
         // Process input and render
         ProcessInput(window, scene, &sel, &locks, &options, &speeds, deltaTime, &prevX, &prevY);
         if (glfwGetKey(window->GetWindow(), GLFW_KEY_SPACE) == GLFW_PRESS && !gammaKeyPressed)
@@ -95,6 +104,8 @@ int main()
 
         // Render
         OpenGLDraw(window, scene, &sel, &options);
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -109,6 +120,9 @@ int main()
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
     glfwTerminate();
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
     delete window;
     return 0;
 }

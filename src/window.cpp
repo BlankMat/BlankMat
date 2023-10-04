@@ -25,16 +25,16 @@ Window::Window(int width, int height, std::string name)
     // glfw window creation
     // --------------------
     const char* windowName = mName.c_str();
-    window = glfwCreateWindow(mWidth, mHeight, windowName, NULL, NULL);
-    if (window == NULL)
+    mWindow = glfwCreateWindow(mWidth, mHeight, windowName, NULL, NULL);
+    if (mWindow == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
         return;
     }
-    glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    glfwMakeContextCurrent(mWindow);
+    glfwSetFramebufferSizeCallback(mWindow, FramebufferSizeCallback);
+    glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     stbi_set_flip_vertically_on_load(true);
 
     // // glad: load all OpenGL function pointers
@@ -44,6 +44,17 @@ Window::Window(int width, int height, std::string name)
         return;
     }
     CalcWindowSize();
+
+    // Dear imGUI
+    // -----------------------
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& tempIO = ImGui::GetIO();
+    tempIO.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+    ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(mWindow, true);
+    ImGui_ImplOpenGL3_Init("#version 330");
+    mIO = &tempIO;
 }
 
 // Enable or disable wireframe

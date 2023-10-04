@@ -65,8 +65,18 @@ add_library(STB_IMAGE "external/stb_image.cpp")
 # GLAD
 add_library(GLAD "external/glad.c")
 
+# IMGUI
+set(IMGUI_DIR "external/imgui")
+add_library(IMGUI "${IMGUI_DIR}/imgui.cpp"
+	"${IMGUI_DIR}/imgui_demo.cpp"
+	"${IMGUI_DIR}/imgui_draw.cpp"
+	"${IMGUI_DIR}/imgui_tables.cpp"
+	"${IMGUI_DIR}/imgui_widgets.cpp"
+	"${IMGUI_DIR}/imgui_impl_glfw.cpp"
+	"${IMGUI_DIR}/imgui_impl_opengl3.cpp")
+
 # Combine all libs into one variable
-set(LIBS ${GLFW3_LIBRARY} ${OPENGL_LIBRARY} GLAD ${CMAKE_DL_LIBS} ${ASSIMP_LIBRARY} STB_IMAGE)
+set(LIBS ${GLFW3_LIBRARY} ${OPENGL_LIBRARY} GLAD ${CMAKE_DL_LIBS} ${ASSIMP_LIBRARY} STB_IMAGE IMGUI)
 
 # Define the include DIRs
 include_directories(
@@ -74,6 +84,7 @@ include_directories(
 	"${CMAKE_SOURCE_DIR}/include"
 	"${CMAKE_SOURCE_DIR}/include/glad"
 	"${CMAKE_SOURCE_DIR}/include/glm"
+	"${CMAKE_SOURCE_DIR}/include/imgui"
 )
 
 # Define the link libraries

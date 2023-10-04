@@ -8,17 +8,18 @@ private:
 	int mWidth;
 	int mHeight;
 	std::string mName;
-	GLFWwindow* window;
+	GLFWwindow* mWindow;
+	ImGuiIO* mIO;
 public:
 	// Opens a OpenGL window with the given name
 	// -----------------------------------------
 	Window(int width, int height, std::string name);
 
 	// Gets and stores the current window size
-	void CalcWindowSize() { glfwGetWindowSize(window, &mWidth, &mHeight); }
+	void CalcWindowSize() { glfwGetWindowSize(mWindow, &mWidth, &mHeight); }
 
 	// Returns the GLFW window reference
-	GLFWwindow* GetWindow() { return window; }
+	GLFWwindow* GetWindow() { return mWindow; }
 	// Returns the width of the window, currently
 	int GetWidth() { return mWidth; }
 	// Returns the height of the window, currently
