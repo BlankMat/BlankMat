@@ -1,5 +1,5 @@
 #pragma once
-#include "iPrimitive.h"
+#include "rendering/iPrimitive.h"
 
 class PPlane : public IPrimitive<glm::vec3, glm::uvec3>
 {

@@ -1,8 +1,5 @@
 #pragma once
-#include "glIncludes.h"
-#include "shader.h"
-#include "iPrimitive.h"
-#include <vector>
+#include "rendering/iPrimitive.h"
 
 class PWireCube : public IPrimitive<glm::vec3, glm::uvec4>
 {

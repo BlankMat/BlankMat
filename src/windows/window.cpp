@@ -57,6 +57,36 @@ Window::Window(int width, int height, std::string name)
     mIO = &tempIO;
 }
 
+// Draws all GUIs
+void Window::DrawGUI()
+{
+    for (auto iter = mGUIList.begin(); iter != mGUIList.end(); ++iter)
+        if (iter->second->IsEnabled())
+            iter->second->Draw();
+}
+
+// Adds the given GUI window
+void Window::AddGUI(IGUIWindow* gui)
+{
+    if (mGUIList.find(gui->GetName()) != mGUIList.end())
+    {
+        std::cout << "ERROR::WINDOW::EXISTS GUI with name " << gui->GetName() << " already exists." << std::endl;
+        return;
+    }
+    mGUIList.emplace(gui->GetName(), gui);
+}
+
+// Gets the GUI with the given name
+IGUIWindow* Window::GetGUI(std::string name)
+{
+    if (mGUIList.find(name) == mGUIList.end())
+    {
+        std::cout << "ERROR::WINDOW::NULL GUI with name " << name << " is not open." << std::endl;
+        return nullptr;
+    }
+    return mGUIList[name];
+}
+
 // Enable or disable wireframe
 // ------------------------------------------
 void OpenGLEnableWireframe(bool enable)

@@ -1,7 +1,7 @@
 #pragma once
 #include "glIncludes.h"
-#include "shader.h"
-#include "iPrimitive.h"
+#include "rendering/shader.h"
+#include "rendering/iPrimitive.h"
 #include <vector>
 
 class PLine : public IPrimitive<glm::vec3, glm::uvec4>

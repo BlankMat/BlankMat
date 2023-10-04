@@ -2,9 +2,9 @@
 #include "glIncludes.h"
 #include "options.h"
 #include "selection.h"
-#include "iMesh.h"
-#include "iScene.h"
-#include "window.h"
+#include "rendering/iMesh.h"
+#include "rendering/iScene.h"
+#include "windows/window.h"
 
 #define KEY1_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_1) == GLFW_PRESS)
 #define KEY2_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_2) == GLFW_PRESS)

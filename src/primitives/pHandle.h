@@ -1,6 +1,6 @@
 #pragma once
-#include "iEntity.h"
-#include "iPrimitive.h"
+#include "rendering/iEntity.h"
+#include "rendering/iPrimitive.h"
 #include "pLine.h"
 #include "pWireCube.h"
 

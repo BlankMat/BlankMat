@@ -1,5 +1,5 @@
 #pragma once
-#include "dataMaterial.h"
+#include "rendering/dataMaterial.h"
 
 // Storage of all options for the program
 struct Options {

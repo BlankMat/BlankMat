@@ -1,7 +1,7 @@
 #pragma once
 #include "glIncludes.h"
-#include "iMesh.h"
-#include "iScene.h"
+#include "rendering/iMesh.h"
+#include "rendering/iScene.h"
 #include <vector>
 #include <iostream>
 #include <set>

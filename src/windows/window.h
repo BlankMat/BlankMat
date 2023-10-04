@@ -1,6 +1,8 @@
 #pragma once
 #include "glIncludes.h"
+#include "iGUIWindow.h"
 #include <iostream>
+#include <unordered_map>
 #include <string>
 
 class Window {
@@ -10,10 +12,20 @@ private:
 	std::string mName;
 	GLFWwindow* mWindow;
 	ImGuiIO* mIO;
+
+	std::unordered_map<std::string, IGUIWindow*> mGUIList;
 public:
 	// Opens a OpenGL window with the given name
 	// -----------------------------------------
 	Window(int width, int height, std::string name);
+
+	// Draws all GUIs
+	void DrawGUI();
+
+	// Adds the given GUI window
+	void AddGUI(IGUIWindow* gui);
+	// Gets the GUI with the given name
+	IGUIWindow* GetGUI(std::string name);
 
 	// Gets and stores the current window size
 	void CalcWindowSize() { glfwGetWindowSize(mWindow, &mWidth, &mHeight); }
@@ -28,6 +40,7 @@ public:
 	float GetAspect() { return (float)mWidth / (float)mHeight; }
 };
 
+// Enables wireframe for the application
 void OpenGLEnableWireframe(bool enable);
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes

@@ -1,11 +1,11 @@
 #pragma once
 #include "glIncludes.h"
 #include "shader.h"
-#include "window.h"
 #include "iLight.h"
 #include "camera.h"
 #include "material.h"
 #include "dataMaterial.h"
+#include "windows/window.h"
 #include <unordered_map>
 
 class IScene
