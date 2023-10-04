@@ -47,7 +47,7 @@ void SceneNode::AddMesh(unsigned int meshIndex)
 {
 	if (HasMesh(meshIndex))
 	{
-		std::cout << "NODE::WARNING Node already has the given mesh" << std::endl;
+		std::cout << "WARNING::NODE::EXISTS Node already has the given mesh" << std::endl;
 		return;
 	}
 	mMeshes.push_back(meshIndex);
@@ -58,7 +58,7 @@ void SceneNode::AddChild(SceneNode* child)
 {
 	if (HasNode(child->mName))
 	{
-		std::cout << "NODE::WARNING Node already has the given node as a child" << std::endl;
+		std::cout << "WARNING::NODE::EXISTS Node already has the given node as a child" << std::endl;
 		return;
 	}
 	mChildren.push_back(child);
@@ -71,7 +71,7 @@ bool SceneNode::MoveMesh(unsigned int meshIndex, SceneNode* other)
 	// Don't move the mesh to a null node
 	if (other == nullptr)
 	{
-		std::cout << "NODE::ERROR Cannot move mesh to null node. Mesh must have node parent." << std::endl;
+		std::cout << "ERROR::NODE::NULL Cannot move mesh to null node. Mesh must have node parent." << std::endl;
 		return false;
 	}
 	// Search for mesh index
@@ -79,7 +79,7 @@ bool SceneNode::MoveMesh(unsigned int meshIndex, SceneNode* other)
 	// Don't move a mesh that is not a child of this node
 	if (index < 0)
 	{
-		std::cout << "NODE::ERROR Attempted to move mesh that is not a child of the node." << std::endl;
+		std::cout << "ERROR::NODE::INVALID Attempted to move mesh that is not a child of the node." << std::endl;
 		return false;
 	}
 	// Move the element
@@ -94,7 +94,7 @@ bool SceneNode::MoveChild(std::string child, SceneNode* other)
 	// Don't move the node to a null node
 	if (other == nullptr)
 	{
-		std::cout << "NODE::ERROR Cannot move node to null node. Node must have parent, and root node can't be moved." << std::endl;
+		std::cout << "ERROR::NODE::NULL Cannot move node to null node. Node must have parent, and root node can't be moved." << std::endl;
 		return false;
 	}
 	// Find the child node
@@ -102,7 +102,7 @@ bool SceneNode::MoveChild(std::string child, SceneNode* other)
 	// Don't move a node that is not a child of this node
 	if (index < 0)
 	{
-		std::cout << "NODE::ERROR Attempted to move node that is not a child of the node." << std::endl;
+		std::cout << "ERROR::NODE::INVALID Attempted to move node that is not a child of the node." << std::endl;
 		return false;
 	}
 	// Move the node
@@ -117,7 +117,7 @@ bool SceneNode::DeleteNode(std::string name)
 	// Do not delete the node itself
 	if (mName == name)
 	{
-		std::cout << "NODE::ERROR Attempted to delete root node." << std::endl;
+		std::cout << "ERROR::NODE::ROOT Attempted to delete root node." << std::endl;
 		return false;
 	}
 
