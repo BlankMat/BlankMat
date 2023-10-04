@@ -33,6 +33,9 @@ public:
 	float GetKA() { return m_ka; }
 	float GetKS() { return m_ks; }
 
+	void SetOffset(glm::vec3 offset) { mOffset = offset; }
+	void SetBaseColor(glm::vec3 color) { mBaseColor = color; }
+
 	ILight(glm::vec3 pos = glm::vec3(1.0f), glm::vec3 dir = glm::vec3(-1.0f), glm::vec3 color = glm::vec3(1.0f), 
 		float ka = 0.1f, float ks = 0.5f, bool gamma = true) 
 		: IEntity(nullptr, color, false, pos), mBaseColor(color), mDir(dir), m_ka(ka), m_ks(ks), mOffset(pos), mGamma(gamma) {}

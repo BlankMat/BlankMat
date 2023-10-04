@@ -112,8 +112,7 @@ Options ReadOptions(std::string fileName)
             }
             // Check for orth size
             else if (tempParse[0] == "cameraSize") {
-                if (tempParse.size() >= 4)
-                    options.camSize = glm::vec2(std::stof(tempParse[2]), std::stof(tempParse[3]));
+                options.camSize = std::stof(tempParse[2]);
             }
         }
         file.close();

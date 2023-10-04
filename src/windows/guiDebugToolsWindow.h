@@ -4,6 +4,7 @@
 #include "options.h"
 #include "mathLib.h"
 #include "rendering/modelScene.h"
+#include "rendering/camera.h"
 
 class GUIDebugToolsWindow : public IGUIWindow
 {
@@ -16,25 +17,52 @@ public:
 	{
 		ImGui::Begin("Debug Tools");
 
+		// Camera settings
 		ImGui::Text("Camera Settings");
+		Camera* cam = mScene->GetCamera();
+
 		// Camera position
-		glm::vec3 camPos = mScene->GetCamera()->GetPos();
+		glm::vec3 camPos = cam->GetPos();
 		float camPosInput[3] = { camPos.x, camPos.y, camPos.z };
 		ImGui::InputFloat3("Camera Position", camPosInput);
-		mScene->GetCamera()->SetPos(Vec3FromFloats(camPosInput));
+		cam->SetPos(Vec3FromFloats(camPosInput));
 
 		// Camera lookat
-		glm::vec3 camTarget = mScene->GetCamera()->GetLookAt();
+		glm::vec3 camTarget = cam->GetLookAt();
 		float camLookInput[3] = { camTarget.x, camTarget.y, camTarget.z };
 		ImGui::InputFloat3("Camera Target", camLookInput);
-		mScene->GetCamera()->LookAt(Vec3FromFloats(camLookInput));
+		cam->LookAt(Vec3FromFloats(camLookInput));
+
+		// Camera size
+		float camSize = cam->GetOrthSize();
+		ImGui::InputFloat("Camera Size", &camSize);
+		cam->SetOrthSize(camSize);
+
+		// Camera near clip
+		float camNearClip = cam->GetNearClip();
+		ImGui::InputFloat("Camera Near Clip", &camNearClip);
+		cam->SetNearClip(camNearClip);
+
+		// Camera far clip
+		float camFarClip = cam->GetFarClip();
+		ImGui::InputFloat("Camera Far Clip", &camFarClip);
+		cam->SetFarClip(camFarClip);
+
+		// Light settings
+		ImGui::Text("Light Settings");
+		ILight* light = mScene->GetLight();
 
 		// Light position
-		ImGui::Text("Light Settings");
-		glm::vec3 lightPos = mScene->GetLight()->GetPos();
+		glm::vec3 lightPos = light->GetOffset();
 		float lightPosInput[3] = { lightPos.x, lightPos.y, lightPos.z };
 		ImGui::InputFloat3("Light Position", lightPosInput);
-		mScene->GetLight()->SetPos(Vec3FromFloats(lightPosInput));
+		light->SetOffset(Vec3FromFloats(lightPosInput));
+
+		// Light color
+		glm::vec3 lightColor = light->GetBaseColor();
+		float lightColorInput[3] = { lightColor.x, lightColor.y, lightColor.z };
+		ImGui::ColorPicker3("Light Color", lightColorInput);
+		light->SetBaseColor(Vec3FromFloats(lightColorInput));
 
 		// Model settings
 		Model* model = mScene->GetModel();

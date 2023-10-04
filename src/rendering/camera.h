@@ -18,7 +18,7 @@ private:
     glm::vec3 mUp;
     glm::vec3 mRight;
 
-    glm::vec2 mOrthSize;
+    float mOrthSize;
     bool mIsPerspective;
 
     glm::vec3 mBGColor;
@@ -62,6 +62,22 @@ public:
     glm::vec3 GetLookAt() { return mPos + mDir * mLookDist; }
     // Returns the background color of the camera
     glm::vec3 GetBGColor() { return mBGColor; }
+    // Returns the orthographic size of the camera
+    float GetOrthSize() { return mOrthSize; }
+    // Returns the far clip plane of the camera
+    float GetFarClip() { return mFarClip; }
+    // Returns the near clip plane of the plane
+    float GetNearClip() { return mNearClip; }
+
+    // Sets the position of the camera
+    void SetPos(glm::vec3 pos) { mPos = pos; }
+    // Sets the orthographic size of the camera
+    void SetOrthSize(float size) { mOrthSize = size; }
+    // Sets the far clip plane of the camera
+    void SetFarClip(float farClip) { mFarClip = farClip; }
+    // Sets the near clip plane of the plane
+    void SetNearClip(float nearClip) { mNearClip = nearClip; }
+
     // Returns the view matrix of the camera
     glm::mat4 GetView() { return glm::lookAt(mPos, mPos + mDir, mUp); }
     // Returns the camera's rotation matrix
@@ -86,17 +102,10 @@ public:
         }
         // Orthographic projection
         else {
-            glm::mat4 projection = glm::ortho(-mOrthSize.x, mOrthSize.x, -mOrthSize.y, mOrthSize.y, mNearClip, mFarClip);
+            projection = glm::ortho(-mOrthSize * aspect, mOrthSize * aspect, -mOrthSize, mOrthSize, mNearClip, mFarClip);
         }
 
         return projection;
-    }
-
-    // Sets the position of the camera
-    void SetPos(glm::vec3 pos)
-    {
-        mPos = pos;
-        CalcBasis();
     }
 
     // Sets the rotation of the camera to be in the given direction
@@ -129,7 +138,7 @@ public:
         CalcBasis();
     }
 
-    Camera(float _fov, float _nearClip, float _farClip, glm::vec3 _pos, glm::vec3 _dir, glm::vec3 _up, glm::vec2 _orthSize, bool _isPerspective)
+    Camera(float _fov, float _nearClip, float _farClip, glm::vec3 _pos, glm::vec3 _dir, glm::vec3 _up, float _orthSize, bool _isPerspective)
         : mFOV(_fov), mNearClip(_nearClip), mFarClip(_farClip), mPos(_pos), mDir(_dir), mUp(_up), mOrthSize(_orthSize), mIsPerspective(_isPerspective)
     {
         mBGColor = glm::vec3(80, 100, 100);

@@ -31,7 +31,7 @@ struct Options {
 	float camFov;
 	float camNearClip;
 	float camFarClip;
-	glm::vec2 camSize;
+	float camSize;
 	bool isPerspective;
 };
 

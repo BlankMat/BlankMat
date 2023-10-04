@@ -51,7 +51,7 @@ cameraStartUp = 0.0 1.0 0.0
 cameraFov = 45.0
 
 # Orthographic camera size. Only used for orthographic camera.
-cameraSize = 10.0 10.0
+cameraSize = 5.0
 
 # Camera near clip plane. (Only change this if you know what you're doing)
 cameraNearClip = 0.1
