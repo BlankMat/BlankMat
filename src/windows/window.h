@@ -1,6 +1,7 @@
 #pragma once
 #include "glIncludes.h"
 #include "iGUIWindow.h"
+#include "fileSystem.h"
 #include <iostream>
 #include <unordered_map>
 #include <string>
@@ -13,7 +14,7 @@ private:
 	GLFWwindow* mWindow;
 	ImGuiIO* mIO;
 
-	std::unordered_map<std::string, IGUIWindow*> mGUIList;
+	std::unordered_map<GUI, IGUIWindow*> mGUIList;
 public:
 	// Opens a OpenGL window with the given name
 	// -----------------------------------------
@@ -24,8 +25,8 @@ public:
 
 	// Adds the given GUI window
 	void AddGUI(IGUIWindow* gui);
-	// Gets the GUI with the given name
-	IGUIWindow* GetGUI(std::string name);
+	// Gets the GUI with the given type
+	IGUIWindow* GetGUI(GUI type);
 
 	// Gets and stores the current window size
 	void CalcWindowSize() { glfwGetWindowSize(mWindow, &mWidth, &mHeight); }

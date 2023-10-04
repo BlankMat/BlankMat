@@ -50,17 +50,20 @@ int main()
     int prevX = -1;
     int prevY = -1;
 
-    // Get selection
-    Selection sel = Selection();
-    sel.SetSelMode(SelMode::MESH);
-    sel.SetTool(Tool::SELECT);
-
     // Track time
     double lastTime = glfwGetTime();
     double currentTime = glfwGetTime();
     float deltaTime = 0.0f;
 
     float gammaKeyPressed = false;
+
+    // Create selection
+    Selection sel = Selection();
+    sel.SetSelMode(SelMode::MESH);
+    sel.SetTool(Tool::SELECT);
+
+    // Add GUIs
+    window->AddGUI(new GUIDebugToolsWindow(&sel, scene, &options, true));
 
     // render loop
     // -----------
@@ -71,14 +74,9 @@ int main()
         currentTime = glfwGetTime();
         deltaTime = float(currentTime - lastTime);
 
-        // Start the Dear ImGUI frame
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-        ImGui::Begin("BlankMat");
-        ImGui::Text("Testing ImGUI");
-        ImGui::End();
-        // TODO: implement equivalent of ImGui::ShowDemoWindw();
+        // Draw GUI
+        window->DrawGUI();
+        ImGui::ShowDemoWindow();
 
         // Process input and render
         ProcessInput(window, scene, &sel, &locks, &options, &speeds, deltaTime, &prevX, &prevY);

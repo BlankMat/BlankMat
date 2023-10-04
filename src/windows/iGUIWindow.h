@@ -18,6 +18,7 @@ enum class GUI
 class IGUIWindow
 {
 protected:
+	GUI type;
 	std::string mName;
 	glm::vec2 mScreenPos;
 	bool mIsEnabled;
@@ -34,6 +35,8 @@ public:
 	// Toggles the enabled status of the GUI
 	bool ToggleEnabled() { mIsEnabled = !mIsEnabled; return mIsEnabled; }
 
+	// Gets the type of the GUI
+	GUI GetType() { return type; }
 	// Gets the name of the GUI
 	std::string GetName() { return mName; }
 	// Sets the name of the GUI

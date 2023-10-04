@@ -35,6 +35,13 @@ Window::Window(int width, int height, std::string name)
     glfwMakeContextCurrent(mWindow);
     glfwSetFramebufferSizeCallback(mWindow, FramebufferSizeCallback);
     glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+
+    // Set icon
+    GLFWimage images[1];
+    images[0].pixels = stbi_load(FileSystem::GetPath("icon.png").c_str(), &images[0].width, &images[0].height, 0, 4);
+    glfwSetWindowIcon(mWindow, 1, images);
+    stbi_image_free(images[0].pixels);
+
     stbi_set_flip_vertically_on_load(true);
 
     // // glad: load all OpenGL function pointers
@@ -60,6 +67,10 @@ Window::Window(int width, int height, std::string name)
 // Draws all GUIs
 void Window::DrawGUI()
 {
+    // Start the Dear ImGUI frame
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
     for (auto iter = mGUIList.begin(); iter != mGUIList.end(); ++iter)
         if (iter->second->IsEnabled())
             iter->second->Draw();
@@ -68,23 +79,23 @@ void Window::DrawGUI()
 // Adds the given GUI window
 void Window::AddGUI(IGUIWindow* gui)
 {
-    if (mGUIList.find(gui->GetName()) != mGUIList.end())
+    if (mGUIList.find(gui->GetType()) != mGUIList.end())
     {
-        std::cout << "ERROR::WINDOW::EXISTS GUI with name " << gui->GetName() << " already exists." << std::endl;
+        std::cout << "ERROR::WINDOW::EXISTS GUI with type " << gui->GetName() << " already exists." << std::endl;
         return;
     }
-    mGUIList.emplace(gui->GetName(), gui);
+    mGUIList.emplace(gui->GetType(), gui);
 }
 
-// Gets the GUI with the given name
-IGUIWindow* Window::GetGUI(std::string name)
+// Gets the GUI with the given type
+IGUIWindow* Window::GetGUI(GUI type)
 {
-    if (mGUIList.find(name) == mGUIList.end())
+    if (mGUIList.find(type) == mGUIList.end())
     {
-        std::cout << "ERROR::WINDOW::NULL GUI with name " << name << " is not open." << std::endl;
+        std::cout << "ERROR::WINDOW::NULL GUI with type " << (int)type << " is not open." << std::endl;
         return nullptr;
     }
-    return mGUIList[name];
+    return mGUIList[type];
 }
 
 // Enable or disable wireframe

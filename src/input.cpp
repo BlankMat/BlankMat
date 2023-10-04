@@ -42,44 +42,6 @@ bool ProcessInput(Window* window, IScene* scene, Selection* sel, InputLocks* loc
         }
         didReceiveInput = true;
     }
-    // Toggle perspective
-    if (KEY4_PRESS && !CTRL_PRESS) {
-        if (!locks->lockKey4) {
-            options->isPerspective = !options->isPerspective;
-            camera->SetPerspective(options->isPerspective);
-            std::cout << "Enabled " << (options->isPerspective == 1 ? "perspective" : "orthographic") << " view\n";
-            locks->lockKey4 = true;
-        }
-        didReceiveInput = true;
-    }
-    // Toggle wireframe
-    if (KEY5_PRESS && !CTRL_PRESS) {
-        if (!locks->lockKey5) {
-            options->wireframe = (options->wireframe == 1 ? 0 : 1);
-            OpenGLEnableWireframe(options->wireframe == 1);
-            std::cout << "Turned wireframe " << (options->wireframe == 1 ? "on" : "off") << "\n";
-            locks->lockKey5 = true;
-        }
-        didReceiveInput = true;
-    }
-    // Toggle disco light
-    if (T_PRESS && ALT_PRESS && !CTRL_PRESS) {
-        if (!locks->lockAltT) {
-            options->isDiscoLight = !options->isDiscoLight;
-            std::cout << "Turned disco light " << (options->isDiscoLight ? "on" : "off") << "\n";
-            locks->lockAltT = true;
-        }
-        didReceiveInput = true;
-    }
-    // Toggle rotating light
-    if (R_PRESS && ALT_PRESS && !CTRL_PRESS) {
-        if (!locks->lockAltR) {
-            options->isRotatingLight = !options->isRotatingLight;
-            std::cout << "Turned rotating light " << (options->isRotatingLight ? "on" : "off") << "\n";
-            locks->lockAltR = true;
-        }
-        didReceiveInput = true;
-    }
 
 
 
@@ -248,7 +210,6 @@ bool ProcessInput(Window* window, IScene* scene, Selection* sel, InputLocks* loc
         // Track mouse movement
         double mouseX, mouseY;
         glfwGetCursorPos(glfwWindow, &mouseX, &mouseY);
-        glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
         int xPos = (int)glm::floor(mouseX);
         int yPos = (int)glm::floor(mouseY);
         float u = (xPos + 0.5f) / width;
@@ -269,11 +230,18 @@ bool ProcessInput(Window* window, IScene* scene, Selection* sel, InputLocks* loc
             // Apply changes to camera
             camera->Rotate(speeds->mouseTurnSpeed * deltaTime * glm::vec3(deltaX, deltaY, 0.0f));
             locks->lockLeftMouse = true;
+
+            // Keep mouse where it was clicked
+            glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+            glfwSetCursorPos(window->GetWindow(), (float)(*prevX), (float)(*prevY));
         }
         // Alt + RMB to move
         else if (RIGHT_MOUSE_PRESS && ALT_PRESS) {
             // Apply changes to camera
+            glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
             camera->Translate(speeds->mouseMoveSpeed * deltaTime * glm::vec3(0.0f, deltaX, deltaY));
+            // Keep mouse where it was clicked
+            glfwSetCursorPos(window->GetWindow(), (float)(*prevX), (float)(*prevY));
         }
         // Handle selection/deselection
         else if (LEFT_MOUSE_PRESS && !locks->lockLeftMouse) {
@@ -331,8 +299,6 @@ bool ProcessInput(Window* window, IScene* scene, Selection* sel, InputLocks* loc
             }
         }
 
-        // Keep mouse where it was clicked
-        glfwSetCursorPos(window->GetWindow(), (float)(*prevX), (float)(*prevY));
         didReceiveInput = true;
     }
     // Reset previous click location when there 

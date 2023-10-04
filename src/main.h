@@ -2,10 +2,14 @@
 #include "fileSystem.h"
 #include "options.h"
 #include "input.h"
+
 #include "windows/window.h"
+#include "windows/guiDebugToolsWindow.h"
+
 #include "rendering/shader.h"
 #include "rendering/model.h"
 #include "rendering/modelScene.h"
+
 #include "primitives/pplane.h"
 #include "primitives/pgrid.h"
 #include "primitives/pLightCube.h"

@@ -9,6 +9,7 @@ private:
     float mFOV;
     float mNearClip;
     float mFarClip;
+    float mLookDist;
 
     glm::vec3 mPos;
     glm::vec3 mRot;
@@ -57,6 +58,8 @@ public:
     glm::vec3 GetPos() { return mPos; }
     // Returns the rotation of the camera
     glm::vec3 GetRot() { return mRot; }
+    // Returns the camera's (estimated) look position
+    glm::vec3 GetLookAt() { return mPos + mDir * mLookDist; }
     // Returns the background color of the camera
     glm::vec3 GetBGColor() { return mBGColor; }
     // Returns the view matrix of the camera
@@ -89,9 +92,17 @@ public:
         return projection;
     }
 
+    // Sets the position of the camera
+    void SetPos(glm::vec3 pos)
+    {
+        mPos = pos;
+        CalcBasis();
+    }
+
     // Sets the rotation of the camera to be in the given direction
     void LookAt(glm::vec3 targetPos)
     {
+        mLookDist = glm::length(targetPos - mPos);
         glm::vec3 lookDir = glm::normalize(targetPos - mPos);
         mRot = glm::vec3(atan2(lookDir.x, lookDir.z), asin(lookDir.y), 0.0f);
         CalcBasis();
@@ -115,7 +126,6 @@ public:
     void SetPerspective(bool isPerspective)
     {
         mIsPerspective = isPerspective;
-        std::cout << "- Camera: Pos:" << Vec3ToString(mPos) << ", Rot:" << Vec3ToString(mRot) << ", Dir:" << Vec3ToString(mDir) << ", Right" << Vec3ToString(mRight) << ", Up:" << Vec3ToString(mUp) << std::endl;
         CalcBasis();
     }
 

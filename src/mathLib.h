@@ -79,6 +79,17 @@ static const std::string Vec3ToString(glm::vec3 vec)
     return ss.str();
 }
 
+static const glm::vec3 Vec3FromFloats(float vec[3])
+{
+    return glm::vec3(vec[0], vec[1], vec[2]);
+}
+
+static float* FloatsFromVec3(glm::vec3 vec3)
+{
+    float vec[3] = { vec3.x, vec3.y, vec3.z };
+    return vec;
+}
+
 static const glm::vec3 Vec3FromAssimp(aiVector3D vec)
 {
 	return glm::vec3(vec.x, vec.y, vec.z);
