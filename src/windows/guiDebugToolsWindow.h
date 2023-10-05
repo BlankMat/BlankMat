@@ -15,6 +15,10 @@ protected:
 public:
 	void Draw() override
 	{
+		// Don't draw disabled GUI
+		if (!mIsEnabled)
+			return;
+
 		ImGui::Begin("Debug Tools");
 
 		// Camera settings
@@ -37,6 +41,11 @@ public:
 		float camSize = cam->GetOrthSize();
 		ImGui::InputFloat("Camera Size", &camSize);
 		cam->SetOrthSize(camSize);
+
+		// Camera FOV
+		float camFOV = cam->GetFOV();
+		ImGui::InputFloat("Camera FOV", &camFOV);
+		cam->SetFOV(camFOV);
 
 		// Camera near clip
 		float camNearClip = cam->GetNearClip();

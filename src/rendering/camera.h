@@ -68,6 +68,8 @@ public:
     float GetFarClip() { return mFarClip; }
     // Returns the near clip plane of the plane
     float GetNearClip() { return mNearClip; }
+    // Returns the FOV of the camera
+    float GetFOV() { return mFOV; }
 
     // Sets the position of the camera
     void SetPos(glm::vec3 pos) { mPos = pos; }
@@ -77,6 +79,8 @@ public:
     void SetFarClip(float farClip) { mFarClip = farClip; }
     // Sets the near clip plane of the plane
     void SetNearClip(float nearClip) { mNearClip = nearClip; }
+    // Sets the FOV of the camera
+    void SetFOV(float fov) { mFOV = fov; }
 
     // Returns the view matrix of the camera
     glm::mat4 GetView() { return glm::lookAt(mPos, mPos + mDir, mUp); }
