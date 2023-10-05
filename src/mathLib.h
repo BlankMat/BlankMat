@@ -61,7 +61,7 @@ static const void ParseStringByDelim(std::vector<std::string>& out, std::string 
 static const glm::vec3 ReadVec3FromStrings(std::vector<std::string>& strings, int offset)
 {
     // Avoid errors
-    if (strings.size() >= 4 + offset)
+    if ((int)strings.size() >= 4 + offset)
         return glm::vec3(std::stof(strings[1 + offset]), std::stof(strings[2 + offset]), std::stof(strings[3 + offset]));
     else
         return glm::vec3();
@@ -77,6 +77,17 @@ static const std::string Vec3ToString(glm::vec3 vec)
     std::ostringstream ss;
     ss << "[" << vec.x << ", " << vec.y << ", " << vec.z << "]";
     return ss.str();
+}
+
+static const glm::vec3 Vec3FromFloats(float vec[3])
+{
+    return glm::vec3(vec[0], vec[1], vec[2]);
+}
+
+static float* FloatsFromVec3(glm::vec3 vec3)
+{
+    float vec[3] = { vec3.x, vec3.y, vec3.z };
+    return vec;
 }
 
 static const glm::vec3 Vec3FromAssimp(aiVector3D vec)

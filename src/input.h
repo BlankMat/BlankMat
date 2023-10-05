@@ -2,8 +2,9 @@
 #include "glIncludes.h"
 #include "options.h"
 #include "selection.h"
-#include "scene.h"
-#include "window.h"
+#include "rendering/iMesh.h"
+#include "rendering/iScene.h"
+#include "windows/window.h"
 
 #define KEY1_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_1) == GLFW_PRESS)
 #define KEY2_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_2) == GLFW_PRESS)
@@ -25,9 +26,12 @@
 #define SHIFT_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS)
 #define ALT_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_LEFT_ALT) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_RIGHT_ALT) == GLFW_PRESS)
 #define CTRL_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS)
-#define MOUSE_PRESS (glfwGetMouseButton(glfwWindow, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS || glfwGetMouseButton(glfwWindow, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
 #define LEFT_MOUSE_PRESS (glfwGetMouseButton(glfwWindow, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
 #define RIGHT_MOUSE_PRESS (glfwGetMouseButton(glfwWindow, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
+#define MOUSE_PRESS (LEFT_MOUSE_PRESS || RIGHT_MOUSE_PRESS)
+#define LEFT_MOUSE_RELEASE (glfwGetMouseButton(glfwWindow, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE)
+#define RIGHT_MOUSE_RELEASE (glfwGetMouseButton(glfwWindow, GLFW_MOUSE_BUTTON_RIGHT) == GLFLW_RELEASE)
+#define MOUSE_RELEASE (glfwGetMouseButton(glfwWindow, GLFW_MOUSE_BUTTON_RIGHT) == GLFLW_RELEASE)
 
 // Input lock structure to separate presses from holding keyes
 struct InputLocks {
@@ -63,6 +67,6 @@ struct InputLocks {
 	void LockTool(Tool _tool);
 };
 
-bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* locks, Options* options, SpeedConsts* speeds, float deltaTime, int* prevX, int* prevY);
+bool ProcessInput(Window* window, IScene* scene, Selection* sel, InputLocks* locks, Options* options, SpeedConsts* speeds, float deltaTime, int* prevX, int* prevY);
 glm::vec3 GetWASDZX(Window* window);
 glm::vec3 GetArrow(Window* window);

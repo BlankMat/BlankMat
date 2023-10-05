@@ -1,5 +1,4 @@
 #include "selection.h"
-#include "scene.h"
 
 // Returns the entire selection as a selection of vertices
 void Selection::GetSelectedVerts(std::vector<unsigned int>& _verts)
@@ -64,7 +63,7 @@ void Selection::SelectVert(unsigned int _id, bool _deselect)
 }
 
 // Selects the given mesh
-void Selection::SelectMesh(Mesh* mesh)
+void Selection::SelectMesh(IMesh* mesh)
 {
 	if (mesh == nullptr)
 		return;
@@ -184,7 +183,7 @@ Tool Selection::GetTool() { return tool; }
 // Returns the selection mode
 SelMode Selection::GetSelMode() { return selMode; }
 // Returns the selected mesh
-Mesh* Selection::GetSelectedMesh() { return selMesh; }
+IMesh* Selection::GetSelectedMesh() { return selMesh; }
 
 // Storage container for information on all selections
 Selection::Selection()
@@ -196,7 +195,7 @@ Selection::Selection()
 }
 
 // Returns the nearest mesh to the clicked position
-Mesh* Selection::GetNearestMesh(Scene* scene, float u, float v)
+IMesh* Selection::GetNearestMesh(IScene* scene, float u, float v)
 {
 	//std::cout << "Transformed click [" << u << ", " << v << "]\n";
 	//Ray ray = RayTracer::GenerateRay(scene, u, v, false);
@@ -208,7 +207,7 @@ Mesh* Selection::GetNearestMesh(Scene* scene, float u, float v)
 }
 
 // Returns the nearest vertex to the clicked position
-int Selection::GetNearestVert(Scene* scene, float u, float v)
+int Selection::GetNearestVert(IScene* scene, float u, float v)
 {
 	//Ray ray = RayTracer::GenerateRay(scene, u, v, false);
 	//IndVertex res = ray.GetClosestVertex(scene->GetRenderTris());
@@ -217,7 +216,7 @@ int Selection::GetNearestVert(Scene* scene, float u, float v)
 }
 
 // Returns the nearest face to the clicked position
-int Selection::GetNearestFace(Scene* scene, float u, float v)
+int Selection::GetNearestFace(IScene* scene, float u, float v)
 {
 	//Ray ray = RayTracer::GenerateRay(scene, u, v, false);
 	//ITriangle res = ray.GetClosestTriangle(scene->GetRenderTris());

@@ -2,11 +2,11 @@
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
-bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* locks, Options* options, SpeedConsts* speeds, float deltaTime, int* prevX, int* prevY)
+bool ProcessInput(Window* window, IScene* scene, Selection* sel, InputLocks* locks, Options* options, SpeedConsts* speeds, float deltaTime, int* prevX, int* prevY)
 {
     // TODO: Replace mesh reference with proper reference
     Camera* camera = scene->GetCamera();
-    Mesh* selMesh = sel->GetSelectedMesh();
+    IMesh* selMesh = sel->GetSelectedMesh();
     std::set<unsigned int> selVerts;
     sel->GetSelectedVerts(selVerts);
     bool didReceiveInput = false;
@@ -39,44 +39,6 @@ bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* lock
             camera->LookAt(targetPos);
 
             locks->lockF = true;
-        }
-        didReceiveInput = true;
-    }
-    // Toggle perspective
-    if (KEY4_PRESS && !CTRL_PRESS) {
-        if (!locks->lockKey4) {
-            options->isPerspective = !options->isPerspective;
-            camera->SetPerspective(options->isPerspective);
-            std::cout << "Enabled " << (options->isPerspective == 1 ? "perspective" : "orthographic") << " view\n";
-            locks->lockKey4 = true;
-        }
-        didReceiveInput = true;
-    }
-    // Toggle wireframe
-    if (KEY5_PRESS && !CTRL_PRESS) {
-        if (!locks->lockKey5) {
-            options->wireframe = (options->wireframe == 1 ? 0 : 1);
-            OpenGLEnableWireframe(options->wireframe == 1);
-            std::cout << "Turned wireframe " << (options->wireframe == 1 ? "on" : "off") << "\n";
-            locks->lockKey5 = true;
-        }
-        didReceiveInput = true;
-    }
-    // Toggle disco light
-    if (T_PRESS && ALT_PRESS && !CTRL_PRESS) {
-        if (!locks->lockAltT) {
-            options->isDiscoLight = !options->isDiscoLight;
-            std::cout << "Turned disco light " << (options->isDiscoLight ? "on" : "off") << "\n";
-            locks->lockAltT = true;
-        }
-        didReceiveInput = true;
-    }
-    // Toggle rotating light
-    if (R_PRESS && ALT_PRESS && !CTRL_PRESS) {
-        if (!locks->lockAltR) {
-            options->isRotatingLight = !options->isRotatingLight;
-            std::cout << "Turned rotating light " << (options->isRotatingLight ? "on" : "off") << "\n";
-            locks->lockAltR = true;
         }
         didReceiveInput = true;
     }
@@ -267,18 +229,29 @@ bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* lock
         if (LEFT_MOUSE_PRESS && ALT_PRESS) {
             // Apply changes to camera
             camera->Rotate(speeds->mouseTurnSpeed * deltaTime * glm::vec3(deltaX, deltaY, 0.0f));
+            locks->lockLeftMouse = true;
+
+            // Keep mouse where it was clicked
+            glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+            glfwSetCursorPos(window->GetWindow(), (float)(*prevX), (float)(*prevY));
         }
         // Alt + RMB to move
         else if (RIGHT_MOUSE_PRESS && ALT_PRESS) {
             // Apply changes to camera
+            glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
             camera->Translate(speeds->mouseMoveSpeed * deltaTime * glm::vec3(0.0f, deltaX, deltaY));
+            // Keep mouse where it was clicked
+            glfwSetCursorPos(window->GetWindow(), (float)(*prevX), (float)(*prevY));
         }
         // Handle selection/deselection
         else if (LEFT_MOUSE_PRESS && !locks->lockLeftMouse) {
             locks->lockLeftMouse = true;
+            IEntity* transformHandle = scene->GetEntity(TRANSFORM_HANDLE);
+            if (transformHandle != nullptr)
+                transformHandle->ToggleEnabled();
 
             // Handle selection
-            Mesh* tempMesh;
+            IMesh* tempMesh;
             int tempFace;
             int tempVert;
             switch (sel->GetSelMode()) {
@@ -326,14 +299,13 @@ bool ProcessInput(Window* window, Scene* scene, Selection* sel, InputLocks* lock
             }
         }
 
-        // Keep mouse where it was clicked
-        glfwSetCursorPos(window->GetWindow(), (float)(*prevX), (float)(*prevY));
         didReceiveInput = true;
     }
     // Reset previous click location when there 
     else {
         locks->lockLeftMouse = false;
         locks->lockRightMouse = false;
+        glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         *prevX = -1;
         *prevY = -1;
     }

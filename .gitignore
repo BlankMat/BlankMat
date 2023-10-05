@@ -412,4 +412,6 @@ FodyWeavers.xsd
 *.sln.iml
 
 # 3D obj Files
-!models/*
+![Mm]odels/*
+![Rr]esources/*
+![Rr]esources/**/*

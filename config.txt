@@ -5,7 +5,10 @@ object = backpack/backpack.obj
 scale = 0.6
 
 # Position of the object in the program
-position = 0.0 0.0 0.0
+position = 0.0 1.8 0.0
+
+# Which shader file should be used for the scene and whether to include Geom [1] or not [0]. 
+shader = phongDefaultShader 0
 
 # Light position
 lightPos = -4.0 4.0 4.0
@@ -17,25 +20,22 @@ lightDir = -1.0 -1.0 -1.0
 lightColor = 1.0 1.0 1.0
 
 # Light ambient strength
-lightKA = 0.1
+lightKA = 0.1 
 
 # Light specular strength
-lightKS = 0.5
+lightKS = 1.0
+
+# Whether gamma is enabled [1] or not [0]
+gamma = 0
 
 # Default color
-dcolor = 0.8 0.8 0.8
+dcolor = 0.6 0.6 0.6
 
 # Background color
 bgcolor = 0.3 0.4 0.4
 
 # Should model be drawn in wireframe? [0] No, [1] Yes
 wireframe = 0
-
-# Should the model information be printed in the console? [0] No, [1] Yes
-print = 0
-
-# Which shader file should be used for the scene and whether to include Geom [1] or not [0]. 
-shader = phongDefaultShader 0
 
 # Camera options
 # Camera start position. This is the position of the camera by default
@@ -51,7 +51,7 @@ cameraStartUp = 0.0 1.0 0.0
 cameraFov = 45.0
 
 # Orthographic camera size. Only used for orthographic camera.
-cameraSize = 10.0 10.0
+cameraSize = 5.0
 
 # Camera near clip plane. (Only change this if you know what you're doing)
 cameraNearClip = 0.1
