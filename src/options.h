@@ -1,5 +1,5 @@
 #pragma once
-#include "material.h"
+#include "rendering/dataMaterial.h"
 
 // Storage of all options for the program
 struct Options {
@@ -16,13 +16,12 @@ struct Options {
 	float lightKS;
 	bool isDiscoLight;
 	bool isRotatingLight;
+	bool gamma;
 
-	Material defaultColor;
+	DataMaterial defaultMat;
 	glm::vec3 bgColor;
-	int vertexModel;
-	int wireframe;
-	int print;
 	std::string shader;
+	bool wireframe;
 	bool shaderGeom;
 
 	// Camera options
@@ -32,7 +31,7 @@ struct Options {
 	float camFov;
 	float camNearClip;
 	float camFarClip;
-	glm::vec2 camSize;
+	float camSize;
 	bool isPerspective;
 };
 

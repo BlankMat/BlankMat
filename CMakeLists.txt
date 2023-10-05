@@ -6,16 +6,38 @@ set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT $
 
 # Link .lib files
 link_directories(${CMAKE_SOURCE_DIR}/lib)
+	
+# Add rendering files
+file(GLOB RENDERING_SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/rendering/*.cpp)
+file(GLOB RENDERING_HEADER_FILES ${CMAKE_SOURCE_DIR}/src/rendering/*.h)
+	
+# Add primitive files
+file(GLOB PRIMITIVE_SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/primitives/*.cpp)
+file(GLOB PRIMITIVE_HEADER_FILES ${CMAKE_SOURCE_DIR}/src/primitives/*.h)
+
+# Add tool files
+file(GLOB TOOL_SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/tools/*.cpp)
+file(GLOB TOOL_HEADER_FILES ${CMAKE_SOURCE_DIR}/src/tools/*.h)
+	
+# Add window files
+file(GLOB WINDOW_SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/windows/*.cpp)
+file(GLOB WINDOW_HEADER_FILES ${CMAKE_SOURCE_DIR}/src/windows/*.h)
 
 # Add source files
-file(GLOB_RECURSE SOURCE_FILES 
+file(GLOB GLOBAL_SOURCE_FILES 
 	${CMAKE_SOURCE_DIR}/src/*.c
 	${CMAKE_SOURCE_DIR}/src/*.cpp)
 	
 # Add header files
-file(GLOB_RECURSE HEADER_FILES 
+file(GLOB GLOBAL_HEADER_FILES 
 	${CMAKE_SOURCE_DIR}/src/*.h
 	${CMAKE_SOURCE_DIR}/src/*.hpp)
+
+set(SOURCE_FILES ${GLOBAL_SOURCE_FILES} ${RENDERING_SOURCE_FILES} 
+	${PRIMITIVE_SOURCE_FILES} ${TOOL_SOURCE_FILES} ${WINDOW_SOURCE_FILES})
+	
+set(HEADER_FILES ${GLOBAL_HEADER_FILES} ${RENDERING_HEADER_FILES} 
+	${PRIMITIVE_HEADER_FILES} ${TOOL_HEADER_FILES} ${WINDOW_HEADER_FILES})
 
 # Configure assets header file
 configure_file(src/helpers/RootDir.h.in src/helpers/RootDir.h)
@@ -37,8 +59,17 @@ file(GLOB_RECURSE RESOURCE_FILES
 set_source_files_properties(${RESOURCE_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
 
 # Group up files to make IDE look nice
-source_group("Sources" FILES ${SOURCE_FILES})
-source_group("Headers" FILES ${HEADER_FILES})
+source_group("Sources" FILES ${GLOBAL_SOURCE_FILES})
+source_group("Sources/Primitives" FILES ${PRIMITIVE_SOURCE_FILES})
+source_group("Sources/Windows" FILES ${WINDOW_SOURCE_FILES})
+source_group("Sources/Rendering" FILES ${RENDERING_SOURCE_FILES})
+source_group("Sources/Tools" FILES ${TOOL_SOURCE_FILES})
+source_group("Headers" FILES ${GLOBAL_HEADER_FILES})
+source_group("Headers/Primitives" FILES ${PRIMITIVE_HEADER_FILES})
+source_group("Headers/Windows" FILES ${WINDOW_HEADER_FILES})
+source_group("Headers/Rendering" FILES ${RENDERING_HEADER_FILES})
+source_group("Headers/Tools" FILES ${TOOL_HEADER_FILES})
+
 source_group("Shaders" FILES ${SHADER_FILES})
 source_group("Configs" FILES ${CONFIG_FILES})
 source_group("Resources" FILES ${RESOURCE_FILES})
@@ -65,8 +96,18 @@ add_library(STB_IMAGE "external/stb_image.cpp")
 # GLAD
 add_library(GLAD "external/glad.c")
 
+# IMGUI
+set(IMGUI_DIR "external/imgui")
+add_library(IMGUI "${IMGUI_DIR}/imgui.cpp"
+	"${IMGUI_DIR}/imgui_demo.cpp"
+	"${IMGUI_DIR}/imgui_draw.cpp"
+	"${IMGUI_DIR}/imgui_tables.cpp"
+	"${IMGUI_DIR}/imgui_widgets.cpp"
+	"${IMGUI_DIR}/imgui_impl_glfw.cpp"
+	"${IMGUI_DIR}/imgui_impl_opengl3.cpp")
+
 # Combine all libs into one variable
-set(LIBS ${GLFW3_LIBRARY} ${OPENGL_LIBRARY} GLAD ${CMAKE_DL_LIBS} ${ASSIMP_LIBRARY} STB_IMAGE)
+set(LIBS ${GLFW3_LIBRARY} ${OPENGL_LIBRARY} GLAD ${CMAKE_DL_LIBS} ${ASSIMP_LIBRARY} STB_IMAGE IMGUI)
 
 # Define the include DIRs
 include_directories(
@@ -74,6 +115,7 @@ include_directories(
 	"${CMAKE_SOURCE_DIR}/include"
 	"${CMAKE_SOURCE_DIR}/include/glad"
 	"${CMAKE_SOURCE_DIR}/include/glm"
+	"${CMAKE_SOURCE_DIR}/include/imgui"
 )
 
 # Define the link libraries
