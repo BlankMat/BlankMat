@@ -1,8 +1,8 @@
 #pragma once
 #include "pCube.h"
-#include "options.h"
 #include "rendering/iLight.h"
 #include "rendering/shader.h"
+#include "files/options.h"
 
 class PLightCube : public ILight
 {

@@ -1,7 +1,7 @@
 #pragma once
 #include "glIncludes.h"
-#include "options.h"
 #include "iEntity.h"
+#include "files/options.h"
 
 class ILight : public IEntity
 {

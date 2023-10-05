@@ -1,7 +1,9 @@
 #pragma once
-#include "fileSystem.h"
-#include "options.h"
 #include "input.h"
+
+#include "files/options.h"
+#include "files/fileSystem.h"
+#include "files/configReader.h"
 
 #include "windows/window.h"
 #include "windows/guiDebugToolsWindow.h"
@@ -15,7 +17,8 @@
 #include "primitives/pLightCube.h"
 #include "primitives/pHandle.h"
 
-#define CONFIG_FILE "config.txt"
+#define CONFIG_FILE "configs/config.txt"
+#define CONFIG_JSON "configs/config.json"
 #define MODELS_DIR "resources/models/"
 #define APP_NAME "BlankMat"
 

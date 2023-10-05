@@ -1,10 +1,10 @@
 #pragma once
 #include "iGUIWindow.h"
 #include "selection.h"
-#include "options.h"
 #include "mathLib.h"
 #include "rendering/modelScene.h"
 #include "rendering/camera.h"
+#include "files/options.h"
 
 class GUIDebugToolsWindow : public IGUIWindow
 {

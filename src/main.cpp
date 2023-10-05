@@ -11,6 +11,7 @@ int main()
     // ------------
     std::cout << "Starting program, reading options from " << FileSystem::GetPath(CONFIG_FILE) << std::endl;
     Options options = ReadOptions(FileSystem::GetPath(CONFIG_FILE));
+    Config* jsonConfig = ConfigReader::ReadFile(FileSystem::GetPath(CONFIG_JSON));
 
     // Create scene
     // ------------
