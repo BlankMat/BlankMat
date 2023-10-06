@@ -2,6 +2,7 @@
 #include "pCube.h"
 #include "rendering/iLight.h"
 #include "rendering/shader.h"
+#include "files/config.h"
 #include "files/options.h"
 
 class PLightCube : public ILight
@@ -27,14 +28,17 @@ public:
     }
 
 	PLightCube(float size, Shader* shader, glm::vec3 pos = glm::vec3(1.0f), glm::vec3 dir = glm::vec3(-1.0f), glm::vec3 color = glm::vec3(1.0f),
-		float ka = 0.1f, float ks = 0.5f)
-        : ILight(pos, dir, color, ka, ks)
+		float ka = 0.1f, float ks = 0.5f, bool gamma = false)
+        : ILight(pos, dir, color, ka, ks, gamma)
     {
         mCube = new PCube(size, shader, color, 0.0f, false, pos);
     }
 
     PLightCube(float size, Shader* shader, Options* options)
         : PLightCube(size, shader, options->lightPos, options->lightDir, options->lightColor, options->lightKA, options->lightKS) {}
+    
+    PLightCube(float size, Shader* shader, Config* config)
+        : PLightCube(size, shader, config->GetVec("pos"), config->GetVec("dir"), config->GetVec("color"), config->GetFloat("ambient"), config->GetFloat("specular"), config->GetBool("gamma")) {}
 
     void Cleanup() override
     {

@@ -1,6 +1,7 @@
 #pragma once
 #include "glIncludes.h"
 #include "iEntity.h"
+#include "files/config.h"
 #include "files/options.h"
 
 class ILight : public IEntity
@@ -41,4 +42,6 @@ public:
 		: IEntity(nullptr, color, false, pos), mBaseColor(color), mDir(dir), m_ka(ka), m_ks(ks), mOffset(pos), mGamma(gamma) {}
 	ILight(Options* options)
 		: ILight(options->lightPos, options->lightDir, options->lightColor, options->lightKA, options->lightKS, options->gamma) {}
+	ILight(Config* config)
+		: ILight(config->GetVec("pos"), config->GetVec("dir"), config->GetVec("color"), config->GetFloat("ambient"), config->GetFloat("specular"), config->GetBool("gamma")) {}
 };

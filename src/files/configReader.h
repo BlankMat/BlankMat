@@ -35,8 +35,6 @@ private:
 	// Recursively reads the given JSON tree, keeping track of the parent key (if any)
 	static Config* ReadJSONTree(const Json::Value& root, const std::string key, Config* config)
 	{
-		Config* tempConfig = new Config();
-
 		// If the node doesn't have children, read the value to the config passed in
 		if (root.size() <= 0 || (root.isArray() && root.size() == 3 && key != ""))
 		{
@@ -45,6 +43,7 @@ private:
 		// If this node has children, read their values
 		else
 		{
+			Config* tempConfig = new Config(key);
 			// If this is the root, set config as parent config
 			if (config == nullptr)
 				config = tempConfig;

@@ -8,6 +8,7 @@
 class Config
 {
 private:
+	std::string mName;
 	std::unordered_map<std::string, Config*> mChildConfigs;
 	std::unordered_map<std::string, std::string> mConfigStrings;
 	std::unordered_map<std::string, glm::vec3> mConfigVecs;
@@ -45,6 +46,12 @@ private:
 	// Sets the given bool to the given value
 	void SetThisBool(std::string name, bool val);
 public:
+	// Creates a config with the given name
+	Config(std::string name) { mName = name; }
+
+	// Returns the config's name
+	std::string GetName() { return mName; }
+
 	// Returns the given config
 	Config* GetConfig(std::string name);
 	// Returns the given string

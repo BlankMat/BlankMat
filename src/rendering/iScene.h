@@ -5,6 +5,7 @@
 #include "camera.h"
 #include "material.h"
 #include "dataMaterial.h"
+#include "files/config.h"
 #include "windows/window.h"
 #include <unordered_map>
 
@@ -87,6 +88,9 @@ public:
 			return mRenderList[name];
 		return nullptr;
 	}
+	
+	// Sets up the scene's camera with the given options
+	void SetCamera(Config* config) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = new Camera(config); }
 
 	// Sets up the scene's camera with the given options
 	void SetCamera(Options* options) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = new Camera(options); }

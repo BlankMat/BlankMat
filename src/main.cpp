@@ -19,8 +19,8 @@ int main()
     scene->CreateShader(DEFAULT_SHADER, options.shader, options.shaderGeom);
     scene->CreateShader(LIGHT_CUBE_SHADER, false);
     scene->CreateShader(LINE_SHADER, false);
-    scene->SetCamera(&options);
-    scene->SetLight(new PLightCube(1.0f, scene->GetShader(LIGHT_CUBE_SHADER), &options));
+    scene->SetCamera(jsonConfig->GetConfig("camera"));
+    scene->SetLight(new PLightCube(1.0f, scene->GetShader(LIGHT_CUBE_SHADER), jsonConfig->GetConfig("light")));
 
     scene->AddEntity(BG_PLANE_OBJ, new PPlane(20.0f, true, scene->GetShader(DEFAULT_SHADER), options.defaultMat.kd, false), true);
     scene->AddEntity(GRID_OBJ, new PGrid(5, 1.0f, scene->GetShader(LINE_SHADER), glm::vec3(0.2f), 2, true, glm::vec3(0.0f)), true);
