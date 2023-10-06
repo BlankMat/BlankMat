@@ -2,7 +2,6 @@
 #include "glIncludes.h"
 #include "iEntity.h"
 #include "files/config.h"
-#include "files/options.h"
 
 class ILight : public IEntity
 {
@@ -33,15 +32,17 @@ public:
 	glm::vec3 GetDir() { return mDir; }
 	float GetKA() { return m_ka; }
 	float GetKS() { return m_ks; }
+	bool GetGamma() { return mGamma; }
 
-	void SetOffset(glm::vec3 offset) { mOffset = offset; }
 	void SetBaseColor(glm::vec3 color) { mBaseColor = color; }
+	void SetOffset(glm::vec3 offset) { mOffset = offset; }
+	void SetKA(float ka) { m_ka = ka; }
+	void SetKS(float ks) { m_ks = ks; }
+	void SetGamma(bool gamma) { mGamma = gamma; }
 
 	ILight(glm::vec3 pos = glm::vec3(1.0f), glm::vec3 dir = glm::vec3(-1.0f), glm::vec3 color = glm::vec3(1.0f), 
 		float ka = 0.1f, float ks = 0.5f, bool gamma = true) 
 		: IEntity(nullptr, color, false, pos), mBaseColor(color), mDir(dir), m_ka(ka), m_ks(ks), mOffset(pos), mGamma(gamma) {}
-	ILight(Options* options)
-		: ILight(options->lightPos, options->lightDir, options->lightColor, options->lightKA, options->lightKS, options->gamma) {}
 	ILight(Config* config)
 		: ILight(config->GetVec("pos"), config->GetVec("dir"), config->GetVec("color"), config->GetFloat("ambient"), config->GetFloat("specular"), config->GetBool("gamma")) {}
 };

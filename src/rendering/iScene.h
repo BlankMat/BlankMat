@@ -26,8 +26,10 @@ public:
 	virtual void Draw(Window* window) = 0;
 
 	// Activates the shader with the given name for the scene
-	void UseShader(std::string name)
+	void UseShader(std::string name = "")
 	{
+		if (name == "")
+			name = mCurShader;
 		if (mShaderList.find(name) != mShaderList.end() && mShaderList[name] != nullptr)
 		{
 			mShaderList[name]->Use();
@@ -47,6 +49,13 @@ public:
 	{
 		if (mShaderList.find(name) == mShaderList.end())
 			mShaderList.emplace(name, new Shader(source, loadGeom));
+	}
+
+	// Creates a shader for the scene with the given name, loading it from a config
+	void CreateShader(std::string name, Config* config)
+	{
+		if (mShaderList.find(name) == mShaderList.end())
+			mShaderList.emplace(name, new Shader(config->GetString("file"), config->GetBool("hasGeomShader")));
 	}
 
 	// Returns the scene's camera
@@ -89,11 +98,14 @@ public:
 		return nullptr;
 	}
 	
-	// Sets up the scene's camera with the given options
-	void SetCamera(Config* config) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = new Camera(config); }
+	// Returns a reference to the shader list
+	std::unordered_map<std::string, Shader*>& GetShaderList() { return mShaderList; }
+
+	// Returns the current shader
+	std::string GetCurShader() { return mCurShader; }
 
 	// Sets up the scene's camera with the given options
-	void SetCamera(Options* options) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = new Camera(options); }
+	void SetCamera(Config* config) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = new Camera(config); }
 
 	// Sets the scene's camera to the given camera
 	void SetCamera(Camera* cam) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = cam; }

@@ -1,7 +1,9 @@
 #pragma once
 #include "input.h"
 
-#include "files/options.h"
+#include "tools/state.h"
+
+#include "files/config.h"
 #include "files/fileSystem.h"
 #include "files/configReader.h"
 
@@ -26,4 +28,4 @@ const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 720;
 
 int main();
-void OpenGLDraw(Window* window, IScene* scene, Selection* sel, Options* options);
+void OpenGLDraw(Window* window, IScene* scene, State* state);

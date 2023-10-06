@@ -3,7 +3,7 @@
     "file": "backpack/backpack.obj",
     "pos": [ 0.0, 1.8, 0.0 ],
     "rot": [ 0.0, 0.0, 0.0 ],
-    "scale": [ 1.0, 1.0, 1.0 ]
+    "scale": [ 0.6, 0.6, 0.6 ]
   },
 
   "defaultMaterial": {
@@ -42,17 +42,5 @@
     "perspective": true,
     "bgColor": [ 0.3, 0.4, 0.4 ],
     "wireframe": false
-  },
-
-  "speeds": {
-    "camMove": 2.0,
-    "camTurn": 1.0,
-    "modelMove": 0.3,
-    "modelTurn": 30.0,
-    "modelScale": 1.0,
-    "mouseMove": 0.1,
-    "mouseTurn": 0.1
-  },
-
-  "flipImages": true
+  }
 }

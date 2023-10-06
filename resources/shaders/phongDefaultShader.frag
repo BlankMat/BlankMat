@@ -1,6 +1,17 @@
 #version 330 core
 out vec4 FragColor;
 
+in vec3 FragPos;
+in vec3 Normal;
+in vec2 TexCoords;
+
+struct Material {
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+    float shininess;
+};
+
 struct Light {
     vec3 position;
 
@@ -9,15 +20,12 @@ struct Light {
     vec3 specular;
 };
 
-in vec3 FragPos;
-in vec3 Normal;
-in vec2 TexCoords;
-
 uniform sampler2D texture_diffuse1;
 uniform sampler2D texture_specular1;
 uniform sampler2D texture_normal1;
 uniform sampler2D texture_height1;
 
+uniform Material material;
 uniform Light light;
 uniform vec3 viewPos;
 uniform bool gamma;

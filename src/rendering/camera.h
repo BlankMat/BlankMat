@@ -2,7 +2,6 @@
 #include "glIncludes.h"
 #include "mathLib.h"
 #include "files/config.h"
-#include "files/options.h"
 
 class Camera
 {
@@ -44,21 +43,6 @@ private:
         LookAt(mDir + mPos);
     }
 
-    // Sets the camera's values from the options given
-    void SetFromOptions(Options* options)
-    {
-        mFOV = options->camFov;
-        mNearClip = options->camNearClip;
-        mFarClip = options->camFarClip;
-        mPos = options->camPos;
-        mDir = options->camLookAt;
-        mOrthSize = options->camSize;
-        mIsPerspective = options->isPerspective;
-        mBGColor = options->bgColor;
-
-        LookAt(mDir + mPos);
-    }
-
     // Calculates the basis of the camera
     void CalcBasis()
     {
@@ -91,6 +75,10 @@ public:
     float GetNearClip() { return mNearClip; }
     // Returns the FOV of the camera
     float GetFOV() { return mFOV; }
+    // Returns whether the camera is in perspective
+    bool IsPerspective() { return mIsPerspective; }
+    // Returns whether the camera is in wireframe
+    bool IsWireframe() { return mIsWireframe; }
 
     // Sets the position of the camera
     void SetPos(glm::vec3 pos) { mPos = pos; }
@@ -104,6 +92,8 @@ public:
     void SetFOV(float fov) { mFOV = fov; }
     // Sets the camera to be perspective/orthographic
     void SetPerspective(bool isPerspective) { mIsPerspective = isPerspective; }
+    // Sets the camera to be/not be wireframe
+    void SetWireframe(bool isWireframe) { mIsWireframe = isWireframe; }
 
     // Returns the view matrix of the camera
     glm::mat4 GetView() { return glm::lookAt(mPos, mPos + mDir, mUp); }
@@ -161,5 +151,4 @@ public:
     }
 
     Camera(Config* config) { UseConfig(config); }
-    Camera(Options* options) { SetFromOptions(options); }
 };
