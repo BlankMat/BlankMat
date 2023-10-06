@@ -5,7 +5,6 @@
 
 #include "windows/window.h"
 #include "windows/guiDebugToolsWindow.h"
-#include "windows/guiToolbarWindow.h"
 
 #include "rendering/shader.h"
 #include "rendering/model.h"
