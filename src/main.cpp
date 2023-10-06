@@ -2,15 +2,15 @@
 
 int main()
 {
-    // Init window
-    Window* window = new Window(SCR_WIDTH, SCR_HEIGHT, APP_NAME);
-    if (window == nullptr)
-        return -1;
-
     // Read Options
     // ------------
     std::cout << "Starting program, reading options from " << FileSystem::GetPath(CONFIG_JSON) << std::endl;
     Config* config = ConfigReader::ReadFile(FileSystem::GetPath(CONFIG_JSON));
+
+    // Init window
+    Window* window = new Window(SCR_WIDTH, SCR_HEIGHT, APP_NAME, config->GetConfig("style"));
+    if (window == nullptr)
+        return -1;
 
     // Create state
     State* state = new State(new Selection(), config);

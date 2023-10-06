@@ -1,7 +1,7 @@
 {
   "model": {
     "file": "backpack/backpack.obj",
-    "pos": [ 0.0, 0.0, 0.0 ],
+    "pos": [ 0.0, 1.8, 0.0 ],
     "rot": [ 0.0, 0.0, 0.0 ],
     "scale": [ 1.0, 1.0, 1.0 ]
   },
@@ -60,6 +60,12 @@
     "mouseTurn": 0.1
   },
 
+  "style": {
+    "font": "Roboto-Regular.ttf",
+    "fontSize": 18.0,
+    "darkTheme": true,
+    "windowOpacity": 0.6
+  },
   "defaultCubes": false,
   "flipImages": true
 }
