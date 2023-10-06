@@ -44,13 +44,17 @@ int main()
     scene->AddEntity(GRID_OBJ, new PGrid(5, 1.0f, scene->GetShader(LINE_SHADER), glm::vec3(0.2f), 2, true, glm::vec3(0.0f)), true);
     scene->AddEntity(TRANSFORM_HANDLE, new PHandle(0.5f, scene->GetShader(LINE_SHADER), 6, true, glm::vec3(0.0f)));
     scene->AddEntity(CAMERA_AXIS_HANDLE, new PHandle(45.0f, scene->GetShader(LINE_SHADER), 6, false, glm::vec3(50, 50, 0)));
-    //scene->Addentity(CAMERA_AXIS_HANDLE, new Cube(15.0f, scene->GetShader(LINE_SHADER), glm::vec3(1.0f), 6, true, glm::vec3(100, 100, 0)));
-    scene->AddEntity("cube1", new PCube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(0,1,0), 0.0f, false, glm::vec3(-5, 0, -5), glm::vec3(0, 45, 0), glm::vec3(1, 2, 1)));
-    scene->AddEntity("cube2", new PCube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(1,0,0), 0.0f, false, glm::vec3(-5, 0, -3), glm::vec3(45, 0, 0), glm::vec3(2, 1, 1)));
-    scene->AddEntity("cube3", new PCube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(0,0,1), 0.0f, false, glm::vec3(-5, 0, -1), glm::vec3(0, 0, 45), glm::vec3(1, 1, 2)));
-    scene->AddEntity("cube4", new PCube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(0,1,1), 0.0f, false, glm::vec3(-5, 0, 1), glm::vec3(0, 45, 45), glm::vec3(1, 2, 2)));
-    scene->AddEntity("cube5", new PCube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(1,0,1), 0.0f, false, glm::vec3(-5, 0, 3), glm::vec3(45, 0, 45), glm::vec3(2, 1, 2)));
-    scene->AddEntity("cube6", new PCube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(1,1,0), 0.0f, false, glm::vec3(-5, 0, 5), glm::vec3(45, 45, 0), glm::vec3(2, 2, 1)));
+
+    if (config->GetBool("defaultCubes"))
+    {
+        //scene->Addentity(CAMERA_AXIS_HANDLE, new Cube(15.0f, scene->GetShader(LINE_SHADER), glm::vec3(1.0f), 6, true, glm::vec3(100, 100, 0)));
+        scene->AddEntity("cube1", new PCube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(0, 1, 0), 0.0f, false, glm::vec3(-5, 0, -5), glm::vec3(0, 45, 0), glm::vec3(1, 2, 1)));
+        scene->AddEntity("cube2", new PCube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(1, 0, 0), 0.0f, false, glm::vec3(-5, 0, -3), glm::vec3(45, 0, 0), glm::vec3(2, 1, 1)));
+        scene->AddEntity("cube3", new PCube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(0, 0, 1), 0.0f, false, glm::vec3(-5, 0, -1), glm::vec3(0, 0, 45), glm::vec3(1, 1, 2)));
+        scene->AddEntity("cube4", new PCube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(0, 1, 1), 0.0f, false, glm::vec3(-5, 0, 1), glm::vec3(0, 45, 45), glm::vec3(1, 2, 2)));
+        scene->AddEntity("cube5", new PCube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(1, 0, 1), 0.0f, false, glm::vec3(-5, 0, 3), glm::vec3(45, 0, 45), glm::vec3(2, 1, 2)));
+        scene->AddEntity("cube6", new PCube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(1, 1, 0), 0.0f, false, glm::vec3(-5, 0, 5), glm::vec3(45, 45, 0), glm::vec3(2, 2, 1)));
+    }
 
     // Enable wireframe if requested in options
     OpenGLEnableWireframe(config->GetBool("camera.wireframe"));
