@@ -15,7 +15,7 @@ protected:
 
 	void GenBuffers() override { mVAO = mVBO = mEBO = 0; }
 public:
-	void Draw(glm::mat4 viewProj) override {}
+	void Draw(glm::mat4 viewProj, glm::mat4 model = glm::mat4(1.0f)) override {}
 
 	// Updates the lighting values of the given shader
 	void UpdateShader(Shader* shader)

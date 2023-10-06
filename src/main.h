@@ -11,11 +11,10 @@
 #include "windows/guiDebugToolsWindow.h"
 
 #include "rendering/shader.h"
-#include "rendering/model.h"
-#include "rendering/modelScene.h"
+#include "rendering/scene.h"
 
-#include "primitives/pplane.h"
-#include "primitives/pgrid.h"
+#include "primitives/pPlane.h"
+#include "primitives/pGrid.h"
 #include "primitives/pLightCube.h"
 #include "primitives/pHandle.h"
 

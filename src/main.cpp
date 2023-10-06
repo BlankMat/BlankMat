@@ -14,7 +14,15 @@ int main()
 
     // Create scene
     // ------------
-    ModelScene* scene = new ModelScene();
+    Scene* scene = new Scene();
+    scene->LoadDefaultMaterial(config->GetConfig("defaultMaterial"));
+    scene->LoadModel(FileSystem::GetPath(MODELS_DIR + config->GetString("model.file")));
+    scene->GetRootNode()->SetShader(scene->GetShader(DEFAULT_SHADER));
+    scene->GetRootNode()->SetPos(config->GetVec("model.pos"));
+    scene->GetRootNode()->SetRot(config->GetVec("model.rot"));
+    scene->GetRootNode()->SetScale(config->GetVec("model.scale"));
+
+    // Load shaders
     scene->CreateShader(DEFAULT_SHADER, config->GetConfig("shader"));
     scene->CreateShader(BLINN_SHADER, false);
     scene->CreateShader(PHONG_SHADER, false);
@@ -37,15 +45,6 @@ int main()
     scene->AddEntity("cube4", new PCube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(0,1,1), 0.0f, false, glm::vec3(-5, 0, 1), glm::vec3(0, 45, 45), glm::vec3(1, 2, 2)));
     scene->AddEntity("cube5", new PCube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(1,0,1), 0.0f, false, glm::vec3(-5, 0, 3), glm::vec3(45, 0, 45), glm::vec3(2, 1, 2)));
     scene->AddEntity("cube6", new PCube(1.0f, scene->GetShader(LINE_SHADER), glm::vec3(1,1,0), 0.0f, false, glm::vec3(-5, 0, 5), glm::vec3(45, 45, 0), glm::vec3(2, 2, 1)));
-
-    // Read mesh
-    // ---------
-    Model* curModel = new Model(FileSystem::GetPath(MODELS_DIR + config->GetString("model.file")));
-    scene->SetModel(curModel);
-    curModel->SetMeshShaders(scene->GetShader(DEFAULT_SHADER));
-    curModel->SetPos(config->GetVec("model.pos"));
-    curModel->SetRot(config->GetVec("model.rot"));
-    curModel->SetScale(config->GetVec("model.scale"));
 
     // Enable wireframe if requested in options
     OpenGLEnableWireframe(config->GetBool("camera.wireframe"));

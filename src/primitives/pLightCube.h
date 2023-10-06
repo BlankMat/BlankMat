@@ -9,9 +9,9 @@ class PLightCube : public ILight
 protected:
     PCube* mCube;
 public:
-    void Draw(glm::mat4 viewProj)
+    void Draw(glm::mat4 viewProj, glm::mat4 model = glm::mat4(1.0f)) override
     {
-        mCube->Draw(viewProj);
+        mCube->Draw(viewProj, model);
     }
 
     void SetPos(glm::vec3 pos) override

@@ -11,6 +11,12 @@ private:
 public:
 	bool isDiscoLight;
 	bool isRotatingLight;
+
+	bool enableDiffuseMap;
+	bool enableAmbientMap;
+	bool enableSpecularMap;
+	bool enableNormalMap;
+
 	std::string curShader;
 
 	Selection* GetSel() { return mSelection; }
@@ -23,5 +29,10 @@ public:
 		mConfig = config;
 		isDiscoLight = false;
 		isRotatingLight = false;
+
+		enableDiffuseMap = true;
+		enableAmbientMap = true;
+		enableSpecularMap = true;
+		enableNormalMap = true;
 	}
 };

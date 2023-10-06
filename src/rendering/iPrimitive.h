@@ -40,14 +40,20 @@ protected:
 	}
 public:
 	// Draws the object to the screen
-	virtual void Draw(glm::mat4 viewProj)
+	virtual void Draw(glm::mat4 viewProj, glm::mat4 model = glm::mat4(1.0f))
 	{
 		// Don't draw disabled objects
 		if (!mIsEnabled)
 			return;
 
 		mShader->Use();
-		mShader->SetMat4("MVP", viewProj * GetModelMatrix());
+		// Set uniforms for this draw
+		glm::mat4 modelMatrix = GetModelMatrix() * model;
+		glm::mat4 mvp = viewProj * modelMatrix;
+		glm::mat3 normalModel = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
+		mShader->SetMat4("MVP", mvp);
+		mShader->SetMat4("Model", modelMatrix);
+		mShader->SetMat3("NormalModel", normalModel);
 		mShader->SetVec3("Color", mColor);
 
 		if (mDrawOver)

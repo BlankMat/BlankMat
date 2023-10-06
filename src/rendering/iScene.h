@@ -4,7 +4,6 @@
 #include "iLight.h"
 #include "camera.h"
 #include "material.h"
-#include "dataMaterial.h"
 #include "files/config.h"
 #include "windows/window.h"
 #include <unordered_map>
@@ -123,7 +122,7 @@ public:
 	}
 
 	// Adds a texture to the scene's texture list
-	Texture* AddMaterial(std::string name, Texture* texture)
+	Texture* AddTexture(std::string name, Texture* texture)
 	{
 		if (mTextureList.find(name) == mTextureList.end())
 			mTextureList.emplace(name, texture);
@@ -138,12 +137,30 @@ public:
 		return material;
 	}
 
-	// Adds a material to the scene's material list
-	DataMaterial* AddMaterial(std::string name, DataMaterial* material)
+	// Loads the default material and texture
+	void LoadDefaultMaterial(Config* config)
 	{
-		if (mMaterialList.find(name) == mMaterialList.end())
-			mMaterialList.emplace(name, new Material(material));
-		return material;
+		// If passed the wrong config, load the correct one
+		if (config->GetName() != "defaultMaterial")
+			config = config->GetConfig("defaultMaterial");
+
+		// Create default textures
+		Texture* defaultKD = new Texture("texture_diffuse", FileSystem::GetPath(TEXTURE_DIR), config->GetString("map_kd"));
+		Texture* defaultKA = new Texture("texture_ambient", FileSystem::GetPath(TEXTURE_DIR), config->GetString("map_ka"));
+		Texture* defaultKS = new Texture("texture_specular", FileSystem::GetPath(TEXTURE_DIR), config->GetString("map_ks"));
+		Texture* defaultBump = new Texture("texture_normal", FileSystem::GetPath(TEXTURE_DIR), config->GetString("map_bump"));
+		Texture* defaultNS = new Texture("texture_height", FileSystem::GetPath(TEXTURE_DIR), config->GetString("map_ns"));
+		Texture* defaultD = new Texture("texture_alpha", FileSystem::GetPath(TEXTURE_DIR), config->GetString("map_d"));
+		Material* defaultMaterial = new Material(config, defaultKD, defaultKA, defaultKS, defaultBump, defaultNS, defaultD);
+
+		// Store default textures
+		AddTexture("default_diffuse", defaultKD);
+		AddTexture("default_ambient", defaultKA);
+		AddTexture("default_specular", defaultKS);
+		AddTexture("default_normal", defaultBump);
+		AddTexture("default_height", defaultNS);
+		AddTexture("default_alpha", defaultD);
+		AddMaterial("default", defaultMaterial);
 	}
 
 	// Returns the projection matrix of the scene's camera

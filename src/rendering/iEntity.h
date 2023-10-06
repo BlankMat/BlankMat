@@ -22,7 +22,7 @@ protected:
 	virtual void GenBuffers() = 0;
 public:
 	// Draws the object to the screen
-	virtual void Draw(glm::mat4 viewProj) = 0;
+	virtual void Draw(glm::mat4 viewProj, glm::mat4 model = glm::mat4(1.0f)) = 0;
 	// Gets the position of the object
 	virtual glm::vec3 GetPos() { return mPos; }
 	// Gets the rotation of the object
@@ -31,6 +31,9 @@ public:
 	virtual glm::vec3 GetScale() { return mScale; }
 	// Gets the color of the object
 	virtual glm::vec3 GetColor() { return mColor; }
+	// Gets the shader of the object
+	virtual Shader* GetShader() { return mShader; }
+
 	// Sets the position of the object
 	virtual void SetPos(glm::vec3 pos) { mPos = pos; }
 	// Sets the rotation of the object
@@ -39,6 +42,8 @@ public:
 	virtual void SetScale(glm::vec3 scale) { mScale = scale; }
 	// Sets the scale of the object
 	virtual void SetColor(glm::vec3 color) { mColor = color; }
+	// Sets the shader of the object
+	virtual void SetShader(Shader* shader) { mShader = shader; }
 
 	// Returns whether the object is enabled
 	bool IsEnabled() { return mIsEnabled; }

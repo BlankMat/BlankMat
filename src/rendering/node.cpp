@@ -1,7 +1,45 @@
-#include "sceneNode.h"
+#include "node.h"
+
+// Creates a scene node with the given parent and name
+Node::Node(Node* parent, std::string name)
+{
+	mParent = parent;
+	mName = name;
+}
+
+// Draws the node recursively
+void Node::Draw(glm::mat4 viewProj, glm::mat4 model)
+{
+	// Calculate the MVP of this stage
+	glm::mat4 newModel = GetModelMatrix() * model;
+
+	// Draw all child meshes
+	for (unsigned int i = 0; i < mMeshes.size(); i++)
+		if (mMeshes[i] != nullptr)
+			mMeshes[i]->Draw(viewProj, newModel);
+
+	// Draw all child nodes
+	for (unsigned int i = 0; i < mChildren.size(); i++)
+		if (mChildren[i] != nullptr)
+			mChildren[i]->Draw(viewProj, newModel);
+}
+
+// Sets the shader of the node recursively
+void Node::SetShader(Shader* shader)
+{
+	// Draw all child meshes
+	for (unsigned int i = 0; i < mMeshes.size(); i++)
+		if (mMeshes[i] != nullptr)
+			mMeshes[i]->SetShader(shader);
+
+	// Draw all child nodes
+	for (unsigned int i = 0; i < mChildren.size(); i++)
+		if (mChildren[i] != nullptr)
+			mChildren[i]->SetShader(shader);
+}
 
 // Finds the node with the given name, recursively
-SceneNode* SceneNode::FindNode(std::string name)
+Node* Node::FindNode(std::string name)
 {
 	// If this node is the node that is being looked for, return it
 	if (mName == name)
@@ -13,7 +51,7 @@ SceneNode* SceneNode::FindNode(std::string name)
 			continue;
 
 		// If the node is found, return it
-		SceneNode* res = mChildren[i]->FindNode(name);
+		Node* res = mChildren[i]->FindNode(name);
 		if (res != nullptr)
 			return res;
 	}
@@ -21,40 +59,42 @@ SceneNode* SceneNode::FindNode(std::string name)
 }
 
 // Returns the index of the given mesh or -1 if not found
-int SceneNode::GetMeshIndex(unsigned int index)
+int Node::GetMeshIndex(IMesh* mesh)
 {
 	for (unsigned int i = 0; i < (unsigned int)mMeshes.size(); i++)
 	{
-		if (mMeshes[i] == index)
-			return i;
+		if (mMeshes[i] != nullptr)
+			if (mMeshes[i]->GetName() == mesh->GetName())
+				return i;
 	}
 	return -1;
 }
 
 // Returns the index of the given node or -1 if not found
-int SceneNode::GetNodeIndex(std::string child)
+int Node::GetNodeIndex(std::string child)
 {
 	for (unsigned int i = 0; i < (unsigned int)mChildren.size(); i++)
 	{
-		if (mChildren[i]->mName == child)
-			return i;
+		if (mChildren[i] != nullptr)
+			if (mChildren[i]->mName == child)
+				return i;
 	}
 	return -1;
 }
 
 // Adds a mesh to the node
-void SceneNode::AddMesh(unsigned int meshIndex)
+void Node::AddMesh(IMesh* mesh)
 {
-	if (HasMesh(meshIndex))
+	if (HasMesh(mesh))
 	{
 		std::cout << "WARNING::NODE::EXISTS Node already has the given mesh" << std::endl;
 		return;
 	}
-	mMeshes.push_back(meshIndex);
+	mMeshes.push_back(mesh);
 }
 
 // Adds a child to the node
-void SceneNode::AddChild(SceneNode* child)
+void Node::AddChild(Node* child)
 {
 	if (HasNode(child->mName))
 	{
@@ -66,8 +106,15 @@ void SceneNode::AddChild(SceneNode* child)
 }
 
 // Moves the given mesh from this node to the given node. Returns whether it was successful
-bool SceneNode::MoveMesh(unsigned int meshIndex, SceneNode* other)
+bool Node::MoveMesh(IMesh* mesh, Node* other)
 {
+	// Don't move null mesh
+	if (mesh == nullptr)
+	{
+		std::cout << "ERROR::NODE::NULL Cannot move null mesh." << std::endl;
+		return false;
+	}
+
 	// Don't move the mesh to a null node
 	if (other == nullptr)
 	{
@@ -75,7 +122,7 @@ bool SceneNode::MoveMesh(unsigned int meshIndex, SceneNode* other)
 		return false;
 	}
 	// Search for mesh index
-	int index = GetMeshIndex(meshIndex);
+	int index = GetMeshIndex(mesh);
 	// Don't move a mesh that is not a child of this node
 	if (index < 0)
 	{
@@ -84,12 +131,12 @@ bool SceneNode::MoveMesh(unsigned int meshIndex, SceneNode* other)
 	}
 	// Move the element
 	mMeshes.erase(mMeshes.begin() + index);
-	other->AddMesh(meshIndex);
+	other->AddMesh(mesh);
 	return true;
 }
 
 // Moves the given child node from this node to the given node. Returns whether it was successful
-bool SceneNode::MoveChild(std::string child, SceneNode* other)
+bool Node::MoveChild(std::string child, Node* other)
 {
 	// Don't move the node to a null node
 	if (other == nullptr)
@@ -112,7 +159,7 @@ bool SceneNode::MoveChild(std::string child, SceneNode* other)
 }
 
 // Removes the node with the given name along with its children. Returns whether the deletion happened
-bool SceneNode::DeleteNode(std::string name)
+bool Node::DeleteNode(std::string name)
 {
 	// Do not delete the node itself
 	if (mName == name)
@@ -122,7 +169,7 @@ bool SceneNode::DeleteNode(std::string name)
 	}
 
 	// Search for the node
-	SceneNode* node = FindNode(name);
+	Node* node = FindNode(name);
 	if (node == nullptr)
 		return false;
 
@@ -132,7 +179,7 @@ bool SceneNode::DeleteNode(std::string name)
 }
 
 // Recursively deletes this node and all its children
-void SceneNode::Delete()
+void Node::Delete()
 {
 	for (unsigned int i = 0; i < (unsigned int)mChildren.size(); i++)
 		mChildren[i]->Delete();

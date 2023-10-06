@@ -2,7 +2,7 @@
 #include "iGUIWindow.h"
 #include "selection.h"
 #include "mathLib.h"
-#include "rendering/modelScene.h"
+#include "rendering/scene.h"
 #include "rendering/camera.h"
 #include "tools/state.h"
 
@@ -10,7 +10,7 @@ class GUIDebugToolsWindow : public IGUIWindow
 {
 protected:
 	State* mState;
-	ModelScene* mScene;
+	Scene* mScene;
 public:
 	void Draw() override
 	{
@@ -20,23 +20,33 @@ public:
 
 		ImGui::Begin("Debug Tools");
 
+		// Shading settings
+		ImGui::Text("Shading");
 		// Select shader
 		std::unordered_map<std::string, Shader*> shaders = mScene->GetShaderList();
 		std::string curShader = mScene->GetCurShader();
-		ImGui::BeginListBox("Shader");
-		for (auto iter = shaders.begin(); iter != shaders.end(); ++iter)
+		if (ImGui::BeginListBox("Shader"))
 		{
-			std::string itemName = iter->first;
-			bool isSelected = itemName == curShader;
-			if (ImGui::Selectable(itemName.c_str(), &isSelected))
-				curShader = itemName;
+			for (auto iter = shaders.begin(); iter != shaders.end(); ++iter)
+			{
+				std::string itemName = iter->first;
+				bool isSelected = itemName == curShader;
+				if (ImGui::Selectable(itemName.c_str(), &isSelected))
+					curShader = itemName;
 
-			if (isSelected)
-				ImGui::SetItemDefaultFocus();
+				if (isSelected)
+					ImGui::SetItemDefaultFocus();
+			}
+			ImGui::EndListBox();
+			mScene->UseShader(curShader);
+			mScene->GetRootNode()->SetShader(mScene->GetShader(curShader));
 		}
-		ImGui::EndListBox();
-		mScene->UseShader(curShader);
-		mScene->GetModel()->SetMeshShaders(mScene->GetShader(curShader));
+
+		// Choose parts of materials
+		ImGui::Checkbox("Enable Diffuse", &mState->enableDiffuseMap);
+		ImGui::Checkbox("Enable Ambient", &mState->enableAmbientMap);
+		ImGui::Checkbox("Enable Specular", &mState->enableSpecularMap);
+		ImGui::Checkbox("Enable Normal", &mState->enableNormalMap);
 
 		// Camera settings
 		ImGui::Text("Camera Settings");
@@ -116,7 +126,7 @@ public:
 		light->SetGamma(lightGamma);
 
 		// Model settings
-		Model* model = mScene->GetModel();
+		Node* model = mScene->GetRootNode();
 		ImGui::Text("Model Settings");
 
 		// Model position
@@ -144,7 +154,7 @@ public:
 		ImGui::End();
 	}
 
-	GUIDebugToolsWindow(State* state, ModelScene* scene, bool isEnabled)
+	GUIDebugToolsWindow(State* state, Scene* scene, bool isEnabled)
 	{
 		type = GUI::DEBUG_TOOLS;
 		mState = state;
