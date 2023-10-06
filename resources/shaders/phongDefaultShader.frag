@@ -1,9 +1,13 @@
 #version 330 core
 out vec4 FragColor;
 
-in vec3 FragPos;
-in vec3 Normal;
-in vec2 TexCoords;
+in VS_OUT {
+	vec3 FragPos;
+	vec2 TexCoords;
+	vec3 TangentLightPos;
+	vec3 TangentViewPos;
+	vec3 TangentFragPos;
+} fs_in;
 
 struct Material {
     vec3 ambient;
@@ -21,9 +25,11 @@ struct Light {
 };
 
 uniform sampler2D texture_diffuse1;
+uniform sampler2D texture_ambient1;
 uniform sampler2D texture_specular1;
 uniform sampler2D texture_normal1;
 uniform sampler2D texture_height1;
+uniform sampler2D texture_alpha1;
 
 uniform Material material;
 uniform Light light;
@@ -32,30 +38,34 @@ uniform bool gamma;
 
 void main()
 {
+    // Normal in range [-1,1]
+    vec3 normal = normalize(texture(texture_normal1, fs_in.TexCoords).rgb * 2.0 - 1.0);
+
     // Ambient
-    vec3 ambient = light.ambient;
+    vec3 ambientColor = texture(texture_ambient1, fs_in.TexCoords).rgb;
+    vec3 ambient = light.ambient * material.ambient * ambientColor;
 
     // Diffuse
-    vec3 norm = normalize(Normal);
-    vec3 lightDir = normalize(light.position - FragPos);
-    vec3 diffuse = light.diffuse * max(dot(norm, lightDir), 0.0);
+    vec3 lightDir = normalize(fs_in.TangentLightPos - fs_in.TangentFragPos);
+    vec3 diffuseColor = texture(texture_diffuse1, fs_in.TexCoords).rgb;
+    vec3 diffuse = light.diffuse * (max(dot(normal, lightDir), 0.0) * material.diffuse) * diffuseColor;
 
     // Specular
-    vec3 viewDir = normalize(viewPos - FragPos);
-    vec3 reflectDir = reflect(-lightDir, norm);
-    vec3 specular = light.specular * pow(max(dot(viewDir, reflectDir), 0.0), 32.0);
+    vec3 viewDir = normalize(fs_in.TangentViewPos - fs_in.TangentFragPos);
+    vec3 reflectDir = reflect(-lightDir, normal);
+    vec3 specularColor = texture(texture_specular1, fs_in.TexCoords).rgb;
+    vec3 specular = light.specular * (pow(max(dot(normal, reflectDir), 0.0), material.shininess) * material.specular) * specularColor;
 	
     // Simple attenuation
     float maxDistance = 1.5;
-    float dist = length(light.position - FragPos);
+    float dist = length(fs_in.TangentLightPos - fs_in.TangentFragPos);
 	//TODO: float attenuation = 1.0f / (gamma ? dist * dist : dist);
     float attenuation = 1.0f;
     diffuse *= attenuation;
     specular *= attenuation;
 
     // Result
-    vec3 textureColor = texture(texture_diffuse1, TexCoords).rgb;
-	vec3 result = (ambient + diffuse + specular) * textureColor;
+	vec3 result = (ambient + diffuse + specular);
     if (gamma)
         result = pow(result, vec3(1.0/2.2));
     FragColor = vec4(result, 1.0);

@@ -3,6 +3,7 @@
 #include "iScene.h"
 #include "mesh.h"
 #include "node.h"
+#include "tools/state.h"
 
 class Scene : public IScene
 {
@@ -10,6 +11,7 @@ protected:
 	std::string mDirectory;
 	std::vector<Mesh*> mMeshList;
 	Node* mRootNode;
+	State* mState;
 
 	void ProcessNode(Node* sceneNode, aiNode* node, const aiScene* scene);
 	Mesh* ProcessMesh(aiMesh* mesh, const aiScene* scene);
@@ -20,7 +22,7 @@ public:
 	// Renders the current scene
 	void Draw(Window* window) override;
 	// Sets the shader for all the meshes of the model
-	void SetMeshShaders(Shader* shader);
+	void SetMeshShaders(Shader* shader, State* state);
 	// Returns the root node
 	Node* GetRootNode() { return mRootNode; }
 	// Constructs the scene, getting everything ready for manual setting

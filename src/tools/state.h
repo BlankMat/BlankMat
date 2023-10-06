@@ -16,6 +16,8 @@ public:
 	bool enableAmbientMap;
 	bool enableSpecularMap;
 	bool enableNormalMap;
+	bool enableHeightMap;
+	bool enableAlphaMap;
 
 	std::string curShader;
 

@@ -24,7 +24,7 @@ void Mesh::Draw(glm::mat4 viewProj, glm::mat4 model)
     glm::mat4 modelMatrix = GetModelMatrix() * model;
     glm::mat4 mvp = viewProj * modelMatrix;
     glm::mat3 normalModel = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
-    mMaterial->UpdateShader(mShader);
+    mMaterial->UpdateShader(mShader, mState, mDefaultMat);
     mShader->SetMat4("MVP", mvp);
     mShader->SetMat4("Model", modelMatrix);
     mShader->SetMat3("NormalModel", normalModel);

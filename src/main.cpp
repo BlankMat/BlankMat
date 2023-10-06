@@ -12,6 +12,11 @@ int main()
     std::cout << "Starting program, reading options from " << FileSystem::GetPath(CONFIG_JSON) << std::endl;
     Config* config = ConfigReader::ReadFile(FileSystem::GetPath(CONFIG_JSON));
 
+    // Create state
+    State* state = new State(new Selection(), config);
+    state->GetSel()->SetSelMode(SelMode::MESH);
+    state->GetSel()->SetTool(Tool::SELECT);
+
     // Create scene
     // ------------
     Scene* scene = new Scene();
@@ -21,6 +26,7 @@ int main()
     scene->GetRootNode()->SetPos(config->GetVec("model.pos"));
     scene->GetRootNode()->SetRot(config->GetVec("model.rot"));
     scene->GetRootNode()->SetScale(config->GetVec("model.scale"));
+    scene->SetMeshShaders(scene->GetShader(DEFAULT_SHADER), state);
 
     // Load shaders
     scene->CreateShader(DEFAULT_SHADER, config->GetConfig("shader"));
@@ -60,11 +66,6 @@ int main()
     float deltaTime = 0.0f;
 
     float gammaKeyPressed = false;
-
-    // Create state
-    State* state = new State(new Selection(), config);
-    state->GetSel()->SetSelMode(SelMode::MESH);
-    state->GetSel()->SetTool(Tool::SELECT);
 
     // Add GUIs
     window->AddGUI(new GUIDebugToolsWindow(state, scene, true));

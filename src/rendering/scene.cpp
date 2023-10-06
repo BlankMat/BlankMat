@@ -35,10 +35,13 @@ void Scene::Draw(Window* window)
 }
 
 // Sets the shader for all the meshes of the model
-void Scene::SetMeshShaders(Shader* shader)
+void Scene::SetMeshShaders(Shader* shader, State* state)
 {
 	for (unsigned int i = 0; i < mMeshList.size(); i++)
+	{
 		mMeshList[i]->SetShader(shader);
+		mMeshList[i]->SetState(state);
+	}
 }
 
 // Loads the model at the given path
@@ -46,7 +49,7 @@ void Scene::LoadModel(std::string path)
 {
 	std::cout << "Reading model from file " << path << std::endl;
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
@@ -71,6 +74,7 @@ void Scene::ProcessNode(Node* sceneNode, aiNode* node, const aiScene* scene)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		Mesh* newMesh = ProcessMesh(mesh, scene);
+		newMesh->SetDefaultMat(GetMaterial("default"));
 		sceneNode->AddMesh(newMesh);
 		mMeshList.push_back(newMesh);
 	}
@@ -96,7 +100,8 @@ Mesh* Scene::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 		glm::vec3 pos = Vec3FromAssimp(mesh->mVertices[i]);
 		glm::vec3 normal = Vec3FromAssimp(mesh->mNormals[i]);
 		glm::vec2 texCoords = (mesh->mTextureCoords[0]) ? Vec2FromAssimp(mesh->mTextureCoords[0][i]) : glm::vec2();
-		vertices.push_back(Vertex(pos, normal, texCoords));
+		glm::vec3 tangent = Vec3FromAssimp(mesh->mTangents[i]);
+		vertices.push_back(Vertex(pos, normal, texCoords, tangent));
 	}
 
 	// Process each index
@@ -118,13 +123,7 @@ Mesh* Scene::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 			// 2. ambient maps
 			std::vector<Texture*> ambientMaps = LoadMaterialTextures(material, aiTextureType_AMBIENT, "texture_ambient");
 			if (ambientMaps.size() == 0)
-			{
-				// If there are no ambient maps but there are diffuse maps, use the diffuse maps
-				if (diffuseMaps.size() > 0)
-					ambientMaps.insert(ambientMaps.end(), diffuseMaps.begin(), diffuseMaps.end());
-				else
-					ambientMaps.push_back(GetTexture("default_ambient"));
-			}
+				ambientMaps.push_back(GetTexture("default_ambient"));
 			// 3. specular maps
 			std::vector<Texture*> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
 			if (specularMaps.size() == 0)

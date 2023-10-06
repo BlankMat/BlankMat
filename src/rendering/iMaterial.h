@@ -20,9 +20,6 @@ struct IMaterial {
 	T map_ns;				// specular highlight texture
 	T map_d;				// alpha (dissolve) texture
 
-	// Updates the given shader with the material's values
-	virtual void UpdateShader(Shader* shader) = 0;
-
 	IMaterial(glm::vec3 _ka = glm::vec3(), glm::vec3 _kd = glm::vec3(), glm::vec3 _ks = glm::vec3(),
 		float _ns = 0, float _ni = 1, float _d = 1, glm::vec3 _ke = glm::vec3(), int _illum = 2)
 		: ka(_ka), kd(_kd), ks(_ks), ke(_ke), ns(_ns), ni(_ni), d(_d), illum(_illum) {}

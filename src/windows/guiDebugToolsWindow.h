@@ -43,10 +43,12 @@ public:
 		}
 
 		// Choose parts of materials
-		ImGui::Checkbox("Enable Diffuse", &mState->enableDiffuseMap);
-		ImGui::Checkbox("Enable Ambient", &mState->enableAmbientMap);
-		ImGui::Checkbox("Enable Specular", &mState->enableSpecularMap);
-		ImGui::Checkbox("Enable Normal", &mState->enableNormalMap);
+		ImGui::Checkbox("Enable Diffuse Map", &mState->enableDiffuseMap);
+		ImGui::Checkbox("Enable Ambient Map", &mState->enableAmbientMap);
+		ImGui::Checkbox("Enable Specular Map", &mState->enableSpecularMap);
+		ImGui::Checkbox("Enable Normal Map", &mState->enableNormalMap);
+		ImGui::Checkbox("Enable Height Map", &mState->enableHeightMap);
+		ImGui::Checkbox("Enable Alpha Map", &mState->enableAlphaMap);
 
 		// Camera settings
 		ImGui::Text("Camera Settings");
