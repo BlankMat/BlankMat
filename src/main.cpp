@@ -64,6 +64,7 @@ int main()
 
     // Add GUIs
     window->AddGUI(new GUIDebugToolsWindow(&sel, scene, &options, true));
+    window->AddGUI(new GUIToolbarWindow(&sel,true));
 
     // render loop
     // -----------
