@@ -34,12 +34,13 @@ protected:
 			return material;
 
 		// Create textures
-		Texture* kd = LoadTexture("texture_diffuse", config->GetString("map_kd"));
-		Texture* ka = LoadTexture("texture_ambient", config->GetString("map_ka"));
-		Texture* ks = LoadTexture("texture_specular", config->GetString("map_ks"));
-		Texture* normal = LoadTexture("texture_normal", config->GetString("map_bump"));
-		Texture* ns = LoadTexture("texture_height", config->GetString("map_ns"));
-		Texture* d = LoadTexture("texture_alpha", config->GetString("map_d"));
+		bool isDefault = (name == "default");
+		Texture* kd = LoadTexture("texture_diffuse", config->GetString("map_kd"), isDefault ? "default_diffuse" : "");
+		Texture* ka = LoadTexture("texture_ambient", config->GetString("map_ka"), isDefault ? "default_ambient" : "");
+		Texture* ks = LoadTexture("texture_specular", config->GetString("map_ks"), isDefault ? "default_specular" : "");
+		Texture* normal = LoadTexture("texture_normal", config->GetString("map_bump"), isDefault ? "default_normal" : "");
+		Texture* ns = LoadTexture("texture_height", config->GetString("map_ns"), isDefault ? "default_height" : "");
+		Texture* d = LoadTexture("texture_alpha", config->GetString("map_d"), isDefault ? "default_alpha" : "");
 
 		// Create material
 		material = new Material(config, kd, ka, ks, normal, ns, d);
@@ -48,7 +49,7 @@ protected:
 	}
 
 	// Loads the given texture or returns the existing one
-	Texture* LoadTexture(std::string type, std::string path)
+	Texture* LoadTexture(std::string type, std::string path, std::string name = "")
 	{
 		// If the texture is already loaded with the same type, return it
 		Texture* texture = GetTexture(path);
@@ -57,7 +58,7 @@ protected:
 
 		// Otherwise load the texture and store it
 		texture = new Texture("texture_diffuse", FileSystem::GetPath(TEXTURE_DIR), path);
-		AddTexture(path, texture);
+		AddTexture((name != "") ? name : path, texture);
 		return texture;
 	}
 

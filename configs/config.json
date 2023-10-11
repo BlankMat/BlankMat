@@ -1,26 +1,9 @@
 {
   "model": {
-    "file": "teapot.obj",
+    "file": "backpack/backpack.obj",
     "pos": [ 0.0, 1.8, 0.0 ],
     "rot": [ 0.0, 0.0, 0.0 ],
     "scale": [ 1.0, 1.0, 1.0 ]
-  },
-
-  "defaultMaterial": {
-    "kd": [ 0.6, 0.6, 0.6 ],
-    "ka": [ 0.2, 0.2, 0.2 ],
-    "ks": [ 1.0, 1.0, 1.0 ],
-    "ke": [ 0.0, 0.0, 0.0 ],
-    "ns": 8.0,
-    "ni": 0.0,
-    "d": 1.0,
-    "illum": 2,
-    "map_kd": "default.png",
-    "map_ka": "default.png",
-    "map_ks": "default.png",
-    "map_bump": "default_normal.png",
-    "map_ns": "default.png",
-    "map_d": "default.png"
   },
 
   "shader": {
