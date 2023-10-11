@@ -20,6 +20,47 @@ protected:
 	std::unordered_map<std::string, Shader*> mShaderList;
 	std::unordered_map<std::string, Material*> mMaterialList;
 	std::unordered_map<std::string, Texture*> mTextureList;
+
+	// Loads the material of the given config. Must be bottom-level config
+	Material* LoadMaterial(Config* config, std::string name)
+	{
+		// Don't handle null configs
+		if (config == nullptr)
+			return nullptr;
+
+		// If the material exists already, return it
+		Material* material = GetMaterial(name);
+		if (material != nullptr)
+			return material;
+
+		// Create textures
+		Texture* kd = LoadTexture("texture_diffuse", config->GetString("map_kd"));
+		Texture* ka = LoadTexture("texture_ambient", config->GetString("map_ka"));
+		Texture* ks = LoadTexture("texture_specular", config->GetString("map_ks"));
+		Texture* normal = LoadTexture("texture_normal", config->GetString("map_bump"));
+		Texture* ns = LoadTexture("texture_height", config->GetString("map_ns"));
+		Texture* d = LoadTexture("texture_alpha", config->GetString("map_d"));
+
+		// Create material
+		material = new Material(config, kd, ka, ks, normal, ns, d);
+		AddMaterial(name, material);
+		return material;
+	}
+
+	// Loads the given texture or returns the existing one
+	Texture* LoadTexture(std::string type, std::string path)
+	{
+		// If the texture is already loaded with the same type, return it
+		Texture* texture = GetTexture(path);
+		if (texture != nullptr && texture->type == type)
+			return texture;
+
+		// Otherwise load the texture and store it
+		texture = new Texture("texture_diffuse", FileSystem::GetPath(TEXTURE_DIR), path);
+		AddTexture(path, texture);
+		return texture;
+	}
+
 public:
 	// Renders the current scene
 	virtual void Draw(Window* window) = 0;
@@ -137,30 +178,17 @@ public:
 		return material;
 	}
 
-	// Loads the default material and texture
-	void LoadDefaultMaterial(Config* config)
+	// Loads the materials from the given config
+	void LoadMaterials(Config* config)
 	{
-		// If passed the wrong config, load the correct one
-		if (config->GetName() != "defaultMaterial")
-			config = config->GetConfig("defaultMaterial");
+		// Load the default material if it exists
+		LoadMaterial(config->GetConfig("default"), "default");
 
-		// Create default textures
-		Texture* defaultKD = new Texture("texture_diffuse", FileSystem::GetPath(TEXTURE_DIR), config->GetString("map_kd"));
-		Texture* defaultKA = new Texture("texture_ambient", FileSystem::GetPath(TEXTURE_DIR), config->GetString("map_ka"));
-		Texture* defaultKS = new Texture("texture_specular", FileSystem::GetPath(TEXTURE_DIR), config->GetString("map_ks"));
-		Texture* defaultBump = new Texture("texture_normal", FileSystem::GetPath(TEXTURE_DIR), config->GetString("map_bump"));
-		Texture* defaultNS = new Texture("texture_height", FileSystem::GetPath(TEXTURE_DIR), config->GetString("map_ns"));
-		Texture* defaultD = new Texture("texture_alpha", FileSystem::GetPath(TEXTURE_DIR), config->GetString("map_d"));
-		Material* defaultMaterial = new Material(config, defaultKD, defaultKA, defaultKS, defaultBump, defaultNS, defaultD);
-
-		// Store default textures
-		AddTexture("default_diffuse", defaultKD);
-		AddTexture("default_ambient", defaultKA);
-		AddTexture("default_specular", defaultKS);
-		AddTexture("default_normal", defaultBump);
-		AddTexture("default_height", defaultNS);
-		AddTexture("default_alpha", defaultD);
-		AddMaterial("default", defaultMaterial);
+		// Load the rest of the materials
+		std::unordered_map<std::string, Config*> configs = config->GetConfigs();
+		for (auto iter = configs.begin(); iter != configs.end(); ++iter)
+			if (GetMaterial(iter->first) == nullptr)
+				LoadMaterial(iter->second, iter->first);
 	}
 
 	// Returns the projection matrix of the scene's camera

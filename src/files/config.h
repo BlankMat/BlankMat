@@ -18,6 +18,8 @@ private:
 
 	// Returns whether the requested name is a nested config
 	bool IsNested(std::string name);
+
+	// Returns the config with the given name
 	Config* GetNameTarget(std::string* name);
 
 	// Returns the given config
@@ -51,6 +53,9 @@ public:
 
 	// Returns the config's name
 	std::string GetName() { return mName; }
+
+	// Returns the child configs
+	std::unordered_map<std::string, Config*>& GetConfigs() { return mChildConfigs; }
 
 	// Returns the given config
 	Config* GetConfig(std::string name);

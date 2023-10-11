@@ -21,7 +21,7 @@ public:
 	void UpdateShader(Shader* shader)
 	{
 		shader->SetVec3("light.diffuse", mColor);
-		shader->SetVec3("light.ambient", mColor * m_ka);
+		shader->SetVec3("light.ambient", glm::vec3(1.0f) * m_ka);
 		shader->SetVec3("light.specular", glm::vec3(1.0f) * m_ks);
 		shader->SetVec3("light.position", mPos);
 		shader->SetBool("gamma", mGamma);

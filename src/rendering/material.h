@@ -12,9 +12,9 @@ public:
     // Updates the given shader with this material's properties
 	void UpdateShader(Shader* shader, State* state, Material* defaultMat)
 	{
-		shader->SetVec3("material.ambient", ka);
-		shader->SetVec3("material.diffuse", kd);
-		shader->SetVec3("material.specular", ks);
+        shader->SetVec3("material.diffuse", kd);
+        shader->SetVec3("material.ambient", ka);
+        shader->SetVec3("material.specular", ks);
 		shader->SetVec3("material.emissive", ke);
 		shader->SetFloat("material.shininess", ns);
 		shader->SetFloat("material.refraction", ni);
@@ -40,16 +40,19 @@ public:
             {
                 number = std::to_string(diffuseNum++);
                 loadID = (state->enableDiffuseMap) ? mTextures[i]->id : defaultMat->map_kd->id;
+                shader->SetVec3("material.diffuse", (state->enableDiffuseMap) ? glm::vec3(1.0f) : kd);
             }
             else if (name == "texture_ambient")
             {
                 number = std::to_string(ambientNum++);
                 loadID = (state->enableAmbientMap) ? mTextures[i]->id : defaultMat->map_ka->id;
+                shader->SetVec3("material.ambient", (state->enableAmbientMap) ? glm::vec3(1.0f) : ka);
             }
             else if (name == "texture_specular")
             {
                 number = std::to_string(specularNum++);
                 loadID = (state->enableSpecularMap) ? mTextures[i]->id : defaultMat->map_ks->id;
+                shader->SetVec3("material.specular", (state->enableSpecularMap) ? glm::vec3(1.0f) : ks);
             }
             else if (name == "texture_normal")
             {

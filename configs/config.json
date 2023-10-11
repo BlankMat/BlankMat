@@ -1,6 +1,6 @@
 {
   "model": {
-    "file": "backpack/backpack.obj",
+    "file": "teapot.obj",
     "pos": [ 0.0, 1.8, 0.0 ],
     "rot": [ 0.0, 0.0, 0.0 ],
     "scale": [ 1.0, 1.0, 1.0 ]
@@ -18,7 +18,7 @@
     "map_kd": "default.png",
     "map_ka": "default.png",
     "map_ks": "default.png",
-    "map_bump": "default.png",
+    "map_bump": "default_normal.png",
     "map_ns": "default.png",
     "map_d": "default.png"
   },

@@ -38,10 +38,8 @@ uniform bool gamma;
 
 void main()
 {
-    // Normal in range [0,1]
-    vec3 normal = texture(texture_normal1, fs_in.TexCoords).rgb;
     // Normal in range [-1,1]
-    normal = normalize(normal * 2.0 - 1.0);
+    vec3 normal = normalize(texture(texture_normal1, fs_in.TexCoords).rgb * 2.0 - 1.0);
 
     // Ambient
     vec3 ambientColor = texture(texture_ambient1, fs_in.TexCoords).rgb;
@@ -62,9 +60,9 @@ void main()
     float maxDistance = 1.5;
     float dist = length(fs_in.TangentLightPos - fs_in.TangentFragPos);
 	//TODO: float attenuation = 1.0f / (gamma ? dist * dist : dist);
-    float attenuation = 1.0f;
-    diffuse *= attenuation;
-    specular *= attenuation;
+    //float attenuation = 1.0f;
+    //diffuse *= attenuation;
+    //specular *= attenuation;
 
     // Result
 	vec3 result = (ambient + diffuse + specular);

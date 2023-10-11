@@ -49,7 +49,8 @@ void Scene::LoadModel(std::string path)
 {
 	std::cout << "Reading model from file " << path << std::endl;
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+	const aiScene* scene = importer.ReadFile(path, 
+		aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals | aiProcess_FixInfacingNormals | aiProcess_CalcTangentSpace);
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
@@ -100,14 +101,56 @@ Mesh* Scene::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 		glm::vec3 pos = Vec3FromAssimp(mesh->mVertices[i]);
 		glm::vec3 normal = Vec3FromAssimp(mesh->mNormals[i]);
 		glm::vec2 texCoords = (mesh->mTextureCoords[0]) ? Vec2FromAssimp(mesh->mTextureCoords[0][i]) : glm::vec2();
-		glm::vec3 tangent = Vec3FromAssimp(mesh->mTangents[i]);
+		glm::vec3 tangent = glm::vec3(0.0f);
+		if (mesh->mTangents != nullptr && mesh->mTangents->Length() > 0)
+		{
+			tangent = Vec3FromAssimp(mesh->mTangents[i]);
+		}
+		else
+		{
+			// Calculate tangent
+			glm::vec3 edge1 = pos - pos;
+			glm::vec3 edge2 = pos - pos;
+			glm::vec2 deltaUV1 = texCoords - texCoords;
+			glm::vec2 deltaUV2 = texCoords - texCoords;
+			
+			float f = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
+			tangent.x = f * (deltaUV2.y * edge1.x - deltaUV1.y * edge2.x);
+			tangent.y = f * (deltaUV2.y * edge1.y - deltaUV1.y * edge2.y);
+			tangent.z = f * (deltaUV2.y * edge1.z - deltaUV1.y * edge2.z);
+		}
 		vertices.push_back(Vertex(pos, normal, texCoords, tangent));
 	}
 
 	// Process each index
 	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+	{
+		if (mesh->mFaces[i].mNumIndices > 0 && vertices[mesh->mFaces[i].mIndices[0]].tangent == glm::vec3(0.0f))
+		{
+			// If vertex does not have tangents, calculate them
+			Vertex vertex1 = vertices[mesh->mFaces[i].mIndices[0]];
+			Vertex vertex2 = vertices[mesh->mFaces[i].mIndices[1]];
+			Vertex vertex3 = vertices[mesh->mFaces[i].mIndices[2]];
+			glm::vec3 edge1 = vertex2.pos - vertex1.pos;
+			glm::vec3 edge2 = vertex3.pos - vertex1.pos;
+			glm::vec2 deltaUV1 = vertex2.texCoords - vertex1.texCoords;
+			glm::vec2 deltaUV2 = vertex3.texCoords - vertex1.texCoords;
+			glm::vec3 tangent = glm::vec3(0.0f);
+
+			float f = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
+			tangent.x = f * (deltaUV2.y * edge1.x - deltaUV1.y * edge2.x);
+			tangent.y = f * (deltaUV2.y * edge1.y - deltaUV1.y * edge2.y);
+			tangent.z = f * (deltaUV2.y * edge1.z - deltaUV1.y * edge2.z);
+
+			vertex1.tangent = tangent;
+			vertex2.tangent = tangent;
+			vertex3.tangent = tangent;
+		}
 		for (unsigned int j = 0; j < mesh->mFaces[i].mNumIndices; j++)
+		{
 			indices.push_back(mesh->mFaces[i].mIndices[j]);
+		}
+	}
 
 	// Process each material's diffuse and specular maps
 	if (mesh->mMaterialIndex >= 0)
@@ -202,7 +245,7 @@ std::vector<Texture*> Scene::LoadMaterialTextures(aiMaterial* mat, aiTextureType
 		// if texture hasn't been loaded already, load it
 		texture = new Texture(typeName, this->mDirectory, str.C_Str());
 		textures.push_back(texture);
-		mTextureList.emplace(str.C_Str(), texture);
+		AddTexture(str.C_Str(), texture);
 		std::cout << "  - Loaded texture " << str.C_Str() << std::endl;
 	}
 	return textures;

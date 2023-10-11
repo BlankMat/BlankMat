@@ -19,8 +19,8 @@
 #include "primitives/pLightCube.h"
 #include "primitives/pHandle.h"
 
-#define CONFIG_FILE "configs/config.txt"
 #define CONFIG_JSON "configs/config.json"
+#define MATS_JSON "configs/materials.json"
 #define MODELS_DIR "resources/models/"
 #define APP_NAME "BlankMat"
 

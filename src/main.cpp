@@ -6,6 +6,7 @@ int main()
     // ------------
     std::cout << "Starting program, reading options from " << FileSystem::GetPath(CONFIG_JSON) << std::endl;
     Config* config = ConfigReader::ReadFile(FileSystem::GetPath(CONFIG_JSON));
+    Config* materialsConfig = ConfigReader::ReadFile(FileSystem::GetPath(MATS_JSON));
 
     // Init window
     Window* window = new Window(SCR_WIDTH, SCR_HEIGHT, APP_NAME, config->GetConfig("style"));
@@ -20,7 +21,7 @@ int main()
     // Create scene
     // ------------
     Scene* scene = new Scene();
-    scene->LoadDefaultMaterial(config->GetConfig("defaultMaterial"));
+    scene->LoadMaterials(materialsConfig->GetConfig("materials"));
     scene->LoadModel(FileSystem::GetPath(MODELS_DIR + config->GetString("model.file")));
     scene->GetRootNode()->SetShader(scene->GetShader(DEFAULT_SHADER));
     scene->GetRootNode()->SetPos(config->GetVec("model.pos"));
