@@ -38,8 +38,10 @@ uniform bool gamma;
 
 void main()
 {
+    // Normal in range [0,1]
+    vec3 normal = texture(texture_normal1, fs_in.TexCoords).rgb;
     // Normal in range [-1,1]
-    vec3 normal = normalize(texture(texture_normal1, fs_in.TexCoords).rgb * 2.0 - 1.0);
+    normal = normalize(normal * 2.0 - 1.0);
 
     // Ambient
     vec3 ambientColor = texture(texture_ambient1, fs_in.TexCoords).rgb;

@@ -9,6 +9,7 @@
 
 #include "windows/window.h"
 #include "windows/guiDebugToolsWindow.h"
+#include "windows/guiMenuBarWindow.h"
 
 #include "rendering/shader.h"
 #include "rendering/scene.h"

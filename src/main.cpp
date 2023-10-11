@@ -73,6 +73,7 @@ int main()
 
     // Add GUIs
     window->AddGUI(new GUIDebugToolsWindow(state, scene, true));
+    window->AddGUI(new GUIMenuBarWindow(true));
 
     // render loop
     // -----------
@@ -85,7 +86,7 @@ int main()
 
         // Draw GUI
         window->DrawGUI();
-        ImGui::ShowDemoWindow();
+        //ImGui::ShowDemoWindow();
 
         // Process input and render
         ProcessInput(window, scene, state, &locks, deltaTime, &prevX, &prevY);
