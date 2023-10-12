@@ -1,7 +1,6 @@
 #pragma once
 #include "glIncludes.h"
 #include "rendering/iMesh.h"
-#include "rendering/iScene.h"
 #include <vector>
 #include <iostream>
 #include <set>
@@ -9,6 +8,7 @@
 enum class Tool { NONE = 0, SELECT = 1, MOVE = 2, ROTATE = 3, SCALE = 4, EXTRUDE = 5 };
 enum class SelMode { MESH = 0, VERT = 1, FACE = 2 };
 
+class IScene;
 struct Selection
 {
 private:

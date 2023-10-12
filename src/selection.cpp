@@ -1,4 +1,5 @@
 #include "selection.h"
+#include "rendering/iScene.h"
 
 // Returns the entire selection as a selection of vertices
 void Selection::GetSelectedVerts(std::vector<unsigned int>& _verts)

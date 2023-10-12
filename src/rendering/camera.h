@@ -1,7 +1,7 @@
 #pragma once
 #include "glIncludes.h"
-#include "options.h"
 #include "mathLib.h"
+#include "files/config.h"
 
 class Camera
 {
@@ -20,20 +20,25 @@ private:
 
     float mOrthSize;
     bool mIsPerspective;
+    bool mIsWireframe;
 
     glm::vec3 mBGColor;
 
-    // Sets the camera's values from the options given
-    void SetFromOptions(Options* options)
+    // Sets the camera's values from the config given
+    void UseConfig(Config* config)
     {
-        mFOV = options->camFov;
-        mNearClip = options->camNearClip;
-        mFarClip = options->camFarClip;
-        mPos = options->camPos;
-        mDir = options->camLookAt;
-        mOrthSize = options->camSize;
-        mIsPerspective = options->isPerspective;
-        mBGColor = options->bgColor;
+        if (config->GetName() != "camera")
+            config = config->GetConfig("camera");
+        mFOV = config->GetFloat("fov");
+        mNearClip = config->GetFloat("nearClip");
+        mFarClip = config->GetFloat("farClip");
+        mPos = config->GetVec("pos");
+        mDir = config->GetVec("dir");
+        mUp = config->GetVec("up");
+        mBGColor = config->GetVec("bgColor");
+        mOrthSize = config->GetFloat("size");
+        mIsPerspective = config->GetBool("perspective");
+        mIsWireframe = config->GetBool("wireframe");
 
         LookAt(mDir + mPos);
     }
@@ -70,6 +75,10 @@ public:
     float GetNearClip() { return mNearClip; }
     // Returns the FOV of the camera
     float GetFOV() { return mFOV; }
+    // Returns whether the camera is in perspective
+    bool IsPerspective() { return mIsPerspective; }
+    // Returns whether the camera is in wireframe
+    bool IsWireframe() { return mIsWireframe; }
 
     // Sets the position of the camera
     void SetPos(glm::vec3 pos) { mPos = pos; }
@@ -81,6 +90,10 @@ public:
     void SetNearClip(float nearClip) { mNearClip = nearClip; }
     // Sets the FOV of the camera
     void SetFOV(float fov) { mFOV = fov; }
+    // Sets the camera to be perspective/orthographic
+    void SetPerspective(bool isPerspective) { mIsPerspective = isPerspective; }
+    // Sets the camera to be/not be wireframe
+    void SetWireframe(bool isWireframe) { mIsWireframe = isWireframe; }
 
     // Returns the view matrix of the camera
     glm::mat4 GetView() { return glm::lookAt(mPos, mPos + mDir, mUp); }
@@ -122,23 +135,11 @@ public:
     }
 
     // Translates the camera by the given delta along the basis of the camera
-    void Translate(glm::vec3 delta)
-    {
-        mPos += mDir * delta.x + mRight * delta.y + mUp * delta.z;
-        CalcBasis();
-    }
-
+    void Translate(glm::vec3 delta) { mPos += mDir * delta.x + mRight * delta.y + mUp * delta.z; }
     // Rotates the camera by the given euler angles
     void Rotate(glm::vec3 delta)
     {
-        mRot = glm::vec3(mRot.x + delta.x, glm::clamp(mRot.y + delta.y, -PI*0.499f, PI*0.499f), mRot.z);
-        CalcBasis();
-    }
-
-    // Sets the camera to be perspective/orthographic
-    void SetPerspective(bool isPerspective)
-    {
-        mIsPerspective = isPerspective;
+        mRot = glm::vec3(mRot.x + delta.x, glm::clamp(mRot.y + delta.y, -PI * 0.499f, PI * 0.499f), mRot.z); CalcBasis();
         CalcBasis();
     }
 
@@ -149,5 +150,5 @@ public:
         LookAt(mDir + mPos);
     }
 
-    Camera(Options* options) { SetFromOptions(options); }
+    Camera(Config* config) { UseConfig(config); }
 };

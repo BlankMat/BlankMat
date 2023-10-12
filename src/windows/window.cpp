@@ -2,7 +2,7 @@
 
 // Opens a OpenGL window with the given name
 // -----------------------------------------
-Window::Window(int width, int height, std::string name)
+Window::Window(int width, int height, std::string name, Config* config)
 {
     // Set class variables
     // ---------------------------
@@ -57,11 +57,41 @@ Window::Window(int width, int height, std::string name)
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& tempIO = ImGui::GetIO();
+    tempIO.Fonts->AddFontFromFileTTF(FileSystem::GetPath(FONT_DIR + config->GetString("font")).c_str(), config->GetFloat("fontSize"));
     tempIO.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
     ImGui::StyleColorsDark();
     ImGui_ImplGlfw_InitForOpenGL(mWindow, true);
     ImGui_ImplOpenGL3_Init("#version 330");
     mIO = &tempIO;
+    SetupImGuiStyle(config->GetBool("darkTheme"), config->GetFloat("windowOpacity"));
+}
+
+// Sets up the ImGui Style
+inline void SetupImGuiStyle(bool isDarkStyle, float alphaThreshold)
+{
+    //Use a ternary operator
+    isDarkStyle ? ImGui::StyleColorsDark() : ImGui::StyleColorsLight();
+
+    ImGuiStyle& style = ImGui::GetStyle();
+
+    // Adjusts the alpha values of the ImGui colors based on the alpha threshold.
+    for (int i = 0; i < ImGuiCol_COUNT; i++)
+    {
+        const auto color_id = static_cast<ImGuiCol>(i);
+        auto& color = style.Colors[i];
+        if (color.w < alphaThreshold || color_id == ImGuiCol_FrameBg || color_id == ImGuiCol_WindowBg || color_id == ImGuiCol_ChildBg)
+        {
+            color.w *= alphaThreshold;
+        }
+    }
+
+    // Sets the border sizes and rounding.
+    style.ChildBorderSize = 1.0f;
+    style.FrameBorderSize = 0.0f;
+    style.PopupBorderSize = 1.0f;
+    style.WindowBorderSize = 0.0f;
+    style.FrameRounding = 3.0f;
+    style.Alpha = 1.0f;
 }
 
 // Draws all GUIs

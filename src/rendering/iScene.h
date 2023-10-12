@@ -4,7 +4,7 @@
 #include "iLight.h"
 #include "camera.h"
 #include "material.h"
-#include "dataMaterial.h"
+#include "files/config.h"
 #include "windows/window.h"
 #include <unordered_map>
 
@@ -20,13 +20,57 @@ protected:
 	std::unordered_map<std::string, Shader*> mShaderList;
 	std::unordered_map<std::string, Material*> mMaterialList;
 	std::unordered_map<std::string, Texture*> mTextureList;
+
+	// Loads the material of the given config. Must be bottom-level config
+	Material* LoadMaterial(Config* config, std::string name)
+	{
+		// Don't handle null configs
+		if (config == nullptr)
+			return nullptr;
+
+		// If the material exists already, return it
+		Material* material = GetMaterial(name);
+		if (material != nullptr)
+			return material;
+
+		// Create textures
+		bool isDefault = (name == "default");
+		Texture* kd = LoadTexture("texture_diffuse", config->GetString("map_kd"), isDefault ? "default_diffuse" : "");
+		Texture* ka = LoadTexture("texture_ambient", config->GetString("map_ka"), isDefault ? "default_ambient" : "");
+		Texture* ks = LoadTexture("texture_specular", config->GetString("map_ks"), isDefault ? "default_specular" : "");
+		Texture* normal = LoadTexture("texture_normal", config->GetString("map_bump"), isDefault ? "default_normal" : "");
+		Texture* ns = LoadTexture("texture_height", config->GetString("map_ns"), isDefault ? "default_height" : "");
+		Texture* d = LoadTexture("texture_alpha", config->GetString("map_d"), isDefault ? "default_alpha" : "");
+
+		// Create material
+		material = new Material(config, kd, ka, ks, normal, ns, d);
+		AddMaterial(name, material);
+		return material;
+	}
+
+	// Loads the given texture or returns the existing one
+	Texture* LoadTexture(std::string type, std::string path, std::string name = "")
+	{
+		// If the texture is already loaded with the same type, return it
+		Texture* texture = GetTexture(path);
+		if (texture != nullptr && texture->type == type)
+			return texture;
+
+		// Otherwise load the texture and store it
+		texture = new Texture("texture_diffuse", FileSystem::GetPath(TEXTURE_DIR), path);
+		AddTexture((name != "") ? name : path, texture);
+		return texture;
+	}
+
 public:
 	// Renders the current scene
 	virtual void Draw(Window* window) = 0;
 
 	// Activates the shader with the given name for the scene
-	void UseShader(std::string name)
+	void UseShader(std::string name = "")
 	{
+		if (name == "")
+			name = mCurShader;
 		if (mShaderList.find(name) != mShaderList.end() && mShaderList[name] != nullptr)
 		{
 			mShaderList[name]->Use();
@@ -46,6 +90,13 @@ public:
 	{
 		if (mShaderList.find(name) == mShaderList.end())
 			mShaderList.emplace(name, new Shader(source, loadGeom));
+	}
+
+	// Creates a shader for the scene with the given name, loading it from a config
+	void CreateShader(std::string name, Config* config)
+	{
+		if (mShaderList.find(name) == mShaderList.end())
+			mShaderList.emplace(name, new Shader(config->GetString("file"), config->GetBool("hasGeomShader")));
 	}
 
 	// Returns the scene's camera
@@ -87,9 +138,15 @@ public:
 			return mRenderList[name];
 		return nullptr;
 	}
+	
+	// Returns a reference to the shader list
+	std::unordered_map<std::string, Shader*>& GetShaderList() { return mShaderList; }
+
+	// Returns the current shader
+	std::string GetCurShader() { return mCurShader; }
 
 	// Sets up the scene's camera with the given options
-	void SetCamera(Options* options) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = new Camera(options); }
+	void SetCamera(Config* config) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = new Camera(config); }
 
 	// Sets the scene's camera to the given camera
 	void SetCamera(Camera* cam) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = cam; }
@@ -107,7 +164,7 @@ public:
 	}
 
 	// Adds a texture to the scene's texture list
-	Texture* AddMaterial(std::string name, Texture* texture)
+	Texture* AddTexture(std::string name, Texture* texture)
 	{
 		if (mTextureList.find(name) == mTextureList.end())
 			mTextureList.emplace(name, texture);
@@ -122,12 +179,17 @@ public:
 		return material;
 	}
 
-	// Adds a material to the scene's material list
-	DataMaterial* AddMaterial(std::string name, DataMaterial* material)
+	// Loads the materials from the given config
+	void LoadMaterials(Config* config)
 	{
-		if (mMaterialList.find(name) == mMaterialList.end())
-			mMaterialList.emplace(name, new Material(material));
-		return material;
+		// Load the default material if it exists
+		LoadMaterial(config->GetConfig("default"), "default");
+
+		// Load the rest of the materials
+		std::unordered_map<std::string, Config*> configs = config->GetConfigs();
+		for (auto iter = configs.begin(); iter != configs.end(); ++iter)
+			if (GetMaterial(iter->first) == nullptr)
+				LoadMaterial(iter->second, iter->first);
 	}
 
 	// Returns the projection matrix of the scene's camera

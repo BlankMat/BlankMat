@@ -1,28 +1,31 @@
 #pragma once
-#include "iMesh.h"
+#include "glIncludes.h"
+#include "texture.h"
+#include "vertex.h"
 #include "material.h"
-#include <unordered_map>
+#include "iMesh.h"
+#include <vector>
 
 class Mesh : public IMesh
 {
 protected:
 	Material* mMaterial;
-	std::unordered_map<std::string, IMesh*> mChildren;
+	Material* mDefaultMat;
+	State* mState;
+
+	// Calculates the center of the mesh
+	glm::vec3 CalcCenter();
 public:
-	// Generates a mesh with the given vertices, indices, material, and child meshes
+	// Instantiates a mesh with the given vertices, indices, and textures
 	Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, Material* material);
-
-	// Draws the mesh to the screen
-	void Draw(glm::mat4 viewProj) override;
-
+	// Draws the mesh
+	void Draw(glm::mat4 viewProj, glm::mat4 model = glm::mat4(1.0f)) override;
 	// Sets the shader of the mesh
-	void SetShader(Shader* shader) override;
-
-	// Adds the child mesh
-	IMesh* AddChild(IMesh* child);
-
-	// Returns the number of child meshes
-	unsigned int GetChildCount() { return (unsigned int)mChildren.size(); }
+	void SetShader(Shader* shader) override { mShader = shader; }
+	// Sets the default material for the mesh
+	void SetDefaultMat(Material* defaultMat) { mDefaultMat = defaultMat; }
+	// Gives the mesh a reference to the global state
+	void SetState(State* state) { mState = state; }
 
 	// Cleans up the mesh
 	~Mesh();

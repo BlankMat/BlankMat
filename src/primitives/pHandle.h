@@ -20,21 +20,21 @@ protected:
 	void GenBuffers() override {}
 public:
 
-	void Draw(glm::mat4 viewProj)
+	void Draw(glm::mat4 viewProj, glm::mat4 model = glm::mat4(1.0f))
 	{
 		// Don't draw any part of the object if not enabled
 		if (!mIsEnabled)
 			return;
 
-		glm::mat4 MVP = viewProj * IEntity::GetModelMatrix();
+		glm::mat4 newModel = IEntity::GetModelMatrix() * model;
 		if (!(mYHeld || mZHeld || mAllHeld))
-			mXHandle->Draw(MVP);
+			mXHandle->Draw(viewProj, newModel);
 		if (!(mXHeld || mZHeld || mAllHeld))
-			mYHandle->Draw(MVP);
+			mYHandle->Draw(viewProj, newModel);
 		if (!(mXHeld || mYHeld || mAllHeld))
-			mZHandle->Draw(MVP);
+			mZHandle->Draw(viewProj, newModel);
 		if (!(mXHeld || mYHeld || mZHeld))
-			mAllHandle->Draw(MVP);
+			mAllHandle->Draw(viewProj, newModel);
 	}
 
 	PHandle(float len, Shader* shader, float lineWidth, bool drawOver,

@@ -18,6 +18,10 @@ file(GLOB PRIMITIVE_HEADER_FILES ${CMAKE_SOURCE_DIR}/src/primitives/*.h)
 # Add tool files
 file(GLOB TOOL_SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/tools/*.cpp)
 file(GLOB TOOL_HEADER_FILES ${CMAKE_SOURCE_DIR}/src/tools/*.h)
+
+# Add file files
+file(GLOB FILE_SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/files/*.cpp)
+file(GLOB FILE_HEADER_FILES ${CMAKE_SOURCE_DIR}/src/files/*.h)
 	
 # Add window files
 file(GLOB WINDOW_SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/windows/*.cpp)
@@ -33,10 +37,10 @@ file(GLOB GLOBAL_HEADER_FILES
 	${CMAKE_SOURCE_DIR}/src/*.h
 	${CMAKE_SOURCE_DIR}/src/*.hpp)
 
-set(SOURCE_FILES ${GLOBAL_SOURCE_FILES} ${RENDERING_SOURCE_FILES} 
+set(SOURCE_FILES ${GLOBAL_SOURCE_FILES} ${RENDERING_SOURCE_FILES} ${FILE_SOURCE_FILES}
 	${PRIMITIVE_SOURCE_FILES} ${TOOL_SOURCE_FILES} ${WINDOW_SOURCE_FILES})
 	
-set(HEADER_FILES ${GLOBAL_HEADER_FILES} ${RENDERING_HEADER_FILES} 
+set(HEADER_FILES ${GLOBAL_HEADER_FILES} ${RENDERING_HEADER_FILES} ${FILE_HEADER_FILES}
 	${PRIMITIVE_HEADER_FILES} ${TOOL_HEADER_FILES} ${WINDOW_HEADER_FILES})
 
 # Configure assets header file
@@ -50,7 +54,7 @@ file(GLOB SHADER_FILES
     ${CMAKE_SOURCE_DIR}/resources/shaders/*.vert)
 file(GLOB CONFIG_FILES
     ${CMAKE_SOURCE_DIR}/CMakeLists.txt
-    ${CMAKE_SOURCE_DIR}/config.txt
+    ${CMAKE_SOURCE_DIR}/configs/*
     ${CMAKE_SOURCE_DIR}/Readme.md
     ${CMAKE_SOURCE_DIR}/.gitattributes
     ${CMAKE_SOURCE_DIR}/.gitignore)
@@ -64,11 +68,13 @@ source_group("Sources/Primitives" FILES ${PRIMITIVE_SOURCE_FILES})
 source_group("Sources/Windows" FILES ${WINDOW_SOURCE_FILES})
 source_group("Sources/Rendering" FILES ${RENDERING_SOURCE_FILES})
 source_group("Sources/Tools" FILES ${TOOL_SOURCE_FILES})
+source_group("Sources/Files" FILES ${FILE_SOURCE_FILES})
 source_group("Headers" FILES ${GLOBAL_HEADER_FILES})
 source_group("Headers/Primitives" FILES ${PRIMITIVE_HEADER_FILES})
 source_group("Headers/Windows" FILES ${WINDOW_HEADER_FILES})
 source_group("Headers/Rendering" FILES ${RENDERING_HEADER_FILES})
 source_group("Headers/Tools" FILES ${TOOL_HEADER_FILES})
+source_group("Headers/Files" FILES ${FILE_HEADER_FILES})
 
 source_group("Shaders" FILES ${SHADER_FILES})
 source_group("Configs" FILES ${CONFIG_FILES})
@@ -96,6 +102,9 @@ add_library(STB_IMAGE "external/stb_image.cpp")
 # GLAD
 add_library(GLAD "external/glad.c")
 
+# JsonCPP
+add_library(JSONCPP "external/jsoncpp.cpp")
+
 # IMGUI
 set(IMGUI_DIR "external/imgui")
 add_library(IMGUI "${IMGUI_DIR}/imgui.cpp"
@@ -107,7 +116,7 @@ add_library(IMGUI "${IMGUI_DIR}/imgui.cpp"
 	"${IMGUI_DIR}/imgui_impl_opengl3.cpp")
 
 # Combine all libs into one variable
-set(LIBS ${GLFW3_LIBRARY} ${OPENGL_LIBRARY} GLAD ${CMAKE_DL_LIBS} ${ASSIMP_LIBRARY} STB_IMAGE IMGUI)
+set(LIBS ${GLFW3_LIBRARY} ${OPENGL_LIBRARY} GLAD ${CMAKE_DL_LIBS} ${ASSIMP_LIBRARY} STB_IMAGE IMGUI JSONCPP)
 
 # Define the include DIRs
 include_directories(

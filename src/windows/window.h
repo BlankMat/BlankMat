@@ -1,10 +1,13 @@
 #pragma once
 #include "glIncludes.h"
 #include "iGUIWindow.h"
-#include "fileSystem.h"
+#include "files/config.h"
+#include "files/fileSystem.h"
 #include <iostream>
 #include <unordered_map>
 #include <string>
+
+#define FONT_DIR "resources/fonts/"
 
 class Window {
 private:
@@ -18,7 +21,7 @@ private:
 public:
 	// Opens a OpenGL window with the given name
 	// -----------------------------------------
-	Window(int width, int height, std::string name);
+	Window(int width, int height, std::string name, Config* config);
 
 	// Draws all GUIs
 	void DrawGUI();
@@ -40,6 +43,9 @@ public:
 	// Returns the aspect ratio of the screen
 	float GetAspect() { return (float)mWidth / (float)mHeight; }
 };
+
+// Sets up the ImGui Style
+inline void SetupImGuiStyle(bool isDarkStyle, float alphaThreshold);
 
 // Enables wireframe for the application
 void OpenGLEnableWireframe(bool enable);

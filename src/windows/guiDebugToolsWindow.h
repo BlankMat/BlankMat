@@ -1,17 +1,16 @@
 #pragma once
 #include "iGUIWindow.h"
 #include "selection.h"
-#include "options.h"
 #include "mathLib.h"
-#include "rendering/modelScene.h"
+#include "rendering/scene.h"
 #include "rendering/camera.h"
+#include "tools/state.h"
 
 class GUIDebugToolsWindow : public IGUIWindow
 {
 protected:
-	Options* mOptions;
-	Selection* mSelection;
-	ModelScene* mScene;
+	State* mState;
+	Scene* mScene;
 public:
 	void Draw() override
 	{
@@ -20,6 +19,36 @@ public:
 			return;
 
 		ImGui::Begin("Debug Tools");
+
+		// Shading settings
+		ImGui::Text("Shading");
+		// Select shader
+		std::unordered_map<std::string, Shader*> shaders = mScene->GetShaderList();
+		std::string curShader = mScene->GetCurShader();
+		if (ImGui::BeginListBox("Shader"))
+		{
+			for (auto iter = shaders.begin(); iter != shaders.end(); ++iter)
+			{
+				std::string itemName = iter->first;
+				bool isSelected = itemName == curShader;
+				if (ImGui::Selectable(itemName.c_str(), &isSelected))
+					curShader = itemName;
+
+				if (isSelected)
+					ImGui::SetItemDefaultFocus();
+			}
+			ImGui::EndListBox();
+			mScene->UseShader(curShader);
+			mScene->GetRootNode()->SetShader(mScene->GetShader(curShader));
+		}
+
+		// Choose parts of materials
+		ImGui::Checkbox("Enable Diffuse Map", &mState->enableDiffuseMap);
+		ImGui::Checkbox("Enable Ambient Map", &mState->enableAmbientMap);
+		ImGui::Checkbox("Enable Specular Map", &mState->enableSpecularMap);
+		ImGui::Checkbox("Enable Normal Map", &mState->enableNormalMap);
+		ImGui::Checkbox("Enable Height Map", &mState->enableHeightMap);
+		ImGui::Checkbox("Enable Alpha Map", &mState->enableAlphaMap);
 
 		// Camera settings
 		ImGui::Text("Camera Settings");
@@ -57,6 +86,16 @@ public:
 		ImGui::InputFloat("Camera Far Clip", &camFarClip);
 		cam->SetFarClip(camFarClip);
 
+		// Perspective
+		bool camPerspective = cam->IsPerspective();
+		ImGui::Checkbox("Perspective", &camPerspective);
+		cam->SetPerspective(camPerspective);
+
+		// Wireframe
+		bool camWireframe = cam->IsWireframe();
+		ImGui::Checkbox("Wireframe", &camWireframe);
+		cam->SetWireframe(camWireframe);
+
 		// Light settings
 		ImGui::Text("Light Settings");
 		ILight* light = mScene->GetLight();
@@ -73,8 +112,23 @@ public:
 		ImGui::ColorPicker3("Light Color", lightColorInput);
 		light->SetBaseColor(Vec3FromFloats(lightColorInput));
 
+		// Light KA
+		float lightKA = light->GetKA();
+		ImGui::InputFloat("Light Ambient", &lightKA);
+		light->SetKA(lightKA);
+
+		// Light KS
+		float lightKS = light->GetKS();
+		ImGui::InputFloat("Light Specular", &lightKS);
+		light->SetKS(lightKS);
+
+		// Light gamma
+		bool lightGamma = light->GetGamma();
+		ImGui::Checkbox("Light Gamma", &lightGamma);
+		light->SetGamma(lightGamma);
+
 		// Model settings
-		Model* model = mScene->GetModel();
+		Node* model = mScene->GetRootNode();
 		ImGui::Text("Model Settings");
 
 		// Model position
@@ -97,22 +151,15 @@ public:
 
 		// Debug settings
 		ImGui::Text("Debug settings");
-		ImGui::Checkbox("Disco Light", &mOptions->isDiscoLight);
-		ImGui::Checkbox("Rotating Light", &mOptions->isRotatingLight);
-		ImGui::Checkbox("Perspective", &mOptions->isPerspective);
-		ImGui::Checkbox("Wireframe", &mOptions->wireframe);
+		ImGui::Checkbox("Disco Light", &mState->isDiscoLight);
+		ImGui::Checkbox("Rotating Light", &mState->isRotatingLight);
 		ImGui::End();
-
-		// Handle resulting changes
-		mScene->GetCamera()->SetPerspective(mOptions->isPerspective);
-		OpenGLEnableWireframe(mOptions->wireframe);
 	}
 
-	GUIDebugToolsWindow(Selection* selection, ModelScene* scene, Options* options, bool isEnabled)
+	GUIDebugToolsWindow(State* state, Scene* scene, bool isEnabled)
 	{
 		type = GUI::DEBUG_TOOLS;
-		mOptions = options;
-		mSelection = selection;
+		mState = state;
 		mScene = scene;
 		mIsEnabled = isEnabled;
 	}

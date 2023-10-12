@@ -90,6 +90,11 @@ static float* FloatsFromVec3(glm::vec3 vec3)
     return vec;
 }
 
+static const glm::vec3 Vec3FromAssimp(aiColor3D vec)
+{
+    return glm::vec3(vec.r, vec.g, vec.b);
+}
+
 static const glm::vec3 Vec3FromAssimp(aiVector3D vec)
 {
 	return glm::vec3(vec.x, vec.y, vec.z);
