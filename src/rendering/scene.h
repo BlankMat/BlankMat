@@ -23,6 +23,10 @@ public:
 	void Draw(Window* window) override;
 	// Sets the shader for all the meshes of the model
 	void SetMeshShaders(Shader* shader, State* state);
+	// Adds the given node to the scene
+	void AddNode(Node* node);
+	// Adds the given mesh to the scene
+	void AddMesh(Mesh* mesh);
 	// Returns the root node
 	Node* GetRootNode() { return mRootNode; }
 	// Constructs the scene, getting everything ready for manual setting

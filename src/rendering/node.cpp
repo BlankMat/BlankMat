@@ -8,7 +8,7 @@ Node::Node(Node* parent, std::string name)
 }
 
 // Draws the node recursively
-void Node::Draw(glm::mat4 viewProj, glm::mat4 model)
+void Node::Draw(glm::mat4 viewProj, Camera* camera, Light* light, glm::mat4 model)
 {
 	// Calculate the MVP of this stage
 	glm::mat4 newModel = GetModelMatrix() * model;
@@ -16,12 +16,12 @@ void Node::Draw(glm::mat4 viewProj, glm::mat4 model)
 	// Draw all child meshes
 	for (unsigned int i = 0; i < mMeshes.size(); i++)
 		if (mMeshes[i] != nullptr)
-			mMeshes[i]->Draw(viewProj, newModel);
+			mMeshes[i]->Draw(viewProj, camera, light, newModel);
 
 	// Draw all child nodes
 	for (unsigned int i = 0; i < mChildren.size(); i++)
 		if (mChildren[i] != nullptr)
-			mChildren[i]->Draw(viewProj, newModel);
+			mChildren[i]->Draw(viewProj, camera, light, newModel);
 }
 
 // Sets the shader of the node recursively

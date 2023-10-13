@@ -38,7 +38,7 @@ Window::Window(int width, int height, std::string name, Config* config)
 
     // Set icon
     GLFWimage images[1];
-    images[0].pixels = stbi_load(FileSystem::GetPath("icon.png").c_str(), &images[0].width, &images[0].height, 0, 4);
+    images[0].pixels = stbi_load(FileSystem::GetPath(ICON).c_str(), &images[0].width, &images[0].height, 0, 4);
     glfwSetWindowIcon(mWindow, 1, images);
     stbi_image_free(images[0].pixels);
 
@@ -152,6 +152,12 @@ void OpenGLEnableWireframe(bool enable)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 }
+
+// Initialize GUI
+//void Window::InitGUI(State* state, Scene* scene)
+//{
+//
+//}
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
 // ---------------------------------------------------------------------------------------------

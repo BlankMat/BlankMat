@@ -1,6 +1,5 @@
 #pragma once
 #include "glIncludes.h"
-#include "rendering/iMesh.h"
 #include <vector>
 #include <iostream>
 #include <set>
@@ -8,7 +7,10 @@
 enum class Tool { NONE = 0, SELECT = 1, MOVE = 2, ROTATE = 3, SCALE = 4, EXTRUDE = 5 };
 enum class SelMode { MESH = 0, VERT = 1, FACE = 2 };
 
+// Forward declare to prevent circular dependency
+class IMesh;
 class IScene;
+
 struct Selection
 {
 private:
@@ -22,6 +24,11 @@ private:
 public:
 	std::set<unsigned int> newSelVerts;
 	std::set<unsigned int> removedSelVerts;
+
+	/// <summary>
+	/// Storage container for information on all selections
+	/// </summary>
+	Selection();
 
 	// Returns the entire selection as a selection of vertices
 	void GetSelectedVerts(std::vector<unsigned int>& _verts);
@@ -68,13 +75,30 @@ public:
 	// Returns whether the given face is selected
 	bool IsFaceSelected(unsigned int _id);
 
-	// Storage container for information on all selections
-	Selection();
-
-	// Returns the nearest mesh to the clicked position
+	/// <summary>
+	/// Returns the nearest mesh to the clicked position
+	/// </summary>
+	/// <param name="scene">Scene to check</param>
+	/// <param name="u">U coordinate onscreen</param>
+	/// <param name="v">V coordinate onscreen</param>
+	/// <returns>Selected mesh</returns>
 	static IMesh* GetNearestMesh(IScene* scene, float u, float v);
-	// Returns the nearest vertex to the clicked position
+
+	/// <summary>
+	/// Returns the nearest vertex to the clicked position
+	/// </summary>
+	/// <param name="scene">Scene to check</param>
+	/// <param name="u">U coordinate onscreen</param>
+	/// <param name="v">V coordinate onscreen</param>
+	/// <returns>Selected vertex index, or -1 if none was found</returns>
 	static int GetNearestVert(IScene* scene, float u, float v);
-	// Returns the nearest face to the clicked position
+
+	/// <summary>
+	/// Returns the nearest face to the clicked position
+	/// </summary>
+	/// <param name="scene">Scene to check</param>
+	/// <param name="u">U coordinate onscreen</param>
+	/// <param name="v">V coordinate onscreen</param>
+	/// <returns>Selected face index, or -1 if none was found</returns>
 	static int GetNearestFace(IScene* scene, float u, float v);
 };

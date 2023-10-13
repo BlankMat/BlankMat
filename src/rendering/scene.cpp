@@ -1,4 +1,5 @@
 #include "scene.h"
+#include "primitives/pLightCube.h"
 
 void Scene::Draw(Window* window)
 {
@@ -7,18 +8,23 @@ void Scene::Draw(Window* window)
 	if (mCurShader == "")
 		UseShader(DEFAULT_SHADER);
 
+	// Set lighting uniforms
+	Shader* curShader = GetShader(mCurShader);
+	GetLight()->UpdateShader(curShader);
+	curShader->SetVec3("viewPos", GetCamera()->GetPos());
+
 	// Draw pre-renderables
 	for (auto iter = mPreRenderList.begin(); iter != mPreRenderList.end(); ++iter)
 		if (iter->second != nullptr)
-			iter->second->Draw(viewProj);
+			iter->second->Draw(viewProj, GetCamera(), GetLight());
 
 	// Draw all of the scene
 	UseShader(mCurShader);
-	mRootNode->Draw(viewProj);
+	mRootNode->Draw(viewProj, GetCamera(), GetLight());
 
 	// Draw lights
-	if (mGlobalLight != nullptr)
-		mGlobalLight->Draw(viewProj);
+	if (mGlobalLight != nullptr && static_cast<PLightCube*>(mGlobalLight) != nullptr)
+		static_cast<PLightCube*>(mGlobalLight)->Draw(viewProj, GetCamera(), GetLight());
 
 	// Draw post-renderables
 	for (auto iter = mRenderList.begin(); iter != mRenderList.end(); ++iter)
@@ -26,12 +32,24 @@ void Scene::Draw(Window* window)
 		// Render camera axis handle with inverse view matrix
 		if (iter->first == CAMERA_AXIS_HANDLE) {
 			iter->second->SetRot(mMainCamera->GetRotationDegrees());
-			iter->second->Draw(glm::ortho(0.0f, (float)window->GetWidth(), 0.0f, (float)window->GetHeight(), -100.0f, 100.0f));
+			iter->second->Draw(glm::ortho(0.0f, (float)window->GetWidth(), 0.0f, (float)window->GetHeight(), -100.0f, 100.0f), GetCamera(), GetLight());
 		}
 		else if (iter->second != nullptr) {
-			iter->second->Draw(viewProj);
+			iter->second->Draw(viewProj, GetCamera(), GetLight());
 		}
 	}
+}
+
+// Adds the given node to the scene
+void Scene::AddNode(Node* node)
+{
+	mRootNode->AddChild(node);
+}
+
+// Adds the given mesh to the scene
+void Scene::AddMesh(Mesh* mesh)
+{
+	mRootNode->AddMesh(mesh);
 }
 
 // Sets the shader for all the meshes of the model
@@ -106,19 +124,6 @@ Mesh* Scene::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 		{
 			tangent = Vec3FromAssimp(mesh->mTangents[i]);
 		}
-		else
-		{
-			// Calculate tangent
-			glm::vec3 edge1 = pos - pos;
-			glm::vec3 edge2 = pos - pos;
-			glm::vec2 deltaUV1 = texCoords - texCoords;
-			glm::vec2 deltaUV2 = texCoords - texCoords;
-			
-			float f = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
-			tangent.x = f * (deltaUV2.y * edge1.x - deltaUV1.y * edge2.x);
-			tangent.y = f * (deltaUV2.y * edge1.y - deltaUV1.y * edge2.y);
-			tangent.z = f * (deltaUV2.y * edge1.z - deltaUV1.y * edge2.z);
-		}
 		vertices.push_back(Vertex(pos, normal, texCoords, tangent));
 	}
 
@@ -166,7 +171,12 @@ Mesh* Scene::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 			// 2. ambient maps
 			std::vector<Texture*> ambientMaps = LoadMaterialTextures(material, aiTextureType_AMBIENT, "texture_ambient");
 			if (ambientMaps.size() == 0)
-				ambientMaps.push_back(GetTexture("default_ambient"));
+			{
+				if (diffuseMaps.size() > 0)
+					ambientMaps.push_back(diffuseMaps[0]);
+				else
+					ambientMaps.push_back(GetTexture("default_ambient"));
+			}
 			// 3. specular maps
 			std::vector<Texture*> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
 			if (specularMaps.size() == 0)
@@ -211,7 +221,7 @@ Mesh* Scene::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 			material->Get(AI_MATKEY_OPACITY, d);
 
 			// Make material out of loaded textures
-			newMaterial = new Material(diffuseMaps, ambientMaps, specularMaps, normalMaps, heightMaps, alphaMaps,
+			newMaterial = new Material(material->GetName().C_Str(), diffuseMaps, ambientMaps, specularMaps, normalMaps, heightMaps, alphaMaps,
 				ka, kd, ks, ns, ni, d, ke);
 			AddMaterial(material->GetName().C_Str(), newMaterial);
 		}
@@ -243,7 +253,7 @@ std::vector<Texture*> Scene::LoadMaterialTextures(aiMaterial* mat, aiTextureType
 		}
 
 		// if texture hasn't been loaded already, load it
-		texture = new Texture(typeName, this->mDirectory, str.C_Str());
+		texture = new Texture(typeName, this->mDirectory, str.C_Str(), str.C_Str());
 		textures.push_back(texture);
 		AddTexture(str.C_Str(), texture);
 		std::cout << "  - Loaded texture " << str.C_Str() << std::endl;
@@ -270,8 +280,6 @@ Scene::~Scene()
 {
 	if (mMainCamera != nullptr)
 		delete mMainCamera;
-	if (mGlobalLight != nullptr)
-		delete mGlobalLight;
 
 	for (auto iter = mShaderList.begin(); iter != mShaderList.end(); ++iter)
 	{

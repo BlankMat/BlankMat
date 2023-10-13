@@ -1,44 +1,41 @@
 #pragma once
 #include "pCube.h"
-#include "rendering/iLight.h"
+#include "rendering/light.h"
 #include "rendering/shader.h"
 #include "files/config.h"
 
-class PLightCube : public ILight
+class PLightCube : public PCube, public Light
 {
-protected:
-    PCube* mCube;
 public:
-    void Draw(glm::mat4 viewProj, glm::mat4 model = glm::mat4(1.0f)) override
-    {
-        mCube->Draw(viewProj, model);
-    }
+    glm::vec3 GetColor() { return Light::GetColor(); }
+    glm::vec3 GetBaseColor() { return Light::GetBaseColor(); }
+    glm::vec3 GetOffset() { return Light::GetOffset(); }
+    glm::vec3 GetDir() { return Light::GetDir(); }
+    glm::vec3 GetPos() { return Light::GetPos(); }
+    float GetKD() { return Light::GetKD(); }
+    float GetKA() { return Light::GetKA(); }
+    float GetKS() { return Light::GetKS(); }
+    bool GetGamma() { return Light::GetGamma(); }
 
-    void SetPos(glm::vec3 pos) override
-    {
-        mPos = pos;
-        mCube->SetPos(pos);
-    }
-
-    void SetColor(glm::vec3 color) override
-    {
-        mColor = color;
-        mCube->SetColor(color);
-    }
+    void SetColor(glm::vec3 color) { Light::SetColor(color); PCube::GetMaterial()->kd = color; }
+    void SetBaseColor(glm::vec3 color) { Light::SetBaseColor(color); }
+    void SetOffset(glm::vec3 offset) { Light::SetOffset(offset); }
+    void SetPos(glm::vec3 pos) override { Light::SetPos(pos); PCube::SetPos(pos); }
+    void SetKD(float kd) { Light::SetKD(kd); }
+    void SetKA(float ka) { Light::SetKA(ka); }
+    void SetKS(float ks) { Light::SetKS(ks); }
+    void SetGamma(bool gamma) { Light::SetGamma(gamma); }
 
 	PLightCube(float size, Shader* shader, glm::vec3 pos = glm::vec3(1.0f), glm::vec3 dir = glm::vec3(-1.0f), glm::vec3 color = glm::vec3(1.0f),
-		float ka = 0.1f, float ks = 0.5f, bool gamma = false)
-        : ILight(pos, dir, color, ka, ks, gamma)
-    {
-        mCube = new PCube(size, shader, color, 0.0f, false, pos);
-    }
+		float kd = 1.0f, float ka = 0.1f, float ks = 0.5f, bool gamma = false)
+        : PCube(size, shader, new Material(color), 0.0f, false, pos), Light(pos, dir, color, kd, ka, ks, gamma) {}
 
     PLightCube(float size, Shader* shader, Config* config)
-        : PLightCube(size, shader, config->GetVec("pos"), config->GetVec("dir"), config->GetVec("color"), config->GetFloat("ambient"), config->GetFloat("specular"), config->GetBool("gamma")) {}
+        : PLightCube(size, shader, config->GetVec("pos"), config->GetVec("dir"), config->GetVec("color"), 
+            config->GetFloat("diffuse"), config->GetFloat("ambient"), config->GetFloat("specular"), config->GetBool("gamma")) {}
 
-    void Cleanup() override
+    ~PLightCube()
     {
-        delete mCube;
-        IEntity::Cleanup();
+        Cleanup();
     }
 };

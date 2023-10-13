@@ -14,17 +14,20 @@ Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, Ma
 }
 
 // Render the mesh
-void Mesh::Draw(glm::mat4 viewProj, glm::mat4 model)
+void Mesh::Draw(glm::mat4 viewProj, Camera* camera, Light* light, glm::mat4 model)
 {
     // Don't draw disabled meshes
     if (!mIsEnabled)
         return;
 
     // Set uniforms for this draw
+    mShader->Use();
     glm::mat4 modelMatrix = GetModelMatrix() * model;
     glm::mat4 mvp = viewProj * modelMatrix;
     glm::mat3 normalModel = glm::transpose(glm::inverse(glm::mat3(modelMatrix)));
+    light->UpdateShader(mShader);
     mMaterial->UpdateShader(mShader, mState, mDefaultMat);
+    mShader->SetVec3("viewPos", camera->GetPos());
     mShader->SetMat4("MVP", mvp);
     mShader->SetMat4("Model", modelMatrix);
     mShader->SetMat3("NormalModel", normalModel);

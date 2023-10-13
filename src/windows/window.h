@@ -8,6 +8,7 @@
 #include <string>
 
 #define FONT_DIR "resources/fonts/"
+#define ICON "icon256.png"
 
 class Window {
 private:
@@ -42,6 +43,9 @@ public:
 	int GetHeight() { return mHeight; }
 	// Returns the aspect ratio of the screen
 	float GetAspect() { return (float)mWidth / (float)mHeight; }
+
+	// Initialize GUI
+	//void InitGUI(State* state, Scene* scene);
 };
 
 // Sets up the ImGui Style

@@ -17,7 +17,7 @@ public:
 	Node(Node* parent, std::string name);
 
 	// Draws the node recursively
-	void Draw(glm::mat4 viewProj, glm::mat4 model = glm::mat4(1.0f)) override;
+	void Draw(glm::mat4 viewProj, Camera* camera, Light* light, glm::mat4 model = glm::mat4(1.0f)) override;
 
 	// Sets the shader of the node recursively
 	void SetShader(Shader* shader) override;

@@ -10,6 +10,7 @@
 #include "windows/window.h"
 #include "windows/guiDebugToolsWindow.h"
 #include "windows/guiMenuBarWindow.h"
+#include "windows/guiMaterialViewer.h"
 
 #include "rendering/shader.h"
 #include "rendering/scene.h"
@@ -18,6 +19,8 @@
 #include "primitives/pGrid.h"
 #include "primitives/pLightCube.h"
 #include "primitives/pHandle.h"
+#include "primitives/vCube.h"
+#include "primitives/vPlane.h"
 
 #define CONFIG_JSON "configs/config.json"
 #define MATS_JSON "configs/materials.json"

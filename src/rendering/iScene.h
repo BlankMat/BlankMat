@@ -1,9 +1,10 @@
 #pragma once
 #include "glIncludes.h"
 #include "shader.h"
-#include "iLight.h"
+#include "light.h"
 #include "camera.h"
 #include "material.h"
+#include "rendering/iEntity.h"
 #include "files/config.h"
 #include "windows/window.h"
 #include <unordered_map>
@@ -12,7 +13,7 @@ class IScene
 {
 protected:
 	std::string mCurShader;
-	ILight* mGlobalLight;
+	Light* mGlobalLight;
 	Camera* mMainCamera;
 
 	std::unordered_map<std::string, IEntity*> mPreRenderList;
@@ -43,7 +44,7 @@ protected:
 		Texture* d = LoadTexture("texture_alpha", config->GetString("map_d"), isDefault ? "default_alpha" : "");
 
 		// Create material
-		material = new Material(config, kd, ka, ks, normal, ns, d);
+		material = new Material(name, config, kd, ka, ks, normal, ns, d);
 		AddMaterial(name, material);
 		return material;
 	}
@@ -57,8 +58,9 @@ protected:
 			return texture;
 
 		// Otherwise load the texture and store it
-		texture = new Texture("texture_diffuse", FileSystem::GetPath(TEXTURE_DIR), path);
-		AddTexture((name != "") ? name : path, texture);
+		name = (name != "") ? name : path;
+		texture = new Texture(type, FileSystem::GetPath(TEXTURE_DIR), path, name);
+		AddTexture(name, texture);
 		return texture;
 	}
 
@@ -103,7 +105,7 @@ public:
 	Camera* GetCamera() { return mMainCamera; }
 
 	// Returns the scene's light
-	ILight* GetLight() { return mGlobalLight; }
+	Light* GetLight() { return mGlobalLight; }
 
 	// Returns the shader with the given name
 	Shader* GetShader(std::string name)
@@ -152,7 +154,7 @@ public:
 	void SetCamera(Camera* cam) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = cam; }
 
 	// Sets the scene's light to the given light
-	void SetLight(ILight* light) { if (mGlobalLight != nullptr) { delete mGlobalLight; } mGlobalLight = light; }
+	void SetLight(Light* light) { if (mGlobalLight != nullptr) { delete mGlobalLight; } mGlobalLight = light; }
 
 	// Adds an entity to the scene's render list
 	IEntity* AddEntity(std::string name, IEntity* entity, bool preRender = false)

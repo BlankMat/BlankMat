@@ -1,4 +1,5 @@
 #include "selection.h"
+#include "rendering/iMesh.h"
 #include "rendering/iScene.h"
 
 // Returns the entire selection as a selection of vertices

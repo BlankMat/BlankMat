@@ -69,6 +69,9 @@ protected:
 public:
 	void Draw() override
 	{
+        if (!mIsEnabled)
+            return;
+
         if (ImGui::BeginMainMenuBar())
         {
             if (ImGui::BeginMenu("File"))
