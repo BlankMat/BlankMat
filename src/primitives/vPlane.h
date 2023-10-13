@@ -67,6 +67,8 @@ public:
         mMaterial = material;
         mDefaultMat = defaultMat;
 
+        std::cout << material << ", " << mMaterial << std::endl;
+
         SetShader(shader);
         Mesh::GenBuffers();
 	}

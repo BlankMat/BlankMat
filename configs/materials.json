@@ -25,10 +25,10 @@
       "ni": 0.0,
       "d": 1.0,
       "illum": 2,
-      "map_kd": "brickwall.png",
-      "map_ka": "brickwall.png",
+      "map_kd": "brickwall.jpg",
+      "map_ka": "brickwall.jpg",
       "map_ks": "default.png",
-      "map_bump": "brickwall_normal.png",
+      "map_bump": "brickwall_normal.jpg",
       "map_ns": "default.png",
       "map_d": "default.png"
     },

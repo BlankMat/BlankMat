@@ -7,7 +7,8 @@
 /// </summary>
 /// <typeparam name="T">Texture class type</typeparam>
 template <typename T>
-struct IMaterial {
+class IMaterial {
+public:
 	/// <summary>
 	/// ambient color
 	/// </summary>

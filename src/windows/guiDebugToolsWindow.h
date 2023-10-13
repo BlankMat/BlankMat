@@ -154,6 +154,46 @@ public:
 			ImGui::InputFloat3("Model Scale", modelScaleInput);
 			model->SetScale(Vec3FromFloats(modelScaleInput));
 
+			// Brick Wall settings
+			IEntity* wall = mScene->GetEntity("brickwall");
+			ImGui::Text("Brick Wall Settings");
+
+			// Wall position
+			glm::vec3 wallPos = wall->GetPos();
+			float wallPosInput[3] = { wallPos.x, wallPos.y, wallPos.z };
+			ImGui::InputFloat3("Wall Position", wallPosInput);
+			wall->SetPos(Vec3FromFloats(wallPosInput));
+
+			// Wall rotation
+			glm::vec3 wallRot = wall->GetRot();
+			float wallRotInput[3] = { wallRot.x, wallRot.y, wallRot.z };
+			ImGui::InputFloat3("Wall Rotation", wallRotInput);
+			wall->SetRot(Vec3FromFloats(wallRotInput));
+
+			// Wall scale
+			glm::vec3 wallScale = wall->GetScale();
+			float wallScaleInput[3] = { wallScale.x, wallScale.y, wallScale.z };
+			ImGui::InputFloat3("Wall Scale", wallScaleInput);
+			wall->SetScale(Vec3FromFloats(wallScaleInput));
+
+			Shader* wallShader = wall->GetShader();
+			if (ImGui::BeginListBox("Wall Shader"))
+			{
+				for (auto iter = shaders.begin(); iter != shaders.end(); ++iter)
+				{
+					std::string itemName = iter->first;
+					unsigned int itemID = iter->second->ID;
+					bool isSelected = itemID == wallShader->ID;
+					if (ImGui::Selectable(itemName.c_str(), &isSelected))
+						wallShader = iter->second;
+
+					if (isSelected)
+						ImGui::SetItemDefaultFocus();
+				}
+				ImGui::EndListBox();
+				wall->SetShader(wallShader);
+			}
+
 			// Debug settings
 			ImGui::Text("Debug settings");
 			ImGui::Checkbox("Disco Light", &mState->isDiscoLight);

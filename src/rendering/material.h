@@ -7,9 +7,9 @@
 class State;
 
 /// <summary>
-/// Struct that stores all texture and render information for a material
+/// Class that stores all texture and render information for a material
 /// </summary>
-struct Material : public IMaterial<Texture>
+class Material : public IMaterial<Texture>
 {
 protected:
 	/// <summary>

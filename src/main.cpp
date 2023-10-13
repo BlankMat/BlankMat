@@ -49,7 +49,8 @@ int main()
     scene->AddEntity(GRID_OBJ, new PGrid(5, 1.0f, scene->GetShader(LINE_SHADER), new Material(glm::vec3(0.2f)), 2, true, glm::vec3(0.0f)), true);
     scene->AddEntity(TRANSFORM_HANDLE, new PHandle(0.5f, scene->GetShader(LINE_SHADER), 6, true, glm::vec3(0.0f)));
     scene->AddEntity(CAMERA_AXIS_HANDLE, new PHandle(45.0f, scene->GetShader(LINE_SHADER), 6, false, glm::vec3(50, 50, 0)));
-    scene->AddMesh(new VPlane(2.0f, scene->GetShader(LAMBERT_FLAT_SHADER), scene->GetMaterial("brickwall"), scene->GetMaterial("default"), state, glm::vec3(5, 2, 0), glm::vec3(90, 0, 0)));
+    std::cout << scene->GetMaterial("brickwall") << std::endl;
+    scene->AddEntity("brickwall", new VPlane(2.0f, scene->GetShader(LAMBERT_FLAT_SHADER), scene->GetMaterial("brickwall"), scene->GetMaterial("default"), state, glm::vec3(5, 2, 0), glm::vec3(90, 0, 0)));
 
     if (config->GetBool("defaultCubes"))
     {
