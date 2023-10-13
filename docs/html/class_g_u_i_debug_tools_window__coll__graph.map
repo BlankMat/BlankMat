@@ -1,0 +1,30 @@
+<map id="GUIDebugToolsWindow" name="GUIDebugToolsWindow">
+<area shape="rect" id="Node000001" title=" " alt="" coords="57,631,214,657"/>
+<area shape="rect" id="Node000002" href="$class_i_g_u_i_window.html" title=" " alt="" coords="5,540,98,567"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="76,576,125,628,122,632,72,580"/>
+<area shape="rect" id="Node000003" href="$class_state.html" title=" " alt="" coords="193,252,246,279"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="190,290,171,306,155,325,143,347,138,371,138,555,138,630,133,630,133,555,133,370,138,345,151,322,168,302,186,286"/>
+<area shape="rect" id="Node000004" href="$class_scene.html" title=" " alt="" coords="218,540,277,567"/>
+<area shape="poly" id="edge15_Node000004_Node000003" title=" " alt="" coords="225,294,249,539,244,540,220,295"/>
+<area shape="rect" id="Node000009" href="$class_i_entity.html" title=" " alt="" coords="296,359,354,385"/>
+<area shape="poly" id="edge13_Node000009_Node000003" title=" " alt="" coords="241,289,282,333,310,356,306,360,278,337,237,293"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="221,579,153,632,150,628,218,574"/>
+<area shape="rect" id="Node000005" href="$class_i_scene.html" title=" " alt="" coords="409,449,470,476"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="408,487,347,518,278,545,276,540,345,514,405,482"/>
+<area shape="rect" id="Node000006" href="$class_light.html" title=" " alt="" coords="402,359,451,385"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="428,400,430,425,437,448,432,450,425,426,423,401"/>
+<area shape="rect" id="Node000007" href="$class_camera.html" title=" " alt="" coords="504,359,570,385"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="528,401,509,427,491,441,472,452,469,447,488,437,506,423,524,398"/>
+<area shape="rect" id="Node000008" href="$class_node.html" title=" " alt="" coords="257,449,308,476"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="274,492,255,540,250,538,269,490"/>
+<area shape="poly" id="edge14_Node000008_Node000008" title=" " alt="" coords="325,453,331,456,334,463,326,472,308,474,308,468,324,467,329,462,328,460,322,458"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="315,401,291,450,286,448,310,398"/>
+<area shape="rect" id="Node000010" href="$struct_material.html" title="Struct that stores all texture and render information for a material." alt="" coords="307,252,375,279"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="339,294,329,359,324,358,334,293"/>
+<area shape="rect" id="Node000011" href="$struct_i_material.html" title=" " alt="" coords="272,176,410,203"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="344,218,344,252,338,252,338,218"/>
+<area shape="rect" id="Node000012" href="$struct_texture.html" title=" " alt="" coords="309,5,373,32"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="344,47,344,176,338,176,338,47"/>
+<area shape="rect" id="Node000013" href="$class_shader.html" title=" " alt="" coords="418,252,480,279"/>
+<area shape="poly" id="edge12_Node000009_Node000013" title=" " alt="" coords="444,295,435,317,420,337,388,357,355,368,354,363,386,352,416,333,430,314,440,293"/>
+</map>

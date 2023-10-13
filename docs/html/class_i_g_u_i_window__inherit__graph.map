@@ -1,0 +1,9 @@
+<map id="IGUIWindow" name="IGUIWindow">
+<area shape="rect" id="Node000001" title=" " alt="" coords="205,5,297,32"/>
+<area shape="rect" id="Node000002" href="$class_g_u_i_debug_tools_window.html" title=" " alt="" coords="5,80,163,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,41,114,82,112,77,207,36"/>
+<area shape="rect" id="Node000003" href="$class_g_u_i_material_viewer.html" title=" " alt="" coords="187,80,315,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="253,48,253,80,248,80,248,48"/>
+<area shape="rect" id="Node000004" href="$class_g_u_i_menu_bar_window.html" title=" " alt="" coords="339,80,480,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="293,36,383,77,380,82,291,41"/>
+</map>
