@@ -51,11 +51,11 @@ void main()
     vec3 diffuse = light.diffuse * (max(dot(normal, lightDir), 0.0) * material.diffuse) * diffuseColor;
 	
     // Simple attenuation
-    float maxDistance = 1.5;
-    float dist = length(fs_in.TangentLightPos - fs_in.TangentFragPos);
+    //float maxDistance = 1.5;
+    //float dist = length(fs_in.TangentLightPos - fs_in.TangentFragPos);
 	//TODO: float attenuation = 1.0f / (gamma ? dist * dist : dist);
-    float attenuation = 1.0f;
-    diffuse *= attenuation;
+    //float attenuation = 1.0f;
+    //diffuse *= attenuation;
 
     // Result
 	vec3 result = (ambient + diffuse);

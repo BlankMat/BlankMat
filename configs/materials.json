@@ -16,6 +16,22 @@
       "map_ns": "default.png",
       "map_d": "default.png"
     },
+    "brickwall": {
+      "kd": [ 0.6, 0.6, 0.6 ],
+      "ka": [ 0.2, 0.2, 0.2 ],
+      "ks": [ 1.0, 1.0, 1.0 ],
+      "ke": [ 0.0, 0.0, 0.0 ],
+      "ns": 8.0,
+      "ni": 0.0,
+      "d": 1.0,
+      "illum": 2,
+      "map_kd": "brickwall.png",
+      "map_ka": "brickwall.png",
+      "map_ks": "default.png",
+      "map_bump": "brickwall_normal.png",
+      "map_ns": "default.png",
+      "map_d": "default.png"
+    },
     "emerald": {
       "kd": [ 0.0215, 0.1745, 0.0215 ],
       "ka": [ 0.07568, 0.61424, 0.07568 ],

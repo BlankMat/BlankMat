@@ -57,12 +57,12 @@ void main()
     vec3 specular = light.specular * (pow(max(dot(normal, reflectDir), 0.0), material.shininess) * material.specular) * specularColor;
 	
     // Simple attenuation
-    float maxDistance = 1.5;
-    float dist = length(fs_in.TangentLightPos - fs_in.TangentFragPos);
+    //float maxDistance = 1.5;
+    //float dist = length(fs_in.TangentLightPos - fs_in.TangentFragPos);
 	//TODO: float attenuation = 1.0f / (gamma ? dist * dist : dist);
-    float attenuation = 1.0f;
-    diffuse *= attenuation;
-    specular *= attenuation;
+    //float attenuation = 1.0f;
+    //diffuse *= attenuation;
+    //specular *= attenuation;
 
     // Result
 	vec3 result = (ambient + diffuse + specular);
