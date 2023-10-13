@@ -4,9 +4,9 @@
 class PWireCube : public IPrimitive<glm::vec3, glm::uvec4>
 {
 public:
-	PWireCube(float size, Shader* shader, glm::vec3 color, float lineWidth, bool drawOver = true,
+	PWireCube(float size, Shader* shader, Material* material, float lineWidth, bool drawOver = true,
 		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
-		: IPrimitive(shader, color, lineWidth, drawOver, pos, rot, scale)
+		: IPrimitive(shader, material, lineWidth, drawOver, pos, rot, scale)
 	{
 		float h = size * 0.5f;
 		// Generate verts of cube

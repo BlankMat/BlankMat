@@ -1,0 +1,24 @@
+<map id="src/rendering/iScene.h" name="src/rendering/iScene.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="231,5,383,32"/>
+<area shape="rect" id="Node000002" href="$input_8h.html" title=" " alt="" coords="98,80,180,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="265,41,169,82,167,77,263,36"/>
+<area shape="rect" id="Node000006" href="$scene_8h.html" title=" " alt="" coords="234,80,380,107"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="310,48,310,80,304,80,304,48"/>
+<area shape="rect" id="Node000010" href="$selection_8cpp.html" title=" " alt="" coords="404,80,524,107"/>
+<area shape="poly" id="edge12_Node000001_Node000010" title=" " alt="" coords="349,36,438,77,435,82,347,41"/>
+<area shape="rect" id="Node000003" href="$input_8cpp.html" title=" " alt="" coords="5,163,102,189"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="116,119,68,164,65,161,113,116"/>
+<area shape="rect" id="Node000004" href="$main_8h.html" title=" " alt="" coords="304,245,387,272"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="152,120,173,158,205,195,228,212,254,226,305,245,303,250,252,231,225,217,201,199,169,162,147,122"/>
+<area shape="rect" id="Node000005" href="$main_8cpp.html" title=" " alt="" coords="297,320,394,347"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="348,288,348,320,343,320,343,288"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="260,116,236,133,217,156,210,176,217,196,234,215,257,230,305,248,303,253,254,235,231,219,213,199,205,176,213,153,232,129,257,112"/>
+<area shape="rect" id="Node000007" href="$scene_8cpp.html" title=" " alt="" coords="227,163,387,189"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="310,122,310,163,304,163,304,122"/>
+<area shape="rect" id="Node000008" href="$gui_debug_tools_window_8h.html" title=" " alt="" coords="411,155,592,197"/>
+<area shape="poly" id="edge8_Node000006_Node000008" title=" " alt="" coords="352,111,452,152,450,156,350,115"/>
+<area shape="rect" id="Node000009" href="$gui_material_viewer_8h.html" title=" " alt="" coords="617,163,826,189"/>
+<area shape="poly" id="edge10_Node000006_Node000009" title=" " alt="" coords="387,107,656,159,655,165,386,113"/>
+<area shape="poly" id="edge9_Node000008_Node000004" title=" " alt="" coords="449,207,371,247,369,242,447,202"/>
+<area shape="poly" id="edge11_Node000009_Node000004" title=" " alt="" coords="648,196,387,251,386,246,647,191"/>
+</map>

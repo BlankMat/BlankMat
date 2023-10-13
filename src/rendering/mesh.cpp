@@ -1,6 +1,5 @@
 #include "mesh.h"
 
-// Generates a mesh from the given vertices, indices, material, and children
 Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, Material* material)
 {
     mVertices = vertices;
@@ -15,7 +14,7 @@ Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, Ma
 }
 
 // Render the mesh
-void Mesh::Draw(glm::mat4 viewProj)
+void Mesh::Draw(glm::mat4 viewProj, Camera* camera, Light* light, glm::mat4 model)
 {
     // Don't draw disabled meshes
     if (!mIsEnabled)
@@ -23,59 +22,35 @@ void Mesh::Draw(glm::mat4 viewProj)
 
     // Set uniforms for this draw
     mShader->Use();
-    glm::mat4 modelMatrix = GetModelMatrix();
+    glm::mat4 modelMatrix = GetModelMatrix() * model;
     glm::mat4 mvp = viewProj * modelMatrix;
-    glm::mat3 normalModel = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
+    glm::mat3 normalModel = glm::transpose(glm::inverse(glm::mat3(modelMatrix)));
+    light->UpdateShader(mShader);
+    mMaterial->UpdateShader(mShader, mState, mDefaultMat);
+    mShader->SetVec3("viewPos", camera->GetPos());
     mShader->SetMat4("MVP", mvp);
     mShader->SetMat4("Model", modelMatrix);
     mShader->SetMat3("NormalModel", normalModel);
-    mMaterial->UpdateShader(mShader);
 
     // Draw mesh
     glBindVertexArray(mVAO);
     glDrawElements(GL_TRIANGLES, (GLsizei)mIndices.size(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
-    // Recursively draw child meshes
-    for (auto iter = mChildren.begin(); iter != mChildren.end(); ++iter)
-        if (iter->second != nullptr)
-            iter->second->Draw(viewProj);
+    // Reset active texture
+    glActiveTexture(GL_TEXTURE0);
 }
 
-// Adds the child mesh
-IMesh* Mesh::AddChild(IMesh* child)
+glm::vec3 Mesh::CalcCenter()
 {
-    std::string name = child->GetName();
-    // If a duplicate name is found, change the name
-    if (mChildren.find(name) == mChildren.end())
-    {
-        // If the name ends in a number, increment it
-        size_t numIndex = name.find_last_not_of("0123456789");
-        std::string nums = name.substr(numIndex + 1);
-        // If the name does not end in a number, add _0 to the end
-        name = (nums.size() > 0) ? name.substr(0, numIndex) + std::to_string(std::stoi(nums) + 1) : name + "_0";
-        child->SetName(name);
-    }
-    mChildren.emplace(name, child);
-    return child;
+    glm::vec3 center = glm::vec3(0.0f);
+    for (unsigned int i = 0; i < mVertices.size(); i++)
+        center += mVertices[i].pos;
+    return center;
 }
 
-// Sets the shader for the mesh and its children
-void Mesh::SetShader(Shader* shader)
-{
-    mShader = shader;
-    for (auto iter = mChildren.begin(); iter != mChildren.end(); ++iter)
-        if (iter->second != nullptr)
-            iter->second->SetShader(shader);
-}
-
-// Cleans up the mesh
 Mesh::~Mesh()
 {
     mVertices.clear();
     mIndices.clear();
-    for (auto iter = mChildren.begin(); iter != mChildren.end(); ++iter)
-        if (iter->second != nullptr)
-            delete iter->second;
-    mChildren.clear();
 }

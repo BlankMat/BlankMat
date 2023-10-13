@@ -1,10 +1,10 @@
 #pragma once
 #include "glIncludes.h"
-#include "options.h"
 #include "selection.h"
 #include "rendering/iMesh.h"
 #include "rendering/iScene.h"
 #include "windows/window.h"
+#include "tools/state.h"
 
 #define KEY1_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_1) == GLFW_PRESS)
 #define KEY2_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_2) == GLFW_PRESS)
@@ -67,6 +67,6 @@ struct InputLocks {
 	void LockTool(Tool _tool);
 };
 
-bool ProcessInput(Window* window, IScene* scene, Selection* sel, InputLocks* locks, Options* options, SpeedConsts* speeds, float deltaTime, int* prevX, int* prevY);
+bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks, float deltaTime, int* prevX, int* prevY);
 glm::vec3 GetWASDZX(Window* window);
 glm::vec3 GetArrow(Window* window);

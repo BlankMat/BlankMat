@@ -1,17 +1,16 @@
 #pragma once
 #include "iGUIWindow.h"
 #include "selection.h"
-#include "options.h"
-#include "mathLib.h"
-#include "rendering/modelScene.h"
+#include "utils.h"
+#include "rendering/scene.h"
 #include "rendering/camera.h"
+#include "tools/state.h"
 
 class GUIDebugToolsWindow : public IGUIWindow
 {
 protected:
-	Options* mOptions;
-	Selection* mSelection;
-	ModelScene* mScene;
+	State* mState;
+	Scene* mScene;
 public:
 	void Draw() override
 	{
@@ -19,100 +18,154 @@ public:
 		if (!mIsEnabled)
 			return;
 
-		ImGui::Begin("Debug Tools");
+		if (ImGui::Begin("Debug Tools"))
+		{
+			// Shading settings
+			ImGui::Text("Shading");
+			// Select shader
+			std::unordered_map<std::string, Shader*> shaders = mScene->GetShaderList();
+			std::string curShader = mScene->GetCurShader();
+			if (ImGui::BeginListBox("Shader"))
+			{
+				for (auto iter = shaders.begin(); iter != shaders.end(); ++iter)
+				{
+					std::string itemName = iter->first;
+					bool isSelected = itemName == curShader;
+					if (ImGui::Selectable(itemName.c_str(), &isSelected))
+						curShader = itemName;
 
-		// Camera settings
-		ImGui::Text("Camera Settings");
-		Camera* cam = mScene->GetCamera();
+					if (isSelected)
+						ImGui::SetItemDefaultFocus();
+				}
+				ImGui::EndListBox();
+				mScene->UseShader(curShader);
+				mScene->GetRootNode()->SetShader(mScene->GetShader(curShader));
+			}
 
-		// Camera position
-		glm::vec3 camPos = cam->GetPos();
-		float camPosInput[3] = { camPos.x, camPos.y, camPos.z };
-		ImGui::InputFloat3("Camera Position", camPosInput);
-		cam->SetPos(Vec3FromFloats(camPosInput));
+			// Choose parts of materials
+			ImGui::Checkbox("Enable Diffuse Map", &mState->enableDiffuseMap);
+			ImGui::Checkbox("Enable Ambient Map", &mState->enableAmbientMap);
+			ImGui::Checkbox("Enable Specular Map", &mState->enableSpecularMap);
+			ImGui::Checkbox("Enable Normal Map", &mState->enableNormalMap);
+			ImGui::Checkbox("Enable Height Map", &mState->enableHeightMap);
+			ImGui::Checkbox("Enable Alpha Map", &mState->enableAlphaMap);
 
-		// Camera lookat
-		glm::vec3 camTarget = cam->GetLookAt();
-		float camLookInput[3] = { camTarget.x, camTarget.y, camTarget.z };
-		ImGui::InputFloat3("Camera Target", camLookInput);
-		cam->LookAt(Vec3FromFloats(camLookInput));
+			// Camera settings
+			ImGui::Text("Camera Settings");
+			Camera* cam = mScene->GetCamera();
 
-		// Camera size
-		float camSize = cam->GetOrthSize();
-		ImGui::InputFloat("Camera Size", &camSize);
-		cam->SetOrthSize(camSize);
+			// Camera position
+			glm::vec3 camPos = cam->GetPos();
+			float camPosInput[3] = { camPos.x, camPos.y, camPos.z };
+			ImGui::InputFloat3("Camera Position", camPosInput);
+			cam->SetPos(Vec3FromFloats(camPosInput));
 
-		// Camera FOV
-		float camFOV = cam->GetFOV();
-		ImGui::InputFloat("Camera FOV", &camFOV);
-		cam->SetFOV(camFOV);
+			// Camera lookat
+			glm::vec3 camTarget = cam->GetLookAt();
+			float camLookInput[3] = { camTarget.x, camTarget.y, camTarget.z };
+			ImGui::InputFloat3("Camera Target", camLookInput);
+			cam->LookAt(Vec3FromFloats(camLookInput));
 
-		// Camera near clip
-		float camNearClip = cam->GetNearClip();
-		ImGui::InputFloat("Camera Near Clip", &camNearClip);
-		cam->SetNearClip(camNearClip);
+			// Camera size
+			float camSize = cam->GetOrthSize();
+			ImGui::InputFloat("Camera Size", &camSize);
+			cam->SetOrthSize(camSize);
 
-		// Camera far clip
-		float camFarClip = cam->GetFarClip();
-		ImGui::InputFloat("Camera Far Clip", &camFarClip);
-		cam->SetFarClip(camFarClip);
+			// Camera FOV
+			float camFOV = cam->GetFOV();
+			ImGui::InputFloat("Camera FOV", &camFOV);
+			cam->SetFOV(camFOV);
 
-		// Light settings
-		ImGui::Text("Light Settings");
-		ILight* light = mScene->GetLight();
+			// Camera near clip
+			float camNearClip = cam->GetNearClip();
+			ImGui::InputFloat("Camera Near Clip", &camNearClip);
+			cam->SetNearClip(camNearClip);
 
-		// Light position
-		glm::vec3 lightPos = light->GetOffset();
-		float lightPosInput[3] = { lightPos.x, lightPos.y, lightPos.z };
-		ImGui::InputFloat3("Light Position", lightPosInput);
-		light->SetOffset(Vec3FromFloats(lightPosInput));
+			// Camera far clip
+			float camFarClip = cam->GetFarClip();
+			ImGui::InputFloat("Camera Far Clip", &camFarClip);
+			cam->SetFarClip(camFarClip);
 
-		// Light color
-		glm::vec3 lightColor = light->GetBaseColor();
-		float lightColorInput[3] = { lightColor.x, lightColor.y, lightColor.z };
-		ImGui::ColorPicker3("Light Color", lightColorInput);
-		light->SetBaseColor(Vec3FromFloats(lightColorInput));
+			// Perspective
+			bool camPerspective = cam->IsPerspective();
+			ImGui::Checkbox("Perspective", &camPerspective);
+			cam->SetPerspective(camPerspective);
 
-		// Model settings
-		Model* model = mScene->GetModel();
-		ImGui::Text("Model Settings");
+			// Wireframe
+			bool camWireframe = cam->IsWireframe();
+			ImGui::Checkbox("Wireframe", &camWireframe);
+			cam->SetWireframe(camWireframe);
 
-		// Model position
-		glm::vec3 modelPos = model->GetPos();
-		float modelPosInput[3] = { modelPos.x, modelPos.y, modelPos.z };
-		ImGui::InputFloat3("Model Position", modelPosInput);
-		model->SetPos(Vec3FromFloats(modelPosInput));
+			// Light settings
+			ImGui::Text("Light Settings");
+			Light* light = mScene->GetLight();
 
-		// Model rotation
-		glm::vec3 modelRot = model->GetRot();
-		float modelRotInput[3] = { modelRot.x, modelRot.y, modelRot.z };
-		ImGui::InputFloat3("Model Rotation", modelRotInput);
-		model->SetRot(Vec3FromFloats(modelRotInput));
+			// Light position
+			glm::vec3 lightPos = light->GetOffset();
+			float lightPosInput[3] = { lightPos.x, lightPos.y, lightPos.z };
+			ImGui::InputFloat3("Light Position", lightPosInput);
+			light->SetOffset(Vec3FromFloats(lightPosInput));
 
-		// Model scale
-		glm::vec3 modelScale = model->GetScale();
-		float modelScaleInput[3] = { modelScale.x, modelScale.y, modelScale.z };
-		ImGui::InputFloat3("Model Scale", modelScaleInput);
-		model->SetScale(Vec3FromFloats(modelScaleInput));
+			// Light color
+			glm::vec3 lightColor = light->GetBaseColor();
+			float lightColorInput[3] = { lightColor.x, lightColor.y, lightColor.z };
+			ImGui::ColorPicker3("Light Color", lightColorInput);
+			light->SetBaseColor(Vec3FromFloats(lightColorInput));
 
-		// Debug settings
-		ImGui::Text("Debug settings");
-		ImGui::Checkbox("Disco Light", &mOptions->isDiscoLight);
-		ImGui::Checkbox("Rotating Light", &mOptions->isRotatingLight);
-		ImGui::Checkbox("Perspective", &mOptions->isPerspective);
-		ImGui::Checkbox("Wireframe", &mOptions->wireframe);
-		ImGui::End();
+			// Light KD
+			float lightKD = light->GetKD();
+			ImGui::InputFloat("Light Diffuse", &lightKD);
+			light->SetKD(lightKD);
 
-		// Handle resulting changes
-		mScene->GetCamera()->SetPerspective(mOptions->isPerspective);
-		OpenGLEnableWireframe(mOptions->wireframe);
+			// Light KA
+			float lightKA = light->GetKA();
+			ImGui::InputFloat("Light Ambient", &lightKA);
+			light->SetKA(lightKA);
+
+			// Light KS
+			float lightKS = light->GetKS();
+			ImGui::InputFloat("Light Specular", &lightKS);
+			light->SetKS(lightKS);
+
+			// Light gamma
+			bool lightGamma = light->GetGamma();
+			ImGui::Checkbox("Light Gamma", &lightGamma);
+			light->SetGamma(lightGamma);
+
+			// Model settings
+			Node* model = mScene->GetRootNode();
+			ImGui::Text("Model Settings");
+
+			// Model position
+			glm::vec3 modelPos = model->GetPos();
+			float modelPosInput[3] = { modelPos.x, modelPos.y, modelPos.z };
+			ImGui::InputFloat3("Model Position", modelPosInput);
+			model->SetPos(Vec3FromFloats(modelPosInput));
+
+			// Model rotation
+			glm::vec3 modelRot = model->GetRot();
+			float modelRotInput[3] = { modelRot.x, modelRot.y, modelRot.z };
+			ImGui::InputFloat3("Model Rotation", modelRotInput);
+			model->SetRot(Vec3FromFloats(modelRotInput));
+
+			// Model scale
+			glm::vec3 modelScale = model->GetScale();
+			float modelScaleInput[3] = { modelScale.x, modelScale.y, modelScale.z };
+			ImGui::InputFloat3("Model Scale", modelScaleInput);
+			model->SetScale(Vec3FromFloats(modelScaleInput));
+
+			// Debug settings
+			ImGui::Text("Debug settings");
+			ImGui::Checkbox("Disco Light", &mState->isDiscoLight);
+			ImGui::Checkbox("Rotating Light", &mState->isRotatingLight);
+			ImGui::End();
+		}
 	}
 
-	GUIDebugToolsWindow(Selection* selection, ModelScene* scene, Options* options, bool isEnabled)
+	GUIDebugToolsWindow(State* state, Scene* scene, bool isEnabled)
 	{
 		type = GUI::DEBUG_TOOLS;
-		mOptions = options;
-		mSelection = selection;
+		mState = state;
 		mScene = scene;
 		mIsEnabled = isEnabled;
 	}

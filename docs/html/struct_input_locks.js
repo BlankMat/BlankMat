@@ -1,0 +1,27 @@
+var struct_input_locks =
+[
+    [ "ClearLocks", "struct_input_locks.html#a04d96295657c1dca39aed0fb2da6bb0c", null ],
+    [ "LockTool", "struct_input_locks.html#ad37c1a650d5749b550882eb8ce6363d1", null ],
+    [ "lockAltR", "struct_input_locks.html#af1306b9c17d05e76494267fcafc43b89", null ],
+    [ "lockAltT", "struct_input_locks.html#a65630a230ab51e5faaaddf77e170b827", null ],
+    [ "lockCtrlC", "struct_input_locks.html#a0176442fc34881d14897476439999cbb", null ],
+    [ "lockCtrlE", "struct_input_locks.html#a2bf935ce5866f5c82979f5c72fdbb39f", null ],
+    [ "lockCtrlR", "struct_input_locks.html#a7a94c8e481ea1cff75c566830a0097d2", null ],
+    [ "lockCtrlS", "struct_input_locks.html#a3d3935136da19032b7d0901d7231fb8f", null ],
+    [ "lockCtrlT", "struct_input_locks.html#a1194c8ad667c5f8f7bc37d20ee513de7", null ],
+    [ "lockDel", "struct_input_locks.html#adb3fae050145fb3ef3f5ff60e8512a76", null ],
+    [ "lockE", "struct_input_locks.html#a6c212cc1163345ac4ba6cee42bc594f8", null ],
+    [ "lockF", "struct_input_locks.html#ad96610abe1b1f70d89a8cb6d1a9e1d52", null ],
+    [ "lockKey1", "struct_input_locks.html#ae4fc848b3ea3ae3aea841400dc502d11", null ],
+    [ "lockKey2", "struct_input_locks.html#a7c05db2952ae93a2e689a5cd824846d0", null ],
+    [ "lockKey3", "struct_input_locks.html#ab7e9bb538fd7dd5c2d992aeb3209b08b", null ],
+    [ "lockKey4", "struct_input_locks.html#a3a375127bf7843b93131ff5a8de9c62d", null ],
+    [ "lockKey5", "struct_input_locks.html#a9f9799005199b62712f6ada907442a9c", null ],
+    [ "lockLeftMouse", "struct_input_locks.html#a4f1a2a5f362176e4d8ffd85d948363b7", null ],
+    [ "lockQ", "struct_input_locks.html#ad4f2935cae3450ef2a2d91a50293f47f", null ],
+    [ "lockR", "struct_input_locks.html#a6df4185fd0109b13cab9710429c934c1", null ],
+    [ "lockRightMouse", "struct_input_locks.html#afa39bc9859b875d58c992c2a97c8acac", null ],
+    [ "lockT", "struct_input_locks.html#af29cfd956b707d5d8fd982f9fd61b597", null ],
+    [ "rerender", "struct_input_locks.html#ac383e98a65314d592822ea004766fdfb", null ],
+    [ "reselect", "struct_input_locks.html#af36a1b1bf17fe35e634ebcbf2a5a3fb4", null ]
+];

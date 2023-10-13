@@ -1,0 +1,21 @@
+<map id="VPlane" name="VPlane">
+<area shape="rect" id="Node000001" title=" " alt="" coords="172,617,235,644"/>
+<area shape="rect" id="Node000002" href="$class_mesh.html" title=" " alt="" coords="177,541,230,568"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="206,583,206,617,201,617,201,583"/>
+<area shape="rect" id="Node000003" href="$class_i_mesh.html" title=" " alt="" coords="175,465,232,492"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="206,507,206,541,201,541,201,507"/>
+<area shape="rect" id="Node000004" href="$class_i_entity.html" title=" " alt="" coords="174,359,233,385"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="206,401,206,465,201,465,201,401"/>
+<area shape="rect" id="Node000005" href="$struct_material.html" title="Struct that stores all texture and render information for a material." alt="" coords="40,252,108,279"/>
+<area shape="poly" id="edge9_Node000002_Node000005" title=" " alt="" coords="83,293,93,334,105,389,111,412,123,440,160,497,194,539,190,543,155,500,119,443,106,414,99,390,87,335,77,295"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="89,291,104,313,123,333,148,349,175,360,173,365,146,353,119,337,100,316,85,294"/>
+<area shape="rect" id="Node000006" href="$struct_i_material.html" title=" " alt="" coords="5,176,143,203"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="77,218,77,252,71,252,71,218"/>
+<area shape="rect" id="Node000007" href="$struct_texture.html" title=" " alt="" coords="42,5,106,32"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="77,47,77,176,71,176,71,47"/>
+<area shape="rect" id="Node000008" href="$class_shader.html" title=" " alt="" coords="172,252,235,279"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="206,294,206,358,201,358,201,294"/>
+<area shape="rect" id="Node000009" href="$class_state.html" title=" " alt="" coords="297,252,350,279"/>
+<area shape="poly" id="edge10_Node000002_Node000009" title=" " alt="" coords="338,292,341,302,343,319,341,335,315,401,280,460,244,509,217,542,213,539,240,506,275,457,310,398,335,334,338,319,335,303,333,294"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="305,292,262,337,228,360,225,356,259,333,301,289"/>
+</map>
