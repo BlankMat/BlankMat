@@ -82,6 +82,24 @@ int Node::GetNodeIndex(std::string child)
 	return -1;
 }
 
+// Returns the child node with the given index, or none if out of bounds
+Node* Node::GetChild(unsigned int index)
+{
+	// Don't search out of bounds
+	if (index >= mChildren.size())
+		return nullptr;
+	return mChildren[index];
+}
+
+// Returns the mesh with the given index, or none if out of bounds
+IMesh* Node::GetMesh(unsigned int index)
+{
+	// Don't search out of bounds
+	if (index >= mMeshes.size())
+		return nullptr;
+	return mMeshes[index];
+}
+
 // Adds a mesh to the node
 void Node::AddMesh(IMesh* mesh)
 {
