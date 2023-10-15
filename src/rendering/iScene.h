@@ -166,6 +166,12 @@ public:
 	// Returns a reference to the shader list
 	std::unordered_map<std::string, Shader*>& GetShaderList() { return mShaderList; }
 
+	// Returns a reference to the material list
+	std::unordered_map<std::string, Material*>& GetMaterialList() { return mMaterialList; }
+
+	// Returns a reference to the texture list
+	std::unordered_map<std::string, Texture*>& GetTextureList() { return mTextureList; }
+
 	// Returns the current shader
 	std::string GetCurShader() { return mCurShader; }
 

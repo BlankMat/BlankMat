@@ -28,7 +28,7 @@ public:
 			{
 				// Change name of selection
 				std::string selName = sel->GetName();
-				ImGui::InputText("Selected:", &selName);
+				ImGui::InputText("Selected", &selName);
 				if (selName != sel->GetName())
 					sel->SetName(selName);
 
