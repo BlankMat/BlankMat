@@ -18,7 +18,7 @@ public:
 		if (!mIsEnabled)
 			return;
 
-		if (ImGui::Begin("Debug Tools"))
+		if (ImGui::Begin("Debug Tools", &mIsEnabled, ImGuiWindowFlags_AlwaysAutoResize))
 		{
 			// Shading settings
 			ImGui::Text("Shading");
@@ -38,8 +38,13 @@ public:
 						ImGui::SetItemDefaultFocus();
 				}
 				ImGui::EndListBox();
-				mScene->UseShader(curShader);
-				mScene->GetRootNode()->SetShader(mScene->GetShader(curShader));
+
+				// Only change the shader if it actually changed
+				if (mScene->GetCurShader() != curShader)
+				{
+					mScene->UseShader(curShader);
+					mScene->GetRootNode()->SetShader(mScene->GetShader(curShader));
+				}
 			}
 
 			// Choose parts of materials
@@ -132,39 +137,17 @@ public:
 			ImGui::Checkbox("Light Gamma", &lightGamma);
 			light->SetGamma(lightGamma);
 
-			// Model settings
-			Node* model = mScene->GetRootNode();
-			ImGui::Text("Model Settings");
-
-			// Model position
-			glm::vec3 modelPos = model->GetPos();
-			float modelPosInput[3] = { modelPos.x, modelPos.y, modelPos.z };
-			ImGui::InputFloat3("Model Position", modelPosInput);
-			model->SetPos(Vec3FromFloats(modelPosInput));
-
-			// Model rotation
-			glm::vec3 modelRot = model->GetRot();
-			float modelRotInput[3] = { modelRot.x, modelRot.y, modelRot.z };
-			ImGui::InputFloat3("Model Rotation", modelRotInput);
-			model->SetRot(Vec3FromFloats(modelRotInput));
-
-			// Model scale
-			glm::vec3 modelScale = model->GetScale();
-			float modelScaleInput[3] = { modelScale.x, modelScale.y, modelScale.z };
-			ImGui::InputFloat3("Model Scale", modelScaleInput);
-			model->SetScale(Vec3FromFloats(modelScaleInput));
-
 			// Debug settings
 			ImGui::Text("Debug settings");
 			ImGui::Checkbox("Disco Light", &mState->isDiscoLight);
 			ImGui::Checkbox("Rotating Light", &mState->isRotatingLight);
-			ImGui::End();
 		}
+		ImGui::End();
 	}
 
 	GUIDebugToolsWindow(State* state, Scene* scene, bool isEnabled)
 	{
-		type = GUI::DEBUG_TOOLS;
+		mType = GUI::DEBUG_TOOLS;
 		mState = state;
 		mScene = scene;
 		mIsEnabled = isEnabled;

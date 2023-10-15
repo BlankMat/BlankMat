@@ -6,17 +6,6 @@
 #include <sstream>
 #include <iostream>
 
-#define SHADER_DIR "resources/shaders/"
-#define DEFAULT_SHADER "default"
-#define LINE_SHADER "line"
-#define LIGHT_CUBE_SHADER "lightCube"
-#define BLINN_SHADER "blinnDefaultShader"
-#define BLINN_FLAT_SHADER "blinnFlatShader"
-#define PHONG_SHADER "phongDefaultShader"
-#define PHONG_FLAT_SHADER "phongFlatShader"
-#define LAMBERT_SHADER "lambertDefaultShader"
-#define LAMBERT_FLAT_SHADER "lambertFlatShader"
-
 // Shader utility class borrowed from
 // CC BY-NC 4.0 license https://creativecommons.org/licenses/by-nc/4.0/
 // https://learnopengl.com/code_viewer_gh.php?code=includes/learnopengl/shader.h

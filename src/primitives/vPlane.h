@@ -4,8 +4,9 @@
 class VPlane : public Mesh
 {
 public:
-	VPlane(float size, Shader* shader, Material* material, Material* defaultMat, State* state,
+	VPlane(std::string name, float size, Shader* shader, Material* material, Material* defaultMat, State* state,
 		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
+        : Mesh(name, material, defaultMat, state)
 	{
         float h = size * 0.5f;
         // Generate positions
@@ -63,9 +64,6 @@ public:
         mPos = pos;
         mRot = rot;
         mScale = scale;
-        mState = state;
-        mMaterial = material;
-        mDefaultMat = defaultMat;
 
         SetShader(shader);
         Mesh::GenBuffers();

@@ -32,46 +32,48 @@ void Material::UpdateShader(Shader* _shader, State* _state, Material* _defaultMa
     {
         // Activate proper texture unit before binding
         glActiveTexture(GL_TEXTURE0 + i);
-        // Retrieve texture number (the N in diffuse_textureN)
+        // Retrieve texture number (the N in texture_diffuseN)
         std::string number;
-        std::string name = mTextures[i]->type;
+        std::string type = mTextures[i]->type;
         unsigned int loadID = 0;
-        if (name == "texture_diffuse")
+        if (type == "texture_diffuse")
         {
             number = std::to_string(diffuseNum++);
             loadID = useDiffuse ? mTextures[i]->id : _defaultMat->map_kd->id;
             _shader->SetVec3("material.diffuse", useDiffuse ? glm::vec3(1.0f) : kd);
         }
-        else if (name == "texture_ambient")
+        else if (type == "texture_ambient")
         {
             number = std::to_string(ambientNum++);
             loadID = useAmbient ? mTextures[i]->id : _defaultMat->map_ka->id;
             _shader->SetVec3("material.ambient", useAmbient ? glm::vec3(1.0f) : ka);
         }
-        else if (name == "texture_specular")
+        else if (type == "texture_specular")
         {
             number = std::to_string(specularNum++);
             loadID = useSpecular ? mTextures[i]->id : _defaultMat->map_ks->id;
             _shader->SetVec3("material.specular", useSpecular ? glm::vec3(1.0f) : ks);
         }
-        else if (name == "texture_normal")
+        else if (type == "texture_normal")
         {
             number = std::to_string(normalNum++);
             loadID = useNormal ? mTextures[i]->id : _defaultMat->map_bump->id;
         }
-        else if (name == "texture_height")
+        else if (type == "texture_height")
         {
             number = std::to_string(heightNum++);
             loadID = useHeight ? mTextures[i]->id : _defaultMat->map_ns->id;
         }
-        else if (name == "texture_alpha")
+        else if (type == "texture_alpha")
         {
             number = std::to_string(alphaNum++);
             loadID = useAlpha ? mTextures[i]->id : _defaultMat->map_d->id;
         }
 
         // Set the sampler to the correct texture unit
-        _shader->SetInt(("material." + name + number).c_str(), loadID);
+        std::string textureName = "material." + type + number;
+        //std::cout << name << ": " << textureName << std::endl;
+        _shader->SetInt(textureName, i);
         glBindTexture(GL_TEXTURE_2D, loadID);
     }
     glActiveTexture(GL_TEXTURE0);

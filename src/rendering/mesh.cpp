@@ -1,10 +1,20 @@
 #include "mesh.h"
 
-Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, Material* material)
+// Instantiates an empty mesh
+Mesh::Mesh(std::string name, Material* material, Material* defaultMat, State* state)
+{
+    mMaterial = material;
+    mDefaultMat = defaultMat;
+    mState = state;
+    mName = name;
+}
+
+Mesh::Mesh(std::string name, std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, Material* material)
 {
     mVertices = vertices;
     mIndices = indices;
     mMaterial = material;
+    mName = name;
 
     mPos = glm::vec3(0.0f);
     mRot = glm::vec3(0.0f);

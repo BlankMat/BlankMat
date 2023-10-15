@@ -46,9 +46,9 @@ void Selection::SelectFace(unsigned int _id, bool _deselect)
 	if (_id < 0)
 		return;
 	if (_deselect)
-		selFaces.clear();
+		mSelFaces.clear();
 
-	selFaces.emplace(_id);
+	mSelFaces.emplace(_id);
 	std::cout << "Selected face [" << _id << "].\n";
 }
 
@@ -58,9 +58,9 @@ void Selection::SelectVert(unsigned int _id, bool _deselect)
 	if (_id < 0)
 		return;
 	if (_deselect)
-		selVerts.clear();
+		mSelVertices.clear();
 
-	selVerts.emplace(_id);
+	mSelVertices.emplace(_id);
 	std::cout << "Selected vertex [" << _id << "].\n";
 }
 
@@ -70,74 +70,84 @@ void Selection::SelectMesh(IMesh* mesh)
 	if (mesh == nullptr)
 		return;
 
-	selMesh = mesh;
-	std::cout << "Selected mesh [" << selMesh << "].\n";
+	mSelMesh = mesh;
+	std::cout << "Selected mesh [" << mSelMesh->GetName() << "].\n";
+}
+
+// Selects the given entity
+void Selection::SelectEntity(IEntity* entity)
+{
+	if (entity == nullptr)
+		return;
+
+	mSelEntity = entity;
+	std::cout << "Selected entity [" << mSelEntity->GetName() << "].\n";
 }
 
 // Deselects the face with the given ID
 void Selection::DeselectFace(unsigned int _id)
 {
-	selFaces.erase(_id);
+	mSelFaces.erase(_id);
 	std::cout << "Deselected face [" << _id << "].\n";
 }
 
 // Deselects the vertex with the given ID
 void Selection::DeselectVert(unsigned int _id)
 {
-	selVerts.erase(_id);
+	mSelVertices.erase(_id);
 	std::cout << "Deselected vertex [" << _id << "].\n";
 }
 
 // Deselects the currently selected mesh
 void Selection::DeselectMesh()
 {
-	if (selMesh == nullptr)
+	if (mSelMesh == nullptr)
 		return;
 
-	selMesh = nullptr;
+	mSelMesh = nullptr;
 	std::cout << "Deselected mesh.\n";
 }
 
 // Clears the vertex selection
-void Selection::ClearVertSel() { selVerts.clear(); }
+void Selection::ClearVertSel() { mSelVertices.clear(); }
 // Clears the face selection
-void Selection::ClearFaceSel() { selFaces.clear(); }
+void Selection::ClearFaceSel() { mSelFaces.clear(); }
 // Clears the entire selection
 void Selection::ClearSelection() { ClearFaceSel(); ClearVertSel(); }
 
 // Sets the selection pivot
-void Selection::SetSelectionPivot(glm::vec3 _pivot) { pivot = _pivot; }
+void Selection::SetSelectionPivot(glm::vec3 _pivot) { mPivot = _pivot; }
 // Returns the selection pivot
-glm::vec3 Selection::GetSelectionPivot() { return pivot; }
+glm::vec3 Selection::GetSelectionPivot() { return mPivot; }
 
 // Calculates the selection pivot
 void Selection::CalcSelPivot()
 {
 	// Reset pivot if nothing is selected
-	if (selMesh == nullptr)
-		pivot = glm::vec3(0, 0, 0);
+	if (mSelMesh == nullptr)
+		mPivot = glm::vec3(0, 0, 0);
 	// Use mesh pivot as center
-	else if (selVerts.size() == 0 && selFaces.size() == 0)
-		pivot = selMesh->GetPos();
+	else if (mSelVertices.size() == 0 && mSelFaces.size() == 0)
+		mPivot = mSelMesh->GetPos();
 	// Calculate center for face selection
-	else if (selFaces.size() != 0) {
-		pivot = selMesh->GetPos();
+	else if (mSelFaces.size() != 0) {
+		mPivot = mSelMesh->GetPos();
 	}
 	// Calculate center for vertex selection
-	else if (selVerts.size() != 0) {
-		pivot = glm::vec3(0, 0, 0);
-		for (auto iter = selVerts.begin(); iter != selVerts.end(); ++iter) {
-			pivot += selMesh->GetVertex(*iter)->pos;
+	else if (mSelVertices.size() != 0) {
+		mPivot = glm::vec3(0, 0, 0);
+		for (auto iter = mSelVertices.begin(); iter != mSelVertices.end(); ++iter) {
+			mPivot += mSelMesh->GetVertex(*iter)->pos;
 		}
-		pivot /= (float)selVerts.size();
+		mPivot /= (float)mSelVertices.size();
 	}
 }
 
 // Sets the tool selection
 void Selection::SetTool(Tool _sel)
 {
-	tool = _sel;
-	switch (tool) {
+	mSelTool = _sel;
+	switch (mSelTool) {
 	case Tool::NONE:
 		std::cout << "Selected tool [NONE]\n";
 		break;
@@ -161,8 +171,8 @@ void Selection::SetTool(Tool _sel)
 // Sets the selection mode
 void Selection::SetSelMode(SelMode _sel)
 {
-	selMode = _sel;
-	switch (selMode) {
+	mSelMode = _sel;
+	switch (mSelMode) {
 	case SelMode::MESH:
 		std::cout << "Selected mode [MESH]\n";
 		break;
@@ -176,24 +186,27 @@ void Selection::SetSelMode(SelMode _sel)
 }
 
 // Returns whether the given vertex is selected
-bool Selection::IsVertSelected(unsigned int _id) { return selVerts.find(_id) != selVerts.end(); }
+bool Selection::IsVertSelected(unsigned int _id) { return mSelVertices.find(_id) != mSelVertices.end(); }
 // Returns whether the given face is selected
-bool Selection::IsFaceSelected(unsigned int _id) { return selFaces.find(_id) != selFaces.end(); }
+bool Selection::IsFaceSelected(unsigned int _id) { return mSelFaces.find(_id) != mSelFaces.end(); }
 
 // Returns the tool selection
-Tool Selection::GetTool() { return tool; }
+Tool Selection::GetTool() { return mSelTool; }
 // Returns the selection mode
-SelMode Selection::GetSelMode() { return selMode; }
+SelMode Selection::GetSelMode() { return mSelMode; }
 // Returns the selected mesh
-IMesh* Selection::GetSelectedMesh() { return selMesh; }
+IMesh* Selection::GetSelectedMesh() { return mSelMesh; }
+// Returns the selected entity
+IEntity* Selection::GetSelectedEntity() { return mSelEntity; }
 
 // Storage container for information on all selections
 Selection::Selection()
 {
-	tool = Tool::NONE;
-	selMode = SelMode::MESH;
-	pivot = glm::vec3(0, 0, 0);
-	selMesh = nullptr;
+	mSelTool = Tool::NONE;
+	mSelMode = SelMode::MESH;
+	mPivot = glm::vec3(0, 0, 0);
+	mSelMesh = nullptr;
+	mSelEntity = nullptr;
 }
 
 // Returns the nearest mesh to the clicked position

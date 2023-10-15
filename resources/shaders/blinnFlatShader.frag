@@ -12,6 +12,13 @@ struct Material {
     vec3 diffuse;
     vec3 specular;
     float shininess;
+
+    sampler2D texture_diffuse1;
+    sampler2D texture_ambient1;
+    sampler2D texture_specular1;
+    sampler2D texture_normal1;
+    sampler2D texture_height1;
+    sampler2D texture_alpha1;
 };
 
 struct Light {
@@ -21,13 +28,6 @@ struct Light {
     vec3 diffuse;
     vec3 specular;
 };
-
-uniform sampler2D texture_diffuse1;
-uniform sampler2D texture_ambient1;
-uniform sampler2D texture_specular1;
-uniform sampler2D texture_normal1;
-uniform sampler2D texture_height1;
-uniform sampler2D texture_alpha1;
 
 uniform Material material;
 uniform Light light;
@@ -40,18 +40,18 @@ void main()
     vec3 normal = normalize(fs_in.Normal);
 
     // Ambient
-    vec3 ambientColor = texture(texture_ambient1, fs_in.TexCoords).rgb;
+    vec3 ambientColor = texture(material.texture_ambient1, fs_in.TexCoords).rgb;
     vec3 ambient = light.ambient * material.ambient * ambientColor;
 
     // Diffuse
     vec3 lightDir = normalize(light.position - fs_in.FragPos);
-    vec3 diffuseColor = texture(texture_diffuse1, fs_in.TexCoords).rgb;
+    vec3 diffuseColor = texture(material.texture_diffuse1, fs_in.TexCoords).rgb;
     vec3 diffuse = light.diffuse * (max(dot(normal, lightDir), 0.0) * material.diffuse) * diffuseColor;
 
     // Specular
     vec3 viewDir = normalize(viewPos - fs_in.FragPos);
     vec3 halfwayDir = normalize(lightDir + viewDir);
-    vec3 specularColor = texture(texture_specular1, fs_in.TexCoords).rgb;
+    vec3 specularColor = texture(material.texture_specular1, fs_in.TexCoords).rgb;
     vec3 specular = light.specular * (pow(max(dot(normal, halfwayDir), 0.0), material.shininess) * material.specular) * specularColor;
 	
     // Simple attenuation

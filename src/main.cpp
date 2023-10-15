@@ -21,45 +21,46 @@ int main()
     // Create scene
     // ------------
     Scene* scene = new Scene();
-    scene->LoadMaterials(materialsConfig->GetConfig("materials"));
-    scene->LoadModel(FileSystem::GetPath(MODELS_DIR + config->GetString("model.file")));
-    scene->GetRootNode()->SetShader(scene->GetShader(DEFAULT_SHADER));
-    scene->GetRootNode()->SetPos(config->GetVec("model.pos"));
-    scene->GetRootNode()->SetRot(config->GetVec("model.rot"));
-    scene->GetRootNode()->SetScale(config->GetVec("model.scale"));
-    scene->SetMeshShaders(scene->GetShader(DEFAULT_SHADER), state);
-    Material* defaultMat = scene->GetMaterial("default");
+    scene->SetState(state);
+    scene->LoadMaterials(materialsConfig);
+    scene->LoadModel(FileSystem::GetPath(MODELS_DIR) + config->GetString("model.file"), 
+        config->GetVec("model.pos"), config->GetVec("model.rot"), config->GetVec("model.scale"));
 
     // Load shaders
-    scene->CreateShader(DEFAULT_SHADER, config->GetConfig("shader"));
-    scene->CreateShader(BLINN_SHADER, false);
-    scene->CreateShader(PHONG_SHADER, false);
-    scene->CreateShader(LAMBERT_SHADER, false);
-    scene->CreateShader(BLINN_FLAT_SHADER, false);
-    scene->CreateShader(PHONG_FLAT_SHADER, false);
-    scene->CreateShader(LAMBERT_FLAT_SHADER, false);
-    scene->CreateShader(LIGHT_CUBE_SHADER, false);
-    scene->CreateShader(LINE_SHADER, false);
+    Shader* defaultShader = scene->CreateShader(DEFAULT_SHADER, config->GetConfig("shader"));
+    Shader* blinnShader = scene->CreateShader(BLINN_SHADER, false);
+    Shader* phongShader = scene->CreateShader(PHONG_SHADER, false);
+    Shader* lambertShader = scene->CreateShader(LAMBERT_SHADER, false);
+    Shader* blinnFlatShader = scene->CreateShader(BLINN_FLAT_SHADER, false);
+    Shader* phongFlatShader = scene->CreateShader(PHONG_FLAT_SHADER, false);
+    Shader* lambertFlatShader = scene->CreateShader(LAMBERT_FLAT_SHADER, false);
+    Shader* lightCubeShader = scene->CreateShader(LIGHT_CUBE_SHADER, false);
+    Shader* lineShader = scene->CreateShader(LINE_SHADER, false);
+    Material* defaultMat = scene->GetMaterial("default");
     scene->UseShader(DEFAULT_SHADER);
 
+    // Setup scene
+    scene->GetRootNode()->SetShader(defaultShader);
+    scene->SetMeshShaders(defaultShader, state);
     scene->SetCamera(config->GetConfig("camera"));
-    scene->SetLight(new PLightCube(1.0f, scene->GetShader(LIGHT_CUBE_SHADER), config->GetConfig("light")));
+    scene->SetLight(new PLightCube("globalLight", 1.0f, lightCubeShader, defaultMat, state, config->GetConfig("light")));
 
-    scene->AddEntity(BG_PLANE_OBJ, new PPlane(20.0f, true, scene->GetShader(DEFAULT_SHADER), defaultMat, false), true);
-    scene->AddEntity(GRID_OBJ, new PGrid(5, 1.0f, scene->GetShader(LINE_SHADER), new Material(glm::vec3(0.2f)), 2, true, glm::vec3(0.0f)), true);
-    scene->AddEntity(TRANSFORM_HANDLE, new PHandle(0.5f, scene->GetShader(LINE_SHADER), 6, true, glm::vec3(0.0f)));
-    scene->AddEntity(CAMERA_AXIS_HANDLE, new PHandle(45.0f, scene->GetShader(LINE_SHADER), 6, false, glm::vec3(50, 50, 0)));
-    scene->AddMesh(new VPlane(2.0f, scene->GetShader(LAMBERT_FLAT_SHADER), scene->GetMaterial("brickwall"), scene->GetMaterial("default"), state, glm::vec3(5, 2, 0), glm::vec3(90, 0, 0)));
+    // Add renderables
+    scene->AddEntity(new PPlane(BG_PLANE_OBJ, 20.0f, true, defaultShader, defaultMat, defaultMat, state, false), true);
+    scene->AddEntity(new PGrid(GRID_OBJ, 5, 1.0f, lineShader, new Material(glm::vec3(0.2f)), defaultMat, state, 2, true, glm::vec3(0.0f)), true);
+    scene->AddEntity(new PHandle(TRANSFORM_HANDLE, 0.5f, lineShader, defaultMat, state, 6, true, glm::vec3(0.0f)));
+    scene->AddEntity(new PHandle(CAMERA_AXIS_HANDLE, 45.0f, lineShader, defaultMat, state, 6, false, glm::vec3(50, 50, 0)));
+    scene->AddMesh(new VPlane("brickwall", 2.0f, blinnShader, scene->GetMaterial("brickwall"), defaultMat, state, glm::vec3(5, 2, 0), glm::vec3(90, 0, 0)));
 
     if (config->GetBool("defaultCubes"))
     {
         //scene->Addentity(CAMERA_AXIS_HANDLE, new Cube(15.0f, scene->GetShader(LINE_SHADER), glm::vec3(1.0f), 6, true, glm::vec3(100, 100, 0)));
-        scene->AddEntity("cube1", new PCube(1.0f, scene->GetShader(LINE_SHADER), new Material(glm::vec3(0, 1, 0)), 0.0f, false, glm::vec3(-5, 0, -5), glm::vec3(0, 45, 0), glm::vec3(1, 2, 1)));
-        scene->AddEntity("cube2", new PCube(1.0f, scene->GetShader(LINE_SHADER), new Material(glm::vec3(1, 0, 0)), 0.0f, false, glm::vec3(-5, 0, -3), glm::vec3(45, 0, 0), glm::vec3(2, 1, 1)));
-        scene->AddEntity("cube3", new PCube(1.0f, scene->GetShader(LINE_SHADER), new Material(glm::vec3(0, 0, 1)), 0.0f, false, glm::vec3(-5, 0, -1), glm::vec3(0, 0, 45), glm::vec3(1, 1, 2)));
-        scene->AddEntity("cube4", new PCube(1.0f, scene->GetShader(LINE_SHADER), new Material(glm::vec3(0, 1, 1)), 0.0f, false, glm::vec3(-5, 0, 1), glm::vec3(0, 45, 45), glm::vec3(1, 2, 2)));
-        scene->AddEntity("cube5", new PCube(1.0f, scene->GetShader(LINE_SHADER), new Material(glm::vec3(1, 0, 1)), 0.0f, false, glm::vec3(-5, 0, 3), glm::vec3(45, 0, 45), glm::vec3(2, 1, 2)));
-        scene->AddEntity("cube6", new PCube(1.0f, scene->GetShader(LINE_SHADER), new Material(glm::vec3(1, 1, 0)), 0.0f, false, glm::vec3(-5, 0, 5), glm::vec3(45, 45, 0), glm::vec3(2, 2, 1)));
+        scene->AddEntity(new PCube("cube1", 1.0f, scene->GetShader(LINE_SHADER), new Material(glm::vec3(0, 1, 0)), defaultMat, state, 0.0f, false, glm::vec3(-5, 0, -5), glm::vec3(0, 45, 0), glm::vec3(1, 2, 1)));
+        scene->AddEntity(new PCube("cube2", 1.0f, scene->GetShader(LINE_SHADER), new Material(glm::vec3(1, 0, 0)), defaultMat, state, 0.0f, false, glm::vec3(-5, 0, -3), glm::vec3(45, 0, 0), glm::vec3(2, 1, 1)));
+        scene->AddEntity(new PCube("cube3", 1.0f, scene->GetShader(LINE_SHADER), new Material(glm::vec3(0, 0, 1)), defaultMat, state, 0.0f, false, glm::vec3(-5, 0, -1), glm::vec3(0, 0, 45), glm::vec3(1, 1, 2)));
+        scene->AddEntity(new PCube("cube4", 1.0f, scene->GetShader(LINE_SHADER), new Material(glm::vec3(0, 1, 1)), defaultMat, state, 0.0f, false, glm::vec3(-5, 0, 1), glm::vec3(0, 45, 45), glm::vec3(1, 2, 2)));
+        scene->AddEntity(new PCube("cube5", 1.0f, scene->GetShader(LINE_SHADER), new Material(glm::vec3(1, 0, 1)), defaultMat, state, 0.0f, false, glm::vec3(-5, 0, 3), glm::vec3(45, 0, 45), glm::vec3(2, 1, 2)));
+        scene->AddEntity(new PCube("cube6", 1.0f, scene->GetShader(LINE_SHADER), new Material(glm::vec3(1, 1, 0)), defaultMat, state, 0.0f, false, glm::vec3(-5, 0, 5), glm::vec3(45, 45, 0), glm::vec3(2, 2, 1)));
     }
 
     // Enable wireframe if requested in options
@@ -80,6 +81,8 @@ int main()
     // Add GUIs
     window->AddGUI(new GUIDebugToolsWindow(state, scene, true));
     window->AddGUI(new GUIMaterialViewer(state, scene, true));
+    window->AddGUI(new GUIHierarchyWindow(state, scene, true));
+    window->AddGUI(new GUIInspectorWindow(state, scene, true));
     window->AddGUI(new GUIMenuBarWindow(true));
 
     // render loop

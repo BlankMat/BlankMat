@@ -14,29 +14,56 @@ public:
 		if (!mIsEnabled)
 			return;
 
-		if (ImGui::Begin("Material Viewer"))
+		if (ImGui::Begin("Material Viewer", &mIsEnabled, ImGuiWindowFlags_AlwaysAutoResize))
 		{
-			if (ImGui::BeginMenu("Colors"))
+			IEntity* sel = mState->GetSel()->GetSelectedEntity();
+			std::unordered_map<std::string, Material*>& mats = mScene->GetMaterialList();
+			if (sel != nullptr && sel->GetMaterial() != nullptr)
 			{
+				Material* selMat = sel->GetMaterial();
+				// Draw all materials
 				float sz = ImGui::GetTextLineHeight();
-				for (int i = 0; i < ImGuiCol_COUNT; i++)
+				float spacing = 5.0f;
+				for (auto iter = mats.begin(); iter != mats.end(); ++iter)
 				{
-					const char* name = ImGui::GetStyleColorName((ImGuiCol)i);
+					glm::vec3 kd = iter->second->kd;
+					glm::vec3 ka = iter->second->ka;
+					glm::vec3 ks = iter->second->ks;
+					ImU32 colorKD = ImGui::GetColorU32(ImVec4(kd.r, kd.g, kd.b, 1.0f));
+					ImU32 colorKA = ImGui::GetColorU32(ImVec4(ka.r, ka.g, ka.b, 1.0f));
+					ImU32 colorKS = ImGui::GetColorU32(ImVec4(ks.r, ks.g, ks.b, 1.0f));
 					ImVec2 p = ImGui::GetCursorScreenPos();
-					ImGui::GetWindowDrawList()->AddRectFilled(p, ImVec2(p.x + sz, p.y + sz), ImGui::GetColorU32((ImGuiCol)i));
-					ImGui::Dummy(ImVec2(sz, sz));
+					ImGui::GetWindowDrawList()->AddRectFilled(p, ImVec2(p.x + sz, p.y + sz), colorKD);
+					p.x += sz + spacing;
+					ImGui::GetWindowDrawList()->AddRectFilled(p, ImVec2(p.x + sz, p.y + sz), colorKA);
+					p.x += sz + spacing;
+					ImGui::GetWindowDrawList()->AddRectFilled(p, ImVec2(p.x + sz, p.y + sz), colorKS);
+					ImGui::Dummy(ImVec2((sz + spacing)*3, sz));
 					ImGui::SameLine();
-					ImGui::MenuItem(name);
+
+					bool isSelected = (selMat == iter->second);
+					if (ImGui::Selectable(iter->first.c_str(), &isSelected))
+						selMat = iter->second;
+
+					if (isSelected)
+						ImGui::SetItemDefaultFocus();
 				}
-				ImGui::EndMenu();
+
+				// If the selected material changed, update sel
+				if (selMat != sel->GetMaterial())
+					sel->SetMaterial(selMat);
 			}
-			ImGui::End();
+			else
+			{
+				ImGui::Text("No selection.");
+			}
 		}
+		ImGui::End();
 	}
 
 	GUIMaterialViewer(State* state, Scene* scene, bool isEnabled)
 	{
-		type = GUI::MATERIAL_BAR;
+		mType = GUI::MATERIAL_BAR;
 		mState = state;
 		mScene = scene;
 		mIsEnabled = isEnabled;
