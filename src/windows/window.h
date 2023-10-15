@@ -7,9 +7,6 @@
 #include <unordered_map>
 #include <string>
 
-#define FONT_DIR "resources/fonts/"
-#define ICON "icon256.png"
-
 class Window {
 private:
 	int mWidth;

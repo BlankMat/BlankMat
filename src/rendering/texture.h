@@ -2,14 +2,12 @@
 #include <string>
 #include <iostream>
 
-#define TEXTURE_DIR "resources/textures"
-
 struct Texture
 {
 	unsigned int id;
+	std::string name;
 	std::string type;
 	std::string path;
-	std::string name;
 
 	Texture::Texture(unsigned int _id = -1, std::string _type = "", std::string _path = "", std::string _name = "")
 		: id(_id), type(_type), path(_path), name(_name) {}

@@ -78,9 +78,9 @@ public:
 		return translate * rotate * scale;
 	}
 
-	IEntity(Shader* shader = nullptr, Material* material = nullptr, bool drawOver = false,
+	IEntity(Shader* shader = nullptr, Material* material = nullptr, Material* defaultMat = nullptr, State* state = nullptr, bool drawOver = false,
 		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
-		: mShader(shader), mMaterial(material), mDrawOver(drawOver), mPos(pos), mRot(rot), mScale(scale)
+		: mShader(shader), mMaterial(material), mDefaultMat(defaultMat), mState(state), mDrawOver(drawOver), mPos(pos), mRot(rot), mScale(scale)
 	{
 		mVAO = mVBO = mEBO = 0;
 		mIsEnabled = true;

@@ -35,13 +35,12 @@ protected:
 			return material;
 
 		// Create textures
-		bool isDefault = (name == "default");
-		Texture* kd = LoadTexture("texture_diffuse", config->GetString("map_kd"), isDefault ? "default_diffuse" : "");
-		Texture* ka = LoadTexture("texture_ambient", config->GetString("map_ka"), isDefault ? "default_ambient" : "");
-		Texture* ks = LoadTexture("texture_specular", config->GetString("map_ks"), isDefault ? "default_specular" : "");
-		Texture* normal = LoadTexture("texture_normal", config->GetString("map_bump"), isDefault ? "default_normal" : "");
-		Texture* ns = LoadTexture("texture_height", config->GetString("map_ns"), isDefault ? "default_height" : "");
-		Texture* d = LoadTexture("texture_alpha", config->GetString("map_d"), isDefault ? "default_alpha" : "");
+		Texture* kd = LoadTexture("texture_diffuse", config->GetString("map_kd"), "default_diffuse");
+		Texture* ka = LoadTexture("texture_ambient", config->GetString("map_ka"), "default_ambient");
+		Texture* ks = LoadTexture("texture_specular", config->GetString("map_ks"), "default_specular");
+		Texture* normal = LoadTexture("texture_normal", config->GetString("map_bump"), "default_normal");
+		Texture* ns = LoadTexture("texture_height", config->GetString("map_ns"), "default_height");
+		Texture* d = LoadTexture("texture_alpha", config->GetString("map_d"), "default_alpha");
 
 		// Create material
 		material = new Material(name, config, kd, ka, ks, normal, ns, d);
@@ -50,15 +49,23 @@ protected:
 	}
 
 	// Loads the given texture or returns the existing one
-	Texture* LoadTexture(std::string type, std::string path, std::string name = "")
+	Texture* LoadTexture(std::string type, std::string path, std::string defaultName = "")
 	{
+		// If no path is given, load the default texture
+		if (path == "")
+			path = defaultName;
+
+		// Get the name of the texture
+		std::string name = path.substr(0, path.find_last_of('.'));
+		if (name == "default")
+			name = defaultName;
+
 		// If the texture is already loaded with the same type, return it
-		Texture* texture = GetTexture(path);
+		Texture* texture = GetTexture(name);
 		if (texture != nullptr && texture->type == type)
 			return texture;
 
-		// Otherwise load the texture and store it
-		name = (name != "") ? name : path;
+		// If the texture is not loaded, load the texture and store it
 		texture = new Texture(type, FileSystem::GetPath(TEXTURE_DIR), path, name);
 		AddTexture(name, texture);
 		return texture;
@@ -159,9 +166,9 @@ public:
 	// Adds an entity to the scene's render list
 	IEntity* AddEntity(std::string name, IEntity* entity, bool preRender = false)
 	{
-		std::unordered_map<std::string, IEntity*>* tempList = &(preRender ? mPreRenderList : mRenderList);
-		if (tempList->find(name) == tempList->end())
-			tempList->emplace(name, entity);
+		std::unordered_map<std::string, IEntity*>& tempList = (preRender ? mPreRenderList : mRenderList);
+		if (tempList.find(name) == tempList.end())
+			tempList.emplace(name, entity);
 		return entity;
 	}
 

@@ -69,14 +69,13 @@ public:
 		glEnable(GL_DEPTH_TEST);
 	}
 
-	IPrimitive(Shader* shader = nullptr, Material* material = nullptr, float lineWidth = 0.1f, bool drawOver = false,
+	IPrimitive(Shader* shader = nullptr, Material* material = nullptr, Material* defaultMat = nullptr,
+		State* state = nullptr, float lineWidth = 0.1f, bool drawOver = false,
 		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
-		: IEntity(shader, material, drawOver, pos, rot, scale), mLineWidth(lineWidth)
+		: IEntity(shader, material, defaultMat, state, drawOver, pos, rot, scale), mLineWidth(lineWidth)
 	{
 		// If the lineWidth is positive, draw wireframe
 		mIsWireframe = lineWidth > 0.0f;
 		mIndexLen = 0;
-		mDefaultMat = nullptr;
-		mState = nullptr;
 	}
 };

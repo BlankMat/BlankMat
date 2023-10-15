@@ -52,6 +52,12 @@ void Scene::AddMesh(Mesh* mesh)
 	mRootNode->AddMesh(mesh);
 }
 
+// Returns the root node
+Node* Scene::GetRootNode()
+{
+	return mRootNode;
+}
+
 // Sets the shader for all the meshes of the model
 void Scene::SetMeshShaders(Shader* shader, State* state)
 {
@@ -62,8 +68,14 @@ void Scene::SetMeshShaders(Shader* shader, State* state)
 	}
 }
 
+// Saves the global state in the scene
+void Scene::SetState(State* state)
+{
+	mState = state;
+}
+
 // Loads the model at the given path
-void Scene::LoadModel(std::string path)
+void Scene::LoadModel(const std::string& path)
 {
 	std::cout << "Reading model from file " << path << std::endl;
 	Assimp::Importer importer;
@@ -75,7 +87,10 @@ void Scene::LoadModel(std::string path)
 		std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
 		return;
 	}
-	mDirectory = path.substr(0, path.find_last_of('/'));
+	size_t lastSlash = path.find_last_of('/') + 1;
+	size_t lastPeriod = path.find_last_of('.');
+	mDirectory = path.substr(0, lastSlash);
+	mName = path.substr(lastSlash, lastPeriod - lastSlash);
 
 	// Process model
 	if (mRootNode == nullptr)
@@ -173,9 +188,15 @@ Mesh* Scene::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 			if (ambientMaps.size() == 0)
 			{
 				if (diffuseMaps.size() > 0)
-					ambientMaps.push_back(diffuseMaps[0]);
+				{
+					Texture* ambientTexture = new Texture(diffuseMaps[0]->id, "texture_ambient", diffuseMaps[0]->path, diffuseMaps[0]->name);
+					AddTexture(ambientTexture->name, ambientTexture);
+					ambientMaps.push_back(ambientTexture);
+				}
 				else
+				{
 					ambientMaps.push_back(GetTexture("default_ambient"));
+				}
 			}
 			// 3. specular maps
 			std::vector<Texture*> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
@@ -235,7 +256,7 @@ Mesh* Scene::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 	return new Mesh(vertices, indices, newMaterial);
 }
 
-// Load
+// Loads material textures
 std::vector<Texture*> Scene::LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
 {
 	std::vector<Texture*> textures;
@@ -243,9 +264,12 @@ std::vector<Texture*> Scene::LoadMaterialTextures(aiMaterial* mat, aiTextureType
 	{
 		aiString str;
 		mat->GetTexture(type, i, &str);
+		std::string path = str.C_Str();
+		std::string name = path.substr(0, path.find_last_of('.'));
+		std::string textureName = mName + "_" + name;
 
 		// Check if texture is loaded already
-		Texture* texture = GetTexture(str.C_Str());
+		Texture* texture = GetTexture(textureName);
 		if (texture != nullptr)
 		{
 			textures.push_back(texture);
@@ -253,10 +277,10 @@ std::vector<Texture*> Scene::LoadMaterialTextures(aiMaterial* mat, aiTextureType
 		}
 
 		// if texture hasn't been loaded already, load it
-		texture = new Texture(typeName, this->mDirectory, str.C_Str(), str.C_Str());
+		texture = new Texture(typeName, mDirectory, path, textureName);
 		textures.push_back(texture);
-		AddTexture(str.C_Str(), texture);
-		std::cout << "  - Loaded texture " << str.C_Str() << std::endl;
+		AddTexture(textureName, texture);
+		std::cout << "  - Loaded texture " << textureName << std::endl;
 	}
 	return textures;
 }

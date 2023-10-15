@@ -22,3 +22,23 @@ constexpr float HALF_PI = 1.57079f;
 #define BG_PLANE_OBJ "bgPlane"
 #define TRANSFORM_HANDLE "transformHandle"
 #define CAMERA_AXIS_HANDLE "cameraAxisHandle"
+
+#define TEXTURE_DIR "resources/textures/"
+#define FONT_DIR "resources/fonts/"
+#define MODELS_DIR "resources/models/"
+#define SHADER_DIR "resources/shaders/"
+
+#define CONFIG_JSON "configs/config.json"
+#define MATS_JSON "configs/materials.json"
+#define APP_NAME "BlankMat"
+#define ICON "icon256.png"
+
+#define DEFAULT_SHADER "default"
+#define LINE_SHADER "line"
+#define LIGHT_CUBE_SHADER "lightCube"
+#define BLINN_SHADER "blinnDefaultShader"
+#define BLINN_FLAT_SHADER "blinnFlatShader"
+#define PHONG_SHADER "phongDefaultShader"
+#define PHONG_FLAT_SHADER "phongFlatShader"
+#define LAMBERT_SHADER "lambertDefaultShader"
+#define LAMBERT_FLAT_SHADER "lambertFlatShader"

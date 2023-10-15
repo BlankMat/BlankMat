@@ -1,5 +1,13 @@
 #include "mesh.h"
 
+// Instantiates an empty mesh
+Mesh::Mesh(Material* material, Material* defaultMat, State* state)
+{
+    mMaterial = material;
+    mDefaultMat = defaultMat;
+    mState = state;
+}
+
 Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, Material* material)
 {
     mVertices = vertices;

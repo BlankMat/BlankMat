@@ -22,11 +22,6 @@
 #include "primitives/vCube.h"
 #include "primitives/vPlane.h"
 
-#define CONFIG_JSON "configs/config.json"
-#define MATS_JSON "configs/materials.json"
-#define MODELS_DIR "resources/models/"
-#define APP_NAME "BlankMat"
-
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 720;
 

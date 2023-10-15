@@ -7,9 +7,9 @@
 class PGrid : public IPrimitive<glm::vec3, glm::uvec2>
 {
 public:
-    PGrid(int gridSize, float unitSize, Shader* shader, Material* material, float lineWidth, bool drawOver = true,
+    PGrid(int gridSize, float unitSize, Shader* shader, Material* material, Material* defaultMat, State* state, float lineWidth, bool drawOver = true,
         glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
-        : IPrimitive(shader, material, lineWidth, drawOver, pos, rot, scale)
+        : IPrimitive(shader, material, defaultMat, state, lineWidth, drawOver, pos, rot, scale)
     {
         // Generate x lines for grid
         for (int x = -gridSize; x <= gridSize; x++) {

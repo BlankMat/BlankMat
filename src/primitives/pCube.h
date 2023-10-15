@@ -7,9 +7,9 @@
 class PCube : public IPrimitive<glm::vec3, glm::uvec3>
 {
 public:
-	PCube(float size, Shader* shader, Material* material, float lineWidth, bool drawOver = false,
+	PCube(float size, Shader* shader, Material* material, Material* defaultMat, State* state, float lineWidth, bool drawOver = false,
 		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
-		: IPrimitive(shader, material, lineWidth, drawOver, pos, rot, scale)
+		: IPrimitive(shader, material, defaultMat, state, lineWidth, drawOver, pos, rot, scale)
 	{
 		float h = size * 0.5f;
 		// Generate verts of cube

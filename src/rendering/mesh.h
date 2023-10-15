@@ -9,15 +9,11 @@
 class Mesh : public IMesh
 {
 protected:
-	Material* mMaterial;
-	Material* mDefaultMat;
-	State* mState;
-
 	// Calculates the center of the mesh
 	glm::vec3 CalcCenter();
 public:
 	// Instantiates an empty mesh
-	Mesh() { mMaterial = nullptr; mState = nullptr; mDefaultMat = nullptr; }
+	Mesh(Material* material, Material* defaultMat, State* state);
 	// Instantiates a mesh with the given vertices, indices, and textures
 	Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, Material* material);
 	// Draws the mesh
