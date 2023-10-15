@@ -88,24 +88,39 @@ public:
 	}
 
 	// Creates a shader for the scene with the given name from the source file of the given name
-	void CreateShader(std::string name, bool loadGeom)
+	Shader* CreateShader(std::string name, bool loadGeom)
 	{
 		if (mShaderList.find(name) == mShaderList.end())
-			mShaderList.emplace(name, new Shader(name, loadGeom));
+		{
+			Shader* newShader = new Shader(name, loadGeom);
+			mShaderList.emplace(name, newShader);
+			return newShader;
+		}
+		return mShaderList[name];
 	}
 
 	// Creates a shader for the scene with the given name, loading it from a different source than the name
-	void CreateShader(std::string name, std::string source, bool loadGeom)
+	Shader* CreateShader(std::string name, std::string source, bool loadGeom)
 	{
 		if (mShaderList.find(name) == mShaderList.end())
-			mShaderList.emplace(name, new Shader(source, loadGeom));
+		{
+			Shader* newShader = new Shader(source, loadGeom);
+			mShaderList.emplace(name, newShader);
+			return newShader;
+		}
+		return mShaderList[name];
 	}
 
 	// Creates a shader for the scene with the given name, loading it from a config
-	void CreateShader(std::string name, Config* config)
+	Shader* CreateShader(std::string name, Config* config)
 	{
 		if (mShaderList.find(name) == mShaderList.end())
-			mShaderList.emplace(name, new Shader(config->GetString("file"), config->GetBool("hasGeomShader")));
+		{
+			Shader* newShader = new Shader(config->GetString("file"), config->GetBool("hasGeomShader"));
+			mShaderList.emplace(name, newShader);
+			return newShader;
+		}
+		return mShaderList[name];
 	}
 
 	// Returns the scene's camera
@@ -164,7 +179,16 @@ public:
 	void SetLight(Light* light) { if (mGlobalLight != nullptr) { delete mGlobalLight; } mGlobalLight = light; }
 
 	// Adds an entity to the scene's render list
-	IEntity* AddEntity(std::string name, IEntity* entity, bool preRender = false)
+	IEntity* AddEntity(IEntity* entity, bool preRender = false)
+	{
+		std::unordered_map<std::string, IEntity*>& tempList = (preRender ? mPreRenderList : mRenderList);
+		if (tempList.find(entity->GetName()) == tempList.end())
+			tempList.emplace(entity->GetName(), entity);
+		return entity;
+	}
+
+	// Adds an entity to the scene's render list
+	IEntity* AddEntity(IEntity* entity, std::string name, bool preRender = false)
 	{
 		std::unordered_map<std::string, IEntity*>& tempList = (preRender ? mPreRenderList : mRenderList);
 		if (tempList.find(name) == tempList.end())

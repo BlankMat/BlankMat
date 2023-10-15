@@ -11,6 +11,8 @@
 #include "windows/guiDebugToolsWindow.h"
 #include "windows/guiMenuBarWindow.h"
 #include "windows/guiMaterialViewer.h"
+#include "windows/guiHierarchyWindow.h"
+#include "windows/guiInspectorWindow.h"
 
 #include "rendering/shader.h"
 #include "rendering/scene.h"

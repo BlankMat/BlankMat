@@ -19,7 +19,7 @@ protected:
 	std::vector<Texture*> LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
 public:
 	// Loads the given model to the scene
-	void LoadModel(const std::string& path);
+	void LoadModel(const std::string& path, glm::vec3 startPos = glm::vec3(0.0f), glm::vec3 startRot = glm::vec3(0.0f), glm::vec3 startScale = glm::vec3(1.0f));
 	// Renders the current scene
 	void Draw(Window* window) override;
 	// Sets the shader for all the meshes of the model

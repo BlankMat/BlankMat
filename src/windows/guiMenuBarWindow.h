@@ -95,7 +95,7 @@ public:
 
     GUIMenuBarWindow(bool isEnabled)
     {
-        type = GUI::MENU_BAR;
+        mType = GUI::MENU_BAR;
         mIsEnabled = isEnabled;
     }
 };

@@ -11,7 +11,6 @@ protected:
 	glm::vec3 mRight;
 	glm::vec3 mUp;
 
-	std::string mName;
 	std::vector<Vertex> mVertices;
 	std::vector<unsigned int> mIndices;
 
@@ -49,12 +48,6 @@ protected:
 public:
 	// Sets the shader of the mesh
 	virtual void SetShader(Shader* shader) = 0;
-
-	// Returns the name of the mesh
-	std::string GetName() { return mName; }
-	
-	// Sets the name of the mesh
-	void SetName(std::string name) { mName = name; }
 
 	// Returns the vertex with the given index
 	Vertex* GetVertex(unsigned int index)

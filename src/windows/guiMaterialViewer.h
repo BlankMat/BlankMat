@@ -14,7 +14,7 @@ public:
 		if (!mIsEnabled)
 			return;
 
-		if (ImGui::Begin("Material Viewer"))
+		if (ImGui::Begin("Material Viewer", &mIsEnabled, ImGuiWindowFlags_AlwaysAutoResize))
 		{
 			if (ImGui::BeginMenu("Colors"))
 			{
@@ -30,13 +30,13 @@ public:
 				}
 				ImGui::EndMenu();
 			}
-			ImGui::End();
 		}
+		ImGui::End();
 	}
 
 	GUIMaterialViewer(State* state, Scene* scene, bool isEnabled)
 	{
-		type = GUI::MATERIAL_BAR;
+		mType = GUI::MATERIAL_BAR;
 		mState = state;
 		mScene = scene;
 		mIsEnabled = isEnabled;

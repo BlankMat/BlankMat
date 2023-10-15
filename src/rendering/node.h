@@ -7,10 +7,6 @@ class Node : public IEntity
 {
 protected:
 	/// <summary>
-	/// Name of the node
-	/// </summary>
-	std::string mName;
-	/// <summary>
 	/// Parent node of this node. Nullptr if this is the root node
 	/// </summary>
 	Node* mParent;
@@ -48,6 +44,12 @@ public:
 	void SetShader(Shader* shader) override;
 
 	/// <summary>
+	/// Returns the name of the node
+	/// </summary>
+	/// <returns>Name of the node</returns>
+	std::string GetName() { return mName; }
+
+	/// <summary>
 	/// Returns the number of child nodes
 	/// </summary>
 	/// <returns>Number of child nodes</returns>
@@ -60,18 +62,18 @@ public:
 	unsigned int GetMeshCount() { return (unsigned int)mMeshes.size(); }
 
 	/// <summary>
-	/// Returns the index of the given mesh or -1 if not found
-	/// </summary>
-	/// <param name="mesh">Mesh to search for</param>
-	/// <returns>Index of the given mesh or -1</returns>
-	int GetMeshIndex(IMesh* mesh);
-
-	/// <summary>
 	/// Returns the index of the given node or -1 if not found
 	/// </summary>
 	/// <param name="child">Child node to search for</param>
 	/// <returns>Index of the node with the given name</returns>
 	int GetNodeIndex(std::string child);
+
+	/// <summary>
+	/// Returns the index of the given mesh or -1 if not found
+	/// </summary>
+	/// <param name="mesh">Mesh to search for</param>
+	/// <returns>Index of the given mesh or -1</returns>
+	int GetMeshIndex(IMesh* mesh);
 
 	/// <summary>
 	/// Returns the child node with the given index, or none if out of bounds
@@ -108,11 +110,24 @@ public:
 	bool IsRootNode() { return mParent == nullptr; }
 
 	/// <summary>
-	/// Recursively find the node with the given name
+	/// Recursively searches for the node with the given name
 	/// </summary>
 	/// <param name="name">Node to search for</param>
-	/// <returns>Node with the given name or null if not found</returns>
+	/// <returns>Node with the given name or nullptr if not found</returns>
 	Node* FindNode(std::string name);
+
+	/// <summary>
+	/// Recursively searches for the mesh with the given name
+	/// </summary>
+	/// <param name="name">Name of the mesh</param>
+	/// <returns>Mesh with the given name or nullptr if not found</returns>
+	IMesh* FindMesh(std::string name);
+
+	/// <summary>
+	/// Renames the node to the given name
+	/// </summary>
+	/// <param name="name">New name</param>
+	void SetName(std::string name) { mName = name; }
 
 	/// <summary>
 	/// Adds a mesh for the node

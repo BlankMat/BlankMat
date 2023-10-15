@@ -8,19 +8,21 @@ enum class Tool { NONE = 0, SELECT = 1, MOVE = 2, ROTATE = 3, SCALE = 4, EXTRUDE
 enum class SelMode { MESH = 0, VERT = 1, FACE = 2 };
 
 // Forward declare to prevent circular dependency
+class IEntity;
 class IMesh;
 class IScene;
 
 struct Selection
 {
 private:
-	glm::vec3 pivot;
-	std::set<unsigned int> selVerts;
-	std::set<unsigned int> selFaces;
-	IMesh* selMesh;
+	glm::vec3 mPivot;
+	std::set<unsigned int> mSelVertices;
+	std::set<unsigned int> mSelFaces;
+	IMesh* mSelMesh;
+	IEntity* mSelEntity;
 
-	Tool tool;
-	SelMode selMode;
+	Tool mSelTool;
+	SelMode mSelMode;
 public:
 	std::set<unsigned int> newSelVerts;
 	std::set<unsigned int> removedSelVerts;
@@ -41,6 +43,8 @@ public:
 	void SelectVert(unsigned int _id, bool _deselect = false);
 	// Selects the given mesh
 	void SelectMesh(IMesh* mesh);
+	// Selects the given entity
+	void SelectEntity(IEntity* entity);
 	// Deselects the face with the given ID
 	void DeselectFace(unsigned int _id);
 	// Deselects the vertex with the given ID
@@ -70,6 +74,8 @@ public:
 	SelMode GetSelMode();
 	// Returns the selected mesh
 	IMesh* GetSelectedMesh();
+	// Returns the selected entity
+	IEntity* GetSelectedEntity();
 	// Returns whether the given vertex is selected
 	bool IsVertSelected(unsigned int _id);
 	// Returns whether the given face is selected

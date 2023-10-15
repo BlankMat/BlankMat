@@ -75,7 +75,7 @@ void Scene::SetState(State* state)
 }
 
 // Loads the model at the given path
-void Scene::LoadModel(const std::string& path)
+void Scene::LoadModel(const std::string& path, glm::vec3 startPos, glm::vec3 startRot, glm::vec3 startScale)
 {
 	std::cout << "Reading model from file " << path << std::endl;
 	Assimp::Importer importer;
@@ -95,7 +95,12 @@ void Scene::LoadModel(const std::string& path)
 	// Process model
 	if (mRootNode == nullptr)
 		mRootNode = new Node(nullptr, "root");
-	ProcessNode(mRootNode, scene->mRootNode, scene);
+	Node* sceneRootNode = new Node(mRootNode, mName);
+	sceneRootNode->SetPos(startPos);
+	sceneRootNode->SetRot(startRot);
+	sceneRootNode->SetScale(startScale);
+	mRootNode->AddChild(sceneRootNode);
+	ProcessNode(sceneRootNode, scene->mRootNode, scene);
 	std::cout << "Read model from file " << path << " successfully, new directory is " << mDirectory << std::endl;
 }
 
@@ -253,7 +258,7 @@ Mesh* Scene::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 		newMaterial = GetMaterial("default");
 	}
 
-	return new Mesh(vertices, indices, newMaterial);
+	return new Mesh(mesh->mName.C_Str(), vertices, indices, newMaterial);
 }
 
 // Loads material textures

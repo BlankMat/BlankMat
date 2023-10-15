@@ -17,6 +17,7 @@ protected:
 	glm::vec3 mRot;
 	glm::vec3 mScale;
 	bool mIsEnabled;
+	std::string mName;
 
 	Material* mDefaultMat;
 	Material* mMaterial;
@@ -38,6 +39,8 @@ public:
 	virtual Material* GetMaterial() { return mMaterial; }
 	// Gets the shader of the object
 	virtual Shader* GetShader() { return mShader; }
+	// Returns the name of the object
+	std::string GetName() { return mName; }
 
 	// Sets the position of the object
 	virtual void SetPos(glm::vec3 pos) { mPos = pos; }
@@ -53,6 +56,8 @@ public:
 	virtual void SetState(State* state) { mState = state; }
 	// Sets the shader of the object
 	virtual void SetShader(Shader* shader) { mShader = shader; }
+	// Sets the name of the object
+	void SetName(std::string name) { mName = name; }
 
 	// Returns whether the object is enabled
 	bool IsEnabled() { return mIsEnabled; }
@@ -78,9 +83,9 @@ public:
 		return translate * rotate * scale;
 	}
 
-	IEntity(Shader* shader = nullptr, Material* material = nullptr, Material* defaultMat = nullptr, State* state = nullptr, bool drawOver = false,
+	IEntity(std::string name = "", Shader* shader = nullptr, Material* material = nullptr, Material* defaultMat = nullptr, State* state = nullptr, bool drawOver = false,
 		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
-		: mShader(shader), mMaterial(material), mDefaultMat(defaultMat), mState(state), mDrawOver(drawOver), mPos(pos), mRot(rot), mScale(scale)
+		: mName(name), mShader(shader), mMaterial(material), mDefaultMat(defaultMat), mState(state), mDrawOver(drawOver), mPos(pos), mRot(rot), mScale(scale)
 	{
 		mVAO = mVBO = mEBO = 0;
 		mIsEnabled = true;
