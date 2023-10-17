@@ -32,7 +32,7 @@ void Mesh::Draw(glm::mat4 viewProj, Camera* camera, Light* light, glm::mat4 mode
 
     // Set uniforms for this draw
     mShader->Use();
-    glm::mat4 modelMatrix = GetModelMatrix() * model;
+    glm::mat4 modelMatrix = model * GetModelMatrix();
     glm::mat4 mvp = viewProj * modelMatrix;
     glm::mat3 normalModel = glm::transpose(glm::inverse(glm::mat3(modelMatrix)));
     light->UpdateShader(mShader);

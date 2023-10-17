@@ -49,7 +49,7 @@ public:
 
 		mShader->Use();
 		// Set uniforms for this draw
-		glm::mat4 modelMatrix = GetModelMatrix() * model;
+		glm::mat4 modelMatrix = model * GetModelMatrix();
 		glm::mat4 mvp = viewProj * modelMatrix;
 		glm::mat3 normalModel = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
 		light->UpdateShader(mShader);

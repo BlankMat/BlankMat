@@ -63,7 +63,7 @@ public:
 
 	GUIMaterialViewer(State* state, Scene* scene, bool isEnabled)
 	{
-		mType = GUI::MATERIAL_BAR;
+		mType = GUI::MATERIAL_VIEWER;
 		mState = state;
 		mScene = scene;
 		mIsEnabled = isEnabled;

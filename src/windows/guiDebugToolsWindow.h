@@ -101,42 +101,6 @@ public:
 			ImGui::Checkbox("Wireframe", &camWireframe);
 			cam->SetWireframe(camWireframe);
 
-			// Light settings
-			ImGui::Text("Light Settings");
-			Light* light = mScene->GetLight();
-
-			// Light position
-			glm::vec3 lightPos = light->GetOffset();
-			float lightPosInput[3] = { lightPos.x, lightPos.y, lightPos.z };
-			ImGui::InputFloat3("Light Position", lightPosInput);
-			light->SetOffset(Vec3FromFloats(lightPosInput));
-
-			// Light color
-			glm::vec3 lightColor = light->GetBaseColor();
-			float lightColorInput[3] = { lightColor.x, lightColor.y, lightColor.z };
-			ImGui::ColorPicker3("Light Color", lightColorInput);
-			light->SetBaseColor(Vec3FromFloats(lightColorInput));
-
-			// Light KD
-			float lightKD = light->GetKD();
-			ImGui::InputFloat("Light Diffuse", &lightKD);
-			light->SetKD(lightKD);
-
-			// Light KA
-			float lightKA = light->GetKA();
-			ImGui::InputFloat("Light Ambient", &lightKA);
-			light->SetKA(lightKA);
-
-			// Light KS
-			float lightKS = light->GetKS();
-			ImGui::InputFloat("Light Specular", &lightKS);
-			light->SetKS(lightKS);
-
-			// Light gamma
-			bool lightGamma = light->GetGamma();
-			ImGui::Checkbox("Light Gamma", &lightGamma);
-			light->SetGamma(lightGamma);
-
 			// Debug settings
 			ImGui::Text("Debug settings");
 			ImGui::Checkbox("Disco Light", &mState->isDiscoLight);

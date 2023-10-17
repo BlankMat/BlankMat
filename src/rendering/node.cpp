@@ -11,7 +11,7 @@ Node::Node(Node* parent, std::string name)
 void Node::Draw(glm::mat4 viewProj, Camera* camera, Light* light, glm::mat4 model)
 {
 	// Calculate the MVP of this stage
-	glm::mat4 newModel = GetModelMatrix() * model;
+	glm::mat4 newModel = model * GetModelMatrix();
 
 	// Draw all child meshes
 	for (unsigned int i = 0; i < mMeshes.size(); i++)

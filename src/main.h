@@ -10,9 +10,10 @@
 #include "windows/window.h"
 #include "windows/guiDebugToolsWindow.h"
 #include "windows/guiMenuBarWindow.h"
-#include "windows/guiMaterialViewer.h"
 #include "windows/guiHierarchyWindow.h"
 #include "windows/guiInspectorWindow.h"
+#include "windows/guiMaterialViewer.h"
+#include "windows/guiLightViewer.h"
 
 #include "rendering/shader.h"
 #include "rendering/scene.h"
