@@ -1,6 +1,7 @@
 #pragma once
 #include "glIncludes.h"
 #include "files/config.h"
+#include "camera.h"
 
 enum class LightType { POINT = 0, DIR = 1, SPOT = 2 };
 
@@ -24,15 +25,34 @@ protected:
 	float mPointC;
 	float mPointL;
 	float mPointQ;
-	float mPointRange;
+	float mLightRange;
 
 	// Spotlight variables
 	float mSpotInner;
 	float mSpotOuter;
+
+	// Shadow mapping variables
+	glm::mat4 mLightSpace;
+	float mNearPlane;
+	float mFarPlane;
+	float mLightSize;
+
+	void CalcMatrices()
+	{
+		mNearPlane = mLightRange * 0.1f;
+		mFarPlane = mLightRange;
+		glm::mat4 mLightProj = glm::ortho(-mLightSize, mLightSize, -mLightSize, mLightSize, mNearPlane, mFarPlane);
+		glm::mat4 mLightView = glm::lookAt(mPos, mPos + mDir, glm::vec3(0,1,0));
+		mLightSpace = mLightProj * mLightView;
+	}
 public:
+	// Draws the object to the screen
+	virtual void Draw(glm::mat4 viewProj, Camera* camera, Light* light, glm::mat4 model = glm::mat4(1.0f)) {}
+
 	// Updates the lighting values of the given shader
 	void UpdateShader(Shader* shader)
 	{
+		// Render light
 		shader->SetVec3("light.diffuse", mColor * mKD);
 		shader->SetVec3("light.ambient", mColor * mKA);
 		shader->SetVec3("light.specular", glm::vec3(1.0f) * mKS);
@@ -40,6 +60,7 @@ public:
 		shader->SetVec3("light.direction", mDir);
 		shader->SetBool("light.gamma", mGamma);
 		shader->SetInt("light.type", (int)mType);
+		shader->SetMat4("LightSpace", mLightSpace);
 
 		// Point light
 		if (mType == LightType::POINT)
@@ -66,31 +87,32 @@ public:
 	float GetKA() { return mKA; }
 	float GetKS() { return mKS; }
 	bool GetGamma() { return mGamma; }
-	float GetPointRange() { return mPointRange; }
+	float GetRange() { return mLightRange; }
 	float GetSpotInnerRadius() { return mSpotInner; }
 	float GetSpotOuterRadius() { return mSpotOuter; }
 
-	void SetType(LightType type) { mType = type; }
-	void SetColor(glm::vec3 color) { mColor = color; }
-	void SetBaseColor(glm::vec3 color) { mBaseColor = color; }
-	void SetOffset(glm::vec3 offset) { mOffset = offset; }
-	void SetPos(glm::vec3 pos) { mPos = pos; }
-	void SetDir(glm::vec3 dir) { mDir = dir; }
-	void SetKD(float kd) { mKD = kd; }
-	void SetKA(float ka) { mKA = ka; }
-	void SetKS(float ks) { mKS = ks; }
-	void SetGamma(bool gamma) { mGamma = gamma; }
-	void SetSpotInnerRadius(float innerRadius) { mSpotInner = innerRadius; }
-	void SetSpotOuterRadius(float outerRadius) { mSpotOuter = outerRadius; }
+	virtual void SetType(LightType type) { mType = type; }
+	virtual void SetColor(glm::vec3 color) { mColor = color; }
+	virtual void SetBaseColor(glm::vec3 color) { mBaseColor = color; }
+	virtual void SetOffset(glm::vec3 offset) { mOffset = offset; }
+	virtual void SetPos(glm::vec3 pos) { mPos = pos; CalcMatrices(); }
+	virtual void SetDir(glm::vec3 dir) { mDir = dir; CalcMatrices(); }
+	virtual void SetKD(float kd) { mKD = kd; }
+	virtual void SetKA(float ka) { mKA = ka; }
+	virtual void SetKS(float ks) { mKS = ks; }
+	virtual void SetGamma(bool gamma) { mGamma = gamma; }
+	virtual void SetSpotInnerRadius(float innerRadius) { mSpotInner = innerRadius; }
+	virtual void SetSpotOuterRadius(float outerRadius) { mSpotOuter = outerRadius; }
 
-	void SetPointRange(float pointRange)
+	void SetRange(float lightRange)
 	{
-		if (pointRange <= 0.0f)
-			pointRange = 0.001f;
-		mPointRange = pointRange;
+		if (lightRange <= 0.0f)
+			lightRange = 0.001f;
+		mLightRange = lightRange;
 		mPointC = 1.0f;
-		mPointL = 4.7f / pointRange;
-		mPointQ = 85.0f / pow(pointRange, 2.0f);
+		mPointL = 4.7f / lightRange;
+		mPointQ = 85.0f / pow(lightRange, 2.0f);
+		CalcMatrices();
 	}
 
 	Light(LightType type = LightType::POINT, glm::vec3 pos = glm::vec3(1.0f), glm::vec3 dir = glm::vec3(-1.0f), 
@@ -99,7 +121,8 @@ public:
 		: mType(type), mColor(color), mBaseColor(color), mDir(dir), mPos(pos), mKD(kd), mKA(ka), mKS(ks), mOffset(pos), mGamma(gamma), 
 		mSpotInner(spotInner), mSpotOuter(spotOuter)
 	{
-		SetPointRange(pointRange);
+		mLightSize = 10.0f;
+		SetRange(pointRange);
 	}
 
 	Light(Config* config)

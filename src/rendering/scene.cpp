@@ -23,8 +23,8 @@ void Scene::Draw(Window* window)
 	mRootNode->Draw(viewProj, GetCamera(), GetLight());
 
 	// Draw lights
-	if (mGlobalLight != nullptr && static_cast<PLightCube*>(mGlobalLight) != nullptr)
-		static_cast<PLightCube*>(mGlobalLight)->Draw(viewProj, GetCamera(), GetLight());
+	if (mGlobalLight != nullptr)
+		mGlobalLight->Draw(viewProj, GetCamera(), GetLight());
 
 	// Draw post-renderables
 	for (auto iter = mRenderList.begin(); iter != mRenderList.end(); ++iter)
