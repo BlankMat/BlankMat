@@ -12,7 +12,7 @@ class IEntity;
 class IMesh;
 class IScene;
 
-struct Selection
+class Selection
 {
 private:
 	glm::vec3 mPivot;

@@ -2,7 +2,7 @@
 #include "tools/state.h"
 
 // Updates the given shader with this material's properties
-void Material::UpdateShader(Shader* _shader, State* _state, Material* _defaultMat)
+unsigned int Material::UpdateShader(Shader* _shader, State* _state, Material* _defaultMat)
 {
     _shader->SetVec3("material.diffuse", kd);
     _shader->SetVec3("material.ambient", ka);
@@ -77,6 +77,7 @@ void Material::UpdateShader(Shader* _shader, State* _state, Material* _defaultMa
         glBindTexture(GL_TEXTURE_2D, loadID);
     }
     glActiveTexture(GL_TEXTURE0);
+    return (unsigned int)mTextures.size();
 }
 
 // Constructs a material out of a single color (diffuse)

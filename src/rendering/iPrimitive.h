@@ -53,7 +53,13 @@ public:
 		glm::mat4 mvp = viewProj * modelMatrix;
 		glm::mat3 normalModel = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
 		light->UpdateShader(mShader);
-		mMaterial->UpdateShader(mShader, mState, mDefaultMat);
+
+		// Bind shadow map
+		unsigned int shadowIndex = mMaterial->UpdateShader(mShader, mState, mDefaultMat);
+		glActiveTexture(GL_TEXTURE0 + shadowIndex);
+		glBindTexture(GL_TEXTURE_2D, mState->depthMap);
+		glActiveTexture(GL_TEXTURE0);
+
 		mShader->SetVec3("viewPos", camera->GetPos());
 		mShader->SetMat4("MVP", mvp);
 		mShader->SetMat4("Model", modelMatrix);

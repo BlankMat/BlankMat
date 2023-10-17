@@ -1,7 +1,8 @@
 #pragma once
 #include "glIncludes.h"
-#include "selection.h"
 #include "files/config.h"
+
+class Selection;
 
 class State
 {
@@ -20,6 +21,7 @@ public:
 	bool enableAlphaMap;
 
 	unsigned int depthMapFBO;
+	unsigned int depthMap;
 	unsigned int depthMapSize;
 
 	std::string curShader;
@@ -41,6 +43,7 @@ public:
 		enableNormalMap = true;
 
 		depthMapFBO = 0;
+		depthMap = 0;
 		depthMapSize = config->GetInt("quality.shadowResolution");
 	}
 };

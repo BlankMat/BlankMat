@@ -23,7 +23,8 @@ public:
     /// <param name="_shader">Shader to use for this material</param>
     /// <param name="_state">Global state of the app</param>
     /// <param name="_defaultMat">Default material for the app</param>
-    void UpdateShader(Shader* _shader, State* _state, Material* _defaultMat);
+    /// <returns>Index of next available GL texture</returns>
+    unsigned int UpdateShader(Shader* _shader, State* _state, Material* _defaultMat);
 
     /// <summary>
     /// Constructs a material out of a single color (diffuse)

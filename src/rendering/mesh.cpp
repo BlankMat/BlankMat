@@ -36,7 +36,13 @@ void Mesh::Draw(glm::mat4 viewProj, Camera* camera, Light* light, glm::mat4 mode
     glm::mat4 mvp = viewProj * modelMatrix;
     glm::mat3 normalModel = glm::transpose(glm::inverse(glm::mat3(modelMatrix)));
     light->UpdateShader(mShader);
-    mMaterial->UpdateShader(mShader, mState, mDefaultMat);
+    
+    // Bind shadow map
+    unsigned int shadowIndex = mMaterial->UpdateShader(mShader, mState, mDefaultMat);
+    glActiveTexture(GL_TEXTURE0 + shadowIndex);
+    glBindTexture(GL_TEXTURE_2D, mState->depthMap);
+    glActiveTexture(GL_TEXTURE0);
+
     mShader->SetVec3("viewPos", camera->GetPos());
     mShader->SetMat4("MVP", mvp);
     mShader->SetMat4("Model", modelMatrix);

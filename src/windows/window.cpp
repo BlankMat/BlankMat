@@ -93,6 +93,7 @@ Window::Window(int width, int height, std::string name, Config* config, State* s
     glReadBuffer(GL_NONE);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     state->depthMapFBO = depthMapFBO;
+    state->depthMap = depthMap;
 }
 
 // Sets up the ImGui Style
