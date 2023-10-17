@@ -19,6 +19,9 @@ public:
 	bool enableHeightMap;
 	bool enableAlphaMap;
 
+	unsigned int depthMapFBO;
+	unsigned int depthMapSize;
+
 	std::string curShader;
 
 	Selection* GetSel() { return mSelection; }
@@ -36,5 +39,8 @@ public:
 		enableAmbientMap = true;
 		enableSpecularMap = true;
 		enableNormalMap = true;
+
+		depthMapFBO = 0;
+		depthMapSize = config->GetInt("quality.shadowResolution");
 	}
 };

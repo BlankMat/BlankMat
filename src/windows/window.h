@@ -3,6 +3,7 @@
 #include "iGUIWindow.h"
 #include "files/config.h"
 #include "files/fileSystem.h"
+#include "tools/state.h"
 #include <iostream>
 #include <unordered_map>
 #include <string>
@@ -19,7 +20,7 @@ private:
 public:
 	// Opens a OpenGL window with the given name
 	// -----------------------------------------
-	Window(int width, int height, std::string name, Config* config);
+	Window(int width, int height, std::string name, Config* config, State* state);
 
 	// Draws all GUIs
 	void DrawGUI();

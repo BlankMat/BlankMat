@@ -8,15 +8,15 @@ int main()
     Config* config = ConfigReader::ReadFile(FileSystem::GetPath(CONFIG_JSON));
     Config* materialsConfig = ConfigReader::ReadFile(FileSystem::GetPath(MATS_JSON));
 
-    // Init window
-    Window* window = new Window(SCR_WIDTH, SCR_HEIGHT, APP_NAME, config->GetConfig("style"));
-    if (window == nullptr)
-        return -1;
-
     // Create state
     State* state = new State(new Selection(), config);
     state->GetSel()->SetSelMode(SelMode::MESH);
     state->GetSel()->SetTool(Tool::SELECT);
+
+    // Init window
+    Window* window = new Window(SCR_WIDTH, SCR_HEIGHT, APP_NAME, config, state);
+    if (window == nullptr)
+        return -1;
 
     // Create scene
     // ------------
@@ -36,6 +36,7 @@ int main()
     Shader* lambertFlatShader = scene->CreateShader(LAMBERT_FLAT_SHADER, false);
     Shader* lightCubeShader = scene->CreateShader(LIGHT_CUBE_SHADER, false);
     Shader* lineShader = scene->CreateShader(LINE_SHADER, false);
+    Shader* shadowMapShader = scene->CreateShader(SHADOW_MAP_SHADER, false);
     Material* defaultMat = scene->GetMaterial("default");
     scene->UseShader(DEFAULT_SHADER);
 
@@ -46,11 +47,12 @@ int main()
     scene->SetLight(new PLightCube("globalLight", 1.0f, lightCubeShader, defaultMat, state, config->GetConfig("light")));
 
     // Add renderables
-    scene->AddEntity(new PPlane(BG_PLANE_OBJ, 20.0f, true, defaultShader, defaultMat, defaultMat, state, false), true);
+    //scene->AddEntity(new PPlane(BG_PLANE_OBJ, 20.0f, true, defaultShader, defaultMat, defaultMat, state, false), true);
     scene->AddEntity(new PGrid(GRID_OBJ, 5, 1.0f, lineShader, new Material(glm::vec3(0.2f)), defaultMat, state, 2, true, glm::vec3(0.0f)), true);
     scene->AddEntity(new PHandle(TRANSFORM_HANDLE, 0.5f, lineShader, defaultMat, state, 6, true, glm::vec3(0.0f)));
     scene->AddEntity(new PHandle(CAMERA_AXIS_HANDLE, 45.0f, lineShader, defaultMat, state, 6, false, glm::vec3(50, 50, 0)));
     scene->AddMesh(new VPlane("brickwall", 2.0f, blinnShader, scene->GetMaterial("brickwall"), defaultMat, state, glm::vec3(5, 2, 0), glm::vec3(90, 0, 0)));
+    scene->AddMesh(new VPlane("bgPlane", 10.0f, defaultShader, defaultMat, defaultMat, state));
 
     if (config->GetBool("defaultCubes"))
     {
@@ -131,13 +133,24 @@ int main()
 // -----------------------
 void OpenGLDraw(Window* window, IScene* scene, State* state)
 {
+    // Clear BG
     glm::vec3 bgColor = scene->GetCamera()->GetBGColor();
     glClearColor(bgColor.r, bgColor.g, bgColor.b, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // Draw the object
+    // Get the shader
     Shader* curShader = scene->GetShader(scene->GetCurShader());
     scene->UseShader();
+    
+    // Render depth map
+    glViewport(0, 0, state->depthMapSize, state->depthMapSize);
+    glBindFramebuffer(GL_FRAMEBUFFER, state->depthMapFBO);
+    glClear(GL_DEPTH_BUFFER_BIT);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    curShader->SetInt("shadowMap", state->depthMapFBO);
+
+    // Reset viewport
+    glViewport(0, 0, window->GetWidth(), window->GetHeight());
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Apply lighting
     glm::vec3 lightOffset = scene->GetLight()->GetOffset();

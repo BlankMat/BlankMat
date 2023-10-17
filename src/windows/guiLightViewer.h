@@ -84,9 +84,9 @@ public:
         if (type == LightType::POINT || type == LightType::SPOT)
         {
             // Range coefficient
-            float pointRange = light->GetPointRange();
+            float pointRange = light->GetRange();
             ImGui::InputFloat("Range", &pointRange);
-            light->SetPointRange(pointRange);
+            light->SetRange(pointRange);
         }
         // Show attributes of spotlight
         if (type == LightType::SPOT)

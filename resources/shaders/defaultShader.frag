@@ -7,6 +7,7 @@ in VS_OUT {
 	vec3 TangentLightPos;
 	vec3 TangentViewPos;
 	vec3 TangentFragPos;
+    vec4 LightSpaceFragPos;
 } fs_in;
 
 struct Material {
@@ -41,39 +42,82 @@ struct Light {
     bool gamma;         // Gamma correct this light
 };
 
+uniform sampler2D shadowMap;
 uniform Material material;
 uniform Light light;
 uniform vec3 viewPos;
 
-vec3 CalcPointLight(Light light, vec3 normal, vec3 ambientColor, vec3 diffuseColor, vec3 specularColor, vec3 viewDir);
-vec3 CalcDirLight(Light light, vec3 normal, vec3 ambientColor, vec3 diffuseColor, vec3 specularColor, vec3 viewDir);
-vec3 CalcSpotLight(Light light, vec3 normal, vec3 ambientColor, vec3 diffuseColor, vec3 specularColor, vec3 viewDir);
+float CalcShadows(vec3 normal);
+vec3 CalcPointLight(Light light, vec3 normal, vec3 ambientColor, vec3 diffuseColor, vec3 specularColor, vec3 viewDir, float shadow);
+vec3 CalcDirLight(Light light, vec3 normal, vec3 ambientColor, vec3 diffuseColor, vec3 specularColor, vec3 viewDir, float shadow);
+vec3 CalcSpotLight(Light light, vec3 normal, vec3 ambientColor, vec3 diffuseColor, vec3 specularColor, vec3 viewDir, float shadow);
 
 void main()
 {
-    // Gather texture and material information
-    vec3 normal = normalize(texture(material.texture_normal1, fs_in.TexCoords).rgb * 2.0 - 1.0);
-    vec3 ambientColor = texture(material.texture_ambient1, fs_in.TexCoords).rgb * material.ambient;
-    vec3 diffuseColor = texture(material.texture_diffuse1, fs_in.TexCoords).rgb * material.diffuse;
-    vec3 specularColor = texture(material.texture_specular1, fs_in.TexCoords).rgb * material.specular;
-    vec3 viewDir = normalize(fs_in.TangentViewPos - fs_in.TangentFragPos);
+    if (gl_FrontFacing)
+    {
+        // Gather texture and material information
+        vec3 normal = normalize(texture(material.texture_normal1, fs_in.TexCoords).rgb * 2.0 - 1.0);
+        vec3 ambientColor = texture(material.texture_ambient1, fs_in.TexCoords).rgb * material.ambient;
+        vec3 diffuseColor = texture(material.texture_diffuse1, fs_in.TexCoords).rgb * material.diffuse;
+        vec3 specularColor = texture(material.texture_specular1, fs_in.TexCoords).rgb * material.specular;
+        vec3 viewDir = normalize(fs_in.TangentViewPos - fs_in.TangentFragPos);
+        float shadow = CalcShadows(normal);
 
-    // Calculate all lighting
-    vec3 result = vec3(0,0,0);
-    if (light.type == 0)
-        result += CalcPointLight(light, normal, ambientColor, diffuseColor, specularColor, viewDir);
-    else if (light.type == 1)
-        result += CalcDirLight(light, normal, ambientColor, diffuseColor, specularColor, viewDir);
-    else if (light.type == 2)
-        result += CalcSpotLight(light, normal, ambientColor, diffuseColor, specularColor, viewDir);
+        // Calculate all lighting
+        vec3 result = vec3(0,0,0);
+        if (light.type == 0)
+            result += CalcPointLight(light, normal, ambientColor, diffuseColor, specularColor, viewDir, shadow);
+        else if (light.type == 1)
+            result += CalcDirLight(light, normal, ambientColor, diffuseColor, specularColor, viewDir, shadow);
+        else if (light.type == 2)
+            result += CalcSpotLight(light, normal, ambientColor, diffuseColor, specularColor, viewDir, shadow);
 
-    if (light.gamma)
-        result = pow(result, vec3(1.0/2.2));
-    FragColor = vec4(result, 1.0);
+        if (light.gamma)
+            result = pow(result, vec3(1.0/2.2));
+        FragColor = vec4(result, 1.0);   
+    }
+    else
+    {
+        FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+    }
+}
+
+// Calculates shadows for this fragment
+float CalcShadows(vec3 normal)
+{
+    // Perform perspective divide in range [0,1]
+    vec3 projCoords = (fs_in.LightSpaceFragPos.xyz / fs_in.LightSpaceFragPos.w) * 0.5 + 0.5;
+    // Get closest depth value from light's perspective
+    float closestDepth = texture(shadowMap, projCoords.xy).r;
+    // Get depth of current fragment from light's perspective
+    float currentDepth = projCoords.z;
+    // Calculate bias
+    vec3 lightDir = normalize(fs_in.TangentLightPos - fs_in.TangentFragPos);
+    float bias = max(0.05 * (1.0 - dot(normal, lightDir)), 0.005);
+
+    // PCF
+    float shadow = 0.0;
+    vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
+    for (int x = -1; x <= 1; ++x)
+    {
+        for (int y = -1; y <= 1; ++y)
+        {
+            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x,y) * texelSize).r;
+            shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;
+        }
+    }
+    // Average neighboring texels
+    shadow /= 9.0;
+
+    // Keep shadow at 0 when outside the light's far plane
+    if (projCoords.z > 1.0)
+        shadow = 0.0;
+    return shadow;
 }
 
 // Calculates the color for a point light
-vec3 CalcPointLight(Light light, vec3 normal, vec3 ambientColor, vec3 diffuseColor, vec3 specularColor, vec3 viewDir)
+vec3 CalcPointLight(Light light, vec3 normal, vec3 ambientColor, vec3 diffuseColor, vec3 specularColor, vec3 viewDir, float shadow)
 {
     // Ambient
     vec3 ambient = light.ambient * ambientColor;
@@ -93,11 +137,11 @@ vec3 CalcPointLight(Light light, vec3 normal, vec3 ambientColor, vec3 diffuseCol
     diffuse *= attenuation;
     specular *= attenuation;
 
-    return (ambient + diffuse + specular);
+    return (ambient + (1.0 - shadow) * (diffuse + specular));
 }
 
 // Calculates the color for a a directional light
-vec3 CalcDirLight(Light light, vec3 normal, vec3 ambientColor, vec3 diffuseColor, vec3 specularColor, vec3 viewDir)
+vec3 CalcDirLight(Light light, vec3 normal, vec3 ambientColor, vec3 diffuseColor, vec3 specularColor, vec3 viewDir, float shadow)
 {
     // Ambient
     vec3 ambient = light.ambient * ambientColor;
@@ -110,11 +154,11 @@ vec3 CalcDirLight(Light light, vec3 normal, vec3 ambientColor, vec3 diffuseColor
     vec3 halfwayDir = normalize(lightDir + viewDir);
     vec3 specular = light.specular * (pow(max(dot(normal, halfwayDir), 0.0), material.shininess)) * specularColor;
     
-    return (ambient + diffuse + specular);
+    return (ambient + (1.0 - shadow) * (diffuse + specular));
 }
 
 // Calculates the color for a a spotlight
-vec3 CalcSpotLight(Light light, vec3 normal, vec3 ambientColor, vec3 diffuseColor, vec3 specularColor, vec3 viewDir)
+vec3 CalcSpotLight(Light light, vec3 normal, vec3 ambientColor, vec3 diffuseColor, vec3 specularColor, vec3 viewDir, float shadow)
 {
     vec3 lightDir = normalize(-light.direction);
     float theta = dot(lightDir, normalize(-light.direction)); 
@@ -144,7 +188,7 @@ vec3 CalcSpotLight(Light light, vec3 normal, vec3 ambientColor, vec3 diffuseColo
         diffuse *= attenuation;
         specular *= attenuation;
 
-        return (ambient + diffuse + specular);
+        return (ambient + (1.0 - shadow) * (diffuse + specular));
     }
     // Only use ambient if outside the spotlight
     else

@@ -36,6 +36,7 @@ constexpr float HALF_PI = 1.57079f;
 
 #define DEFAULT_SHADER "default"
 #define LINE_SHADER "line"
+#define SHADOW_MAP_SHADER "shadowMappingDepth"
 #define LIGHT_CUBE_SHADER "lightCube"
 #define BLINN_SHADER "blinnDefaultShader"
 #define BLINN_FLAT_SHADER "blinnFlatShader"

@@ -10,6 +10,7 @@ out VS_OUT {
 	vec3 TangentLightPos;
 	vec3 TangentViewPos;
 	vec3 TangentFragPos;
+	vec4 LightSpaceFragPos;
 } vs_out;
 
 struct Light {
@@ -33,6 +34,7 @@ struct Light {
 uniform mat4 MVP;
 uniform mat4 Model;
 uniform mat3 NormalModel;
+uniform mat4 LightSpace;
 
 uniform Light light;
 uniform vec3 viewPos;
@@ -53,6 +55,7 @@ void main()
 	vs_out.TangentLightPos = TBN * light.position;
 	vs_out.TangentViewPos = TBN * viewPos;
 	vs_out.TangentFragPos = TBN * vs_out.FragPos;
+	vs_out.LightSpaceFragPos = LightSpace * vec4(vs_out.FragPos, 1.0);
 
 	gl_Position = MVP * vec4(aPos, 1.0);
 }

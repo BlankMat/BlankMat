@@ -54,6 +54,11 @@
     "darkTheme": true,
     "windowOpacity": 0.6
   },
+
+  "quality": {
+    "shadowResolution": 1024
+  },
+
   "defaultCubes": false,
   "flipImages": true
 }
