@@ -20,7 +20,7 @@
     "specular": 1.0,
     "gamma": false,
     "type": 0,
-    "pointRange": 13.0,
+    "range": 30.0,
     "spotInnerRadius": 25.0,
     "spotOuterRadius": 35.0
   },

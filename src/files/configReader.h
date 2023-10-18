@@ -34,15 +34,15 @@ private:
 	static void AddValueToConfig(const Json::Value& val, const std::string key, Config* config)
 	{
 		// Get vec3
-		if (val.size() == 3 && val.isArray())
+		if (val.size() == 3 && val.type() == Json::ValueType::arrayValue)
 			config->SetVec(key, JsonValueToVec3(val));
-		else if (val.isDouble())
-			config->SetFloat(key, val.asFloat());
-		else if (val.isInt())
+		else if (val.type() == Json::ValueType::intValue || val.type() == Json::ValueType::uintValue)
 			config->SetInt(key, val.asInt());
-		else if (val.isString())
+		else if (val.type() == Json::ValueType::realValue)
+			config->SetFloat(key, val.asFloat());
+		else if (val.type() == Json::ValueType::stringValue)
 			config->SetString(key, val.asString().c_str());
-		else if (val.isBool())
+		else if (val.type() == Json::ValueType::booleanValue)
 			config->SetBool(key, val.asBool());
 	}
 
