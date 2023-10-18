@@ -82,10 +82,11 @@ int main()
 
     // Add GUIs
     window->AddGUI(new GUIDebugToolsWindow(state, scene, true));
-    window->AddGUI(new GUIMaterialViewer(state, scene, true));
-    window->AddGUI(new GUILightViewer(state, scene, true));
     window->AddGUI(new GUIHierarchyWindow(state, scene, true));
     window->AddGUI(new GUIInspectorWindow(state, scene, true));
+    window->AddGUI(new GUILightViewer(state, scene, true));
+    window->AddGUI(new GUIMaterialViewer(state, scene, true));
+    window->AddGUI(new GUIMaterialEditor(state, scene, true));
     window->AddGUI(new GUIMenuBarWindow(true));
 
     // render loop

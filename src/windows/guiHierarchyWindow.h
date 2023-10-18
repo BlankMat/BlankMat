@@ -1,5 +1,6 @@
 #pragma once
 #include "iGUIWindow.h"
+#include "guiWindowUtils.h"
 #include "tools/state.h"
 #include "rendering/scene.h"
 #include <set>
@@ -15,13 +16,12 @@ protected:
     void RenderSelectable(IEntity*& selEntity, IEntity* curEntity, std::string depthMarker)
     {
         // Add checkbox for enabling or disabling elements
-        bool isEnabled = curEntity->IsEnabled();
-        ImGui::Checkbox(("##entity" + curEntity->GetName()).c_str(), &isEnabled);
-        curEntity->Enable(isEnabled);
+        curEntity->Enable(
+            GUIWindowUtils::Checkbox("##entity" + curEntity->GetName(), curEntity->IsEnabled()));
         ImGui::SameLine();
 
-        bool isSelected = (curEntity == selEntity);
-        bool meshOpen = ImGui::Selectable((depthMarker + curEntity->GetName()).c_str(), &isSelected);
+        bool isSelected = GUIWindowUtils::Selectable(depthMarker + curEntity->GetName(), selEntity, curEntity);
+
         // If the item is clicked, toggle selection
         if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
         {

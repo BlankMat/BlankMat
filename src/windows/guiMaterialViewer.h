@@ -1,5 +1,6 @@
 #pragma once
 #include "iGUIWindow.h"
+#include "guiWindowUtils.h"
 #include "rendering/scene.h"
 #include "tools/state.h"
 
@@ -22,31 +23,20 @@ public:
 			{
 				Material* selMat = sel->GetMaterial();
 				// Draw all materials
-				float sz = ImGui::GetTextLineHeight();
+				float size = ImGui::GetTextLineHeight();
 				float spacing = 5.0f;
 				for (auto iter = mats.begin(); iter != mats.end(); ++iter)
 				{
-					glm::vec3 kd = iter->second->kd;
-					glm::vec3 ka = iter->second->ka;
-					glm::vec3 ks = iter->second->ks;
-					ImU32 colorKD = ImGui::GetColorU32(ImVec4(kd.r, kd.g, kd.b, 1.0f));
-					ImU32 colorKA = ImGui::GetColorU32(ImVec4(ka.r, ka.g, ka.b, 1.0f));
-					ImU32 colorKS = ImGui::GetColorU32(ImVec4(ks.r, ks.g, ks.b, 1.0f));
-					ImVec2 p = ImGui::GetCursorScreenPos();
-					ImGui::GetWindowDrawList()->AddRectFilled(p, ImVec2(p.x + sz, p.y + sz), colorKD);
-					p.x += sz + spacing;
-					ImGui::GetWindowDrawList()->AddRectFilled(p, ImVec2(p.x + sz, p.y + sz), colorKA);
-					p.x += sz + spacing;
-					ImGui::GetWindowDrawList()->AddRectFilled(p, ImVec2(p.x + sz, p.y + sz), colorKS);
-					ImGui::Dummy(ImVec2((sz + spacing)*3, sz));
+					ImVec2 pos = ImGui::GetCursorScreenPos();
+					GUIWindowUtils::DrawColor(iter->second->kd, pos, size);
+					pos.x += size + spacing;
+					GUIWindowUtils::DrawColor(iter->second->ka, pos, size);
+					pos.x += size + spacing;
+					GUIWindowUtils::DrawColor(iter->second->ks, pos, size);
+					ImGui::Dummy(ImVec2((size + spacing)*3, size));
 					ImGui::SameLine();
 
-					bool isSelected = (selMat == iter->second);
-					if (ImGui::Selectable(iter->first.c_str(), &isSelected))
-						selMat = iter->second;
-
-					if (isSelected)
-						ImGui::SetItemDefaultFocus();
+					GUIWindowUtils::Selectable(iter->first, selMat, iter->second);
 				}
 
 				// If the selected material changed, update sel

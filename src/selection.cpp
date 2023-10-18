@@ -1,6 +1,7 @@
 #include "selection.h"
 #include "rendering/iMesh.h"
 #include "rendering/iScene.h"
+#include "rendering/material.h"
 
 // Returns the entire selection as a selection of vertices
 void Selection::GetSelectedVerts(std::vector<unsigned int>& _verts)
@@ -78,6 +79,13 @@ void Selection::SelectEntity(IEntity* entity)
 	std::cout << "Selected entity [" << IEntity::GetNameNullSafe(mSelEntity) << "].\n";
 }
 
+// Selects the given material
+void Selection::SelectMat(Material* material)
+{
+	mSelMat = material;
+	std::cout << "Selected material [" << (material != nullptr ? material->name : "None") << "].\n";
+}
+
 // Deselects the face with the given ID
 void Selection::DeselectFace(unsigned int _id)
 {
@@ -100,6 +108,16 @@ void Selection::DeselectMesh()
 
 	mSelMesh = nullptr;
 	std::cout << "Deselected mesh.\n";
+}
+
+// Deselects the currently selected material
+void Selection::DeselectMat()
+{
+	if (mSelMat == nullptr)
+		return;
+
+	mSelMat = nullptr;
+	std::cout << "Delected material\n";
 }
 
 // Clears the vertex selection
@@ -192,6 +210,8 @@ SelMode Selection::GetSelMode() { return mSelMode; }
 IMesh* Selection::GetSelectedMesh() { return mSelMesh; }
 // Returns the selected entity
 IEntity* Selection::GetSelectedEntity() { return mSelEntity; }
+// Returns the selected material
+Material* Selection::GetSelectedMat() { return mSelMat; }
 
 // Storage container for information on all selections
 Selection::Selection()

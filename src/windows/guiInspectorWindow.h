@@ -1,5 +1,6 @@
 #pragma once
 #include "iGUIWindow.h"
+#include "guiWindowUtils.h"
 #include "tools/state.h"
 #include "rendering/scene.h"
 
@@ -27,33 +28,24 @@ public:
 			else
 			{
 				// Change name of selection
-				std::string selName = sel->GetName();
-				ImGui::InputText("Selected", &selName);
-				if (selName != sel->GetName())
-					sel->SetName(selName);
+				sel->SetName(
+					GUIWindowUtils::InputText("Selected", sel->GetName()));
 
 				// Position
-				glm::vec3 pos = sel->GetPos();
-				float posInput[3] = { pos.x, pos.y, pos.z };
-				ImGui::InputFloat3("Position", posInput);
-				sel->SetPos(Vec3FromFloats(posInput));
+				sel->SetPos(
+					GUIWindowUtils::InputVec3("Position", sel->GetPos()));
 
 				// Rotation
-				glm::vec3 rot = sel->GetRot();
-				float rotInput[3] = { rot.x, rot.y, rot.z };
-				ImGui::InputFloat3("Rotation", rotInput);
-				sel->SetRot(Vec3FromFloats(rotInput));
+				sel->SetRot(
+					GUIWindowUtils::InputVec3("Rotation", sel->GetRot()));
 
 				// Scale
-				glm::vec3 scale = sel->GetScale();
-				float scaleInput[3] = { scale.x, scale.y, scale.z };
-				ImGui::InputFloat3("Scale", scaleInput);
-				sel->SetScale(Vec3FromFloats(scaleInput));
+				sel->SetScale(
+					GUIWindowUtils::InputVec3("Scale", sel->GetScale()));
 
 				// Enabled
-				bool isEnabled = sel->IsEnabled();
-				ImGui::Checkbox("Enabled", &isEnabled);
-				sel->Enable(isEnabled);
+				sel->Enable(
+					GUIWindowUtils::Checkbox("Enabled", sel->IsEnabled()));
 
 				// Shader
 				std::unordered_map<std::string, Shader*>& shaders = mScene->GetShaderList();
@@ -62,14 +54,7 @@ public:
 				{
 					for (auto iter = shaders.begin(); iter != shaders.end(); ++iter)
 					{
-						std::string itemName = iter->first;
-						unsigned int itemID = iter->second->ID;
-						bool isSelected = (itemID == shader->ID);
-						if (ImGui::Selectable(itemName.c_str(), &isSelected))
-							shader = iter->second;
-
-						if (isSelected)
-							ImGui::SetItemDefaultFocus();
+						GUIWindowUtils::Selectable(iter->first, shader, iter->second);
 					}
 					ImGui::EndListBox();
 					sel->SetShader(shader);

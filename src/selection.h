@@ -11,6 +11,7 @@ enum class SelMode { MESH = 0, VERT = 1, FACE = 2 };
 class IEntity;
 class IMesh;
 class IScene;
+class Material;
 
 class Selection
 {
@@ -20,6 +21,7 @@ private:
 	std::set<unsigned int> mSelFaces;
 	IMesh* mSelMesh;
 	IEntity* mSelEntity;
+	Material* mSelMat;
 
 	Tool mSelTool;
 	SelMode mSelMode;
@@ -45,12 +47,16 @@ public:
 	void SelectMesh(IMesh* mesh);
 	// Selects the given entity
 	void SelectEntity(IEntity* entity);
+	// Selects the given material
+	void SelectMat(Material* material);
 	// Deselects the face with the given ID
 	void DeselectFace(unsigned int _id);
 	// Deselects the vertex with the given ID
 	void DeselectVert(unsigned int _id);
 	// Deselects the currently selected mesh
 	void DeselectMesh();
+	// Deselects the currently selected material
+	void DeselectMat();
 
 	// Clears the vertex selection
 	void ClearVertSel();
@@ -68,6 +74,7 @@ public:
 	void SetTool(Tool _sel);
 	// Sets the selection mode
 	void SetSelMode(SelMode _sel);
+
 	// Returns the tool selection
 	Tool GetTool();
 	// Returns the selection mode
@@ -76,6 +83,8 @@ public:
 	IMesh* GetSelectedMesh();
 	// Returns the selected entity
 	IEntity* GetSelectedEntity();
+	// Returns the selected material
+	Material* GetSelectedMat();
 	// Returns whether the given vertex is selected
 	bool IsVertSelected(unsigned int _id);
 	// Returns whether the given face is selected

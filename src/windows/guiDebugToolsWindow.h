@@ -1,5 +1,6 @@
 #pragma once
 #include "iGUIWindow.h"
+#include "guiWindowUtils.h"
 #include "selection.h"
 #include "utils.h"
 #include "rendering/scene.h"
@@ -29,13 +30,7 @@ public:
 			{
 				for (auto iter = shaders.begin(); iter != shaders.end(); ++iter)
 				{
-					std::string itemName = iter->first;
-					bool isSelected = itemName == curShader;
-					if (ImGui::Selectable(itemName.c_str(), &isSelected))
-						curShader = itemName;
-
-					if (isSelected)
-						ImGui::SetItemDefaultFocus();
+					GUIWindowUtils::Selectable(iter->first, curShader, iter->first);
 				}
 				ImGui::EndListBox();
 
@@ -48,63 +43,37 @@ public:
 			}
 
 			// Choose parts of materials
-			ImGui::Checkbox("Enable Diffuse Map", &mState->enableDiffuseMap);
-			ImGui::Checkbox("Enable Ambient Map", &mState->enableAmbientMap);
-			ImGui::Checkbox("Enable Specular Map", &mState->enableSpecularMap);
-			ImGui::Checkbox("Enable Normal Map", &mState->enableNormalMap);
-			ImGui::Checkbox("Enable Height Map", &mState->enableHeightMap);
-			ImGui::Checkbox("Enable Alpha Map", &mState->enableAlphaMap);
+			mState->enableDiffuseMap = GUIWindowUtils::Checkbox("Enable Diffuse Map", mState->enableDiffuseMap);
+			mState->enableAmbientMap = GUIWindowUtils::Checkbox("Enable Ambient Map", mState->enableAmbientMap);
+			mState->enableSpecularMap = GUIWindowUtils::Checkbox("Enable Specular Map", mState->enableSpecularMap);
+			mState->enableNormalMap = GUIWindowUtils::Checkbox("Enable Normal Map", mState->enableNormalMap);
+			mState->enableHeightMap = GUIWindowUtils::Checkbox("Enable Height Map", mState->enableHeightMap);
+			mState->enableAlphaMap = GUIWindowUtils::Checkbox("Enable Alpha Map", mState->enableAlphaMap);
 
 			// Camera settings
 			ImGui::Text("Camera Settings");
 			Camera* cam = mScene->GetCamera();
-
-			// Camera position
-			glm::vec3 camPos = cam->GetPos();
-			float camPosInput[3] = { camPos.x, camPos.y, camPos.z };
-			ImGui::InputFloat3("Camera Position", camPosInput);
-			cam->SetPos(Vec3FromFloats(camPosInput));
-
-			// Camera lookat
-			glm::vec3 camTarget = cam->GetLookAt();
-			float camLookInput[3] = { camTarget.x, camTarget.y, camTarget.z };
-			ImGui::InputFloat3("Camera Target", camLookInput);
-			cam->LookAt(Vec3FromFloats(camLookInput));
-
-			// Camera size
-			float camSize = cam->GetOrthSize();
-			ImGui::InputFloat("Camera Size", &camSize);
-			cam->SetOrthSize(camSize);
-
-			// Camera FOV
-			float camFOV = cam->GetFOV();
-			ImGui::InputFloat("Camera FOV", &camFOV);
-			cam->SetFOV(camFOV);
-
-			// Camera near clip
-			float camNearClip = cam->GetNearClip();
-			ImGui::InputFloat("Camera Near Clip", &camNearClip);
-			cam->SetNearClip(camNearClip);
-
-			// Camera far clip
-			float camFarClip = cam->GetFarClip();
-			ImGui::InputFloat("Camera Far Clip", &camFarClip);
-			cam->SetFarClip(camFarClip);
-
-			// Perspective
-			bool camPerspective = cam->IsPerspective();
-			ImGui::Checkbox("Perspective", &camPerspective);
-			cam->SetPerspective(camPerspective);
-
-			// Wireframe
-			bool camWireframe = cam->IsWireframe();
-			ImGui::Checkbox("Wireframe", &camWireframe);
-			cam->SetWireframe(camWireframe);
+			cam->SetPos(
+				GUIWindowUtils::InputVec3("Position", cam->GetPos()));
+			cam->LookAt(
+				GUIWindowUtils::InputVec3("Target", cam->GetLookAt()));
+			cam->SetOrthSize(
+				GUIWindowUtils::InputFloat("Size", cam->GetOrthSize()));
+			cam->SetFOV(
+				GUIWindowUtils::InputFloat("FOV", cam->GetFOV()));
+			cam->SetNearClip(
+				GUIWindowUtils::InputFloat("Near Clip", cam->GetNearClip()));
+			cam->SetFarClip(
+				GUIWindowUtils::InputFloat("Far Clip", cam->GetFarClip()));
+			cam->SetPerspective(
+				GUIWindowUtils::Checkbox("Perspective", cam->IsPerspective()));
+			cam->SetWireframe(
+				GUIWindowUtils::Checkbox("Wireframe", cam->IsWireframe()));
 
 			// Debug settings
 			ImGui::Text("Debug settings");
-			ImGui::Checkbox("Disco Light", &mState->isDiscoLight);
-			ImGui::Checkbox("Rotating Light", &mState->isRotatingLight);
+			mState->isDiscoLight = GUIWindowUtils::Checkbox("Disco Light", mState->isDiscoLight);
+			mState->isRotatingLight = GUIWindowUtils::Checkbox("Rotating Light", mState->isRotatingLight);
 		}
 		ImGui::End();
 	}
