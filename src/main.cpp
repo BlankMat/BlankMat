@@ -47,12 +47,12 @@ int main()
     scene->SetLight(new PLightCube("globalLight", 1.0f, lightCubeShader, defaultMat, state, config->GetConfig("light")));
 
     // Add renderables
-    //scene->AddEntity(new PPlane(BG_PLANE_OBJ, 20.0f, true, defaultShader, defaultMat, defaultMat, state, false), true);
+    scene->AddEntity(new PPlane(BG_PLANE_OBJ, 20.0f, true, defaultShader, defaultMat, defaultMat, state, false), true);
     scene->AddEntity(new PGrid(GRID_OBJ, 5, 1.0f, lineShader, new Material(glm::vec3(0.2f)), defaultMat, state, 2, true, glm::vec3(0.0f)), true);
     scene->AddEntity(new PHandle(TRANSFORM_HANDLE, 0.5f, lineShader, defaultMat, state, 6, true, glm::vec3(0.0f)));
     scene->AddEntity(new PHandle(CAMERA_AXIS_HANDLE, 45.0f, lineShader, defaultMat, state, 6, false, glm::vec3(50, 50, 0)));
     scene->AddMesh(new VPlane("brickwall", 2.0f, blinnShader, scene->GetMaterial("brickwall"), defaultMat, state, glm::vec3(5, 2, 0), glm::vec3(90, 0, 0)));
-    scene->AddMesh(new VPlane("bgPlane", 10.0f, defaultShader, defaultMat, defaultMat, state));
+    //scene->AddMesh(new VPlane("bgPlane", 10.0f, defaultShader, defaultMat, defaultMat, state));
 
     if (config->GetBool("defaultCubes"))
     {

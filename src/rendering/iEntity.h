@@ -61,10 +61,8 @@ public:
 
 	// Returns whether the object is enabled
 	bool IsEnabled() { return mIsEnabled; }
-	// Enables the object
-	void Enable() { mIsEnabled = true; }
-	// Disables the object
-	void Disable() { mIsEnabled = false; }
+	// Enables or disables the object
+	void Enable(bool shouldEnable = true) { mIsEnabled = shouldEnable; }
 	// Toggles the enabled status of the object
 	bool ToggleEnabled() { mIsEnabled = !mIsEnabled; return mIsEnabled; }
 
@@ -97,4 +95,7 @@ public:
 		glDeleteBuffers(1, &mVBO);
 		glDeleteBuffers(1, &mEBO);
 	}
+
+	// Returns the name of the entity, or "null" if nullptr
+	static std::string GetNameNullSafe(IEntity* entity) { return (entity != nullptr) ? entity->GetName() : "null"; }
 };

@@ -50,6 +50,11 @@ public:
 				ImGui::InputFloat3("Scale", scaleInput);
 				sel->SetScale(Vec3FromFloats(scaleInput));
 
+				// Enabled
+				bool isEnabled = sel->IsEnabled();
+				ImGui::Checkbox("Enabled", &isEnabled);
+				sel->Enable(isEnabled);
+
 				// Shader
 				std::unordered_map<std::string, Shader*>& shaders = mScene->GetShaderList();
 				Shader* shader = sel->GetShader();

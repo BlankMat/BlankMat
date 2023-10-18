@@ -67,21 +67,15 @@ void Selection::SelectVert(unsigned int _id, bool _deselect)
 // Selects the given mesh
 void Selection::SelectMesh(IMesh* mesh)
 {
-	if (mesh == nullptr)
-		return;
-
 	mSelMesh = mesh;
-	std::cout << "Selected mesh [" << mSelMesh->GetName() << "].\n";
+	std::cout << "Selected mesh [" << IEntity::GetNameNullSafe(mSelMesh) << "].\n";
 }
 
 // Selects the given entity
 void Selection::SelectEntity(IEntity* entity)
 {
-	if (entity == nullptr)
-		return;
-
 	mSelEntity = entity;
-	std::cout << "Selected entity [" << mSelEntity->GetName() << "].\n";
+	std::cout << "Selected entity [" << IEntity::GetNameNullSafe(mSelEntity) << "].\n";
 }
 
 // Deselects the face with the given ID

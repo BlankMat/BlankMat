@@ -11,32 +11,49 @@ protected:
     Scene* mScene;
     std::set<IEntity*> mExpandedNodes;
 
+    // Render one row of the hierarchy
+    void RenderSelectable(IEntity*& selEntity, IEntity* curEntity, std::string depthMarker)
+    {
+        // Add checkbox for enabling or disabling elements
+        bool isEnabled = curEntity->IsEnabled();
+        ImGui::Checkbox(("##entity" + curEntity->GetName()).c_str(), &isEnabled);
+        curEntity->Enable(isEnabled);
+        ImGui::SameLine();
+
+        bool isSelected = (curEntity == selEntity);
+        bool meshOpen = ImGui::Selectable((depthMarker + curEntity->GetName()).c_str(), &isSelected);
+        // If the item is clicked, toggle selection
+        if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
+        {
+            IEntity* newSelect = (selEntity != curEntity) ? curEntity : nullptr;
+            std::cout << "Clicked " << IEntity::GetNameNullSafe(curEntity) << ". Changing from " << IEntity::GetNameNullSafe(selEntity)
+                << " to " << IEntity::GetNameNullSafe(newSelect) << std::endl;
+            selEntity = newSelect;
+            isSelected = newSelect != nullptr;
+        }
+
+        // If the item is selected, highlight it
+        if (isSelected)
+            ImGui::SetItemDefaultFocus();
+    }
+
     // Recursively renders the node and its children
     void RenderNode(IEntity*& selEntity, Node* node, int depth)
     {
+        // Don't render null nodes
+        if (node == nullptr)
+            return;
+
         // Mark depth of nodes
         std::string depthMarker = "";
         for (int k = 0; k < depth - 1; k++)
             depthMarker += "  ";
 
         // Mark this node
-        bool isSelected = (node == selEntity);
+        bool isSelected = (IEntity::GetNameNullSafe(node) == IEntity::GetNameNullSafe(selEntity));
         bool isExpanded = (mExpandedNodes.find(node) != mExpandedNodes.end());
         char* nodeMarker = isExpanded ? "v  " : ">  ";
-        bool nodeOpen = ImGui::Selectable((nodeMarker + depthMarker + node->GetName()).c_str(), &isSelected);
-
-        // If the element is clicked, toggle selection
-        if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
-        {
-            std::cout << "Clicked " << ((node != nullptr) ? node->GetName() : "None") << ". Changing from " <<
-                ((selEntity != nullptr) ? selEntity->GetName() : "") << " to " << ((selEntity != node) ? node->GetName() : "null") << std::endl;
-            selEntity = (selEntity != node) ? node : nullptr;
-            isSelected = (node == selEntity);
-        }
-
-        // If the item is selected, highlight it
-        if (isSelected)
-            ImGui::SetItemDefaultFocus();
+        RenderSelectable(selEntity, node, depthMarker + nodeMarker);
 
         // Toggle node expanded status on right click
         if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
@@ -59,19 +76,7 @@ protected:
             IEntity* mesh = node->GetMesh(j);
             if (mesh == nullptr)
                 continue;
-
-            isSelected = (mesh == selEntity);
-            bool meshOpen = ImGui::Selectable(("+    " + depthMarker + mesh->GetName()).c_str(), &isSelected);
-            // If the item is clicked, toggle selection
-            if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
-            {
-                selEntity = (selEntity != mesh) ? mesh : nullptr;
-                isSelected = (mesh == selEntity);
-            }
-
-            // If the item is selected, highlight it
-            if (isSelected)
-                ImGui::SetItemDefaultFocus();
+            RenderSelectable(selEntity, mesh, depthMarker + "  +  ");
         }
 
         // Render all child nodes if requested
@@ -92,8 +97,9 @@ public:
             IEntity* selEntity = mState->GetSel()->GetSelectedEntity();
             if (ImGui::BeginListBox("##HierarchyRoot"))
             {
+                IEntity* prevSel = selEntity;
                 RenderNode(selEntity, root, 0);
-                if (mState->GetSel()->GetSelectedEntity() != selEntity)
+                if (prevSel != selEntity)
                     mState->GetSel()->SelectEntity(selEntity);
                 ImGui::EndListBox();
             }

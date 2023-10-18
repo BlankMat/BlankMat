@@ -10,6 +10,10 @@ Node::Node(Node* parent, std::string name)
 // Draws the node recursively
 void Node::Draw(glm::mat4 viewProj, Camera* camera, Light* light, glm::mat4 model)
 {
+	// Don't draw disabled nodes or their children
+	if (!mIsEnabled)
+		return;
+
 	// Calculate the MVP of this stage
 	glm::mat4 newModel = model * GetModelMatrix();
 
