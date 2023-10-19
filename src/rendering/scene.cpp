@@ -31,7 +31,7 @@ void Scene::Draw(Window* window)
 	{
 		// Render camera axis handle with inverse view matrix
 		if (iter->first == CAMERA_AXIS_HANDLE) {
-			iter->second->SetRot(mMainCamera->GetRotationDegrees());
+			iter->second->SetRot(GetRotationDegrees(mMainCamera->GetDir()));
 			iter->second->Draw(glm::ortho(0.0f, (float)window->GetWidth(), 0.0f, (float)window->GetHeight(), -100.0f, 100.0f), GetCamera(), GetLight());
 		}
 		else if (iter->second != nullptr) {

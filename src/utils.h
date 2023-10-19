@@ -7,6 +7,52 @@
 #include <sstream>
 #include <vector>
 
+/// <summary>
+/// Returns the euler degrees of the direction vector with respect to the up vector
+/// http://geom3d.com/data/documents/Calculation=20of=20Euler=20angles.pdf
+/// </summary>
+/// <param name="dir">The direction (x) to rotate towards</param>
+/// <param name="up">The up axis is by default y, but can be changed</param>
+/// <returns></returns>
+static glm::vec3 GetRotationDegrees(glm::vec3 dir, glm::vec3 up = glm::vec3(0,1,0))
+{
+    //return glm::vec3(atan2(dir.x, dir.z), asin(dir.y), 0.0f);
+    /*
+    According to "Calculation of Euler Angles" by Prokopi Nikolaev,
+        variables defined here use y as the up (Z1 in the formula)
+        dir = x -> X1
+        up = y -> Z1
+        right = z -> Y1
+    */
+
+    glm::vec3 right = glm::normalize(glm::cross(dir, up));
+    float y1xz = glm::sqrt(up.x * up.x + up.z * up.z);
+    if (y1xz > 0.0f)
+    {
+        return glm::vec3(
+            glm::degrees(atan2f(right.x * up.z - right.z * up.x, dir.x * up.z - dir.z * up.x)),
+            glm::degrees(atan2f(y1xz, up.y)),
+            glm::degrees(-atan2f(-up.x, up.z))
+        );
+    }
+    else
+    {
+        return glm::vec3(
+            glm::degrees(0.0f), 
+            glm::degrees((up.y > 0.0f ? 0.0f : PI)), 
+            glm::degrees(-atan2f(dir.z, dir.x))
+        );
+    }
+    /*
+    glm::vec3 right = glm::normalize(glm::cross(dir, up));
+    float rotX = asinf(-dir.y);
+    if (cosf(rotX) > 0.0001)
+        return glm::degrees(glm::vec3(rotX, atan2f(-dir.x, -dir.z), atan2f(right.y, up.y)));
+    return glm::degrees(glm::vec3(rotX, 0.0f, atan2f(-up.x, right.x)));
+    */
+
+}
+
 // Taken from https://gamedev.stackexchange.com/questions/115032/how-should-i-rotate-vertices-around-the-origin-on-the-cpu
 static const glm::vec4 RotateAround(glm::vec4 aPointToRotate, glm::vec4 aRotationCenter, glm::mat4x4 aRotationMatrix)
 {

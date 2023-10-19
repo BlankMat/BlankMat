@@ -1,6 +1,7 @@
 #pragma once
 #include "glIncludes.h"
 #include "files/config.h"
+#include "shader.h"
 #include "camera.h"
 
 enum class LightType { POINT = 0, DIR = 1, SPOT = 2 };
@@ -41,8 +42,11 @@ protected:
 	{
 		mNearPlane = mLightRange * 0.1f;
 		mFarPlane = mLightRange;
+		glm::vec3 target = glm::vec3(0.0f, 0.0f, 0.0f);
+		if (mType == LightType::DIR || mType == LightType::SPOT)
+			target = mPos + mDir;
 		glm::mat4 mLightProj = glm::ortho(-mLightSize, mLightSize, -mLightSize, mLightSize, mNearPlane, mFarPlane);
-		glm::mat4 mLightView = glm::lookAt(mPos, mPos + mDir, glm::vec3(0,1,0));
+		glm::mat4 mLightView = glm::lookAt(mPos, target, glm::vec3(0,1,0));
 		mLightSpace = mLightProj * mLightView;
 	}
 public:
@@ -91,10 +95,9 @@ public:
 	float GetSpotInnerRadius() { return mSpotInner; }
 	float GetSpotOuterRadius() { return mSpotOuter; }
 
-	virtual void SetType(LightType type) { mType = type; }
 	virtual void SetColor(glm::vec3 color) { mColor = color; }
 	virtual void SetBaseColor(glm::vec3 color) { mBaseColor = color; }
-	virtual void SetOffset(glm::vec3 offset) { mOffset = offset; }
+	virtual void SetOffset(glm::vec3 offset) { mOffset = offset; CalcMatrices(); }
 	virtual void SetPos(glm::vec3 pos) { mPos = pos; CalcMatrices(); }
 	virtual void SetDir(glm::vec3 dir) { mDir = dir; CalcMatrices(); }
 	virtual void SetKD(float kd) { mKD = kd; }
@@ -103,6 +106,12 @@ public:
 	virtual void SetGamma(bool gamma) { mGamma = gamma; }
 	virtual void SetSpotInnerRadius(float innerRadius) { mSpotInner = innerRadius; }
 	virtual void SetSpotOuterRadius(float outerRadius) { mSpotOuter = outerRadius; }
+
+	virtual void SetType(LightType type)
+	{
+		mType = type;
+		CalcMatrices();
+	}
 
 	void SetRange(float lightRange)
 	{
@@ -123,6 +132,7 @@ public:
 	{
 		mLightSize = 10.0f;
 		SetRange(range);
+		CalcMatrices();
 	}
 
 	Light(Config* config)

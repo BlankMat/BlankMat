@@ -12,6 +12,7 @@ unsigned int Material::UpdateShader(Shader* _shader, State* _state, Material* _d
     _shader->SetFloat("material.refraction", ni);
     _shader->SetFloat("material.alpha", d);
     _shader->SetInt("material.mode", illum);
+    _shader->SetBool("useShadows", _state->enableShadows);
 
     // If the state has the map enabled, and the texture is not the default texture, use the texture
     bool useDiffuse = (map_kd != nullptr && map_kd->id != _defaultMat->map_kd->id) && (_state == nullptr || _state->enableDiffuseMap);

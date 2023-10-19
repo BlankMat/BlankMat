@@ -16,6 +16,7 @@ protected:
 	Light* mGlobalLight;
 	Camera* mMainCamera;
 
+	std::unordered_map<std::string, Camera*> mCameraList;
 	std::unordered_map<std::string, IEntity*> mPreRenderList;
 	std::unordered_map<std::string, IEntity*> mRenderList;
 	std::unordered_map<std::string, Shader*> mShaderList;
