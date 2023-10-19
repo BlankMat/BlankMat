@@ -9,6 +9,8 @@ class GUIMaterialEditor : public IGUIWindow
 protected:
 	State* mState;
 	Scene* mScene;
+
+	// Local state
 	std::string mSelColor = "";
 public:
 	void Draw() override
@@ -28,33 +30,33 @@ public:
 				GUIWindowUtils::DrawColor(selMat->kd, pos, size);
 				ImGui::Dummy(ImVec2(size, size));
 				ImGui::SameLine();
-				bool isSelected = GUIWindowUtils::Selectable("Diffuse", mSelColor, std::string("kd"));
-				if (isSelected)
-					selMat->kd = GUIWindowUtils::ColorPicker("Diffuse", selMat->kd);
+				GUIWindowUtils::Deselectable("Diffuse", mSelColor, std::string("kd"));
+				if (mSelColor == "kd")
+					selMat->kd = GUIWindowUtils::ColorPicker("##DiffuseColor", selMat->kd);
 
 				pos = ImGui::GetCursorScreenPos();
 				GUIWindowUtils::DrawColor(selMat->ka, pos, size);
 				ImGui::Dummy(ImVec2(size, size));
 				ImGui::SameLine();
-				isSelected = GUIWindowUtils::Selectable("Ambient", mSelColor, std::string("ka"));
-				if (isSelected)
-					selMat->ka = GUIWindowUtils::ColorPicker("Ambient", selMat->ka);
+				GUIWindowUtils::Deselectable("Ambient", mSelColor, std::string("ka"));
+				if (mSelColor == "ka")
+					selMat->ka = GUIWindowUtils::ColorPicker("##AmbientColor", selMat->ka);
 
 				pos = ImGui::GetCursorScreenPos();
 				GUIWindowUtils::DrawColor(selMat->ks, pos, size);
 				ImGui::Dummy(ImVec2(size, size));
 				ImGui::SameLine();
-				isSelected = GUIWindowUtils::Selectable("Specular", mSelColor, std::string("ks"));
-				if (isSelected)
-					selMat->ks = GUIWindowUtils::ColorPicker("Specular", selMat->ks);
+				GUIWindowUtils::Deselectable("Specular", mSelColor, std::string("ks"));
+				if (mSelColor == "ks")
+					selMat->ks = GUIWindowUtils::ColorPicker("##SpecularColor", selMat->ks);
 
 				pos = ImGui::GetCursorScreenPos();
 				GUIWindowUtils::DrawColor(selMat->ke, pos, size);
 				ImGui::Dummy(ImVec2(size, size));
 				ImGui::SameLine();
-				isSelected = GUIWindowUtils::Selectable("Emissive", mSelColor, std::string("ke"));
-				if (isSelected)
-					selMat->ke = GUIWindowUtils::ColorPicker("Emissive", selMat->ke);
+				GUIWindowUtils::Deselectable("Emissive", mSelColor, std::string("ke"));
+				if (mSelColor == "ke")
+					selMat->ke = GUIWindowUtils::ColorPicker("##EmissiveColor", selMat->ke);
 
 				selMat->ns = GUIWindowUtils::InputFloat("Specular Exponent", selMat->ns);
 				selMat->ni = GUIWindowUtils::InputFloat("Index of Refraction", selMat->ni);

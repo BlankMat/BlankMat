@@ -24,9 +24,25 @@ public:
 		// If the item is clicked, toggle selection
 		if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
 		{
-			T* newSelect = (selValue != thisValue) ? thisValue : nullptr;
-			selValue = newSelect;
-			isSelected = newSelect != nullptr;
+			isSelected = !isSelected;
+			selValue = isSelected ? thisValue : nullptr;
+		}
+
+		if (isSelected)
+			ImGui::SetItemDefaultFocus();
+		return isSelected;
+	}
+
+	static bool Deselectable(std::string label, std::string& selValue, std::string thisValue)
+	{
+		bool isSelected = (selValue == thisValue);
+		ImGui::Selectable(label.c_str(), &isSelected);
+
+		// If the item is clicked, toggle selection
+		if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
+		{
+			isSelected = !isSelected;
+			selValue = isSelected ? thisValue : "";
 		}
 
 		if (isSelected)

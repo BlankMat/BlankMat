@@ -2,6 +2,8 @@
 #include "glIncludes.h"
 #include "shader.h"
 
+enum class IllumMode { FLAT = 0, LAMBERT = 1, PHONG = 2, REFLECTION = 3 };
+
 /// <summary>
 /// Base material class that supports a template type for textures. Based on the Wavefront .obj/.mtl format.
 /// </summary>
