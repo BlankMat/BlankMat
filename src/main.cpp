@@ -88,6 +88,7 @@ int main()
     window->AddGUI(new GUIMaterialViewer(state, scene, true));
     window->AddGUI(new GUIMaterialEditor(state, scene, true));
     window->AddGUI(new GUIMenuBarWindow(true));
+    window->AddGUI(new GUIToolbarWindow(state, scene, true));
 
     // render loop
     // -----------

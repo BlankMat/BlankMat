@@ -12,6 +12,7 @@
 #include "windows/guiMenuBarWindow.h"
 #include "windows/guiHierarchyWindow.h"
 #include "windows/guiInspectorWindow.h"
+#include "windows/guiToolbarWindow.h"
 
 #include "windows/guiLightViewer.h"
 #include "windows/guiMaterialViewer.h"

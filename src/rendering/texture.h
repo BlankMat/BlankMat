@@ -2,6 +2,8 @@
 #include <string>
 #include <iostream>
 
+//#include "renderingHelpers.h"
+
 struct Texture
 {
 	unsigned int id;
@@ -15,18 +17,17 @@ struct Texture
 	Texture::Texture(std::string _type, std::string _directory, std::string _path, std::string _name)
 		: type(_type), path(_path), name(_name)
 	{
-		id = TextureFromFile(_directory, _path);
+		int width,height;
+		id = TextureFromFile(_directory, _path,width,height);
 	}
-
 	// Loads the given texture from a file
-	static unsigned int TextureFromFile(const std::string& _directory, const std::string& _name, bool _gamma = false)
+	static unsigned int TextureFromFile(const std::string& directory, const std::string& name, int& out_width, int& out_height, bool gamma = false)
 	{
-		std::string fileName = _directory + '/' + _name;
+		std::string fileName = directory + '/' + name;
 		unsigned int textureID;
 		glGenTextures(1, &textureID);
-
-		int width, height, nrComponents;
-		unsigned char* data = stbi_load(fileName.c_str(), &width, &height, &nrComponents, 0);
+		int nrComponents;
+		unsigned char* data = stbi_load(fileName.c_str(), &out_width, &out_height, &nrComponents, 0);
 		if (data)
 		{
 			GLenum format = GL_RGB;
@@ -38,7 +39,7 @@ struct Texture
 				format = GL_RGBA;
 
 			glBindTexture(GL_TEXTURE_2D, textureID);
-			glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+			glTexImage2D(GL_TEXTURE_2D, 0, format, out_width, out_height, 0, format, GL_UNSIGNED_BYTE, data);
 			glGenerateMipmap(GL_TEXTURE_2D);
 
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -50,10 +51,9 @@ struct Texture
 		}
 		else
 		{
-			std::cout << "Texture failed to load at path: " << _name << std::endl;
+			std::cout << "Texture failed to load at path: " << name << std::endl;
 			stbi_image_free(data);
 		}
-
 		return textureID;
 	}
 };

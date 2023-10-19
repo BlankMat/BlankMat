@@ -6,123 +6,108 @@
 #include <vector>
 #include <iostream>
 #include "string.h"
+#include "renderingHelpers.h"
+#include "tools/state.h"
+#include "rendering/scene.h"
+#include "files/fileSystem.h"
 
-#define NUMBER_OF_TOOLS 5
+#define TOOLSDIR "resources/icons/toolIcons"
+#define SelectFileName "Select.png"
+#define MoveFileName "Move.png"
+#define RotateFileName "Rotate.png"
+#define ScaleFileName "Scale.png"
+#define ExtrudeFileName "Extrude.png"
+
+
+//a[5] = [SelectFileName,MoveFileName,RotateFileName,ScaleFileName,ExtrudeFileName];
+
 
 class GUIToolbarWindow : public IGUIWindow
 {
-private: 
-	std::string getToolName(Tool toolEnum)
-	{
-		switch (toolEnum)
-		{
-			case Tool::NONE:
-				return "None";
-				break;
-			case Tool::SELECT:
-				return "Select";
-				break;
-			case Tool::MOVE:
-				return "Move";
-				break;
-			case Tool::ROTATE:
-				return "Rotate";
-				break;
-			case Tool::SCALE:
-				return "Scale";
-				break;
-			case Tool::EXTRUDE:
-				return "Extrude";
-				break;	
-		}
-		return "";
-	}
-	bool LoadTextureFromFile(const char* filename, GLuint* out_texture, int* out_width, int* out_height)
-	{
-		stbi_set_flip_vertically_on_load(false);
-
-		stbi__vertically_flip_on_load_global = false;
-		// Load from file
-		int image_width = 0;
-		int image_height = 0;
-		unsigned char* image_data = stbi_load(filename, &image_width, &image_height, NULL, 4);
-		if (image_data == NULL)
-			return false;
-
-		// Create a OpenGL texture identifier
-		GLuint image_texture;
-		glGenTextures(1, &image_texture);
-		glBindTexture(GL_TEXTURE_2D, image_texture);
-
-		// Setup filtering parameters for display
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE); 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE); 
-
-		// Upload pixels into texture
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image_width, image_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
-		stbi_image_free(image_data);
-
-		*out_texture = image_texture;
-		*out_width = image_width;
-		*out_height = image_height;
-
-		// TODO: Refactor using the state variable when available
-		stbi_set_flip_vertically_on_load(true);
-
-		return true;
-	}
-
 protected:
-	Selection* mSelection;
-	std::vector<GLuint> mTextureIDs;
-	std::vector<ImVec2> mTextureDims;
+    State* mState;
+    Scene* mScene;
+    const std::string fileNames[5] = {SelectFileName,MoveFileName,RotateFileName,ScaleFileName,ExtrudeFileName};
+    std::vector<ImTextureID>  mTextureIDs;
+    std::vector<ImVec2> mDims;
+    /*unsigned int TextureFromFile(const std::string& directory, const std::string& name, int& out_width, int& out_height, bool gamma = false)
+	{
+		std::string fileName = directory + '/' + name;
+		unsigned int textureID;
+		glGenTextures(1, &textureID);
+		int nrComponents;
+		unsigned char* data = stbi_load(fileName.c_str(), &out_width, &out_height, &nrComponents, 0);
+		if (data)
+		{
+			GLenum format = GL_RGB;
+			if (nrComponents == 1)
+				format = GL_RED;
+			else if (nrComponents == 3)
+				format = GL_RGB;
+			else if (nrComponents == 4)
+				format = GL_RGBA;
+
+			glBindTexture(GL_TEXTURE_2D, textureID);
+			glTexImage2D(GL_TEXTURE_2D, 0, format, out_width, out_height, 0, format, GL_UNSIGNED_BYTE, data);
+			glGenerateMipmap(GL_TEXTURE_2D);
+
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+			stbi_image_free(data);
+		}
+		else
+		{
+			std::cout << "Texture failed to load at path: " << name << std::endl;
+			stbi_image_free(data);
+		}
+
+		return textureID;
+	}*/
 public:
-	void Draw() override
-	{
-		// Don't draw disabled GUI
-		if(!mIsEnabled)
-		{
-			return;
-		}
-		// Name the window
-		ImGui::Begin("Toolbar");
+    void Draw() override
+    {
+        ImGui::Begin("Toolbar");
+		Selection* curSel = mState->GetSel();
+        Tool curTool = curSel->GetTool();
+        for(Tool t = Tool::SELECT; t != Tool::LAST; t = (Tool)((int)t+1))
+        {
+            int offsetT = (int)t-1;
+            ImVec4 newBg = ImVec4(0,0,0,0);
+            if(curTool == t)
+            {
+                newBg = ImVec4(0.5,0.5,0.5,0.5);
+            }
+            bool isPressed = ImGui::ImageButton(mTextureIDs[offsetT], mDims[offsetT],ImVec2(0,0),ImVec2(1,1),-1,newBg);
+            if(isPressed)
+            {
+                curSel->SetTool(t);
+                curTool = t;
+            }
+        }
 
-		// Add buttons and call functions if clicked
-		for(int i = 0; i < NUMBER_OF_TOOLS; ++i)
-		{
-			bool isPressed = ImGui::ImageButton(getToolName(Tool(i+1)).c_str(),(void*)(intptr_t)mTextureIDs[i],mTextureDims[i]);
-			if(isPressed)
-			{
-				mSelection->SetTool(Tool(i+1));
-			}
-		}
+        ImGui::End();
+    }
 
-		ImGui::End();
-	}
-
-	GUIToolbarWindow(Selection* selection, bool isEnabled)
-	{
-		type = GUI::TOOLBAR;
-		mSelection = selection;
-		mIsEnabled = isEnabled;
-		std::string filePath("..\\resources\\icons\\toolIcons\\");
-		std::string fileExtension(".png");
-		for(int i = 0; i < NUMBER_OF_TOOLS; ++i)
-		{
-			int my_image_width = 0;
-			int my_image_height = 0;
-			GLuint my_image_texture = 0;
-			std::string toolName(getToolName(Tool(i+1)));
-			std::string fullFilePath = filePath+ toolName+fileExtension;
-			bool ret = LoadTextureFromFile(fullFilePath.c_str() , &my_image_texture, &my_image_width, &my_image_height);
-			if(!ret)
-			{
-				std::cout << "Failed to load the "+toolName+" icon" << std::endl;
-			}
-			mTextureIDs.push_back(my_image_texture);
-			mTextureDims.push_back(ImVec2(my_image_width,my_image_height));
-		}
-	}
+    GUIToolbarWindow(State* state, Scene* scene, bool isEnabled)
+    {
+        mType = GUI::TOOLBAR;
+        mIsEnabled = isEnabled;
+        mState = state;
+        mScene = scene;
+        stbi_set_flip_vertically_on_load(false);
+        for(Tool t = Tool::SELECT; t != Tool::LAST; t = (Tool)((int)t+1))
+        {
+            std::string fileName = fileNames[(int)t-1];
+            //std::string fullFilePath = TOOLSDIR + std::string("/")+ fileName;
+            int widthDim = 0;
+            int heightDim = 0;
+            ImTextureID textureID = (ImTextureID)TextureFromFile(FileSystem::GetPath(TOOLSDIR),fileName,widthDim,heightDim, false);
+            mTextureIDs.push_back(textureID);
+            mDims.push_back(ImVec2(widthDim,heightDim));
+        }
+        stbi_set_flip_vertically_on_load(true);
+    }
 };
