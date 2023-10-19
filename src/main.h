@@ -10,6 +10,13 @@
 #include "windows/window.h"
 #include "windows/guiDebugToolsWindow.h"
 #include "windows/guiMenuBarWindow.h"
+#include "windows/guiHierarchyWindow.h"
+#include "windows/guiInspectorWindow.h"
+
+#include "windows/guiLightViewer.h"
+#include "windows/guiMaterialViewer.h"
+
+#include "windows/guiMaterialEditor.h"
 
 #include "rendering/shader.h"
 #include "rendering/scene.h"
@@ -18,11 +25,8 @@
 #include "primitives/pGrid.h"
 #include "primitives/pLightCube.h"
 #include "primitives/pHandle.h"
-
-#define CONFIG_JSON "configs/config.json"
-#define MATS_JSON "configs/materials.json"
-#define MODELS_DIR "resources/models/"
-#define APP_NAME "BlankMat"
+#include "primitives/vCube.h"
+#include "primitives/vPlane.h"
 
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 720;

@@ -1,9 +1,10 @@
 #pragma once
 #include "glIncludes.h"
 #include "shader.h"
-#include "iLight.h"
+#include "light.h"
 #include "camera.h"
 #include "material.h"
+#include "rendering/iEntity.h"
 #include "files/config.h"
 #include "windows/window.h"
 #include <unordered_map>
@@ -12,7 +13,7 @@ class IScene
 {
 protected:
 	std::string mCurShader;
-	ILight* mGlobalLight;
+	Light* mGlobalLight;
 	Camera* mMainCamera;
 
 	std::unordered_map<std::string, IEntity*> mPreRenderList;
@@ -34,31 +35,39 @@ protected:
 			return material;
 
 		// Create textures
-		bool isDefault = (name == "default");
-		Texture* kd = LoadTexture("texture_diffuse", config->GetString("map_kd"), isDefault ? "default_diffuse" : "");
-		Texture* ka = LoadTexture("texture_ambient", config->GetString("map_ka"), isDefault ? "default_ambient" : "");
-		Texture* ks = LoadTexture("texture_specular", config->GetString("map_ks"), isDefault ? "default_specular" : "");
-		Texture* normal = LoadTexture("texture_normal", config->GetString("map_bump"), isDefault ? "default_normal" : "");
-		Texture* ns = LoadTexture("texture_height", config->GetString("map_ns"), isDefault ? "default_height" : "");
-		Texture* d = LoadTexture("texture_alpha", config->GetString("map_d"), isDefault ? "default_alpha" : "");
+		Texture* kd = LoadTexture("texture_diffuse", config->GetString("map_kd"), "default_diffuse");
+		Texture* ka = LoadTexture("texture_ambient", config->GetString("map_ka"), "default_ambient");
+		Texture* ks = LoadTexture("texture_specular", config->GetString("map_ks"), "default_specular");
+		Texture* normal = LoadTexture("texture_normal", config->GetString("map_bump"), "default_normal");
+		Texture* ns = LoadTexture("texture_height", config->GetString("map_ns"), "default_height");
+		Texture* d = LoadTexture("texture_alpha", config->GetString("map_d"), "default_alpha");
 
 		// Create material
-		material = new Material(config, kd, ka, ks, normal, ns, d);
+		material = new Material(name, config, kd, ka, ks, normal, ns, d);
 		AddMaterial(name, material);
 		return material;
 	}
 
 	// Loads the given texture or returns the existing one
-	Texture* LoadTexture(std::string type, std::string path, std::string name = "")
+	Texture* LoadTexture(std::string type, std::string path, std::string defaultName = "")
 	{
+		// If no path is given, load the default texture
+		if (path == "")
+			path = defaultName;
+
+		// Get the name of the texture
+		std::string name = path.substr(0, path.find_last_of('.'));
+		if (name == "default")
+			name = defaultName;
+
 		// If the texture is already loaded with the same type, return it
-		Texture* texture = GetTexture(path);
+		Texture* texture = GetTexture(name);
 		if (texture != nullptr && texture->type == type)
 			return texture;
 
-		// Otherwise load the texture and store it
-		texture = new Texture("texture_diffuse", FileSystem::GetPath(TEXTURE_DIR), path);
-		AddTexture((name != "") ? name : path, texture);
+		// If the texture is not loaded, load the texture and store it
+		texture = new Texture(type, FileSystem::GetPath(TEXTURE_DIR), path, name);
+		AddTexture(name, texture);
 		return texture;
 	}
 
@@ -79,31 +88,46 @@ public:
 	}
 
 	// Creates a shader for the scene with the given name from the source file of the given name
-	void CreateShader(std::string name, bool loadGeom)
+	Shader* CreateShader(std::string name, bool loadGeom)
 	{
 		if (mShaderList.find(name) == mShaderList.end())
-			mShaderList.emplace(name, new Shader(name, loadGeom));
+		{
+			Shader* newShader = new Shader(name, loadGeom);
+			mShaderList.emplace(name, newShader);
+			return newShader;
+		}
+		return mShaderList[name];
 	}
 
 	// Creates a shader for the scene with the given name, loading it from a different source than the name
-	void CreateShader(std::string name, std::string source, bool loadGeom)
+	Shader* CreateShader(std::string name, std::string source, bool loadGeom)
 	{
 		if (mShaderList.find(name) == mShaderList.end())
-			mShaderList.emplace(name, new Shader(source, loadGeom));
+		{
+			Shader* newShader = new Shader(source, loadGeom);
+			mShaderList.emplace(name, newShader);
+			return newShader;
+		}
+		return mShaderList[name];
 	}
 
 	// Creates a shader for the scene with the given name, loading it from a config
-	void CreateShader(std::string name, Config* config)
+	Shader* CreateShader(std::string name, Config* config)
 	{
 		if (mShaderList.find(name) == mShaderList.end())
-			mShaderList.emplace(name, new Shader(config->GetString("file"), config->GetBool("hasGeomShader")));
+		{
+			Shader* newShader = new Shader(config->GetString("file"), config->GetBool("hasGeomShader"));
+			mShaderList.emplace(name, newShader);
+			return newShader;
+		}
+		return mShaderList[name];
 	}
 
 	// Returns the scene's camera
 	Camera* GetCamera() { return mMainCamera; }
 
 	// Returns the scene's light
-	ILight* GetLight() { return mGlobalLight; }
+	Light* GetLight() { return mGlobalLight; }
 
 	// Returns the shader with the given name
 	Shader* GetShader(std::string name)
@@ -142,6 +166,12 @@ public:
 	// Returns a reference to the shader list
 	std::unordered_map<std::string, Shader*>& GetShaderList() { return mShaderList; }
 
+	// Returns a reference to the material list
+	std::unordered_map<std::string, Material*>& GetMaterialList() { return mMaterialList; }
+
+	// Returns a reference to the texture list
+	std::unordered_map<std::string, Texture*>& GetTextureList() { return mTextureList; }
+
 	// Returns the current shader
 	std::string GetCurShader() { return mCurShader; }
 
@@ -152,14 +182,23 @@ public:
 	void SetCamera(Camera* cam) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = cam; }
 
 	// Sets the scene's light to the given light
-	void SetLight(ILight* light) { if (mGlobalLight != nullptr) { delete mGlobalLight; } mGlobalLight = light; }
+	void SetLight(Light* light) { if (mGlobalLight != nullptr) { delete mGlobalLight; } mGlobalLight = light; }
 
 	// Adds an entity to the scene's render list
-	IEntity* AddEntity(std::string name, IEntity* entity, bool preRender = false)
+	IEntity* AddEntity(IEntity* entity, bool preRender = false)
 	{
-		std::unordered_map<std::string, IEntity*>* tempList = &(preRender ? mPreRenderList : mRenderList);
-		if (tempList->find(name) == tempList->end())
-			tempList->emplace(name, entity);
+		std::unordered_map<std::string, IEntity*>& tempList = (preRender ? mPreRenderList : mRenderList);
+		if (tempList.find(entity->GetName()) == tempList.end())
+			tempList.emplace(entity->GetName(), entity);
+		return entity;
+	}
+
+	// Adds an entity to the scene's render list
+	IEntity* AddEntity(IEntity* entity, std::string name, bool preRender = false)
+	{
+		std::unordered_map<std::string, IEntity*>& tempList = (preRender ? mPreRenderList : mRenderList);
+		if (tempList.find(name) == tempList.end())
+			tempList.emplace(name, entity);
 		return entity;
 	}
 

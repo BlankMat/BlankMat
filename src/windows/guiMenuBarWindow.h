@@ -69,6 +69,9 @@ protected:
 public:
 	void Draw() override
 	{
+        if (!mIsEnabled)
+            return;
+
         if (ImGui::BeginMainMenuBar())
         {
             if (ImGui::BeginMenu("File"))
@@ -92,7 +95,7 @@ public:
 
     GUIMenuBarWindow(bool isEnabled)
     {
-        type = GUI::MENU_BAR;
+        mType = GUI::MENU_BAR;
         mIsEnabled = isEnabled;
     }
 };

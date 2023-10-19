@@ -1,0 +1,25 @@
+<map id="Scene" name="Scene">
+<area shape="rect" id="Node000001" title=" " alt="" coords="220,540,278,567"/>
+<area shape="rect" id="Node000002" href="$class_i_scene.html" title=" " alt="" coords="110,449,171,476"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="170,484,235,537,232,541,166,488"/>
+<area shape="rect" id="Node000003" href="$class_light.html" title=" " alt="" coords="5,359,55,385"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="41,398,57,423,83,441,111,452,109,457,80,445,53,427,36,401"/>
+<area shape="rect" id="Node000004" href="$class_camera.html" title=" " alt="" coords="108,359,174,385"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="143,401,143,449,138,449,138,401"/>
+<area shape="rect" id="Node000005" href="$class_node.html" title=" " alt="" coords="223,449,274,476"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="251,492,251,539,246,539,246,492"/>
+<area shape="poly" id="edge11_Node000005_Node000005" title=" " alt="" coords="291,453,298,456,301,463,292,472,275,474,275,468,290,467,296,462,294,460,289,458"/>
+<area shape="rect" id="Node000006" href="$class_i_entity.html" title=" " alt="" coords="216,359,274,385"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="249,401,251,449,245,449,243,401"/>
+<area shape="rect" id="Node000007" href="$struct_material.html" title="Struct that stores all texture and render information for a material." alt="" coords="100,252,168,279"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="142,293,150,314,163,333,188,351,216,362,214,367,186,355,159,337,145,316,137,295"/>
+<area shape="rect" id="Node000008" href="$struct_i_material.html" title=" " alt="" coords="65,176,203,203"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="137,218,137,252,131,252,131,218"/>
+<area shape="rect" id="Node000009" href="$struct_texture.html" title=" " alt="" coords="102,5,166,32"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="137,47,137,176,131,176,131,47"/>
+<area shape="rect" id="Node000010" href="$class_shader.html" title=" " alt="" coords="211,252,273,279"/>
+<area shape="poly" id="edge9_Node000006_Node000010" title=" " alt="" coords="245,294,246,335,247,358,241,358,241,335,240,294"/>
+<area shape="rect" id="Node000011" href="$class_state.html" title=" " alt="" coords="336,252,388,279"/>
+<area shape="poly" id="edge12_Node000001_Node000011" title=" " alt="" coords="377,292,379,302,384,343,385,388,379,435,366,477,349,501,327,521,280,545,277,540,324,516,345,498,361,475,374,434,380,388,379,343,374,303,371,294"/>
+<area shape="poly" id="edge10_Node000006_Node000011" title=" " alt="" coords="343,292,301,337,268,360,265,356,298,333,339,288"/>
+</map>

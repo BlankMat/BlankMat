@@ -2,6 +2,7 @@
 #include "glIncludes.h"
 #include "iEntity.h"
 #include "shader.h"
+#include "camera.h"
 #include <vector>
 
 template <typename V, typename I>
@@ -40,7 +41,7 @@ protected:
 	}
 public:
 	// Draws the object to the screen
-	virtual void Draw(glm::mat4 viewProj, glm::mat4 model = glm::mat4(1.0f))
+	virtual void Draw(glm::mat4 viewProj, Camera* camera, Light* light, glm::mat4 model = glm::mat4(1.0f))
 	{
 		// Don't draw disabled objects
 		if (!mIsEnabled)
@@ -48,13 +49,21 @@ public:
 
 		mShader->Use();
 		// Set uniforms for this draw
-		glm::mat4 modelMatrix = GetModelMatrix() * model;
+		glm::mat4 modelMatrix = model * GetModelMatrix();
 		glm::mat4 mvp = viewProj * modelMatrix;
 		glm::mat3 normalModel = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
+		light->UpdateShader(mShader);
+
+		// Bind shadow map
+		unsigned int shadowIndex = mMaterial->UpdateShader(mShader, mState, mDefaultMat);
+		glActiveTexture(GL_TEXTURE0 + shadowIndex);
+		glBindTexture(GL_TEXTURE_2D, mState->depthMap);
+		glActiveTexture(GL_TEXTURE0);
+
+		mShader->SetVec3("viewPos", camera->GetPos());
 		mShader->SetMat4("MVP", mvp);
 		mShader->SetMat4("Model", modelMatrix);
 		mShader->SetMat3("NormalModel", normalModel);
-		mShader->SetVec3("Color", mColor);
 
 		if (mDrawOver)
 			glDisable(GL_DEPTH_TEST);
@@ -66,9 +75,10 @@ public:
 		glEnable(GL_DEPTH_TEST);
 	}
 
-	IPrimitive(Shader* shader = nullptr, glm::vec3 color = glm::vec3(), float lineWidth = 0.1f, bool drawOver = false,
+	IPrimitive(std::string name, Shader* shader = nullptr, Material* material = nullptr, Material* defaultMat = nullptr,
+		State* state = nullptr, float lineWidth = 0.1f, bool drawOver = false,
 		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
-		: IEntity(shader, color, drawOver, pos, rot, scale), mLineWidth(lineWidth)
+		: IEntity(name, shader, material, defaultMat, state, drawOver, pos, rot, scale), mLineWidth(lineWidth)
 	{
 		// If the lineWidth is positive, draw wireframe
 		mIsWireframe = lineWidth > 0.0f;

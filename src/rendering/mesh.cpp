@@ -1,10 +1,20 @@
 #include "mesh.h"
 
-Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, Material* material)
+// Instantiates an empty mesh
+Mesh::Mesh(std::string name, Material* material, Material* defaultMat, State* state)
+{
+    mMaterial = material;
+    mDefaultMat = defaultMat;
+    mState = state;
+    mName = name;
+}
+
+Mesh::Mesh(std::string name, std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, Material* material)
 {
     mVertices = vertices;
     mIndices = indices;
     mMaterial = material;
+    mName = name;
 
     mPos = glm::vec3(0.0f);
     mRot = glm::vec3(0.0f);
@@ -14,17 +24,26 @@ Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, Ma
 }
 
 // Render the mesh
-void Mesh::Draw(glm::mat4 viewProj, glm::mat4 model)
+void Mesh::Draw(glm::mat4 viewProj, Camera* camera, Light* light, glm::mat4 model)
 {
     // Don't draw disabled meshes
     if (!mIsEnabled)
         return;
 
     // Set uniforms for this draw
-    glm::mat4 modelMatrix = GetModelMatrix() * model;
+    mShader->Use();
+    glm::mat4 modelMatrix = model * GetModelMatrix();
     glm::mat4 mvp = viewProj * modelMatrix;
     glm::mat3 normalModel = glm::transpose(glm::inverse(glm::mat3(modelMatrix)));
-    mMaterial->UpdateShader(mShader, mState, mDefaultMat);
+    light->UpdateShader(mShader);
+    
+    // Bind shadow map
+    unsigned int shadowIndex = mMaterial->UpdateShader(mShader, mState, mDefaultMat);
+    glActiveTexture(GL_TEXTURE0 + shadowIndex);
+    glBindTexture(GL_TEXTURE_2D, mState->depthMap);
+    glActiveTexture(GL_TEXTURE0);
+
+    mShader->SetVec3("viewPos", camera->GetPos());
     mShader->SetMat4("MVP", mvp);
     mShader->SetMat4("Model", modelMatrix);
     mShader->SetMat3("NormalModel", normalModel);

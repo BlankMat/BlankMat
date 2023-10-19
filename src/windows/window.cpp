@@ -2,13 +2,15 @@
 
 // Opens a OpenGL window with the given name
 // -----------------------------------------
-Window::Window(int width, int height, std::string name, Config* config)
+Window::Window(int width, int height, std::string name, Config* config, State* state)
 {
     // Set class variables
     // ---------------------------
     mWidth = width;
     mHeight = height;
     mName = name;
+    Config* styleConfig = config->GetConfig("style");
+    Config* qualityConfig = config->GetConfig("quality");
 
     // glfw: initialize and configure
     // ------------------------------
@@ -38,7 +40,7 @@ Window::Window(int width, int height, std::string name, Config* config)
 
     // Set icon
     GLFWimage images[1];
-    images[0].pixels = stbi_load(FileSystem::GetPath("icon.png").c_str(), &images[0].width, &images[0].height, 0, 4);
+    images[0].pixels = stbi_load(FileSystem::GetPath(ICON).c_str(), &images[0].width, &images[0].height, 0, 4);
     glfwSetWindowIcon(mWindow, 1, images);
     stbi_image_free(images[0].pixels);
 
@@ -57,13 +59,41 @@ Window::Window(int width, int height, std::string name, Config* config)
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& tempIO = ImGui::GetIO();
-    tempIO.Fonts->AddFontFromFileTTF(FileSystem::GetPath(FONT_DIR + config->GetString("font")).c_str(), config->GetFloat("fontSize"));
+    tempIO.Fonts->AddFontFromFileTTF(FileSystem::GetPath(FONT_DIR + styleConfig->GetString("font")).c_str(), styleConfig->GetFloat("fontSize"));
     tempIO.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
     ImGui::StyleColorsDark();
     ImGui_ImplGlfw_InitForOpenGL(mWindow, true);
     ImGui_ImplOpenGL3_Init("#version 330");
     mIO = &tempIO;
-    SetupImGuiStyle(config->GetBool("darkTheme"), config->GetFloat("windowOpacity"));
+    SetupImGuiStyle(styleConfig->GetBool("darkTheme"), styleConfig->GetFloat("windowOpacity"));
+
+    // Quality Settings
+    // ----------------------------
+    unsigned int shadowWidth = state->depthMapSize;
+    unsigned int shadowHeight = shadowWidth;
+
+    // Generate depth map frame buffer
+    unsigned int depthMapFBO;
+    glGenFramebuffers(1, &depthMapFBO);
+
+    // Create depth texture
+    unsigned int depthMap;
+    glGenTextures(1, &depthMap);
+    glBindTexture(GL_TEXTURE_2D, depthMap);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadowWidth, shadowHeight, 0 , GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+    // Attach depth texture to frame buffer
+    glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
+    glDrawBuffer(GL_NONE);
+    glReadBuffer(GL_NONE);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    state->depthMapFBO = depthMapFBO;
+    state->depthMap = depthMap;
 }
 
 // Sets up the ImGui Style
@@ -143,7 +173,7 @@ void OpenGLEnableWireframe(bool enable)
     else {
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         // Enable culling
-        glEnable(GL_CULL_FACE);
+        glDisable(GL_CULL_FACE);
 
         // Enable depth buffer
         glEnable(GL_DEPTH_TEST);
@@ -152,6 +182,12 @@ void OpenGLEnableWireframe(bool enable)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 }
+
+// Initialize GUI
+//void Window::InitGUI(State* state, Scene* scene)
+//{
+//
+//}
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
 // ---------------------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 #pragma once
 #include "glIncludes.h"
-#include "mathLib.h"
+#include "utils.h"
 #include "files/config.h"
 
 class Camera

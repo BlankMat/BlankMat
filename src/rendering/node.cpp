@@ -8,20 +8,24 @@ Node::Node(Node* parent, std::string name)
 }
 
 // Draws the node recursively
-void Node::Draw(glm::mat4 viewProj, glm::mat4 model)
+void Node::Draw(glm::mat4 viewProj, Camera* camera, Light* light, glm::mat4 model)
 {
+	// Don't draw disabled nodes or their children
+	if (!mIsEnabled)
+		return;
+
 	// Calculate the MVP of this stage
-	glm::mat4 newModel = GetModelMatrix() * model;
+	glm::mat4 newModel = model * GetModelMatrix();
 
 	// Draw all child meshes
 	for (unsigned int i = 0; i < mMeshes.size(); i++)
 		if (mMeshes[i] != nullptr)
-			mMeshes[i]->Draw(viewProj, newModel);
+			mMeshes[i]->Draw(viewProj, camera, light, newModel);
 
 	// Draw all child nodes
 	for (unsigned int i = 0; i < mChildren.size(); i++)
 		if (mChildren[i] != nullptr)
-			mChildren[i]->Draw(viewProj, newModel);
+			mChildren[i]->Draw(viewProj, camera, light, newModel);
 }
 
 // Sets the shader of the node recursively
@@ -58,6 +62,35 @@ Node* Node::FindNode(std::string name)
 	return nullptr;
 }
 
+// Recursively searches for the mesh with the given name
+IMesh* Node::FindMesh(std::string name)
+{
+	// Search child meshes
+	for (unsigned int i = 0; i < (unsigned int)mMeshes.size(); i++)
+	{
+		// Don't check null meshes
+		if (mMeshes[i] == nullptr)
+			continue;
+		// If the node is found, return it
+		if (mMeshes[i]->GetName() == name)
+			return mMeshes[i];
+	}
+
+	// Search child nodes
+	for (unsigned int i = 0; i < (unsigned int)mChildren.size(); i++)
+	{
+		// Don't check null nodes
+		if (mChildren[i] == nullptr)
+			continue;
+
+		// If the mesh is found, return it
+		IMesh* res = mChildren[i]->FindMesh(name);
+		if (res != nullptr)
+			return res;
+	}
+	return nullptr;
+}
+
 // Returns the index of the given mesh or -1 if not found
 int Node::GetMeshIndex(IMesh* mesh)
 {
@@ -80,6 +113,24 @@ int Node::GetNodeIndex(std::string child)
 				return i;
 	}
 	return -1;
+}
+
+// Returns the child node with the given index, or none if out of bounds
+Node* Node::GetChild(unsigned int index)
+{
+	// Don't search out of bounds
+	if (index >= mChildren.size())
+		return nullptr;
+	return mChildren[index];
+}
+
+// Returns the mesh with the given index, or none if out of bounds
+IMesh* Node::GetMesh(unsigned int index)
+{
+	// Don't search out of bounds
+	if (index >= mMeshes.size())
+		return nullptr;
+	return mMeshes[index];
 }
 
 // Adds a mesh to the node

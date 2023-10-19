@@ -3,11 +3,10 @@
 #include "iGUIWindow.h"
 #include "files/config.h"
 #include "files/fileSystem.h"
+#include "tools/state.h"
 #include <iostream>
 #include <unordered_map>
 #include <string>
-
-#define FONT_DIR "resources/fonts/"
 
 class Window {
 private:
@@ -21,7 +20,7 @@ private:
 public:
 	// Opens a OpenGL window with the given name
 	// -----------------------------------------
-	Window(int width, int height, std::string name, Config* config);
+	Window(int width, int height, std::string name, Config* config, State* state);
 
 	// Draws all GUIs
 	void DrawGUI();
@@ -42,6 +41,9 @@ public:
 	int GetHeight() { return mHeight; }
 	// Returns the aspect ratio of the screen
 	float GetAspect() { return (float)mWidth / (float)mHeight; }
+
+	// Initialize GUI
+	//void InitGUI(State* state, Scene* scene);
 };
 
 // Sets up the ImGui Style
