@@ -12,12 +12,6 @@ class GUIDebugToolsWindow : public IGUIWindow
 protected:
 	State* mState;
 	Scene* mScene;
-
-	double mPrevFrameTime = 0.0;
-	int mNumFramesThisSecond = 0;
-
-	std::string mFrameLen = "0";
-	std::string mFPS = "0";
 public:
 	void Draw() override
 	{
@@ -25,24 +19,9 @@ public:
 		if (!mIsEnabled)
 			return;
 
-		// Calculate FPS
-		double curFrameTime = glfwGetTime();
-		mNumFramesThisSecond++;
-		if (curFrameTime - mPrevFrameTime >= 1.0)
-		{
-			// Calculate FPS and Frame Length in ms
-			mFPS = std::to_string(mNumFramesThisSecond);
-			mFrameLen = std::to_string(1000.0f / mNumFramesThisSecond);
-			mFrameLen = mFrameLen.substr(0, mFrameLen.find(".")+3) + "ms";
-
-			// Reset frame times
-			mNumFramesThisSecond = 0;
-			mPrevFrameTime = curFrameTime;
-		}
-
 		if (ImGui::Begin("Debug Tools", &mIsEnabled, ImGuiWindowFlags_AlwaysAutoResize))
 		{
-			ImGui::Text(("Frame Time : " + mFrameLen + " [" + mFPS + " FPS]").c_str());
+			ImGui::Text(("Frame Time : " + mState->frameTime + " [" + mState->fps + " FPS]").c_str());
 			// Shading settings
 			ImGui::Text("Shading");
 			// Select shader

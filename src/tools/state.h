@@ -24,6 +24,8 @@ public:
 	unsigned int depthMapFBO;
 	unsigned int depthMap;
 	unsigned int depthMapSize;
+	std::string fps;
+	std::string frameTime;
 
 	std::string curShader;
 

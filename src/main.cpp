@@ -86,7 +86,9 @@ int main()
     // Track time
     double lastTime = glfwGetTime();
     double currentTime = glfwGetTime();
+    double lastFrameTime = glfwGetTime();
     float deltaTime = 0.0f;
+    int numFrames = 0;
 
     float gammaKeyPressed = false;
 
@@ -107,6 +109,21 @@ int main()
         lastTime = currentTime;
         currentTime = glfwGetTime();
         deltaTime = float(currentTime - lastTime);
+
+        // Calculate FPS
+        double curFrameTime = glfwGetTime();
+        numFrames++;
+        if (currentTime - lastFrameTime >= 1.0)
+        {
+            // Calculate FPS and Frame Length in ms
+            state->fps = std::to_string(numFrames);
+            std::string frameTime = std::to_string(1000.0f / numFrames);
+            state->frameTime = frameTime.substr(0, frameTime.find(".") + 3) + "ms";
+
+            // Reset frame times
+            numFrames = 0;
+            lastFrameTime = curFrameTime;
+        }
 
         // Draw GUI
         window->DrawGUI();
