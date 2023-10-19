@@ -20,13 +20,18 @@ int main()
 
     // Create scene
     // ------------
+    double loadStartTime = glfwGetTime();
     Scene* scene = new Scene();
     scene->SetState(state);
     scene->LoadMaterials(materialsConfig);
     scene->LoadModel(FileSystem::GetPath(MODELS_DIR) + config->GetString("model.file"), 
         config->GetVec("model.pos"), config->GetVec("model.rot"), config->GetVec("model.scale"));
+    double loadEndTime = glfwGetTime();
+    double loadTotalTime = loadEndTime - loadStartTime;
+    std::cout << "Scene loaded in " << loadTotalTime << " seconds." << std::endl;
 
     // Load shaders
+    loadStartTime = glfwGetTime();
     Shader* defaultShader = scene->CreateShader(DEFAULT_SHADER, config->GetConfig("shader"));
     Shader* blinnShader = scene->CreateShader(BLINN_SHADER, false);
     Shader* phongShader = scene->CreateShader(PHONG_SHADER, false);
@@ -39,6 +44,11 @@ int main()
     Shader* shadowMapShader = scene->CreateShader(SHADOW_MAP_SHADER, false);
     Material* defaultMat = scene->GetMaterial("default");
     scene->UseShader(DEFAULT_SHADER);
+
+    loadEndTime = glfwGetTime();
+    loadTotalTime = loadEndTime - loadStartTime;
+    std::cout << "Shaders loaded in " << loadTotalTime << " seconds." << std::endl;
+
 
     // Setup scene
     scene->GetRootNode()->SetShader(defaultShader);

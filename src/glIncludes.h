@@ -9,12 +9,13 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
+#include <glm/gtx/rotate_vector.hpp>
 #include <stb_image.h>
 #include <assimp/Importer.hpp>
 #include <assimp/Exporter.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-constexpr float PI = 3.14159f;
+constexpr float PI = 3.141592f;
 constexpr float HALF_PI = 1.57079f;
 
 #define VERT_SHADER_SIZE 12
