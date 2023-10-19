@@ -20,21 +20,7 @@ protected:
             GUIWindowUtils::Checkbox("##entity" + curEntity->GetName(), curEntity->IsEnabled()));
         ImGui::SameLine();
 
-        bool isSelected = GUIWindowUtils::Selectable(depthMarker + curEntity->GetName(), selEntity, curEntity);
-
-        // If the item is clicked, toggle selection
-        if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
-        {
-            IEntity* newSelect = (selEntity != curEntity) ? curEntity : nullptr;
-            std::cout << "Clicked " << IEntity::GetNameNullSafe(curEntity) << ". Changing from " << IEntity::GetNameNullSafe(selEntity)
-                << " to " << IEntity::GetNameNullSafe(newSelect) << std::endl;
-            selEntity = newSelect;
-            isSelected = newSelect != nullptr;
-        }
-
-        // If the item is selected, highlight it
-        if (isSelected)
-            ImGui::SetItemDefaultFocus();
+        GUIWindowUtils::Deselectable(depthMarker + curEntity->GetName(), selEntity, curEntity);
     }
 
     // Recursively renders the node and its children

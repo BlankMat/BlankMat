@@ -14,6 +14,25 @@ public:
 			ImGui::SetItemDefaultFocus();
 		return isSelected;
 	}
+	
+	template<typename T>
+	static bool Deselectable(std::string label, T*& selValue, T* thisValue)
+	{
+		bool isSelected = (selValue == thisValue);
+		ImGui::Selectable(label.c_str(), &isSelected);
+
+		// If the item is clicked, toggle selection
+		if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
+		{
+			T* newSelect = (selValue != thisValue) ? thisValue : nullptr;
+			selValue = newSelect;
+			isSelected = newSelect != nullptr;
+		}
+
+		if (isSelected)
+			ImGui::SetItemDefaultFocus();
+		return isSelected;
+	}
 
 	static bool Checkbox(std::string label, bool value)
 	{

@@ -13,13 +13,13 @@ unsigned int Material::UpdateShader(Shader* _shader, State* _state, Material* _d
     _shader->SetFloat("material.alpha", d);
     _shader->SetInt("material.mode", illum);
 
-    // Read state (or lack of state)
-    bool useDiffuse = (_state == nullptr || _state->enableDiffuseMap);
-    bool useAmbient = (_state == nullptr || _state->enableAmbientMap);
-    bool useSpecular = (_state == nullptr || _state->enableSpecularMap);
-    bool useNormal = (_state == nullptr || _state->enableNormalMap);
-    bool useHeight = (_state == nullptr || _state->enableHeightMap);
-    bool useAlpha = (_state == nullptr || _state->enableAlphaMap);
+    // If the state has the map enabled, and the texture is not the default texture, use the texture
+    bool useDiffuse = (map_kd != nullptr && map_kd->id != _defaultMat->map_kd->id) && (_state == nullptr || _state->enableDiffuseMap);
+    bool useAmbient = (map_ka != nullptr && map_ka->id != _defaultMat->map_ka->id) && (_state == nullptr || _state->enableAmbientMap);
+    bool useSpecular = (map_ks != nullptr && map_ks->id != _defaultMat->map_ks->id) && (_state == nullptr || _state->enableSpecularMap);
+    bool useNormal = (map_bump != nullptr && map_bump->id != _defaultMat->map_bump->id) && (_state == nullptr || _state->enableNormalMap);
+    bool useHeight = (map_ns != nullptr && map_ns->id != _defaultMat->map_ns->id) && (_state == nullptr || _state->enableHeightMap);
+    bool useAlpha = (map_d != nullptr && map_d->id != _defaultMat->map_d->id) && (_state == nullptr || _state->enableAlphaMap);
 
     // Bind all textures
     unsigned int diffuseNum = 1;
