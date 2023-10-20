@@ -2,6 +2,7 @@
 #include "glIncludes.h"
 #include "files/config.h"
 #include "shader.h"
+#include "material.h"
 
 enum class LightType { POINT = 0, DIR = 1, SPOT = 2 };
 
