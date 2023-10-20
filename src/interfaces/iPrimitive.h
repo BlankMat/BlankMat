@@ -1,8 +1,7 @@
 #pragma once
 #include "glIncludes.h"
-#include "iEntity.h"
-#include "shader.h"
-#include "camera.h"
+#include "interfaces/iEntity.h"
+#include "rendering/shader.h"
 #include <vector>
 
 template <typename V, typename I>
@@ -41,29 +40,26 @@ protected:
 	}
 public:
 	// Draws the object to the screen
-	virtual void Draw(glm::mat4 viewProj, Camera* camera, Light* light, glm::mat4 model = glm::mat4(1.0f))
+	void Draw(Shader* shader, State* state, Material* defaultMat, glm::mat4 viewProj, glm::mat4 model = glm::mat4(1.0f)) override
 	{
 		// Don't draw disabled objects
 		if (!mIsEnabled)
 			return;
 
-		mShader->Use();
 		// Set uniforms for this draw
 		glm::mat4 modelMatrix = model * GetModelMatrix();
 		glm::mat4 mvp = viewProj * modelMatrix;
 		glm::mat3 normalModel = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
-		light->UpdateShader(mShader);
+
+		shader->SetMat4("MVP", mvp);
+		shader->SetMat4("Model", modelMatrix);
+		shader->SetMat3("NormalModel", normalModel);
 
 		// Bind shadow map
-		unsigned int shadowIndex = mMaterial->UpdateShader(mShader, mState, mDefaultMat);
+		unsigned int shadowIndex = mMaterial->UpdateShader(shader, state, defaultMat);
 		glActiveTexture(GL_TEXTURE0 + shadowIndex);
-		glBindTexture(GL_TEXTURE_2D, mState->depthMap);
+		glBindTexture(GL_TEXTURE_2D, state->depthMap);
 		glActiveTexture(GL_TEXTURE0);
-
-		mShader->SetVec3("viewPos", camera->GetPos());
-		mShader->SetMat4("MVP", mvp);
-		mShader->SetMat4("Model", modelMatrix);
-		mShader->SetMat3("NormalModel", normalModel);
 
 		if (mDrawOver)
 			glDisable(GL_DEPTH_TEST);
@@ -75,10 +71,9 @@ public:
 		glEnable(GL_DEPTH_TEST);
 	}
 
-	IPrimitive(std::string name, Shader* shader = nullptr, Material* material = nullptr, Material* defaultMat = nullptr,
-		State* state = nullptr, float lineWidth = 0.1f, bool drawOver = false,
+	IPrimitive(std::string name, Material* material = nullptr, float lineWidth = 0.1f, bool drawOver = false,
 		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
-		: IEntity(name, shader, material, defaultMat, state, drawOver, pos, rot, scale), mLineWidth(lineWidth)
+		: IEntity(name, material, drawOver, pos, rot, scale), mLineWidth(lineWidth)
 	{
 		// If the lineWidth is positive, draw wireframe
 		mIsWireframe = lineWidth > 0.0f;

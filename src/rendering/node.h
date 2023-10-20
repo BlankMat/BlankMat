@@ -1,6 +1,6 @@
 #pragma once
 #include "glIncludes.h"
-#include "iMesh.h"
+#include "interfaces/iMesh.h"
 #include <vector>
 
 class Node : public IEntity
@@ -31,17 +31,12 @@ public:
 	/// <summary>
 	/// Recursively draws the node and its children and child meshes
 	/// </summary>
-	/// <param name="viewProj">View*Projection Matrix of the camera</param>
-	/// <param name="camera">Camera used for viewing</param>
-	/// <param name="light">Light used for viewing</param>
+	/// <param name="shader">Shader to draw to</param>
+	/// <param name="state">Global state of the application</param>
+	/// <param name="defaultMat">Default material of the scene</param>
+	/// <param name="viewProj">Projection * View Matrix of the camera</param>
 	/// <param name="model">Combined model matrix of all parents</param>
-	void Draw(glm::mat4 viewProj, Camera* camera, Light* light, glm::mat4 model = glm::mat4(1.0f)) override;
-
-	/// <summary>
-	/// Sets the shader of the node recursively
-	/// </summary>
-	/// <param name="shader">Shader to use</param>
-	void SetShader(Shader* shader) override;
+	void Draw(Shader* shader, State* state, Material* defaultMat, glm::mat4 viewProj, glm::mat4 model = glm::mat4(1.0f)) override;
 
 	/// <summary>
 	/// Returns the name of the node

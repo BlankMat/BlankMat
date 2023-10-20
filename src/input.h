@@ -1,8 +1,8 @@
 #pragma once
 #include "glIncludes.h"
 #include "selection.h"
-#include "rendering/iMesh.h"
-#include "rendering/iScene.h"
+#include "interfaces/iMesh.h"
+#include "interfaces/iScene.h"
 #include "windows/window.h"
 #include "tools/state.h"
 

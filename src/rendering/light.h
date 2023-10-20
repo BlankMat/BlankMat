@@ -2,7 +2,6 @@
 #include "glIncludes.h"
 #include "files/config.h"
 #include "shader.h"
-#include "camera.h"
 
 enum class LightType { POINT = 0, DIR = 1, SPOT = 2 };
 
@@ -41,7 +40,7 @@ protected:
 	void CalcMatrices()
 	{
 		mNearPlane = mLightRange * 0.1f;
-		mFarPlane = mLightRange;
+		mFarPlane = mLightRange * 10.0f;
 		glm::vec3 target = glm::vec3(0.0f, 0.0f, 0.0f);
 		if (mType == LightType::DIR || mType == LightType::SPOT)
 			target = mPos + mDir;
@@ -51,7 +50,7 @@ protected:
 	}
 public:
 	// Draws the object to the screen
-	virtual void Draw(glm::mat4 viewProj, Camera* camera, Light* light, glm::mat4 model = glm::mat4(1.0f)) {}
+	virtual void Draw(Shader* shader, State* state, Material* defaultMat, glm::mat4 viewProj, glm::mat4 model = glm::mat4(1.0f)) {}
 
 	// Updates the lighting values of the given shader
 	void UpdateShader(Shader* shader)
@@ -116,11 +115,11 @@ public:
 	void SetRange(float lightRange)
 	{
 		if (lightRange <= 0.0f)
-			lightRange = 0.001f;
+			lightRange = 0.1f;
 		mLightRange = lightRange;
 		mPointC = 1.0f;
-		mPointL = 4.7f / lightRange;
-		mPointQ = 85.0f / pow(lightRange, 2.0f);
+		mPointL = 0.47f / lightRange;
+		mPointQ = 8.5f / pow(lightRange, 2.0f);
 		CalcMatrices();
 	}
 

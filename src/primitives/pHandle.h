@@ -1,8 +1,7 @@
 #pragma once
-#include "rendering/iEntity.h"
-#include "rendering/iPrimitive.h"
-#include "pLine.h"
-#include "pWireCube.h"
+#include "interfaces/iEntity.h"
+#include "primitives/pLine.h"
+#include "primitives/pWireCube.h"
 
 class PHandle : public IEntity
 {
@@ -20,7 +19,7 @@ protected:
 	void GenBuffers() override {}
 public:
 
-	void Draw(glm::mat4 viewProj, Camera* camera, Light* light, glm::mat4 model = glm::mat4(1.0f))
+	void Draw(Shader* shader, State* state, Material* defaultMat, glm::mat4 viewProj, glm::mat4 model = glm::mat4(1.0f)) override
 	{
 		// Don't draw any part of the object if not enabled
 		if (!mIsEnabled)
@@ -28,25 +27,25 @@ public:
 
 		glm::mat4 newModel = IEntity::GetModelMatrix() * model;
 		if (!(mYHeld || mZHeld || mAllHeld))
-			mXHandle->Draw(viewProj, camera, light, newModel);
+			mXHandle->Draw(shader, state, defaultMat, viewProj, newModel);
 		if (!(mXHeld || mZHeld || mAllHeld))
-			mYHandle->Draw(viewProj, camera, light, newModel);
+			mYHandle->Draw(shader, state, defaultMat, viewProj, newModel);
 		if (!(mXHeld || mYHeld || mAllHeld))
-			mZHandle->Draw(viewProj, camera, light, newModel);
+			mZHandle->Draw(shader, state, defaultMat, viewProj, newModel);
 		if (!(mXHeld || mYHeld || mZHeld))
-			mAllHandle->Draw(viewProj, camera, light, newModel);
+			mAllHandle->Draw(shader, state, defaultMat, viewProj, newModel);
 	}
 
-	PHandle(std::string name, float len, Shader* shader, Material* defaultMat, State* state, float lineWidth, bool drawOver,
+	PHandle(std::string name, float len, float lineWidth, bool drawOver,
 		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f),
 		glm::vec3 allColor = glm::vec3(1, 1, 0),
 		glm::vec3 xColor = glm::vec3(1,0,0), glm::vec3 yColor = glm::vec3(0,1,0), glm::vec3 zColor = glm::vec3(0,0,1))
-		: IEntity(name, shader, defaultMat, defaultMat, state, drawOver, pos, rot, scale)
+		: IEntity(name, nullptr, drawOver, pos, rot, scale)
 	{
-		mXHandle = new PLine(name + "x", glm::vec3(len * 0.05f, 0, 0), glm::vec3(len, 0, 0), shader, new Material(xColor), defaultMat, state, lineWidth, drawOver);
-		mYHandle = new PLine(name + "y", glm::vec3(0, len * 0.05f, 0), glm::vec3(0, len, 0), shader, new Material(yColor), defaultMat, state, lineWidth, drawOver);
-		mZHandle = new PLine(name + "z", glm::vec3(0, 0, len * 0.05f), glm::vec3(0, 0, len), shader, new Material(zColor), defaultMat, state, lineWidth, drawOver);
-		mAllHandle = new PWireCube(name + "all", len * 0.1f, shader, new Material(allColor), defaultMat, state, lineWidth * 0.5f, drawOver);
+		mXHandle = new PLine(name + "x", glm::vec3(len * 0.05f, 0, 0), glm::vec3(len, 0, 0), new Material(xColor), lineWidth, drawOver);
+		mYHandle = new PLine(name + "y", glm::vec3(0, len * 0.05f, 0), glm::vec3(0, len, 0), new Material(yColor), lineWidth, drawOver);
+		mZHandle = new PLine(name + "z", glm::vec3(0, 0, len * 0.05f), glm::vec3(0, 0, len), new Material(zColor), lineWidth, drawOver);
+		mAllHandle = new PWireCube(name + "all", len * 0.1f, new Material(allColor), lineWidth * 0.5f, drawOver);
 
 		mXHeld = false;
 		mYHeld = false;

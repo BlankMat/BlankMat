@@ -6,6 +6,7 @@
 #include "rendering/scene.h"
 #include "rendering/camera.h"
 #include "tools/state.h"
+#include <map>
 
 class GUIDebugToolsWindow : public IGUIWindow
 {
@@ -25,21 +26,21 @@ public:
 			// Shading settings
 			ImGui::Text("Shading");
 			// Select shader
-			std::unordered_map<std::string, Shader*> shaders = mScene->GetShaderList();
+			std::unordered_map<std::string, Shader*> shaderList = mScene->GetShaderList();
+			std::map<std::string, Shader*> sortedShaders;
+			for (auto iter = shaderList.begin(); iter != shaderList.end(); ++iter)
+				sortedShaders.emplace(iter->first, iter->second);
 			std::string curShader = mScene->GetCurShader();
 			if (ImGui::BeginListBox("Shader"))
 			{
-				for (auto iter = shaders.begin(); iter != shaders.end(); ++iter)
-				{
+				for (auto iter = sortedShaders.begin(); iter != sortedShaders.end(); ++iter)
 					GUIWindowUtils::Selectable(iter->first, curShader, iter->first);
-				}
 				ImGui::EndListBox();
 
 				// Only change the shader if it actually changed
 				if (mScene->GetCurShader() != curShader)
 				{
 					mScene->UseShader(curShader);
-					mScene->GetRootNode()->SetShader(mScene->GetShader(curShader));
 				}
 			}
 

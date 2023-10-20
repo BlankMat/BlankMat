@@ -1,7 +1,7 @@
 #include "selection.h"
-#include "rendering/iMesh.h"
-#include "rendering/iScene.h"
 #include "rendering/material.h"
+#include "interfaces/iMesh.h"
+#include "interfaces/iScene.h"
 
 // Returns the entire selection as a selection of vertices
 void Selection::GetSelectedVerts(std::vector<unsigned int>& _verts)
@@ -216,7 +216,7 @@ Material* Selection::GetSelectedMat() { return mSelMat; }
 // Storage container for information on all selections
 Selection::Selection()
 {
-	mSelTool = Tool::NONE;
+	mSelTool = Tool::SELECT;
 	mSelMode = SelMode::MESH;
 	mPivot = glm::vec3(0, 0, 0);
 	mSelMesh = nullptr;

@@ -1,30 +1,31 @@
 #include "scene.h"
 #include "primitives/pLightCube.h"
 
-void Scene::Draw(Window* window)
+void Scene::Draw(Window* window, Shader* shader)
 {
-	window->CalcWindowSize();
-	glm::mat4 viewProj = GetProjectionMatrix(window->GetAspect()) * GetViewMatrix();
-	if (mCurShader == "")
-		UseShader(DEFAULT_SHADER);
-
 	// Set lighting uniforms
 	Shader* curShader = GetShader(mCurShader);
-	GetLight()->UpdateShader(curShader);
-	curShader->SetVec3("viewPos", GetCamera()->GetPos());
+	if (mCurShader == "")
+		UseShader("default");
+
+	GetLight()->UpdateShader(shader);
+	shader->SetVec3("viewPos", GetCamera()->GetPos());
+
+	window->CalcWindowSize();
+	glm::mat4 viewProj = GetProjectionMatrix(window->GetAspect()) * GetViewMatrix();
+
+	// Draw all of the scene
+	UseShader(mCurShader);
+	mRootNode->Draw(mShader, mState, mDefaultMat, viewProj);
+
+	// Draw lights
+	if (mGlobalLight != nullptr)
+		mGlobalLight->Draw(mShader, mState, mDefaultMat, viewProj);
 
 	// Draw pre-renderables
 	for (auto iter = mPreRenderList.begin(); iter != mPreRenderList.end(); ++iter)
 		if (iter->second != nullptr)
-			iter->second->Draw(viewProj, GetCamera(), GetLight());
-
-	// Draw all of the scene
-	UseShader(mCurShader);
-	mRootNode->Draw(viewProj, GetCamera(), GetLight());
-
-	// Draw lights
-	if (mGlobalLight != nullptr)
-		mGlobalLight->Draw(viewProj, GetCamera(), GetLight());
+			iter->second->Draw(mShader, mState, mDefaultMat, viewProj);
 
 	// Draw post-renderables
 	for (auto iter = mRenderList.begin(); iter != mRenderList.end(); ++iter)
@@ -32,10 +33,10 @@ void Scene::Draw(Window* window)
 		// Render camera axis handle with inverse view matrix
 		if (iter->first == CAMERA_AXIS_HANDLE) {
 			iter->second->SetRot(GetRotationDegrees(mMainCamera->GetDir()));
-			iter->second->Draw(glm::ortho(0.0f, (float)window->GetWidth(), 0.0f, (float)window->GetHeight(), -100.0f, 100.0f), GetCamera(), GetLight());
+			iter->second->Draw(mShader, mState, mDefaultMat, glm::ortho(0.0f, (float)window->GetWidth(), 0.0f, (float)window->GetHeight(), -100.0f, 100.0f));
 		}
 		else if (iter->second != nullptr) {
-			iter->second->Draw(viewProj, GetCamera(), GetLight());
+			iter->second->Draw(mShader, mState, mDefaultMat, viewProj);
 		}
 	}
 }
@@ -58,16 +59,6 @@ Node* Scene::GetRootNode()
 	return mRootNode;
 }
 
-// Sets the shader for all the meshes of the model
-void Scene::SetMeshShaders(Shader* shader, State* state)
-{
-	for (unsigned int i = 0; i < mMeshList.size(); i++)
-	{
-		mMeshList[i]->SetShader(shader);
-		mMeshList[i]->SetState(state);
-	}
-}
-
 // Saves the global state in the scene
 void Scene::SetState(State* state)
 {
@@ -77,6 +68,7 @@ void Scene::SetState(State* state)
 // Loads the model at the given path
 void Scene::LoadModel(const std::string& path, glm::vec3 startPos, glm::vec3 startRot, glm::vec3 startScale)
 {
+	double loadStartTime = glfwGetTime();
 	std::cout << "Reading model from file " << path << std::endl;
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(path, 
@@ -101,7 +93,11 @@ void Scene::LoadModel(const std::string& path, glm::vec3 startPos, glm::vec3 sta
 	sceneRootNode->SetScale(startScale);
 	mRootNode->AddChild(sceneRootNode);
 	ProcessNode(sceneRootNode, scene->mRootNode, scene);
-	std::cout << "Read model from file " << path << " successfully, new directory is " << mDirectory << std::endl;
+
+	double loadEndTime = glfwGetTime();
+	double loadTotalTime = loadEndTime - loadStartTime;
+	std::cout << "Read model from file " << path << " successfully in " << loadTotalTime << " seconds." << std::endl;
+	std::cout << "Project directory is " << mDirectory << std::endl;
 }
 
 // Recursively processes the meshes in the given node and all its children
@@ -113,7 +109,6 @@ void Scene::ProcessNode(Node* sceneNode, aiNode* node, const aiScene* scene)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		Mesh* newMesh = ProcessMesh(mesh, scene);
-		newMesh->SetDefaultMat(GetMaterial("default"));
 		sceneNode->AddMesh(newMesh);
 		mMeshList.push_back(newMesh);
 	}

@@ -1,9 +1,9 @@
 #pragma once
 #include "glIncludes.h"
-#include "iScene.h"
 #include "mesh.h"
 #include "node.h"
 #include "tools/state.h"
+#include "interfaces/iScene.h"
 
 class Scene : public IScene
 {
@@ -21,9 +21,7 @@ public:
 	// Loads the given model to the scene
 	void LoadModel(const std::string& path, glm::vec3 startPos = glm::vec3(0.0f), glm::vec3 startRot = glm::vec3(0.0f), glm::vec3 startScale = glm::vec3(1.0f));
 	// Renders the current scene
-	void Draw(Window* window) override;
-	// Sets the shader for all the meshes of the model
-	void SetMeshShaders(Shader* shader, State* state);
+	void Draw(Window* window, Shader* shader) override;
 	// Saves the global state in the scene
 	void SetState(State* state);
 	// Adds the given node to the scene

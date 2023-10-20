@@ -8,7 +8,7 @@ Node::Node(Node* parent, std::string name)
 }
 
 // Draws the node recursively
-void Node::Draw(glm::mat4 viewProj, Camera* camera, Light* light, glm::mat4 model)
+void Node::Draw(Shader* shader, State* state, Material* defaultMat, glm::mat4 viewProj, glm::mat4 model)
 {
 	// Don't draw disabled nodes or their children
 	if (!mIsEnabled)
@@ -20,26 +20,12 @@ void Node::Draw(glm::mat4 viewProj, Camera* camera, Light* light, glm::mat4 mode
 	// Draw all child meshes
 	for (unsigned int i = 0; i < mMeshes.size(); i++)
 		if (mMeshes[i] != nullptr)
-			mMeshes[i]->Draw(viewProj, camera, light, newModel);
+			mMeshes[i]->Draw(shader, state, defaultMat, viewProj, newModel);
 
 	// Draw all child nodes
 	for (unsigned int i = 0; i < mChildren.size(); i++)
 		if (mChildren[i] != nullptr)
-			mChildren[i]->Draw(viewProj, camera, light, newModel);
-}
-
-// Sets the shader of the node recursively
-void Node::SetShader(Shader* shader)
-{
-	// Draw all child meshes
-	for (unsigned int i = 0; i < mMeshes.size(); i++)
-		if (mMeshes[i] != nullptr)
-			mMeshes[i]->SetShader(shader);
-
-	// Draw all child nodes
-	for (unsigned int i = 0; i < mChildren.size(); i++)
-		if (mChildren[i] != nullptr)
-			mChildren[i]->SetShader(shader);
+			mChildren[i]->Draw(shader, state, defaultMat, viewProj, newModel);
 }
 
 // Finds the node with the given name, recursively

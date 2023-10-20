@@ -32,16 +32,6 @@ constexpr float HALF_PI = 1.57079f;
 
 #define CONFIG_JSON "configs/config.json"
 #define MATS_JSON "configs/materials.json"
+#define SHADERS_JSON "configs/shaders.json"
 #define APP_NAME "BlankMat"
 #define ICON "icon256.png"
-
-#define DEFAULT_SHADER "default"
-#define LINE_SHADER "line"
-#define SHADOW_MAP_SHADER "shadowMappingDepth"
-#define LIGHT_CUBE_SHADER "lightCube"
-#define BLINN_SHADER "blinnDefaultShader"
-#define BLINN_FLAT_SHADER "blinnFlatShader"
-#define PHONG_SHADER "phongDefaultShader"
-#define PHONG_FLAT_SHADER "phongFlatShader"
-#define LAMBERT_SHADER "lambertDefaultShader"
-#define LAMBERT_FLAT_SHADER "lambertFlatShader"
