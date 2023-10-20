@@ -75,12 +75,12 @@ public:
         for(Tool t = Tool::SELECT; t != Tool::LAST; t = (Tool)((int)t+1))
         {
             int offsetT = (int)t-1;
-            ImVec4 newBg = ImVec4(0,0,0,0);
+            ImVec4 newTint = ImVec4(1,1,1,1);
             if(curTool == t)
             {
-                newBg = ImVec4(0.5,0.5,0.5,0.5);
+                newTint = ImVec4(0.5,0.5,0.5,0.5);
             }
-            bool isPressed = ImGui::ImageButton(mTextureIDs[offsetT], mDims[offsetT],ImVec2(0,0),ImVec2(1,1),-1,newBg);
+            bool isPressed = ImGui::ImageButton(mTextureIDs[offsetT], mDims[offsetT],ImVec2(0,0),ImVec2(1,1),-1,ImVec4(0,0,0,0),newTint);
             if(isPressed)
             {
                 curSel->SetTool(t);

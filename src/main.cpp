@@ -47,16 +47,6 @@ int main()
 
     float gammaKeyPressed = false;
 
-    // Add GUIs
-    window->AddGUI(new GUIDebugToolsWindow(state, scene, true));
-    window->AddGUI(new GUIHierarchyWindow(state, scene, true));
-    window->AddGUI(new GUIInspectorWindow(state, scene, true));
-    window->AddGUI(new GUILightViewer(state, scene, true));
-    window->AddGUI(new GUIMaterialViewer(state, scene, true));
-    window->AddGUI(new GUIMaterialEditor(state, scene, true));
-    window->AddGUI(new GUIMenuBarWindow(true));
-    window->AddGUI(new GUIToolbarWindow(state, scene, true));
-
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window->GetWindow()))
@@ -161,6 +151,7 @@ void LoadGUIs(Window* window, State* state, Scene* scene)
     window->AddGUI(new GUIMaterialViewer(state, scene, true));
     window->AddGUI(new GUIMaterialEditor(state, scene, true));
     window->AddGUI(new GUIMenuBarWindow(true));
+    window->AddGUI(new GUIToolbarWindow(state, scene, true));
 }
 
 // Loads all defined shaders
