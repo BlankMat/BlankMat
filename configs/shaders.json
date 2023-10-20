@@ -1,0 +1,38 @@
+{
+  "default": {
+    "file": "defaultShader",
+    "hasGeomShader": false
+  },
+  "lambert": {
+    "file": "lambertDefaultShader",
+    "hasGeomShader": false
+  },
+  "lambertFlat": {
+    "file": "lambertFlatShader",
+    "hasGeomShader": false
+  },
+  "blinn": {
+    "file": "blinnDefaultShader",
+    "hasGeomShader": false
+  },
+  "blinnFlat": {
+    "file": "blinnFlatShader",
+    "hasGeomShader": false
+  },
+  "phong": {
+    "file": "phongDefaultShader",
+    "hasGeomShader": false
+  },
+  "phongFlat": {
+    "file": "phongFlatShader",
+    "hasGeomShader": false
+  },
+  "shadowMap": {
+    "file": "shadowMappingDepth",
+    "hasGeomShader": false
+  },
+  "flat": {
+    "file": "flatShader",
+    "hasGeomShader": false
+  }
+}

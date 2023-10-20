@@ -1,6 +1,6 @@
 #pragma once
 #include "glIncludes.h"
-#include "shader.h"
+#include "rendering/shader.h"
 
 enum class IllumMode { FLAT = 0, LAMBERT = 1, PHONG = 2, REFLECTION = 3 };
 

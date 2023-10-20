@@ -46,19 +46,6 @@ public:
 				// Enabled
 				sel->Enable(
 					GUIWindowUtils::Checkbox("Enabled", sel->IsEnabled()));
-
-				// Shader
-				std::unordered_map<std::string, Shader*>& shaders = mScene->GetShaderList();
-				Shader* shader = sel->GetShader();
-				if (shader != nullptr && ImGui::BeginListBox("Shader"))
-				{
-					for (auto iter = shaders.begin(); iter != shaders.end(); ++iter)
-					{
-						GUIWindowUtils::Selectable(iter->first, shader, iter->second);
-					}
-					ImGui::EndListBox();
-					sel->SetShader(shader);
-				}
 			}
 		}
 		ImGui::End();

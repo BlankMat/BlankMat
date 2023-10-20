@@ -1,26 +1,30 @@
 #pragma once
 #include "glIncludes.h"
-#include "shader.h"
-#include "light.h"
-#include "camera.h"
-#include "material.h"
-#include "rendering/iEntity.h"
 #include "files/config.h"
 #include "windows/window.h"
+#include "rendering/shader.h"
+#include "rendering/light.h"
+#include "rendering/camera.h"
+#include "rendering/material.h"
+#include "interfaces/iEntity.h"
 #include <unordered_map>
 
 class IScene
 {
 protected:
 	std::string mCurShader;
+	Shader* mShader;
 	Light* mGlobalLight;
 	Camera* mMainCamera;
+	Material* mDefaultMat;
 
-	std::unordered_map<std::string, IEntity*> mPreRenderList;
-	std::unordered_map<std::string, IEntity*> mRenderList;
+	std::unordered_map<std::string, Light*> mLightList;
+	std::unordered_map<std::string, Camera*> mCameraList;
 	std::unordered_map<std::string, Shader*> mShaderList;
 	std::unordered_map<std::string, Material*> mMaterialList;
 	std::unordered_map<std::string, Texture*> mTextureList;
+	std::unordered_map<std::string, IEntity*> mPreRenderList;
+	std::unordered_map<std::string, IEntity*> mRenderList;
 
 	// Loads the material of the given config. Must be bottom-level config
 	Material* LoadMaterial(Config* config, std::string name)
@@ -73,7 +77,7 @@ protected:
 
 public:
 	// Renders the current scene
-	virtual void Draw(Window* window) = 0;
+	virtual void Draw(Window* window, Shader* shader) = 0;
 
 	// Activates the shader with the given name for the scene
 	void UseShader(std::string name = "")
@@ -82,8 +86,9 @@ public:
 			name = mCurShader;
 		if (mShaderList.find(name) != mShaderList.end() && mShaderList[name] != nullptr)
 		{
-			mShaderList[name]->Use();
 			mCurShader = name;
+			mShader = mShaderList[name];
+			mShader->Use();
 		}
 	}
 
@@ -93,6 +98,7 @@ public:
 		if (mShaderList.find(name) == mShaderList.end())
 		{
 			Shader* newShader = new Shader(name, loadGeom);
+			newShader->name = name;
 			mShaderList.emplace(name, newShader);
 			return newShader;
 		}
@@ -105,6 +111,7 @@ public:
 		if (mShaderList.find(name) == mShaderList.end())
 		{
 			Shader* newShader = new Shader(source, loadGeom);
+			newShader->name = name;
 			mShaderList.emplace(name, newShader);
 			return newShader;
 		}
@@ -117,6 +124,7 @@ public:
 		if (mShaderList.find(name) == mShaderList.end())
 		{
 			Shader* newShader = new Shader(config->GetString("file"), config->GetBool("hasGeomShader"));
+			newShader->name = name;
 			mShaderList.emplace(name, newShader);
 			return newShader;
 		}
@@ -143,6 +151,12 @@ public:
 		if (mMaterialList.find(name) != mMaterialList.end())
 			return mMaterialList[name];
 		return nullptr;
+	}
+
+	// Returns the default material
+	Material* GetDefaultMat()
+	{
+		return mDefaultMat;
 	}
 
 	// Returns the material with the given name
@@ -216,6 +230,21 @@ public:
 		if (mMaterialList.find(name) == mMaterialList.end())
 			mMaterialList.emplace(name, material);
 		return material;
+	}
+
+	// Sets the default material of the scene from the material list if the material exists.
+	Material* SetDefaultMaterial(std::string name)
+	{
+		if (mMaterialList.find(name) != mMaterialList.end())
+			mDefaultMat = mMaterialList[name];
+		return mDefaultMat;
+	}
+
+	// Sets the default material of the scene. Note: Does not add it to the material list.
+	Material* SetDefaultMaterial(Material* material)
+	{
+		mDefaultMat = material;
+		return mDefaultMat;
 	}
 
 	// Loads the materials from the given config

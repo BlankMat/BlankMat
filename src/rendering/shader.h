@@ -16,6 +16,7 @@ private:
     // ------------------------------------------------------------------------
     void CheckCompileErrors(GLuint shader, std::string type);
 public:
+    std::string name;
     unsigned int ID;
 
     // constructor generates the shader on the fly

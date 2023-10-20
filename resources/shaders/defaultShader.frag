@@ -43,6 +43,7 @@ struct Light {
 };
 
 uniform sampler2D shadowMap;
+uniform bool useShadows;
 uniform Material material;
 uniform Light light;
 uniform vec3 viewPos;
@@ -62,7 +63,13 @@ void main()
         vec3 diffuseColor = texture(material.texture_diffuse1, fs_in.TexCoords).rgb * material.diffuse;
         vec3 specularColor = texture(material.texture_specular1, fs_in.TexCoords).rgb * material.specular;
         vec3 viewDir = normalize(fs_in.TangentViewPos - fs_in.TangentFragPos);
-        float shadow = CalcShadows(normal);
+        
+        // Only use shadows if they are enabled
+        float shadow = 0;
+        if (useShadows)
+        {
+            CalcShadows(normal);
+        }
 
         // Calculate all lighting
         vec3 result = vec3(0,0,0);

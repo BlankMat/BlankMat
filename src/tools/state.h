@@ -19,10 +19,13 @@ public:
 	bool enableNormalMap;
 	bool enableHeightMap;
 	bool enableAlphaMap;
+	bool enableShadows;
 
 	unsigned int depthMapFBO;
 	unsigned int depthMap;
 	unsigned int depthMapSize;
+	std::string fps;
+	std::string frameTime;
 
 	std::string curShader;
 
@@ -41,6 +44,9 @@ public:
 		enableAmbientMap = true;
 		enableSpecularMap = true;
 		enableNormalMap = true;
+		enableHeightMap = true;
+		enableAlphaMap = true;
+		enableShadows = true;
 
 		depthMapFBO = 0;
 		depthMap = 0;

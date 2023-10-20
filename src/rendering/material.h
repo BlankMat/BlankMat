@@ -1,7 +1,7 @@
 #pragma once
-#include "iMaterial.h"
 #include "texture.h"
 #include "files/config.h"
+#include "interfaces/iMaterial.h"
 
 // Forward declare state to prevent circular dependency
 class State;

@@ -1,15 +1,12 @@
 #pragma once
-#include "glIncludes.h"
-#include "rendering/shader.h"
-#include "rendering/iPrimitive.h"
-#include <vector>
+#include "interfaces/iPrimitive.h"
 
 class PGrid : public IPrimitive<glm::vec3, glm::uvec2>
 {
 public:
-    PGrid(std::string name, int gridSize, float unitSize, Shader* shader, Material* material, Material* defaultMat, State* state, float lineWidth, bool drawOver = true,
+    PGrid(std::string name, int gridSize, float unitSize, Material* material, float lineWidth, bool drawOver = true,
         glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
-        : IPrimitive(name, shader, material, defaultMat, state, lineWidth, drawOver, pos, rot, scale)
+        : IPrimitive(name, material, lineWidth, drawOver, pos, rot, scale)
     {
         // Generate x lines for grid
         for (int x = -gridSize; x <= gridSize; x++) {

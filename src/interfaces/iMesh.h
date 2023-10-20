@@ -1,7 +1,7 @@
 #pragma once
 #include "glIncludes.h"
-#include "iEntity.h"
-#include "vertex.h"
+#include "interfaces/iEntity.h"
+#include "rendering/vertex.h"
 #include <vector>
 
 class IMesh : public IEntity
@@ -46,9 +46,6 @@ protected:
 		glBindVertexArray(0);
 	}
 public:
-	// Sets the shader of the mesh
-	virtual void SetShader(Shader* shader) = 0;
-
 	// Returns the vertex with the given index
 	Vertex* GetVertex(unsigned int index)
 	{

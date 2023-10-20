@@ -63,6 +63,8 @@ public:
     glm::vec3 GetPos() { return mPos; }
     // Returns the rotation of the camera
     glm::vec3 GetRot() { return mRot; }
+    // Returns the direction of the camera
+    glm::vec3 GetDir() { return mDir; }
     // Returns the camera's (estimated) look position
     glm::vec3 GetLookAt() { return mPos + mDir * mLookDist; }
     // Returns the background color of the camera
@@ -99,14 +101,6 @@ public:
     glm::mat4 GetView() { return glm::lookAt(mPos, mPos + mDir, mUp); }
     // Returns the camera's rotation matrix
     glm::mat4 GetRotationMatrix() { return glm::mat4(glm::vec4(mRight, 0), glm::vec4(mUp, 0), glm::vec4(-mDir, 0), glm::vec4(0, 0, 0, 1)); }
-    // Returns the camera's rotation in degrees
-    glm::vec3 GetRotationDegrees()
-    {
-        float rotX = asinf(-mDir.y);
-        if (cosf(rotX) > 0.0001)
-            return glm::degrees(glm::vec3(rotX, atan2f(-mDir.x, -mDir.z), atan2f(mRight.y, mUp.y)));
-        return glm::degrees(glm::vec3(rotX, 0.0f, atan2f(-mUp.x, mRight.x)));
-    }
     // Returns the projection matrix of the camera
     glm::mat4 GetProjection(float aspect)
     {
