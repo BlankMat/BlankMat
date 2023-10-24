@@ -31,7 +31,8 @@ void Mesh::Draw(Shader* shader, State* state, Material* defaultMat, glm::mat4 vi
     // Set uniforms for this draw
     glm::mat4 modelMatrix = model * GetModelMatrix();
     glm::mat4 mvp = viewProj * modelMatrix;
-    glm::mat3 normalModel = glm::transpose(glm::inverse(glm::mat3(modelMatrix)));
+    glm::mat3 normalModel = GetNormalModelMatrix(model);
+    mRecalcMatrices = false;
 
     shader->SetMat4("MVP", mvp);
     shader->SetMat4("Model", modelMatrix);

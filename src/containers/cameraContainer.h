@@ -1,7 +1,8 @@
 #pragma once
 #include "rendering/camera.h"
+#include "interfaces/iContainer.h"
 
-class CameraContainer
+class CameraContainer : public IContainer<Camera>
 {
 
 };

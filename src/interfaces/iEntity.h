@@ -19,6 +19,10 @@ protected:
 
 	Material* mMaterial;
 
+	bool mRecalcMatrices;
+	glm::mat4 mModelMatrix;
+	glm::mat3 mNormalModelMatrix;
+
 	// Generates the necessary VAO, VBO, and EBO for the object after verts and indices are set
 	virtual void GenBuffers() = 0;
 public:
@@ -36,11 +40,11 @@ public:
 	std::string GetName() { return mName; }
 
 	// Sets the position of the object
-	virtual void SetPos(glm::vec3 pos) { mPos = pos; }
+	virtual void SetPos(glm::vec3 pos) { mPos = pos; mRecalcMatrices = true; }
 	// Sets the rotation of the object
-	virtual void SetRot(glm::vec3 rot) { mRot = rot; }
+	virtual void SetRot(glm::vec3 rot) { mRot = rot; mRecalcMatrices = true; }
 	// Sets the scale of the object
-	virtual void SetScale(glm::vec3 scale) { mScale = scale; }
+	virtual void SetScale(glm::vec3 scale) { mScale = scale; mRecalcMatrices = true; }
 	// Sets the material of the object
 	virtual void SetMaterial(Material* material) { mMaterial = material; }
 	// Sets the name of the object
@@ -56,16 +60,31 @@ public:
 	// Returns the model matrix for the object
 	glm::mat4 GetModelMatrix()
 	{
-		glm::mat4 identity = glm::mat4(1.0f);
+		if (mRecalcMatrices)
+		{
+			glm::mat4 identity = glm::mat4(1.0f);
 
-		glm::mat4 rotateX = glm::rotate(identity, glm::radians(mRot.x), glm::vec3(1, 0, 0));
-		glm::mat4 rotateY = glm::rotate(identity, glm::radians(mRot.y), glm::vec3(0, 1, 0));
-		glm::mat4 rotateZ = glm::rotate(identity, glm::radians(mRot.z), glm::vec3(0, 0, 1));
+			glm::mat4 rotateX = glm::rotate(identity, glm::radians(mRot.x), glm::vec3(1, 0, 0));
+			glm::mat4 rotateY = glm::rotate(identity, glm::radians(mRot.y), glm::vec3(0, 1, 0));
+			glm::mat4 rotateZ = glm::rotate(identity, glm::radians(mRot.z), glm::vec3(0, 0, 1));
 
-		glm::mat4 translate = glm::translate(identity, mPos);
-		glm::mat4 rotate = rotateY * rotateZ * rotateX;
-		glm::mat4 scale = glm::scale(identity, mScale);
-		return translate * rotate * scale;
+			glm::mat4 translate = glm::translate(identity, mPos);
+			glm::mat4 rotate = rotateY * rotateZ * rotateX;
+			glm::mat4 scale = glm::scale(identity, mScale);
+
+			mModelMatrix = translate * rotate * scale;
+		}
+		return mModelMatrix;
+	}
+
+	// Returns the inverse model matrix of the object
+	glm::mat3 GetNormalModelMatrix(glm::mat4 model)
+	{
+		if (mRecalcMatrices || model != glm::mat4(1.0f))
+		{
+			mNormalModelMatrix = glm::mat3(glm::transpose(glm::inverse(model * mModelMatrix)));
+		}
+		return mNormalModelMatrix;
 	}
 
 	IEntity(std::string name = "", Material* material = nullptr, bool drawOver = false,

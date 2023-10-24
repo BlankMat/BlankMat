@@ -49,7 +49,8 @@ public:
 		// Set uniforms for this draw
 		glm::mat4 modelMatrix = model * GetModelMatrix();
 		glm::mat4 mvp = viewProj * modelMatrix;
-		glm::mat3 normalModel = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
+		glm::mat3 normalModel = GetNormalModelMatrix(model);
+		mRecalcMatrices = false;
 
 		shader->SetMat4("MVP", mvp);
 		shader->SetMat4("Model", modelMatrix);
