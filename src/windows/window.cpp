@@ -1,4 +1,9 @@
 #include "window.h"
+#include "imgui.h"
+#include "imgui_internal.h" // Include this header for ImGuiDockBuilder
+
+// Define a flag to check if the docking space is initialized
+bool DockSpaceInitialized = false;
 
 // Opens a OpenGL window with the given name
 // -----------------------------------------
@@ -67,6 +72,10 @@ Window::Window(int width, int height, std::string name, Config* config, State* s
     mIO = &tempIO;
     SetupImGuiStyle(styleConfig->GetBool("darkTheme"), styleConfig->GetFloat("windowOpacity"));
 
+    // Dear ImGui Docking
+    DockSpaceInitialized = false;
+    mIO->ConfigFlags |= ImGuiConfigFlags_DockingEnable; // Enable docking
+
     // Quality Settings
     // ----------------------------
     unsigned int shadowWidth = state->depthMapSize;
@@ -131,9 +140,39 @@ void Window::DrawGUI()
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
+
+     // Check if the docking system is enabled
+    if (mIO->ConfigFlags & ImGuiConfigFlags_DockingEnable)
+    {
+        // Create a docking space
+        if (!DockSpaceInitialized)
+        {
+            ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
+            ImGuiViewport* viewport = ImGui::GetMainViewport();
+            ImGui::SetNextWindowPos(viewport->Pos);
+            ImGui::SetNextWindowSize(viewport->Size);
+            ImGui::SetNextWindowViewport(viewport->ID);
+            ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+            ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+            ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+            ImGui::Begin("DockSpace", nullptr, dockspace_flags);
+            ImGui::PopStyleVar(3);
+
+            ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+            ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
+
+            DockSpaceInitialized = true;
+            ImGui::End();
+        }
+    }
+
     for (auto iter = mGUIList.begin(); iter != mGUIList.end(); ++iter)
         if (iter->second->IsEnabled())
             iter->second->Draw();
+
+    // Rendering
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 // Adds the given GUI window

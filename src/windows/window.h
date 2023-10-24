@@ -7,6 +7,8 @@
 #include <iostream>
 #include <unordered_map>
 #include <string>
+#include "imgui.h"
+#include "imgui_internal.h" // Include this header for ImGuiDockBuilder
 
 class Window {
 private:
@@ -17,6 +19,9 @@ private:
 	ImGuiIO* mIO;
 
 	std::unordered_map<GUI, IGUIWindow*> mGUIList;
+
+	// Flag to track if the docking space is initialized
+	bool DockSpaceInitialized;
 public:
 	// Opens a OpenGL window with the given name
 	// -----------------------------------------
