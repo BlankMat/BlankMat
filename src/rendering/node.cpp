@@ -28,6 +28,27 @@ void Node::Draw(Shader* shader, State* state, Material* defaultMat, glm::mat4 vi
 			mChildren[i]->Draw(shader, state, defaultMat, viewProj, newModel);
 }
 
+// Draws the node's shadows
+void Node::DrawShadows(Shader* shader, State* state, glm::mat4 model)
+{
+	// Don't draw disabled nodes or their children
+	if (!mIsEnabled)
+		return;
+
+	// Calculate the MVP of this stage
+	glm::mat4 newModel = model * GetModelMatrix();
+
+	// Draw all child meshes
+	for (unsigned int i = 0; i < mMeshes.size(); i++)
+		if (mMeshes[i] != nullptr)
+			mMeshes[i]->DrawShadows(shader, state, newModel);
+
+	// Draw all child nodes
+	for (unsigned int i = 0; i < mChildren.size(); i++)
+		if (mChildren[i] != nullptr)
+			mChildren[i]->DrawShadows(shader, state, newModel);
+}
+
 // Finds the node with the given name, recursively
 Node* Node::FindNode(std::string name)
 {

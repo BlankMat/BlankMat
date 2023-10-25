@@ -39,6 +39,14 @@ public:
 	void Draw(Shader* shader, State* state, Material* defaultMat, glm::mat4 viewProj, glm::mat4 model = glm::mat4(1.0f)) override;
 
 	/// <summary>
+	/// Recursively draws the node's and children's shadows
+	/// </summary>
+	/// <param name="shader">Shadow shader</param>
+	/// <param name="state">Global state of the application</param>
+	/// <param name="model">Model matrix</param>
+	void DrawShadows(Shader* shader, State* state, glm::mat4 model = glm::mat4(1.0f));
+
+	/// <summary>
 	/// Returns the name of the node
 	/// </summary>
 	/// <returns>Name of the node</returns>

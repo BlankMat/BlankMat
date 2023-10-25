@@ -34,6 +34,8 @@ protected:
 	State* mState;
 
 	std::vector<Mesh*> mMeshList;
+	std::unordered_map<std::string, EntityContainer*> mEntityList;
+
 	std::unordered_map<std::string, Light*> mLightList;
 	std::unordered_map<std::string, Camera*> mCameraList;
 	std::unordered_map<std::string, Shader*> mShaderList;
@@ -136,10 +138,7 @@ public:
 	void SetDirectory(std::string dir);
 
 	// Adds an entity to the scene's render list
-	IEntity* AddEntity(IEntity* entity, bool preRender = false);
-
-	// Adds an entity to the scene's render list
-	IEntity* AddEntity(IEntity* entity, std::string name, bool preRender = false);
+	IEntity* AddEntity(std::string shaderName, IEntity* entity, bool preRender = false);
 
 	// Adds a texture to the scene's texture list
 	Texture* AddTexture(std::string name, Texture* texture);

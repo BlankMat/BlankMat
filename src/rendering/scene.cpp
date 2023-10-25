@@ -2,44 +2,61 @@
 #include "primitives/pLightCube.h"
 #include "files/modelReader.h"
 
+// Renders the current scene
 void Scene::Draw(Window* window, Shader* shader)
 {
-	// Set lighting uniforms
-	Shader* curShader = GetShader(mCurShader);
-	if (mCurShader == "")
-		UseShader("default");
-
-	GetLight()->UpdateShader(shader);
-	shader->SetVec3("viewPos", GetCamera()->GetPos());
-
+	// Calculate camera view projection
 	window->CalcWindowSize();
 	glm::mat4 viewProj = GetProjectionMatrix(window->GetAspect()) * GetViewMatrix();
 
 	// Draw all of the scene
-	UseShader(mCurShader);
-	mRootNode->Draw(mShader, mState, mDefaultMat, viewProj);
+	GetLight()->UpdateShader(shader);
+	shader->SetVec3("viewPos", GetCamera()->GetPos());
+	mRootNode->Draw(shader, mState, mDefaultMat, viewProj);
 
-	// Draw lights
-	if (mGlobalLight != nullptr)
-		mGlobalLight->Draw(mShader, mState, mDefaultMat, viewProj);
-
-	// Draw pre-renderables
-	for (auto iter = mPreRenderList.begin(); iter != mPreRenderList.end(); ++iter)
-		if (iter->second != nullptr)
-			iter->second->Draw(mShader, mState, mDefaultMat, viewProj);
-
-	// Draw post-renderables
-	for (auto iter = mRenderList.begin(); iter != mRenderList.end(); ++iter)
+	// Draw all entities with their respective shaders
+	for (auto iter = mEntityList.begin(); iter != mEntityList.end(); ++iter)
 	{
-		// Render camera axis handle with inverse view matrix
-		if (iter->first == CAMERA_AXIS_HANDLE) {
-			iter->second->SetRot(GetRotationDegrees(mMainCamera->GetDir()));
-			iter->second->Draw(mShader, mState, mDefaultMat, glm::ortho(0.0f, (float)window->GetWidth(), 0.0f, (float)window->GetHeight(), -100.0f, 100.0f));
-		}
-		else if (iter->second != nullptr) {
-			iter->second->Draw(mShader, mState, mDefaultMat, viewProj);
+		if (iter->second != nullptr)
+		{
+			Shader* curShader = GetShader(iter->first);
+			if (curShader != nullptr)
+			{
+				curShader->Use();
+				curShader->SetVec3("viewPos", GetCamera()->GetPos());
+				GetLight()->UpdateShader(curShader);
+				iter->second->Draw(curShader, mState, mDefaultMat, viewProj);
+			}
 		}
 	}
+
+	// Draw flat objects
+	Shader* flatShader = GetShader("flat");
+	if (flatShader != nullptr)
+	{
+		flatShader->Use();
+		if (mViewAxisHandle != nullptr)
+		{
+			mViewAxisHandle->SetRot(GetRotationDegrees(GetCamera()->GetDir()));
+			mViewAxisHandle->Draw(flatShader, mState, mDefaultMat, glm::ortho(0.0f, (float)window->GetWidth(), 0.0f, (float)window->GetHeight(), -100.0f, 100.0f));
+		}
+			
+		if (mGlobalLight != nullptr)
+			mGlobalLight->Draw(shader, mState, mDefaultMat, viewProj);
+	}
+}
+
+// Renders the current scene's shadows
+void Scene::DrawShadows(Window* window, Shader* shader)
+{
+	// Calculate camera view projection
+	window->CalcWindowSize();
+	glm::mat4 viewProj = GetProjectionMatrix(window->GetAspect()) * GetViewMatrix();
+
+	// Draw all of the scene
+	GetLight()->UpdateShader(shader);
+	shader->SetVec3("viewPos", GetCamera()->GetPos());
+	mRootNode->Draw(shader, mState, mDefaultMat, viewProj);
 }
 
 // Adds the given node to the scene
@@ -70,6 +87,12 @@ void Scene::SetState(State* state)
 void Scene::LoadModel(const std::string& path, glm::vec3 startPos, glm::vec3 startRot, glm::vec3 startScale)
 {
 	ModelReader::LoadModel(this, path, startPos, startRot, startScale);
+}
+
+// Sets the view axis handle to the given object
+void Scene::SetViewAxisHandle(IEntity* viewHandle)
+{
+	mViewAxisHandle = viewHandle;
 }
 
 // Constructs the scene from the given file

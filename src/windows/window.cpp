@@ -49,6 +49,7 @@ Window::Window(int width, int height, std::string name, Config* config, State* s
     glfwSetWindowIcon(mWindow, 1, images);
     stbi_image_free(images[0].pixels);
 
+    // TODO: Change to import setting
     stbi_set_flip_vertically_on_load(true);
 
     // // glad: load all OpenGL function pointers
@@ -94,6 +95,8 @@ Window::Window(int width, int height, std::string name, Config* config, State* s
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    float borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 
     // Attach depth texture to frame buffer
     glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
@@ -212,7 +215,7 @@ void OpenGLEnableWireframe(bool enable)
     else {
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         // Enable culling
-        glDisable(GL_CULL_FACE);
+        glEnable(GL_CULL_FACE);
 
         // Enable depth buffer
         glEnable(GL_DEPTH_TEST);

@@ -42,6 +42,36 @@ void Mesh::Draw(Shader* shader, State* state, Material* defaultMat, glm::mat4 vi
     unsigned int shadowIndex = mMaterial->UpdateShader(shader, state, defaultMat);
     glActiveTexture(GL_TEXTURE0 + shadowIndex);
     glBindTexture(GL_TEXTURE_2D, state->depthMap);
+    shader->SetInt("shadowMap", state->depthMapFBO);
+    glActiveTexture(GL_TEXTURE0);
+
+    // Draw mesh
+    glBindVertexArray(mVAO);
+    glDrawElements(GL_TRIANGLES, (GLsizei)mIndices.size(), GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // Reset active texture
+    glActiveTexture(GL_TEXTURE0);
+}
+
+// Renders the mesh's shadows
+void Mesh::DrawShadows(Shader* shader, State* state, glm::mat4 model)
+{
+    // Don't draw disabled meshes
+    if (!mIsEnabled)
+        return;
+
+    // Set uniforms for this draw
+    glm::mat4 modelMatrix = model * GetModelMatrix();
+    mRecalcMatrices = false;
+
+    shader->SetMat4("Model", modelMatrix);
+
+    // Bind shadow map
+    unsigned int shadowIndex = 0;
+    glActiveTexture(GL_TEXTURE0 + shadowIndex);
+    glBindTexture(GL_TEXTURE_2D, state->depthMap);
+    shader->SetInt("shadowMap", state->depthMapFBO);
     glActiveTexture(GL_TEXTURE0);
 
     // Draw mesh

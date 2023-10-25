@@ -208,20 +208,12 @@ void IScene::SetName(std::string name) { mName = name; }
 void IScene::SetDirectory(std::string dir) { mDirectory = dir; }
 
 // Adds an entity to the scene's render list
-IEntity* IScene::AddEntity(IEntity* entity, bool preRender)
+IEntity* IScene::AddEntity(std::string shaderName, IEntity* entity, bool preRender)
 {
-	std::unordered_map<std::string, IEntity*>& tempList = (preRender ? mPreRenderList : mRenderList);
-	if (tempList.find(entity->GetName()) == tempList.end())
-		tempList.emplace(entity->GetName(), entity);
-	return entity;
-}
-
-// Adds an entity to the scene's render list
-IEntity* IScene::AddEntity(IEntity* entity, std::string name, bool preRender)
-{
-	std::unordered_map<std::string, IEntity*>& tempList = (preRender ? mPreRenderList : mRenderList);
-	if (tempList.find(name) == tempList.end())
-		tempList.emplace(name, entity);
+	if (mEntityList.find(shaderName) == mEntityList.begin())
+		mEntityList.emplace(shaderName, new EntityContainer());
+	EntityContainer* entityList = mEntityList[shaderName];
+	entityList->Add(entity->GetName(), entity);
 	return entity;
 }
 

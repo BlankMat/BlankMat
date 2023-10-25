@@ -36,6 +36,8 @@ public:
 			mAllHandle->Draw(shader, state, defaultMat, viewProj, newModel);
 	}
 
+	void DrawShadows(Shader* shader, State* state, glm::mat4 model = glm::mat4(1.0f)) override {}
+
 	PHandle(std::string name, float len, float lineWidth, bool drawOver,
 		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f),
 		glm::vec3 allColor = glm::vec3(1, 1, 0),

@@ -7,11 +7,17 @@
 
 class Scene : public IScene
 {
+protected:
+	IEntity* mViewAxisHandle;
 public:
 	// Loads the given model to the scene
 	void LoadModel(const std::string& path, glm::vec3 startPos = glm::vec3(0.0f), glm::vec3 startRot = glm::vec3(0.0f), glm::vec3 startScale = glm::vec3(1.0f));
 	// Renders the current scene
 	void Draw(Window* window, Shader* shader) override;
+	// Renders the current scene's shadows
+	void DrawShadows(Window* window, Shader* shader);
+	// Sets the view axis handle to the given object
+	void SetViewAxisHandle(IEntity* viewHandle);
 	// Saves the global state in the scene
 	void SetState(State* state);
 	// Adds the given node to the scene

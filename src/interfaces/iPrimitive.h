@@ -56,10 +56,11 @@ public:
 		shader->SetMat4("Model", modelMatrix);
 		shader->SetMat3("NormalModel", normalModel);
 
-		// Bind shadow map
+		// Bind shadow map to next available texture index
 		unsigned int shadowIndex = mMaterial->UpdateShader(shader, state, defaultMat);
 		glActiveTexture(GL_TEXTURE0 + shadowIndex);
 		glBindTexture(GL_TEXTURE_2D, state->depthMap);
+		shader->SetInt("shadowMap", state->depthMapFBO);
 		glActiveTexture(GL_TEXTURE0);
 
 		if (mDrawOver)
@@ -71,6 +72,9 @@ public:
 		glBindVertexArray(0);
 		glEnable(GL_DEPTH_TEST);
 	}
+	
+	// Draws the object's shadows
+	void DrawShadows(Shader* shader, State* state, glm::mat4 model = glm::mat4(1.0f)) override {}
 
 	IPrimitive(std::string name, Material* material = nullptr, float lineWidth = 0.1f, bool drawOver = false,
 		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))

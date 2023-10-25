@@ -18,6 +18,8 @@ public:
 	Mesh(std::string name, std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, Material* material);
 	// Draws the mesh
 	void Draw(Shader* shader, State* state, Material* defaultMat, glm::mat4 viewProj, glm::mat4 model = glm::mat4(1.0f)) override;
+	// Draws the mesh's shadows
+	void DrawShadows(Shader* shader, State* state, glm::mat4 model = glm::mat4(1.0f)) override;
 
 	// Cleans up the mesh
 	~Mesh();
