@@ -7,7 +7,7 @@ bool DockSpaceInitialized = false;
 
 // Opens a OpenGL window with the given name
 // -----------------------------------------
-Window::Window(int width, int height, std::string name, Config* config, State* state)
+Window::Window(int width, int height, const std::string& name, Config* config, State* state)
 {
     // Set class variables
     // ---------------------------
@@ -198,31 +198,6 @@ IGUIWindow* Window::GetGUI(GUI type)
         return nullptr;
     }
     return mGUIList[type];
-}
-
-// Enable or disable wireframe
-// ------------------------------------------
-void OpenGLEnableWireframe(bool enable)
-{
-    if (enable) {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        // Disable culling
-        glDisable(GL_CULL_FACE);
-        glDisable(GL_DEPTH_TEST);
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    }
-    else {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        // Enable culling
-        glEnable(GL_CULL_FACE);
-
-        // Enable depth buffer
-        glEnable(GL_DEPTH_TEST);
-        glDepthFunc(GL_LESS);
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    }
 }
 
 // Initialize GUI

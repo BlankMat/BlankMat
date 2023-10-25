@@ -18,7 +18,7 @@ public:
 		if (ImGui::Begin("Material Viewer", &mIsEnabled, ImGuiWindowFlags_AlwaysAutoResize))
 		{
 			IEntity* sel = mState->GetSel()->GetSelectedEntity();
-			std::unordered_map<std::string, Material*>& mats = mScene->GetMaterialList();
+			const std::unordered_map<std::string, Material*>& mats = mScene->GetMaterialList();
 			if (sel != nullptr && sel->GetMaterial() != nullptr)
 			{
 				Material* selMat = sel->GetMaterial();

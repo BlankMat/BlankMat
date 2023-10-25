@@ -31,7 +31,7 @@ public:
     /// </summary>
     /// <param name="_color">Diffuse color of the material</param>
     /// <param name="_name">Name of the material</param>
-    Material(glm::vec3 _color, std::string _name = "");
+    Material(const glm::vec3& _color, const std::string& _name = "");
 
     /// <summary>
     /// Constructs a material out of a config file and preloaded textures
@@ -44,7 +44,7 @@ public:
     /// <param name="_map_bump">Normal/Bump texture</param>
     /// <param name="_map_ns">Specular highlight/Height texture</param>
     /// <param name="_map_d">Alpha texture</param>
-    Material(std::string _name, Config* _config, Texture* _map_kd, Texture* _map_ka, Texture* _map_ks,
+    Material(const std::string& _name, Config* _config, Texture* _map_kd, Texture* _map_ka, Texture* _map_ks,
         Texture* _map_bump, Texture* _map_ns, Texture* _map_d);
 
     /// <summary>
@@ -65,11 +65,11 @@ public:
     /// <param name="_d">Alpha</param>
     /// <param name="_ke">Emissive color</param>
     /// <param name="_illum">Illumination mode</param>
-    Material(std::string _name, Texture* _map_kd, Texture* _map_ka, Texture* _map_ks,
+    Material(const std::string& _name, Texture* _map_kd, Texture* _map_ka, Texture* _map_ks,
         Texture* _map_bump, Texture* _map_ns, Texture* _map_d,
-        glm::vec3 _ka = glm::vec3(), glm::vec3 _kd = glm::vec3(), glm::vec3 _ks = glm::vec3(),
-        float _ns = 0, float _ni = 1, float _d = 1,
-        glm::vec3 _ke = glm::vec3(), int _illum = 2);
+        const glm::vec3& _ka = glm::vec3(), const glm::vec3& _kd = glm::vec3(), const glm::vec3& _ks = glm::vec3(),
+        const float _ns = 0, const float _ni = 1, const float _d = 1,
+        const glm::vec3& _ke = glm::vec3(), const int _illum = 2);
 
     /// <summary>
     /// Constructs a material out of lists of preloaded textures
@@ -89,9 +89,10 @@ public:
     /// <param name="_d">Alpha</param>
     /// <param name="_ke">Emissive color</param>
     /// <param name="_illum">Illumination mode</param>
-    Material(std::string _name, std::vector<Texture*>& _map_kd, std::vector<Texture*>& _map_ka, std::vector<Texture*>& _map_ks,
-        std::vector<Texture*>& _map_bump, std::vector<Texture*>& _map_ns, std::vector<Texture*>& _map_d,
-        glm::vec3 _ka = glm::vec3(), glm::vec3 _kd = glm::vec3(), glm::vec3 _ks = glm::vec3(),
-        float _ns = 0, float _ni = 1, float _d = 1,
-        glm::vec3 _ke = glm::vec3(), int _illum = 2);
+    Material(const std::string& _name, 
+        const std::vector<Texture*>& _map_kd, const std::vector<Texture*>& _map_ka, const std::vector<Texture*>& _map_ks, 
+        const std::vector<Texture*>& _map_bump, const std::vector<Texture*>& _map_ns, const std::vector<Texture*>& _map_d,
+        const glm::vec3& _ka = glm::vec3(), const glm::vec3& _kd = glm::vec3(), const glm::vec3& _ks = glm::vec3(),
+        const float _ns = 0, const float _ni = 1, const float _d = 1,
+        const glm::vec3& _ke = glm::vec3(), const int _illum = 2);
 };

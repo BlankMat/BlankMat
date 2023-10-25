@@ -7,8 +7,6 @@
 #include <iostream>
 #include <unordered_map>
 #include <string>
-#include "imgui.h"
-#include "imgui_internal.h" // Include this header for ImGuiDockBuilder
 
 class Window {
 private:
@@ -25,7 +23,7 @@ private:
 public:
 	// Opens a OpenGL window with the given name
 	// -----------------------------------------
-	Window(int width, int height, std::string name, Config* config, State* state);
+	Window(int width, int height, const std::string& name, Config* config, State* state);
 
 	// Draws all GUIs
 	void DrawGUI();
@@ -53,9 +51,6 @@ public:
 
 // Sets up the ImGui Style
 inline void SetupImGuiStyle(bool isDarkStyle, float alphaThreshold);
-
-// Enables wireframe for the application
-void OpenGLEnableWireframe(bool enable);
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
 // ---------------------------------------------------------------------------------------------

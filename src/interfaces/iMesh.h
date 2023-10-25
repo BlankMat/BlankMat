@@ -1,18 +1,15 @@
 #pragma once
 #include "glIncludes.h"
-#include "interfaces/iEntity.h"
+#include "interfaces/iPrimitive.h"
 #include "rendering/vertex.h"
 #include <vector>
 
-class IMesh : public IEntity
+class IMesh : public IPrimitive<Vertex, unsigned int>
 {
 protected:
 	glm::vec3 mFront;
 	glm::vec3 mRight;
 	glm::vec3 mUp;
-
-	std::vector<Vertex> mVertices;
-	std::vector<unsigned int> mIndices;
 
 	// Generates the required buffers to render the mesh
 	void GenBuffers() override
@@ -44,6 +41,7 @@ protected:
 		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, tangent));
 
 		glBindVertexArray(0);
+		mIndexLen = (GLuint)mIndices.size() * sizeof(*mIndices.data());
 	}
 public:
 	// Returns the vertex with the given index
@@ -86,5 +84,12 @@ public:
 
 		// Up vector : perpendicular to both direction and right
 		mUp = glm::normalize(glm::cross(mRight, mFront));
+	}
+
+	IMesh(std::string name, Material* material = nullptr,
+		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
+		: IPrimitive(name, material, 0.0f, false, pos, rot, scale)
+	{
+		CalcBasis();
 	}
 };

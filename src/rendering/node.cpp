@@ -1,56 +1,68 @@
 #include "node.h"
 
 // Creates a scene node with the given parent and name
-Node::Node(Node* parent, std::string name)
+Node::Node(Node* parent, const std::string& name)
 {
 	mParent = parent;
 	mName = name;
+	mParentModelMatrix = (parent != nullptr) ? parent->GetModelMatrix() : glm::mat4(1.0f);
 }
 
 // Draws the node recursively
-void Node::Draw(Shader* shader, State* state, Material* defaultMat, glm::mat4 viewProj, glm::mat4 model)
+void Node::Draw(Shader* shader, State* state, Material* defaultMat, const glm::mat4& viewProj)
 {
 	// Don't draw disabled nodes or their children
 	if (!mIsEnabled)
 		return;
 
-	// Calculate the MVP of this stage
-	glm::mat4 newModel = model * GetModelMatrix();
-
 	// Draw all child meshes
 	for (unsigned int i = 0; i < mMeshes.size(); i++)
 		if (mMeshes[i] != nullptr)
-			mMeshes[i]->Draw(shader, state, defaultMat, viewProj, newModel);
+			mMeshes[i]->Draw(shader, state, defaultMat, viewProj);
 
 	// Draw all child nodes
 	for (unsigned int i = 0; i < mChildren.size(); i++)
 		if (mChildren[i] != nullptr)
-			mChildren[i]->Draw(shader, state, defaultMat, viewProj, newModel);
+			mChildren[i]->Draw(shader, state, defaultMat, viewProj);
 }
 
 // Draws the node's shadows
-void Node::DrawShadows(Shader* shader, State* state, glm::mat4 model)
+void Node::DrawShadows(Shader* shader, State* state)
 {
 	// Don't draw disabled nodes or their children
 	if (!mIsEnabled)
 		return;
 
-	// Calculate the MVP of this stage
-	glm::mat4 newModel = model * GetModelMatrix();
-
 	// Draw all child meshes
 	for (unsigned int i = 0; i < mMeshes.size(); i++)
 		if (mMeshes[i] != nullptr)
-			mMeshes[i]->DrawShadows(shader, state, newModel);
+			mMeshes[i]->DrawShadows(shader, state);
 
 	// Draw all child nodes
 	for (unsigned int i = 0; i < mChildren.size(); i++)
 		if (mChildren[i] != nullptr)
-			mChildren[i]->DrawShadows(shader, state, newModel);
+			mChildren[i]->DrawShadows(shader, state);
+}
+
+// Sets the node's and node's childrens' parent model matrix
+void Node::SetParentModelMatrix(const glm::mat4& parentModelMatrix)
+{
+	mParentModelMatrix = parentModelMatrix;
+	RecalcMatrices();
+
+	// Draw all child meshes
+	for (unsigned int i = 0; i < mMeshes.size(); i++)
+		if (mMeshes[i] != nullptr)
+			mMeshes[i]->SetParentModelMatrix(mModelMatrix);
+
+	// Draw all child nodes
+	for (unsigned int i = 0; i < mChildren.size(); i++)
+		if (mChildren[i] != nullptr)
+			mChildren[i]->SetParentModelMatrix(mModelMatrix);
 }
 
 // Finds the node with the given name, recursively
-Node* Node::FindNode(std::string name)
+Node* Node::FindNode(const std::string& name)
 {
 	// If this node is the node that is being looked for, return it
 	if (mName == name)
@@ -70,7 +82,7 @@ Node* Node::FindNode(std::string name)
 }
 
 // Recursively searches for the mesh with the given name
-IMesh* Node::FindMesh(std::string name)
+IMesh* Node::FindMesh(const std::string& name)
 {
 	// Search child meshes
 	for (unsigned int i = 0; i < (unsigned int)mMeshes.size(); i++)
@@ -111,7 +123,7 @@ int Node::GetMeshIndex(IMesh* mesh)
 }
 
 // Returns the index of the given node or -1 if not found
-int Node::GetNodeIndex(std::string child)
+int Node::GetNodeIndex(const std::string& child)
 {
 	for (unsigned int i = 0; i < (unsigned int)mChildren.size(); i++)
 	{
@@ -194,7 +206,7 @@ bool Node::MoveMesh(IMesh* mesh, Node* other)
 }
 
 // Moves the given child node from this node to the given node. Returns whether it was successful
-bool Node::MoveChild(std::string child, Node* other)
+bool Node::MoveChild(const std::string& child, Node* other)
 {
 	// Don't move the node to a null node
 	if (other == nullptr)
@@ -217,7 +229,7 @@ bool Node::MoveChild(std::string child, Node* other)
 }
 
 // Removes the node with the given name along with its children. Returns whether the deletion happened
-bool Node::DeleteNode(std::string name)
+bool Node::DeleteNode(const std::string& name)
 {
 	// Do not delete the node itself
 	if (mName == name)

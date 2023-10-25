@@ -51,7 +51,7 @@ protected:
 	}
 public:
 	// Draws the object to the screen
-	virtual void Draw(Shader* shader, State* state, Material* defaultMat, glm::mat4 viewProj, glm::mat4 model = glm::mat4(1.0f)) {}
+	virtual void Draw(Shader* shader, State* state, Material* defaultMat, const glm::mat4& viewProj) {}
 
 	// Updates the lighting values of the given shader
 	void UpdateShader(Shader* shader)
@@ -95,38 +95,36 @@ public:
 	float GetSpotInnerRadius() { return mSpotInner; }
 	float GetSpotOuterRadius() { return mSpotOuter; }
 
-	virtual void SetColor(glm::vec3 color) { mColor = color; }
-	virtual void SetBaseColor(glm::vec3 color) { mBaseColor = color; }
-	virtual void SetOffset(glm::vec3 offset) { mOffset = offset; CalcMatrices(); }
-	virtual void SetPos(glm::vec3 pos) { mPos = pos; CalcMatrices(); }
-	virtual void SetDir(glm::vec3 dir) { mDir = dir; CalcMatrices(); }
-	virtual void SetKD(float kd) { mKD = kd; }
-	virtual void SetKA(float ka) { mKA = ka; }
-	virtual void SetKS(float ks) { mKS = ks; }
-	virtual void SetGamma(bool gamma) { mGamma = gamma; }
-	virtual void SetSpotInnerRadius(float innerRadius) { mSpotInner = innerRadius; }
-	virtual void SetSpotOuterRadius(float outerRadius) { mSpotOuter = outerRadius; }
+	virtual void SetColor(const glm::vec3& color) { mColor = color; }
+	virtual void SetBaseColor(const glm::vec3& color) { mBaseColor = color; }
+	virtual void SetOffset(const glm::vec3& offset) { mOffset = offset; CalcMatrices(); }
+	virtual void SetPos(const glm::vec3& pos) { mPos = pos; CalcMatrices(); }
+	virtual void SetDir(const glm::vec3& dir) { mDir = dir; CalcMatrices(); }
+	virtual void SetKD(const float kd) { mKD = kd; }
+	virtual void SetKA(const float ka) { mKA = ka; }
+	virtual void SetKS(const float ks) { mKS = ks; }
+	virtual void SetGamma(const bool gamma) { mGamma = gamma; }
+	virtual void SetSpotInnerRadius(const float innerRadius) { mSpotInner = innerRadius; }
+	virtual void SetSpotOuterRadius(const float outerRadius) { mSpotOuter = outerRadius; }
 
-	virtual void SetType(LightType type)
+	virtual void SetType(const LightType type)
 	{
 		mType = type;
 		CalcMatrices();
 	}
 
-	void SetRange(float lightRange)
+	void SetRange(const float lightRange)
 	{
-		if (lightRange <= 0.0f)
-			lightRange = 0.1f;
-		mLightRange = lightRange;
+		mLightRange = (lightRange > 0.0f) ? lightRange : 0.1f;
 		mPointC = 1.0f;
-		mPointL = 0.47f / lightRange;
-		mPointQ = 8.5f / pow(lightRange, 2.0f);
+		mPointL = 0.47f / mLightRange;
+		mPointQ = 8.5f / pow(mLightRange, 2.0f);
 		CalcMatrices();
 	}
 
-	Light(LightType type = LightType::POINT, glm::vec3 pos = glm::vec3(1.0f), glm::vec3 dir = glm::vec3(-1.0f), 
-		glm::vec3 color = glm::vec3(1.0f), float kd = 1.0f, float ka = 0.1f, float ks = 0.5f, bool gamma = true, 
-		float range = 13.0f, float spotInner = 25, float spotOuter = 35)
+	Light(const LightType type = LightType::POINT, const glm::vec3& pos = glm::vec3(1.0f), const glm::vec3& dir = glm::vec3(-1.0f), 
+		const glm::vec3& color = glm::vec3(1.0f), const float kd = 1.0f, const float ka = 0.1f, const float ks = 0.5f, const bool gamma = true, 
+		const float range = 13.0f, const float spotInner = 25, const float spotOuter = 35)
 		: mType(type), mColor(color), mBaseColor(color), mDir(dir), mPos(pos), mKD(kd), mKA(ka), mKS(ks), mOffset(pos), mGamma(gamma), 
 		mSpotInner(spotInner), mSpotOuter(spotOuter)
 	{

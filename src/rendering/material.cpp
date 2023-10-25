@@ -82,7 +82,7 @@ unsigned int Material::UpdateShader(Shader* _shader, State* _state, Material* _d
 }
 
 // Constructs a material out of a single color (diffuse)
-Material::Material(glm::vec3 _color, std::string _name)
+Material::Material(const glm::vec3& _color, const std::string& _name)
 {
     name = _name;
     kd = _color;
@@ -103,7 +103,7 @@ Material::Material(glm::vec3 _color, std::string _name)
 }
 
 // Constructs a material out of a config file and preloaded textures
-Material::Material(std::string _name, Config* _config, Texture* _map_kd, Texture* _map_ka, Texture* _map_ks,
+Material::Material(const std::string& _name, Config* _config, Texture* _map_kd, Texture* _map_ka, Texture* _map_ks,
     Texture* _map_bump, Texture* _map_ns, Texture* _map_d)
 {
     name = _name;
@@ -136,10 +136,10 @@ Material::Material(std::string _name, Config* _config, Texture* _map_kd, Texture
 }
 
 // Constructs a material out of preloaded textures
-Material::Material(std::string _name, Texture* _map_kd, Texture* _map_ka, Texture* _map_ks,
+Material::Material(const std::string& _name, Texture* _map_kd, Texture* _map_ka, Texture* _map_ks,
     Texture* _map_bump, Texture* _map_ns, Texture* _map_d,
-    glm::vec3 _ka, glm::vec3 _kd, glm::vec3 _ks,
-    float _ns, float _ni, float _d, glm::vec3 _ke, int _illum)
+    const glm::vec3& _ka, const glm::vec3& _kd, const glm::vec3& _ks,
+    const float _ns, const float _ni, const float _d, const glm::vec3& _ke, const int _illum)
     : IMaterial(_name, _ka, _kd, _ks, _ns, _ni, _d, _ke, _illum)
 {
     map_kd = _map_kd;
@@ -157,10 +157,11 @@ Material::Material(std::string _name, Texture* _map_kd, Texture* _map_ka, Textur
 }
 
 // Construcst a material out of lists of preloaded textures
-Material::Material(std::string _name, std::vector<Texture*>& _map_kd, std::vector<Texture*>& _map_ka, std::vector<Texture*>& _map_ks,
-    std::vector<Texture*>& _map_bump, std::vector<Texture*>& _map_ns, std::vector<Texture*>& _map_d,
-    glm::vec3 _ka, glm::vec3 _kd, glm::vec3 _ks,
-    float _ns, float _ni, float _d, glm::vec3 _ke, int _illum)
+Material::Material(const std::string& _name, 
+    const std::vector<Texture*>& _map_kd, const std::vector<Texture*>& _map_ka, const std::vector<Texture*>& _map_ks,
+    const std::vector<Texture*>& _map_bump, const std::vector<Texture*>& _map_ns, const std::vector<Texture*>& _map_d,
+    const glm::vec3& _ka, const glm::vec3& _kd, const glm::vec3& _ks,
+    const float _ns, const float _ni, const float _d, const glm::vec3& _ke, const int _illum)
     : IMaterial(_name, _ka, _kd, _ks, _ns, _ni, _d, _ke, _illum)
 {
     map_kd = _map_kd[0];

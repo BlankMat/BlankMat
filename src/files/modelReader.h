@@ -160,7 +160,7 @@ private:
 	}
 
 	// Loads material textures
-	static std::vector<Texture*> LoadMaterialTextures(IScene* scene, aiMaterial* mat, aiTextureType type, std::string typeName)
+	static std::vector<Texture*> LoadMaterialTextures(IScene* scene, aiMaterial* mat, aiTextureType type, const std::string& typeName)
 	{
 		std::vector<Texture*> textures;
 		for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
@@ -189,7 +189,7 @@ private:
 	}
 public:
 	// Loads the model at the given path
-	static void LoadModel(IScene* scene, const std::string& path, glm::vec3 startPos, glm::vec3 startRot, glm::vec3 startScale)
+	static void LoadModel(IScene* scene, const std::string& path, const glm::vec3& startPos, const glm::vec3& startRot, const glm::vec3& startScale)
 	{
 		double loadStartTime = glfwGetTime();
 		std::cout << "Reading model from file " << path << std::endl;
@@ -222,6 +222,7 @@ public:
 		sceneRootNode->SetScale(startScale);
 		rootNode->AddChild(sceneRootNode);
 		ProcessNode(scene, sceneRootNode, assimpScene->mRootNode, assimpScene);
+		rootNode->SetParentModelMatrix(glm::mat4(1.0f));
 
 		double loadEndTime = glfwGetTime();
 		double loadTotalTime = loadEndTime - loadStartTime;

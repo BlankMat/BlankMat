@@ -44,11 +44,11 @@ public:
 	// Gets the type of the GUI
 	GUI GetType() { return mType; }
 	// Gets the name of the GUI
-	std::string GetName() { return mName; }
+	const std::string GetName() { return mName; }
 	// Sets the name of the GUI
-	void SetName(std::string name) { mName = name; }
+	void SetName(const std::string& name) { mName = name; }
 	// Gets the position of the GUI on the screen
-	glm::vec2 GetPos() { return mScreenPos; }
+	const glm::vec2 GetPos() { return mScreenPos; }
 	// Sets the position of the GUI on the screen
-	void SetPos(glm::vec2 pos) { mScreenPos = pos; }
+	void SetPos(const glm::vec2& pos) { mScreenPos = pos; }
 };

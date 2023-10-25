@@ -40,17 +40,16 @@ protected:
 	}
 public:
 	// Draws the object to the screen
-	void Draw(Shader* shader, State* state, Material* defaultMat, glm::mat4 viewProj, glm::mat4 model = glm::mat4(1.0f)) override
+	void Draw(Shader* shader, State* state, Material* defaultMat, const glm::mat4& viewProj) override
 	{
 		// Don't draw disabled objects
 		if (!mIsEnabled)
 			return;
 
 		// Set uniforms for this draw
-		glm::mat4 modelMatrix = model * GetModelMatrix();
+		glm::mat4 modelMatrix = GetModelMatrix();
 		glm::mat4 mvp = viewProj * modelMatrix;
-		glm::mat3 normalModel = GetNormalModelMatrix(model);
-		mRecalcMatrices = false;
+		glm::mat3 normalModel = GetNormalModelMatrix();
 
 		shader->SetMat4("MVP", mvp);
 		shader->SetMat4("Model", modelMatrix);
@@ -74,10 +73,33 @@ public:
 	}
 	
 	// Draws the object's shadows
-	void DrawShadows(Shader* shader, State* state, glm::mat4 model = glm::mat4(1.0f)) override {}
+	void DrawShadows(Shader* shader, State* state) override
+	{
+		// Don't draw disabled objects
+		if (!mIsEnabled)
+			return;
 
-	IPrimitive(std::string name, Material* material = nullptr, float lineWidth = 0.1f, bool drawOver = false,
-		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
+		// Set uniforms for this draw
+		shader->SetMat4("Model", GetModelMatrix());
+
+		// Bind shadow map
+		unsigned int shadowIndex = 0;
+		glActiveTexture(GL_TEXTURE0 + shadowIndex);
+		glBindTexture(GL_TEXTURE_2D, state->depthMap);
+		shader->SetInt("shadowMap", state->depthMapFBO);
+		glActiveTexture(GL_TEXTURE0);
+
+		// Draw object
+		glBindVertexArray(mVAO);
+		glDrawElements(GL_TRIANGLES, (GLsizei)mIndices.size(), GL_UNSIGNED_INT, 0);
+		glBindVertexArray(0);
+
+		// Reset active texture
+		glActiveTexture(GL_TEXTURE0);
+	}
+
+	IPrimitive(const std::string& name, Material* material = nullptr, const float lineWidth = 0.1f, const bool drawOver = false,
+		const glm::vec3& pos = glm::vec3(0.0f), const glm::vec3& rot = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f))
 		: IEntity(name, material, drawOver, pos, rot, scale), mLineWidth(lineWidth)
 	{
 		// If the lineWidth is positive, draw wireframe

@@ -20,6 +20,7 @@ public:
 	bool enableHeightMap;
 	bool enableAlphaMap;
 	bool enableShadows;
+	bool enableGrid;
 
 	unsigned int depthMapFBO;
 	unsigned int depthMap;
@@ -47,6 +48,7 @@ public:
 		enableHeightMap = true;
 		enableAlphaMap = true;
 		enableShadows = true;
+		enableGrid = true;
 
 		depthMapFBO = 0;
 		depthMap = 0;

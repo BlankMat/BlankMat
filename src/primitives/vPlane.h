@@ -4,8 +4,8 @@
 class VPlane : public Mesh
 {
 public:
-	VPlane(std::string name, float size, Material* material,
-		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
+	VPlane(const std::string& name, const float size, Material* material,
+        const glm::vec3& pos = glm::vec3(0.0f), const glm::vec3& rot = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f))
         : Mesh(name, material)
 	{
         float h = size * 0.5f;

@@ -10,10 +10,10 @@ struct Texture
 	std::string type;
 	std::string path;
 
-	Texture::Texture(unsigned int _id = -1, std::string _type = "", std::string _path = "", std::string _name = "")
+	Texture::Texture(const unsigned int _id = -1, const std::string& _type = "", const std::string& _path = "", const std::string& _name = "")
 		: id(_id), type(_type), path(_path), name(_name) {}
 
-	Texture::Texture(std::string _type, std::string _directory, std::string _path, std::string _name)
+	Texture::Texture(const std::string& _type, const std::string& _directory, const std::string& _path, const std::string& _name)
 		: type(_type), path(_path), name(_name)
 	{
 		id = TextureFromFile(_directory, _path);

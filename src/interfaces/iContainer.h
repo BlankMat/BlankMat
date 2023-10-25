@@ -42,7 +42,7 @@ public:
 	/// </summary>
 	/// <param name="name">Name of item to select</param>
 	/// <returns>Whether the item was selected or not</returns>
-	virtual bool Select(std::string name)
+	virtual bool Select(const std::string& name)
 	{
 		T* item = Get(name);
 		if (item != nullptr)
@@ -84,7 +84,7 @@ public:
 	/// Returns the currently selected item
 	/// </summary>
 	/// <returns>Selected item</returns>
-	virtual std::string GetSelectedName()
+	virtual const std::string GetSelectedName()
 	{
 		return mCurSelectedName;
 	}
@@ -103,7 +103,7 @@ public:
 	/// </summary>
 	/// <param name="name">Name of the item</param>
 	/// <param name="item">The item to store</param>
-	virtual void Add(std::string name, T* item)
+	virtual void Add(const std::string& name, T* item)
 	{
 		if (mData.find(name) == mData.end())
 			mData.emplace(name, item);
@@ -116,7 +116,7 @@ public:
 	/// </summary>
 	/// <param name="name">Name of item to remove</param>
 	/// <returns>Whether the item was removed or not</returns>
-	virtual bool Remove(std::string name)
+	virtual bool Remove(const std::string& name)
 	{
 		if (mData.find(name) != mData.end())
 		{
@@ -149,7 +149,7 @@ public:
 	/// </summary>
 	/// <param name="name">Name of item to find</param>
 	/// <returns>Item</returns>
-	virtual T* Get(std::string name)
+	virtual T* Get(const std::string& name)
 	{
 		if (mData.find(name) != mData.end())
 			return mData[name];
@@ -161,7 +161,7 @@ public:
 	/// </summary>
 	/// <param name="item">Item to search for</param>
 	/// <returns>Name of item</returns>
-	virtual std::string Get(T* item)
+	virtual const std::string Get(T* item)
 	{
 		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
 		{
@@ -178,7 +178,7 @@ public:
 	/// WARNING: Only use this to iterate over the data, not to modify it
 	/// </summary>
 	/// <returns>Data of the container</returns>
-	virtual std::unordered_map<std::string, T*>& Data()
+	virtual const std::unordered_map<std::string, T*>& Data()
 	{
 		return mData;
 	}

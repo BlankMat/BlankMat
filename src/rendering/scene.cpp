@@ -38,11 +38,17 @@ void Scene::Draw(Window* window, Shader* shader)
 		if (mViewAxisHandle != nullptr)
 		{
 			mViewAxisHandle->SetRot(GetRotationDegrees(GetCamera()->GetDir()));
-			mViewAxisHandle->Draw(flatShader, mState, mDefaultMat, glm::ortho(0.0f, (float)window->GetWidth(), 0.0f, (float)window->GetHeight(), -100.0f, 100.0f));
+			mViewAxisHandle->Draw(flatShader, mState, mDefaultMat, GetViewAxisProjection(window));
 		}
+
+		if (mTransformHandle != nullptr)
+			mTransformHandle->Draw(flatShader, mState, mDefaultMat, viewProj);
+
+		if (mGrid != nullptr && mState->enableGrid)
+			mGrid->Draw(flatShader, mState, mDefaultMat, viewProj);
 			
 		if (mGlobalLight != nullptr)
-			mGlobalLight->Draw(shader, mState, mDefaultMat, viewProj);
+			mGlobalLight->Draw(flatShader, mState, mDefaultMat, viewProj);
 	}
 }
 
@@ -57,6 +63,18 @@ void Scene::DrawShadows(Window* window, Shader* shader)
 	GetLight()->UpdateShader(shader);
 	shader->SetVec3("viewPos", GetCamera()->GetPos());
 	mRootNode->Draw(shader, mState, mDefaultMat, viewProj);
+}
+
+// Returns the projection matrix of the view axis handle
+const glm::mat4& Scene::GetViewAxisProjection(Window* window)
+{
+	if (window->GetWidth() != mViewAxisPrevWidth || window->GetHeight() != mViewAxisPrevHeight)
+	{
+		mViewAxisPrevWidth = window->GetWidth();
+		mViewAxisPrevHeight = window->GetHeight();
+		mViewAxisProjection = glm::ortho(0.0f, (float)window->GetWidth(), 0.0f, (float)window->GetHeight(), -100.0f, 100.0f);
+	}
+	return mViewAxisProjection;
 }
 
 // Adds the given node to the scene
@@ -84,7 +102,7 @@ void Scene::SetState(State* state)
 }
 
 // Loads the model at the given path
-void Scene::LoadModel(const std::string& path, glm::vec3 startPos, glm::vec3 startRot, glm::vec3 startScale)
+void Scene::LoadModel(const std::string& path, const glm::vec3& startPos, const glm::vec3& startRot, const glm::vec3& startScale)
 {
 	ModelReader::LoadModel(this, path, startPos, startRot, startScale);
 }
@@ -93,6 +111,18 @@ void Scene::LoadModel(const std::string& path, glm::vec3 startPos, glm::vec3 sta
 void Scene::SetViewAxisHandle(IEntity* viewHandle)
 {
 	mViewAxisHandle = viewHandle;
+}
+
+// Sets the grid object
+void Scene::SetGrid(IEntity* grid)
+{
+	mGrid = grid;
+}
+
+// Sets the transform handle object
+void Scene::SetTransformHandle(IEntity* handle)
+{
+	mTransformHandle = handle;
 }
 
 // Constructs the scene from the given file

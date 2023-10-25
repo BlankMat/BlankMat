@@ -13,7 +13,7 @@ protected:
     std::set<IEntity*> mExpandedNodes;
 
     // Render one row of the hierarchy
-    void RenderSelectable(IEntity*& selEntity, IEntity* curEntity, std::string depthMarker)
+    void RenderSelectable(IEntity*& selEntity, IEntity* curEntity, const std::string& depthMarker)
     {
         // Add checkbox for enabling or disabling elements
         curEntity->Enable(
@@ -32,7 +32,7 @@ protected:
 
         // Mark depth of nodes
         std::string depthMarker = "";
-        for (int k = 0; k < depth - 1; k++)
+        for (int k = 0; k < depth; k++)
             depthMarker += "  ";
 
         // Mark this node

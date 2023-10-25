@@ -124,20 +124,23 @@ void OpenGLDraw(Window* window, State* state, Scene* scene)
     // Render shadows
     if (state->enableShadows)
     {
-        Shader* shadowShader = scene->GetShader("shadowMap");
-        shadowShader->Use();
+        // Clear viewport
         glViewport(0, 0, state->depthMapSize, state->depthMapSize);
         glBindFramebuffer(GL_FRAMEBUFFER, state->depthMapFBO);
         glClear(GL_DEPTH_BUFFER_BIT);
+
+        // Render scene shadows
+        Shader* shadowShader = scene->GetShader("shadowMap");
+        shadowShader->Use();
         scene->DrawShadows(window, shadowShader);
+
+        // Clear depth map
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 
     // Reset viewport
     glViewport(0, 0, window->GetWidth(), window->GetHeight());
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    OpenGLEnableWireframe(scene->GetCamera()->IsWireframe());
 
     // Render the scene
     Shader* curShader = scene->GetShader(scene->GetCurShader());
@@ -149,12 +152,12 @@ void OpenGLDraw(Window* window, State* state, Scene* scene)
 // ------------------------------------------------------
 void LoadGUIs(Window* window, State* state, Scene* scene)
 {
-    window->AddGUI(new GUIDebugToolsWindow(state, scene, true));
-    window->AddGUI(new GUIHierarchyWindow(state, scene, true));
-    window->AddGUI(new GUIInspectorWindow(state, scene, true));
     window->AddGUI(new GUILightViewer(state, scene, true));
     window->AddGUI(new GUIMaterialViewer(state, scene, true));
     window->AddGUI(new GUIMaterialEditor(state, scene, true));
+    window->AddGUI(new GUIDebugToolsWindow(state, scene, true));
+    window->AddGUI(new GUIHierarchyWindow(state, scene, true));
+    window->AddGUI(new GUIInspectorWindow(state, scene, true));
     window->AddGUI(new GUIMenuBarWindow(true));
 }
 
@@ -185,12 +188,12 @@ void LoadDefaultScene(Scene* scene, Material* defaultMat, bool defaultCubes, Con
     scene->SetLight(new PLightCube("globalLight", 1.0f, lightConfig));
 
     // Add renderables
-    scene->AddEntity("flat", new PGrid(GRID_OBJ, 5, 1.0f, new Material(glm::vec3(0.2f)), 2, true, glm::vec3(0.0f)));
-    scene->AddEntity("flat", new PHandle(TRANSFORM_HANDLE, 0.5f, 6, true, glm::vec3(0.0f)));
+    scene->SetTransformHandle(new PHandle(TRANSFORM_HANDLE, 0.5f, 6, true, glm::vec3(0.0f)));
+    scene->SetGrid(new PGrid(GRID_OBJ, 5, 1.0f, new Material(glm::vec3(0.2f)), 2, true, glm::vec3(0.0f)));
     scene->SetViewAxisHandle(new PHandle(CAMERA_AXIS_HANDLE, 45.0f, 6, false, glm::vec3(50, 50, 0)));
+
     scene->AddMesh(new VPlane(BG_PLANE_OBJ, 20.0f, defaultMat));
     scene->AddMesh(new VPlane("brickwall", 2.0f, scene->GetMaterial("brickwall"), glm::vec3(5, 2, 0), glm::vec3(90, 0, 0)));
-    //scene->AddMesh(new VPlane("bgPlane", 10.0f, defaultShader, defaultMat, defaultMat, state));
 
     if (defaultCubes)
     {

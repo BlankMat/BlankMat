@@ -1,7 +1,7 @@
 #include "iScene.h"
 
 // Loads the material of the given config. Must be bottom-level config
-Material* IScene::LoadMaterial(Config* config, std::string name)
+Material* IScene::LoadMaterial(Config* config, const std::string& name)
 {
 	// Don't handle null configs
 	if (config == nullptr)
@@ -27,12 +27,8 @@ Material* IScene::LoadMaterial(Config* config, std::string name)
 }
 
 // Loads the given texture or returns the existing one
-Texture* IScene::LoadTexture(std::string type, std::string path, std::string defaultName)
+Texture* IScene::LoadTexture(const std::string& type, const std::string& path, const std::string& defaultName)
 {
-	// If no path is given, load the default texture
-	if (path == "")
-		path = defaultName;
-
 	// Get the name of the texture
 	std::string name = path.substr(0, path.find_last_of('.'));
 	if (name == "default")
@@ -50,10 +46,8 @@ Texture* IScene::LoadTexture(std::string type, std::string path, std::string def
 }
 
 // Activates the shader with the given name for the scene
-void IScene::UseShader(std::string name)
+void IScene::UseShader(const std::string& name)
 {
-	if (name == "")
-		name = mCurShader;
 	if (mShaderList.find(name) != mShaderList.end() && mShaderList[name] != nullptr)
 	{
 		mCurShader = name;
@@ -63,7 +57,7 @@ void IScene::UseShader(std::string name)
 }
 
 // Creates a shader for the scene with the given name from the source file of the given name
-Shader* IScene::CreateShader(std::string name, bool loadGeom)
+Shader* IScene::CreateShader(const std::string& name, bool loadGeom)
 {
 	if (mShaderList.find(name) == mShaderList.end())
 	{
@@ -76,7 +70,7 @@ Shader* IScene::CreateShader(std::string name, bool loadGeom)
 }
 
 // Creates a shader for the scene with the given name, loading it from a different source than the name
-Shader* IScene::CreateShader(std::string name, std::string source, bool loadGeom)
+Shader* IScene::CreateShader(const std::string& name, const std::string& source, bool loadGeom)
 {
 	if (mShaderList.find(name) == mShaderList.end())
 	{
@@ -89,7 +83,7 @@ Shader* IScene::CreateShader(std::string name, std::string source, bool loadGeom
 }
 
 // Creates a shader for the scene with the given name, loading it from a config
-Shader* IScene::CreateShader(std::string name, Config* config)
+Shader* IScene::CreateShader(const std::string& name, Config* config)
 {
 	if (mShaderList.find(name) == mShaderList.end())
 	{
@@ -114,7 +108,7 @@ std::string IScene::GetName() { return mName; }
 std::string IScene::GetDirectory() { return mDirectory; }
 
 // Returns the shader with the given name
-Shader* IScene::GetShader(std::string name)
+Shader* IScene::GetShader(const std::string& name)
 {
 	if (mShaderList.find(name) != mShaderList.end())
 		return mShaderList[name];
@@ -122,7 +116,7 @@ Shader* IScene::GetShader(std::string name)
 }
 
 // Returns the material with the given name
-Material* IScene::GetMaterial(std::string name)
+Material* IScene::GetMaterial(const std::string& name)
 {
 	if (mMaterialList.find(name) != mMaterialList.end())
 		return mMaterialList[name];
@@ -136,7 +130,7 @@ Material* IScene::GetDefaultMat()
 }
 
 // Returns the material with the given name
-Texture* IScene::GetTexture(std::string name)
+Texture* IScene::GetTexture(const std::string& name)
 {
 	if (mTextureList.find(name) != mTextureList.end())
 		return mTextureList[name];
@@ -144,7 +138,7 @@ Texture* IScene::GetTexture(std::string name)
 }
 
 // Returns the entity with the given name
-IEntity* IScene::GetEntity(std::string name)
+IEntity* IScene::GetEntity(const std::string& name)
 {
 	if (mPreRenderList.find(name) != mPreRenderList.end())
 		return mPreRenderList[name];
@@ -181,16 +175,16 @@ void IScene::SetRootNode(Node* rootNode)
 }
 
 // Returns a reference to the shader list
-std::unordered_map<std::string, Shader*>& IScene::GetShaderList() { return mShaderList; }
+const std::unordered_map<std::string, Shader*>& IScene::GetShaderList() { return mShaderList; }
 
 // Returns a reference to the material list
-std::unordered_map<std::string, Material*>& IScene::GetMaterialList() { return mMaterialList; }
+const std::unordered_map<std::string, Material*>& IScene::GetMaterialList() { return mMaterialList; }
 
 // Returns a reference to the texture list
-std::unordered_map<std::string, Texture*>& IScene::GetTextureList() { return mTextureList; }
+const std::unordered_map<std::string, Texture*>& IScene::GetTextureList() { return mTextureList; }
 
 // Returns the current shader
-std::string IScene::GetCurShader() { return mCurShader; }
+const std::string IScene::GetCurShader() { return mCurShader; }
 
 // Sets up the scene's camera with the given options
 void IScene::SetCamera(Config* config) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = new Camera(config); }
@@ -202,13 +196,13 @@ void IScene::SetCamera(Camera* cam) { if (mMainCamera != nullptr) { delete mMain
 void IScene::SetLight(Light* light) { if (mGlobalLight != nullptr) { delete mGlobalLight; } mGlobalLight = light; }
 
 // Sets the scene's name
-void IScene::SetName(std::string name) { mName = name; }
+void IScene::SetName(const std::string& name) { mName = name; }
 
 // Sets the scene's directory
-void IScene::SetDirectory(std::string dir) { mDirectory = dir; }
+void IScene::SetDirectory(const std::string& dir) { mDirectory = dir; }
 
 // Adds an entity to the scene's render list
-IEntity* IScene::AddEntity(std::string shaderName, IEntity* entity, bool preRender)
+IEntity* IScene::AddEntity(const std::string& shaderName, IEntity* entity, bool preRender)
 {
 	if (mEntityList.find(shaderName) == mEntityList.begin())
 		mEntityList.emplace(shaderName, new EntityContainer());
@@ -218,7 +212,7 @@ IEntity* IScene::AddEntity(std::string shaderName, IEntity* entity, bool preRend
 }
 
 // Adds a texture to the scene's texture list
-Texture* IScene::AddTexture(std::string name, Texture* texture)
+Texture* IScene::AddTexture(const std::string& name, Texture* texture)
 {
 	if (mTextureList.find(name) == mTextureList.end())
 		mTextureList.emplace(name, texture);
@@ -226,7 +220,7 @@ Texture* IScene::AddTexture(std::string name, Texture* texture)
 }
 
 // Adds a material to the scene's material list
-Material* IScene::AddMaterial(std::string name, Material* material)
+Material* IScene::AddMaterial(const std::string& name, Material* material)
 {
 	if (mMaterialList.find(name) == mMaterialList.end())
 		mMaterialList.emplace(name, material);
@@ -234,7 +228,7 @@ Material* IScene::AddMaterial(std::string name, Material* material)
 }
 
 // Sets the default material of the scene from the material list if the material exists.
-Material* IScene::SetDefaultMaterial(std::string name)
+Material* IScene::SetDefaultMaterial(const std::string& name)
 {
 	if (mMaterialList.find(name) != mMaterialList.end())
 		mDefaultMat = mMaterialList[name];
@@ -262,7 +256,7 @@ void IScene::LoadMaterials(Config* config)
 }
 
 // Returns the projection matrix of the scene's camera
-glm::mat4 IScene::GetProjectionMatrix(float aspect) { return GetCamera()->GetProjection(aspect); }
+const glm::mat4& IScene::GetProjectionMatrix(float aspect) { return GetCamera()->GetProjection(aspect); }
 
 // Returns the view matrix of the scene's camera
-glm::mat4 IScene::GetViewMatrix() { return GetCamera()->GetView(); }
+const glm::mat4& IScene::GetViewMatrix() { return GetCamera()->GetView(); }
