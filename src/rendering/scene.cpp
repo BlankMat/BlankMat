@@ -9,7 +9,29 @@ void Scene::Draw(Window* window, Shader* shader)
 	window->CalcWindowSize();
 	glm::mat4 viewProj = GetProjectionMatrix(window->GetAspect()) * GetViewMatrix();
 
+	// Draw flat objects
+	Shader* flatShader = GetShader("flat");
+	if (flatShader != nullptr)
+	{
+		flatShader->Use();
+		if (mGrid != nullptr && mState->enableGrid)
+			mGrid->Draw(flatShader, mState, mDefaultMat, viewProj);
+
+		if (mViewAxisHandle != nullptr)
+		{
+			mViewAxisHandle->SetRot(GetRotationDegrees(GetCamera()->GetDir()));
+			mViewAxisHandle->Draw(flatShader, mState, mDefaultMat, GetViewAxisProjection(window));
+		}
+
+		if (mTransformHandle != nullptr)
+			mTransformHandle->Draw(flatShader, mState, mDefaultMat, viewProj);
+
+		if (mGlobalLight != nullptr)
+			mGlobalLight->Draw(flatShader, mState, mDefaultMat, viewProj);
+	}
+
 	// Draw all of the scene
+	shader->Use();
 	GetLight()->UpdateShader(shader);
 	shader->SetVec3("viewPos", GetCamera()->GetPos());
 	mRootNode->Draw(shader, mState, mDefaultMat, viewProj);
@@ -28,27 +50,6 @@ void Scene::Draw(Window* window, Shader* shader)
 				iter->second->Draw(curShader, mState, mDefaultMat, viewProj);
 			}
 		}
-	}
-
-	// Draw flat objects
-	Shader* flatShader = GetShader("flat");
-	if (flatShader != nullptr)
-	{
-		flatShader->Use();
-		if (mViewAxisHandle != nullptr)
-		{
-			mViewAxisHandle->SetRot(GetRotationDegrees(GetCamera()->GetDir()));
-			mViewAxisHandle->Draw(flatShader, mState, mDefaultMat, GetViewAxisProjection(window));
-		}
-
-		if (mTransformHandle != nullptr)
-			mTransformHandle->Draw(flatShader, mState, mDefaultMat, viewProj);
-
-		if (mGrid != nullptr && mState->enableGrid)
-			mGrid->Draw(flatShader, mState, mDefaultMat, viewProj);
-			
-		if (mGlobalLight != nullptr)
-			mGlobalLight->Draw(flatShader, mState, mDefaultMat, viewProj);
 	}
 }
 

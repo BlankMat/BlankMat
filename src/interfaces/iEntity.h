@@ -26,7 +26,7 @@ protected:
 	glm::mat3 mNormalModelMatrix;
 
 	// Recalculates all matrices of the entity
-	void RecalcMatrices()
+	virtual void RecalcMatrices()
 	{
 		glm::mat4 identity = glm::mat4(1.0f);
 

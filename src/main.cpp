@@ -130,9 +130,7 @@ void OpenGLDraw(Window* window, State* state, Scene* scene)
         glClear(GL_DEPTH_BUFFER_BIT);
 
         // Render scene shadows
-        Shader* shadowShader = scene->GetShader("shadowMap");
-        shadowShader->Use();
-        scene->DrawShadows(window, shadowShader);
+        scene->DrawShadows(window, scene->GetShader("shadowMap"));
 
         // Clear depth map
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -143,9 +141,7 @@ void OpenGLDraw(Window* window, State* state, Scene* scene)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Render the scene
-    Shader* curShader = scene->GetShader(scene->GetCurShader());
-    curShader->Use();
-    scene->Draw(window, curShader);
+    scene->Draw(window, scene->GetShader(scene->GetCurShader()));
 }
 
 // Opens all defined GUIs

@@ -50,10 +50,9 @@ public:
 	void DrawShadows(Shader* shader, State* state);
 
 	/// <summary>
-	/// Sets the node's and node's childrens parent model matrix
+	/// Recalculates all matrices of the node
 	/// </summary>
-	/// <param name="parentModelMatrix">Combined model matrix of all parents</param>
-	void SetParentModelMatrix(const glm::mat4& parentModelMatrix) override;
+	void RecalcMatrices() override;
 
 	/// <summary>
 	/// Returns the number of child nodes

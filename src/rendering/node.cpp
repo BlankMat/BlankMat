@@ -44,11 +44,23 @@ void Node::DrawShadows(Shader* shader, State* state)
 			mChildren[i]->DrawShadows(shader, state);
 }
 
-// Sets the node's and node's childrens' parent model matrix
-void Node::SetParentModelMatrix(const glm::mat4& parentModelMatrix)
+// Recalculates all matrices of the entity
+void Node::RecalcMatrices()
 {
-	mParentModelMatrix = parentModelMatrix;
-	RecalcMatrices();
+	glm::mat4 identity = glm::mat4(1.0f);
+
+	glm::mat4 rotateX = glm::rotate(identity, glm::radians(mRot.x), glm::vec3(1, 0, 0));
+	glm::mat4 rotateY = glm::rotate(identity, glm::radians(mRot.y), glm::vec3(0, 1, 0));
+	glm::mat4 rotateZ = glm::rotate(identity, glm::radians(mRot.z), glm::vec3(0, 0, 1));
+
+	glm::mat4 translate = glm::translate(identity, mPos);
+	glm::mat4 rotate = rotateY * rotateZ * rotateX;
+	glm::mat4 scale = glm::scale(identity, mScale);
+
+	mSelfModelMatrix = translate * rotate * scale;
+	mModelMatrix = mParentModelMatrix * mSelfModelMatrix;
+	mNormalModelMatrix = glm::mat3(glm::transpose(glm::inverse(mModelMatrix)));
+	mRecalcMatrices = false;
 
 	// Draw all child meshes
 	for (unsigned int i = 0; i < mMeshes.size(); i++)
