@@ -72,7 +72,7 @@ void Scene::DrawShadows(Window* window, Shader* shader)
 	// Draw all of the scene
 	GetLight()->UpdateShader(shader);
 	shader->SetVec3("viewPos", GetCamera()->GetPos());
-	mRootNode->Draw(shader, mState, mDefaultMat, viewProj);
+	mRootNode->DrawShadows(shader, mState);
 }
 
 // Returns the projection matrix of the view axis handle
