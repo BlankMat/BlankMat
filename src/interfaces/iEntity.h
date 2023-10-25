@@ -11,6 +11,10 @@ protected:
 	unsigned int mEBO;
 	bool mDrawOver;
 
+	glm::vec3 mFront;
+	glm::vec3 mRight;
+	glm::vec3 mUp;
+
 	glm::vec3 mPos;
 	glm::vec3 mRot;
 	glm::vec3 mScale;
@@ -62,6 +66,26 @@ public:
 	// Returns the name of the object
 	virtual const std::string GetName() { return mName; }
 
+	// Returns the up vector of the object
+	const glm::vec3 GetUp() { return mUp; }
+	// Returns the right vector of the object
+	const glm::vec3 GetRight() { return mRight; }
+	// Returns the front vector of the object
+	const glm::vec3 GetFront() { return mFront; }
+
+	// Adds delta to the position of the object
+	void Translate(const glm::vec3& delta) { mPos += delta; mRecalcMatrices = true; }
+	// Adds delta to the rotation of the object
+	void Rotate(const glm::vec3& delta) { mRot += delta; mRecalcMatrices = true; }
+	// Adds delta to the scale of the object
+	void Scale(const glm::vec3& delta) { mScale += delta; mRecalcMatrices = true; }
+
+	// Returns the entity's world position
+	const glm::vec3 GetWorldPos()
+	{
+		return glm::vec3(mModelMatrix[3].x, mModelMatrix[3].y, mModelMatrix[3].z);
+	}
+
 	// Sets the position of the object
 	virtual void SetPos(const glm::vec3& pos)
 	{
@@ -90,6 +114,22 @@ public:
 
 		mScale = scale;
 		mRecalcMatrices = true;
+	}
+
+	// Calculates the basis (front/right/up vectors) of the object
+	void CalcBasis()
+	{
+		mFront = glm::normalize(glm::vec3(
+			cos(mRot.y) * sin(mRot.x),
+			sin(mRot.y),
+			cos(mRot.y) * cos(mRot.x)
+		));
+
+		// Right vector
+		mRight = glm::normalize(glm::cross(mFront, glm::vec3(0.0f, 1.0f, 0.0f)));
+
+		// Up vector : perpendicular to both direction and right
+		mUp = glm::normalize(glm::cross(mRight, mFront));
 	}
 
 	// Sets the material of the object
@@ -154,6 +194,9 @@ public:
 		mNormalModelMatrix = glm::mat3(1.0f);
 		mRecalcMatrices = true;
 		mIsEnabled = true;
+
+		mUp = mRight = mFront = glm::vec3(0.0f);
+		CalcBasis();
 	}
 
 	virtual void Cleanup()

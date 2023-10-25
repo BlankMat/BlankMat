@@ -23,6 +23,9 @@ int main()
     scene->LoadModel(FileSystem::GetPath(MODELS_DIR) + config->GetString("model.file"), 
         config->GetVec("model.pos"), config->GetVec("model.rot"), config->GetVec("model.scale"));
 
+    state->GetSel()->SetTransformHandle(new PHandle("transformHandle", 0.5f, 6, true, glm::vec3(0.0f)));
+    scene->SetTransformHandle(state->GetSel()->GetTransformHandle());
+
     // Load shaders
     LoadShaders(scene, shadersConfig);
     Material* defaultMat = scene->SetDefaultMaterial("default");
@@ -184,7 +187,6 @@ void LoadDefaultScene(Scene* scene, Material* defaultMat, bool defaultCubes, Con
     scene->SetLight(new PLightCube("globalLight", 1.0f, lightConfig));
 
     // Add renderables
-    scene->SetTransformHandle(new PHandle(TRANSFORM_HANDLE, 0.5f, 6, true, glm::vec3(0.0f)));
     scene->SetGrid(new PGrid(GRID_OBJ, 5, 1.0f, new Material(glm::vec3(0.2f)), 2, true, glm::vec3(0.0f)));
     scene->SetViewAxisHandle(new PHandle(CAMERA_AXIS_HANDLE, 45.0f, 6, false, glm::vec3(50, 50, 0)));
 

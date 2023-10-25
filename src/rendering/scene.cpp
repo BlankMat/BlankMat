@@ -1,6 +1,7 @@
 #include "scene.h"
 #include "primitives/pLightCube.h"
 #include "files/modelReader.h"
+#include "selection.h"
 
 // Renders the current scene
 void Scene::Draw(Window* window, Shader* shader)
@@ -16,15 +17,6 @@ void Scene::Draw(Window* window, Shader* shader)
 		flatShader->Use();
 		if (mGrid != nullptr && mState->enableGrid)
 			mGrid->Draw(flatShader, mState, mDefaultMat, viewProj);
-
-		if (mViewAxisHandle != nullptr)
-		{
-			mViewAxisHandle->SetRot(GetRotationDegrees(GetCamera()->GetDir()));
-			mViewAxisHandle->Draw(flatShader, mState, mDefaultMat, GetViewAxisProjection(window));
-		}
-
-		if (mTransformHandle != nullptr)
-			mTransformHandle->Draw(flatShader, mState, mDefaultMat, viewProj);
 
 		if (mGlobalLight != nullptr)
 			mGlobalLight->Draw(flatShader, mState, mDefaultMat, viewProj);
@@ -49,6 +41,23 @@ void Scene::Draw(Window* window, Shader* shader)
 				GetLight()->UpdateShader(curShader);
 				iter->second->Draw(curShader, mState, mDefaultMat, viewProj);
 			}
+		}
+	}
+
+	// Draw flat objects on top
+	if (flatShader != nullptr)
+	{
+		flatShader->Use();
+		if (mViewAxisHandle != nullptr)
+		{
+			mViewAxisHandle->SetRot(GetRotationDegrees(GetCamera()->GetDir()));
+			mViewAxisHandle->Draw(flatShader, mState, mDefaultMat, GetViewAxisProjection(window));
+		}
+
+		if (mTransformHandle != nullptr)
+		{
+			mState->GetSel()->UpdateTransformHandle();
+			mTransformHandle->Draw(flatShader, mState, mDefaultMat, viewProj);
 		}
 	}
 }

@@ -31,6 +31,22 @@
     "map_ns": "",
     "map_d": ""
   },
+  "castlewall": {
+    "kd": [ 0.6, 0.6, 0.6 ],
+    "ka": [ 0.2, 0.2, 0.2 ],
+    "ks": [ 1.0, 1.0, 1.0 ],
+    "ke": [ 0.0, 0.0, 0.0 ],
+    "ns": 8.0,
+    "ni": 0.0,
+    "d": 1.0,
+    "illum": 2,
+    "map_kd": "",
+    "map_ka": "",
+    "map_ks": "castle_wall_specular.jpg",
+    "map_bump": "castle_wall_normal.jpg",
+    "map_ns": "",
+    "map_d": ""
+  },
   "emerald": {
     "kd": [ 0.07568, 0.61424, 0.07568 ],
     "ka": [ 0.0215, 0.1745, 0.0215 ],

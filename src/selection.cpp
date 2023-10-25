@@ -76,6 +76,7 @@ void Selection::SelectMesh(IMesh* mesh)
 void Selection::SelectEntity(IEntity* entity)
 {
 	mSelEntity = entity;
+	UpdateTransformHandle();
 	std::cout << "Selected entity [" << IEntity::GetNameNullSafe(mSelEntity) << "].\n";
 }
 
@@ -98,6 +99,17 @@ void Selection::DeselectVert(unsigned int _id)
 {
 	mSelVertices.erase(_id);
 	std::cout << "Deselected vertex [" << _id << "].\n";
+}
+
+// Deselects the currently selected entity
+void Selection::DeselectEntity()
+{
+	if (mSelEntity == nullptr)
+		return;
+
+	mSelEntity = nullptr;
+	UpdateTransformHandle();
+	std::cout << "Deselected entity.\n";
 }
 
 // Deselects the currently selected mesh
@@ -212,15 +224,22 @@ IMesh* Selection::GetSelectedMesh() { return mSelMesh; }
 IEntity* Selection::GetSelectedEntity() { return mSelEntity; }
 // Returns the selected material
 Material* Selection::GetSelectedMat() { return mSelMat; }
+// Returns the transform handle
+IEntity* Selection::GetTransformHandle() { return mSelTransformHandle; }
 
-// Storage container for information on all selections
-Selection::Selection()
+// Sets the selection's transform handle
+void Selection::SetTransformHandle(IEntity* transformHandle) { mSelTransformHandle = transformHandle; }
+
+// Updates the transform handle's status
+void Selection::UpdateTransformHandle()
 {
-	mSelTool = Tool::SELECT;
-	mSelMode = SelMode::MESH;
-	mPivot = glm::vec3(0, 0, 0);
-	mSelMesh = nullptr;
-	mSelEntity = nullptr;
+	if (mSelTransformHandle == nullptr)
+		return;
+
+	bool isSelected = (mSelEntity != nullptr);
+	mSelTransformHandle->Enable(isSelected);
+	if (isSelected)
+		mSelTransformHandle->SetParentModelMatrix(mSelEntity->GetModelMatrix());
 }
 
 // Returns the nearest mesh to the clicked position
@@ -251,4 +270,16 @@ int Selection::GetNearestFace(IScene* scene, float u, float v)
 	//ITriangle res = ray.GetClosestTriangle(scene->GetRenderTris());
 	//return res.triIndex;
 	return -1;
+}
+
+// Storage container for information on all selections
+Selection::Selection()
+{
+	mSelTool = Tool::SELECT;
+	mSelMode = SelMode::MESH;
+	mPivot = glm::vec3(0, 0, 0);
+	mSelMesh = nullptr;
+	mSelMat = nullptr;
+	mSelEntity = nullptr;
+	mSelTransformHandle = nullptr;
 }

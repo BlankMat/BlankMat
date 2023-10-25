@@ -81,15 +81,15 @@ private:
     }
 public:
     // Returns the position of the camera
-    glm::vec3 GetPos() { return mPos; }
+    const glm::vec3 GetPos() { return mPos; }
     // Returns the rotation of the camera
-    glm::vec3 GetRot() { return mRot; }
+    const glm::vec3 GetRot() { return mRot; }
     // Returns the direction of the camera
-    glm::vec3 GetDir() { return mDir; }
+    const glm::vec3 GetDir() { return mDir; }
     // Returns the camera's (estimated) look position
-    glm::vec3 GetLookAt() { return mPos + mDir * mLookDist; }
+    const glm::vec3 GetLookAt() { return mPos + mDir * mLookDist; }
     // Returns the background color of the camera
-    glm::vec3 GetBGColor() { return mBGColor; }
+    const glm::vec3 GetBGColor() { return mBGColor; }
     // Returns the orthographic size of the camera
     float GetOrthSize() { return mOrthSize; }
     // Returns the far clip plane of the camera
