@@ -29,8 +29,13 @@ Material* IScene::LoadMaterial(Config* config, const std::string& name)
 // Loads the given texture or returns the existing one
 Texture* IScene::LoadTexture(const std::string& type, const std::string& path, const std::string& defaultName)
 {
+	// If no path is given, load the default texture
+	std::string pathToLoad = path;
+	if (path == "")
+		pathToLoad = defaultName;
+
 	// Get the name of the texture
-	std::string name = path.substr(0, path.find_last_of('.'));
+	std::string name = pathToLoad.substr(0, pathToLoad.find_last_of('.'));
 	if (name == "default")
 		name = defaultName;
 
@@ -40,7 +45,7 @@ Texture* IScene::LoadTexture(const std::string& type, const std::string& path, c
 		return texture;
 
 	// If the texture is not loaded, load the texture and store it
-	texture = new Texture(type, FileSystem::GetPath(TEXTURE_DIR), path, name);
+	texture = new Texture(type, FileSystem::GetPath(TEXTURE_DIR), pathToLoad, name);
 	AddTexture(name, texture);
 	return texture;
 }
