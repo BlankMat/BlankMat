@@ -19,20 +19,20 @@ protected:
 	void GenBuffers() override {}
 public:
 
-	void Draw(Shader* shader, State* state, Material* defaultMat, const glm::mat4& viewProj) override
+	void Draw(Shader* shader, State* state, Material* defaultMat, const glm::mat4& viewProj, bool drawMats = false) override
 	{
 		// Don't draw any part of the object if not enabled
 		if (!mIsEnabled)
 			return;
 
 		if (!(mYHeld || mZHeld || mAllHeld))
-			mXHandle->Draw(shader, state, defaultMat, viewProj);
+			mXHandle->Draw(shader, state, defaultMat, viewProj, drawMats);
 		if (!(mXHeld || mZHeld || mAllHeld))
-			mYHandle->Draw(shader, state, defaultMat, viewProj);
+			mYHandle->Draw(shader, state, defaultMat, viewProj, drawMats);
 		if (!(mXHeld || mYHeld || mAllHeld))
-			mZHandle->Draw(shader, state, defaultMat, viewProj);
+			mZHandle->Draw(shader, state, defaultMat, viewProj, drawMats);
 		if (!(mXHeld || mYHeld || mZHeld))
-			mAllHandle->Draw(shader, state, defaultMat, viewProj);
+			mAllHandle->Draw(shader, state, defaultMat, viewProj, drawMats);
 	}
 
 	// Sets the parent model matrices of all the components of this handle

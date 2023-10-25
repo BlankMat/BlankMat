@@ -16,17 +16,44 @@ void Scene::Draw(Window* window, Shader* shader)
 	{
 		flatShader->Use();
 		if (mGrid != nullptr && mState->enableGrid)
-			mGrid->Draw(flatShader, mState, mDefaultMat, viewProj);
+			mGrid->Draw(flatShader, mState, mDefaultMat, viewProj, true);
 
 		if (mGlobalLight != nullptr)
-			mGlobalLight->Draw(flatShader, mState, mDefaultMat, viewProj);
+			mGlobalLight->Draw(flatShader, mState, mDefaultMat, viewProj, true);
 	}
 
 	// Draw all of the scene
 	shader->Use();
 	GetLight()->UpdateShader(shader);
 	shader->SetVec3("viewPos", GetCamera()->GetPos());
-	mRootNode->Draw(shader, mState, mDefaultMat, viewProj);
+
+	// Draw scene by materials
+	if (mState->drawByMaterial)
+	{
+		for (auto iter = mMeshRenderList.begin(); iter != mMeshRenderList.end(); ++iter)
+		{
+			// If there are meshes to render for the material, update the shader
+			Material* mat = GetMaterial(iter->first);
+			if (!iter->second->Empty() && mat != nullptr)
+			{
+				// Load textures
+				mat->LoadTextures(mState, mDefaultMat);
+				unsigned int shadowIndex = mat->UpdateShader(shader);
+				glActiveTexture(GL_TEXTURE0 + shadowIndex);
+				glBindTexture(GL_TEXTURE_2D, mState->depthMap);
+				shader->SetInt("shadowMap", mState->depthMapFBO);
+				glActiveTexture(GL_TEXTURE0);
+
+				// Draw mesh
+				iter->second->Draw(shader, mState, mDefaultMat, viewProj, false);
+			}
+		}
+	}
+	// Default draw
+	else 
+	{
+		mRootNode->Draw(shader, mState, mDefaultMat, viewProj, true);
+	}
 
 	// Draw all entities with their respective shaders
 	for (auto iter = mEntityList.begin(); iter != mEntityList.end(); ++iter)
@@ -39,7 +66,7 @@ void Scene::Draw(Window* window, Shader* shader)
 				curShader->Use();
 				curShader->SetVec3("viewPos", GetCamera()->GetPos());
 				GetLight()->UpdateShader(curShader);
-				iter->second->Draw(curShader, mState, mDefaultMat, viewProj);
+				iter->second->Draw(curShader, mState, mDefaultMat, viewProj, true);
 			}
 		}
 	}
@@ -51,13 +78,13 @@ void Scene::Draw(Window* window, Shader* shader)
 		if (mViewAxisHandle != nullptr)
 		{
 			mViewAxisHandle->SetRot(GetRotationDegrees(GetCamera()->GetDir()));
-			mViewAxisHandle->Draw(flatShader, mState, mDefaultMat, GetViewAxisProjection(window));
+			mViewAxisHandle->Draw(flatShader, mState, mDefaultMat, GetViewAxisProjection(window), true);
 		}
 
 		if (mTransformHandle != nullptr)
 		{
 			mState->GetSel()->UpdateTransformHandle();
-			mTransformHandle->Draw(flatShader, mState, mDefaultMat, viewProj);
+			mTransformHandle->Draw(flatShader, mState, mDefaultMat, viewProj, true);
 		}
 	}
 }
@@ -85,24 +112,6 @@ const glm::mat4& Scene::GetViewAxisProjection(Window* window)
 		mViewAxisProjection = glm::ortho(0.0f, (float)window->GetWidth(), 0.0f, (float)window->GetHeight(), -100.0f, 100.0f);
 	}
 	return mViewAxisProjection;
-}
-
-// Adds the given node to the scene
-void Scene::AddNode(Node* node)
-{
-	mRootNode->AddChild(node);
-}
-
-// Adds the given mesh to the scene
-void Scene::AddMesh(Mesh* mesh)
-{
-	mRootNode->AddMesh(mesh);
-}
-
-// Returns the root node
-Node* Scene::GetRootNode()
-{
-	return mRootNode;
 }
 
 // Saves the global state in the scene

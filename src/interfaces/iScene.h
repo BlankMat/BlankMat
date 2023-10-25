@@ -34,6 +34,7 @@ protected:
 	State* mState;
 
 	std::vector<Mesh*> mMeshList;
+	std::unordered_map<std::string, EntityContainer*> mMeshRenderList;
 	std::unordered_map<std::string, EntityContainer*> mEntityList;
 
 	std::unordered_map<std::string, Light*> mLightList;
@@ -151,6 +152,9 @@ public:
 
 	// Sets the default material of the scene. Note: Does not add it to the material list.
 	Material* SetDefaultMaterial(Material* material);
+
+	// Sets the material of the given entity
+	void SetEntityMaterial(IEntity* entity, Material* material);
 
 	// Loads the materials from the given config
 	void LoadMaterials(Config* config);

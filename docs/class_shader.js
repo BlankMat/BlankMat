@@ -1,6 +1,6 @@
 var class_shader =
 [
-    [ "Shader", "class_shader.html#af54d200b75e907424029923a5bfaea98", null ],
+    [ "Shader", "class_shader.html#ae3839c9cd5087abb910952cc50ee7056", null ],
     [ "Shader", "class_shader.html#aa732beb72038e86aca70a34c369a255e", null ],
     [ "~Shader", "class_shader.html#aff01df87e8a102f270b5b135a295e59d", null ],
     [ "SetBool", "class_shader.html#a70cd07acf03715e4e927df1be5c5b5a0", null ],
@@ -16,5 +16,6 @@ var class_shader =
     [ "SetVec4", "class_shader.html#a12c2843859a8c0f26d8342ef17b4355c", null ],
     [ "SetVec4", "class_shader.html#aa22b708c2c588f8064a7dc729dccd4ac", null ],
     [ "Use", "class_shader.html#a6b11327cff651ffdb22988b6917b1650", null ],
-    [ "ID", "class_shader.html#a142a08b6fbdfc982d82ca10ee0b0f38d", null ]
+    [ "ID", "class_shader.html#a142a08b6fbdfc982d82ca10ee0b0f38d", null ],
+    [ "name", "class_shader.html#a8c8fba8311ca3a7cfeac5afeb346e51b", null ]
 ];

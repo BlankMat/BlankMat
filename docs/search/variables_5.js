@@ -1,23 +1,7 @@
 var searchData=
 [
-  ['lockaltr_0',['lockAltR',['../struct_input_locks.html#af1306b9c17d05e76494267fcafc43b89',1,'InputLocks']]],
-  ['lockaltt_1',['lockAltT',['../struct_input_locks.html#a65630a230ab51e5faaaddf77e170b827',1,'InputLocks']]],
-  ['lockctrlc_2',['lockCtrlC',['../struct_input_locks.html#a0176442fc34881d14897476439999cbb',1,'InputLocks']]],
-  ['lockctrle_3',['lockCtrlE',['../struct_input_locks.html#a2bf935ce5866f5c82979f5c72fdbb39f',1,'InputLocks']]],
-  ['lockctrlr_4',['lockCtrlR',['../struct_input_locks.html#a7a94c8e481ea1cff75c566830a0097d2',1,'InputLocks']]],
-  ['lockctrls_5',['lockCtrlS',['../struct_input_locks.html#a3d3935136da19032b7d0901d7231fb8f',1,'InputLocks']]],
-  ['lockctrlt_6',['lockCtrlT',['../struct_input_locks.html#a1194c8ad667c5f8f7bc37d20ee513de7',1,'InputLocks']]],
-  ['lockdel_7',['lockDel',['../struct_input_locks.html#adb3fae050145fb3ef3f5ff60e8512a76',1,'InputLocks']]],
-  ['locke_8',['lockE',['../struct_input_locks.html#a6c212cc1163345ac4ba6cee42bc594f8',1,'InputLocks']]],
-  ['lockf_9',['lockF',['../struct_input_locks.html#ad96610abe1b1f70d89a8cb6d1a9e1d52',1,'InputLocks']]],
-  ['lockkey1_10',['lockKey1',['../struct_input_locks.html#ae4fc848b3ea3ae3aea841400dc502d11',1,'InputLocks']]],
-  ['lockkey2_11',['lockKey2',['../struct_input_locks.html#a7c05db2952ae93a2e689a5cd824846d0',1,'InputLocks']]],
-  ['lockkey3_12',['lockKey3',['../struct_input_locks.html#ab7e9bb538fd7dd5c2d992aeb3209b08b',1,'InputLocks']]],
-  ['lockkey4_13',['lockKey4',['../struct_input_locks.html#a3a375127bf7843b93131ff5a8de9c62d',1,'InputLocks']]],
-  ['lockkey5_14',['lockKey5',['../struct_input_locks.html#a9f9799005199b62712f6ada907442a9c',1,'InputLocks']]],
-  ['lockleftmouse_15',['lockLeftMouse',['../struct_input_locks.html#a4f1a2a5f362176e4d8ffd85d948363b7',1,'InputLocks']]],
-  ['lockq_16',['lockQ',['../struct_input_locks.html#ad4f2935cae3450ef2a2d91a50293f47f',1,'InputLocks']]],
-  ['lockr_17',['lockR',['../struct_input_locks.html#a6df4185fd0109b13cab9710429c934c1',1,'InputLocks']]],
-  ['lockrightmouse_18',['lockRightMouse',['../struct_input_locks.html#afa39bc9859b875d58c992c2a97c8acac',1,'InputLocks']]],
-  ['lockt_19',['lockT',['../struct_input_locks.html#af29cfd956b707d5d8fd982f9fd61b597',1,'InputLocks']]]
+  ['ka_0',['ka',['../class_i_material.html#af564aef25e37b26445bffc4423ee8437',1,'IMaterial']]],
+  ['kd_1',['kd',['../class_i_material.html#ae98876c25074100184fd49ed39de17a5',1,'IMaterial']]],
+  ['ke_2',['ke',['../class_i_material.html#a79a97ae96d52c4fd2babed4e7f541997',1,'IMaterial']]],
+  ['ks_3',['ks',['../class_i_material.html#aa7ca522692de4f2d00e3fedebf32900c',1,'IMaterial']]]
 ];

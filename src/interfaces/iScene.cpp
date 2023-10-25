@@ -165,6 +165,7 @@ void IScene::AddMesh(Mesh* mesh, Node* parent)
 		parent = mRootNode;
 	parent->AddMesh(mesh);
 	mMeshList.push_back(mesh);
+	SetEntityMaterial(mesh, mesh->GetMaterial());
 }
 
 // Returns the root node
@@ -245,6 +246,28 @@ Material* IScene::SetDefaultMaterial(Material* material)
 {
 	mDefaultMat = material;
 	return mDefaultMat;
+}
+
+// Sets the material of the given entity
+void IScene::SetEntityMaterial(IEntity* entity, Material* material)
+{
+	std::string prevMatName = entity->GetMaterial()->name;
+	std::string matName = material->name;
+
+	// If the material is already stored in the render list, remove it
+	if (mMeshRenderList.find(prevMatName) != mMeshRenderList.end())
+	{
+		if (mMeshRenderList[prevMatName]->Get(entity->GetName()) != nullptr)
+			mMeshRenderList[prevMatName]->Remove(entity->GetName());
+	}
+	entity->SetMaterial(material);
+
+	// Add the material to the appropriate render list
+	if (mMeshRenderList.find(material->name) == mMeshRenderList.end())
+	{
+		mMeshRenderList.emplace(material->name, new EntityContainer());
+	}
+	mMeshRenderList[material->name]->Add(entity->GetName(), entity);
 }
 
 // Loads the materials from the given config

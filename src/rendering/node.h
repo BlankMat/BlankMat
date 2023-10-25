@@ -39,7 +39,7 @@ public:
 	/// <param name="defaultMat">Default material of the scene</param>
 	/// <param name="viewProj">Projection * View Matrix of the camera</param>
 	/// <param name="model">Combined model matrix of all parents</param>
-	void Draw(Shader* shader, State* state, Material* defaultMat, const glm::mat4& viewProj) override;
+	void Draw(Shader* shader, State* state, Material* defaultMat, const glm::mat4& viewProj, bool drawMats = false) override;
 
 	/// <summary>
 	/// Recursively draws the node's and children's shadows
@@ -113,6 +113,11 @@ public:
 	/// </summary>
 	/// <returns>Whether this node is the root node</returns>
 	bool IsRootNode() { return mParent == nullptr; }
+
+	/// <summary>
+	/// Updates the enabled status of the object and its children
+	/// </summary>
+	void UpdateEnabledStatus() override;
 
 	/// <summary>
 	/// Recursively searches for the node with the given name

@@ -24,6 +24,7 @@ public:
 	bool enableAlphaMap;
 	bool enableShadows;
 	bool enableGrid;
+	bool drawByMaterial;
 
 	unsigned int depthMapFBO;
 	unsigned int depthMap;
@@ -69,6 +70,7 @@ public:
 		enableAlphaMap = true;
 		enableShadows = true;
 		enableGrid = true;
+		drawByMaterial = true;
 
 		depthMapFBO = 0;
 		depthMap = 0;

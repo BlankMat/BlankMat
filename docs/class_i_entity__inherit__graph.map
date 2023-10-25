@@ -1,35 +1,35 @@
 <map id="IEntity" name="IEntity">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,244,64,271"/>
-<area shape="rect" id="Node000002" href="$class_i_primitive.html" title=" " alt="" coords="112,44,256,87"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="40,228,65,164,84,128,110,97,125,85,128,89,114,101,89,131,70,166,45,230"/>
-<area shape="rect" id="Node000006" href="$class_i_primitive.html" title=" " alt="" coords="112,111,256,153"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="50,230,76,196,110,163,128,152,131,156,113,167,80,200,55,233"/>
-<area shape="rect" id="Node000008" href="$class_i_primitive.html" title=" " alt="" coords="112,177,256,220"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="77,238,127,218,129,223,79,243"/>
-<area shape="rect" id="Node000011" href="$class_i_mesh.html" title=" " alt="" coords="156,244,212,271"/>
-<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="79,255,155,255,155,260,79,260"/>
-<area shape="rect" id="Node000015" href="$class_i_primitive.html" title=" " alt="" coords="125,295,243,321"/>
-<area shape="poly" id="edge14_Node000001_Node000015" title=" " alt="" coords="79,270,143,292,141,297,78,275"/>
-<area shape="rect" id="Node000016" href="$class_node.html" title=" " alt="" coords="158,345,210,372"/>
-<area shape="poly" id="edge15_Node000001_Node000016" title=" " alt="" coords="58,281,83,307,113,331,136,342,159,350,157,355,134,347,110,336,79,311,54,284"/>
-<area shape="rect" id="Node000017" href="$class_p_handle.html" title=" " alt="" coords="149,396,219,423"/>
-<area shape="poly" id="edge16_Node000001_Node000017" title=" " alt="" coords="48,284,73,334,92,360,113,382,130,393,149,400,147,405,128,397,110,386,87,363,69,337,44,287"/>
-<area shape="rect" id="Node000003" href="$class_p_cube.html" title=" " alt="" coords="318,5,378,32"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="270,38,316,25,318,30,272,43"/>
-<area shape="rect" id="Node000005" href="$class_p_plane.html" title=" " alt="" coords="316,56,379,83"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="272,65,316,66,315,71,271,70"/>
-<area shape="rect" id="Node000004" href="$class_p_light_cube.html" title=" " alt="" coords="439,5,528,32"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="393,16,439,16,439,21,393,21"/>
-<area shape="rect" id="Node000007" href="$class_p_grid.html" title=" " alt="" coords="321,111,375,137"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="271,125,320,123,320,128,271,130"/>
-<area shape="rect" id="Node000009" href="$class_p_line.html" title=" " alt="" coords="321,161,375,188"/>
-<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="271,183,319,176,320,181,272,188"/>
-<area shape="rect" id="Node000010" href="$class_p_wire_cube.html" title=" " alt="" coords="304,212,391,239"/>
-<area shape="poly" id="edge9_Node000008_Node000010" title=" " alt="" coords="272,210,304,216,303,221,271,216"/>
-<area shape="rect" id="Node000012" href="$class_mesh.html" title=" " alt="" coords="321,263,374,289"/>
-<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="228,260,321,270,320,276,227,265"/>
-<area shape="rect" id="Node000013" href="$class_v_cube.html" title=" " alt="" coords="453,237,514,264"/>
-<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="389,266,452,254,453,259,390,271"/>
-<area shape="rect" id="Node000014" href="$class_v_plane.html" title=" " alt="" coords="452,288,515,315"/>
-<area shape="poly" id="edge13_Node000012_Node000014" title=" " alt="" coords="390,281,452,293,451,298,389,286"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,245,64,272"/>
+<area shape="rect" id="Node000002" href="$class_i_primitive.html" title=" " alt="" coords="120,31,248,73"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="40,230,65,162,84,124,110,90,132,72,136,76,114,94,89,127,69,164,45,231"/>
+<area shape="rect" id="Node000007" href="$class_i_primitive.html" title=" " alt="" coords="112,104,256,147"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="49,230,75,193,110,157,127,145,130,149,113,161,79,196,53,233"/>
+<area shape="rect" id="Node000010" href="$class_i_primitive.html" title=" " alt="" coords="112,171,256,213"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="77,237,134,211,136,216,79,242"/>
+<area shape="rect" id="Node000012" href="$class_i_primitive.html" title=" " alt="" coords="112,237,256,280"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="79,256,111,256,111,261,79,261"/>
+<area shape="rect" id="Node000015" href="$class_i_primitive.html" title=" " alt="" coords="125,304,243,331"/>
+<area shape="poly" id="edge14_Node000001_Node000015" title=" " alt="" coords="79,275,113,290,143,301,141,306,111,294,77,280"/>
+<area shape="rect" id="Node000016" href="$class_node.html" title=" " alt="" coords="158,355,210,381"/>
+<area shape="poly" id="edge15_Node000001_Node000016" title=" " alt="" coords="56,283,81,313,113,340,136,352,158,360,157,365,133,357,110,345,77,317,52,286"/>
+<area shape="rect" id="Node000017" href="$class_p_handle.html" title=" " alt="" coords="149,405,219,432"/>
+<area shape="poly" id="edge16_Node000001_Node000017" title=" " alt="" coords="47,286,72,340,91,367,113,391,130,402,149,409,147,414,128,407,110,395,87,371,68,342,43,288"/>
+<area shape="rect" id="Node000003" href="$class_i_mesh.html" title=" " alt="" coords="320,31,376,57"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="263,45,319,43,319,48,263,51"/>
+<area shape="rect" id="Node000004" href="$class_mesh.html" title=" " alt="" coords="439,31,493,57"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="392,41,439,41,439,47,392,47"/>
+<area shape="rect" id="Node000005" href="$class_v_cube.html" title=" " alt="" coords="542,5,603,32"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="507,32,541,23,542,28,508,37"/>
+<area shape="rect" id="Node000006" href="$class_v_plane.html" title=" " alt="" coords="541,56,604,83"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="508,51,541,59,539,64,507,56"/>
+<area shape="rect" id="Node000008" href="$class_p_cube.html" title=" " alt="" coords="318,81,378,108"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="270,106,317,98,318,103,271,112"/>
+<area shape="rect" id="Node000009" href="$class_p_plane.html" title=" " alt="" coords="316,132,379,159"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="272,133,316,139,315,144,271,139"/>
+<area shape="rect" id="Node000011" href="$class_p_grid.html" title=" " alt="" coords="321,183,375,209"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="271,191,320,193,320,198,271,197"/>
+<area shape="rect" id="Node000013" href="$class_p_line.html" title=" " alt="" coords="321,237,375,264"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="271,252,320,249,320,255,271,257"/>
+<area shape="rect" id="Node000014" href="$class_p_wire_cube.html" title=" " alt="" coords="304,288,391,315"/>
+<area shape="poly" id="edge13_Node000012_Node000014" title=" " alt="" coords="271,279,304,287,303,293,270,284"/>
 </map>

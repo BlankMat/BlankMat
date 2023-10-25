@@ -11,10 +11,10 @@ protected:
     PLine* mDirLine;
 public:
     // Draws the object to the screen
-    void Draw(Shader* shader, State* state, Material* defaultMat, const glm::mat4& viewProj)
+    void Draw(Shader* shader, State* state, Material* defaultMat, const glm::mat4& viewProj, bool drawMats = false)
     {
-        mCube->Draw(shader, state, defaultMat, viewProj);
-        mDirLine->Draw(shader, state, defaultMat, viewProj);
+        mCube->Draw(shader, state, defaultMat, viewProj, drawMats);
+        mDirLine->Draw(shader, state, defaultMat, viewProj, drawMats);
     }
 
     // Sets the parent model matrices of the children

@@ -54,6 +54,7 @@ public:
 			mState->enableAlphaMap = GUIWindowUtils::Checkbox("Enable Alpha Map", mState->enableAlphaMap);
 			mState->enableShadows = GUIWindowUtils::Checkbox("Enable Shadows", mState->enableShadows);
 			mState->enableGrid = GUIWindowUtils::Checkbox("Enable Grid", mState->enableGrid);
+			mState->drawByMaterial = GUIWindowUtils::Checkbox("Draw By Material", mState->drawByMaterial);
 
 			// Camera settings
 			ImGui::Separator();

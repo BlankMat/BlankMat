@@ -9,7 +9,7 @@ Node::Node(Node* parent, const std::string& name)
 }
 
 // Draws the node recursively
-void Node::Draw(Shader* shader, State* state, Material* defaultMat, const glm::mat4& viewProj)
+void Node::Draw(Shader* shader, State* state, Material* defaultMat, const glm::mat4& viewProj, bool drawMats)
 {
 	// Don't draw disabled nodes or their children
 	if (!mIsEnabled)
@@ -18,12 +18,12 @@ void Node::Draw(Shader* shader, State* state, Material* defaultMat, const glm::m
 	// Draw all child meshes
 	for (unsigned int i = 0; i < mMeshes.size(); i++)
 		if (mMeshes[i] != nullptr)
-			mMeshes[i]->Draw(shader, state, defaultMat, viewProj);
+			mMeshes[i]->Draw(shader, state, defaultMat, viewProj, drawMats);
 
 	// Draw all child nodes
 	for (unsigned int i = 0; i < mChildren.size(); i++)
 		if (mChildren[i] != nullptr)
-			mChildren[i]->Draw(shader, state, defaultMat, viewProj);
+			mChildren[i]->Draw(shader, state, defaultMat, viewProj, drawMats);
 }
 
 // Draws the node's shadows
@@ -62,12 +62,12 @@ void Node::RecalcMatrices()
 	mNormalModelMatrix = glm::mat3(glm::transpose(glm::inverse(mModelMatrix)));
 	mRecalcMatrices = false;
 
-	// Draw all child meshes
+	// Recalculate child meshes
 	for (unsigned int i = 0; i < mMeshes.size(); i++)
 		if (mMeshes[i] != nullptr)
 			mMeshes[i]->SetParentModelMatrix(mModelMatrix);
 
-	// Draw all child nodes
+	// Recalculate child nodes
 	for (unsigned int i = 0; i < mChildren.size(); i++)
 		if (mChildren[i] != nullptr)
 			mChildren[i]->SetParentModelMatrix(mModelMatrix);
@@ -162,6 +162,22 @@ IMesh* Node::GetMesh(unsigned int index)
 	if (index >= mMeshes.size())
 		return nullptr;
 	return mMeshes[index];
+}
+
+// Updates the enabled status of the object
+void Node::UpdateEnabledStatus()
+{
+	mIsEnabled = mIsEnabledParent && mIsEnabledSelf;
+
+	// Update enabled status child meshes
+	for (unsigned int i = 0; i < mMeshes.size(); i++)
+		if (mMeshes[i] != nullptr)
+			mMeshes[i]->EnableParent(mIsEnabled);
+
+	// Update enabled status child nodes
+	for (unsigned int i = 0; i < mChildren.size(); i++)
+		if (mChildren[i] != nullptr)
+			mChildren[i]->EnableParent(mIsEnabled);
 }
 
 // Adds a mesh to the node

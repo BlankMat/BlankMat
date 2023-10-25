@@ -19,6 +19,8 @@ protected:
 	glm::vec3 mRot;
 	glm::vec3 mScale;
 	bool mIsEnabled;
+	bool mIsEnabledSelf;
+	bool mIsEnabledParent;
 	std::string mName;
 
 	Material* mMaterial;
@@ -48,11 +50,17 @@ protected:
 		mRecalcMatrices = false;
 	}
 
+	// Updates the enabled status of the object
+	virtual void UpdateEnabledStatus()
+	{
+		mIsEnabled = mIsEnabledParent && mIsEnabledSelf;
+	}
+
 	// Generates the necessary VAO, VBO, and EBO for the object after verts and indices are set
 	virtual void GenBuffers() = 0;
 public:
 	// Draws the object to the screen
-	virtual void Draw(Shader* shader, State* state, Material* defaultMat, const glm::mat4& viewProj) = 0;
+	virtual void Draw(Shader* shader, State* state, Material* defaultMat, const glm::mat4& viewProj, bool drawMats = false) = 0;
 	// Draws the object's shadows to the screen
 	virtual void DrawShadows(Shader* shader, State* state) = 0;
 	// Gets the position of the object
@@ -138,11 +146,31 @@ public:
 	void SetName(const std::string& name) { mName = name; }
 
 	// Returns whether the object is enabled
-	bool IsEnabled() { return mIsEnabled; }
+	bool IsEnabled() { return mIsEnabledSelf; }
+	// Returns whether the object is enabled in hierarchy
+	bool IsEnabledInHierarchy() { return mIsEnabled; }
+
 	// Enables or disables the object
-	void Enable(const bool shouldEnable = true) { mIsEnabled = shouldEnable; }
+	void Enable(bool shouldEnable = true)
+	{
+		mIsEnabledSelf = shouldEnable;
+		UpdateEnabledStatus();
+	}
+
+	// Sets the object's parent enabled status
+	void EnableParent(bool shouldEnable)
+	{
+		mIsEnabledParent = shouldEnable;
+		UpdateEnabledStatus();
+	}
+
 	// Toggles the enabled status of the object
-	bool ToggleEnabled() { mIsEnabled = !mIsEnabled; return mIsEnabled; }
+	bool ToggleEnabled()
+	{
+		mIsEnabledSelf = !mIsEnabledSelf;
+		mIsEnabled = mIsEnabledParent && mIsEnabledSelf;
+		return mIsEnabled;
+	}
 
 	// Sets the entity's parent model matrix
 	virtual void SetParentModelMatrix(const glm::mat4& parentModelMatrix)
@@ -194,6 +222,8 @@ public:
 		mNormalModelMatrix = glm::mat3(1.0f);
 		mRecalcMatrices = true;
 		mIsEnabled = true;
+		mIsEnabledSelf = true;
+		mIsEnabledParent = true;
 
 		mUp = mRight = mFront = glm::vec3(0.0f);
 		CalcBasis();

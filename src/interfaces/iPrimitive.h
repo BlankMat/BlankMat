@@ -40,7 +40,7 @@ protected:
 	}
 public:
 	// Draws the object to the screen
-	void Draw(Shader* shader, State* state, Material* defaultMat, const glm::mat4& viewProj) override
+	void Draw(Shader* shader, State* state, Material* defaultMat, const glm::mat4& viewProj, bool drawMats = false) override
 	{
 		// Don't draw disabled objects
 		if (!mIsEnabled)
@@ -55,13 +55,18 @@ public:
 		shader->SetMat4("Model", modelMatrix);
 		shader->SetMat3("NormalModel", normalModel);
 
-		// Bind shadow map to next available texture index
-		state->LoadMaterial(mMaterial);
-		unsigned int shadowIndex = mMaterial->UpdateShader(shader);
-		glActiveTexture(GL_TEXTURE0 + shadowIndex);
-		glBindTexture(GL_TEXTURE_2D, state->depthMap);
-		shader->SetInt("shadowMap", state->depthMapFBO);
-		glActiveTexture(GL_TEXTURE0);
+		// Only update materials if requested
+		if (drawMats)
+		{
+			state->LoadMaterial(mMaterial);
+
+			// Bind shadow map to next available texture index
+			unsigned int shadowIndex = mMaterial->UpdateShader(shader);
+			glActiveTexture(GL_TEXTURE0 + shadowIndex);
+			glBindTexture(GL_TEXTURE_2D, state->depthMap);
+			shader->SetInt("shadowMap", state->depthMapFBO);
+			glActiveTexture(GL_TEXTURE0);
+		}
 
 		if (mDrawOver)
 			glDisable(GL_DEPTH_TEST);

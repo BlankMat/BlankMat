@@ -51,7 +51,7 @@ protected:
 	}
 public:
 	// Draws the object to the screen
-	virtual void Draw(Shader* shader, State* state, Material* defaultMat, const glm::mat4& viewProj) {}
+	virtual void Draw(Shader* shader, State* state, Material* defaultMat, const glm::mat4& viewProj, bool drawMats = false) {}
 
 	// Updates the lighting values of the given shader
 	void UpdateShader(Shader* shader)

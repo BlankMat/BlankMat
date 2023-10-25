@@ -1,3 +1,17 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$class_state.html" title=" " alt="" coords="5,5,58,32"/>
+<area shape="rect" id="Node000000" href="$class_i_g_u_i_window.html" title=" " alt="" coords="5,157,98,184"/>
+<area shape="rect" id="Node000001" href="$class_g_u_i_debug_tools_window.html" title=" " alt="" coords="146,5,303,32"/>
+<area shape="poly" id="edge23_Node000000_Node000001" title=" " alt="" coords="64,142,96,91,118,65,144,42,165,30,168,35,147,46,122,69,100,95,68,145"/>
+<area shape="rect" id="Node000002" href="$class_g_u_i_hierarchy_window.html" title=" " alt="" coords="152,56,297,83"/>
+<area shape="poly" id="edge24_Node000000_Node000002" title=" " alt="" coords="75,145,107,118,144,92,170,81,173,86,147,97,110,122,79,149"/>
+<area shape="rect" id="Node000003" href="$class_g_u_i_inspector_window.html" title=" " alt="" coords="153,107,296,133"/>
+<area shape="poly" id="edge25_Node000000_Node000003" title=" " alt="" coords="111,150,176,131,177,136,113,156"/>
+<area shape="rect" id="Node000004" href="$class_g_u_i_light_viewer.html" title=" " alt="" coords="169,157,280,184"/>
+<area shape="poly" id="edge26_Node000000_Node000004" title=" " alt="" coords="113,168,169,168,169,173,113,173"/>
+<area shape="rect" id="Node000005" href="$class_g_u_i_material_editor.html" title=" " alt="" coords="163,208,286,235"/>
+<area shape="poly" id="edge27_Node000000_Node000005" title=" " alt="" coords="113,186,177,205,176,210,111,191"/>
+<area shape="rect" id="Node000006" href="$class_g_u_i_material_viewer.html" title=" " alt="" coords="160,259,289,285"/>
+<area shape="poly" id="edge28_Node000000_Node000006" title=" " alt="" coords="79,193,110,220,147,244,173,256,170,261,144,249,107,224,75,197"/>
+<area shape="rect" id="Node000007" href="$class_g_u_i_menu_bar_window.html" title=" " alt="" coords="154,309,295,336"/>
+<area shape="poly" id="edge29_Node000000_Node000007" title=" " alt="" coords="68,196,100,247,122,273,147,295,168,306,165,311,144,300,118,277,96,250,64,199"/>
 </map>

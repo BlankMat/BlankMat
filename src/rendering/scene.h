@@ -35,12 +35,6 @@ public:
 
 	// Saves the global state in the scene
 	void SetState(State* state);
-	// Adds the given node to the scene
-	void AddNode(Node* node);
-	// Adds the given mesh to the scene
-	void AddMesh(Mesh* mesh);
-	// Returns the root node
-	Node* GetRootNode();
 	// Constructs the scene, getting everything ready for manual setting
 	Scene();
 	// Destructs scene and cleans up all memory used

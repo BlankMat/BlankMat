@@ -41,7 +41,9 @@ public:
 
 				// If the selected material changed, update sel
 				if (selMat != sel->GetMaterial())
-					sel->SetMaterial(selMat);
+				{
+					mScene->SetEntityMaterial(sel, selMat);
+				}
 			}
 			else
 			{

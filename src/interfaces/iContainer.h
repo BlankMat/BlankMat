@@ -29,12 +29,21 @@ protected:
 	T* mCurSelectedItem;
 public:
 	/// <summary>
-	/// Returns the number of elements in the
+	/// Returns the number of elements in the container
 	/// </summary>
 	/// <returns></returns>
 	unsigned int Count()
 	{
 		return mData.size();
+	}
+
+	/// <summary>
+	/// Returns whether the container is empty or not
+	/// </summary>
+	/// <returns></returns>
+	bool Empty()
+	{
+		return mData.size() == 0;
 	}
 
 	/// <summary>

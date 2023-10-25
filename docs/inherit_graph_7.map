@@ -1,5 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$struct_i_material.html" title=" " alt="" coords="5,5,143,32"/>
-<area shape="rect" id="Node000001" href="$struct_material.html" title="Struct that stores all texture and render information for a material." alt="" coords="191,5,258,32"/>
-<area shape="poly" id="edge21_Node000000_Node000001" title=" " alt="" coords="158,16,190,16,190,21,158,21"/>
+<area shape="rect" id="Node000000" href="$class_i_container.html" title=" " alt="" coords="5,5,137,32"/>
+<area shape="rect" id="Node000001" href="$class_light_container.html" title=" " alt="" coords="185,5,289,32"/>
+<area shape="poly" id="edge3_Node000000_Node000001" title=" " alt="" coords="153,16,184,16,184,21,153,21"/>
 </map>

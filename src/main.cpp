@@ -134,13 +134,11 @@ void OpenGLDraw(Window* window, State* state, Scene* scene)
 
         // Render scene shadows
         scene->DrawShadows(window, scene->GetShader("shadowMap"));
-
-        // Clear depth map
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 
     // Reset viewport
     glViewport(0, 0, window->GetWidth(), window->GetHeight());
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Render the scene
@@ -148,6 +146,7 @@ void OpenGLDraw(Window* window, State* state, Scene* scene)
 
     // Clear materials loaded for this frame
     state->ClearLoadedMaterials();
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 // Opens all defined GUIs
