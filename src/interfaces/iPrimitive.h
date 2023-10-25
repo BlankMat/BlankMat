@@ -56,7 +56,8 @@ public:
 		shader->SetMat3("NormalModel", normalModel);
 
 		// Bind shadow map to next available texture index
-		unsigned int shadowIndex = mMaterial->UpdateShader(shader, state, defaultMat);
+		state->LoadMaterial(mMaterial);
+		unsigned int shadowIndex = mMaterial->UpdateShader(shader);
 		glActiveTexture(GL_TEXTURE0 + shadowIndex);
 		glBindTexture(GL_TEXTURE_2D, state->depthMap);
 		shader->SetInt("shadowMap", state->depthMapFBO);

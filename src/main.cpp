@@ -28,10 +28,10 @@ int main()
 
     // Load shaders
     LoadShaders(scene, shadersConfig);
-    Material* defaultMat = scene->SetDefaultMaterial("default");
+    state->defaultMat = scene->SetDefaultMaterial("default");
 
     // Load default scene
-    LoadDefaultScene(scene, defaultMat, config->GetBool("defaultCubes"), config->GetConfig("camera"), config->GetConfig("light"));
+    LoadDefaultScene(scene, state->defaultMat, config->GetBool("defaultCubes"), config->GetConfig("camera"), config->GetConfig("light"));
 
     // Add GUIs
     LoadGUIs(window, state, scene);
@@ -145,6 +145,9 @@ void OpenGLDraw(Window* window, State* state, Scene* scene)
 
     // Render the scene
     scene->Draw(window, scene->GetShader(scene->GetCurShader()));
+
+    // Clear materials loaded for this frame
+    state->ClearLoadedMaterials();
 }
 
 // Opens all defined GUIs

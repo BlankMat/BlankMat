@@ -1,19 +1,9 @@
 #include "material.h"
 #include "tools/state.h"
 
-// Updates the given shader with this material's properties
-unsigned int Material::UpdateShader(Shader* _shader, State* _state, Material* _defaultMat)
+// Loads the textures of this material into the OpenGL context
+void Material::LoadTextures(State* _state, Material* _defaultMat)
 {
-    _shader->SetVec3("material.diffuse", kd);
-    _shader->SetVec3("material.ambient", ka);
-    _shader->SetVec3("material.specular", ks);
-    _shader->SetVec3("material.emissive", ke);
-    _shader->SetFloat("material.shininess", ns);
-    _shader->SetFloat("material.refraction", ni);
-    _shader->SetFloat("material.alpha", d);
-    _shader->SetInt("material.mode", illum);
-    _shader->SetBool("useShadows", _state->enableShadows);
-
     // If the state has the map enabled, and the texture is not the default texture, use the texture
     bool useDiffuse = (map_kd != nullptr && map_kd->id != _defaultMat->map_kd->id) && (_state == nullptr || _state->enableDiffuseMap);
     bool useAmbient = (map_ka != nullptr && map_ka->id != _defaultMat->map_ka->id) && (_state == nullptr || _state->enableAmbientMap);
@@ -29,55 +19,77 @@ unsigned int Material::UpdateShader(Shader* _shader, State* _state, Material* _d
     unsigned int normalNum = 1;
     unsigned int heightNum = 1;
     unsigned int alphaNum = 1;
+
+    mCurTextures.clear();
+    mCurTextureNames.clear();
     for (unsigned int i = 0; i < mTextures.size(); i++)
     {
-        // Activate proper texture unit before binding
-        glActiveTexture(GL_TEXTURE0 + i);
         // Retrieve texture number (the N in texture_diffuseN)
         std::string number;
         std::string type = mTextures[i]->type;
-        unsigned int loadID = 0;
         if (type == "texture_diffuse")
         {
             number = std::to_string(diffuseNum++);
-            loadID = useDiffuse ? mTextures[i]->id : _defaultMat->map_kd->id;
-            _shader->SetVec3("material.diffuse", useDiffuse ? glm::vec3(1.0f) : kd);
+            mCurTextures.push_back(useDiffuse ? mTextures[i] : _defaultMat->map_kd);
+            mCurKD = (useDiffuse ? glm::vec3(1.0f) : kd);
         }
         else if (type == "texture_ambient")
         {
             number = std::to_string(ambientNum++);
-            loadID = useAmbient ? mTextures[i]->id : _defaultMat->map_ka->id;
-            _shader->SetVec3("material.ambient", useAmbient ? glm::vec3(1.0f) : ka);
+            mCurTextures.push_back(useAmbient ? mTextures[i] : _defaultMat->map_ka);
+            mCurKA = (useAmbient ? glm::vec3(1.0f) : ka);
         }
         else if (type == "texture_specular")
         {
             number = std::to_string(specularNum++);
-            loadID = useSpecular ? mTextures[i]->id : _defaultMat->map_ks->id;
-            _shader->SetVec3("material.specular", useSpecular ? glm::vec3(1.0f) : ks);
+            mCurTextures.push_back(useSpecular ? mTextures[i] : _defaultMat->map_ks);
+            mCurKS = (useSpecular ? glm::vec3(1.0f) : ks);
         }
         else if (type == "texture_normal")
         {
             number = std::to_string(normalNum++);
-            loadID = useNormal ? mTextures[i]->id : _defaultMat->map_bump->id;
+            mCurTextures.push_back(useNormal ? mTextures[i] : _defaultMat->map_bump);
         }
         else if (type == "texture_height")
         {
             number = std::to_string(heightNum++);
-            loadID = useHeight ? mTextures[i]->id : _defaultMat->map_ns->id;
+            mCurTextures.push_back(useHeight ? mTextures[i] : _defaultMat->map_ns);
         }
         else if (type == "texture_alpha")
         {
             number = std::to_string(alphaNum++);
-            loadID = useAlpha ? mTextures[i]->id : _defaultMat->map_d->id;
+            mCurTextures.push_back(useAlpha ? mTextures[i] : _defaultMat->map_d);
         }
 
         // Set the sampler to the correct texture unit
-        std::string textureName = "material." + type + number;
-        //std::cout << name << ": " << textureName << std::endl;
-        _shader->SetInt(textureName, i);
-        glBindTexture(GL_TEXTURE_2D, loadID);
+        mCurTextureNames.push_back("material." + type + number);
+    }
+
+    mShadowsEnabled = (_state == nullptr || _state->enableShadows);
+}
+
+// Updates the given shader with this material's properties
+unsigned int Material::UpdateShader(Shader* _shader)
+{
+    _shader->SetVec3("material.diffuse", mCurKD);
+    _shader->SetVec3("material.ambient", mCurKA);
+    _shader->SetVec3("material.specular", mCurKS);
+    _shader->SetVec3("material.emissive", mCurKE);
+    _shader->SetFloat("material.shininess", ns);
+    _shader->SetFloat("material.refraction", ni);
+    _shader->SetFloat("material.alpha", d);
+    _shader->SetInt("material.mode", illum);
+    _shader->SetBool("useShadows", mShadowsEnabled);
+
+    for (unsigned int i = 0; i < mCurTextures.size(); i++)
+    {
+        // Activate proper texture unit before binding
+        glActiveTexture(GL_TEXTURE0 + i);
+        _shader->SetInt(mCurTextureNames[i], i);
+        glBindTexture(GL_TEXTURE_2D, mCurTextures[i]->id);
     }
     glActiveTexture(GL_TEXTURE0);
+
     return (unsigned int)mTextures.size();
 }
 

@@ -12,19 +12,32 @@ class State;
 class Material : public IMaterial<Texture>
 {
 protected:
+    glm::vec3 mCurKD;
+    glm::vec3 mCurKA;
+    glm::vec3 mCurKS;
+    glm::vec3 mCurKE;
+    bool mShadowsEnabled;
+    std::vector<Texture*> mCurTextures;
+    std::vector<std::string> mCurTextureNames;
+
 	/// <summary>
 	/// List of textures that are part of this material
 	/// </summary>
 	std::vector<Texture*> mTextures;
 public:
     /// <summary>
+    /// Loads the textures of this material into the OpenGL context
+    /// </summary>
+    /// <param name="_state">Global state of the application</param>
+    /// <param name="_defaultMat">Default material</param>
+    void LoadTextures(State* _state, Material* _defaultMat);
+
+    /// <summary>
     /// Updates the given shader with this material's properties
     /// </summary>
     /// <param name="_shader">Shader to use for this material</param>
-    /// <param name="_state">Global state of the app</param>
-    /// <param name="_defaultMat">Default material for the app</param>
     /// <returns>Index of next available GL texture</returns>
-    unsigned int UpdateShader(Shader* _shader, State* _state, Material* _defaultMat);
+    unsigned int UpdateShader(Shader* _shader);
 
     /// <summary>
     /// Constructs a material out of a single color (diffuse)
