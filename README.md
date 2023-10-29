@@ -4,6 +4,8 @@ BlankMat is a free open-source application for creating high-quality textures fo
 [![Badge License]][License]
 [![Badge Docs]](https://blankmat.github.io/BlankMat)
 
+# Usage
+
 # Building
 ## Building on Windows (64-bit)
 
