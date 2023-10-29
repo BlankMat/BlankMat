@@ -1,11 +1,5 @@
 <map id="PLightCube" name="PLightCube">
-<area shape="rect" id="Node000001" title=" " alt="" coords="72,245,160,272"/>
-<area shape="rect" id="Node000002" href="$class_p_cube.html" title=" " alt="" coords="47,171,108,197"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,210,112,244,107,246,89,212"/>
-<area shape="rect" id="Node000003" href="$class_i_primitive.html" title=" " alt="" coords="5,80,150,123"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="80,139,80,170,75,170,75,139"/>
-<area shape="rect" id="Node000004" href="$class_i_entity.html" title=" " alt="" coords="48,5,107,32"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="80,48,80,80,75,80,75,48"/>
-<area shape="rect" id="Node000005" href="$class_light.html" title=" " alt="" coords="132,171,181,197"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="144,213,125,246,121,244,139,210"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,80,94,107"/>
+<area shape="rect" id="Node000002" href="$class_light.html" title=" " alt="" coords="25,5,74,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="52,48,52,80,47,80,47,48"/>
 </map>

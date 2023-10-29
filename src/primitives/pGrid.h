@@ -4,8 +4,8 @@
 class PGrid : public IPrimitive<glm::vec3, glm::uvec2>
 {
 public:
-    PGrid(std::string name, int gridSize, float unitSize, Material* material, float lineWidth, bool drawOver = true,
-        glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
+    PGrid(const std::string& name, const int gridSize, const float unitSize, Material* material, const float lineWidth, const bool drawOver = true,
+        const glm::vec3& pos = glm::vec3(0.0f), const glm::vec3& rot = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f))
         : IPrimitive(name, material, lineWidth, drawOver, pos, rot, scale)
     {
         // Generate x lines for grid

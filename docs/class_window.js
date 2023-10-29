@@ -1,6 +1,6 @@
 var class_window =
 [
-    [ "Window", "class_window.html#af11212f5a8642fe4795ca6c9aa2e9a6e", null ],
+    [ "Window", "class_window.html#ac3346b3f363adac40ca7ef8b28ededf6", null ],
     [ "AddGUI", "class_window.html#ae94b337a0789ab45e62834359140a8db", null ],
     [ "CalcWindowSize", "class_window.html#a29131beab27ceb4d83bbee62a11b917a", null ],
     [ "DrawGUI", "class_window.html#a952d4c7669d021dfdb9a9de0d28e0ed3", null ],

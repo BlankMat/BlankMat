@@ -22,6 +22,7 @@ private:
 	IMesh* mSelMesh;
 	IEntity* mSelEntity;
 	Material* mSelMat;
+	IEntity* mSelTransformHandle;
 
 	Tool mSelTool;
 	SelMode mSelMode;
@@ -53,6 +54,8 @@ public:
 	void DeselectFace(unsigned int _id);
 	// Deselects the vertex with the given ID
 	void DeselectVert(unsigned int _id);
+	// Deselects the currently selected entity
+	void DeselectEntity();
 	// Deselects the currently selected mesh
 	void DeselectMesh();
 	// Deselects the currently selected material
@@ -85,10 +88,17 @@ public:
 	IEntity* GetSelectedEntity();
 	// Returns the selected material
 	Material* GetSelectedMat();
+	// Returns the transform handle
+	IEntity* GetTransformHandle();
 	// Returns whether the given vertex is selected
 	bool IsVertSelected(unsigned int _id);
 	// Returns whether the given face is selected
 	bool IsFaceSelected(unsigned int _id);
+
+	// Sets the selection's transform handle
+	void SetTransformHandle(IEntity* transformHandle);
+	// Updates the transform handle's status
+	void UpdateTransformHandle();
 
 	/// <summary>
 	/// Returns the nearest mesh to the clicked position

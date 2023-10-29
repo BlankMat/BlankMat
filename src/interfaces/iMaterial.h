@@ -85,8 +85,8 @@ public:
 	/// <param name="_d"></param>
 	/// <param name="_ke"></param>
 	/// <param name="_illum"></param>
-	IMaterial(std::string _name = "", glm::vec3 _ka = glm::vec3(), glm::vec3 _kd = glm::vec3(), glm::vec3 _ks = glm::vec3(),
-		float _ns = 0, float _ni = 1, float _d = 1, glm::vec3 _ke = glm::vec3(), int _illum = 2)
+	IMaterial(const std::string& _name = "", const glm::vec3& _ka = glm::vec3(), const glm::vec3& _kd = glm::vec3(), const glm::vec3& _ks = glm::vec3(),
+		const float _ns = 0, const float _ni = 1, const float _d = 1, const glm::vec3& _ke = glm::vec3(), const int _illum = 2)
 		: name(_name), ka(_ka), kd(_kd), ks(_ks), ke(_ke), ns(_ns), ni(_ni), d(_d), illum(_illum)
 	{
 		map_ka = nullptr;

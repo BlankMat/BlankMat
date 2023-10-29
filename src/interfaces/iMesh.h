@@ -1,19 +1,12 @@
 #pragma once
 #include "glIncludes.h"
-#include "interfaces/iEntity.h"
+#include "interfaces/iPrimitive.h"
 #include "rendering/vertex.h"
 #include <vector>
 
-class IMesh : public IEntity
+class IMesh : public IPrimitive<Vertex, unsigned int>
 {
 protected:
-	glm::vec3 mFront;
-	glm::vec3 mRight;
-	glm::vec3 mUp;
-
-	std::vector<Vertex> mVertices;
-	std::vector<unsigned int> mIndices;
-
 	// Generates the required buffers to render the mesh
 	void GenBuffers() override
 	{
@@ -44,6 +37,7 @@ protected:
 		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, tangent));
 
 		glBindVertexArray(0);
+		mIndexLen = (GLuint)mIndices.size() * sizeof(*mIndices.data());
 	}
 public:
 	// Returns the vertex with the given index
@@ -54,37 +48,10 @@ public:
 		return &mVertices[index];
 	}
 
-	// Returns the up vector of the mesh
-	glm::vec3 GetUp() { return mUp; }
-
-	// Returns the right vector of the mesh
-	glm::vec3 GetRight() { return mRight; }
-
-	// Returns the front vector of the mesh
-	glm::vec3 GetFront() { return mFront; }
-
-	// Adds delta to the position of the mesh
-	void Translate(glm::vec3 delta) { mPos += delta; }
-
-	// Adds delta to the rotation of the mesh
-	void Rotate(glm::vec3 delta) { mRot += delta; }
-
-	// Adds delta to the scale of the mesh
-	void Scale(glm::vec3 delta) { mScale += delta; }
-
-	// Calculates the basis (front/right/up vectors) of the mesh
-	void CalcBasis()
+	IMesh(std::string name, Material* material = nullptr,
+		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
+		: IPrimitive(name, material, 0.0f, false, pos, rot, scale)
 	{
-		mFront = glm::normalize(glm::vec3(
-			cos(mRot.y) * sin(mRot.x),
-			sin(mRot.y),
-			cos(mRot.y) * cos(mRot.x)
-		));
-
-		// Right vector
-		mRight = glm::normalize(glm::cross(mFront, glm::vec3(0.0f, 1.0f, 0.0f)));
-
-		// Up vector : perpendicular to both direction and right
-		mUp = glm::normalize(glm::cross(mRight, mFront));
+		CalcBasis();
 	}
 };

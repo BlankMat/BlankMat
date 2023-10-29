@@ -8,7 +8,7 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
     Camera* camera = scene->GetCamera();
     Selection* sel = state->GetSel();
     Config* config = state->GetConfig();
-    IMesh* selMesh = sel->GetSelectedMesh();
+    IEntity* selEntity = sel->GetSelectedEntity();
     bool didReceiveInput = false;
 
     // Get window width and height
@@ -31,7 +31,7 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
     if (F_PRESS && !CTRL_PRESS) {
         // Only focus when not locked
         if (!locks->lockF) {
-            glm::vec3 targetPos = (selMesh != nullptr) ? selMesh->GetPos() : glm::vec3(0.0f);
+            glm::vec3 targetPos = (selEntity != nullptr) ? selEntity->GetWorldPos() : glm::vec3(0.0f);
             glm::vec3 targetDir = glm::normalize(targetPos - camera->GetPos());
             float rotY = asin(targetDir.y);
             float rotX = atan2(targetDir.x, targetDir.z);
@@ -116,13 +116,13 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
                 break;
                 /* ========== Handle moving ================= */
             case Tool::MOVE:
-                if (selMesh == nullptr)
+                if (selEntity == nullptr)
                     break;
 
-                glm::vec3 moveVec = inputVec.x * selMesh->GetFront() + inputVec.y * selMesh->GetRight() + inputVec.z * selMesh->GetUp();
+                glm::vec3 moveVec = inputVec.x * selEntity->GetFront() + inputVec.y * selEntity->GetRight() + inputVec.z * selEntity->GetUp();
                 switch (sel->GetSelMode()) {
                 case SelMode::MESH:
-                    selMesh->Translate(moveVec * deltaTime * config->GetFloat("speeds.modelMove"));
+                    selEntity->Translate(moveVec * deltaTime * config->GetFloat("speeds.modelMove"));
                     break;
                 case SelMode::FACE:
                 case SelMode::VERT:
@@ -135,15 +135,15 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
                 break;
                 /* ========== Handle scaling ================= */
             case Tool::SCALE:
-                if (selMesh == nullptr)
+                if (selEntity == nullptr)
                     break;
 
                 switch (sel->GetSelMode()) {
                 case SelMode::MESH:
                     if (SHIFT_PRESS)
-                        selMesh->SetScale(selMesh->GetScale() + glm::clamp(inputVec.x + inputVec.y + inputVec.z, -1.0f, 1.0f) * config->GetFloat("speeds.modelScale") * deltaTime * selMesh->GetScale());
+                        selEntity->SetScale(selEntity->GetScale() + glm::clamp(inputVec.x + inputVec.y + inputVec.z, -1.0f, 1.0f) * config->GetFloat("speeds.modelScale") * deltaTime * selEntity->GetScale());
                     else
-                        selMesh->SetScale(selMesh->GetScale() + inputVec * config->GetFloat("speeds.modelScale") * deltaTime * selMesh->GetScale());
+                        selEntity->SetScale(selEntity->GetScale() + inputVec * config->GetFloat("speeds.modelScale") * deltaTime * selEntity->GetScale());
                     break;
                 case SelMode::FACE:
                 case SelMode::VERT:
@@ -159,12 +159,12 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
                 break;
                 /* ========== Handle rotating ================ */
             case Tool::ROTATE:
-                if (selMesh == nullptr)
+                if (selEntity == nullptr)
                     break;
 
                 switch (sel->GetSelMode()) {
                 case SelMode::MESH:
-                    selMesh->Rotate(glm::vec3(inputVec.y, inputVec.x, inputVec.z) * config->GetFloat("speeds.modelTurn") * deltaTime);
+                    selEntity->Rotate(glm::vec3(inputVec.y, inputVec.x, inputVec.z) * config->GetFloat("speeds.modelTurn") * deltaTime);
                     break;
                 case SelMode::FACE:
                 case SelMode::VERT:
@@ -263,7 +263,7 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
                     sel->SelectMesh(tempMesh);
                 break;
             case SelMode::FACE:
-                if (selMesh == nullptr)
+                if (selEntity == nullptr)
                     break;
 
                 tempFace = Selection::GetNearestFace(scene, u, v);
@@ -274,7 +274,7 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
                 locks->reselect = true;
                 break;
             case SelMode::VERT:
-                if (selMesh == nullptr)
+                if (selEntity == nullptr)
                     break;
 
                 tempVert = Selection::GetNearestVert(scene, u, v);
@@ -308,8 +308,8 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
     }
 
     // Recalculate the selected mesh if changes were made
-    if (locks->rerender && selMesh != nullptr) {
-        selMesh->CalcBasis();
+    if (locks->rerender && selEntity != nullptr) {
+        selEntity->CalcBasis();
     }
 
     return didReceiveInput;

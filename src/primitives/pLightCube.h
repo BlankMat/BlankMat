@@ -11,35 +11,42 @@ protected:
     PLine* mDirLine;
 public:
     // Draws the object to the screen
-    void Draw(Shader* shader, State* state, Material* defaultMat, glm::mat4 viewProj, glm::mat4 model = glm::mat4(1.0f))
+    void Draw(Shader* shader, State* state, Material* defaultMat, const glm::mat4& viewProj, bool drawMats = false)
     {
-        mCube->Draw(shader, state, defaultMat, viewProj, model);
-        mDirLine->Draw(shader, state, defaultMat, viewProj, model);
+        mCube->Draw(shader, state, defaultMat, viewProj, drawMats);
+        mDirLine->Draw(shader, state, defaultMat, viewProj, drawMats);
     }
 
-    void SetColor(glm::vec3 color) override
+    // Sets the parent model matrices of the children
+    void SetParentModelMatrix(const glm::mat4& parentModelMatrix)
+    {
+        mCube->SetParentModelMatrix(parentModelMatrix);
+        mDirLine->SetParentModelMatrix(parentModelMatrix);
+    }
+
+    void SetColor(const glm::vec3& color) override
     {
         Light::SetColor(color); 
         mCube->GetMaterial()->kd = color;
     }
 
-    void SetPos(glm::vec3 pos) override 
+    void SetPos(const glm::vec3& pos) override 
     { 
         Light::SetPos(pos); 
         mCube->SetPos(pos); 
         mDirLine->SetPos(pos);
     }
 
-    void SetDir(glm::vec3 dir) override
+    void SetDir(const glm::vec3& dir) override
     {
         Light::SetDir(dir);
         mDirLine->SetRot(GetRotationDegrees(dir));
     }
 
-	PLightCube(std::string name, float size, LightType type = LightType::POINT, 
-        glm::vec3 pos = glm::vec3(1.0f), glm::vec3 dir = glm::vec3(-1.0f),
-        glm::vec3 color = glm::vec3(1.0f), float kd = 1.0f, float ka = 0.1f, float ks = 0.5f, bool gamma = true,
-        float range = 13.0f, float spotInner = 25, float spotOuter = 35)
+	PLightCube(const std::string& name, const float size, const LightType type = LightType::POINT, 
+        const glm::vec3& pos = glm::vec3(1.0f), const glm::vec3& dir = glm::vec3(-1.0f),
+        const glm::vec3& color = glm::vec3(1.0f), const float kd = 1.0f, const float ka = 0.1f, const float ks = 0.5f, 
+        const bool gamma = true, const float range = 13.0f, const float spotInner = 25, const float spotOuter = 35)
         : Light(type, pos, dir, color, kd, ka, ks, gamma, range, spotInner, spotOuter)
     {
         Material* newMat = new Material(color);
@@ -48,7 +55,7 @@ public:
         SetDir(dir);
     }
 
-    PLightCube(std::string name, float size, Config* config)
+    PLightCube(const std::string& name, const float size, Config* config)
         : PLightCube(name, size, static_cast<LightType>(config->GetInt("type")), 
             config->GetVec("pos"), config->GetVec("dir"), config->GetVec("color"), 
             config->GetFloat("diffuse"), config->GetFloat("ambient"), config->GetFloat("specular"), config->GetBool("gamma"),

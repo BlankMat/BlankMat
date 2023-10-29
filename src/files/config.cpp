@@ -2,7 +2,7 @@
 
 // ------------------------------------------ PRIVATE -----------------------------------------
 // Returns whether the requested name is a nested config
-bool Config::IsNested(std::string name)
+const bool Config::IsNested(const std::string& name)
 {
 	return (name.find('.') != std::string::npos);
 }
@@ -24,7 +24,7 @@ Config* Config::GetNameTarget(std::string* name)
 }
 
 // Returns the given config
-Config* Config::GetThisConfig(std::string name)
+Config* Config::GetThisConfig(const std::string& name)
 {
 	if (mChildConfigs.find(name) != mChildConfigs.end())
 		return mChildConfigs[name];
@@ -32,7 +32,7 @@ Config* Config::GetThisConfig(std::string name)
 }
 
 // Returns the given string
-std::string Config::GetThisString(std::string name)
+const std::string Config::GetThisString(const std::string& name)
 {
 	if (mConfigStrings.find(name) != mConfigStrings.end())
 		return mConfigStrings[name];
@@ -40,7 +40,7 @@ std::string Config::GetThisString(std::string name)
 }
 
 // Returns the given vec3
-glm::vec3 Config::GetThisVec(std::string name)
+const glm::vec3 Config::GetThisVec(const std::string& name)
 {
 	if (mConfigVecs.find(name) != mConfigVecs.end())
 		return mConfigVecs[name];
@@ -48,7 +48,7 @@ glm::vec3 Config::GetThisVec(std::string name)
 }
 
 // Returns the given float
-float Config::GetThisFloat(std::string name)
+const float Config::GetThisFloat(const std::string& name)
 {
 	if (mConfigFloats.find(name) != mConfigFloats.end())
 		return mConfigFloats[name];
@@ -56,7 +56,7 @@ float Config::GetThisFloat(std::string name)
 }
 
 // Returns the given int
-int Config::GetThisInt(std::string name)
+const int Config::GetThisInt(const std::string& name)
 {
 	if (mConfigInts.find(name) != mConfigInts.end())
 		return mConfigInts[name];
@@ -64,7 +64,7 @@ int Config::GetThisInt(std::string name)
 }
 
 // Returns the given bool
-bool Config::GetThisBool(std::string name)
+const bool Config::GetThisBool(const std::string& name)
 {
 	if (mConfigBools.find(name) != mConfigBools.end())
 		return mConfigBools[name];
@@ -72,7 +72,7 @@ bool Config::GetThisBool(std::string name)
 }
 
 // Sets the given config to the given value
-void Config::SetThisConfig(std::string name, Config* val)
+void Config::SetThisConfig(const std::string& name, Config* val)
 {
 	if (mChildConfigs.find(name) == mChildConfigs.end())
 		mChildConfigs.emplace(name, val);
@@ -81,7 +81,7 @@ void Config::SetThisConfig(std::string name, Config* val)
 }
 
 // Sets the given string to the given value
-void Config::SetThisString(std::string name, std::string val)
+void Config::SetThisString(const std::string& name, const std::string& val)
 {
 	if (mConfigStrings.find(name) == mConfigStrings.end())
 		mConfigStrings.emplace(name, val);
@@ -90,7 +90,7 @@ void Config::SetThisString(std::string name, std::string val)
 }
 
 // Sets the given vec3 to the given value
-void Config::SetThisVec(std::string name, glm::vec3 val)
+void Config::SetThisVec(const std::string& name, const glm::vec3& val)
 {
 	if (mConfigVecs.find(name) == mConfigVecs.end())
 		mConfigVecs.emplace(name, val);
@@ -99,7 +99,7 @@ void Config::SetThisVec(std::string name, glm::vec3 val)
 }
 
 // Sets the given float to the given value
-void Config::SetThisFloat(std::string name, float val)
+void Config::SetThisFloat(const std::string& name, const float val)
 {
 	if (mConfigFloats.find(name) == mConfigFloats.end())
 		mConfigFloats.emplace(name, val);
@@ -108,7 +108,7 @@ void Config::SetThisFloat(std::string name, float val)
 }
 
 // Sets the given int to the given value
-void Config::SetThisInt(std::string name, int val)
+void Config::SetThisInt(const std::string& name, const int val)
 {
 	if (mConfigInts.find(name) == mConfigInts.end())
 		mConfigInts.emplace(name, val);
@@ -117,7 +117,7 @@ void Config::SetThisInt(std::string name, int val)
 }
 
 // Sets the given bool to the given value
-void Config::SetThisBool(std::string name, bool val)
+void Config::SetThisBool(const std::string& name, const bool val)
 {
 	if (mConfigBools.find(name) == mConfigBools.end())
 		mConfigBools.emplace(name, val);
@@ -127,115 +127,127 @@ void Config::SetThisBool(std::string name, bool val)
 
 // ------------------------------------------ PUBLIC ------------------------------------------
 // Returns the given config
-Config* Config::GetConfig(std::string name)
+Config* Config::GetConfig(const std::string& name)
 {
-	Config* config = GetNameTarget(&name);
+	std::string tempName = name;
+	Config* config = GetNameTarget(&tempName);
 	if (config != this)
-		return config->GetConfig(name);
-	return config->GetThisConfig(name);
+		return config->GetConfig(tempName);
+	return config->GetThisConfig(tempName);
 }
 
 // Returns the given string
-std::string Config::GetString(std::string name)
+const std::string Config::GetString(const std::string& name)
 {
-	Config* config = GetNameTarget(&name);
+	std::string tempName = name;
+	Config* config = GetNameTarget(&tempName);
 	if (config != this)
-		return config->GetString(name);
-	return config->GetThisString(name);
+		return config->GetString(tempName);
+	return config->GetThisString(tempName);
 }
 
 // Returns the given vec3
-glm::vec3 Config::GetVec(std::string name)
+const glm::vec3 Config::GetVec(const std::string& name)
 {
-	Config* config = GetNameTarget(&name);
+	std::string tempName = name;
+	Config* config = GetNameTarget(&tempName);
 	if (config != this)
-		return config->GetVec(name);
-	return config->GetThisVec(name);
+		return config->GetVec(tempName);
+	return config->GetThisVec(tempName);
 }
 
 // Returns the given float
-float Config::GetFloat(std::string name)
+const float Config::GetFloat(const std::string& name)
 {
-	Config* config = GetNameTarget(&name);
+	std::string tempName = name;
+	Config* config = GetNameTarget(&tempName);
 	if (config != this)
-		return config->GetFloat(name);
-	return config->GetThisFloat(name);
+		return config->GetFloat(tempName);
+	return config->GetThisFloat(tempName);
 }
 
 // Returns the given int
-int Config::GetInt(std::string name)
+const int Config::GetInt(const std::string& name)
 {
-	Config* config = GetNameTarget(&name);
+	std::string tempName = name;
+	Config* config = GetNameTarget(&tempName);
 	if (config != this)
-		return config->GetInt(name);
-	return config->GetThisInt(name);
+		return config->GetInt(tempName);
+	return config->GetThisInt(tempName);
 }
 
 // Returns the given bool
-bool Config::GetBool(std::string name)
+const bool Config::GetBool(const std::string& name)
 {
-	Config* config = GetNameTarget(&name);
+	std::string tempName = name;
+	Config* config = GetNameTarget(&tempName);
 	if (config != this)
-		return config->GetBool(name);
-	return config->GetThisBool(name);
+		return config->GetBool(tempName);
+	return config->GetThisBool(tempName);
 }
 
 // Sets the given config to the given value
-void Config::SetConfig(std::string name, Config* val)
+void Config::SetConfig(const std::string& name, Config* val)
 {
-	Config* config = GetNameTarget(&name);
+	std::string tempName = name;
+	Config* config = GetNameTarget(&tempName);
 	if (config != this)
-		return config->SetConfig(name, val);
-	return config->SetThisConfig(name, val);
+		return config->SetConfig(tempName, val);
+	return config->SetThisConfig(tempName, val);
 }
 
 // Sets the given string to the given value
-void Config::SetString(std::string name, std::string val)
+void Config::SetString(const std::string& name, const std::string& val)
 {
-	Config* config = GetNameTarget(&name);
+	std::string tempName = name;
+	Config* config = GetNameTarget(&tempName);
 	if (config != this)
-		return config->SetString(name, val);
-	return config->SetThisString(name, val);
+		return config->SetString(tempName, val);
+	return config->SetThisString(tempName, val);
 }
 
 // Sets the given vec3 to the given value
-void Config::SetVec(std::string name, glm::vec3 val)
+void Config::SetVec(const std::string& name, const glm::vec3& val)
 {
-	Config* config = GetNameTarget(&name);
+	std::string tempName = name;
+	Config* config = GetNameTarget(&tempName);
 	if (config != this)
-		return config->SetVec(name, val);
-	return config->SetThisVec(name, val);
+		return config->SetVec(tempName, val);
+	return config->SetThisVec(tempName, val);
 }
 
 // Sets the given float to the given value
-void Config::SetFloat(std::string name, float val)
+void Config::SetFloat(const std::string& name, const float val)
 {
-	Config* config = GetNameTarget(&name);
+	std::string tempName = name;
+	Config* config = GetNameTarget(&tempName);
 	if (config != this)
-		return config->SetFloat(name, val);
-	return config->SetThisFloat(name, val);
+		return config->SetFloat(tempName, val);
+	return config->SetThisFloat(tempName, val);
 }
 
 // Sets the given int to the given value
-void Config::SetInt(std::string name, int val)
+void Config::SetInt(const std::string& name, const int val)
 {
-	Config* config = GetNameTarget(&name);
+	std::string tempName = name;
+	Config* config = GetNameTarget(&tempName);
 	if (config != this)
-		return config->SetInt(name, val);
-	return config->SetThisInt(name, val);
+		return config->SetInt(tempName, val);
+	return config->SetThisInt(tempName, val);
 }
 
 // Sets the given bool to the given value
-void Config::SetBool(std::string name, bool val)
+void Config::SetBool(const std::string& name, const bool val)
 {
-	Config* config = GetNameTarget(&name);
+	std::string tempName = name;
+	Config* config = GetNameTarget(&tempName);
 	if (config != this)
-		return config->SetBool(name, val);
-	return config->SetThisBool(name, val);
+		return config->SetBool(tempName, val);
+	return config->SetThisBool(tempName, val);
 }
 
 // Prints the config
-void Config::Print(int depth)
+void Config::Print(const int depth)
 {
 	for (int i = 0; i < depth; i++)
 		std::cout << "-";

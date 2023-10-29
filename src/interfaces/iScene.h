@@ -6,17 +6,36 @@
 #include "rendering/light.h"
 #include "rendering/camera.h"
 #include "rendering/material.h"
+#include "rendering/mesh.h"
+#include "rendering/node.h"
 #include "interfaces/iEntity.h"
+
+#include "containers/textureContainer.h"
+#include "containers/materialContainer.h"
+#include "containers/shaderContainer.h"
+#include "containers/cameraContainer.h"
+#include "containers/lightContainer.h"
+#include "containers/entityContainer.h"
+#include "containers/meshContainer.h"
 #include <unordered_map>
 
 class IScene
 {
 protected:
+	std::string mDirectory;
+	std::string mName;
+
 	std::string mCurShader;
 	Shader* mShader;
 	Light* mGlobalLight;
 	Camera* mMainCamera;
 	Material* mDefaultMat;
+	Node* mRootNode;
+	State* mState;
+
+	std::vector<Mesh*> mMeshList;
+	std::unordered_map<std::string, EntityContainer*> mMeshRenderList;
+	std::unordered_map<std::string, EntityContainer*> mEntityList;
 
 	std::unordered_map<std::string, Light*> mLightList;
 	std::unordered_map<std::string, Camera*> mCameraList;
@@ -27,242 +46,122 @@ protected:
 	std::unordered_map<std::string, IEntity*> mRenderList;
 
 	// Loads the material of the given config. Must be bottom-level config
-	Material* LoadMaterial(Config* config, std::string name)
-	{
-		// Don't handle null configs
-		if (config == nullptr)
-			return nullptr;
-
-		// If the material exists already, return it
-		Material* material = GetMaterial(name);
-		if (material != nullptr)
-			return material;
-
-		// Create textures
-		Texture* kd = LoadTexture("texture_diffuse", config->GetString("map_kd"), "default_diffuse");
-		Texture* ka = LoadTexture("texture_ambient", config->GetString("map_ka"), "default_ambient");
-		Texture* ks = LoadTexture("texture_specular", config->GetString("map_ks"), "default_specular");
-		Texture* normal = LoadTexture("texture_normal", config->GetString("map_bump"), "default_normal");
-		Texture* ns = LoadTexture("texture_height", config->GetString("map_ns"), "default_height");
-		Texture* d = LoadTexture("texture_alpha", config->GetString("map_d"), "default_alpha");
-
-		// Create material
-		material = new Material(name, config, kd, ka, ks, normal, ns, d);
-		AddMaterial(name, material);
-		return material;
-	}
+	Material* LoadMaterial(Config* config, const std::string& name);
 
 	// Loads the given texture or returns the existing one
-	Texture* LoadTexture(std::string type, std::string path, std::string defaultName = "")
-	{
-		// If no path is given, load the default texture
-		if (path == "")
-			path = defaultName;
-
-		// Get the name of the texture
-		std::string name = path.substr(0, path.find_last_of('.'));
-		if (name == "default")
-			name = defaultName;
-
-		// If the texture is already loaded with the same type, return it
-		Texture* texture = GetTexture(name);
-		if (texture != nullptr && texture->type == type)
-			return texture;
-
-		// If the texture is not loaded, load the texture and store it
-		texture = new Texture(type, FileSystem::GetPath(TEXTURE_DIR), path, name);
-		AddTexture(name, texture);
-		return texture;
-	}
+	Texture* LoadTexture(const std::string& type, const std::string& path, const std::string& defaultName);
 
 public:
+	TextureContainer* mTextures;
+	MaterialContainer* mMaterials;
+	LightContainer* mLights;
+	CameraContainer* mCameras;
+	ShaderContainer* mShaders;
+	MeshContainer* mMeshes;
+	EntityContainer* mEntities;
+
 	// Renders the current scene
 	virtual void Draw(Window* window, Shader* shader) = 0;
 
 	// Activates the shader with the given name for the scene
-	void UseShader(std::string name = "")
-	{
-		if (name == "")
-			name = mCurShader;
-		if (mShaderList.find(name) != mShaderList.end() && mShaderList[name] != nullptr)
-		{
-			mCurShader = name;
-			mShader = mShaderList[name];
-			mShader->Use();
-		}
-	}
+	void UseShader(const std::string& name = "");
 
 	// Creates a shader for the scene with the given name from the source file of the given name
-	Shader* CreateShader(std::string name, bool loadGeom)
-	{
-		if (mShaderList.find(name) == mShaderList.end())
-		{
-			Shader* newShader = new Shader(name, loadGeom);
-			newShader->name = name;
-			mShaderList.emplace(name, newShader);
-			return newShader;
-		}
-		return mShaderList[name];
-	}
+	Shader* CreateShader(const std::string& name, bool loadGeom);
 
 	// Creates a shader for the scene with the given name, loading it from a different source than the name
-	Shader* CreateShader(std::string name, std::string source, bool loadGeom)
-	{
-		if (mShaderList.find(name) == mShaderList.end())
-		{
-			Shader* newShader = new Shader(source, loadGeom);
-			newShader->name = name;
-			mShaderList.emplace(name, newShader);
-			return newShader;
-		}
-		return mShaderList[name];
-	}
+	Shader* CreateShader(const std::string& name, const std::string& source, bool loadGeom);
 
 	// Creates a shader for the scene with the given name, loading it from a config
-	Shader* CreateShader(std::string name, Config* config)
-	{
-		if (mShaderList.find(name) == mShaderList.end())
-		{
-			Shader* newShader = new Shader(config->GetString("file"), config->GetBool("hasGeomShader"));
-			newShader->name = name;
-			mShaderList.emplace(name, newShader);
-			return newShader;
-		}
-		return mShaderList[name];
-	}
+	Shader* CreateShader(const std::string& name, Config* config);
 
 	// Returns the scene's camera
-	Camera* GetCamera() { return mMainCamera; }
+	Camera* GetCamera();
 
 	// Returns the scene's light
-	Light* GetLight() { return mGlobalLight; }
+	Light* GetLight();
+
+	// Returns the scene's name
+	std::string GetName();
+
+	// Returns the scene's directory
+	std::string GetDirectory();
 
 	// Returns the shader with the given name
-	Shader* GetShader(std::string name)
-	{
-		if (mShaderList.find(name) != mShaderList.end())
-			return mShaderList[name];
-		return nullptr;
-	}
+	Shader* GetShader(const std::string& name);
 
 	// Returns the material with the given name
-	Material* GetMaterial(std::string name)
-	{
-		if (mMaterialList.find(name) != mMaterialList.end())
-			return mMaterialList[name];
-		return nullptr;
-	}
+	Material* GetMaterial(const std::string& name);
 
 	// Returns the default material
-	Material* GetDefaultMat()
-	{
-		return mDefaultMat;
-	}
+	Material* GetDefaultMat();
 
 	// Returns the material with the given name
-	Texture* GetTexture(std::string name)
-	{
-		if (mTextureList.find(name) != mTextureList.end())
-			return mTextureList[name];
-		return nullptr;
-	}
+	Texture* GetTexture(const std::string& name);
 
 	// Returns the entity with the given name
-	IEntity* GetEntity(std::string name)
-	{
-		if (mPreRenderList.find(name) != mPreRenderList.end())
-			return mPreRenderList[name];
-		else if (mRenderList.find(name) != mRenderList.end())
-			return mRenderList[name];
-		return nullptr;
-	}
+	IEntity* GetEntity(const std::string& name);
+
+	// Adds the given node to the scene
+	void AddNode(Node* node);
+	// Adds the given mesh to the scene as child of the given node
+	void AddMesh(Mesh* mesh, Node* parent = nullptr);
+	// Returns the root node
+	Node* GetRootNode();
+	// Sets the root node
+	void SetRootNode(Node* rootNode);
 	
 	// Returns a reference to the shader list
-	std::unordered_map<std::string, Shader*>& GetShaderList() { return mShaderList; }
+	const std::unordered_map<std::string, Shader*>& GetShaderList();
 
 	// Returns a reference to the material list
-	std::unordered_map<std::string, Material*>& GetMaterialList() { return mMaterialList; }
+	const std::unordered_map<std::string, Material*>& GetMaterialList();
 
 	// Returns a reference to the texture list
-	std::unordered_map<std::string, Texture*>& GetTextureList() { return mTextureList; }
+	const std::unordered_map<std::string, Texture*>& GetTextureList();
 
 	// Returns the current shader
-	std::string GetCurShader() { return mCurShader; }
+	const std::string GetCurShader();
 
 	// Sets up the scene's camera with the given options
-	void SetCamera(Config* config) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = new Camera(config); }
+	void SetCamera(Config* config);
 
 	// Sets the scene's camera to the given camera
-	void SetCamera(Camera* cam) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = cam; }
+	void SetCamera(Camera* cam);
 
 	// Sets the scene's light to the given light
-	void SetLight(Light* light) { if (mGlobalLight != nullptr) { delete mGlobalLight; } mGlobalLight = light; }
+	void SetLight(Light* light);
+
+	// Sets the scene's name
+	void SetName(const std::string& name);
+
+	// Sets the scene's directory
+	void SetDirectory(const std::string& dir);
 
 	// Adds an entity to the scene's render list
-	IEntity* AddEntity(IEntity* entity, bool preRender = false)
-	{
-		std::unordered_map<std::string, IEntity*>& tempList = (preRender ? mPreRenderList : mRenderList);
-		if (tempList.find(entity->GetName()) == tempList.end())
-			tempList.emplace(entity->GetName(), entity);
-		return entity;
-	}
-
-	// Adds an entity to the scene's render list
-	IEntity* AddEntity(IEntity* entity, std::string name, bool preRender = false)
-	{
-		std::unordered_map<std::string, IEntity*>& tempList = (preRender ? mPreRenderList : mRenderList);
-		if (tempList.find(name) == tempList.end())
-			tempList.emplace(name, entity);
-		return entity;
-	}
+	IEntity* AddEntity(const std::string& shaderName, IEntity* entity, bool preRender = false);
 
 	// Adds a texture to the scene's texture list
-	Texture* AddTexture(std::string name, Texture* texture)
-	{
-		if (mTextureList.find(name) == mTextureList.end())
-			mTextureList.emplace(name, texture);
-		return texture;
-	}
+	Texture* AddTexture(const std::string& name, Texture* texture);
 
 	// Adds a material to the scene's material list
-	Material* AddMaterial(std::string name, Material* material)
-	{
-		if (mMaterialList.find(name) == mMaterialList.end())
-			mMaterialList.emplace(name, material);
-		return material;
-	}
+	Material* AddMaterial(const std::string& name, Material* material);
 
 	// Sets the default material of the scene from the material list if the material exists.
-	Material* SetDefaultMaterial(std::string name)
-	{
-		if (mMaterialList.find(name) != mMaterialList.end())
-			mDefaultMat = mMaterialList[name];
-		return mDefaultMat;
-	}
+	Material* SetDefaultMaterial(const std::string& name);
 
 	// Sets the default material of the scene. Note: Does not add it to the material list.
-	Material* SetDefaultMaterial(Material* material)
-	{
-		mDefaultMat = material;
-		return mDefaultMat;
-	}
+	Material* SetDefaultMaterial(Material* material);
+
+	// Sets the material of the given entity
+	void SetEntityMaterial(IEntity* entity, Material* material);
 
 	// Loads the materials from the given config
-	void LoadMaterials(Config* config)
-	{
-		// Load the default material if it exists
-		LoadMaterial(config->GetConfig("default"), "default");
-
-		// Load the rest of the materials
-		std::unordered_map<std::string, Config*> configs = config->GetConfigs();
-		for (auto iter = configs.begin(); iter != configs.end(); ++iter)
-			if (GetMaterial(iter->first) == nullptr)
-				LoadMaterial(iter->second, iter->first);
-	}
+	void LoadMaterials(Config* config);
 
 	// Returns the projection matrix of the scene's camera
-	glm::mat4 GetProjectionMatrix(float aspect) { return GetCamera()->GetProjection(aspect); }
+	const glm::mat4& GetProjectionMatrix(float aspect);
 
 	// Returns the view matrix of the scene's camera
-	glm::mat4 GetViewMatrix() { return GetCamera()->GetView(); }
+	const glm::mat4& GetViewMatrix();
 };

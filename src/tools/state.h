@@ -1,6 +1,7 @@
 #pragma once
 #include "glIncludes.h"
 #include "files/config.h"
+#include "rendering/material.h"
 
 class Selection;
 
@@ -9,6 +10,8 @@ class State
 private:
 	Config* mConfig;
 	Selection* mSelection;
+
+	std::unordered_map<std::string, Material*> mMaterialsThisFrame;
 public:
 	bool isDiscoLight;
 	bool isRotatingLight;
@@ -20,6 +23,8 @@ public:
 	bool enableHeightMap;
 	bool enableAlphaMap;
 	bool enableShadows;
+	bool enableGrid;
+	bool drawByMaterial;
 
 	unsigned int depthMapFBO;
 	unsigned int depthMap;
@@ -28,6 +33,23 @@ public:
 	std::string frameTime;
 
 	std::string curShader;
+	Material* defaultMat;
+
+	// Loads the given material, unless it's already been loaded this frame
+	void LoadMaterial(Material* material)
+	{
+		if (mMaterialsThisFrame.find(material->name) != mMaterialsThisFrame.end())
+			return;
+
+		material->LoadTextures(this, defaultMat);
+		mMaterialsThisFrame.emplace(material->name, material);
+	}
+
+	// Clears the loaded materials from this frame
+	void ClearLoadedMaterials()
+	{
+		mMaterialsThisFrame.clear();
+	}
 
 	Selection* GetSel() { return mSelection; }
 	Config* GetConfig() { return mConfig; }
@@ -47,6 +69,8 @@ public:
 		enableHeightMap = true;
 		enableAlphaMap = true;
 		enableShadows = true;
+		enableGrid = true;
+		drawByMaterial = true;
 
 		depthMapFBO = 0;
 		depthMap = 0;

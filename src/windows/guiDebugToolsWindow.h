@@ -45,6 +45,7 @@ public:
 			}
 
 			// Choose parts of materials
+			ImGui::Separator();
 			mState->enableDiffuseMap = GUIWindowUtils::Checkbox("Enable Diffuse Map", mState->enableDiffuseMap);
 			mState->enableAmbientMap = GUIWindowUtils::Checkbox("Enable Ambient Map", mState->enableAmbientMap);
 			mState->enableSpecularMap = GUIWindowUtils::Checkbox("Enable Specular Map", mState->enableSpecularMap);
@@ -52,8 +53,11 @@ public:
 			mState->enableHeightMap = GUIWindowUtils::Checkbox("Enable Height Map", mState->enableHeightMap);
 			mState->enableAlphaMap = GUIWindowUtils::Checkbox("Enable Alpha Map", mState->enableAlphaMap);
 			mState->enableShadows = GUIWindowUtils::Checkbox("Enable Shadows", mState->enableShadows);
+			mState->enableGrid = GUIWindowUtils::Checkbox("Enable Grid", mState->enableGrid);
+			mState->drawByMaterial = GUIWindowUtils::Checkbox("Draw By Material", mState->drawByMaterial);
 
 			// Camera settings
+			ImGui::Separator();
 			ImGui::Text("Camera Settings");
 			Camera* cam = mScene->GetCamera();
 			cam->SetPos(
@@ -74,6 +78,7 @@ public:
 				GUIWindowUtils::Checkbox("Wireframe", cam->IsWireframe()));
 
 			// Debug settings
+			ImGui::Separator();
 			ImGui::Text("Debug settings");
 			mState->isDiscoLight = GUIWindowUtils::Checkbox("Disco Light", mState->isDiscoLight);
 			mState->isRotatingLight = GUIWindowUtils::Checkbox("Rotating Light", mState->isRotatingLight);

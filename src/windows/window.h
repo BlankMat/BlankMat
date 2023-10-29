@@ -17,10 +17,13 @@ private:
 	ImGuiIO* mIO;
 
 	std::unordered_map<GUI, IGUIWindow*> mGUIList;
+
+	// Flag to track if the docking space is initialized
+	bool DockSpaceInitialized;
 public:
 	// Opens a OpenGL window with the given name
 	// -----------------------------------------
-	Window(int width, int height, std::string name, Config* config, State* state);
+	Window(int width, int height, const std::string& name, Config* config, State* state);
 
 	// Draws all GUIs
 	void DrawGUI();
@@ -48,9 +51,6 @@ public:
 
 // Sets up the ImGui Style
 inline void SetupImGuiStyle(bool isDarkStyle, float alphaThreshold);
-
-// Enables wireframe for the application
-void OpenGLEnableWireframe(bool enable);
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
 // ---------------------------------------------------------------------------------------------
