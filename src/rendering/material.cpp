@@ -112,6 +112,12 @@ Material::Material(const glm::vec3& _color, const std::string& _name)
     map_bump = nullptr;
     map_ns = nullptr;
     map_d = nullptr;
+
+    mCurKD = kd;
+    mCurKA = ka;
+    mCurKS = ks;
+    mCurKE = ke;
+    mShadowsEnabled = true;
 }
 
 // Constructs a material out of a config file and preloaded textures
@@ -145,6 +151,12 @@ Material::Material(const std::string& _name, Config* _config, Texture* _map_kd, 
     mTextures.push_back(map_bump);
     mTextures.push_back(map_ns);
     mTextures.push_back(map_d);
+
+    mCurKD = kd;
+    mCurKA = ka;
+    mCurKS = ks;
+    mCurKE = ke;
+    mShadowsEnabled = true;
 }
 
 // Constructs a material out of preloaded textures
@@ -160,12 +172,19 @@ Material::Material(const std::string& _name, Texture* _map_kd, Texture* _map_ka,
     map_bump = _map_bump;
     map_ns = _map_ns;
     map_d = _map_d;
+
     mTextures.push_back(map_kd);
     mTextures.push_back(map_ka);
     mTextures.push_back(map_ks);
     mTextures.push_back(map_bump);
     mTextures.push_back(map_ns);
     mTextures.push_back(map_d);
+
+    mCurKD = glm::vec3(1, 1, 1);
+    mCurKA = glm::vec3(0, 0, 0);
+    mCurKS = glm::vec3(1, 1, 1);
+    mCurKE = glm::vec3(0, 0, 0);
+    mShadowsEnabled = true;
 }
 
 // Construcst a material out of lists of preloaded textures
@@ -182,10 +201,17 @@ Material::Material(const std::string& _name,
     map_bump = _map_bump[0];
     map_ns = _map_ns[0];
     map_d = _map_d[0];
+
     mTextures.insert(mTextures.end(), _map_kd.begin(), _map_kd.end());
     mTextures.insert(mTextures.end(), _map_ka.begin(), _map_ka.end());
     mTextures.insert(mTextures.end(), _map_ks.begin(), _map_ks.end());
     mTextures.insert(mTextures.end(), _map_bump.begin(), _map_bump.end());
     mTextures.insert(mTextures.end(), _map_ns.begin(), _map_ns.end());
     mTextures.insert(mTextures.end(), _map_d.begin(), _map_d.end());
+
+    mCurKD = glm::vec3(1, 1, 1);
+    mCurKA = glm::vec3(0, 0, 0);
+    mCurKS = glm::vec3(1, 1, 1);
+    mCurKE = glm::vec3(0, 0, 0);
+    mShadowsEnabled = true;
 }
