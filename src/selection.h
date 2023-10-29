@@ -4,6 +4,7 @@
 #include <iostream>
 #include <set>
 #include "tools/selectTool.h"
+#include "tools/iTool.h"
 
 enum class Tool { NONE = 0, SELECT = 1, MOVE = 2, ROTATE = 3, SCALE = 4, EXTRUDE = 5 , LAST};
 enum class SelMode { MESH = 0, VERT = 1, FACE = 2, LAST };
@@ -13,6 +14,7 @@ class IEntity;
 class IMesh;
 class IScene;
 class Material;
+class ITool;
 
 class Selection
 {
@@ -80,6 +82,8 @@ public:
 	void SetTool(Tool _sel);
 	// Sets the selection mode
 	void SetSelMode(SelMode _sel);
+	// Call Interact from the current Tool object 
+	void ToolInteract(double cursorX, double cursorY);
 
 	// Returns the tool selection
 	Tool GetTool();

@@ -208,6 +208,13 @@ void Selection::SetSelMode(SelMode _sel)
 		break;
 	}
 }
+// Call Interact from the current Tool object 
+void Selection::ToolInteract(double cursorX, double cursorY)
+{
+	ITool* curFunctionalTool = mTools[(int)mSelTool];
+	std::cout << "Tool Interaction has occured\n";
+	curFunctionalTool->Interact(cursorX,cursorY);
+}
 
 // Returns whether the given vertex is selected
 bool Selection::IsVertSelected(unsigned int _id) { return mSelVertices.find(_id) != mSelVertices.end(); }
@@ -283,5 +290,6 @@ Selection::Selection()
 	mSelEntity = nullptr;
 	mSelTransformHandle = nullptr;
 
-	mTools.push_back(new SelectTool());
+	// Create tools and link with this Selection Instance
+	mTools.push_back(new SelectTool(this));
 }

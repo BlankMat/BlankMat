@@ -15,12 +15,27 @@ class SelectTool : public ITool
         {
 
         }
-        void Interact()
-        {
-            ImGui::GetMousePos();
+        void Interact(double cursorX, double cursorY)
+        {/*
+            switch(mSel->GetSelMode())
+            {
+                case SelMode::FACE :
+                {
+                    mSel->SelectFace(mSel->GetNearestFace(,(float)cursorX,(float)cursorY));
+                }
+                case SelMode::VERT :
+                {
+                    mSel->SelectVert(mSel->GetNearestVert());
+                }
+                case SelMode::MESH :
+                {
+                    mSel->SelectMesh(mSel->GetNearestMesh());
+                }
+            }
+            */
         }
-        SelectTool()
+        SelectTool(Selection* sel)
         {
-
+            mSel = sel;
         }
 };

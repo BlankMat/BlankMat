@@ -108,6 +108,9 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
         }
         // Handle tools on any other input
         else {
+            double cursorX = 0;
+            double cursorY = 0;
+            glfwGetCursorPos(window->GetWindow(),&cursorX,&cursorY);
             switch (sel->GetTool()) {
                 /* ========== Handle extruding ============== */
             case Tool::EXTRUDE:
@@ -177,6 +180,7 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
                 break;
                 /* ========== Handle defaults ================ */
             case Tool::SELECT:
+                sel->ToolInteract(cursorX, cursorY);
             case Tool::NONE:
             default:
                 break;
