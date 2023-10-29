@@ -1,7 +1,9 @@
 #pragma once
 #include "glIncludes.h"
 #include "iGUIWindow.h"
-#include "fileSystem.h"
+#include "files/config.h"
+#include "files/fileSystem.h"
+#include "tools/state.h"
 #include <iostream>
 #include <unordered_map>
 #include <string>
@@ -15,10 +17,13 @@ private:
 	ImGuiIO* mIO;
 
 	std::unordered_map<GUI, IGUIWindow*> mGUIList;
+
+	// Flag to track if the docking space is initialized
+	bool DockSpaceInitialized;
 public:
 	// Opens a OpenGL window with the given name
 	// -----------------------------------------
-	Window(int width, int height, std::string name);
+	Window(int width, int height, const std::string& name, Config* config, State* state);
 
 	// Draws all GUIs
 	void DrawGUI();
@@ -39,10 +44,13 @@ public:
 	int GetHeight() { return mHeight; }
 	// Returns the aspect ratio of the screen
 	float GetAspect() { return (float)mWidth / (float)mHeight; }
+
+	// Initialize GUI
+	//void InitGUI(State* state, Scene* scene);
 };
 
-// Enables wireframe for the application
-void OpenGLEnableWireframe(bool enable);
+// Sets up the ImGui Style
+inline void SetupImGuiStyle(bool isDarkStyle, float alphaThreshold);
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
 // ---------------------------------------------------------------------------------------------

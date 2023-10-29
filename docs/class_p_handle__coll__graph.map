@@ -1,0 +1,19 @@
+<map id="PHandle" name="PHandle">
+<area shape="rect" id="Node000001" title=" " alt="" coords="87,633,157,660"/>
+<area shape="rect" id="Node000002" href="$class_i_entity.html" title=" " alt="" coords="45,343,103,369"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="76,385,77,454,86,537,102,590,119,632,114,634,97,592,81,538,71,455,70,385"/>
+<area shape="rect" id="Node000007" href="$class_i_primitive.html" title=" " alt="" coords="95,419,240,461"/>
+<area shape="poly" id="edge7_Node000007_Node000002" title=" " alt="" coords="101,377,146,416,142,420,98,381"/>
+<area shape="rect" id="Node000003" href="$class_material.html" title="Class that stores all texture and render information for a material." alt="" coords="40,252,108,279"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="77,294,77,342,71,342,71,294"/>
+<area shape="rect" id="Node000004" href="$class_i_material.html" title=" " alt="" coords="5,176,143,203"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="77,218,77,252,71,252,71,218"/>
+<area shape="rect" id="Node000005" href="$struct_texture.html" title=" " alt="" coords="42,5,106,32"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="77,47,77,176,71,176,71,47"/>
+<area shape="rect" id="Node000006" href="$class_p_line.html" title=" " alt="" coords="95,511,149,537"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="125,553,125,633,119,633,119,553"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="151,477,131,512,127,509,146,474"/>
+<area shape="rect" id="Node000008" href="$class_p_wire_cube.html" title=" " alt="" coords="173,511,260,537"/>
+<area shape="poly" id="edge9_Node000008_Node000007" title=" " alt="" coords="190,473,211,509,207,512,185,476"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="214,553,205,582,188,611,173,625,156,635,153,630,170,620,184,608,200,580,209,551"/>
+</map>

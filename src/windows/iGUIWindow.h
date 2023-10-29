@@ -6,19 +6,26 @@ enum class GUI
 	NONE = 0,
 	DEBUG_TOOLS = 1,
 	HIERARCHY = 2,
-	TOOLBAR = 3,
-	MATERIAL_BAR = 4,
-	TRANSFORM_EDITOR = 5,
+	INSPECTOR = 3,
+	MENU_BAR = 4,
+	TOOLBAR = 5,
+	MATERIAL_BAR = 6,
+	TRANSFORM_EDITOR = 7,
+	MODEBAR = 8,
 
 	MODEL_EDITOR = 10,
 	MATERIAL_EDITOR = 11,
 	UV_EDITOR = 12,
+
+	MATERIAL_VIEWER = 20,
+	LIGHT_VIEWER = 21,
+	CAMERA_VIEWER = 22
 };
 
 class IGUIWindow
 {
 protected:
-	GUI type;
+	GUI mType;
 	std::string mName;
 	glm::vec2 mScreenPos;
 	bool mIsEnabled;
@@ -36,13 +43,13 @@ public:
 	bool ToggleEnabled() { mIsEnabled = !mIsEnabled; return mIsEnabled; }
 
 	// Gets the type of the GUI
-	GUI GetType() { return type; }
+	GUI GetType() { return mType; }
 	// Gets the name of the GUI
-	std::string GetName() { return mName; }
+	const std::string GetName() { return mName; }
 	// Sets the name of the GUI
-	void SetName(std::string name) { mName = name; }
+	void SetName(const std::string& name) { mName = name; }
 	// Gets the position of the GUI on the screen
-	glm::vec2 GetPos() { return mScreenPos; }
+	const glm::vec2 GetPos() { return mScreenPos; }
 	// Sets the position of the GUI on the screen
-	void SetPos(glm::vec2 pos) { mScreenPos = pos; }
+	void SetPos(const glm::vec2& pos) { mScreenPos = pos; }
 };

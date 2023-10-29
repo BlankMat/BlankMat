@@ -1,18 +1,10 @@
 #pragma once
 #include "glIncludes.h"
-#include "fileSystem.h"
+#include "files/fileSystem.h"
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <iostream>
-
-#define SHADER_DIR "resources/shaders/"
-#define DEFAULT_SHADER "default"
-#define LINE_SHADER "line"
-#define LIGHT_CUBE_SHADER "lightCube"
-#define BLINN_SHADER "blinnDefaultShader"
-#define PHONG_SHADER "phongDefaultShader"
-#define LAMBERT_SHADER "lambertDefaultShader"
 
 // Shader utility class borrowed from
 // CC BY-NC 4.0 license https://creativecommons.org/licenses/by-nc/4.0/
@@ -22,12 +14,13 @@ class Shader
 private:
     // utility function for checking shader compilation/linking errors.
     // ------------------------------------------------------------------------
-    void CheckCompileErrors(GLuint shader, std::string type);
+    void CheckCompileErrors(GLuint shader, const std::string& type);
 public:
+    std::string name;
     unsigned int ID;
 
     // constructor generates the shader on the fly
-    Shader(std::string path, bool loadGeom = false);
+    Shader(const std::string& path, bool loadGeom = false);
     // constructor generates the shader on the fly
     Shader(const char* vertexPath, const char* fragmentPath, const char* geometryPath = nullptr);
     // Cleans up the shader's info

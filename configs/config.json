@@ -1,0 +1,59 @@
+{
+  "model": {
+    "file": "backpack/backpack.obj",
+    "pos": [ 0.0, 1.8, 0.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+
+  "light": {
+    "pos": [ -4.0, 5.0, 4.0 ],
+    "dir": [ -1.0, -1.0, -1.0 ],
+    "color": [ 1.0, 1.0, 1.0 ],
+    "diffuse":  1.0,
+    "ambient": 0.1,
+    "specular": 1.0,
+    "gamma": false,
+    "type": 0,
+    "range": 30.0,
+    "spotInnerRadius": 25.0,
+    "spotOuterRadius": 35.0
+  },
+
+  "camera": {
+    "pos": [ 5.0, 5.0, 7.0 ],
+    "dir": [ -5.0, -7.0, -7.0 ],
+    "up": [ 0.0, 1.0, 0.0 ],
+    "fov": 45.0,
+    "size": 5.0,
+    "nearClip": 0.1,
+    "farClip": 100.0,
+    "perspective": true,
+    "bgColor": [ 0.3, 0.4, 0.4 ],
+    "wireframe": false
+  },
+
+  "speeds": {
+    "camMove": 2.0,
+    "camTurn": 1.0,
+    "modelMove": 0.3,
+    "modelTurn": 30.0,
+    "modelScale": 1.0,
+    "mouseMove": 0.1,
+    "mouseTurn": 0.1
+  },
+
+  "style": {
+    "font": "Roboto-Regular.ttf",
+    "fontSize": 18.0,
+    "darkTheme": true,
+    "windowOpacity": 0.6
+  },
+
+  "quality": {
+    "shadowResolution": 1024
+  },
+
+  "defaultCubes": false,
+  "flipImages": true
+}

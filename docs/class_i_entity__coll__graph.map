@@ -1,0 +1,9 @@
+<map id="IEntity" name="IEntity">
+<area shape="rect" id="Node000001" title=" " alt="" coords="45,343,103,369"/>
+<area shape="rect" id="Node000002" href="$class_material.html" title="Class that stores all texture and render information for a material." alt="" coords="40,252,108,279"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="77,294,77,342,71,342,71,294"/>
+<area shape="rect" id="Node000003" href="$class_i_material.html" title=" " alt="" coords="5,176,143,203"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="77,218,77,252,71,252,71,218"/>
+<area shape="rect" id="Node000004" href="$struct_texture.html" title=" " alt="" coords="42,5,106,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="77,47,77,176,71,176,71,47"/>
+</map>

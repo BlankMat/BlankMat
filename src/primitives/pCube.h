@@ -1,15 +1,12 @@
 #pragma once
-#include "glIncludes.h"
-#include "rendering/shader.h"
-#include "rendering/iPrimitive.h"
-#include <vector>
+#include "interfaces/iPrimitive.h"
 
 class PCube : public IPrimitive<glm::vec3, glm::uvec3>
 {
 public:
-	PCube(float size, Shader* shader, glm::vec3 color, float lineWidth, bool drawOver = false,
-		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
-		: IPrimitive(shader, color, lineWidth, drawOver, pos, rot, scale)
+	PCube(const std::string& name, const float size, Material* material, const float lineWidth, const bool drawOver = false,
+		const glm::vec3& pos = glm::vec3(0.0f), const glm::vec3& rot = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f))
+		: IPrimitive(name, material, lineWidth, drawOver, pos, rot, scale)
 	{
 		float h = size * 0.5f;
 		// Generate verts of cube

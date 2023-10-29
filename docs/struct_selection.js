@@ -1,0 +1,27 @@
+var struct_selection =
+[
+    [ "Selection", "struct_selection.html#a53d1bd270d6d257d34d5bc8d50028049", null ],
+    [ "CalcSelPivot", "struct_selection.html#a2ef7109d8db054fe76c978d8c7377ca4", null ],
+    [ "ClearFaceSel", "struct_selection.html#aa695c048c7955928f609c287aaa917e8", null ],
+    [ "ClearSelection", "struct_selection.html#a098fd89ec5755611d9ee075e4df6b024", null ],
+    [ "ClearVertSel", "struct_selection.html#a6e8ab1df82fd19904a6138894ec5f63b", null ],
+    [ "DeselectFace", "struct_selection.html#ac98a25e6428a12ac8e9178545685195a", null ],
+    [ "DeselectMesh", "struct_selection.html#a097eed175432a438373cb9a7d1b5cfe7", null ],
+    [ "DeselectVert", "struct_selection.html#adf497f66fd288e29b979a9a3fac1492d", null ],
+    [ "GetSelectedMesh", "struct_selection.html#a800e0ebc46ce1ca6d91c460898fc49d4", null ],
+    [ "GetSelectedVerts", "struct_selection.html#a536e8b593ad414fd904838cba66388c3", null ],
+    [ "GetSelectedVerts", "struct_selection.html#ac171581296b858d2351213468d870754", null ],
+    [ "GetSelectionPivot", "struct_selection.html#adbe02d976671f4f5ff03cd23796075d2", null ],
+    [ "GetSelMode", "struct_selection.html#a28f4e9e54d7d46f1e1f7bc5bb95d887f", null ],
+    [ "GetTool", "struct_selection.html#aa423bbd72d9e6657a9f778142c1ac24d", null ],
+    [ "IsFaceSelected", "struct_selection.html#a230f3845cccfc540418fa2990a90d0d4", null ],
+    [ "IsVertSelected", "struct_selection.html#a8481770c80ac0958d3a9fa5f6598572d", null ],
+    [ "SelectFace", "struct_selection.html#ac90abf87e6758dffc3dc07529e5e3ea7", null ],
+    [ "SelectMesh", "struct_selection.html#a000f745b39fa2a8ffa94c0a93749fe0a", null ],
+    [ "SelectVert", "struct_selection.html#ae16be2c70ae6f39d8fae5b7e989fa8d5", null ],
+    [ "SetSelectionPivot", "struct_selection.html#a4fa4b858d6b0062d6b5099fab3634daa", null ],
+    [ "SetSelMode", "struct_selection.html#aad3b872e155cfd3e7f52a9935b0452b4", null ],
+    [ "SetTool", "struct_selection.html#ad6095139266ba8f1d0f092fd01bad81c", null ],
+    [ "newSelVerts", "struct_selection.html#a529547407c0694a95a474caed68e2b4f", null ],
+    [ "removedSelVerts", "struct_selection.html#a656e5ec5c6455a3881ce9eb0ee28412d", null ]
+];

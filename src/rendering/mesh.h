@@ -1,29 +1,24 @@
 #pragma once
-#include "iMesh.h"
+#include "glIncludes.h"
+#include "texture.h"
+#include "vertex.h"
 #include "material.h"
-#include <unordered_map>
+#include "interfaces/iMesh.h"
+#include <vector>
 
 class Mesh : public IMesh
 {
 protected:
-	Material* mMaterial;
-	std::unordered_map<std::string, IMesh*> mChildren;
+	// Calculates the center of the mesh
+	const glm::vec3 CalcCenter();
 public:
-	// Generates a mesh with the given vertices, indices, material, and child meshes
-	Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, Material* material);
+	// Instantiates an empty mesh
+	Mesh(const std::string& name, Material* material)
+		: IMesh(name, material) {}
 
-	// Draws the mesh to the screen
-	void Draw(glm::mat4 viewProj) override;
-
-	// Sets the shader of the mesh
-	void SetShader(Shader* shader) override;
-
-	// Adds the child mesh
-	IMesh* AddChild(IMesh* child);
-
-	// Returns the number of child meshes
-	unsigned int GetChildCount() { return (unsigned int)mChildren.size(); }
-
+	// Instantiates a mesh with the given vertices, indices, and textures
+	Mesh(const std::string& name, const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, Material* material);
+	
 	// Cleans up the mesh
 	~Mesh();
 };
