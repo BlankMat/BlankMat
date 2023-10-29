@@ -25,6 +25,7 @@ public:
 	bool enableShadows;
 	bool enableGrid;
 	bool drawByMaterial;
+	bool flipTextures;
 
 	unsigned int depthMapFBO;
 	unsigned int depthMap;
@@ -71,6 +72,7 @@ public:
 		enableShadows = true;
 		enableGrid = true;
 		drawByMaterial = true;
+		flipTextures = true;
 
 		depthMapFBO = 0;
 		depthMap = 0;
