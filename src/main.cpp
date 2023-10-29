@@ -89,7 +89,8 @@ int main()
             scene->GetLight()->SetColor(lightColor);
 
         // Draw GUI
-        window->DrawGUI();
+        if (state->drawGUI)
+            window->DrawGUI();
         //ImGui::ShowDemoWindow();
 
         // Process input and render
@@ -97,8 +98,12 @@ int main()
 
         // Render
         OpenGLDraw(window, state, scene);
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        if (state->drawGUI)
+        {
+            ImGui::Render();
+            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        }
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         glfwSwapBuffers(window->GetWindow());
@@ -201,11 +206,11 @@ void LoadDefaultScene(Scene* scene, Material* defaultMat, bool defaultCubes, Con
     if (defaultCubes)
     {
         //scene->Addentity(CAMERA_AXIS_HANDLE, new Cube(15.0f, scene->GetShader(LINE_SHADER), glm::vec3(1.0f), 6, true, glm::vec3(100, 100, 0)));
-        scene->AddEntity("blinn", new PCube("cube1", 1.0f, new Material(glm::vec3(0, 1, 0)), 0.0f, false, glm::vec3(-5, 0, -5), glm::vec3(0, 45, 0), glm::vec3(1, 2, 1)));
-        scene->AddEntity("blinn", new PCube("cube2", 1.0f, new Material(glm::vec3(1, 0, 0)), 0.0f, false, glm::vec3(-5, 0, -3), glm::vec3(45, 0, 0), glm::vec3(2, 1, 1)));
-        scene->AddEntity("blinn", new PCube("cube3", 1.0f, new Material(glm::vec3(0, 0, 1)), 0.0f, false, glm::vec3(-5, 0, -1), glm::vec3(0, 0, 45), glm::vec3(1, 1, 2)));
-        scene->AddEntity("blinn", new PCube("cube4", 1.0f, new Material(glm::vec3(0, 1, 1)), 0.0f, false, glm::vec3(-5, 0, 1), glm::vec3(0, 45, 45), glm::vec3(1, 2, 2)));
-        scene->AddEntity("blinn", new PCube("cube5", 1.0f, new Material(glm::vec3(1, 0, 1)), 0.0f, false, glm::vec3(-5, 0, 3), glm::vec3(45, 0, 45), glm::vec3(2, 1, 2)));
-        scene->AddEntity("blinn", new PCube("cube6", 1.0f, new Material(glm::vec3(1, 1, 0)), 0.0f, false, glm::vec3(-5, 0, 5), glm::vec3(45, 45, 0), glm::vec3(2, 2, 1)));
+        scene->AddMesh(new VCube("cube1", 1.0f, new Material(glm::vec3(0, 1, 0)), glm::vec3(-5, 0, -5), glm::vec3(0, 45, 0), glm::vec3(1, 2, 1)));
+        scene->AddMesh(new VCube("cube2", 1.0f, new Material(glm::vec3(1, 0, 0)), glm::vec3(-5, 0, -3), glm::vec3(45, 0, 0), glm::vec3(2, 1, 1)));
+        scene->AddMesh(new VCube("cube3", 1.0f, new Material(glm::vec3(0, 0, 1)), glm::vec3(-5, 0, -1), glm::vec3(0, 0, 45), glm::vec3(1, 1, 2)));
+        scene->AddMesh(new VCube("cube4", 1.0f, new Material(glm::vec3(0, 1, 1)), glm::vec3(-5, 0, 1), glm::vec3(0, 45, 45), glm::vec3(1, 2, 2)));
+        scene->AddMesh(new VCube("cube5", 1.0f, new Material(glm::vec3(1, 0, 1)), glm::vec3(-5, 0, 3), glm::vec3(45, 0, 45), glm::vec3(2, 1, 2)));
+        scene->AddMesh(new VCube("cube6", 1.0f, new Material(glm::vec3(1, 1, 0)), glm::vec3(-5, 0, 5), glm::vec3(45, 45, 0), glm::vec3(2, 2, 1)));
     }
 }

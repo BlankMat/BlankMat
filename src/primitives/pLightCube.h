@@ -51,7 +51,7 @@ public:
     {
         Material* newMat = new Material(color);
         mCube = new PCube(name, size, newMat, 0.0f, false, pos);
-        mDirLine = new PLine(name, glm::vec3(0, 0, 0), glm::vec3(0, 0, 2), new Material(glm::vec3(1,1,0)), 15.0f, false, pos);
+        mDirLine = new PLine(name, glm::vec3(0, 0, 0), glm::vec3(0, 0, 1.5f), new Material(glm::vec3(1, 1, 0)), 15.0f, false, pos);
         SetDir(dir);
     }
 

@@ -20,6 +20,7 @@
 #define F_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_F) == GLFW_PRESS)
 #define D_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_D) == GLFW_PRESS)
 #define ESC_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+#define SPACE_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_SPACE) == GLFW_PRESS)
 #define WASDZX_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_W) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_A) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_S) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_D) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_Z) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_X) == GLFW_PRESS)
 #define ARROW_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_UP) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_DOWN) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_LEFT) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_RIGHT) == GLFW_PRESS)
 #define DELETE_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_DELETE) == GLFW_PRESS)
@@ -53,6 +54,7 @@ struct InputLocks {
 	bool lockDel = false;		// Delete
 	bool lockLeftMouse = false;
 	bool lockRightMouse = false;
+	bool lockSpace = false;
 
 	bool lockKey1 = false;
 	bool lockKey2 = false;
