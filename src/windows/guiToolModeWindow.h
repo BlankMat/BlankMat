@@ -11,64 +11,64 @@
 #include "rendering/scene.h"
 #include "files/fileSystem.h"
 
-#define TOOLSDIR "resources/icons/toolIcons"
-#define SelectFileName "Select.png"
-#define MoveFileName "Move.png"
-#define RotateFileName "Rotate.png"
-#define ScaleFileName "Scale.png"
-#define ExtrudeFileName "Extrude.png"
+#define MODESDIR "resources/icons/modeIcons"
 
-class GUIToolbarWindow : public IGUIWindow
+
+
+class GUIToolModeWindow : public IGUIWindow
 {
 protected:
+    const std::string mModeFileNames[3] = {"Mesh.png", "Vert.png", "Face.png"};
     State* mState;
     Scene* mScene;
-    const std::string fileNames[5] = {SelectFileName,MoveFileName,RotateFileName,ScaleFileName,ExtrudeFileName};
+    //const std::string fileNames[5] = {SelectModesFileName,MoveModesFileName,RotateModesFileName,ScaleModesFileName,ExtrudeModesFileName};
     std::vector<ImTextureID>  mTextureIDs;
     std::vector<ImVec2> mDims;
 public:
     void Draw() override
     {
-        ImGui::Begin("Toolbar");
+        ImGui::Begin("Tool Modes");
 		Selection* curSel = mState->GetSel();
-        Tool curTool = curSel->GetTool();
-        for(Tool t = Tool::SELECT; t != Tool::LAST; t = (Tool)((int)t+1))
+        //Tool curTool = curSel->GetTool();
+        SelMode curMode = curSel->GetSelMode();
+        
+        for(SelMode m = SelMode::MESH; m != SelMode::LAST; m = (SelMode)((int)m+1))
         {
-            int offsetT = (int)t-1;
+            int intM = (int)m;
             ImVec4 newTint = ImVec4(1,1,1,1);
             // If Tool t is the currently selected tool, tint the button to make it look darker.
-            if(curTool == t)
+            if(curMode == m)
             {
                 newTint = ImVec4(0.5,0.5,0.5,0.5);
             }
-            bool isPressed = ImGui::ImageButton(mTextureIDs[offsetT], mDims[offsetT],ImVec2(0,0),ImVec2(1,1),-1,ImVec4(0,0,0,0),newTint);
+            bool isPressed = ImGui::ImageButton(mTextureIDs[intM], mDims[intM],ImVec2(0,0),ImVec2(1,1),-1,ImVec4(0,0,0,0),newTint);
             if(isPressed)
             {
-                curSel->SetTool(t);
-                curTool = t;
+                curSel->SetSelMode(m);
+                curMode = m;
             }
         }
 
         ImGui::End();
     }
 
-    GUIToolbarWindow(State* state, Scene* scene, bool isEnabled)
+    GUIToolModeWindow(State* state, Scene* scene, bool isEnabled)
     {
-        mType = GUI::TOOLBAR;
+        mType = GUI::MODEBAR;
         mIsEnabled = isEnabled;
         mState = state;
         mScene = scene;
         stbi_set_flip_vertically_on_load(false);
-        for(Tool t = Tool::SELECT; t != Tool::LAST; t = (Tool)((int)t+1))
+        for(SelMode m = SelMode::MESH; m != SelMode::LAST; m = (SelMode)((int)m+1))
         {
-            std::string fileName = fileNames[(int)t-1];
+            std::string fileName = mModeFileNames[(int)m];
             //std::string fullFilePath = TOOLSDIR + std::string("/")+ fileName;
             int widthDim = 0;
             int heightDim = 0;
-            ImTextureID textureID = (ImTextureID)TextureFromFile(FileSystem::GetPath(TOOLSDIR),fileName,widthDim,heightDim, false);
+            ImTextureID textureID = (ImTextureID)TextureFromFile(FileSystem::GetPath(MODESDIR),fileName,widthDim,heightDim, false);
             mTextureIDs.push_back(textureID);
             mDims.push_back(ImVec2(widthDim,heightDim));
         }
         stbi_set_flip_vertically_on_load(true);
     }
-};
+};  

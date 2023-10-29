@@ -282,4 +282,6 @@ Selection::Selection()
 	mSelMat = nullptr;
 	mSelEntity = nullptr;
 	mSelTransformHandle = nullptr;
+
+	mTools.push_back(new SelectTool());
 }

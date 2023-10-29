@@ -3,9 +3,10 @@
 #include <vector>
 #include <iostream>
 #include <set>
+#include "tools/selectTool.h"
 
 enum class Tool { NONE = 0, SELECT = 1, MOVE = 2, ROTATE = 3, SCALE = 4, EXTRUDE = 5 , LAST};
-enum class SelMode { MESH = 0, VERT = 1, FACE = 2 };
+enum class SelMode { MESH = 0, VERT = 1, FACE = 2, LAST };
 
 // Forward declare to prevent circular dependency
 class IEntity;
@@ -26,6 +27,8 @@ private:
 
 	Tool mSelTool;
 	SelMode mSelMode;
+	std::vector<ITool*> mTools;
+
 public:
 	std::set<unsigned int> newSelVerts;
 	std::set<unsigned int> removedSelVerts;

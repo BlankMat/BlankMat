@@ -162,6 +162,7 @@ void LoadGUIs(Window* window, State* state, Scene* scene)
     window->AddGUI(new GUIInspectorWindow(state, scene, true));
     window->AddGUI(new GUIMenuBarWindow(true));
     window->AddGUI(new GUIToolbarWindow(state, scene, true));
+    window->AddGUI(new GUIToolModeWindow(state, scene, true));
 }
 
 // Loads all defined shaders
