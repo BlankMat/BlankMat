@@ -102,8 +102,8 @@ $(document).ready(function(){initNavTree('input_8h_source.html',''); initResizab
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;glIncludes.h&quot;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;selection.h&quot;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;rendering/iMesh.h&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;rendering/iScene.h&quot;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;interfaces/iMesh.h&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;interfaces/iScene.h&quot;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;windows/window.h&quot;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;tools/state.h&quot;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
@@ -173,9 +173,9 @@ $(document).ready(function(){initNavTree('input_8h_source.html',''); initResizab
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="keywordtype">bool</span> ProcessInput(<a class="code hl_class" href="class_window.html">Window</a>* window, <a class="code hl_class" href="class_i_scene.html">IScene</a>* scene, <a class="code hl_class" href="class_state.html">State</a>* state, <a class="code hl_struct" href="struct_input_locks.html">InputLocks</a>* locks, <span class="keywordtype">float</span> deltaTime, <span class="keywordtype">int</span>* prevX, <span class="keywordtype">int</span>* prevY);</div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>glm::vec3 GetWASDZX(<a class="code hl_class" href="class_window.html">Window</a>* window);</div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>glm::vec3 GetArrow(<a class="code hl_class" href="class_window.html">Window</a>* window);</div>
-<div class="ttc" id="aclass_i_scene_html"><div class="ttname"><a href="class_i_scene.html">IScene</a></div><div class="ttdef"><b>Definition</b> iScene.h:13</div></div>
-<div class="ttc" id="aclass_state_html"><div class="ttname"><a href="class_state.html">State</a></div><div class="ttdef"><b>Definition</b> state.h:7</div></div>
-<div class="ttc" id="aclass_window_html"><div class="ttname"><a href="class_window.html">Window</a></div><div class="ttdef"><b>Definition</b> window.h:13</div></div>
+<div class="ttc" id="aclass_i_scene_html"><div class="ttname"><a href="class_i_scene.html">IScene</a></div><div class="ttdef"><b>Definition</b> iScene.h:23</div></div>
+<div class="ttc" id="aclass_state_html"><div class="ttname"><a href="class_state.html">State</a></div><div class="ttdef"><b>Definition</b> state.h:9</div></div>
+<div class="ttc" id="aclass_window_html"><div class="ttname"><a href="class_window.html">Window</a></div><div class="ttdef"><b>Definition</b> window.h:11</div></div>
 <div class="ttc" id="astruct_input_locks_html"><div class="ttname"><a href="struct_input_locks.html">InputLocks</a></div><div class="ttdef"><b>Definition</b> input.h:37</div></div>
 <div class="ttc" id="astruct_input_locks_html_a0176442fc34881d14897476439999cbb"><div class="ttname"><a href="struct_input_locks.html#a0176442fc34881d14897476439999cbb">InputLocks::lockCtrlC</a></div><div class="ttdeci">bool lockCtrlC</div><div class="ttdef"><b>Definition</b> input.h:45</div></div>
 <div class="ttc" id="astruct_input_locks_html_a04d96295657c1dca39aed0fb2da6bb0c"><div class="ttname"><a href="struct_input_locks.html#a04d96295657c1dca39aed0fb2da6bb0c">InputLocks::ClearLocks</a></div><div class="ttdeci">void ClearLocks()</div><div class="ttdef"><b>Definition</b> input.cpp:367</div></div>

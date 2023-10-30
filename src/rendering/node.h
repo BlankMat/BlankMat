@@ -1,6 +1,6 @@
 #pragma once
 #include "glIncludes.h"
-#include "iMesh.h"
+#include "interfaces/iMesh.h"
 #include <vector>
 
 class Node : public IEntity
@@ -19,6 +19,9 @@ protected:
 	/// </summary>
 	std::vector<IMesh*> mMeshes;
 
+	/// <summary>
+	/// Generates buffers. Nodes have no buffers.
+	/// </summary>
 	void GenBuffers() override {}
 public:
 	/// <summary>
@@ -26,28 +29,30 @@ public:
 	/// </summary>
 	/// <param name="parent">Parent node or nullptr</param>
 	/// <param name="name">Name of this node</param>
-	Node(Node* parent, std::string name);
+	Node(Node* parent, const std::string& name);
 
 	/// <summary>
 	/// Recursively draws the node and its children and child meshes
 	/// </summary>
-	/// <param name="viewProj">View*Projection Matrix of the camera</param>
-	/// <param name="camera">Camera used for viewing</param>
-	/// <param name="light">Light used for viewing</param>
+	/// <param name="shader">Shader to draw to</param>
+	/// <param name="state">Global state of the application</param>
+	/// <param name="defaultMat">Default material of the scene</param>
+	/// <param name="viewProj">Projection * View Matrix of the camera</param>
 	/// <param name="model">Combined model matrix of all parents</param>
-	void Draw(glm::mat4 viewProj, Camera* camera, Light* light, glm::mat4 model = glm::mat4(1.0f)) override;
+	void Draw(Shader* shader, State* state, Material* defaultMat, const glm::mat4& viewProj, bool drawMats = false) override;
 
 	/// <summary>
-	/// Sets the shader of the node recursively
+	/// Recursively draws the node's and children's shadows
 	/// </summary>
-	/// <param name="shader">Shader to use</param>
-	void SetShader(Shader* shader) override;
+	/// <param name="shader">Shadow shader</param>
+	/// <param name="state">Global state of the application</param>
+	/// <param name="model">Model matrix</param>
+	void DrawShadows(Shader* shader, State* state);
 
 	/// <summary>
-	/// Returns the name of the node
+	/// Recalculates all matrices of the node
 	/// </summary>
-	/// <returns>Name of the node</returns>
-	std::string GetName() { return mName; }
+	void RecalcMatrices() override;
 
 	/// <summary>
 	/// Returns the number of child nodes
@@ -66,7 +71,7 @@ public:
 	/// </summary>
 	/// <param name="child">Child node to search for</param>
 	/// <returns>Index of the node with the given name</returns>
-	int GetNodeIndex(std::string child);
+	int GetNodeIndex(const std::string& child);
 
 	/// <summary>
 	/// Returns the index of the given mesh or -1 if not found
@@ -101,7 +106,7 @@ public:
 	/// </summary>
 	/// <param name="child">Child node to search for</param>
 	/// <returns>Whether the node was found or not</returns>
-	bool HasNode(std::string child) { return GetNodeIndex(child) > 0; }
+	bool HasNode(const std::string& child) { return GetNodeIndex(child) > 0; }
 
 	/// <summary>
 	/// Returns whether this node is the root node
@@ -110,24 +115,23 @@ public:
 	bool IsRootNode() { return mParent == nullptr; }
 
 	/// <summary>
+	/// Updates the enabled status of the object and its children
+	/// </summary>
+	void UpdateEnabledStatus() override;
+
+	/// <summary>
 	/// Recursively searches for the node with the given name
 	/// </summary>
 	/// <param name="name">Node to search for</param>
 	/// <returns>Node with the given name or nullptr if not found</returns>
-	Node* FindNode(std::string name);
+	Node* FindNode(const std::string& name);
 
 	/// <summary>
 	/// Recursively searches for the mesh with the given name
 	/// </summary>
 	/// <param name="name">Name of the mesh</param>
 	/// <returns>Mesh with the given name or nullptr if not found</returns>
-	IMesh* FindMesh(std::string name);
-
-	/// <summary>
-	/// Renames the node to the given name
-	/// </summary>
-	/// <param name="name">New name</param>
-	void SetName(std::string name) { mName = name; }
+	IMesh* FindMesh(const std::string& name);
 
 	/// <summary>
 	/// Adds a mesh for the node
@@ -155,14 +159,14 @@ public:
 	/// <param name="child">Name of the child node to move</param>
 	/// <param name="other">Node to move child node to</param>
 	/// <returns>Whether the moving was successful</returns>
-	bool MoveChild(std::string child, Node* other);
+	bool MoveChild(const std::string& child, Node* other);
 
 	/// <summary>
 	/// Removes the node with the given name along with its children
 	/// </summary>
 	/// <param name="name">Name of child node to delete</param>
 	/// <returns>Whether the deletion happened or not</returns>
-	bool DeleteNode(std::string name);
+	bool DeleteNode(const std::string& name);
 
 	/// <summary>
 	/// Recursively deletes this node and all its children

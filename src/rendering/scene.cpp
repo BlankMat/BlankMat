@@ -1,71 +1,126 @@
 #include "scene.h"
 #include "primitives/pLightCube.h"
+#include "files/modelReader.h"
+#include "selection.h"
 
-void Scene::Draw(Window* window)
+// Renders the current scene
+void Scene::Draw(Window* window, Shader* shader)
 {
+	// Calculate camera view projection
 	window->CalcWindowSize();
 	glm::mat4 viewProj = GetProjectionMatrix(window->GetAspect()) * GetViewMatrix();
-	if (mCurShader == "")
-		UseShader(DEFAULT_SHADER);
 
-	// Set lighting uniforms
-	Shader* curShader = GetShader(mCurShader);
-	GetLight()->UpdateShader(curShader);
-	curShader->SetVec3("viewPos", GetCamera()->GetPos());
+	// Draw flat objects
+	Shader* flatShader = GetShader("flat");
+	if (flatShader != nullptr)
+	{
+		flatShader->Use();
+		if (mGrid != nullptr && mState->enableGrid)
+			mGrid->Draw(flatShader, mState, mDefaultMat, viewProj, true);
 
-	// Draw pre-renderables
-	for (auto iter = mPreRenderList.begin(); iter != mPreRenderList.end(); ++iter)
-		if (iter->second != nullptr)
-			iter->second->Draw(viewProj, GetCamera(), GetLight());
+		if (mGlobalLight != nullptr)
+			mGlobalLight->Draw(flatShader, mState, mDefaultMat, viewProj, true);
+	}
 
 	// Draw all of the scene
-	UseShader(mCurShader);
-	mRootNode->Draw(viewProj, GetCamera(), GetLight());
+	shader->Use();
+	GetLight()->UpdateShader(shader);
+	shader->SetVec3("viewPos", GetCamera()->GetPos());
 
-	// Draw lights
-	if (mGlobalLight != nullptr && static_cast<PLightCube*>(mGlobalLight) != nullptr)
-		static_cast<PLightCube*>(mGlobalLight)->Draw(viewProj, GetCamera(), GetLight());
-
-	// Draw post-renderables
-	for (auto iter = mRenderList.begin(); iter != mRenderList.end(); ++iter)
+	// Draw scene by materials
+	if (mState->drawByMaterial)
 	{
-		// Render camera axis handle with inverse view matrix
-		if (iter->first == CAMERA_AXIS_HANDLE) {
-			iter->second->SetRot(mMainCamera->GetRotationDegrees());
-			iter->second->Draw(glm::ortho(0.0f, (float)window->GetWidth(), 0.0f, (float)window->GetHeight(), -100.0f, 100.0f), GetCamera(), GetLight());
+		for (auto iter = mMeshRenderList.begin(); iter != mMeshRenderList.end(); ++iter)
+		{
+			// If there are meshes to render for the material, update the shader
+			Material* mat = GetMaterial(iter->first);
+			if (iter->second->Empty())
+				continue;
+
+			// If there is a material, preload it
+			if (mat != nullptr)
+			{
+				// Load textures
+				mat->LoadTextures(mState, mDefaultMat);
+				unsigned int shadowIndex = mat->UpdateShader(shader);
+				glActiveTexture(GL_TEXTURE0 + shadowIndex);
+				glBindTexture(GL_TEXTURE_2D, mState->depthMap);
+				shader->SetInt("shadowMap", mState->depthMapFBO);
+				glActiveTexture(GL_TEXTURE0);
+
+				// Draw mesh
+				iter->second->Draw(shader, mState, mDefaultMat, viewProj, false);
+			}
+			// If no material is defined, render the object with its own default mat
+			else
+			{
+				iter->second->Draw(shader, mState, mDefaultMat, viewProj, true);
+			}
 		}
-		else if (iter->second != nullptr) {
-			iter->second->Draw(viewProj, GetCamera(), GetLight());
+	}
+	// Default draw
+	else 
+	{
+		mRootNode->Draw(shader, mState, mDefaultMat, viewProj, true);
+	}
+
+	// Draw all entities with their respective shaders
+	for (auto iter = mEntityList.begin(); iter != mEntityList.end(); ++iter)
+	{
+		if (iter->second != nullptr)
+		{
+			Shader* curShader = GetShader(iter->first);
+			if (curShader != nullptr)
+			{
+				curShader->Use();
+				curShader->SetVec3("viewPos", GetCamera()->GetPos());
+				GetLight()->UpdateShader(curShader);
+				iter->second->Draw(curShader, mState, mDefaultMat, viewProj, true);
+			}
+		}
+	}
+
+	// Draw flat objects on top
+	if (flatShader != nullptr)
+	{
+		flatShader->Use();
+		if (mViewAxisHandle != nullptr)
+		{
+			mViewAxisHandle->SetRot(GetRotationDegrees(GetCamera()->GetDir()));
+			mViewAxisHandle->Draw(flatShader, mState, mDefaultMat, GetViewAxisProjection(window), true);
+		}
+
+		if (mTransformHandle != nullptr)
+		{
+			mState->GetSel()->UpdateTransformHandle();
+			mTransformHandle->Draw(flatShader, mState, mDefaultMat, viewProj, true);
 		}
 	}
 }
 
-// Adds the given node to the scene
-void Scene::AddNode(Node* node)
+// Renders the current scene's shadows
+void Scene::DrawShadows(Window* window, Shader* shader)
 {
-	mRootNode->AddChild(node);
+	// Calculate camera view projection
+	window->CalcWindowSize();
+	glm::mat4 viewProj = GetProjectionMatrix(window->GetAspect()) * GetViewMatrix();
+
+	// Draw all of the scene
+	GetLight()->UpdateShader(shader);
+	shader->SetVec3("viewPos", GetCamera()->GetPos());
+	mRootNode->DrawShadows(shader, mState);
 }
 
-// Adds the given mesh to the scene
-void Scene::AddMesh(Mesh* mesh)
+// Returns the projection matrix of the view axis handle
+const glm::mat4& Scene::GetViewAxisProjection(Window* window)
 {
-	mRootNode->AddMesh(mesh);
-}
-
-// Returns the root node
-Node* Scene::GetRootNode()
-{
-	return mRootNode;
-}
-
-// Sets the shader for all the meshes of the model
-void Scene::SetMeshShaders(Shader* shader, State* state)
-{
-	for (unsigned int i = 0; i < mMeshList.size(); i++)
+	if (window->GetWidth() != mViewAxisPrevWidth || window->GetHeight() != mViewAxisPrevHeight)
 	{
-		mMeshList[i]->SetShader(shader);
-		mMeshList[i]->SetState(state);
+		mViewAxisPrevWidth = window->GetWidth();
+		mViewAxisPrevHeight = window->GetHeight();
+		mViewAxisProjection = glm::ortho(0.0f, (float)window->GetWidth(), 0.0f, (float)window->GetHeight(), -100.0f, 100.0f);
 	}
+	return mViewAxisProjection;
 }
 
 // Saves the global state in the scene
@@ -75,219 +130,27 @@ void Scene::SetState(State* state)
 }
 
 // Loads the model at the given path
-void Scene::LoadModel(const std::string& path, glm::vec3 startPos, glm::vec3 startRot, glm::vec3 startScale)
+void Scene::LoadModel(const std::string& path, const glm::vec3& startPos, const glm::vec3& startRot, const glm::vec3& startScale)
 {
-	std::cout << "Reading model from file " << path << std::endl;
-	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(path, 
-		aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals | aiProcess_FixInfacingNormals | aiProcess_CalcTangentSpace);
-
-	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
-	{
-		std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
-		return;
-	}
-	size_t lastSlash = path.find_last_of('/') + 1;
-	size_t lastPeriod = path.find_last_of('.');
-	mDirectory = path.substr(0, lastSlash);
-	mName = path.substr(lastSlash, lastPeriod - lastSlash);
-
-	// Process model
-	if (mRootNode == nullptr)
-		mRootNode = new Node(nullptr, "root");
-	Node* sceneRootNode = new Node(mRootNode, mName);
-	sceneRootNode->SetPos(startPos);
-	sceneRootNode->SetRot(startRot);
-	sceneRootNode->SetScale(startScale);
-	mRootNode->AddChild(sceneRootNode);
-	ProcessNode(sceneRootNode, scene->mRootNode, scene);
-	std::cout << "Read model from file " << path << " successfully, new directory is " << mDirectory << std::endl;
+	ModelReader::LoadModel(this, path, startPos, startRot, startScale);
 }
 
-// Recursively processes the meshes in the given node and all its children
-void Scene::ProcessNode(Node* sceneNode, aiNode* node, const aiScene* scene)
+// Sets the view axis handle to the given object
+void Scene::SetViewAxisHandle(IEntity* viewHandle)
 {
-	std::cout << " - Reading node " << node->mName.C_Str() << std::endl;
-	// Process all the node's meshes (if any)
-	for (unsigned int i = 0; i < node->mNumMeshes; i++)
-	{
-		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		Mesh* newMesh = ProcessMesh(mesh, scene);
-		newMesh->SetDefaultMat(GetMaterial("default"));
-		sceneNode->AddMesh(newMesh);
-		mMeshList.push_back(newMesh);
-	}
-	// Process each of the children
-	for (unsigned int i = 0; i < node->mNumChildren; i++)
-	{
-		Node* childNode = new Node(sceneNode, node->mChildren[i]->mName.C_Str());
-		sceneNode->AddChild(childNode);
-		ProcessNode(childNode, node->mChildren[i], scene);
-	}
+	mViewAxisHandle = viewHandle;
 }
 
-// Process the vertices, indices, and textures of the given mesh
-Mesh* Scene::ProcessMesh(aiMesh* mesh, const aiScene* scene)
+// Sets the grid object
+void Scene::SetGrid(IEntity* grid)
 {
-	std::vector<Vertex> vertices;
-	std::vector<unsigned int> indices;
-	Material* newMaterial;
-
-	// Process each vertex
-	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
-	{
-		glm::vec3 pos = Vec3FromAssimp(mesh->mVertices[i]);
-		glm::vec3 normal = Vec3FromAssimp(mesh->mNormals[i]);
-		glm::vec2 texCoords = (mesh->mTextureCoords[0]) ? Vec2FromAssimp(mesh->mTextureCoords[0][i]) : glm::vec2();
-		glm::vec3 tangent = glm::vec3(0.0f);
-		if (mesh->mTangents != nullptr && mesh->mTangents->Length() > 0)
-		{
-			tangent = Vec3FromAssimp(mesh->mTangents[i]);
-		}
-		vertices.push_back(Vertex(pos, normal, texCoords, tangent));
-	}
-
-	// Process each index
-	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
-	{
-		if (mesh->mFaces[i].mNumIndices > 0 && vertices[mesh->mFaces[i].mIndices[0]].tangent == glm::vec3(0.0f))
-		{
-			// If vertex does not have tangents, calculate them
-			Vertex vertex1 = vertices[mesh->mFaces[i].mIndices[0]];
-			Vertex vertex2 = vertices[mesh->mFaces[i].mIndices[1]];
-			Vertex vertex3 = vertices[mesh->mFaces[i].mIndices[2]];
-			glm::vec3 edge1 = vertex2.pos - vertex1.pos;
-			glm::vec3 edge2 = vertex3.pos - vertex1.pos;
-			glm::vec2 deltaUV1 = vertex2.texCoords - vertex1.texCoords;
-			glm::vec2 deltaUV2 = vertex3.texCoords - vertex1.texCoords;
-			glm::vec3 tangent = glm::vec3(0.0f);
-
-			float f = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
-			tangent.x = f * (deltaUV2.y * edge1.x - deltaUV1.y * edge2.x);
-			tangent.y = f * (deltaUV2.y * edge1.y - deltaUV1.y * edge2.y);
-			tangent.z = f * (deltaUV2.y * edge1.z - deltaUV1.y * edge2.z);
-
-			vertex1.tangent = tangent;
-			vertex2.tangent = tangent;
-			vertex3.tangent = tangent;
-		}
-		for (unsigned int j = 0; j < mesh->mFaces[i].mNumIndices; j++)
-		{
-			indices.push_back(mesh->mFaces[i].mIndices[j]);
-		}
-	}
-
-	// Process each material's diffuse and specular maps
-	if (mesh->mMaterialIndex >= 0)
-	{
-		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-		newMaterial = GetMaterial(material->GetName().C_Str());
-		if (newMaterial == nullptr)
-		{
-			// 1. diffuse maps
-			std::vector<Texture*> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
-			if (diffuseMaps.size() == 0)
-				diffuseMaps.push_back(GetTexture("default_diffuse"));
-			// 2. ambient maps
-			std::vector<Texture*> ambientMaps = LoadMaterialTextures(material, aiTextureType_AMBIENT, "texture_ambient");
-			if (ambientMaps.size() == 0)
-			{
-				if (diffuseMaps.size() > 0)
-				{
-					Texture* ambientTexture = new Texture(diffuseMaps[0]->id, "texture_ambient", diffuseMaps[0]->path, diffuseMaps[0]->name);
-					AddTexture(ambientTexture->name, ambientTexture);
-					ambientMaps.push_back(ambientTexture);
-				}
-				else
-				{
-					ambientMaps.push_back(GetTexture("default_ambient"));
-				}
-			}
-			// 3. specular maps
-			std::vector<Texture*> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
-			if (specularMaps.size() == 0)
-				specularMaps.push_back(GetTexture("default_specular"));
-			// 4. normal maps
-			std::vector<Texture*> normalMaps = LoadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
-			if (normalMaps.size() == 0)
-				normalMaps.push_back(GetTexture("default_normal"));
-			// 5. height maps
-			std::vector<Texture*> heightMaps = LoadMaterialTextures(material, aiTextureType_DISPLACEMENT, "texture_height");
-			if (heightMaps.size() == 0)
-				heightMaps.push_back(GetTexture("default_height"));
-			// 6. alpha maps
-			std::vector<Texture*> alphaMaps = LoadMaterialTextures(material, aiTextureType_OPACITY, "texture_alpha");
-			if (alphaMaps.size() == 0)
-				alphaMaps.push_back(GetTexture("default_alpha"));
-
-			// Read properties into material
-			aiColor3D diffuse;
-			material->Get(AI_MATKEY_COLOR_DIFFUSE, diffuse);
-			glm::vec3 kd = Vec3FromAssimp(diffuse);
-
-			aiColor3D ambient;
-			material->Get(AI_MATKEY_COLOR_AMBIENT, ambient);
-			glm::vec3 ka = Vec3FromAssimp(ambient);
-
-			aiColor3D specular;
-			material->Get(AI_MATKEY_COLOR_SPECULAR, specular);
-			glm::vec3 ks = Vec3FromAssimp(specular);
-
-			aiColor3D emissive;
-			material->Get(AI_MATKEY_COLOR_EMISSIVE, emissive);
-			glm::vec3 ke = Vec3FromAssimp(emissive);
-
-			float ns;
-			material->Get(AI_MATKEY_SHININESS, ns);
-
-			float ni;
-			material->Get(AI_MATKEY_REFRACTI, ni);
-
-			float d;
-			material->Get(AI_MATKEY_OPACITY, d);
-
-			// Make material out of loaded textures
-			newMaterial = new Material(material->GetName().C_Str(), diffuseMaps, ambientMaps, specularMaps, normalMaps, heightMaps, alphaMaps,
-				ka, kd, ks, ns, ni, d, ke);
-			AddMaterial(material->GetName().C_Str(), newMaterial);
-		}
-	}
-	// If there are no textures, use default material
-	else
-	{
-		newMaterial = GetMaterial("default");
-	}
-
-	return new Mesh(mesh->mName.C_Str(), vertices, indices, newMaterial);
+	mGrid = grid;
 }
 
-// Loads material textures
-std::vector<Texture*> Scene::LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
+// Sets the transform handle object
+void Scene::SetTransformHandle(IEntity* handle)
 {
-	std::vector<Texture*> textures;
-	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
-	{
-		aiString str;
-		mat->GetTexture(type, i, &str);
-		std::string path = str.C_Str();
-		std::string name = path.substr(0, path.find_last_of('.'));
-		std::string textureName = mName + "_" + name;
-
-		// Check if texture is loaded already
-		Texture* texture = GetTexture(textureName);
-		if (texture != nullptr)
-		{
-			textures.push_back(texture);
-			continue;
-		}
-
-		// if texture hasn't been loaded already, load it
-		texture = new Texture(typeName, mDirectory, path, textureName);
-		textures.push_back(texture);
-		AddTexture(textureName, texture);
-		std::cout << "  - Loaded texture " << textureName << std::endl;
-	}
-	return textures;
+	mTransformHandle = handle;
 }
 
 // Constructs the scene from the given file

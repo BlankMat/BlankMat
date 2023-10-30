@@ -2,7 +2,7 @@
 
 // constructor generates the shader on the fly
 // ------------------------------------------------------------------------
-Shader::Shader(std::string path, bool loadGeom)
+Shader::Shader(const std::string& path, bool loadGeom)
     : Shader((path + ".vert").c_str(), (path + ".frag").c_str(), loadGeom ? (path + ".geom").c_str() : nullptr) {}
 
 // constructor generates the shader on the fly
@@ -93,7 +93,7 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath, const char* geo
 
 // utility function for checking shader compilation/linking errors.
 // ------------------------------------------------------------------------
-void Shader::CheckCompileErrors(GLuint shader, std::string type)
+void Shader::CheckCompileErrors(GLuint shader, const std::string& type)
 {
     GLint success;
     GLchar infoLog[1024];

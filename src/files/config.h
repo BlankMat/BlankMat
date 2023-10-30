@@ -17,74 +17,74 @@ private:
 	std::unordered_map<std::string, bool> mConfigBools;
 
 	// Returns whether the requested name is a nested config
-	bool IsNested(std::string name);
+	const bool IsNested(const std::string& name);
 
 	// Returns the config with the given name
 	Config* GetNameTarget(std::string* name);
 
 	// Returns the given config
-	Config* GetThisConfig(std::string name);
+	Config* GetThisConfig(const std::string& name);
 	// Returns the given string
-	std::string GetThisString(std::string name);
+	const std::string GetThisString(const std::string& name);
 	// Returns the given vec3
-	glm::vec3 GetThisVec(std::string name);
+	const glm::vec3 GetThisVec(const std::string& name);
 	// Returns the given float
-	float GetThisFloat(std::string name);
+	const float GetThisFloat(const std::string& name);
 	// Returns the given int
-	int GetThisInt(std::string name);
+	const int GetThisInt(const std::string& name);
 	// Returns the given bool
-	bool GetThisBool(std::string name);
+	const bool GetThisBool(const std::string& name);
 
 	// Sets the given config to the given value
-	void SetThisConfig(std::string name, Config* val);
+	void SetThisConfig(const std::string& name, Config* val);
 	// Sets the given string to the given value
-	void SetThisString(std::string name, std::string val);
+	void SetThisString(const std::string& name, const std::string& val);
 	// Sets the given vec3 to the given value
-	void SetThisVec(std::string name, glm::vec3 val);
+	void SetThisVec(const std::string& name, const glm::vec3& val);
 	// Sets the given float to the given value
-	void SetThisFloat(std::string name, float val);
+	void SetThisFloat(const std::string& name, const float val);
 	// Sets the given int to the given value
-	void SetThisInt(std::string name, int val);
+	void SetThisInt(const std::string& name, const int val);
 	// Sets the given bool to the given value
-	void SetThisBool(std::string name, bool val);
+	void SetThisBool(const std::string& name, const bool val);
 public:
 	// Creates a config with the given name
-	Config(std::string name) { mName = name; }
+	Config(const std::string& name) { mName = name; }
 
 	// Returns the config's name
-	std::string GetName() { return mName; }
+	const std::string GetName() { return mName; }
 
 	// Returns the child configs
-	std::unordered_map<std::string, Config*>& GetConfigs() { return mChildConfigs; }
+	const std::unordered_map<std::string, Config*>& GetConfigs() { return mChildConfigs; }
 
 	// Returns the given config
-	Config* GetConfig(std::string name);
+	Config* GetConfig(const std::string& name);
 	// Returns the given string
-	std::string GetString(std::string name);
+	const std::string GetString(const std::string& name);
 	// Returns the given vec3
-	glm::vec3 GetVec(std::string name);
+	const glm::vec3 GetVec(const std::string& name);
 	// Returns the given float
-	float GetFloat(std::string name);
+	const float GetFloat(const std::string& name);
 	// Returns the given int
-	int GetInt(std::string name);
+	const int GetInt(const std::string& name);
 	// Returns the given bool
-	bool GetBool(std::string name);
+	const bool GetBool(const std::string& name);
 
 	// Sets the given config to the given value
-	void SetConfig(std::string name, Config* val);
+	void SetConfig(const std::string& name, Config* val);
 	// Sets the given string to the given value
-	void SetString(std::string name, std::string val);
+	void SetString(const std::string& name, const std::string& val);
 	// Sets the given vec3 to the given value
-	void SetVec(std::string name, glm::vec3 val);
+	void SetVec(const std::string& name, const glm::vec3& val);
 	// Sets the given float to the given value
-	void SetFloat(std::string name, float val);
+	void SetFloat(const std::string& name, const float val);
 	// Sets the given int to the given value
-	void SetInt(std::string name, int val);
+	void SetInt(const std::string& name, const int val);
 	// Sets the given bool to the given value
-	void SetBool(std::string name, bool val);
+	void SetBool(const std::string& name, const bool val);
 
 	// Prints the config
-	void Print(int depth = 0);
+	void Print(const int depth = 0);
 	// Resets the config
 	void Reset();
 };

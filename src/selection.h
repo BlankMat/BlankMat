@@ -3,16 +3,18 @@
 #include <vector>
 #include <iostream>
 #include <set>
+#include "tools/selectTool.h"
 
-enum class Tool { NONE = 0, SELECT = 1, MOVE = 2, ROTATE = 3, SCALE = 4, EXTRUDE = 5 };
-enum class SelMode { MESH = 0, VERT = 1, FACE = 2 };
+enum class Tool { NONE = 0, SELECT = 1, MOVE = 2, ROTATE = 3, SCALE = 4, EXTRUDE = 5 , LAST};
+enum class SelMode { MESH = 0, VERT = 1, FACE = 2, LAST };
 
 // Forward declare to prevent circular dependency
 class IEntity;
 class IMesh;
 class IScene;
+class Material;
 
-struct Selection
+class Selection
 {
 private:
 	glm::vec3 mPivot;
@@ -20,9 +22,13 @@ private:
 	std::set<unsigned int> mSelFaces;
 	IMesh* mSelMesh;
 	IEntity* mSelEntity;
+	Material* mSelMat;
+	IEntity* mSelTransformHandle;
 
 	Tool mSelTool;
 	SelMode mSelMode;
+	std::vector<ITool*> mTools;
+
 public:
 	std::set<unsigned int> newSelVerts;
 	std::set<unsigned int> removedSelVerts;
@@ -45,12 +51,18 @@ public:
 	void SelectMesh(IMesh* mesh);
 	// Selects the given entity
 	void SelectEntity(IEntity* entity);
+	// Selects the given material
+	void SelectMat(Material* material);
 	// Deselects the face with the given ID
 	void DeselectFace(unsigned int _id);
 	// Deselects the vertex with the given ID
 	void DeselectVert(unsigned int _id);
+	// Deselects the currently selected entity
+	void DeselectEntity();
 	// Deselects the currently selected mesh
 	void DeselectMesh();
+	// Deselects the currently selected material
+	void DeselectMat();
 
 	// Clears the vertex selection
 	void ClearVertSel();
@@ -68,6 +80,7 @@ public:
 	void SetTool(Tool _sel);
 	// Sets the selection mode
 	void SetSelMode(SelMode _sel);
+
 	// Returns the tool selection
 	Tool GetTool();
 	// Returns the selection mode
@@ -76,10 +89,19 @@ public:
 	IMesh* GetSelectedMesh();
 	// Returns the selected entity
 	IEntity* GetSelectedEntity();
+	// Returns the selected material
+	Material* GetSelectedMat();
+	// Returns the transform handle
+	IEntity* GetTransformHandle();
 	// Returns whether the given vertex is selected
 	bool IsVertSelected(unsigned int _id);
 	// Returns whether the given face is selected
 	bool IsFaceSelected(unsigned int _id);
+
+	// Sets the selection's transform handle
+	void SetTransformHandle(IEntity* transformHandle);
+	// Updates the transform handle's status
+	void UpdateTransformHandle();
 
 	/// <summary>
 	/// Returns the nearest mesh to the clicked position

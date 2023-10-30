@@ -14,12 +14,13 @@ class Shader
 private:
     // utility function for checking shader compilation/linking errors.
     // ------------------------------------------------------------------------
-    void CheckCompileErrors(GLuint shader, std::string type);
+    void CheckCompileErrors(GLuint shader, const std::string& type);
 public:
+    std::string name;
     unsigned int ID;
 
     // constructor generates the shader on the fly
-    Shader(std::string path, bool loadGeom = false);
+    Shader(const std::string& path, bool loadGeom = false);
     // constructor generates the shader on the fly
     Shader(const char* vertexPath, const char* fragmentPath, const char* geometryPath = nullptr);
     // Cleans up the shader's info

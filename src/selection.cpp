@@ -1,6 +1,7 @@
 #include "selection.h"
-#include "rendering/iMesh.h"
-#include "rendering/iScene.h"
+#include "rendering/material.h"
+#include "interfaces/iMesh.h"
+#include "interfaces/iScene.h"
 
 // Returns the entire selection as a selection of vertices
 void Selection::GetSelectedVerts(std::vector<unsigned int>& _verts)
@@ -67,21 +68,23 @@ void Selection::SelectVert(unsigned int _id, bool _deselect)
 // Selects the given mesh
 void Selection::SelectMesh(IMesh* mesh)
 {
-	if (mesh == nullptr)
-		return;
-
 	mSelMesh = mesh;
-	std::cout << "Selected mesh [" << mSelMesh->GetName() << "].\n";
+	std::cout << "Selected mesh [" << IEntity::GetNameNullSafe(mSelMesh) << "].\n";
 }
 
 // Selects the given entity
 void Selection::SelectEntity(IEntity* entity)
 {
-	if (entity == nullptr)
-		return;
-
 	mSelEntity = entity;
-	std::cout << "Selected entity [" << mSelEntity->GetName() << "].\n";
+	UpdateTransformHandle();
+	std::cout << "Selected entity [" << IEntity::GetNameNullSafe(mSelEntity) << "].\n";
+}
+
+// Selects the given material
+void Selection::SelectMat(Material* material)
+{
+	mSelMat = material;
+	std::cout << "Selected material [" << (material != nullptr ? material->name : "None") << "].\n";
 }
 
 // Deselects the face with the given ID
@@ -98,6 +101,17 @@ void Selection::DeselectVert(unsigned int _id)
 	std::cout << "Deselected vertex [" << _id << "].\n";
 }
 
+// Deselects the currently selected entity
+void Selection::DeselectEntity()
+{
+	if (mSelEntity == nullptr)
+		return;
+
+	mSelEntity = nullptr;
+	UpdateTransformHandle();
+	std::cout << "Deselected entity.\n";
+}
+
 // Deselects the currently selected mesh
 void Selection::DeselectMesh()
 {
@@ -106,6 +120,16 @@ void Selection::DeselectMesh()
 
 	mSelMesh = nullptr;
 	std::cout << "Deselected mesh.\n";
+}
+
+// Deselects the currently selected material
+void Selection::DeselectMat()
+{
+	if (mSelMat == nullptr)
+		return;
+
+	mSelMat = nullptr;
+	std::cout << "Delected material\n";
 }
 
 // Clears the vertex selection
@@ -198,15 +222,24 @@ SelMode Selection::GetSelMode() { return mSelMode; }
 IMesh* Selection::GetSelectedMesh() { return mSelMesh; }
 // Returns the selected entity
 IEntity* Selection::GetSelectedEntity() { return mSelEntity; }
+// Returns the selected material
+Material* Selection::GetSelectedMat() { return mSelMat; }
+// Returns the transform handle
+IEntity* Selection::GetTransformHandle() { return mSelTransformHandle; }
 
-// Storage container for information on all selections
-Selection::Selection()
+// Sets the selection's transform handle
+void Selection::SetTransformHandle(IEntity* transformHandle) { mSelTransformHandle = transformHandle; }
+
+// Updates the transform handle's status
+void Selection::UpdateTransformHandle()
 {
-	mSelTool = Tool::NONE;
-	mSelMode = SelMode::MESH;
-	mPivot = glm::vec3(0, 0, 0);
-	mSelMesh = nullptr;
-	mSelEntity = nullptr;
+	if (mSelTransformHandle == nullptr)
+		return;
+
+	bool isSelected = (mSelEntity != nullptr);
+	mSelTransformHandle->Enable(isSelected);
+	if (isSelected)
+		mSelTransformHandle->SetParentModelMatrix(mSelEntity->GetModelMatrix());
 }
 
 // Returns the nearest mesh to the clicked position
@@ -237,4 +270,18 @@ int Selection::GetNearestFace(IScene* scene, float u, float v)
 	//ITriangle res = ray.GetClosestTriangle(scene->GetRenderTris());
 	//return res.triIndex;
 	return -1;
+}
+
+// Storage container for information on all selections
+Selection::Selection()
+{
+	mSelTool = Tool::SELECT;
+	mSelMode = SelMode::MESH;
+	mPivot = glm::vec3(0, 0, 0);
+	mSelMesh = nullptr;
+	mSelMat = nullptr;
+	mSelEntity = nullptr;
+	mSelTransformHandle = nullptr;
+
+	mTools.push_back(new SelectTool());
 }

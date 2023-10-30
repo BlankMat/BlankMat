@@ -1,14 +1,21 @@
 #include "window.h"
+#include "imgui.h"
+#include "imgui_internal.h" // Include this header for ImGuiDockBuilder
+
+// Define a flag to check if the docking space is initialized
+bool DockSpaceInitialized = false;
 
 // Opens a OpenGL window with the given name
 // -----------------------------------------
-Window::Window(int width, int height, std::string name, Config* config)
+Window::Window(int width, int height, const std::string& name, Config* config, State* state)
 {
     // Set class variables
     // ---------------------------
     mWidth = width;
     mHeight = height;
     mName = name;
+    Config* styleConfig = config->GetConfig("style");
+    Config* qualityConfig = config->GetConfig("quality");
 
     // glfw: initialize and configure
     // ------------------------------
@@ -42,6 +49,7 @@ Window::Window(int width, int height, std::string name, Config* config)
     glfwSetWindowIcon(mWindow, 1, images);
     stbi_image_free(images[0].pixels);
 
+    // TODO: Change to import setting
     stbi_set_flip_vertically_on_load(true);
 
     // // glad: load all OpenGL function pointers
@@ -57,13 +65,47 @@ Window::Window(int width, int height, std::string name, Config* config)
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& tempIO = ImGui::GetIO();
-    tempIO.Fonts->AddFontFromFileTTF(FileSystem::GetPath(FONT_DIR + config->GetString("font")).c_str(), config->GetFloat("fontSize"));
+    tempIO.Fonts->AddFontFromFileTTF(FileSystem::GetPath(FONT_DIR + styleConfig->GetString("font")).c_str(), styleConfig->GetFloat("fontSize"));
     tempIO.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
     ImGui::StyleColorsDark();
     ImGui_ImplGlfw_InitForOpenGL(mWindow, true);
     ImGui_ImplOpenGL3_Init("#version 330");
     mIO = &tempIO;
-    SetupImGuiStyle(config->GetBool("darkTheme"), config->GetFloat("windowOpacity"));
+    SetupImGuiStyle(styleConfig->GetBool("darkTheme"), styleConfig->GetFloat("windowOpacity"));
+
+    // Dear ImGui Docking
+    DockSpaceInitialized = false;
+    mIO->ConfigFlags |= ImGuiConfigFlags_DockingEnable; // Enable docking
+
+    // Quality Settings
+    // ----------------------------
+    unsigned int shadowWidth = state->depthMapSize;
+    unsigned int shadowHeight = shadowWidth;
+
+    // Generate depth map frame buffer
+    unsigned int depthMapFBO;
+    glGenFramebuffers(1, &depthMapFBO);
+
+    // Create depth texture
+    unsigned int depthMap;
+    glGenTextures(1, &depthMap);
+    glBindTexture(GL_TEXTURE_2D, depthMap);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadowWidth, shadowHeight, 0 , GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    float borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+
+    // Attach depth texture to frame buffer
+    glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
+    glDrawBuffer(GL_NONE);
+    glReadBuffer(GL_NONE);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    state->depthMapFBO = depthMapFBO;
+    state->depthMap = depthMap;
 }
 
 // Sets up the ImGui Style
@@ -101,9 +143,39 @@ void Window::DrawGUI()
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
+
+     // Check if the docking system is enabled
+    if (mIO->ConfigFlags & ImGuiConfigFlags_DockingEnable)
+    {
+        // Create a docking space
+        if (!DockSpaceInitialized)
+        {
+            ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
+            ImGuiViewport* viewport = ImGui::GetMainViewport();
+            ImGui::SetNextWindowPos(viewport->Pos);
+            ImGui::SetNextWindowSize(viewport->Size);
+            ImGui::SetNextWindowViewport(viewport->ID);
+            ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+            ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+            ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+            ImGui::Begin("DockSpace", nullptr, dockspace_flags);
+            ImGui::PopStyleVar(3);
+
+            ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+            ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
+
+            DockSpaceInitialized = true;
+            ImGui::End();
+        }
+    }
+
     for (auto iter = mGUIList.begin(); iter != mGUIList.end(); ++iter)
         if (iter->second->IsEnabled())
             iter->second->Draw();
+
+    // Rendering
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 // Adds the given GUI window
@@ -126,31 +198,6 @@ IGUIWindow* Window::GetGUI(GUI type)
         return nullptr;
     }
     return mGUIList[type];
-}
-
-// Enable or disable wireframe
-// ------------------------------------------
-void OpenGLEnableWireframe(bool enable)
-{
-    if (enable) {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        // Disable culling
-        glDisable(GL_CULL_FACE);
-        glDisable(GL_DEPTH_TEST);
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    }
-    else {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        // Enable culling
-        glEnable(GL_CULL_FACE);
-
-        // Enable depth buffer
-        glEnable(GL_DEPTH_TEST);
-        glDepthFunc(GL_LESS);
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    }
 }
 
 // Initialize GUI

@@ -15,6 +15,14 @@ file(GLOB RENDERING_HEADER_FILES ${CMAKE_SOURCE_DIR}/src/rendering/*.h)
 file(GLOB PRIMITIVE_SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/primitives/*.cpp)
 file(GLOB PRIMITIVE_HEADER_FILES ${CMAKE_SOURCE_DIR}/src/primitives/*.h)
 
+# Add interface files
+file(GLOB INTERFACE_SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/interfaces/*.cpp)
+file(GLOB INTERFACE_HEADER_FILES ${CMAKE_SOURCE_DIR}/src/interfaces/*.h)
+
+# Add container files
+file(GLOB CONTAINER_SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/containers/*.cpp)
+file(GLOB CONTAINER_HEADER_FILES ${CMAKE_SOURCE_DIR}/src/containers/*.h)
+
 # Add tool files
 file(GLOB TOOL_SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/tools/*.cpp)
 file(GLOB TOOL_HEADER_FILES ${CMAKE_SOURCE_DIR}/src/tools/*.h)
@@ -38,10 +46,10 @@ file(GLOB GLOBAL_HEADER_FILES
 	${CMAKE_SOURCE_DIR}/src/*.hpp)
 
 set(SOURCE_FILES ${GLOBAL_SOURCE_FILES} ${RENDERING_SOURCE_FILES} ${FILE_SOURCE_FILES}
-	${PRIMITIVE_SOURCE_FILES} ${TOOL_SOURCE_FILES} ${WINDOW_SOURCE_FILES})
+	${PRIMITIVE_SOURCE_FILES} ${INTERFACE_SOURCE_FILES} ${CONTAINER_SOURCE_FILES} ${TOOL_SOURCE_FILES} ${WINDOW_SOURCE_FILES})
 	
 set(HEADER_FILES ${GLOBAL_HEADER_FILES} ${RENDERING_HEADER_FILES} ${FILE_HEADER_FILES}
-	${PRIMITIVE_HEADER_FILES} ${TOOL_HEADER_FILES} ${WINDOW_HEADER_FILES})
+	${PRIMITIVE_HEADER_FILES} ${INTERFACE_HEADER_FILES} ${CONTAINER_HEADER_FILES} ${TOOL_HEADER_FILES} ${WINDOW_HEADER_FILES})
 
 # Configure assets header file
 configure_file(src/helpers/RootDir.h.in src/helpers/RootDir.h)
@@ -65,12 +73,17 @@ set_source_files_properties(${RESOURCE_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
 # Group up files to make IDE look nice
 source_group("Sources" FILES ${GLOBAL_SOURCE_FILES})
 source_group("Sources/Primitives" FILES ${PRIMITIVE_SOURCE_FILES})
+source_group("Sources/Interfaces" FILES ${INTERFACE_SOURCE_FILES})
+source_group("Sources/Containers" FILES ${CONTAINER_SOURCE_FILES})
 source_group("Sources/Windows" FILES ${WINDOW_SOURCE_FILES})
 source_group("Sources/Rendering" FILES ${RENDERING_SOURCE_FILES})
 source_group("Sources/Tools" FILES ${TOOL_SOURCE_FILES})
 source_group("Sources/Files" FILES ${FILE_SOURCE_FILES})
+
 source_group("Headers" FILES ${GLOBAL_HEADER_FILES})
 source_group("Headers/Primitives" FILES ${PRIMITIVE_HEADER_FILES})
+source_group("Headers/Interfaces" FILES ${INTERFACE_HEADER_FILES})
+source_group("Headers/Containers" FILES ${CONTAINER_HEADER_FILES})
 source_group("Headers/Windows" FILES ${WINDOW_HEADER_FILES})
 source_group("Headers/Rendering" FILES ${RENDERING_HEADER_FILES})
 source_group("Headers/Tools" FILES ${TOOL_HEADER_FILES})

@@ -31,18 +31,18 @@ private:
 	/// <param name="val">JSON value</param>
 	/// <param name="key">Key of the value (name of the property)</param>
 	/// <param name="config">Config to add the value to</param>
-	static void AddValueToConfig(const Json::Value& val, const std::string key, Config* config)
+	static void AddValueToConfig(const Json::Value& val, const std::string& key, Config* config)
 	{
 		// Get vec3
-		if (val.size() == 3 && val.isArray())
+		if (val.size() == 3 && val.type() == Json::ValueType::arrayValue)
 			config->SetVec(key, JsonValueToVec3(val));
-		else if (val.isDouble())
-			config->SetFloat(key, val.asFloat());
-		else if (val.isInt())
+		else if (val.type() == Json::ValueType::intValue || val.type() == Json::ValueType::uintValue)
 			config->SetInt(key, val.asInt());
-		else if (val.isString())
+		else if (val.type() == Json::ValueType::realValue)
+			config->SetFloat(key, val.asFloat());
+		else if (val.type() == Json::ValueType::stringValue)
 			config->SetString(key, val.asString().c_str());
-		else if (val.isBool())
+		else if (val.type() == Json::ValueType::booleanValue)
 			config->SetBool(key, val.asBool());
 	}
 
@@ -53,7 +53,7 @@ private:
 	/// <param name="key">Name of the parent json value</param>
 	/// <param name="config">Parent config (or nullptr if this is the root)</param>
 	/// <returns>Complete Config read from this level</returns>
-	static Config* ReadJSONTree(const Json::Value& root, const std::string key, Config* config)
+	static Config* ReadJSONTree(const Json::Value& root, const std::string& key, Config* config)
 	{
 		// If the node doesn't have children, read the value to the config passed in
 		if (root.size() <= 0 || (root.isArray() && root.size() == 3 && key != ""))
@@ -84,7 +84,7 @@ public:
 	/// </summary>
 	/// <param name="fileName">Filename to open and read</param>
 	/// <returns>Complete Config class</returns>
-	static Config* ReadFile(std::string fileName)
+	static Config* ReadFile(const std::string& fileName)
 	{
 		// Don't read a file that doesn't exist
 		if (!FileExists(fileName))
