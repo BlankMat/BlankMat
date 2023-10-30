@@ -1,7 +1,8 @@
 #pragma once
 #include "rendering/material.h"
+#include "interfaces/iContainer.h"
 
-class MaterialContainer
+class MaterialContainer : public IContainer<Material>
 {
 
 };

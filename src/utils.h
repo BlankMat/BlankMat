@@ -25,6 +25,7 @@ static glm::vec3 GetRotationDegrees(const glm::vec3& dir, const glm::vec3& up = 
         right = z -> Y1
     */
 
+    /*
     glm::vec3 right = glm::normalize(glm::cross(dir, up));
     float y1xz = glm::sqrt(up.x * up.x + up.z * up.z);
     if (y1xz > 0.0f)
@@ -43,14 +44,13 @@ static glm::vec3 GetRotationDegrees(const glm::vec3& dir, const glm::vec3& up = 
             glm::degrees(-atan2f(dir.z, dir.x))
         );
     }
-    /*
+    */
+    
     glm::vec3 right = glm::normalize(glm::cross(dir, up));
     float rotX = asinf(-dir.y);
     if (cosf(rotX) > 0.0001)
         return glm::degrees(glm::vec3(rotX, atan2f(-dir.x, -dir.z), atan2f(right.y, up.y)));
     return glm::degrees(glm::vec3(rotX, 0.0f, atan2f(-up.x, right.x)));
-    */
-
 }
 
 // Taken from https://gamedev.stackexchange.com/questions/115032/how-should-i-rotate-vertices-around-the-origin-on-the-cpu
@@ -116,6 +116,93 @@ static const glm::vec3 ReadVec3FromStrings(const std::vector<std::string>& strin
 static const bool IsCCW(const glm::vec3& a, const glm::vec3& b, const glm::vec3& c)
 {
 	return ((b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y)) > 0;
+}
+
+/// <summary>
+/// Clamps the given value to be within min and max
+/// </summary>
+/// <param name="value">Value to clamp</param>
+/// <param name="min">Minimum</param>
+/// <param name="max">Maximum value</param>
+/// <returns>Value in range [min, max]</returns>
+static const int Clamp(int value, int min, int max)
+{
+    if (value > max)
+        return max;
+    else if (value < min)
+        return min;
+    else
+        return value;
+}
+
+/// <summary>
+/// Converts the given decimal value to hexadecimal.
+/// Borrowed from: 
+/// https://www.geeksforgeeks.org/convert-the-given-rgb-color-code-to-hex-color-code/
+/// </summary>
+/// <param name="value">Decimal value</param>
+/// <returns>Hexadecimal equivalent</returns>
+static const std::string DecimalToHex(int value)
+{
+    // char array to store hexadecimal number
+    char hexValue[2];
+
+    // counter for hexadecimal number array
+    int i = 0;
+    while (value != 0) {
+
+        // temporary variable to store remainder
+        int temp = 0;
+
+        // storing remainder in temp variable.
+        temp = value % 16;
+
+        // check if temp < 10
+        if (temp < 10) {
+            hexValue[i] = temp + 48;
+            i++;
+        }
+        else {
+            hexValue[i] = temp + 55;
+            i++;
+        }
+
+        value = value / 16;
+    }
+
+    std::string hexCode = "";
+    if (i == 2) {
+        hexCode.push_back(hexValue[0]);
+        hexCode.push_back(hexValue[1]);
+    }
+    else if (i == 1) {
+        hexCode = "0";
+        hexCode.push_back(hexValue[0]);
+    }
+    else if (i == 0)
+        hexCode = "00";
+
+    // Return the equivalent
+    // hexadecimal color code
+    return hexCode;
+}
+
+/// <summary>
+/// Converts the given vec3 to its hexadecimal equivalent
+/// </summary>
+/// <param name="vec">Vec3 to convert</param>
+/// <returns>Hex value</returns>
+static const std::string Vec3ToHex(const glm::vec3& vec)
+{
+    int r = Clamp((int)round(vec.r * 255), 0, 255);
+    int g = Clamp((int)round(vec.g * 255), 0, 255);
+    int b = Clamp((int)round(vec.b * 255), 0, 255);
+
+    std::string hex = "#";
+    hex += DecimalToHex(r);
+    hex += DecimalToHex(g);
+    hex += DecimalToHex(b);
+    return hex;
 }
 
 static const std::string Vec3ToString(const glm::vec3& vec)

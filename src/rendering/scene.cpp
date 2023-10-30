@@ -34,7 +34,11 @@ void Scene::Draw(Window* window, Shader* shader)
 		{
 			// If there are meshes to render for the material, update the shader
 			Material* mat = GetMaterial(iter->first);
-			if (!iter->second->Empty() && mat != nullptr)
+			if (iter->second->Empty())
+				continue;
+
+			// If there is a material, preload it
+			if (mat != nullptr)
 			{
 				// Load textures
 				mat->LoadTextures(mState, mDefaultMat);
@@ -46,6 +50,11 @@ void Scene::Draw(Window* window, Shader* shader)
 
 				// Draw mesh
 				iter->second->Draw(shader, mState, mDefaultMat, viewProj, false);
+			}
+			// If no material is defined, render the object with its own default mat
+			else
+			{
+				iter->second->Draw(shader, mState, mDefaultMat, viewProj, true);
 			}
 		}
 	}

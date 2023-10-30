@@ -54,6 +54,6 @@
     "shadowResolution": 1024
   },
 
-  "defaultCubes": false,
+  "defaultCubes": true,
   "flipImages": true
 }
