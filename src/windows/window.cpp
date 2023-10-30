@@ -133,6 +133,115 @@ inline void SetupImGuiStyle(bool isDarkStyle, float alphaThreshold)
     style.Alpha = 1.0f;
 }
 
+void ShowExampleAppDockSpace(bool* p_open)
+{
+    static bool opt_fullscreen = true;
+    static bool opt_padding = false;
+    static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
+
+    // We are using the ImGuiWindowFlags_NoDocking flag to make the parent window not dockable into,
+    // because it would be confusing to have two docking targets within each others.
+    ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+    if (opt_fullscreen)
+    {
+        const ImGuiViewport* viewport = ImGui::GetMainViewport();
+        ImGui::SetNextWindowPos(viewport->WorkPos);
+        ImGui::SetNextWindowSize(viewport->WorkSize);
+        ImGui::SetNextWindowViewport(viewport->ID);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+        window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+        window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+    }
+    else
+    {
+        dockspace_flags &= ~ImGuiDockNodeFlags_PassthruCentralNode;
+    }
+
+    // When using ImGuiDockNodeFlags_PassthruCentralNode, DockSpace() will render our background
+    // and handle the pass-thru hole, so we ask Begin() to not render a background.
+    if (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode)
+        window_flags |= ImGuiWindowFlags_NoBackground;
+
+    // Important: note that we proceed even if Begin() returns false (aka window is collapsed).
+    // This is because we want to keep our DockSpace() active. If a DockSpace() is inactive,
+    // all active windows docked into it will lose their parent and become undocked.
+    // We cannot preserve the docking relationship between an active window and an inactive docking, otherwise
+    // any change of dockspace/settings would lead to windows being stuck in limbo and never being visible.
+    if (!opt_padding)
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+    ImGui::Begin("DockSpace Demo", p_open, window_flags);
+    if (!opt_padding)
+        ImGui::PopStyleVar();
+
+    if (opt_fullscreen)
+        ImGui::PopStyleVar(2);
+
+    // Submit the DockSpace
+    ImGuiIO& io = ImGui::GetIO();
+    if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
+    {
+        ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+        ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+    }
+
+    if (ImGui::BeginMenuBar())
+    {
+        if (ImGui::BeginMenu("Options"))
+        {
+            // Disabling fullscreen would allow the window to be moved to the front of other windows,
+            // which we can't undo at the moment without finer window depth/z control.
+            ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen);
+            ImGui::MenuItem("Padding", NULL, &opt_padding);
+            ImGui::Separator();
+
+            if (ImGui::MenuItem("Flag: NoDockingOverCentralNode", "", (dockspace_flags & ImGuiDockNodeFlags_NoDockingOverCentralNode) != 0)) { dockspace_flags ^= ImGuiDockNodeFlags_NoDockingOverCentralNode; }
+            if (ImGui::MenuItem("Flag: NoDockingSplit", "", (dockspace_flags & ImGuiDockNodeFlags_NoDockingSplit) != 0)) { dockspace_flags ^= ImGuiDockNodeFlags_NoDockingSplit; }
+            if (ImGui::MenuItem("Flag: NoUndocking", "", (dockspace_flags & ImGuiDockNodeFlags_NoUndocking) != 0)) { dockspace_flags ^= ImGuiDockNodeFlags_NoUndocking; }
+            if (ImGui::MenuItem("Flag: NoResize", "", (dockspace_flags & ImGuiDockNodeFlags_NoResize) != 0)) { dockspace_flags ^= ImGuiDockNodeFlags_NoResize; }
+            if (ImGui::MenuItem("Flag: AutoHideTabBar", "", (dockspace_flags & ImGuiDockNodeFlags_AutoHideTabBar) != 0)) { dockspace_flags ^= ImGuiDockNodeFlags_AutoHideTabBar; }
+            if (ImGui::MenuItem("Flag: PassthruCentralNode", "", (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode) != 0, opt_fullscreen)) { dockspace_flags ^= ImGuiDockNodeFlags_PassthruCentralNode; }
+            ImGui::Separator();
+
+            if (ImGui::MenuItem("Close", NULL, false, p_open != NULL))
+                *p_open = false;
+            ImGui::EndMenu();
+        }
+
+        ImGui::EndMenuBar();
+    }
+
+    ImGui::End();
+}
+
+void Window::SetupDefaultDockingLayout()
+{
+    if (DockSpaceInitialized) // To ensure this runs once
+        return;
+
+    ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+    ImGui::DockBuilderRemoveNode(dockspace_id); // Clear out existing layout
+    ImGui::DockBuilderAddNode(dockspace_id, ImGuiDockNodeFlags_DockSpace);
+
+    // Split the dockspace into left, right and bottom
+    ImGuiID dock_main = dockspace_id;
+    ImGuiID dock_left = ImGui::DockBuilderSplitNode(dock_main, ImGuiDir_Left, 0.25f, NULL, &dock_main);
+    ImGuiID dock_right = ImGui::DockBuilderSplitNode(dock_main, ImGuiDir_Right, 0.25f, NULL, &dock_main);
+    ImGuiID dock_bottom = ImGui::DockBuilderSplitNode(dock_main, ImGuiDir_Down, 0.25f, NULL, &dock_main);
+
+    // Now dock the windows in the desired locations.
+    ImGui::DockBuilderDockWindow("Debug Tools", dock_left);
+    ImGui::DockBuilderDockWindow("Light Viewer", dock_right);
+    ImGui::DockBuilderDockWindow("Hierarchy", dock_bottom);
+    ImGui::DockBuilderDockWindow("Material Viewer", dock_bottom);
+    ImGui::DockBuilderDockWindow("Material Editor", dock_bottom);
+    ImGui::DockBuilderDockWindow("Inspector", dock_bottom);
+
+    ImGui::DockBuilderFinish(dockspace_id);
+
+    DockSpaceInitialized = true;
+}
+
 // Draws all GUIs
 void Window::DrawGUI()
 {
@@ -141,29 +250,34 @@ void Window::DrawGUI()
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-     // Check if the docking system is enabled
-    if (mIO->ConfigFlags & ImGuiConfigFlags_DockingEnable)
-    {
-        // Create a docking space
-        if (!DockSpaceInitialized)
-        {
-            ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
-            ImGuiViewport* viewport = ImGui::GetMainViewport();
-            ImGui::SetNextWindowPos(viewport->Pos);
-            ImGui::SetNextWindowSize(viewport->Size);
-            ImGui::SetNextWindowViewport(viewport->ID);
-            ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-            ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-            ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-            ImGui::Begin("DockSpace", nullptr, dockspace_flags);
-            ImGui::PopStyleVar(3);
+    // Set up DockSpace every frame
+    ShowExampleAppDockSpace(&DockSpaceInitialized);
 
-            ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
-            ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
+    // Draw each GUI
+    for (auto& pair : mGUIList) {
+        IGUIWindow* guiWindow = pair.second;
+        GUI guiType = pair.first; // Assuming first element of pair is the identifier
 
-            DockSpaceInitialized = true;
-            ImGui::End();
+        switch (guiType) {
+        case GUI::DEBUG_TOOLS: // Docking to the left of the screen
+            ImGui::SetNextWindowPos(ImVec2(0, 48)); // 20 for menu bar height; adjust as needed
+            ImGui::SetNextWindowSize(ImVec2((float)mWidth * 0.2f, (float)mHeight));
+            break;
+        case GUI::LIGHT_VIEWER: // Docking to the right of the screen
+            ImGui::SetNextWindowPos(ImVec2((float)mWidth * 0.8f, 48));
+            ImGui::SetNextWindowSize(ImVec2((float)mWidth * 0.2f, (float)mHeight));
+            break;
+        default: // All other windows docked to the bottom of the screen
+            ImGui::SetNextWindowPos(ImVec2((float)mWidth * 0.2f, (float)mHeight * 0.8f)); // Start right after Debug Tools
+            ImGui::SetNextWindowSize(ImVec2((float)mWidth * 0.6f, (float)mHeight * 0.8f - 48)); // End right before Light Viewer
+            break;
         }
+
+        guiWindow->Draw();
+    }
+
+    if (!DockSpaceInitialized) {
+        DockSpaceInitialized = true;
     }
 
     for (auto iter = mGUIList.begin(); iter != mGUIList.end(); ++iter)

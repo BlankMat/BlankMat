@@ -27,6 +27,9 @@ public:
 	// -----------------------------------------
 	Window(int width, int height, std::string name, Config* config, State* state);
 
+	// Sets up the default docking layout
+	void SetupDefaultDockingLayout();
+
 	// Draws all GUIs
 	void DrawGUI();
 
