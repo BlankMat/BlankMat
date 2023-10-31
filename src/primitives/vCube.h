@@ -10,41 +10,156 @@ public:
 	{
 		float h = size * 0.5f;
 
-		// Generate UV coords
-		glm::vec2 uv1(0.0f, 1.0f);
-		glm::vec2 uv2(0.0f, 0.0f);
-		glm::vec2 uv3(1.0f, 0.0f);
-		glm::vec2 uv4(1.0f, 1.0f);
+		std::vector<glm::vec3> positions = {
+			glm::vec3(-h, -h, -h ),
+			glm::vec3(-h, -h,  h ),
+			glm::vec3( h, -h,  h ),
+			glm::vec3( h, -h, -h ),
 
-		// Normal
-		glm::vec3 nm(0.0f, 0.0f, 1.0f);
+			glm::vec3(-h,  h, -h ),
+			glm::vec3(-h,  h,  h ),
+			glm::vec3( h,  h,  h ),
+			glm::vec3( h,  h, -h ),
+
+			glm::vec3(-h, -h, -h ),
+			glm::vec3(-h,  h, -h ),
+			glm::vec3( h,  h, -h ),
+			glm::vec3( h, -h, -h ),
+
+			glm::vec3(-h, -h,  h ),
+			glm::vec3(-h,  h,  h ),
+			glm::vec3( h,  h,  h ),
+			glm::vec3( h, -h,  h ),
+
+			glm::vec3(-h, -h, -h ),
+			glm::vec3(-h, -h,  h ),
+			glm::vec3(-h,  h,  h ),
+			glm::vec3(-h,  h, -h ),
+
+			glm::vec3( h, -h, -h ),
+			glm::vec3( h, -h,  h ),
+			glm::vec3( h,  h,  h ),
+			glm::vec3( h,  h, -h )
+		};
+
+
+		std::vector<glm::vec3> normals = {
+			glm::vec3(0.0f, -1.0f, 0.0f),
+			glm::vec3(0.0f, -1.0f, 0.0f),
+			glm::vec3(0.0f, -1.0f, 0.0f),
+			glm::vec3(0.0f, -1.0f, 0.0f),
+
+			glm::vec3(0.0f, 1.0f, 0.0f ),			
+			glm::vec3(0.0f, 1.0f, 0.0f ),			
+			glm::vec3(0.0f, 1.0f, 0.0f ),			
+			glm::vec3(0.0f, 1.0f, 0.0f ),
+
+			glm::vec3(0.0f, 0.0f, -1.0f),
+			glm::vec3(0.0f, 0.0f, -1.0f),
+			glm::vec3(0.0f, 0.0f, -1.0f),
+			glm::vec3(0.0f, 0.0f, -1.0f),
+
+			glm::vec3(0.0f, 0.0f, 1.0f ),			
+			glm::vec3(0.0f, 0.0f, 1.0f ),			
+			glm::vec3(0.0f, 0.0f, 1.0f ),			
+			glm::vec3(0.0f, 0.0f, 1.0f ),
+
+			glm::vec3(-1.0f, 0.0f, 0.0f),
+			glm::vec3(-1.0f, 0.0f, 0.0f),
+			glm::vec3(-1.0f, 0.0f, 0.0f),
+			glm::vec3(-1.0f, 0.0f, 0.0f),
+
+			glm::vec3(1.0f, 0.0f, 0.0f ),			
+			glm::vec3(1.0f, 0.0f, 0.0f ),			
+			glm::vec3(1.0f, 0.0f, 0.0f ),			
+			glm::vec3(1.0f, 0.0f, 0.0f )
+		};
+
+		std::vector<glm::vec3> tangents = {
+			glm::vec3( 1.0f, 0.0f, 0.0f ),
+			glm::vec3( 1.0f, 0.0f, 0.0f ),
+			glm::vec3( 1.0f, 0.0f, 0.0f ),
+			glm::vec3( 1.0f, 0.0f, 0.0f ),
+
+			glm::vec3( 1.0f, 0.0f, 0.0f ),
+			glm::vec3( 1.0f, 0.0f, 0.0f ),
+			glm::vec3( 1.0f, 0.0f, 0.0f ),
+			glm::vec3( 1.0f, 0.0f, 0.0f ),
+
+			glm::vec3( -1.0f, 0.0f, 0.0f ),
+			glm::vec3( -1.0f, 0.0f, 0.0f ),
+			glm::vec3( -1.0f, 0.0f, 0.0f ),
+			glm::vec3( -1.0f, 0.0f, 0.0f ),
+
+			glm::vec3( 1.0f, 0.0f, 0.0f ),
+			glm::vec3( 1.0f, 0.0f, 0.0f ),
+			glm::vec3( 1.0f, 0.0f, 0.0f ),
+			glm::vec3( 1.0f, 0.0f, 0.0f ),
+
+			glm::vec3( 0.0f, 0.0f, 1.0f ),
+			glm::vec3( 0.0f, 0.0f, 1.0f ),
+			glm::vec3( 0.0f, 0.0f, 1.0f ),
+			glm::vec3( 0.0f, 0.0f, 1.0f ),
+
+			glm::vec3( 0.0f, 0.0f, -1.0f ),
+			glm::vec3( 0.0f, 0.0f, -1.0f ),
+			glm::vec3( 0.0f, 0.0f, -1.0f ),
+			glm::vec3( 0.0f, 0.0f, -1.0f )
+		};
+
+		std::vector<glm::vec2> texCoords = {
+			glm::vec2( 0.0f, 0.0f ),
+			glm::vec2( 0.0f, 1.0f ),
+			glm::vec2( 1.0f, 1.0f ),
+			glm::vec2( 1.0f, 0.0f ),
+
+			glm::vec2( 0.0f, 1.0f ),
+			glm::vec2( 0.0f, 0.0f ),
+			glm::vec2( 1.0f, 0.0f ),
+			glm::vec2( 1.0f, 1.0f ),
+
+			glm::vec2( 1.0f, 0.0f ),
+			glm::vec2( 1.0f, 1.0f ),
+			glm::vec2( 0.0f, 1.0f ),
+			glm::vec2( 0.0f, 0.0f ),
+
+			glm::vec2( 0.0f, 0.0f ),
+			glm::vec2( 0.0f, 1.0f ),
+			glm::vec2( 1.0f, 1.0f ),
+			glm::vec2( 1.0f, 0.0f ),
+
+			glm::vec2( 0.0f, 0.0f ),
+			glm::vec2( 1.0f, 0.0f ),
+			glm::vec2( 1.0f, 1.0f ),
+			glm::vec2( 0.0f, 1.0f ),
+
+			glm::vec2( 1.0f, 0.0f ),
+			glm::vec2( 0.0f, 0.0f ),
+			glm::vec2( 0.0f, 1.0f ),
+			glm::vec2( 1.0f, 1.0f )
+		};
+
+		std::vector<unsigned int> tempIndices = {
+			0, 2, 1,
+			0, 3, 2,
+			4, 5, 6,
+			4, 6, 7,
+			8, 9, 10,
+			8, 10, 11,
+			12, 15, 14,
+			12, 14, 13,
+			16, 17, 18,
+			16, 18, 19,
+			20, 23, 22,
+			20, 22, 21
+		};
 
 		// Generate verts of cube
-		mVertices.push_back(Vertex(glm::vec3(-h, -h,  h), glm::vec3(), glm::vec2(), glm::vec3()));	//0
-		mVertices.push_back(Vertex(glm::vec3( h, -h,  h), glm::vec3(), glm::vec2(), glm::vec3()));	//1
-		mVertices.push_back(Vertex(glm::vec3(-h,  h,  h), glm::vec3(), glm::vec2(), glm::vec3()));	//2
-		mVertices.push_back(Vertex(glm::vec3( h,  h,  h), glm::vec3(), glm::vec2(), glm::vec3()));	//3
-		mVertices.push_back(Vertex(glm::vec3(-h, -h, -h), glm::vec3(), glm::vec2(), glm::vec3()));	//4
-		mVertices.push_back(Vertex(glm::vec3( h, -h, -h), glm::vec3(), glm::vec2(), glm::vec3()));	//5
-		mVertices.push_back(Vertex(glm::vec3(-h,  h, -h), glm::vec3(), glm::vec2(), glm::vec3()));	//6
-		mVertices.push_back(Vertex(glm::vec3( h,  h, -h), glm::vec3(), glm::vec2(), glm::vec3()));	//7
-
-		// Generate indices of cube
-		std::vector<unsigned int> tempInd = {
-			2, 3, 7,	// Top
-			7, 6, 2,	// Top
-			0, 4, 5,	// Bottom
-			5, 1, 0,	// Bottom
-			0, 2, 6,	// Left
-			6, 4, 0,	// Left
-			7, 3, 1,	// Right
-			1, 5, 7,	// Right
-			3, 2, 0,	// Front
-			0, 1, 3,	// Front
-			4, 6, 7,	// Back
-			7, 5, 4		// Back
-		};
-		mIndices.insert(mIndices.begin(), tempInd.begin(), tempInd.end());
+		for (unsigned int i = 0; i < 24; i++)
+			mVertices.push_back(Vertex(positions[i], normals[i], texCoords[i], tangents[i]));
+		
+		// Load indices
+		mIndices.insert(mIndices.begin(), tempIndices.begin(), tempIndices.end());
 
 		mPos = pos;
 		mRot = rot;

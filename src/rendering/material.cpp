@@ -96,6 +96,8 @@ unsigned int Material::UpdateShader(Shader* _shader)
 // Constructs a material out of a single color (diffuse)
 Material::Material(const glm::vec3& _color, const std::string& _name)
 {
+    if (name == "")
+        name = "Color" + Vec3ToHex(_color);
     name = _name;
     kd = _color;
     ka = glm::vec3(0.0f);

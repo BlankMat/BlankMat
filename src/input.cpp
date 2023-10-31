@@ -206,6 +206,15 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
         didReceiveInput = true;
     }
 
+    // Disable UI
+    if (SPACE_PRESS)
+    {
+        if (!locks->lockSpace) {
+            state->drawGUI = !state->drawGUI;
+            locks->lockSpace = true;
+        }
+        didReceiveInput = true;
+    }
 
 
     /* ==================================================== Mouse Input ===================================================== */
@@ -385,6 +394,7 @@ void InputLocks::ClearLocks()
     lockKey4 = false;
     lockKey5 = false;
 
+    lockSpace = false;
     lockAltT = false;       // Disco light
     lockAltR = false;       // Rotating light
 

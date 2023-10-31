@@ -26,6 +26,7 @@ public:
 	bool enableGrid;
 	bool drawByMaterial;
 	bool flipTextures;
+	bool drawGUI;
 
 	unsigned int depthMapFBO;
 	unsigned int depthMap;
@@ -73,6 +74,7 @@ public:
 		enableGrid = true;
 		drawByMaterial = true;
 		flipTextures = true;
+		drawGUI = true;
 
 		depthMapFBO = 0;
 		depthMap = 0;
