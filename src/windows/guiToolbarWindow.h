@@ -11,12 +11,12 @@
 #include "rendering/scene.h"
 #include "files/fileSystem.h"
 
-constexpr char* TOOLS_DIR = "resources/icons/toolIcons";
-constexpr char* SELECT_ICON = "Select.png";
-constexpr char* MOVE_ICON = "Move.png";
-constexpr char* ROTATE_ICON = "Rotate.png";
-constexpr char* SCALE_ICON = "Scale.png";
-constexpr char* EXTRUDE_ICON = "Extrude.png";
+constexpr auto TOOLS_DIR = "resources/icons/toolIcons";
+constexpr auto SELECT_ICON = "Select.png";
+constexpr auto MOVE_ICON = "Move.png";
+constexpr auto ROTATE_ICON = "Rotate.png";
+constexpr auto SCALE_ICON = "Scale.png";
+constexpr auto EXTRUDE_ICON = "Extrude.png";
 
 class GUIToolbarWindow : public IGUIWindow
 {

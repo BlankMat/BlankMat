@@ -10,7 +10,7 @@
 #include "rendering/scene.h"
 #include "files/fileSystem.h"
 
-constexpr char* MODES_DIR = "resources/icons/modeIcons";
+constexpr auto MODES_DIR = "resources/icons/modeIcons";
 
 class GUIToolModeWindow : public IGUIWindow
 {
