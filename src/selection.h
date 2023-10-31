@@ -123,7 +123,7 @@ public:
 	/// <param name="u">U coordinate onscreen</param>
 	/// <param name="v">V coordinate onscreen</param>
 	/// <returns>Selected vertex index, or -1 if none was found</returns>
-	static int GetNearestVert(IScene* scene, float u, float v);
+	static int GetNearestVert(IScene* scene, float xPos, float yPos);
 
 	/// <summary>
 	/// Returns the nearest face to the clicked position
@@ -133,4 +133,6 @@ public:
 	/// <param name="v">V coordinate onscreen</param>
 	/// <returns>Selected face index, or -1 if none was found</returns>
 	static int GetNearestFace(IScene* scene, float u, float v);
+
+	static glm::vec3 Selection::GetWorldPointFromScreenPoint(IScene* scene, float xPos, float yPos);
 };

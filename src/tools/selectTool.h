@@ -1,41 +1,36 @@
 #pragma once
 #include "iTool.h"
-#include "glIncludes.h"
+//#include "glIncludes.h"
 
 class SelectTool : public ITool
 {
-    protected:
-        //State mState;
     public:
-        void Select()
-        {
+    void Select(State* state, IScene* scene)
+    {
 
-        }
-        void Deselect()
-        {
+    }
+	void Deselect(State* state, IScene* scene)
+    {
 
-        }
-        void Interact(double cursorX, double cursorY)
+    }
+	void Interact(State* state, IScene* scene)
+    {
+        Selection* sel = state->GetSel();
+        //switch(sel->GetSelMode())
         {/*
-            switch(mSel->GetSelMode())
+            case SelMode::FACE :
             {
-                case SelMode::FACE :
-                {
-                    mSel->SelectFace(mSel->GetNearestFace(,(float)cursorX,(float)cursorY));
-                }
-                case SelMode::VERT :
-                {
-                    mSel->SelectVert(mSel->GetNearestVert());
-                }
-                case SelMode::MESH :
-                {
-                    mSel->SelectMesh(mSel->GetNearestMesh());
-                }
+                sel->SelectFace(mSel->GetNearestFace(,(float)cursorX,(float)cursorY));
+            }
+            case SelMode::VERT :
+            {
+                sel->SelectVert(mSel->GetNearestVert());
+            }
+            case SelMode::MESH :
+            {
+                sel->SelectMesh(mSel->GetNearestMesh());
             }
             */
         }
-        SelectTool(Selection* sel)
-        {
-            mSel = sel;
-        }
+    }
 };

@@ -208,13 +208,6 @@ void Selection::SetSelMode(SelMode _sel)
 		break;
 	}
 }
-// Call Interact from the current Tool object 
-void Selection::ToolInteract(double cursorX, double cursorY)
-{
-	ITool* curFunctionalTool = mTools[(int)mSelTool];
-	std::cout << "Tool Interaction has occured\n";
-	curFunctionalTool->Interact(cursorX,cursorY);
-}
 
 // Returns whether the given vertex is selected
 bool Selection::IsVertSelected(unsigned int _id) { return mSelVertices.find(_id) != mSelVertices.end(); }
@@ -249,21 +242,71 @@ void Selection::UpdateTransformHandle()
 		mSelTransformHandle->SetParentModelMatrix(mSelEntity->GetModelMatrix());
 }
 
-// Returns the nearest mesh to the clicked position
-IMesh* Selection::GetNearestMesh(IScene* scene, float u, float v)
+glm::vec3 Selection::GetWorldPointFromScreenPoint(IScene* scene, float xPos, float yPos)
 {
-	//std::cout << "Transformed click [" << u << ", " << v << "]\n";
-	//Ray ray = RayTracer::GenerateRay(scene, u, v, false);
-	//if (ray.DoesIntersect(scene->GetRenderTris()))
-	//	return scene->GetMeshes()->GetAll().begin()->second;
-	//else
-	//	return nullptr;
+	Camera* camera = scene->GetCamera();
+	glm::mat4 camRotationMatrix = camera->GetRotationMatrix();
+	float nearClipDist = camera->GetNearClip();
+	glm::vec3 camPos = camera->GetPos();
+
+	// Camera directional Vectors 
+	glm::vec3 camUpVector = glm::vec3(camRotationMatrix[0]);
+	glm::vec3 camRightVector = glm::vec3(camRotationMatrix[1]);
+	glm::vec3 camDirVector = glm::vec3(camRotationMatrix[2]);
+
+	glm::vec3 screenPlaneOriginPos = camDirVector*nearClipDist + camPos;
+	glm::vec3 screenPointIn3D = screenPlaneOriginPos + xPos * camRightVector+ yPos * camUpVector;
+
+	return screenPointIn3D;
+}
+
+// Returns the nearest mesh to the clicked position
+IMesh* Selection::GetNearestMesh(IScene* scene, float xPos, float yPos)
+{
+	glm::vec3 clickedPoint =  GetWorldPointFromScreenPoint(scene,xPos,yPos);
+	
+	Node* rootNode = scene->GetRootNode();
+	std::vector<Node*> *nodes = new std::vector<Node*>();
+	std::vector<Node*> *nextNodes = new std::vector<Node*>();
+	nodes->push_back(rootNode);
+
+	std::vector<IMesh*> meshes;
+	
+	while(!nodes->empty())
+	{
+		for(int i = 0; i < nodes->size(); ++i)
+		{
+			Node* currentNode = (*nodes)[i];
+
+			unsigned int currentNodeMeshCount = currentNode->GetMeshCount();
+			for(unsigned int j = 0; j < currentNodeMeshCount; ++j)
+			{
+				IMesh* currentMesh = currentNode->GetMesh(j);
+				meshes.push_back(currentMesh);
+			}
+
+			unsigned int currentNodeChildCount = currentNode->GetChildCount();
+			for(unsigned int j = 0; j < currentNodeChildCount; ++j)
+			{
+				Node* newNode = currentNode->GetChild(j);
+				nextNodes->push_back(newNode);
+			}
+		}
+		delete nodes;
+		nodes = nextNodes;
+		nextNodes = new std::vector<Node*>();
+	}
+	delete nodes;
+	delete nextNodes;
+	
 	return nullptr;
 }
 
 // Returns the nearest vertex to the clicked position
-int Selection::GetNearestVert(IScene* scene, float u, float v)
+int Selection::GetNearestVert(IScene* scene, float xPos, float yPos)
 {
+	
+	
 	//Ray ray = RayTracer::GenerateRay(scene, u, v, false);
 	//IndVertex res = ray.GetClosestVertex(scene->GetRenderTris());
 	//return res.id;
@@ -290,6 +333,5 @@ Selection::Selection()
 	mSelEntity = nullptr;
 	mSelTransformHandle = nullptr;
 
-	// Create tools and link with this Selection Instance
-	mTools.push_back(new SelectTool(this));
+	mTools.push_back(new SelectTool());
 }
