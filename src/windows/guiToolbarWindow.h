@@ -11,19 +11,19 @@
 #include "rendering/scene.h"
 #include "files/fileSystem.h"
 
-#define TOOLS_DIR "resources/icons/toolIcons"
-#define SelectFileName "Select.png"
-#define MoveFileName "Move.png"
-#define RotateFileName "Rotate.png"
-#define ScaleFileName "Scale.png"
-#define ExtrudeFileName "Extrude.png"
+constexpr char* TOOLS_DIR = "resources/icons/toolIcons";
+constexpr char* SELECT_ICON = "Select.png";
+constexpr char* MOVE_ICON = "Move.png";
+constexpr char* ROTATE_ICON = "Rotate.png";
+constexpr char* SCALE_ICON = "Scale.png";
+constexpr char* EXTRUDE_ICON = "Extrude.png";
 
 class GUIToolbarWindow : public IGUIWindow
 {
 protected:
     State* mState;
     Scene* mScene;
-    const std::string fileNames[5] = {SelectFileName,MoveFileName,RotateFileName,ScaleFileName,ExtrudeFileName};
+    const std::string fileNames[5] = {SELECT_ICON,MOVE_ICON,ROTATE_ICON,SCALE_ICON,EXTRUDE_ICON};
     std::vector<unsigned int> mTextureIDs;
     ImVec2 mIconSize;
 public:

@@ -5,7 +5,7 @@ class ModelReader
 {
 private:
 	// Recursively processes the meshes in the given node and all its children
-	static void ProcessNode(IScene* scene, Node* sceneNode, aiNode* node, const aiScene* assimpScene)
+	static void ProcessNode(IScene* scene, Node* sceneNode, const aiNode* node, const aiScene* assimpScene)
 	{
 		std::cout << " - Reading node " << node->mName.C_Str() << std::endl;
 		// Process all the node's meshes (if any)
@@ -25,12 +25,21 @@ private:
 	}
 
 	// Process the vertices, indices, and textures of the given mesh
-	static Mesh* ProcessMesh(IScene* scene, aiMesh* mesh, const aiScene* assimpScene)
+	static Mesh* ProcessMesh(IScene* scene, const aiMesh* mesh, const aiScene* assimpScene)
+	{
+		// Process each part of the mesh
+		std::vector<Vertex> vertices = ProcessVertices(mesh);
+		std::vector<unsigned int> indices = ProcessIndices(vertices, mesh);
+		Material* newMaterial = ProcessMaterial(scene, mesh, assimpScene);
+
+		// Construct mesh
+		return new Mesh(mesh->mName.C_Str(), vertices, indices, newMaterial);
+	}
+
+	// Processes the vertices of the mesh, emplacing them into the list given
+	static std::vector<Vertex> ProcessVertices(const aiMesh* mesh)
 	{
 		std::vector<Vertex> vertices;
-		std::vector<unsigned int> indices;
-		Material* newMaterial;
-
 		// Process each vertex
 		for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 		{
@@ -44,7 +53,13 @@ private:
 			}
 			vertices.push_back(Vertex(pos, normal, texCoords, tangent));
 		}
+		return vertices;
+	}
 
+	// Processes the indices of the mesh
+	static std::vector<unsigned int> ProcessIndices(const std::vector<Vertex>& vertices, const aiMesh* mesh)
+	{
+		std::vector<unsigned int> indices;
 		// Process each index
 		for (unsigned int i = 0; i < mesh->mNumFaces; i++)
 		{
@@ -74,93 +89,95 @@ private:
 				indices.push_back(mesh->mFaces[i].mIndices[j]);
 			}
 		}
+		return indices;
+	}
+
+	// Processes the material of the mesh
+	static Material* ProcessMaterial(IScene* scene, const aiMesh* mesh, const aiScene* assimpScene)
+	{
+		// If there are no textures, use default material
+		if (mesh->mMaterialIndex >= assimpScene->mNumMaterials)
+			return scene->GetMaterial("default");
 
 		// Process each material's diffuse and specular maps
-		if (mesh->mMaterialIndex >= 0)
+		aiMaterial* material = assimpScene->mMaterials[mesh->mMaterialIndex];
+
+		// If the material already exists, return it
+		Material* newMaterial = scene->GetMaterial(material->GetName().C_Str());
+		if (newMaterial != nullptr)
+			return newMaterial;
+
+		// 1. diffuse maps
+		std::vector<Texture*> diffuseMaps = LoadMaterialTextures(scene, material, aiTextureType_DIFFUSE, "texture_diffuse");
+		if (diffuseMaps.empty())
+			diffuseMaps.push_back(scene->GetTexture("default_diffuse"));
+		// 2. ambient maps
+		std::vector<Texture*> ambientMaps = LoadMaterialTextures(scene, material, aiTextureType_AMBIENT, "texture_ambient");
+		if (ambientMaps.empty())
 		{
-			aiMaterial* material = assimpScene->mMaterials[mesh->mMaterialIndex];
-			newMaterial = scene->GetMaterial(material->GetName().C_Str());
-			if (newMaterial == nullptr)
+			if (!diffuseMaps.empty())
 			{
-				// 1. diffuse maps
-				std::vector<Texture*> diffuseMaps = LoadMaterialTextures(scene, material, aiTextureType_DIFFUSE, "texture_diffuse");
-				if (diffuseMaps.size() == 0)
-					diffuseMaps.push_back(scene->GetTexture("default_diffuse"));
-				// 2. ambient maps
-				std::vector<Texture*> ambientMaps = LoadMaterialTextures(scene, material, aiTextureType_AMBIENT, "texture_ambient");
-				if (ambientMaps.size() == 0)
-				{
-					if (diffuseMaps.size() > 0)
-					{
-						Texture* ambientTexture = new Texture(diffuseMaps[0]->id, "texture_ambient", diffuseMaps[0]->path, diffuseMaps[0]->name);
-						scene->AddTexture(ambientTexture->name, ambientTexture);
-						ambientMaps.push_back(ambientTexture);
-					}
-					else
-					{
-						ambientMaps.push_back(scene->GetTexture("default_ambient"));
-					}
-				}
-				// 3. specular maps
-				std::vector<Texture*> specularMaps = LoadMaterialTextures(scene, material, aiTextureType_SPECULAR, "texture_specular");
-				if (specularMaps.size() == 0)
-					specularMaps.push_back(scene->GetTexture("default_specular"));
-				// 4. normal maps
-				std::vector<Texture*> normalMaps = LoadMaterialTextures(scene, material, aiTextureType_HEIGHT, "texture_normal");
-				if (normalMaps.size() == 0)
-					normalMaps.push_back(scene->GetTexture("default_normal"));
-				// 5. height maps
-				std::vector<Texture*> heightMaps = LoadMaterialTextures(scene, material, aiTextureType_DISPLACEMENT, "texture_height");
-				if (heightMaps.size() == 0)
-					heightMaps.push_back(scene->GetTexture("default_height"));
-				// 6. alpha maps
-				std::vector<Texture*> alphaMaps = LoadMaterialTextures(scene, material, aiTextureType_OPACITY, "texture_alpha");
-				if (alphaMaps.size() == 0)
-					alphaMaps.push_back(scene->GetTexture("default_alpha"));
-
-				// Read properties into material
-				aiColor3D diffuse;
-				material->Get(AI_MATKEY_COLOR_DIFFUSE, diffuse);
-				glm::vec3 kd = Vec3FromAssimp(diffuse);
-
-				aiColor3D ambient;
-				material->Get(AI_MATKEY_COLOR_AMBIENT, ambient);
-				glm::vec3 ka = Vec3FromAssimp(ambient);
-
-				aiColor3D specular;
-				material->Get(AI_MATKEY_COLOR_SPECULAR, specular);
-				glm::vec3 ks = Vec3FromAssimp(specular);
-
-				aiColor3D emissive;
-				material->Get(AI_MATKEY_COLOR_EMISSIVE, emissive);
-				glm::vec3 ke = Vec3FromAssimp(emissive);
-
-				float ns;
-				material->Get(AI_MATKEY_SHININESS, ns);
-
-				float ni;
-				material->Get(AI_MATKEY_REFRACTI, ni);
-
-				float d;
-				material->Get(AI_MATKEY_OPACITY, d);
-
-				// Make material out of loaded textures
-				newMaterial = new Material(material->GetName().C_Str(), diffuseMaps, ambientMaps, specularMaps, normalMaps, heightMaps, alphaMaps,
-					ka, kd, ks, ns, ni, d, ke);
-				scene->AddMaterial(material->GetName().C_Str(), newMaterial);
+				Texture* ambientTexture = new Texture(diffuseMaps[0]->id, "texture_ambient", diffuseMaps[0]->path, diffuseMaps[0]->name);
+				scene->AddTexture(ambientTexture->name, ambientTexture);
+				ambientMaps.push_back(ambientTexture);
+			}
+			else
+			{
+				ambientMaps.push_back(scene->GetTexture("default_ambient"));
 			}
 		}
-		// If there are no textures, use default material
-		else
-		{
-			newMaterial = scene->GetMaterial("default");
-		}
+		// 3. specular maps
+		std::vector<Texture*> specularMaps = LoadMaterialTextures(scene, material, aiTextureType_SPECULAR, "texture_specular");
+		if (specularMaps.empty())
+			specularMaps.push_back(scene->GetTexture("default_specular"));
+		// 4. normal maps
+		std::vector<Texture*> normalMaps = LoadMaterialTextures(scene, material, aiTextureType_HEIGHT, "texture_normal");
+		if (normalMaps.empty())
+			normalMaps.push_back(scene->GetTexture("default_normal"));
+		// 5. height maps
+		std::vector<Texture*> heightMaps = LoadMaterialTextures(scene, material, aiTextureType_DISPLACEMENT, "texture_height");
+		if (heightMaps.empty())
+			heightMaps.push_back(scene->GetTexture("default_height"));
+		// 6. alpha maps
+		std::vector<Texture*> alphaMaps = LoadMaterialTextures(scene, material, aiTextureType_OPACITY, "texture_alpha");
+		if (alphaMaps.empty())
+			alphaMaps.push_back(scene->GetTexture("default_alpha"));
 
-		return new Mesh(mesh->mName.C_Str(), vertices, indices, newMaterial);
+		// Read properties into material
+		aiColor3D diffuse;
+		material->Get(AI_MATKEY_COLOR_DIFFUSE, diffuse);
+		glm::vec3 kd = Vec3FromAssimp(diffuse);
+
+		aiColor3D ambient;
+		material->Get(AI_MATKEY_COLOR_AMBIENT, ambient);
+		glm::vec3 ka = Vec3FromAssimp(ambient);
+
+		aiColor3D specular;
+		material->Get(AI_MATKEY_COLOR_SPECULAR, specular);
+		glm::vec3 ks = Vec3FromAssimp(specular);
+
+		aiColor3D emissive;
+		material->Get(AI_MATKEY_COLOR_EMISSIVE, emissive);
+		glm::vec3 ke = Vec3FromAssimp(emissive);
+
+		float ns;
+		material->Get(AI_MATKEY_SHININESS, ns);
+
+		float ni;
+		material->Get(AI_MATKEY_REFRACTI, ni);
+
+		float d;
+		material->Get(AI_MATKEY_OPACITY, d);
+
+		// Make material out of loaded textures
+		newMaterial = new Material(material->GetName().C_Str(), diffuseMaps, ambientMaps, specularMaps, normalMaps, heightMaps, alphaMaps,
+			ka, kd, ks, ns, ni, d, ke);
+		scene->AddMaterial(material->GetName().C_Str(), newMaterial);
+		return newMaterial;
 	}
 
 	// Loads material textures
-	static std::vector<Texture*> LoadMaterialTextures(IScene* scene, aiMaterial* mat, aiTextureType type, const std::string& typeName)
+	static std::vector<Texture*> LoadMaterialTextures(IScene* scene, const aiMaterial* mat, aiTextureType type, const std::string& typeName)
 	{
 		std::vector<Texture*> textures;
 		for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)

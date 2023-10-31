@@ -30,8 +30,8 @@
 #include "primitives/vCube.h"
 #include "primitives/vPlane.h"
 
-const unsigned int SCR_WIDTH = 1280;
-const unsigned int SCR_HEIGHT = 720;
+constexpr unsigned int SCR_WIDTH = 1280;
+constexpr unsigned int SCR_HEIGHT = 720;
 
 // Main program loop
 int main();

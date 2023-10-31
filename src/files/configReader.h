@@ -98,7 +98,7 @@ public:
 		f >> root;
 
 		// If the root cannot be read
-		if (root.isNull() || root.size() == 0)
+		if (root.isNull() || root.empty())
 		{
 			std::cout << "ERROR::CONFIGREADER::NULL File " << fileName << " is not valid JSON or was read incorrectly." << std::endl;
 			return nullptr;

@@ -16,23 +16,24 @@
 #include <assimp/Exporter.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#include <string>
 constexpr float PI = 3.141592f;
 constexpr float HALF_PI = 1.57079f;
 
-#define VERT_SHADER_SIZE 12
+constexpr size_t VERT_SHADER_SIZE = 12;
 
-#define GRID_OBJ "grid"
-#define BG_PLANE_OBJ "bgPlane"
-#define TRANSFORM_HANDLE "transformHandle"
-#define CAMERA_AXIS_HANDLE "cameraAxisHandle"
+constexpr char* GRID_OBJ = "grid";
+constexpr char* BG_PLANE_OBJ = "bgPlane";
+constexpr char* TRANSFORM_HANDLE = "transformHandle";
+constexpr char* CAMERA_AXIS_HANDLE = "cameraAxisHandle";
 
-#define TEXTURE_DIR "resources/textures/"
-#define FONT_DIR "resources/fonts/"
-#define MODELS_DIR "resources/models/"
-#define SHADER_DIR "resources/shaders/"
+constexpr char* TEXTURE_DIR = "resources/textures/";
+constexpr char* FONT_DIR = "resources/fonts/";
+constexpr char* MODELS_DIR = "resources/models/";
+constexpr char* SHADER_DIR = "resources/shaders/";
 
-#define CONFIG_JSON "configs/config.json"
-#define MATS_JSON "configs/materials.json"
-#define SHADERS_JSON "configs/shaders.json"
-#define APP_NAME "BlankMat"
-#define ICON "icon256.png"
+constexpr char* CONFIG_JSON = "configs/config.json";
+constexpr char* MATS_JSON = "configs/materials.json";
+constexpr char* SHADERS_JSON = "configs/shaders.json";
+constexpr char* APP_NAME = "BlankMat";
+constexpr char* ICON = "icon256.png";
