@@ -32,10 +32,6 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
         // Only focus when not locked
         if (!locks->lockF) {
             glm::vec3 targetPos = (selEntity != nullptr) ? selEntity->GetWorldPos() : glm::vec3(0.0f);
-            glm::vec3 targetDir = glm::normalize(targetPos - camera->GetPos());
-            float rotY = asin(targetDir.y);
-            float rotX = atan2(targetDir.x, targetDir.z);
-            //camera->SetRot(glm::vec3(rotX, rotY, 0.0f));
             camera->LookAt(targetPos);
 
             locks->lockF = true;

@@ -89,8 +89,10 @@ public:
     const glm::vec3 GetRot() { return mRot; }
     // Returns the direction of the camera
     const glm::vec3 GetDir() { return mDir; }
-    // Returns the camera's look target
-    const glm::vec3 GetLookAt() { return mPivot; }
+    // Returns the camera's current look target
+    const glm::vec3 GetLookAt() { return mPos + mDir; }
+    // Returns the camera's pivot
+    const glm::vec3 GetPivot() { return mPivot; }
     // Returns the background color of the camera
     const glm::vec3 GetBGColor() { return mBGColor; }
     // Returns the orthographic size of the camera
