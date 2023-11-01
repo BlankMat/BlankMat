@@ -9,10 +9,10 @@ private:
     float mFOV;
     float mNearClip;
     float mFarClip;
-    float mLookDist;
 
     glm::vec3 mPos;
     glm::vec3 mRot;
+    glm::vec3 mPivot;
 
     glm::vec3 mDir;
     glm::vec3 mUp;
@@ -21,6 +21,7 @@ private:
     float mOrthSize;
     bool mIsPerspective;
     bool mIsWireframe;
+    bool mRotateAroundPivot;
 
     glm::vec3 mBGColor;
 
@@ -42,6 +43,7 @@ private:
         mFarClip = config->GetFloat("farClip");
         mPos = config->GetVec("pos");
         mDir = config->GetVec("dir");
+        mPivot = mPos + mDir;
         mUp = config->GetVec("up");
         mBGColor = config->GetVec("bgColor");
         mOrthSize = config->GetFloat("size");
@@ -51,13 +53,14 @@ private:
         mRecalcProjection = true;
         mRecalcView = true;
         mRecalcRotation = true;
+        mRotateAroundPivot = false;
         mIsWireframe = false;
         mProjection = glm::mat4(1.0f);
         mView = glm::mat4(1.0f);
         mRotation = glm::mat4(1.0f);
         mPrevAspect = 1.0f;
 
-        LookAt(mDir + mPos);
+        LookAt(mPivot);
         EnableWireframe(mIsWireframe);
     }
 
@@ -86,8 +89,8 @@ public:
     const glm::vec3 GetRot() { return mRot; }
     // Returns the direction of the camera
     const glm::vec3 GetDir() { return mDir; }
-    // Returns the camera's (estimated) look position
-    const glm::vec3 GetLookAt() { return mPos + mDir * mLookDist; }
+    // Returns the camera's look target
+    const glm::vec3 GetLookAt() { return mPivot; }
     // Returns the background color of the camera
     const glm::vec3 GetBGColor() { return mBGColor; }
     // Returns the orthographic size of the camera
@@ -102,6 +105,8 @@ public:
     bool IsPerspective() { return mIsPerspective; }
     // Returns whether the camera is in wireframe
     bool IsWireframe() { return mIsWireframe; }
+    // Returns whether the camera is rotating around the pivot
+    bool IsRotatingAroundPivot() { return mRotateAroundPivot; }
 
     // Sets the position of the camera
     void SetPos(const glm::vec3& pos) { mPos = pos; mRecalcView = true; }
@@ -113,6 +118,8 @@ public:
     void SetNearClip(float nearClip) { mNearClip = nearClip; }
     // Sets the FOV of the camera
     void SetFOV(float fov) { mFOV = fov; }
+    // Sets the camera's rotate mode to be around the pivot
+    void SetPivotRotatioMode(bool isPivotRotation) { mRotateAroundPivot = isPivotRotation; }
 
     // Sets the camera to be perspective/orthographic
     void SetPerspective(bool isPerspective)
@@ -184,7 +191,7 @@ public:
     // Sets the rotation of the camera to be in the given direction
     void LookAt(const glm::vec3& targetPos)
     {
-        mLookDist = glm::length(targetPos - mPos);
+        mPivot = targetPos;
         glm::vec3 lookDir = glm::normalize(targetPos - mPos);
         mRot = glm::vec3(atan2(lookDir.x, lookDir.z), asin(lookDir.y), 0.0f);
         CalcBasis();
@@ -200,7 +207,17 @@ public:
     // Rotates the camera by the given euler angles
     void Rotate(const glm::vec3& delta)
     {
-        mRot = glm::vec3(mRot.x + delta.x, glm::clamp(mRot.y + delta.y, -PI * 0.499f, PI * 0.499f), mRot.z); CalcBasis();
+        // When rotating around pivot, change position instead of rotation
+        if (mRotateAroundPivot)
+        {
+            // TODO: Rotate around pivot
+            mRot = glm::vec3(mRot.x + delta.x, glm::clamp(mRot.y + delta.y, -PI * 0.499f, PI * 0.499f), mRot.z);
+        }
+        // When rotating around camera, don't change position
+        else
+        {
+            mRot = glm::vec3(mRot.x + delta.x, glm::clamp(mRot.y + delta.y, -PI * 0.499f, PI * 0.499f), mRot.z);
+        }
         CalcBasis();
     }
 
@@ -240,8 +257,10 @@ public:
         mView = glm::mat4(1.0f);
         mRotation = glm::mat4(1.0f);
         mPrevAspect = 1.0f;
+        mRotateAroundPivot = false;
 
-        LookAt(mDir + mPos);
+        mPivot = mPos + mDir;
+        LookAt(mPivot);
         EnableWireframe(mIsWireframe);
     }
 
