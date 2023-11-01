@@ -76,6 +76,8 @@ public:
 				GUIWindowUtils::Checkbox("Perspective", cam->IsPerspective()));
 			cam->SetWireframe(
 				GUIWindowUtils::Checkbox("Wireframe", cam->IsWireframe()));
+			cam->SetPivotRotatioMode(
+				GUIWindowUtils::Checkbox("Rotate Around Pivot", cam->IsRotatingAroundPivot()));
 
 			// Debug settings
 			ImGui::Separator();
