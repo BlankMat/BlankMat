@@ -1,14 +1,13 @@
 #pragma once
-#include "iGUIWindow.h"
-#include "selection.h"
-#include "stb_image.h"
-#include <vector>
-#include <iostream>
-#include "string.h"
 #include "renderingHelpers.h"
 #include "tools/state.h"
-#include "rendering/scene.h"
 #include "files/fileSystem.h"
+#include "rendering/scene.h"
+#include "windows/iGUIWindow.h"
+#include "interaction/selection.h"
+#include <vector>
+#include <iostream>
+#include <string>
 
 constexpr auto MODES_DIR = "resources/icons/modeIcons";
 

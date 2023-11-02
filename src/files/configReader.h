@@ -106,6 +106,7 @@ public:
 
 		//std::cout << "Read JSON file " << fileName <<  ". Contents:" << std::endl;
 		//std::cout << root.toStyledString() << std::endl;
+		std::cout << "Read file " << fileName << std::endl;
 		return ReadJSONTree(root, "root", nullptr);
 	}
 };

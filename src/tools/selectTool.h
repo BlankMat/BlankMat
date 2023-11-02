@@ -1,6 +1,6 @@
 #pragma once
-#include "iTool.h"
 #include "glIncludes.h"
+#include "interfaces/iTool.h"
 
 class SelectTool : public ITool
 {

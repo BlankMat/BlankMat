@@ -1,15 +1,14 @@
 #pragma once
-//#define STB_IMAGE_IMPLEMENTATION
-#include "iGUIWindow.h"
-#include "selection.h"
-#include "stb_image.h"
+#include "glIncludes.h"
+#include "renderingHelpers.h"
+#include "files/fileSystem.h"
+#include "windows/iGUIWindow.h"
+#include "interaction/selection.h"
+#include "rendering/scene.h"
+#include "tools/state.h"
 #include <vector>
 #include <iostream>
-#include "string.h"
-#include "renderingHelpers.h"
-#include "tools/state.h"
-#include "rendering/scene.h"
-#include "files/fileSystem.h"
+#include <string>
 
 constexpr auto TOOLS_DIR = "resources/icons/toolIcons";
 constexpr auto SELECT_ICON = "Select.png";

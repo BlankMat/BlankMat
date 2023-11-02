@@ -1,5 +1,5 @@
 #pragma once
-#include "input.h"
+#include "interaction/input.h"
 
 #include "tools/state.h"
 

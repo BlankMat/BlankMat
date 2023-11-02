@@ -1,8 +1,8 @@
 #pragma once
-#include "iGUIWindow.h"
-#include "guiWindowUtils.h"
-#include "selection.h"
 #include "utils.h"
+#include "windows/iGUIWindow.h"
+#include "windows/guiWindowUtils.h"
+#include "interaction/selection.h"
 #include "rendering/scene.h"
 #include "rendering/camera.h"
 #include "tools/state.h"

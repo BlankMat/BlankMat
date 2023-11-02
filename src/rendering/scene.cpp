@@ -1,7 +1,7 @@
 #include "scene.h"
 #include "primitives/pLightCube.h"
 #include "files/modelReader.h"
-#include "selection.h"
+#include "interaction/selection.h"
 
 // Renders the current scene
 void Scene::Draw(Window* window, Shader* shader)

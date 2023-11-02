@@ -3,7 +3,6 @@
 int main()
 {
     // Read Configs
-    std::cout << "Starting program, reading options from " << FileSystem::GetPath(CONFIG_JSON) << std::endl;
     Config* config = ConfigReader::ReadFile(FileSystem::GetPath(CONFIG_JSON));
     Config* materialsConfig = ConfigReader::ReadFile(FileSystem::GetPath(MATS_JSON));
     Config* shadersConfig = ConfigReader::ReadFile(FileSystem::GetPath(SHADERS_JSON));
