@@ -3,6 +3,7 @@
 
 class RedoCommand : public ICommand
 {
+public:
 	void Execute() const override
 	{
 

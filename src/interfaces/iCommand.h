@@ -5,6 +5,8 @@
 /// </summary>
 class ICommand
 {
+protected:
+	bool mCanBeUndone = true;
 public:
 	/// <summary>
 	/// Executes this command.
@@ -15,6 +17,12 @@ public:
 	/// Attempts to undo this command. May not be possible for a specific command.
 	/// </summary>
 	virtual void Undo() const = 0;
+
+	/// <summary>
+	/// Returns whether the command is undoable
+	/// </summary>
+	/// <returns></returns>
+	bool Undoable() { return mCanBeUndone; }
 
 	virtual ~ICommand() {}
 };

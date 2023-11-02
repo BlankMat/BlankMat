@@ -3,6 +3,7 @@
 
 class UndoCommand : public ICommand
 {
+public:
 	void Execute() const override
 	{
 
