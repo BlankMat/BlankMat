@@ -5,15 +5,15 @@
 class SelectTool : public ITool
 {
     public:
-    void Select(State* state, IScene* scene)
+    void Select(State* state, IScene* scene, Window* window)
     {
 
     }
-	void Deselect(State* state, IScene* scene)
+	void Deselect(State* state, IScene* scene, Window* window)
     {
 
     }
-	void Interact(State* state, IScene* scene)
+	void Interact(State* state, IScene* scene, Window* window)
     {
         Selection* sel = state->GetSel();
         //switch(sel->GetSelMode())

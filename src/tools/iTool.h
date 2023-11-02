@@ -13,7 +13,7 @@ protected:
 	//Selection* mSel;
 	
 public:
-	virtual void Select(State* state, IScene* scene) = 0;
-	virtual void Deselect(State* state, IScene* scene) = 0;
-	virtual void Interact(State* state, IScene* scene) = 0;
+	virtual void Select(State* state, IScene* scene, Window* window) = 0;
+	virtual void Deselect(State* state, IScene* scene, Window* window) = 0;
+	virtual void Interact(State* state, IScene* scene, Window* window) = 0;
 };

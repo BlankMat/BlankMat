@@ -224,13 +224,15 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
         double mouseX, mouseY;
         glfwGetCursorPos(glfwWindow, &mouseX, &mouseY);
         int xPos = (int)glm::floor(mouseX);
-        int yPos = (int)glm::floor(mouseY);
+        // View cordinates are based distance from the bottom
+        // but mouseY is based on distance from top
+        int yPos = height - (int)glm::floor(mouseY);
 
         int xPosFromCenter = xPos - (int)halfWidth;
         int yPosFromCenter = yPos - (int)halfHeight;
 
-        float u = (xPos + 0.5f) / width;
-        float v = (yPos + 0.5f) / height;
+        float u = (xPosFromCenter + 0.5f) / width;
+        float v = (yPosFromCenter + 0.5f) / height;
 
         // Reset previous positions
         if (*prevX < 0)
@@ -273,7 +275,7 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
             int tempVert;
             switch (sel->GetSelMode()) {
             case SelMode::MESH:
-                tempMesh = Selection::GetNearestMesh(scene, xPosFromCenter,yPosFromCenter);
+                tempMesh = Selection::GetNearestMesh(scene, window, u, v);
                 if (tempMesh == sel->GetSelectedMesh())
                     sel->DeselectMesh();
                 else
@@ -283,7 +285,7 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
                 if (selEntity == nullptr)
                     break;
 
-                tempFace = Selection::GetNearestFace(scene, xPosFromCenter,yPosFromCenter);
+                tempFace = Selection::GetNearestFace(scene, window, u, v);
                 if (sel->IsFaceSelected(tempFace))
                     sel->DeselectFace(tempFace);
                 else
@@ -294,7 +296,7 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
                 if (selEntity == nullptr)
                     break;
 
-                tempVert = Selection::GetNearestVert(scene, xPosFromCenter,yPosFromCenter);
+                tempVert = Selection::GetNearestVert(scene, window, u, v);
                 if (sel->IsVertSelected(tempVert))
                     sel->DeselectVert(tempVert);
                 else

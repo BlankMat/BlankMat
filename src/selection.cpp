@@ -242,29 +242,23 @@ void Selection::UpdateTransformHandle()
 		mSelTransformHandle->SetParentModelMatrix(mSelEntity->GetModelMatrix());
 }
 
-glm::vec3 Selection::GetWorldPointFromScreenPoint(IScene* scene, float xPos, float yPos)
+// Take a point on the screen and transform it into a 3d point in the world
+glm::vec4 Selection::GetWorldPointFromScreenPoint(IScene* scene, Window* window, float u, float v)
 {
+	glm::vec4 clipClickPoint = glm::vec4(u,v,0.0,1.0);
+
 	Camera* camera = scene->GetCamera();
-	glm::mat4 camRotationMatrix = camera->GetRotationMatrix();
-	float nearClipDist = camera->GetNearClip();
-	glm::vec3 camPos = camera->GetPos();
+	glm::mat4 inverseProjectionMatrix = glm::inverse(scene->GetProjectionMatrix(window->GetAspect()));
+	glm::mat4 inverseViewMatrix =  glm::inverse(scene->GetViewMatrix());
 
-	// Camera directional Vectors 
-	glm::vec3 camUpVector = glm::vec3(camRotationMatrix[0]);
-	glm::vec3 camRightVector = glm::vec3(camRotationMatrix[1]);
-	glm::vec3 camDirVector = glm::vec3(camRotationMatrix[2]);
+	glm::vec4 worldClickPoint = inverseProjectionMatrix*inverseViewMatrix*clipClickPoint;
 
-	glm::vec3 screenPlaneOriginPos = camDirVector*nearClipDist + camPos;
-	glm::vec3 screenPointIn3D = screenPlaneOriginPos + xPos * camRightVector+ yPos * camUpVector;
-
-	return screenPointIn3D;
+	return worldClickPoint;
 }
 
-// Returns the nearest mesh to the clicked position
-IMesh* Selection::GetNearestMesh(IScene* scene, float xPos, float yPos)
+// Returns all meshes from a scene
+std::vector<IMesh*> Selection::GetAllMeshesFromScene(IScene* scene)
 {
-	glm::vec3 clickedPoint =  GetWorldPointFromScreenPoint(scene,xPos,yPos);
-	
 	Node* rootNode = scene->GetRootNode();
 	std::vector<Node*> *nodes = new std::vector<Node*>();
 	std::vector<Node*> *nextNodes = new std::vector<Node*>();
@@ -299,13 +293,29 @@ IMesh* Selection::GetNearestMesh(IScene* scene, float xPos, float yPos)
 	delete nodes;
 	delete nextNodes;
 	
+	return meshes;
+}
+
+// Returns the nearest mesh to the clicked position
+IMesh* Selection::GetNearestMesh(IScene* scene,Window* window, float u, float v)
+{
+	glm::vec3 camDirVector = -(scene->GetCamera()->GetDir());
+	glm::vec4 worldClickPoint =  GetWorldPointFromScreenPoint(scene,window,u,v);
+	
+	std::vector<IMesh*> meshes = GetAllMeshesFromScene(scene);
+	glm::mat4 inverseModelMatrix = glm::inverse(meshes[0]->GetModelMatrix());
+	glm::vec4 localClickedPoint = inverseModelMatrix*worldClickPoint;
+
+
 	return nullptr;
 }
 
-// Returns the nearest vertex to the clicked position
-int Selection::GetNearestVert(IScene* scene, float xPos, float yPos)
+// Returns the nearest vertex to the clicked position (A small margin is allowed as hitting a single point directly is pretty difficult)
+int Selection::GetNearestVert(IScene* scene,Window* window, float u, float v)
 {
-	
+	glm::vec3 camDirVector = -(scene->GetCamera()->GetDir());
+	glm::vec3 clickedPoint =  GetWorldPointFromScreenPoint(scene,window,u,v);
+
 	
 	//Ray ray = RayTracer::GenerateRay(scene, u, v, false);
 	//IndVertex res = ray.GetClosestVertex(scene->GetRenderTris());
@@ -314,7 +324,7 @@ int Selection::GetNearestVert(IScene* scene, float xPos, float yPos)
 }
 
 // Returns the nearest face to the clicked position
-int Selection::GetNearestFace(IScene* scene, float u, float v)
+int Selection::GetNearestFace(IScene* scene,Window* window, float u, float v)
 {
 	//Ray ray = RayTracer::GenerateRay(scene, u, v, false);
 	//ITriangle res = ray.GetClosestTriangle(scene->GetRenderTris());

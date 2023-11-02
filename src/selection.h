@@ -114,7 +114,7 @@ public:
 	/// <param name="u">U coordinate onscreen</param>
 	/// <param name="v">V coordinate onscreen</param>
 	/// <returns>Selected mesh</returns>
-	static IMesh* GetNearestMesh(IScene* scene, float u, float v);
+	static IMesh* GetNearestMesh(IScene* scene,Window* window, float u, float v);
 
 	/// <summary>
 	/// Returns the nearest vertex to the clicked position
@@ -123,7 +123,7 @@ public:
 	/// <param name="u">U coordinate onscreen</param>
 	/// <param name="v">V coordinate onscreen</param>
 	/// <returns>Selected vertex index, or -1 if none was found</returns>
-	static int GetNearestVert(IScene* scene, float xPos, float yPos);
+	static int GetNearestVert(IScene* scene,Window* window, float u, float v);
 
 	/// <summary>
 	/// Returns the nearest face to the clicked position
@@ -132,7 +132,10 @@ public:
 	/// <param name="u">U coordinate onscreen</param>
 	/// <param name="v">V coordinate onscreen</param>
 	/// <returns>Selected face index, or -1 if none was found</returns>
-	static int GetNearestFace(IScene* scene, float u, float v);
+	static int GetNearestFace(IScene* scene,Window* window, float u, float v);
 
-	static glm::vec3 Selection::GetWorldPointFromScreenPoint(IScene* scene, float xPos, float yPos);
+	static glm::vec4 Selection::GetWorldPointFromScreenPoint(IScene* scene, Window* window, float u, float v);
+
+
+	static std::vector<IMesh*> Selection::GetAllMeshesFromScene(IScene* scene);
 };
