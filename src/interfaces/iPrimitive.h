@@ -105,10 +105,6 @@ public:
 		glActiveTexture(GL_TEXTURE0);
 	}
 
-	std::vector<V> GetVertices()
-	{
-		return mVertices;
-	}
 	IPrimitive(const std::string& name, Material* material = nullptr, const float lineWidth = 0.1f, const bool drawOver = false,
 		const glm::vec3& pos = glm::vec3(0.0f), const glm::vec3& rot = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f))
 		: IEntity(name, material, drawOver, pos, rot, scale), mLineWidth(lineWidth)

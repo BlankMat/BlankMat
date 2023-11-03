@@ -6,6 +6,8 @@
 #include "tools/selectTool.h"
 #include "tools/iTool.h"
 
+#define SELECTION_ERROR_MARGIN 9
+
 enum class Tool { NONE = 0, SELECT = 1, MOVE = 2, ROTATE = 3, SCALE = 4, EXTRUDE = 5 , LAST};
 enum class SelMode { MESH = 0, VERT = 1, FACE = 2, LAST };
 

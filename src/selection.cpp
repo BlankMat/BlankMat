@@ -299,22 +299,36 @@ std::vector<IMesh*> Selection::GetAllMeshesFromScene(IScene* scene)
 // Returns the nearest mesh to the clicked position
 IMesh* Selection::GetNearestMesh(IScene* scene,Window* window, float u, float v)
 {
-	glm::vec3 camDirVector = -(scene->GetCamera()->GetDir());
+	glm::vec3 camDirVector = (scene->GetCamera()->GetDir());
 	glm::vec4 worldClickPoint =  GetWorldPointFromScreenPoint(scene,window,u,v);
 	
 	std::vector<IMesh*> meshes = GetAllMeshesFromScene(scene);
-	glm::mat4 inverseModelMatrix = glm::inverse(meshes[0]->GetModelMatrix());
-	glm::vec4 localClickedPoint = inverseModelMatrix*worldClickPoint;
+	Vertex* selectedVertex = nullptr;
+	for(int i = 0; i < meshes.size(); ++i)
+	{
+		IMesh* currentMesh = meshes[i];
+		glm::mat4 inverseModelMatrix = meshes[0]->GetNormalModelMatrix();
 
-
+		glm::vec4 localClickedPoint = inverseModelMatrix*worldClickPoint;
+		glm::vec4 localClickedVector = inverseModelMatrix * glm::vec4(camDirVector,1.0);
+		int collisionFaceID = currentMesh->CheckLineFaceCollision(localClickedPoint,localClickedVector);
+		if(collisionFaceID != -1)
+		{
+			glm::vec3 color = currentMesh->GetMaterial()->kd;
+			std::cout << "Color [" + std::to_string(color.x)
+			 + ", " + std::to_string(color.y) + ", " 
+			 + std::to_string(color.z)+"]" << std::endl;
+			return currentMesh;
+		}
+	}
 	return nullptr;
 }
 
 // Returns the nearest vertex to the clicked position (A small margin is allowed as hitting a single point directly is pretty difficult)
 int Selection::GetNearestVert(IScene* scene,Window* window, float u, float v)
 {
-	glm::vec3 camDirVector = -(scene->GetCamera()->GetDir());
-	glm::vec3 clickedPoint =  GetWorldPointFromScreenPoint(scene,window,u,v);
+
+	
 
 	
 	//Ray ray = RayTracer::GenerateRay(scene, u, v, false);

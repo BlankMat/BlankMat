@@ -257,3 +257,10 @@ static const glm::vec2 Vec2FromAssimp(const aiVector3D& vec)
 {
 	return glm::vec2(vec.x, vec.y);
 }
+
+static const bool Vec3FloatEqual(const glm::vec3& vecA, const glm::vec3& vecB, double acceptableElementwiseMargin)
+{
+    return(vecA.x-vecB.x < acceptableElementwiseMargin &&
+    vecA.x-vecB.y < acceptableElementwiseMargin &&
+    vecA.x-vecB.z < acceptableElementwiseMargin);
+}
