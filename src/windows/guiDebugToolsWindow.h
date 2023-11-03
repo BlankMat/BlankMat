@@ -55,6 +55,7 @@ public:
 			mState->enableShadows = GUIWindowUtils::Checkbox("Enable Shadows", mState->enableShadows);
 			mState->enableGrid = GUIWindowUtils::Checkbox("Enable Grid", mState->enableGrid);
 			mState->drawByMaterial = GUIWindowUtils::Checkbox("Draw By Material", mState->drawByMaterial);
+			mState->DEBUG_fakeNumber = GUIWindowUtils::InputInt("DEBUG Number", mState->DEBUG_fakeNumber);
 
 			// Camera settings
 			ImGui::Separator();

@@ -53,6 +53,9 @@ int main()
     // -----------
     while (!glfwWindowShouldClose(window->GetWindow()))
     {
+        // Poll events at the start of the loop
+        glfwPollEvents();
+
         // Get deltaTime
         lastTime = currentTime;
         currentTime = glfwGetTime();
@@ -104,9 +107,8 @@ int main()
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         }
 
-        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
+        // Swap buffers at the end of the loop
         glfwSwapBuffers(window->GetWindow());
-        glfwPollEvents();
     }
 
     // Clear up dynamic memory usage
@@ -167,6 +169,7 @@ void LoadGUIs(Window* window, State* state, Scene* scene)
     window->AddGUI(new GUIMenuBarWindow(true));
     window->AddGUI(new GUIToolbarWindow(state, scene, true));
     window->AddGUI(new GUIToolModeWindow(state, scene, true));
+    window->AddGUI(new GUIActionList(state, scene, true));
 }
 
 // Loads all defined shaders

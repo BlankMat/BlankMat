@@ -1,13 +1,13 @@
 #pragma once
+#include "utils.h"
 #include "interfaces/iCommand.h"
 
-template<typename T>
-class AddValueCommand : public ICommand
+class EnableValueCommand : public ICommand
 {
 protected:
-	T mPrevValue;
-	T mNewValue;
-	T* mValueRef;
+	bool mPrevValue;
+	bool mNewValue;
+	bool* mValueRef;
 public:
 	/// <summary>
 	/// Executes this command
@@ -31,19 +31,19 @@ public:
 	/// <returns></returns>
 	const std::string GetName() override
 	{
-		return "ADD_VALUE_FROM_" + TypeToString(mPrevValue) + "_TO_" + TypeToString(mNewValue);
+		return "ENABLED_VALUE_FROM_" + BoolToString(mPrevValue) + "_TO_" + BoolToString(mNewValue);
 	}
 
 	/// <summary>
-	/// Instantiates a command that adds the given value to the value of the given reference once the command is executed
+	/// Instantiates a command that changes the value of the given reference to the given value once the command is executed
 	/// </summary>
 	/// <param name="valueRef">Reference to the variable to change</param>
-	/// <param name="delta">Value to add to the variable</param>
-	explicit AddValueCommand(T* valueRef, const T& delta)
+	/// <param name="newValue">Value to change the variable to</param>
+	explicit EnableValueCommand(bool* valueRef, const bool& newValue)
 	{
 		mValueRef = valueRef;
 		mPrevValue = *valueRef;
-		mNewValue = *valueRef + delta;
+		mNewValue = newValue;
 		mCanBeUndone = true;
 	}
 };

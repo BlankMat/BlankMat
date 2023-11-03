@@ -19,6 +19,8 @@
 #define S_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_S) == GLFW_PRESS)
 #define F_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_F) == GLFW_PRESS)
 #define D_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_D) == GLFW_PRESS)
+#define Y_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_Y) == GLFW_PRESS)
+#define Z_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_Z) == GLFW_PRESS)
 #define ESC_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 #define SPACE_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_SPACE) == GLFW_PRESS)
 #define WASDZX_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_W) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_A) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_S) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_D) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_Z) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_X) == GLFW_PRESS)
@@ -61,6 +63,14 @@ struct InputLocks {
 	bool lockKey3 = false;
 	bool lockKey4 = false;
 	bool lockKey5 = false;
+
+	bool lockCtrl1 = false;
+	bool lockCtrl2 = false;
+	bool lockCtrl3 = false;
+	bool lockCtrl4 = false;
+	bool lockCtrl5 = false;
+	bool lockCtrlY = false;
+	bool lockCtrlZ = false;
 
 	bool reselect = false;
 	bool rerender = false;

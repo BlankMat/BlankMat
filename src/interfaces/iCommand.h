@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 /// <summary>
 /// Command interface. Allows executing the command and undoing it.
@@ -23,6 +24,12 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	bool Undoable() { return mCanBeUndone; }
+
+	/// <summary>
+	/// Returns the name of this command
+	/// </summary>
+	/// <returns></returns>
+	virtual const std::string GetName() = 0;
 
 	virtual ~ICommand() {}
 };

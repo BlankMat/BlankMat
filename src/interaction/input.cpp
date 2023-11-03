@@ -1,4 +1,9 @@
 #include "input.h"
+#include "interaction/addValueCommand.h"
+#include "interaction/changeValueCommand.h"
+#include "interaction/enableValueCommand.h"
+#include "interaction/undoCommand.h"
+#include "interaction/redoCommand.h"
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
@@ -8,6 +13,7 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
     Camera* camera = scene->GetCamera();
     Selection* sel = state->GetSel();
     Config* config = state->GetConfig();
+    ActionStack* actions = state->GetActionStack();
     IEntity* selEntity = sel->GetSelectedEntity();
     bool didReceiveInput = false;
 
@@ -91,6 +97,64 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
         didReceiveInput = true;
     }
 
+
+    // Debug run fake commands
+    if (KEY1_PRESS && CTRL_PRESS) {
+        if (!locks->lockCtrl1)
+        {
+            actions->Execute(new ChangeValueCommand<int>(&state->DEBUG_fakeNumber, 0));
+            locks->lockCtrl1 = true;
+        }
+        didReceiveInput = true;
+    }
+    else if (KEY2_PRESS && CTRL_PRESS) {
+        if (!locks->lockCtrl2)
+        {
+            actions->Execute(new AddValueCommand<int>(&state->DEBUG_fakeNumber, 1));
+            locks->lockCtrl2 = true;
+        }
+        didReceiveInput = true;
+    }
+    else if (KEY3_PRESS && CTRL_PRESS) {
+        if (!locks->lockCtrl3)
+        {
+            actions->Execute(new AddValueCommand<int>(&state->DEBUG_fakeNumber, -1));
+            locks->lockCtrl3 = true;
+        }
+        didReceiveInput = true;
+    }
+    else if (KEY4_PRESS && CTRL_PRESS) {
+        if (!locks->lockCtrl4)
+        {
+            actions->Execute(new EnableValueCommand(&state->enableDiffuseMap, true));
+            locks->lockCtrl4 = true;
+        }
+        didReceiveInput = true;
+    }
+    else if (KEY5_PRESS && CTRL_PRESS) {
+        if (!locks->lockCtrl5)
+        {
+            actions->Execute(new EnableValueCommand(&state->enableDiffuseMap, false));
+            locks->lockCtrl5 = true;
+        }
+        didReceiveInput = true;
+    }
+    else if (Y_PRESS && CTRL_PRESS) {
+        if (!locks->lockCtrlY)
+        {
+            actions->Redo();
+            locks->lockCtrlY = true;
+        }
+        didReceiveInput = true;
+    }
+    else if (Z_PRESS && CTRL_PRESS) {
+        if (!locks->lockCtrlZ)
+        {
+            actions->Undo();
+            locks->lockCtrlZ = true;
+        }
+        didReceiveInput = true;
+    }
 
 
     /* ==================================================== Keyboard Input ===================================================== */
@@ -385,6 +449,14 @@ void InputLocks::ClearLocks()
     lockDel = false;        // Delete
     lockKey4 = false;
     lockKey5 = false;
+
+    lockCtrl1 = false;
+    lockCtrl2 = false;
+    lockCtrl3 = false;
+    lockCtrl4 = false;
+    lockCtrl5 = false;
+    lockCtrlY = false;
+    lockCtrlZ = false;
 
     lockSpace = false;
     lockAltT = false;       // Disco light

@@ -18,6 +18,7 @@
 #include "windows/guiLightViewer.h"
 #include "windows/guiMaterialViewer.h"
 
+#include "windows/guiActionList.h"
 #include "windows/guiMaterialEditor.h"
 
 #include "rendering/shader.h"

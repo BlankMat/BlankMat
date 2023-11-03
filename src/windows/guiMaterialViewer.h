@@ -1,7 +1,8 @@
 #pragma once
-#include "iGUIWindow.h"
-#include "guiWindowUtils.h"
+#include "windows/iGUIWindow.h"
+#include "windows/guiWindowUtils.h"
 #include "rendering/scene.h"
+#include "interaction/selection.h"
 #include "tools/state.h"
 
 class GUIMaterialViewer : public IGUIWindow

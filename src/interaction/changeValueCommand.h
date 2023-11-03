@@ -26,6 +26,15 @@ public:
 	}
 
 	/// <summary>
+	/// Returns the name of this command
+	/// </summary>
+	/// <returns></returns>
+	const std::string GetName() override
+	{
+		return "CHANGE_VALUE_FROM_" + TypeToString(mPrevValue) + "_TO_" + TypeToString(mNewValue);
+	}
+
+	/// <summary>
 	/// Instantiates a command that changes the value of the given reference to the given value once the command is executed
 	/// </summary>
 	/// <param name="valueRef">Reference to the variable to change</param>
@@ -35,5 +44,6 @@ public:
 		mValueRef = valueRef;
 		mPrevValue = *valueRef;
 		mNewValue = newValue;
+		mCanBeUndone = true;
 	}
 };

@@ -257,3 +257,20 @@ static const glm::vec2 Vec2FromAssimp(const aiVector3D& vec)
 {
 	return glm::vec2(vec.x, vec.y);
 }
+
+template<typename T>
+static const std::string TypeToString(T& value)
+{
+    if (std::is_same<T, int>::value)
+        return std::to_string(static_cast<int>(value));
+    else if (std::is_same<T, glm::vec3>::value)
+        return Vec3ToString(static_cast<glm::vec3>(value));
+    else if (std::is_same<T, bool>::value)
+        return (value) ? "True" : "False";
+    return "invalid_type";
+}
+
+static const std::string BoolToString(bool value)
+{
+    return (value) ? "True" : "False";
+}

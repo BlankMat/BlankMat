@@ -19,7 +19,9 @@ enum class GUI
 
 	MATERIAL_VIEWER = 20,
 	LIGHT_VIEWER = 21,
-	CAMERA_VIEWER = 22
+	CAMERA_VIEWER = 22,
+
+	ACTION_LIST = 31
 };
 
 class IGUIWindow

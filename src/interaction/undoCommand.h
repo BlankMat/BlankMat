@@ -13,4 +13,18 @@ public:
 	/// Undo cannot be undone
 	/// </summary>
 	void Undo() const override {}
+
+	/// <summary>
+	/// Returns the name of this command
+	/// </summary>
+	/// <returns></returns>
+	const std::string GetName() override
+	{
+		return "UNDO";
+	}
+
+	explicit UndoCommand()
+	{
+		mCanBeUndone = false;
+	}
 };

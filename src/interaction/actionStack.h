@@ -1,5 +1,6 @@
 #pragma once
 #include "interfaces/iCommand.h"
+#include "interaction/actionNode.h"
 #include <memory>
 
 /// <summary>
@@ -9,29 +10,6 @@
 class ActionStack
 {
 private:
-	/// <summary>
-	/// Doubly linked node that stores the do and undo command of an action
-	/// </summary>
-	struct ActionNode
-	{
-		ICommand* mCommand;
-
-		ActionNode* mPrevNode;
-		ActionNode* mNextNode;
-
-		bool HasPrev() { return mPrevNode != nullptr; }
-		bool HasNext() { return mNextNode != nullptr; }
-		bool HasCommand() { return mCommand != nullptr; }
-		bool CanUndo() { return (mCommand != nullptr && mCommand->Undoable()); }
-
-		ActionNode(ActionNode* prev, ActionNode* next, ICommand* command)
-		{
-			mPrevNode = prev;
-			mNextNode = next;
-			mCommand = command;
-		}
-	};
-
 	/// <summary>
 	/// Reference to the first node. Null if empty
 	/// </summary>
@@ -58,29 +36,6 @@ private:
 	unsigned int mMaxSize;
 
 	/// <summary>
-	/// Returns the node at the given index or nullptr if the index does not exist
-	/// </summary>
-	/// <param name="index">Node at the index or nullptr</param>
-	/// <returns></returns>
-	ActionNode* Get(unsigned int index)
-	{
-		// Don't allow accessing nodes out of range
-		if (index >= mCurSize)
-			return nullptr;
-
-		// Iterate forward index times
-		ActionNode* curNode = mFirstNode;
-		for (unsigned int i = 0; i < index; i++)
-		{
-			// If there is no next node, return null
-			if (curNode == nullptr || !curNode->HasNext())
-				return nullptr;
-			curNode = curNode->mNextNode;
-		}
-		return curNode;
-	}
-
-	/// <summary>
 	/// Resizes the stack to be at most the max size, removing elements from the beginning if necessary
 	/// </summary>
 	void Resize()
@@ -90,7 +45,7 @@ private:
 			return;
 
 		// Delete the first curSize - maxSize elements so that curSize equals maxSize
-		ActionNode* newFirst = Get(mCurSize - mMaxSize);
+		ActionNode* newFirst = GetAction(mCurSize - mMaxSize);
 		mFirstNode->mNextNode = newFirst;
 		ClearBefore(newFirst);
 	}
@@ -211,6 +166,43 @@ public:
 	}
 
 	/// <summary>
+	/// Returns the node at the given index or nullptr if the index does not exist.
+	/// Returns the last node for a negative index.
+	/// </summary>
+	/// <param name="index">Node at the index or nullptr</param>
+	/// <returns>Node at the given index</returns>
+	ActionNode* GetAction(int index)
+	{
+		// If requesting a negative index, return last node instead
+		if (index < 0)
+			return mLastNode;
+
+		// Don't allow accessing nodes out of range
+		if ((unsigned int)index >= mCurSize)
+			return nullptr;
+
+		// Iterate forward index times
+		ActionNode* tempNode = mFirstNode;
+		for (unsigned int i = 0; i < (unsigned int)index; i++)
+		{
+			// If there is no next node, return null
+			if (tempNode == nullptr || !tempNode->HasNext())
+				return nullptr;
+			tempNode = tempNode->mNextNode;
+		}
+		return tempNode;
+	}
+
+	/// <summary>
+	/// Returns the most recent action
+	/// </summary>
+	/// <returns></returns>
+	ActionNode* GetCurAction()
+	{
+		return mCurNode;
+	}
+
+	/// <summary>
 	/// Attempts to undo the most recent command. Does nothing if the most recent command cannot be undone.
 	/// </summary>
 	void Undo()
@@ -220,7 +212,7 @@ public:
 			return;
 
 		// Undo the current command
-		mCurNode->mCommand->Undo();
+		mCurNode->Undo();
 		mCurNode = mCurNode->mPrevNode;
 	}
 
@@ -234,7 +226,7 @@ public:
 			return;
 
 		// Redo the current command
-		mCurNode->mCommand->Execute();
+		mCurNode->Execute();
 		mCurNode = mCurNode->mNextNode;
 	}
 

@@ -2,6 +2,7 @@
 #include "glIncludes.h"
 #include "files/config.h"
 #include "rendering/material.h"
+#include "interaction/actionStack.h"
 
 class Selection;
 
@@ -10,6 +11,7 @@ class State
 private:
 	Config* mConfig;
 	Selection* mSelection;
+	ActionStack* mActionStack;
 
 	std::unordered_map<std::string, Material*> mMaterialsThisFrame;
 public:
@@ -27,6 +29,8 @@ public:
 	bool drawByMaterial;
 	bool flipTextures;
 	bool drawGUI;
+
+	int DEBUG_fakeNumber;
 
 	unsigned int depthMapFBO;
 	unsigned int depthMap;
@@ -53,14 +57,30 @@ public:
 		mMaterialsThisFrame.clear();
 	}
 
-	Selection* GetSel() { return mSelection; }
-	Config* GetConfig() { return mConfig; }
+	// Returns the selection object
+	Selection* GetSel() 
+	{
+		return mSelection; 
+	}
+
+	// Returns the current config
+	Config* GetConfig()
+	{
+		return mConfig;
+	}
+	
+	// Returns the action stack
+	ActionStack* GetActionStack()
+	{
+		return mActionStack;
+	}
 
 	State(Selection* selection, Config* config)
 	{
 		curShader = config->GetString("shader.file");
 		mSelection = selection;
 		mConfig = config;
+		mActionStack = new ActionStack();
 		isDiscoLight = false;
 		isRotatingLight = false;
 
@@ -75,6 +95,7 @@ public:
 		drawByMaterial = true;
 		flipTextures = true;
 		drawGUI = true;
+		DEBUG_fakeNumber = 0;
 
 		depthMapFBO = 0;
 		depthMap = 0;
