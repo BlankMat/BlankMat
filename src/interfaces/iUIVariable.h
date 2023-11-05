@@ -64,7 +64,7 @@ public:
 	/// <summary>
 	/// Implicitly converts this variable to its internal value
 	/// </summary>
-	explicit operator T() const
+	operator T()
 	{
 		return mValue;
 	}

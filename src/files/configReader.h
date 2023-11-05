@@ -63,7 +63,7 @@ private:
 		// If this node has children, read their values
 		else
 		{
-			Config* tempConfig = new Config(key);
+			auto* tempConfig = new Config(key);
 			// If this is the root, set config as parent config
 			if (config == nullptr)
 				config = tempConfig;
@@ -104,8 +104,6 @@ public:
 			return nullptr;
 		}
 
-		//std::cout << "Read JSON file " << fileName <<  ". Contents:" << std::endl;
-		//std::cout << root.toStyledString() << std::endl;
 		std::cout << "Read file " << fileName << std::endl;
 		return ReadJSONTree(root, "root", nullptr);
 	}
