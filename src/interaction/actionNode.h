@@ -6,13 +6,11 @@
 /// </summary>
 struct ActionNode
 {
-private:
 	/// <summary>
 	/// The command that the node executes
 	/// </summary>
 	ICommand* mCommand;
 
-public:
 	/// <summary>
 	/// The previous node of the action
 	/// </summary>
@@ -27,7 +25,7 @@ public:
 	/// Returns whether this action has a previous node
 	/// </summary>
 	/// <returns></returns>
-	bool HasPrev()
+	bool HasPrev() const
 	{
 		return mPrevNode != nullptr;
 	}
@@ -36,7 +34,7 @@ public:
 	/// Returns whether this action has a next node
 	/// </summary>
 	/// <returns></returns>
-	bool HasNext() 
+	bool HasNext() const
 	{ 
 		return mNextNode != nullptr; 
 	}
@@ -45,7 +43,7 @@ public:
 	/// Returns whether this action has a valid command
 	/// </summary>
 	/// <returns></returns>
-	bool HasCommand() 
+	bool HasCommand() const
 	{ 
 		return mCommand != nullptr; 
 	}
@@ -54,7 +52,7 @@ public:
 	/// Returns whether this action can be undone
 	/// </summary>
 	/// <returns></returns>
-	bool CanUndo()
+	bool CanUndo() const
 	{ 
 		return (mCommand != nullptr && mCommand->Undoable());
 	}
@@ -91,7 +89,7 @@ public:
 	/// Returns the name of the command
 	/// </summary>
 	/// <returns></returns>
-	const std::string GetName()
+	std::string GetName() const
 	{
 		if (mCommand != nullptr)
 			return mCommand->GetName();
@@ -105,9 +103,6 @@ public:
 	/// <param name="next">Next node (should be null)</param>
 	/// <param name="command">Command to run</param>
 	ActionNode(ActionNode* prev, ActionNode* next, ICommand* command)
-	{
-		mPrevNode = prev;
-		mNextNode = next;
-		mCommand = command;
-	}
+		: mPrevNode(prev), mNextNode(next), mCommand(command)
+	{}
 };

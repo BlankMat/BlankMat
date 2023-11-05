@@ -4,7 +4,7 @@
 template<typename T>
 class AddValueCommand : public ICommand
 {
-protected:
+private:
 	T mPrevValue;
 	T mNewValue;
 	T* mValueRef;
@@ -51,7 +51,7 @@ public:
 	/// Returns the name of this command
 	/// </summary>
 	/// <returns></returns>
-	const std::string GetName() const override
+	std::string GetName() const override
 	{
 		return "ADD_VALUE_FROM_" + TypeToString(mPrevValue) + "_TO_" + TypeToString(mNewValue);
 	}
@@ -62,10 +62,8 @@ public:
 	/// <param name="valueRef">Reference to the variable to change</param>
 	/// <param name="delta">Value to add to the variable</param>
 	explicit AddValueCommand(T* valueRef, const T& delta)
+		: mValueRef(valueRef), mPrevValue(*valueRef), mNewValue(*valueRef + delta)
 	{
-		mValueRef = valueRef;
-		mPrevValue = *valueRef;
-		mNewValue = *valueRef + delta;
 		mCanBeUndone = true;
 	}
 };

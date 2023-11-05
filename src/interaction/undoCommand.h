@@ -9,13 +9,16 @@ public:
 	/// </summary>
 	void Execute() override
 	{
-
+		// Undo does not need to be executed
 	}
 
 	/// <summary>
 	/// Undo cannot be undone
 	/// </summary>
-	void Undo() override {}
+	void Undo() override 
+	{
+		// Undo has no undo
+	}
 
 	/// <summary>
 	/// Undo cannot be combined
@@ -31,7 +34,7 @@ public:
 	/// Returns the name of this command
 	/// </summary>
 	/// <returns></returns>
-	const std::string GetName() const override
+	std::string GetName() const override
 	{
 		return "UNDO";
 	}

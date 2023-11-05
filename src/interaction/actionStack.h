@@ -83,11 +83,11 @@ private:
 			return;
 
 		// Iterate through all nodes, deleting everything after the current node
-		ActionNode* curNode = node->mNextNode;
+		auto* curNode = node->mNextNode;
 		node->mNextNode = nullptr;
 		while (curNode != nullptr)
 		{
-			ActionNode* tempNextNode = curNode->mNextNode;
+			auto* tempNextNode = curNode->mNextNode;
 			delete curNode;
 			curNode = tempNextNode;
 			mCurSize--;
@@ -114,7 +114,7 @@ private:
 			Clear();
 
 		// Make new node for action
-		ActionNode* newNode = new ActionNode(mCurNode, nullptr, command);
+		auto* newNode = new ActionNode(mCurNode, nullptr, command);
 		mCurSize++;
 
 		// If no nodes have been added, make this the first and only node
@@ -145,7 +145,7 @@ public:
 	/// Returns the number of currently stored actions
 	/// </summary>
 	/// <returns></returns>
-	unsigned int Size()
+	unsigned int Size() const
 	{
 		return mCurSize;
 	}
@@ -154,7 +154,7 @@ public:
 	/// Returns the maximum number of undoes stored
 	/// </summary>
 	/// <returns></returns>
-	unsigned int MaxSize()
+	unsigned int MaxSize() const
 	{
 		return mMaxSize;
 	}
@@ -186,7 +186,7 @@ public:
 			return nullptr;
 
 		// Iterate forward index times
-		ActionNode* tempNode = mFirstNode;
+		auto* tempNode = mFirstNode;
 		for (unsigned int i = 0; i < (unsigned int)index; i++)
 		{
 			// If there is no next node, return null
@@ -201,7 +201,7 @@ public:
 	/// Returns the most recent action
 	/// </summary>
 	/// <returns></returns>
-	ActionNode* GetCurAction()
+	ActionNode* GetCurAction() const
 	{
 		return mCurNode;
 	}
@@ -268,14 +268,8 @@ public:
 	/// </summary>
 	/// <param name="maxUndo">The max number of undoes before old ones start being removed</param>
 	explicit ActionStack(unsigned int maxUndo = 50)
-	{
-		// Create first node that always points to the actual first node
-		mFirstNode = new ActionNode(nullptr, nullptr, nullptr);
-		mLastNode = nullptr;
-		mCurNode = nullptr;
-		mCurSize = 0;
-		mMaxSize = maxUndo;
-	}
+		: mFirstNode(new ActionNode(nullptr, nullptr, nullptr)), mLastNode(nullptr), mCurNode(nullptr), mCurSize(0), mMaxSize(maxUndo)
+	{}
 
 	/// <summary>
 	/// Destructs the whole action stack

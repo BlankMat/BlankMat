@@ -37,7 +37,7 @@ public:
 	/// Returns the name of this command
 	/// </summary>
 	/// <returns></returns>
-	virtual const std::string GetName() const = 0;
+	virtual std::string GetName() const = 0;
 
 	virtual ~ICommand() {}
 };

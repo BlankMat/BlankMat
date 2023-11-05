@@ -49,7 +49,7 @@ public:
 	/// </summary>
 	/// <param name="other">Value to add</param>
 	/// <returns>This + Other</returns>
-	int operator+(int other)
+	int operator+(int other) const
 	{
 		return mValue + other;
 	}
@@ -59,7 +59,7 @@ public:
 	/// </summary>
 	/// <param name="other">Value to add</param>
 	/// <returns>This + Other</returns>
-	int operator+(const UIInt& other)
+	int operator+(const UIInt& other) const
 	{
 		return mValue + other.mValue;
 	}
@@ -96,7 +96,7 @@ public:
 	/// </summary>
 	/// <param name="other">Value to add</param>
 	/// <returns>This + Other</returns>
-	float operator+(float other)
+	float operator+(float other) const
 	{
 		return mValue + other;
 	}
@@ -106,7 +106,7 @@ public:
 	/// </summary>
 	/// <param name="other">Value to add</param>
 	/// <returns>This + Other</returns>
-	float operator+(const UIFloat& other)
+	float operator+(const UIFloat& other) const
 	{
 		return mValue + other.mValue;
 	}
@@ -143,7 +143,7 @@ public:
 	/// </summary>
 	/// <param name="other">Value to add</param>
 	/// <returns>This + Other</returns>
-	glm::vec3 operator+(const glm::vec3& other)
+	glm::vec3 operator+(const glm::vec3& other) const
 	{
 		return mValue + other;
 	}
@@ -153,7 +153,7 @@ public:
 	/// </summary>
 	/// <param name="other">Value to add</param>
 	/// <returns>This + Other</returns>
-	glm::vec3 operator+(const UIVec3& other)
+	glm::vec3 operator+(const UIVec3& other) const
 	{
 		return mValue + other.mValue;
 	}
@@ -163,7 +163,7 @@ public:
 	/// </summary>
 	/// <param name="other">Value to subtract</param>
 	/// <returns>This - Other</returns>
-	glm::vec3 operator-(const glm::vec3& other)
+	glm::vec3 operator-(const glm::vec3& other) const
 	{
 		return mValue - other;
 	}
@@ -173,7 +173,7 @@ public:
 	/// </summary>
 	/// <param name="other">Value to subtract</param>
 	/// <returns>This - Other</returns>
-	glm::vec3 operator-(const UIVec3& other)
+	glm::vec3 operator-(const UIVec3& other) const
 	{
 		return mValue - other.mValue;
 	}
@@ -183,7 +183,7 @@ public:
 	/// </summary>
 	/// <param name="other">Value to multiply</param>
 	/// <returns>This * Other</returns>
-	glm::vec3 operator*(float other)
+	glm::vec3 operator*(float other) const
 	{
 		return other * mValue;
 	}
@@ -193,7 +193,7 @@ public:
 	/// </summary>
 	/// <param name="other">Value to multiply</param>
 	/// <returns>This * Other</returns>
-	glm::vec3 operator*(const glm::vec3& other)
+	glm::vec3 operator*(const glm::vec3& other) const
 	{
 		return mValue * other;
 	}
@@ -203,7 +203,7 @@ public:
 	/// </summary>
 	/// <param name="other">Value to multiply</param>
 	/// <returns>This * Other</returns>
-	glm::vec3 operator*(const UIVec3& other)
+	glm::vec3 operator*(const UIVec3& other) const
 	{
 		return mValue * other.mValue;
 	}
@@ -226,7 +226,7 @@ public:
 /// </summary>
 class UIColor : public IUIVariable<glm::vec3>
 {
-protected:
+private:
 	bool mPickColor;
 public:
 	/// <summary>
@@ -269,7 +269,7 @@ public:
 	/// </summary>
 	/// <param name="other">Value to add</param>
 	/// <returns>This + Other</returns>
-	std::string operator+(const std::string& other)
+	std::string operator+(const std::string& other) const
 	{
 		return mValue + other;
 	}
@@ -279,7 +279,7 @@ public:
 	/// </summary>
 	/// <param name="other">Value to add</param>
 	/// <returns>This + Other</returns>
-	std::string operator+(const UIString& other)
+	std::string operator+(const UIString& other) const
 	{
 		return mValue + other.mValue;
 	}

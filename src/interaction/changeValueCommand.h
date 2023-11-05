@@ -4,7 +4,7 @@
 template<typename T>
 class ChangeValueCommand : public ICommand
 {
-protected:
+private:
 	T mPrevValue;
 	T mNewValue;
 	T* mValueRef;
@@ -51,7 +51,7 @@ public:
 	/// Returns the name of this command
 	/// </summary>
 	/// <returns></returns>
-	const std::string GetName() const override
+	std::string GetName() const override
 	{
 		return "CHANGE_VALUE_FROM_" + TypeToString(mPrevValue) + "_TO_" + TypeToString(mNewValue);
 	}
@@ -62,10 +62,8 @@ public:
 	/// <param name="valueRef">Reference to the variable to change</param>
 	/// <param name="newValue">Value to change the variable to</param>
 	explicit ChangeValueCommand(T* valueRef, const T& newValue)
+		: mValueRef(valueRef), mPrevValue(*valueRef), mNewValue(newValue)
 	{
-		mValueRef = valueRef;
-		mPrevValue = *valueRef;
-		mNewValue = newValue;
 		mCanBeUndone = true;
 	}
 };
