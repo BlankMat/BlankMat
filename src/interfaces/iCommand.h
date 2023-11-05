@@ -38,6 +38,4 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	virtual std::string GetName() const = 0;
-
-	virtual ~ICommand() {}
 };

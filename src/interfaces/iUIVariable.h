@@ -64,7 +64,7 @@ public:
 	/// <summary>
 	/// Implicitly converts this variable to its internal value
 	/// </summary>
-	operator T() const
+	explicit operator T() const
 	{
 		return mValue;
 	}
@@ -100,7 +100,7 @@ public:
 	/// Returns the name of the variable
 	/// </summary>
 	/// <returns>Name of the variable</returns>
-	const std::string Name() const
+	std::string Name() const
 	{
 		return mName;
 	}

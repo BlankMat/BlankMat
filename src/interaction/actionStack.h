@@ -13,27 +13,27 @@ private:
 	/// <summary>
 	/// Reference to the first node. Null if empty
 	/// </summary>
-	ActionNode* mFirstNode;
+	ActionNode* mFirstNode = nullptr;
 
 	/// <summary>
 	/// Reference to the last node. Null if empty
 	/// </summary>
-	ActionNode* mLastNode;
+	ActionNode* mLastNode = nullptr;
 
 	/// <summary>
 	/// Reference to the current node. Should equal lastNode unless undo has been used
 	/// </summary>
-	ActionNode* mCurNode;
+	ActionNode* mCurNode = nullptr;
 
 	/// <summary>
 	/// Current number of actions stored. Cannot be higher than maxSize
 	/// </summary>
-	unsigned int mCurSize;
+	unsigned int mCurSize = 0;
 
 	/// <summary>
 	/// Maximum number of actions that can be stored.
 	/// </summary>
-	unsigned int mMaxSize;
+	unsigned int mMaxSize = 50;
 
 	/// <summary>
 	/// Resizes the stack to be at most the max size, removing elements from the beginning if necessary
@@ -268,8 +268,10 @@ public:
 	/// </summary>
 	/// <param name="maxUndo">The max number of undoes before old ones start being removed</param>
 	explicit ActionStack(unsigned int maxUndo = 50)
-		: mFirstNode(new ActionNode(nullptr, nullptr, nullptr)), mLastNode(nullptr), mCurNode(nullptr), mCurSize(0), mMaxSize(maxUndo)
-	{}
+		: mMaxSize(maxUndo)
+	{
+		mFirstNode = new ActionNode(nullptr, nullptr, nullptr);
+	}
 
 	/// <summary>
 	/// Destructs the whole action stack

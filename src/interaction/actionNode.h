@@ -7,11 +7,6 @@
 struct ActionNode
 {
 	/// <summary>
-	/// The command that the node executes
-	/// </summary>
-	ICommand* mCommand;
-
-	/// <summary>
 	/// The previous node of the action
 	/// </summary>
 	ActionNode* mPrevNode;
@@ -20,6 +15,11 @@ struct ActionNode
 	/// The next node of the action
 	/// </summary>
 	ActionNode* mNextNode;
+
+	/// <summary>
+	/// The command that the node executes
+	/// </summary>
+	ICommand* mCommand;
 
 	/// <summary>
 	/// Returns whether this action has a previous node
