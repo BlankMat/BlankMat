@@ -1,7 +1,6 @@
 #include "input.h"
 #include "interaction/addValueCommand.h"
 #include "interaction/changeValueCommand.h"
-#include "interaction/enableValueCommand.h"
 #include "interaction/undoCommand.h"
 #include "interaction/redoCommand.h"
 
@@ -126,7 +125,7 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
     else if (KEY4_PRESS && CTRL_PRESS) {
         if (!locks->lockCtrl4)
         {
-            actions->Execute(new EnableValueCommand(&state->enableDiffuseMap, true));
+            actions->Execute(new ChangeValueCommand<bool>(&state->enableDiffuseMap, true));
             locks->lockCtrl4 = true;
         }
         didReceiveInput = true;
@@ -134,7 +133,7 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
     else if (KEY5_PRESS && CTRL_PRESS) {
         if (!locks->lockCtrl5)
         {
-            actions->Execute(new EnableValueCommand(&state->enableDiffuseMap, false));
+            actions->Execute(new ChangeValueCommand<bool>(&state->enableDiffuseMap, false));
             locks->lockCtrl5 = true;
         }
         didReceiveInput = true;
@@ -266,7 +265,7 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
     if (SPACE_PRESS)
     {
         if (!locks->lockSpace) {
-            state->drawGUI = !state->drawGUI;
+            state->drawGUI.Set(!state->drawGUI);
             locks->lockSpace = true;
         }
         didReceiveInput = true;

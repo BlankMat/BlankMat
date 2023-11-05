@@ -30,7 +30,7 @@ int main()
     state->defaultMat = scene->SetDefaultMaterial("default");
 
     // Load default scene
-    LoadDefaultScene(scene, state->defaultMat, config->GetBool("defaultCubes"), config->GetConfig("camera"), config->GetConfig("light"));
+    LoadDefaultScene(scene, state, state->defaultMat, config->GetBool("defaultCubes"), config->GetConfig("camera"), config->GetConfig("light"));
 
     // Add GUIs
     LoadGUIs(window, state, scene);
@@ -192,10 +192,10 @@ void LoadShaders(Scene* scene, Config* shaderConfig)
 
 // Loads the default scene
 // --------------------------------------------------------------------------------------------------------------------
-void LoadDefaultScene(Scene* scene, Material* defaultMat, bool defaultCubes, Config* cameraConfig, Config* lightConfig)
+void LoadDefaultScene(Scene* scene, State* state, Material* defaultMat, bool defaultCubes, Config* cameraConfig, Config* lightConfig)
 {
     // Add light and camera
-    scene->SetCamera(cameraConfig);
+    scene->SetCamera(state->GetActionStack(), cameraConfig);
     scene->SetLight(new PLightCube("globalLight", 1.0f, lightConfig));
 
     // Add renderables

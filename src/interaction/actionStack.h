@@ -105,6 +105,10 @@ private:
 		if (command == nullptr)
 			return;
 
+		// Attempt to combine the new command with the previous one. If successful, don't change anything.
+		if (mCurNode != nullptr && mCurNode->Combine(command))
+			return;
+
 		// If there is no undo, clear all previous commands
 		if (!command->Undoable())
 			Clear();

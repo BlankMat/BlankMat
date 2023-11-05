@@ -8,6 +8,9 @@
 #include "tools/state.h"
 #include <map>
 
+/// <summary>
+/// 
+/// </summary>
 class GUIDebugToolsWindow : public IGUIWindow
 {
 protected:
@@ -46,45 +49,37 @@ public:
 
 			// Choose parts of materials
 			ImGui::Separator();
-			mState->enableDiffuseMap = GUIWindowUtils::Checkbox("Enable Diffuse Map", mState->enableDiffuseMap);
-			mState->enableAmbientMap = GUIWindowUtils::Checkbox("Enable Ambient Map", mState->enableAmbientMap);
-			mState->enableSpecularMap = GUIWindowUtils::Checkbox("Enable Specular Map", mState->enableSpecularMap);
-			mState->enableNormalMap = GUIWindowUtils::Checkbox("Enable Normal Map", mState->enableNormalMap);
-			mState->enableHeightMap = GUIWindowUtils::Checkbox("Enable Height Map", mState->enableHeightMap);
-			mState->enableAlphaMap = GUIWindowUtils::Checkbox("Enable Alpha Map", mState->enableAlphaMap);
-			mState->enableShadows = GUIWindowUtils::Checkbox("Enable Shadows", mState->enableShadows);
-			mState->enableGrid = GUIWindowUtils::Checkbox("Enable Grid", mState->enableGrid);
-			mState->drawByMaterial = GUIWindowUtils::Checkbox("Draw By Material", mState->drawByMaterial);
-			mState->DEBUG_fakeNumber = GUIWindowUtils::InputInt("DEBUG Number", mState->DEBUG_fakeNumber);
+			mState->enableDiffuseMap.Display();
+			mState->enableAmbientMap.Display();
+			mState->enableSpecularMap.Display();
+			mState->enableNormalMap.Display();
+			mState->enableHeightMap.Display();
+			mState->enableAlphaMap.Display();
+			mState->enableShadows.Display();
+			mState->enableGrid.Display();
+			mState->drawByMaterial.Display();
+			mState->DEBUG_fakeNumber.Display();
 
 			// Camera settings
 			ImGui::Separator();
 			ImGui::Text("Camera Settings");
 			Camera* cam = mScene->GetCamera();
-			cam->SetPos(
-				GUIWindowUtils::InputVec3("Position", cam->GetPos()));
-			cam->LookAt(
-				GUIWindowUtils::InputVec3("Target", cam->GetLookAt()));
-			cam->SetOrthSize(
-				GUIWindowUtils::InputFloat("Size", cam->GetOrthSize()));
-			cam->SetFOV(
-				GUIWindowUtils::InputFloat("FOV", cam->GetFOV()));
-			cam->SetNearClip(
-				GUIWindowUtils::InputFloat("Near Clip", cam->GetNearClip()));
-			cam->SetFarClip(
-				GUIWindowUtils::InputFloat("Far Clip", cam->GetFarClip()));
-			cam->SetPerspective(
-				GUIWindowUtils::Checkbox("Perspective", cam->IsPerspective()));
-			cam->SetWireframe(
-				GUIWindowUtils::Checkbox("Wireframe", cam->IsWireframe()));
-			cam->SetPivotRotatioMode(
-				GUIWindowUtils::Checkbox("Rotate Around Pivot", cam->IsRotatingAroundPivot()));
+			cam->GetPos().Display();
+			cam->GetTarget().Display();
+			cam->GetPivot().Display();
+			cam->GetOrthSize().Display();
+			cam->GetFOV().Display();
+			cam->GetNearClip().Display();
+			cam->GetFarClip().Display();
+			cam->IsPerspective().Display();
+			cam->IsWireframe().Display();
+			cam->IsRotatingAroundPivot().Display();
 
 			// Debug settings
 			ImGui::Separator();
 			ImGui::Text("Debug settings");
-			mState->isDiscoLight = GUIWindowUtils::Checkbox("Disco Light", mState->isDiscoLight);
-			mState->isRotatingLight = GUIWindowUtils::Checkbox("Rotating Light", mState->isRotatingLight);
+			mState->isDiscoLight.Display();
+			mState->isRotatingLight.Display();
 		}
 		ImGui::End();
 	}

@@ -4,7 +4,10 @@
 class UndoCommand : public ICommand
 {
 public:
-	void Execute() const override
+	/// <summary>
+	/// Executes this command
+	/// </summary>
+	void Execute() override
 	{
 
 	}
@@ -12,13 +15,23 @@ public:
 	/// <summary>
 	/// Undo cannot be undone
 	/// </summary>
-	void Undo() const override {}
+	void Undo() override {}
+
+	/// <summary>
+	/// Undo cannot be combined
+	/// </summary>
+	/// <param name="other">Other command</param>
+	/// <returns>False</returns>
+	bool Combine(ICommand*& other) override
+	{
+		return false;
+	}
 
 	/// <summary>
 	/// Returns the name of this command
 	/// </summary>
 	/// <returns></returns>
-	const std::string GetName() override
+	const std::string GetName() const override
 	{
 		return "UNDO";
 	}

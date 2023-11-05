@@ -78,6 +78,16 @@ public:
 	}
 
 	/// <summary>
+	/// Attempts to combine the new command with the current command
+	/// </summary>
+	/// <param name="newCommand">New command to try combining</param>
+	/// <returns>Whether the commands were combined</returns>
+	bool Combine(ICommand*& newCommand)
+	{
+		return mCommand->Combine(newCommand);
+	}
+
+	/// <summary>
 	/// Returns the name of the command
 	/// </summary>
 	/// <returns></returns>

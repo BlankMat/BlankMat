@@ -12,24 +12,32 @@ public:
 	/// <summary>
 	/// Executes this command.
 	/// </summary>
-	virtual void Execute() const = 0;
+	virtual void Execute() = 0;
 
 	/// <summary>
 	/// Attempts to undo this command. May not be possible for a specific command.
 	/// </summary>
-	virtual void Undo() const = 0;
+	virtual void Undo() = 0;
+
+	/// <summary>
+	/// Combine this command with another command if they modify the same variable.
+	/// WARNING: If combined, the other command is deleted and will be nullptr
+	/// </summary>
+	/// <param name="other">Other command to combine with</param>
+	/// <returns>Whether the commands were combined</returns>
+	virtual bool Combine(ICommand*& other) = 0;
 
 	/// <summary>
 	/// Returns whether the command is undoable
 	/// </summary>
 	/// <returns></returns>
-	bool Undoable() { return mCanBeUndone; }
+	bool Undoable() const { return mCanBeUndone; }
 
 	/// <summary>
 	/// Returns the name of this command
 	/// </summary>
 	/// <returns></returns>
-	virtual const std::string GetName() = 0;
+	virtual const std::string GetName() const = 0;
 
 	virtual ~ICommand() {}
 };

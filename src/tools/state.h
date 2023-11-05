@@ -3,6 +3,7 @@
 #include "files/config.h"
 #include "rendering/material.h"
 #include "interaction/actionStack.h"
+#include "windows/guiVariableTypes.h"
 
 class Selection;
 
@@ -15,22 +16,22 @@ private:
 
 	std::unordered_map<std::string, Material*> mMaterialsThisFrame;
 public:
-	bool isDiscoLight;
-	bool isRotatingLight;
+	UIBool isDiscoLight;
+	UIBool isRotatingLight;
 
-	bool enableDiffuseMap;
-	bool enableAmbientMap;
-	bool enableSpecularMap;
-	bool enableNormalMap;
-	bool enableHeightMap;
-	bool enableAlphaMap;
-	bool enableShadows;
-	bool enableGrid;
-	bool drawByMaterial;
-	bool flipTextures;
-	bool drawGUI;
+	UIBool enableDiffuseMap;
+	UIBool enableAmbientMap;
+	UIBool enableSpecularMap;
+	UIBool enableNormalMap;
+	UIBool enableHeightMap;
+	UIBool enableAlphaMap;
+	UIBool enableShadows;
+	UIBool enableGrid;
+	UIBool drawByMaterial;
+	UIBool flipTextures;
+	UIBool drawGUI;
 
-	int DEBUG_fakeNumber;
+	UIInt DEBUG_fakeNumber;
 
 	unsigned int depthMapFBO;
 	unsigned int depthMap;
@@ -81,21 +82,21 @@ public:
 		mSelection = selection;
 		mConfig = config;
 		mActionStack = new ActionStack();
-		isDiscoLight = false;
-		isRotatingLight = false;
+		isDiscoLight = UIBool("Disco Light", false, mActionStack);
+		isRotatingLight = UIBool("Rotating Light", false, mActionStack);
 
-		enableDiffuseMap = true;
-		enableAmbientMap = true;
-		enableSpecularMap = true;
-		enableNormalMap = true;
-		enableHeightMap = true;
-		enableAlphaMap = true;
-		enableShadows = true;
-		enableGrid = true;
-		drawByMaterial = true;
-		flipTextures = true;
-		drawGUI = true;
-		DEBUG_fakeNumber = 0;
+		enableDiffuseMap = UIBool("Enable Diffuse Map", true, mActionStack);
+		enableAmbientMap = UIBool("Enable Ambient Map", true, mActionStack);
+		enableSpecularMap = UIBool("Enable Specular Map", true, mActionStack);
+		enableNormalMap = UIBool("Enable Normal Map", true, mActionStack);
+		enableHeightMap = UIBool("Enable Height Map", true, mActionStack);
+		enableAlphaMap = UIBool("Enable Alpha Map", true, mActionStack);
+		enableShadows = UIBool("Enable Shadows", true, mActionStack);
+		enableGrid = UIBool("Enabled Grid", true, mActionStack);
+		drawByMaterial = UIBool("Draw By Material", true, mActionStack);
+		flipTextures = UIBool("Flip Textures", true, mActionStack);
+		drawGUI = UIBool("Draw UI", true, mActionStack);
+		DEBUG_fakeNumber = UIInt("DEBUG number", 0, mActionStack);
 
 		depthMapFBO = 0;
 		depthMap = 0;

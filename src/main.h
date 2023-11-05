@@ -1,5 +1,6 @@
 #pragma once
 #include "interaction/input.h"
+#include "interaction/actionStack.h"
 
 #include "tools/state.h"
 
@@ -64,8 +65,9 @@ void LoadShaders(Scene* scene, Config* shaderConfig);
 /// Loads the default testing scene
 /// </summary>
 /// <param name="scene">Scene to load to</param>
+/// <param name="state">Global state</param>
 /// <param name="defaultMat">Default material</param>
 /// <param name="defaultCubes">Whether to draw sample cubes or not</param>
 /// <param name="cameraConfig">Default camera</param>
 /// <param name="lightConfig">Default light</param>
-void LoadDefaultScene(Scene* scene, Material* defaultMat, bool defaultCubes, Config* cameraConfig, Config* lightConfig);
+void LoadDefaultScene(Scene* scene, State* state, Material* defaultMat, bool defaultCubes, Config* cameraConfig, Config* lightConfig);

@@ -8,6 +8,7 @@
 #include "rendering/material.h"
 #include "rendering/mesh.h"
 #include "rendering/node.h"
+#include "interaction/actionStack.h"
 #include "interfaces/iEntity.h"
 
 #include "containers/textureContainer.h"
@@ -124,7 +125,7 @@ public:
 	const std::string GetCurShader();
 
 	// Sets up the scene's camera with the given options
-	void SetCamera(Config* config);
+	void SetCamera(ActionStack* actionStack, Config* config);
 
 	// Sets the scene's camera to the given camera
 	void SetCamera(Camera* cam);

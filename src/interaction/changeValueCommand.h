@@ -12,7 +12,7 @@ public:
 	/// <summary>
 	/// Executes this command
 	/// </summary>
-	void Execute() const override
+	void Execute() override
 	{
 		*mValueRef = mNewValue;
 	}
@@ -20,16 +20,38 @@ public:
 	/// <summary>
 	/// Undoes this command
 	/// </summary>
-	void Undo() const override 
+	void Undo() override 
 	{
 		*mValueRef = mPrevValue;
+	}
+
+	/// <summary>
+	/// Combine this command with another command if they modify the same variable.
+	/// WARNING: If combined, the other command is deleted and will be nullptr
+	/// </summary>
+	/// <param name="other">Other command to combine with</param>
+	/// <returns>Whether the commands were combined</returns>
+	bool Combine(ICommand*& other) override
+	{
+		auto* otherCast = dynamic_cast<ChangeValueCommand*>(other);
+		// If the commands modify different variables, don't combine them
+		if (!otherCast || this->mValueRef != otherCast->mValueRef)
+			return false;
+
+		// Update this command's value to the new value
+		mNewValue = otherCast->mNewValue;
+		*mValueRef = mNewValue;
+		
+		// Delete the other, since the action stack will not be doing that
+		delete other;
+		return true;
 	}
 
 	/// <summary>
 	/// Returns the name of this command
 	/// </summary>
 	/// <returns></returns>
-	const std::string GetName() override
+	const std::string GetName() const override
 	{
 		return "CHANGE_VALUE_FROM_" + TypeToString(mPrevValue) + "_TO_" + TypeToString(mNewValue);
 	}
