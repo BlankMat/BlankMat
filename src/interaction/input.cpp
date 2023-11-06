@@ -106,7 +106,7 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
         }
         didReceiveInput = true;
     }
-    else if (KEY2_PRESS && CTRL_PRESS) {
+    if (KEY2_PRESS && CTRL_PRESS) {
         if (!locks->lockCtrl2)
         {
             actions->Execute(new AddValueCommand<int>(&state->DEBUG_fakeNumber, 1));
@@ -114,7 +114,7 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
         }
         didReceiveInput = true;
     }
-    else if (KEY3_PRESS && CTRL_PRESS) {
+    if (KEY3_PRESS && CTRL_PRESS) {
         if (!locks->lockCtrl3)
         {
             actions->Execute(new AddValueCommand<int>(&state->DEBUG_fakeNumber, -1));
@@ -122,7 +122,7 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
         }
         didReceiveInput = true;
     }
-    else if (KEY4_PRESS && CTRL_PRESS) {
+    if (KEY4_PRESS && CTRL_PRESS) {
         if (!locks->lockCtrl4)
         {
             actions->Execute(new ChangeValueCommand<bool>(&state->enableDiffuseMap, true));
@@ -130,7 +130,7 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
         }
         didReceiveInput = true;
     }
-    else if (KEY5_PRESS && CTRL_PRESS) {
+    if (KEY5_PRESS && CTRL_PRESS) {
         if (!locks->lockCtrl5)
         {
             actions->Execute(new ChangeValueCommand<bool>(&state->enableDiffuseMap, false));
@@ -138,7 +138,7 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
         }
         didReceiveInput = true;
     }
-    else if (Y_PRESS && CTRL_PRESS) {
+    if (Y_PRESS && CTRL_PRESS) {
         if (!locks->lockCtrlY)
         {
             actions->Redo();
@@ -146,7 +146,7 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
         }
         didReceiveInput = true;
     }
-    else if (Z_PRESS && CTRL_PRESS) {
+    if (Z_PRESS && CTRL_PRESS) {
         if (!locks->lockCtrlZ)
         {
             actions->Undo();

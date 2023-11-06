@@ -20,13 +20,17 @@ public:
 	/// <summary>
 	/// Creates a new variable that can be displayed and updated directly in the UI
 	/// </summary>
-	/// <param name="value">Value to initialize the variable with</param>
-	/// <param name="actionStack">Reference to the global ActionStack</param>
-	explicit UIBool(const std::string& name = "", bool value = true, ActionStack* actionStack = nullptr)
+	/// <param name="name">Name of the variable</param>
+	/// <param name="value">Value to initialize the variable to</param>
+	/// <param name="actionStack">Global action stack</param>
+	/// <param name="callback">Callback function to run when set</param>
+	explicit UIBool(const std::string& name = "", bool value = false,
+		ActionStack* actionStack = nullptr, std::function<void()> callback = std::function<void()>(nullptr))
 	{
 		mName = name;
 		mValue = value;
 		mActionStack = actionStack;
+		mSetCallback = callback;
 	}
 };
 
@@ -67,13 +71,17 @@ public:
 	/// <summary>
 	/// Creates a new variable that can be displayed and updated directly in the UI
 	/// </summary>
-	/// <param name="value">Value to initialize the variable with</param>
-	/// <param name="actionStack">Reference to the global ActionStack</param>
-	explicit UIInt(const std::string& name = "", int value = 0, ActionStack* actionStack = nullptr)
+	/// <param name="name">Name of the variable</param>
+	/// <param name="value">Value to initialize the variable to</param>
+	/// <param name="actionStack">Global action stack</param>
+	/// <param name="callback">Callback function to run when set</param>
+	explicit UIInt(const std::string& name = "", int value = 0,
+		ActionStack* actionStack = nullptr, std::function<void()> callback = std::function<void()>(nullptr))
 	{
 		mName = name;
 		mValue = value;
 		mActionStack = actionStack;
+		mSetCallback = callback;
 	}
 };
 
@@ -114,13 +122,17 @@ public:
 	/// <summary>
 	/// Creates a new variable that can be displayed and updated directly in the UI
 	/// </summary>
-	/// <param name="value">Value to initialize the variable with</param>
-	/// <param name="actionStack">Reference to the global ActionStack</param>
-	explicit UIFloat(const std::string& name = "", float value = 0.0f, ActionStack* actionStack = nullptr)
+	/// <param name="name">Name of the variable</param>
+	/// <param name="value">Value to initialize the variable to</param>
+	/// <param name="actionStack">Global action stack</param>
+	/// <param name="callback">Callback function to run when set</param>
+	explicit UIFloat(const std::string& name = "", float value = 0.0f,
+		ActionStack* actionStack = nullptr, std::function<void()> callback = std::function<void()>(nullptr))
 	{
 		mName = name;
 		mValue = value;
 		mActionStack = actionStack;
+		mSetCallback = callback;
 	}
 };
 
@@ -211,13 +223,17 @@ public:
 	/// <summary>
 	/// Creates a new variable that can be displayed and updated directly in the UI
 	/// </summary>
-	/// <param name="value">Value to initialize the variable with</param>
-	/// <param name="actionStack">Reference to the global ActionStack</param>
-	explicit UIVec3(const std::string& name = "", const glm::vec3& value = glm::vec3(0.0f), ActionStack* actionStack = nullptr)
+	/// <param name="name">Name of the variable</param>
+	/// <param name="value">Value to initialize the variable to</param>
+	/// <param name="actionStack">Global action stack</param>
+	/// <param name="callback">Callback function to run when set</param>
+	explicit UIVec3(const std::string& name = "", const glm::vec3& value = glm::vec3(0.0f),
+		ActionStack* actionStack = nullptr, std::function<void()> callback = std::function<void()>(nullptr))
 	{
 		mName = name;
 		mValue = value;
 		mActionStack = actionStack;
+		mSetCallback = callback;
 	}
 };
 
@@ -240,13 +256,17 @@ public:
 	/// <summary>
 	/// Creates a new variable that can be displayed and updated directly in the UI
 	/// </summary>
-	/// <param name="value">Value to initialize the variable with</param>
-	/// <param name="actionStack">Reference to the global ActionStack</param>
-	explicit UIColor(const std::string& name = "", const glm::vec3& value = glm::vec3(0.0f), ActionStack* actionStack = nullptr)
+	/// <param name="name">Name of the variable</param>
+	/// <param name="value">Value to initialize the variable to</param>
+	/// <param name="actionStack">Global action stack</param>
+	/// <param name="callback">Callback function to run when set</param>
+	explicit UIColor(const std::string& name = "", const glm::vec3& value = glm::vec3(0.0f), 
+		ActionStack* actionStack = nullptr, std::function<void()> callback = std::function<void()>(nullptr))
 	{
 		mName = name;
 		mValue = value;
 		mActionStack = actionStack;
+		mSetCallback = callback;
 	}
 };
 
@@ -287,12 +307,16 @@ public:
 	/// <summary>
 	/// Creates a new variable that can be displayed and updated directly in the UI
 	/// </summary>
-	/// <param name="value">Value to initialize the variable with</param>
-	/// <param name="actionStack">Reference to the global ActionStack</param>
-	explicit UIString(const std::string& name = "", const std::string& value = "", ActionStack* actionStack = nullptr)
+	/// <param name="name">Name of the variable</param>
+	/// <param name="value">Value to initialize the variable to</param>
+	/// <param name="actionStack">Global action stack</param>
+	/// <param name="callback">Callback function to run when set</param>
+	explicit UIString(const std::string& name = "", const std::string& value = "",
+		ActionStack* actionStack = nullptr, std::function<void()> callback = std::function<void()>(nullptr))
 	{
 		mName = name;
 		mValue = value;
 		mActionStack = actionStack;
+		mSetCallback = callback;
 	}
 };

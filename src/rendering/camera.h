@@ -27,45 +27,13 @@ private:
 
     UIColor mBGColor;
 
-    glm::mat4 mRotation;
-    glm::mat4 mView;
-    glm::mat4 mProjection;
-    bool mRecalcRotation;
-    bool mRecalcView;
-    bool mRecalcProjection;
-    float mPrevAspect;
-
-    // Sets the camera's values from the config given
-    void UseConfig(Config* config, ActionStack* actionStack)
-    {
-        if (config->GetName() != "camera")
-            config = config->GetConfig("camera");
-
-        mFOV = UIFloat("FOV", config->GetFloat("fov"), actionStack);
-        mNearClip = UIFloat("Near Clip", config->GetFloat("nearClip"), actionStack);
-        mFarClip = UIFloat("Far Clip", config->GetFloat("farClip"), actionStack);
-        mPos = UIVec3("Position", config->GetVec("pos"), actionStack);
-        mDir = UIVec3("Direction", config->GetVec("dir"), actionStack);
-        mUp = UIVec3("Up", config->GetVec("up"), actionStack);
-        mPivot = UIVec3("Pivot", mPos + mDir, actionStack);
-        mTarget = UIVec3("Target", mPos + mDir, actionStack);
-        mOrthSize = UIFloat("Size", config->GetFloat("size"), actionStack);
-        mIsPerspective = UIBool("Perspective", config->GetBool("perspective"), actionStack);
-        mIsWireframe = UIBool("Wireframe", config->GetBool("wireframe"), actionStack);
-        mRotateAroundPivot = UIBool("Lock Rotation", false, actionStack);
-        mBGColor = UIColor("Background", config->GetVec("bgColor"), actionStack);
-
-        mRecalcProjection = true;
-        mRecalcView = true;
-        mRecalcRotation = true;
-        mProjection = glm::mat4(1.0f);
-        mView = glm::mat4(1.0f);
-        mRotation = glm::mat4(1.0f);
-        mPrevAspect = 1.0f;
-
-        LookAt(mPivot);
-        EnableWireframe(mIsWireframe);
-    }
+    glm::mat4 mRotation = glm::mat4(1.0f);
+    glm::mat4 mView = glm::mat4(1.0f);
+    glm::mat4 mProjection = glm::mat4(1.0f);
+    bool mRecalcRotation = true;
+    bool mRecalcView = true;
+    bool mRecalcProjection = true;
+    float mPrevAspect = 1.0f;
 
     // Calculates the basis of the camera
     void CalcBasis()
@@ -89,31 +57,31 @@ private:
     }
 public:
     // Returns the position of the camera
-    UIVec3 GetPos() const { return mPos; }
+    UIVec3& GetPos() { return mPos; }
     // Returns the rotation of the camera
-    UIVec3 GetRot() const { return mRot; }
+    UIVec3& GetRot() { return mRot; }
     // Returns the direction of the camera
-    UIVec3 GetDir() const { return mDir; }
+    UIVec3& GetDir() { return mDir; }
     // Returns the camera's current look target
-    UIVec3 GetTarget() const { return mTarget; }
+    UIVec3& GetTarget() { return mTarget; }
     // Returns the camera's pivot
-    UIVec3 GetPivot() const { return mPivot; }
+    UIVec3& GetPivot() { return mPivot; }
     // Returns the background color of the camera
-    UIColor GetBGColor() const { return mBGColor; }
+    UIColor& GetBGColor() { return mBGColor; }
     // Returns the orthographic size of the camera
-    UIFloat GetOrthSize() const { return mOrthSize; }
+    UIFloat& GetOrthSize() { return mOrthSize; }
     // Returns the far clip plane of the camera
-    UIFloat GetFarClip() const { return mFarClip; }
+    UIFloat& GetFarClip() { return mFarClip; }
     // Returns the near clip plane of the plane
-    UIFloat GetNearClip() const { return mNearClip; }
+    UIFloat& GetNearClip() { return mNearClip; }
     // Returns the FOV of the camera
-    UIFloat GetFOV() const { return mFOV; }
+    UIFloat& GetFOV() { return mFOV; }
     // Returns whether the camera is in perspective
-    UIBool IsPerspective() const { return mIsPerspective; }
+    UIBool& IsPerspective() { return mIsPerspective; }
     // Returns whether the camera is in wireframe
-    UIBool IsWireframe() const { return mIsWireframe; }
+    UIBool& IsWireframe() { return mIsWireframe; }
     // Returns whether the camera is rotating around the pivot
-    UIBool IsRotatingAroundPivot() const { return mRotateAroundPivot; }
+    UIBool& IsRotatingAroundPivot() { return mRotateAroundPivot; }
 
     // Sets the position of the camera
     void SetPos(const glm::vec3& pos) { mPos.Set(pos); mRecalcView = true; }
@@ -145,7 +113,7 @@ public:
         if (mIsWireframe.Equals(isWireframe))
             return;
         mIsWireframe.Set(isWireframe);
-        EnableWireframe(isWireframe);
+        TriggerRecalcWireframe();
     }
 
     // Returns the view matrix of the camera
@@ -232,10 +200,17 @@ public:
         CalcBasis();
     }
 
+    // Triggers a recalculation of the view matrix on the next frame
+    void TriggerRecalcView() { mRecalcView = true; }
+    // Triggers a recalculation of the projection matrix on the next frame
+    void TriggerRecalcProjection() { mRecalcProjection = true; }
+    // Triggers a recalculation of the rotation matrix on the next frame
+    void TriggerRecalcRotation() { mRecalcRotation = true; }
+
     // Enables or disables wireframe
-    static void EnableWireframe(bool enable)
+    void TriggerRecalcWireframe()
     {
-        if (enable) {
+        if (mIsWireframe) {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
             // Disable culling
             glDisable(GL_CULL_FACE);
@@ -256,38 +231,51 @@ public:
         }
     }
 
+    /// <summary>
+    /// Constructs a camera from the given parameters.
+    /// </summary>
+    /// <param name="actionStack">Global action stack</param>
+    /// <param name="fov">Field of View of perspective camera</param>
+    /// <param name="nearClip">Near clip plane</param>
+    /// <param name="farClip">Far clip plane</param>
+    /// <param name="pos">Position of camera</param>
+    /// <param name="dir">Direction that camera faces (not normalized)</param>
+    /// <param name="up">Up vector of the camera</param>
+    /// <param name="color">Background color displayed by the camera</param>
+    /// <param name="orthSize">Orthogonal size of orth camera</param>
+    /// <param name="isPerspective">Whether the camera is in perspective or orthogonal view mode</param>
+    /// <param name="isWireframe">Whether the camera is rendering in wireframe or not</param>
     Camera(ActionStack* actionStack, float fov, float nearClip, float farClip, 
-        const glm::vec3& pos, const glm::vec3& dir, const glm::vec3& up, 
-        const glm::vec3& color, float orthSize, bool isPerspective)
+        const glm::vec3& pos, const glm::vec3& dir, const glm::vec3& up, const glm::vec3& color, 
+        float orthSize = 10.0f, bool isPerspective = true, bool isWireframe = false)
     {
-        mFOV = UIFloat("FOV", fov, actionStack);
-        mNearClip = UIFloat("Near Clip", nearClip, actionStack);
-        mFarClip = UIFloat("Far Clip", farClip, actionStack);
-        mPos = UIVec3("Position", pos, actionStack);
-        mDir = UIVec3("Direction", dir, actionStack);
-        mUp = UIVec3("Up", up, actionStack);
+        mFOV = UIFloat("FOV", fov, actionStack, [this]() { TriggerRecalcProjection(); });
+        mNearClip = UIFloat("Near Clip", nearClip, actionStack, [this]() { TriggerRecalcProjection(); });
+        mFarClip = UIFloat("Far Clip", farClip, actionStack, [this]() { TriggerRecalcProjection(); });
+        mPos = UIVec3("Position", pos, actionStack, [this]() { TriggerRecalcView(); });
+        mDir = UIVec3("Direction", dir, actionStack, [this]() { TriggerRecalcView(); });
+        mUp = UIVec3("Up", up, actionStack, [this]() { TriggerRecalcView(); });
+        mRot = UIVec3("Rotation", glm::vec3(0.0f), actionStack, [this]() { TriggerRecalcRotation(); });
         mPivot = UIVec3("Pivot", pos + dir, actionStack);
-        mTarget = UIVec3("Target", pos + dir, actionStack);
-        mOrthSize = UIFloat("Size", orthSize, actionStack);
-        mIsPerspective = UIBool("Perspective", isPerspective, actionStack);
-        mIsWireframe = UIBool("Wireframe", false, actionStack);
+        mTarget = UIVec3("Target", pos + dir, actionStack, [this]() { TriggerRecalcView(); });
+        mOrthSize = UIFloat("Size", orthSize, actionStack, [this]() { TriggerRecalcProjection(); });
+        mIsPerspective = UIBool("Perspective", isPerspective, actionStack, [this]() { TriggerRecalcProjection(); });
+        mIsWireframe = UIBool("Wireframe", isWireframe, actionStack, [this]() { TriggerRecalcView(); });
         mRotateAroundPivot = UIBool("Lock Rotation", false, actionStack);
         mBGColor = UIColor("Background", color, actionStack);
 
-        mRecalcProjection = true;
-        mRecalcView = true;
-        mRecalcRotation = true;
-        mProjection = glm::mat4(1.0f);
-        mView = glm::mat4(1.0f);
-        mRotation = glm::mat4(1.0f);
-        mPrevAspect = 1.0f;
-
         LookAt(mPivot);
-        EnableWireframe(mIsWireframe);
+        TriggerRecalcWireframe();
     }
 
+    /// <summary>
+    /// Constructs a camera from the given config
+    /// </summary>
+    /// <param name="actionStack">Global action stack</param>
+    /// <param name="config">Config to build camera from</param>
     Camera(ActionStack* actionStack, Config* config)
-    {
-        UseConfig(config, actionStack);
-    }
+        : Camera(actionStack, config->GetFloat("fov"), config->GetFloat("nearClip"), config->GetFloat("farClip"),
+            config->GetVec("pos"), config->GetVec("dir"), config->GetVec("up"), config->GetVec("bgColor"), 
+            config->GetFloat("size"), config->GetBool("perspective"), config->GetBool("wireframe"))
+    {}
 };

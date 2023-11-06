@@ -25,6 +25,11 @@ protected:
 	/// Reference to the global action stack
 	/// </summary>
 	ActionStack* mActionStack;
+
+	/// <summary>
+	/// Callback function that runs whenever set is modified
+	/// </summary>
+	std::function<void()> mSetCallback;
 public:
 	/// <summary>
 	/// Displays the variable as an editable field in the UI. 
@@ -118,7 +123,11 @@ public:
 
 		// If the value changed, notify the action stack
 		if (mActionStack != nullptr)
-			mActionStack->Execute(new ChangeValueCommand<T>(&mValue, newValue));
+			mActionStack->Execute(new ChangeValueCommand<T>(&mValue, newValue, mSetCallback));
+
+		// Trigger the callback function if it exists
+		if (mSetCallback != nullptr)
+			mSetCallback();
 
 		// Update the value of the variable
 		mValue = newValue;

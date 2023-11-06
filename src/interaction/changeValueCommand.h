@@ -5,9 +5,25 @@ template<typename T>
 class ChangeValueCommand : public ICommand
 {
 private:
+	/// <summary>
+	/// Value before this command was run
+	/// </summary>
 	T mPrevValue;
+
+	/// <summary>
+	/// Value after this command was run
+	/// </summary>
 	T mNewValue;
+
+	/// <summary>
+	/// Reference to the address of the value
+	/// </summary>
 	T* mValueRef;
+
+	/// <summary>
+	/// Optional set callback that needs to run when the value of valueRef is changed
+	/// </summary>
+	std::function<void()> mSetCallback;
 public:
 	/// <summary>
 	/// Executes this command
@@ -15,6 +31,8 @@ public:
 	void Execute() override
 	{
 		*mValueRef = mNewValue;
+		if (mSetCallback != nullptr)
+			mSetCallback();
 	}
 
 	/// <summary>
@@ -23,6 +41,8 @@ public:
 	void Undo() override 
 	{
 		*mValueRef = mPrevValue;
+		if (mSetCallback != nullptr)
+			mSetCallback();
 	}
 
 	/// <summary>
@@ -61,8 +81,8 @@ public:
 	/// </summary>
 	/// <param name="valueRef">Reference to the variable to change</param>
 	/// <param name="newValue">Value to change the variable to</param>
-	explicit ChangeValueCommand(T* valueRef, const T& newValue)
-		: mValueRef(valueRef), mPrevValue(*valueRef), mNewValue(newValue)
+	explicit ChangeValueCommand(T* valueRef, const T& newValue, std::function<void()> setCallback = std::function<void()>(nullptr))
+		: mValueRef(valueRef), mPrevValue(*valueRef), mNewValue(newValue), mSetCallback(setCallback)
 	{
 		mCanBeUndone = true;
 	}
