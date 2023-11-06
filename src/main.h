@@ -71,3 +71,11 @@ void LoadShaders(Scene* scene, Config* shaderConfig);
 /// <param name="cameraConfig">Default camera</param>
 /// <param name="lightConfig">Default light</param>
 void LoadDefaultScene(Scene* scene, State* state, Material* defaultMat, bool defaultCubes, Config* cameraConfig, Config* lightConfig);
+
+/// <summary>
+/// Calculates the number of frames this second
+/// </summary>
+/// <param name="state">Global state</param>
+/// <param name="lastSecond">Time of the previous second</param>
+/// <param name="numFrames">Number of frames this second</param>
+void CalculateFPS(State* state, double& lastSecond, int& numFrames);

@@ -41,13 +41,11 @@ int main()
     int prevY = -1;
 
     // Track time
-    double lastTime = glfwGetTime();
-    double currentTime = glfwGetTime();
-    double lastFrameTime = glfwGetTime();
+    double prevFrameTime = glfwGetTime();
+    double curFrameTime = glfwGetTime();
+    double lastSecond = glfwGetTime();
     float deltaTime = 0.0f;
     int numFrames = 0;
-
-    float gammaKeyPressed = false;
 
     // render loop
     // -----------
@@ -57,24 +55,10 @@ int main()
         glfwPollEvents();
 
         // Get deltaTime
-        lastTime = currentTime;
-        currentTime = glfwGetTime();
-        deltaTime = float(currentTime - lastTime);
-
-        // Calculate FPS
-        double curFrameTime = glfwGetTime();
-        numFrames++;
-        if (currentTime - lastFrameTime >= 1.0)
-        {
-            // Calculate FPS and Frame Length in ms
-            state->fps = std::to_string(numFrames);
-            std::string frameTime = std::to_string(1000.0f / numFrames);
-            state->frameTime = frameTime.substr(0, frameTime.find(".") + 3) + "ms";
-
-            // Reset frame times
-            numFrames = 0;
-            lastFrameTime = curFrameTime;
-        }
+        prevFrameTime = curFrameTime;
+        curFrameTime = glfwGetTime();
+        deltaTime = float(curFrameTime - prevFrameTime);
+        CalculateFPS(state, lastSecond, numFrames);
 
         // Rotate light over time
         glm::vec3 lightOffset = scene->GetLight()->GetOffset();
@@ -90,19 +74,16 @@ int main()
         else
             scene->GetLight()->SetColor(lightColor);
 
-        // Draw GUI
-        if (state->drawGUI)
-            window->DrawGUI();
-        //ImGui::ShowDemoWindow();
-
         // Process input and render
         ProcessInput(window, scene, state, &locks, deltaTime, &prevX, &prevY);
 
         // Render
         OpenGLDraw(window, state, scene);
 
+        // Draw GUI
         if (state->drawGUI)
         {
+            window->DrawGUI();
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         }
@@ -214,5 +195,27 @@ void LoadDefaultScene(Scene* scene, State* state, Material* defaultMat, bool def
         scene->AddMesh(new VCube("cube4", 1.0f, new Material(glm::vec3(0, 1, 1)), glm::vec3(-5, 0, 1), glm::vec3(0, 45, 45), glm::vec3(1, 2, 2)));
         scene->AddMesh(new VCube("cube5", 1.0f, new Material(glm::vec3(1, 0, 1)), glm::vec3(-5, 0, 3), glm::vec3(45, 0, 45), glm::vec3(2, 1, 2)));
         scene->AddMesh(new VCube("cube6", 1.0f, new Material(glm::vec3(1, 1, 0)), glm::vec3(-5, 0, 5), glm::vec3(45, 45, 0), glm::vec3(2, 2, 1)));
+    }
+}
+
+// Handles calculating the number of frames per second in state
+// ----------------------------------------------------------------
+void CalculateFPS(State* state, double& lastSecond, int& numFrames)
+{
+    // Calculate FPS
+    double currentTime = glfwGetTime();
+    numFrames++;
+
+    // Check whether a full second has passed since the last update
+    if (currentTime - lastSecond >= 1.0)
+    {
+        // Calculate FPS and Frame Length in ms
+        state->fps = std::to_string(numFrames);
+        std::string frameTime = std::to_string(1000.0f / numFrames);
+        state->frameTime = frameTime.substr(0, frameTime.find(".") + 3) + "ms";
+
+        // Reset frame times
+        numFrames = 0;
+        lastSecond = currentTime;
     }
 }
