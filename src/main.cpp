@@ -84,8 +84,6 @@ int main()
         if (state->drawGUI)
         {
             window->DrawGUI();
-            ImGui::Render();
-            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         }
 
         // Swap buffers at the end of the loop
