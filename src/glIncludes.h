@@ -33,6 +33,7 @@ constexpr auto MODELS_DIR = "resources/models/";
 constexpr auto SHADER_DIR = "resources/shaders/";
 
 constexpr auto CONFIG_JSON = "configs/config.json";
+constexpr auto HOTKEYS_JSON = "configs/hotkeys.json";
 constexpr auto MATS_JSON = "configs/materials.json";
 constexpr auto SHADERS_JSON = "configs/shaders.json";
 constexpr auto APP_NAME = "BlankMat";

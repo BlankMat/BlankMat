@@ -4,8 +4,9 @@ int main()
 {
     // Read Configs
     Config* config = ConfigReader::ReadFile(FileSystem::GetPath(CONFIG_JSON));
-    Config* materialsConfig = ConfigReader::ReadFile(FileSystem::GetPath(MATS_JSON));
-    Config* shadersConfig = ConfigReader::ReadFile(FileSystem::GetPath(SHADERS_JSON));
+    config->SetConfig("hotkeys", ConfigReader::ReadFile(FileSystem::GetPath(HOTKEYS_JSON)));
+    config->SetConfig("materials", ConfigReader::ReadFile(FileSystem::GetPath(MATS_JSON)));
+    config->SetConfig("shaders", ConfigReader::ReadFile(FileSystem::GetPath(SHADERS_JSON)));
 
     // Create state
     State* state = new State(new Selection(), config);
@@ -16,9 +17,8 @@ int main()
         return -1;
 
     // Create scene
-    Scene* scene = new Scene();
-    scene->SetState(state);
-    scene->LoadMaterials(materialsConfig);
+    Scene* scene = new Scene(state);
+    scene->LoadMaterials(config->GetConfig("materials"));
     scene->LoadModel(FileSystem::GetPath(MODELS_DIR) + config->GetString("model.file"), 
         config->GetVec("model.pos"), config->GetVec("model.rot"), config->GetVec("model.scale"));
 
@@ -26,7 +26,7 @@ int main()
     scene->SetTransformHandle(state->GetSel()->GetTransformHandle());
 
     // Load shaders
-    LoadShaders(scene, shadersConfig);
+    LoadShaders(scene, config->GetConfig("shaders"));
     state->defaultMat = scene->SetDefaultMaterial("default");
 
     // Load default scene
