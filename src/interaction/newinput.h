@@ -32,51 +32,51 @@ public:
 	}
 
 	/// <summary>
-	/// 
+	/// Handles keyboard key interactions
 	/// </summary>
-	/// <param name="window"></param>
-	/// <param name="key"></param>
-	/// <param name="scancode"></param>
-	/// <param name="action"></param>
-	/// <param name="mods"></param>
+	/// <param name="window">Current window</param>
+	/// <param name="key">The key that was pressed or unpressed</param>
+	/// <param name="scancode">Scancode of key</param>
+	/// <param name="action">Whether the key was pressed or unpressed</param>
+	/// <param name="mods">Modifier</param>
 	static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 	
 	/// <summary>
-	/// 
+	/// Handles keyboard character typing interactions
 	/// </summary>
-	/// <param name="window"></param>
-	/// <param name="codepoint"></param>
+	/// <param name="window">Current window</param>
+	/// <param name="codepoint">Code of character typed</param>
 	static void CharacterCallback(GLFWwindow* window, unsigned int codepoint);
 	
 	/// <summary>
-	/// 
+	/// Handles mouse movement interactions
 	/// </summary>
-	/// <param name="window"></param>
-	/// <param name="xPos"></param>
-	/// <param name="yPos"></param>
+	/// <param name="window">Current window</param>
+	/// <param name="xPos">x position of cursor</param>
+	/// <param name="yPos">y position of cursor</param>
 	static void CursorPositionCallback(GLFWwindow* window, double xPos, double yPos);
 	
 	/// <summary>
-	/// 
+	/// Handles mouse button interactions
 	/// </summary>
-	/// <param name="window"></param>
-	/// <param name="button"></param>
-	/// <param name="action"></param>
-	/// <param name="mods"></param>
+	/// <param name="window">Current window</param>
+	/// <param name="button">The mouse button that was pressed or unpressed</param>
+	/// <param name="action">Whether the mouse button was pressed or unpressed</param>
+	/// <param name="mods">Modifiers</param>
 	static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 	
 	/// <summary>
-	/// 
+	/// Handles mouse scroll interactions
 	/// </summary>
-	/// <param name="window"></param>
-	/// <param name="xOffset"></param>
-	/// <param name="yOffset"></param>
+	/// <param name="window">Current window</param>
+	/// <param name="xOffset">Change in x</param>
+	/// <param name="yOffset">Change in y</param>
 	static void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset);
 	
 	/// <summary>
-	/// Changes the viewport to match the resized window size
+	/// Handles changing the viewport size to match the window size
 	/// </summary>
-	/// <param name="window"></param>
+	/// <param name="window">Current window</param>
 	/// <param name="width"></param>
 	/// <param name="height"></param>
 	static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
