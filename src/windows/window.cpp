@@ -13,7 +13,7 @@ Window::Window(int width, int height, const std::string& name, Config* config, S
     // Setup all components of the window, returning if any of them fail
     if (!SetupGLFW())
         return;
-    if (!SetupInput())
+    if (!SetupInput(config))
         return;
     if (!SetupIcon(state))
         return;
@@ -33,7 +33,7 @@ void Window::DrawGUI()
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-     // Check if the docking system is enabled
+    // Check if the docking system is enabled
     if (mIO->ConfigFlags & ImGuiConfigFlags_DockingEnable)
     {
         // Create a docking space
@@ -133,10 +133,10 @@ bool Window::SetupGLAD()
 }
 
 // Sets up input for the app
-bool Window::SetupInput()
+bool Window::SetupInput(Config* config)
 {
     // Setup window to be able to use the input module
-    mInput = new Input();
+    mInput = new Input(config->GetConfig("hotkeys"));
     glfwSetWindowUserPointer(mWindow, this);
 
     glfwSetKeyCallback(mWindow, KeyCallback);
@@ -177,13 +177,12 @@ bool Window::SetupImGui(Config* config)
     mIO->Fonts->AddFontFromFileTTF(FileSystem::GetPath(FONT_DIR + styleConfig->GetString("font")).c_str(), styleConfig->GetFloat("fontSize"));
     mIO->ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 
-    // Setup style
-    ImGui::StyleColorsDark();
-    SetupImGuiStyle(styleConfig->GetBool("darkTheme"), styleConfig->GetFloat("windowOpacity"));
-
     // Dear ImGui Docking
     DockSpaceInitialized = false;
     mIO->ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
+    // Setup style
+    SetupImGuiStyle(styleConfig->GetBool("darkTheme"), styleConfig->GetFloat("windowOpacity"));
 
     // Return success
     return true;
@@ -192,7 +191,7 @@ bool Window::SetupImGui(Config* config)
 // Sets up the ImGui Style
 bool Window::SetupImGuiStyle(bool isDarkStyle, float alphaThreshold)
 {
-    //Use a ternary operator
+    // Enable the correct style colors
     isDarkStyle ? ImGui::StyleColorsDark() : ImGui::StyleColorsLight();
 
     ImGuiStyle& style = ImGui::GetStyle();
