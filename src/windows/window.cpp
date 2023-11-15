@@ -135,11 +135,14 @@ bool Window::SetupGLAD()
 // Sets up input for the app
 bool Window::SetupInput()
 {
-    glfwSetCharCallback(mWindow, Input::CharacterCallback);
-    glfwSetKeyCallback(mWindow, Input::KeyCallback);
-    glfwSetCursorPosCallback(mWindow, Input::CursorPositionCallback);
-    glfwSetMouseButtonCallback(mWindow, Input::MouseButtonCallback);
-    glfwSetScrollCallback(mWindow, Input::ScrollCallback);
+    // Setup window to be able to use the input module
+    mInput = new Input();
+    glfwSetWindowUserPointer(mWindow, this);
+
+    glfwSetKeyCallback(mWindow, KeyCallback);
+    glfwSetCursorPosCallback(mWindow, CursorPositionCallback);
+    glfwSetMouseButtonCallback(mWindow, MouseButtonCallback);
+    glfwSetScrollCallback(mWindow, ScrollCallback);
     Input::ShowMouseCursor(mWindow);
     return true;
 }

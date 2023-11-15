@@ -16,6 +16,7 @@ private:
 	std::string mName;
 	GLFWwindow* mWindow;
 	ImGuiIO* mIO;
+	Input* mInput;
 
 	std::unordered_map<GUI, IGUIWindow*> mGUIList;
 
@@ -42,6 +43,34 @@ private:
 
 	// Sets up shadows for the app
 	bool SetupShadows(State* state);
+
+	// Wrapper to call input KeyCallback
+	static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) 
+	{
+		Window* obj = (Window*)glfwGetWindowUserPointer(window);
+		obj->mInput->KeyCallback(window, key, scancode, action, mods);
+	}
+
+	// Wrapper to call input CursorPostionCallback
+	static void CursorPositionCallback(GLFWwindow* window, double xPos, double yPos) 
+	{
+		Window* obj = (Window*)glfwGetWindowUserPointer(window);
+		obj->mInput->CursorPositionCallback(window, xPos, yPos);
+	}
+
+	// Wrapper to call input MouseButtonCallback
+	static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods) 
+	{
+		Window* obj = (Window*)glfwGetWindowUserPointer(window);
+		obj->mInput->MouseButtonCallback(window, button, action, mods);
+	}
+
+	// Wrapper to call input ScrollCallback
+	static void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset) 
+	{
+		Window* obj = (Window*)glfwGetWindowUserPointer(window);
+		obj->mInput->ScrollCallback(window, xOffset, yOffset);
+	}
 public:
 	// Opens a OpenGL window with the given name
 	// -----------------------------------------
