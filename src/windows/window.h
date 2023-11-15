@@ -1,6 +1,7 @@
 #pragma once
 #include "glIncludes.h"
 #include "iGUIWindow.h"
+#include "interaction/newinput.h"
 #include "files/config.h"
 #include "files/fileSystem.h"
 #include "tools/state.h"
@@ -20,6 +21,27 @@ private:
 
 	// Flag to track if the docking space is initialized
 	bool DockSpaceInitialized;
+
+	// Sets up GLFW for the app
+	bool SetupGLFW();
+
+	// Sets up GLAD for the app
+	bool SetupGLAD();
+
+	// Sets up input for the app
+	bool SetupInput();
+	
+	// Sets the icon for the app
+	bool SetupIcon(State* state);
+
+	// Sets up ImGui for the app
+	bool SetupImGui(Config* config);
+
+	// Sets up the ImGui Style
+	bool SetupImGuiStyle(bool isDarkStyle, float alphaThreshold);
+
+	// Sets up shadows for the app
+	bool SetupShadows(State* state);
 public:
 	// Opens a OpenGL window with the given name
 	// -----------------------------------------
@@ -44,14 +66,4 @@ public:
 	int GetHeight() { return mHeight; }
 	// Returns the aspect ratio of the screen
 	float GetAspect() { return (float)mWidth / (float)mHeight; }
-
-	// Initialize GUI
-	//void InitGUI(State* state, Scene* scene);
 };
-
-// Sets up the ImGui Style
-inline void SetupImGuiStyle(bool isDarkStyle, float alphaThreshold);
-
-// glfw: whenever the window size changed (by OS or user resize) this callback function executes
-// ---------------------------------------------------------------------------------------------
-void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
