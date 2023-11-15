@@ -8,13 +8,13 @@
 class Scene : public IScene
 {
 protected:
-	IEntity* mGrid;
-	IEntity* mTransformHandle;
-	IEntity* mViewAxisHandle;
+	IEntity* mGrid = nullptr;
+	IEntity* mTransformHandle = nullptr;
+	IEntity* mViewAxisHandle = nullptr;
 
-	int mViewAxisPrevWidth;
-	int mViewAxisPrevHeight;
-	glm::mat4 mViewAxisProjection;
+	int mViewAxisPrevWidth = 0;
+	int mViewAxisPrevHeight = 0;
+	glm::mat4 mViewAxisProjection = glm::mat4(1.0f);
 
 	// Returns the projection matrix of the view axis handle
 	const glm::mat4& GetViewAxisProjection(Window* window);
@@ -33,10 +33,8 @@ public:
 	// Sets the transform handle object
 	void SetTransformHandle(IEntity* handle);
 
-	// Saves the global state in the scene
-	void SetState(State* state);
 	// Constructs the scene, getting everything ready for manual setting
-	Scene();
+	Scene(State* state);
 	// Destructs scene and cleans up all memory used
 	~Scene();
 };

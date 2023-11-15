@@ -123,12 +123,6 @@ const glm::mat4& Scene::GetViewAxisProjection(Window* window)
 	return mViewAxisProjection;
 }
 
-// Saves the global state in the scene
-void Scene::SetState(State* state)
-{
-	mState = state;
-}
-
 // Loads the model at the given path
 void Scene::LoadModel(const std::string& path, const glm::vec3& startPos, const glm::vec3& startRot, const glm::vec3& startScale)
 {
@@ -154,9 +148,10 @@ void Scene::SetTransformHandle(IEntity* handle)
 }
 
 // Constructs the scene from the given file
-Scene::Scene()
+Scene::Scene(State* state)
 {
 	mCurShader = "";
+	mState = state;
 	mMainCamera = nullptr;
 	mGlobalLight = nullptr;
 	mRootNode = nullptr;
