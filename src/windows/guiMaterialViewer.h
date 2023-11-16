@@ -8,8 +8,8 @@
 class GUIMaterialViewer : public IGUIWindow
 {
 private:
-	State* mState;
-	Scene* mScene;
+	State* mState = nullptr;
+	Scene* mScene = nullptr;
 public:
 	void Draw() override
 	{
@@ -55,10 +55,9 @@ public:
 	}
 
 	GUIMaterialViewer(State* state, Scene* scene, bool isEnabled)
+		: mState(state), mScene(scene)
 	{
 		mType = GUI::MATERIAL_VIEWER;
-		mState = state;
-		mScene = scene;
 		mIsEnabled = isEnabled;
 	}
 };

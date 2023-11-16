@@ -8,8 +8,8 @@
 class GUIHierarchyWindow : public IGUIWindow
 {
 protected:
-    State* mState;
-    Scene* mScene;
+    State* mState = nullptr;
+    Scene* mScene = nullptr;
     std::set<IEntity*> mExpandedNodes;
 
     // Render one row of the hierarchy
@@ -94,10 +94,9 @@ public:
     }
 
     GUIHierarchyWindow(State* state, Scene* scene, bool isEnabled)
+        : mState(state), mScene(scene)
     {
         mType = GUI::HIERARCHY;
-        mState = state;
-        mScene = scene;
         mIsEnabled = isEnabled;
     }
 };

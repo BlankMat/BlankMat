@@ -1,7 +1,7 @@
 #pragma once
 #include "glIncludes.h"
 #include "iGUIWindow.h"
-#include "interaction/newinput.h"
+#include "interaction/input.h"
 #include "files/config.h"
 #include "files/fileSystem.h"
 #include "tools/state.h"
@@ -11,17 +11,15 @@
 
 class Window {
 private:
-	int mWidth;
-	int mHeight;
-	std::string mName;
-	GLFWwindow* mWindow;
-	ImGuiIO* mIO;
-	Input* mInput;
+	int mWidth = 1920;
+	int mHeight = 1080;
+	std::string mName = "BlankMat";
+	GLFWwindow* mWindow = nullptr;
+	ImGuiIO* mIO = nullptr;
+	Input* mInput = nullptr;
+	bool mIsDockSpaceInitialized = false;
 
 	std::unordered_map<GUI, IGUIWindow*> mGUIList;
-
-	// Flag to track if the docking space is initialized
-	bool DockSpaceInitialized;
 
 	// Sets up GLFW for the app
 	bool SetupGLFW();
@@ -89,6 +87,8 @@ public:
 
 	// Returns the GLFW window reference
 	GLFWwindow* GetWindow() { return mWindow; }
+	// Returns the window's input module
+	Input* GetInput() { return mInput; }
 	// Returns the width of the window, currently
 	int GetWidth() { return mWidth; }
 	// Returns the height of the window, currently

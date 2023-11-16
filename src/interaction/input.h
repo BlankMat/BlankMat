@@ -1,84 +1,279 @@
 #pragma once
 #include "glIncludes.h"
-#include "selection.h"
-#include "interfaces/iMesh.h"
-#include "interfaces/iScene.h"
-#include "windows/window.h"
+#include "files/config.h"
 #include "tools/state.h"
+#include "interfaces/iCommand.h"
+#include <unordered_map>
+#include <unordered_set>
 
-#define KEY1_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_1) == GLFW_PRESS)
-#define KEY2_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_2) == GLFW_PRESS)
-#define KEY3_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_3) == GLFW_PRESS)
-#define KEY4_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_4) == GLFW_PRESS)
-#define KEY5_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_5) == GLFW_PRESS)
-#define C_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_C) == GLFW_PRESS)
-#define Q_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_Q) == GLFW_PRESS)
-#define E_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_E) == GLFW_PRESS)
-#define R_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_R) == GLFW_PRESS)
-#define T_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_T) == GLFW_PRESS)
-#define S_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_S) == GLFW_PRESS)
-#define F_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_F) == GLFW_PRESS)
-#define D_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_D) == GLFW_PRESS)
-#define Y_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_Y) == GLFW_PRESS)
-#define Z_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_Z) == GLFW_PRESS)
-#define ESC_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-#define SPACE_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_SPACE) == GLFW_PRESS)
-#define WASDZX_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_W) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_A) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_S) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_D) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_Z) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_X) == GLFW_PRESS)
-#define ARROW_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_UP) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_DOWN) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_LEFT) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_RIGHT) == GLFW_PRESS)
-#define DELETE_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_DELETE) == GLFW_PRESS)
-#define SHIFT_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS)
-#define ALT_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_LEFT_ALT) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_RIGHT_ALT) == GLFW_PRESS)
-#define CTRL_PRESS (glfwGetKey(glfwWindow, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS || glfwGetKey(glfwWindow, GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS)
-#define LEFT_MOUSE_PRESS (glfwGetMouseButton(glfwWindow, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
-#define RIGHT_MOUSE_PRESS (glfwGetMouseButton(glfwWindow, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
-#define MOUSE_PRESS (LEFT_MOUSE_PRESS || RIGHT_MOUSE_PRESS)
-#define LEFT_MOUSE_RELEASE (glfwGetMouseButton(glfwWindow, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE)
-#define RIGHT_MOUSE_RELEASE (glfwGetMouseButton(glfwWindow, GLFW_MOUSE_BUTTON_RIGHT) == GLFLW_RELEASE)
-#define MOUSE_RELEASE (glfwGetMouseButton(glfwWindow, GLFW_MOUSE_BUTTON_RIGHT) == GLFLW_RELEASE)
+class Input
+{
+private:
+	State* mState = nullptr;
 
-// Input lock structure to separate presses from holding keyes
-struct InputLocks {
-	bool lockQ = false;			// Select
-	bool lockE = false;			// Scale
-	bool lockR = false;			// Rotate
-	bool lockT = false;			// Translate
-	bool lockCtrlE = false;		// Extrude
+	std::unordered_map<std::string, int> mKeysPressed;
+	std::unordered_map<std::string, std::string> mHotkeys;
+	std::unordered_map<std::string, ICommand*> mCommands;
+public:
+	/// <summary>
+	/// Returns whether the key is a modifier key
+	/// </summary>
+	/// <param name="key">Key code to check</param>
+	/// <returns>Is the key a modifier key?</returns>
+	static bool IsModKey(int key)
+	{
+		// Keys in range 340 to 347 are Left/Right Shift/Alt/Control/Super
+		return (key >= GLFW_KEY_LEFT_SHIFT && key <= GLFW_KEY_RIGHT_SUPER);
+	}
 
-	bool lockF = false;			// Focus
-	bool lockCtrlC = false;		// Center pivot
-	bool lockCtrlR = false;		// Render
-	bool lockCtrlT = false;		// Triangulate
-	bool lockCtrlS = false;		// Save
+	/// <summary>
+	/// Presses the given key with the given mod bits
+	/// </summary>
+	/// <param name="keyCode">Key code to press</param>
+	/// <param name="mods">Modifier bits</param>
+	/// <returns>Whether the key was successfully pressed</returns>
+	bool PressKey(const std::string& keyCode, int mods)
+	{
+		// If the key is already pressed, don't override mod bits
+		if (IsKeyPressed(keyCode))
+			return false;
+		mKeysPressed.emplace(keyCode, mods);
 
-	bool lockAltT = false;		// Disco light
-	bool lockAltR = false;		// Rotating light
+		// Trigger hotkey
+		std::string hotkey = GetModCode(mods) + keyCode;
+		if (mHotkeys.find(hotkey) != mHotkeys.end())
+			RunCommand(mHotkeys[hotkey]);
+		return true;
+	}
 
-	bool lockDel = false;		// Delete
-	bool lockLeftMouse = false;
-	bool lockRightMouse = false;
-	bool lockSpace = false;
+	/// <summary>
+	/// Unpresses the given key
+	/// </summary>
+	/// <param name="keyCode">Key code to unpress</param>
+	/// <returns>Whether the key was successfully unpressed</returns>
+	bool UnPressKey(const std::string& keyCode)
+	{
+		if (!IsKeyPressed(keyCode))
+			return false;
+		mKeysPressed.erase(keyCode);
+		return true;
+	}
 
-	bool lockKey1 = false;
-	bool lockKey2 = false;
-	bool lockKey3 = false;
-	bool lockKey4 = false;
-	bool lockKey5 = false;
+	/// <summary>
+	/// Returns whether the given key is pressed or not
+	/// </summary>
+	/// <param name="keyCode">Key code to check</param>
+	/// <returns>Whether the key is pressed</returns>
+	bool IsKeyPressed(const std::string& keyCode) const
+	{
+		return mKeysPressed.find(keyCode) != mKeysPressed.end();
+	}
 
-	bool lockCtrl1 = false;
-	bool lockCtrl2 = false;
-	bool lockCtrl3 = false;
-	bool lockCtrl4 = false;
-	bool lockCtrl5 = false;
-	bool lockCtrlY = false;
-	bool lockCtrlZ = false;
+	/// <summary>
+	/// Runs the command with the given name if it exists
+	/// </summary>
+	/// <param name="command">Command to run</param>
+	void RunCommand(const std::string& command)
+	{
+		std::cout << "Ran command " << command << std::endl;
+		if (mCommands.find(command) != mCommands.end())
+			mState->GetActionStack()->Execute(mCommands[command]);
+	}
 
-	bool reselect = false;
-	bool rerender = false;
+	/// <summary>
+	/// Returns the modifier keys of the pressed key
+	/// </summary>
+	/// <param name="keyCode">Key code of the key pressed</param>
+	/// <returns>The modifier bits of the pressed key</returns>
+	int GeyKeyMods(const std::string& keyCode) const
+	{
+		if (IsKeyPressed(keyCode))
+			return mKeysPressed.at(keyCode);
+		else
+			return 0;
+	}
 
-	void ClearLocks();
-	void LockTool(Tool _tool);
+	/// <summary>
+	/// Returns the mod code as a string
+	/// </summary>
+	/// <param name="mod">Alt/Ctrl/Shift modifiers</param>
+	/// <returns>Name of mod</returns>
+	static std::string GetModCode(int mod)
+	{
+		std::string result = "";
+		if (CtrlPress(mod))
+			result += "CTRL+";
+		if (AltPress(mod))
+			result += "ALT+";
+		if (ShiftPress(mod))
+			result += "SHIFT+";
+		return result;
+	}
+
+	/// <summary>
+	/// Returns the key code as a string
+	/// </summary>
+	/// <param name="key">Key code</param>
+	/// <returns>Name of key</returns>
+	static std::string GetKeyCode(int key)
+	{
+		switch (key)
+		{
+		case GLFW_KEY_ESCAPE:
+			return "ESC";
+		case GLFW_KEY_SPACE:
+			return "SPACE";
+		case GLFW_KEY_BACKSPACE:
+			return "BKSP";
+		case GLFW_KEY_DELETE:
+			return "DEL";
+		case GLFW_KEY_ENTER:
+			return "ENTER";
+		case GLFW_KEY_TAB:
+			return "TAB";
+		case GLFW_KEY_UP:
+			return "UP";
+		case GLFW_KEY_DOWN:
+			return "DOWN";
+		case GLFW_KEY_RIGHT:
+			return "RIGHT";
+		case GLFW_KEY_LEFT:
+			return "LEFT";
+		default:
+			if (key >= 0 && key <= 255)
+				return std::string(1, (char)key);
+			else
+				return "NULL";
+		}
+	}
+
+	/// <summary>
+	/// Returns the mouse button code as a string
+	/// </summary>
+	/// <param name="button">Mouse button</param>
+	/// <returns>Name of mouse button</returns>
+	static std::string GetMouseCode(int button)
+	{
+		if (button == GLFW_MOUSE_BUTTON_1)
+			return "MB1";
+		else if (button == GLFW_MOUSE_BUTTON_2)
+			return "MB2";
+		else if (button == GLFW_MOUSE_BUTTON_3)
+			return "MB3";
+		else if (button == GLFW_MOUSE_BUTTON_4)
+			return "MB4";
+		else if (button == GLFW_MOUSE_BUTTON_5)
+			return "MB5";
+		else
+			return "";
+	}
+
+	/// <summary>
+	/// Returns whether alt is being pressed
+	/// </summary>
+	/// <param name="mod">Alt/Ctrl/Shift modifiers</param>
+	/// <returns>Whether the modifier is pressing alt</returns>
+	static bool AltPress(int mod)
+	{
+		return (mod & GLFW_MOD_ALT);
+	}
+
+	/// <summary>
+	/// Returns whether shift is being pressed
+	/// </summary>
+	/// <param name="mod">Alt/Ctrl/Shift modifiers</param>
+	/// <returns>Whether the modifier is pressing alt</returns>
+	static bool ShiftPress(int mod)
+	{
+		return (mod & GLFW_MOD_SHIFT);
+	}
+
+	/// <summary>
+	/// Returns whether ctrl is being pressed
+	/// </summary>
+	/// <param name="mod">Alt/Ctrl/Shift modifiers</param>
+	/// <returns>Whether the modifier is pressing alt</returns>
+	static bool CtrlPress(int mod)
+	{
+		return (mod & GLFW_MOD_CONTROL);
+	}
+
+	/// <summary>
+	/// Handles changing the viewport size to match the window size
+	/// </summary>
+	/// <param name="window">Current window</param>
+	/// <param name="width">Width of new window</param>
+	/// <param name="height">Height of new window</param>
+	static void FramebufferSizeCallback(GLFWwindow* window, int width, int height)
+	{
+		glViewport(0, 0, width, height);
+	}
+
+	/// <summary>
+	/// Disables the mouse cursor, making it not move even if the user moves their mouse
+	/// </summary>
+	/// <param name="window">Current window</param>
+	static void DisableMouseCursor(GLFWwindow* window)
+	{
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	}
+	
+	/// <summary>
+	/// Hides the mouse cursor, allowing the user to continue moving it in the background
+	/// </summary>
+	/// <param name="window">Current window</param>
+	static void HideMouseCursor(GLFWwindow* window)
+	{
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+	}
+	
+	/// <summary>
+	/// Shows the mouse cursor, resetting it to the default mode
+	/// </summary>
+	/// <param name="window">Current window</param>
+	static void ShowMouseCursor(GLFWwindow* window)
+	{
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	}
+
+	/// <summary>
+	/// Handles keyboard key interactions
+	/// </summary>
+	/// <param name="window">Current window</param>
+	/// <param name="key">The key that was pressed or unpressed</param>
+	/// <param name="scancode">Scancode of key</param>
+	/// <param name="action">Whether the key was pressed or unpressed</param>
+	/// <param name="mods">Alt/Ctrl/Shift modifiers</param>
+	void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+	
+	/// <summary>
+	/// Handles mouse button interactions
+	/// </summary>
+	/// <param name="window">Current window</param>
+	/// <param name="button">The mouse button that was pressed or unpressed</param>
+	/// <param name="action">Whether the mouse button was pressed or unpressed</param>
+	/// <param name="mods">Alt/Ctrl/Shift modifiers</param>
+	void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+
+	/// <summary>
+	/// Handles mouse movement interactions
+	/// </summary>
+	/// <param name="window">Current window</param>
+	/// <param name="xPos">x position of cursor</param>
+	/// <param name="yPos">y position of cursor</param>
+	void CursorPositionCallback(GLFWwindow* window, double xPos, double yPos);
+	
+	/// <summary>
+	/// Handles mouse scroll interactions
+	/// </summary>
+	/// <param name="window">Current window</param>
+	/// <param name="xOffset">Change in x</param>
+	/// <param name="yOffset">Change in y</param>
+	void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset);
+
+	/// <summary>
+	/// Initializes the input module with the current hotkeys
+	/// </summary>
+	/// <param name="hotkeyConfig">Hotkey configuration</param>
+	explicit Input(State* state, Config* hotkeyConfig);
 };
-
-bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks, float deltaTime, int* prevX, int* prevY);
-glm::vec3 GetWASDZX(Window* window);
-glm::vec3 GetArrow(Window* window);

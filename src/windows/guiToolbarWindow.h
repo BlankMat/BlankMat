@@ -20,11 +20,12 @@ constexpr auto EXTRUDE_ICON = "Extrude.png";
 class GUIToolbarWindow : public IGUIWindow
 {
 protected:
-    State* mState;
-    Scene* mScene;
-    const std::string fileNames[5] = {SELECT_ICON,MOVE_ICON,ROTATE_ICON,SCALE_ICON,EXTRUDE_ICON};
+    State* mState = nullptr;
+    Scene* mScene = nullptr;
+    ImVec2 mIconSize = ImVec2(50, 50);
+
+    const std::string fileNames[5] = { SELECT_ICON, MOVE_ICON, ROTATE_ICON, SCALE_ICON, EXTRUDE_ICON };
     std::vector<unsigned int> mTextureIDs;
-    ImVec2 mIconSize;
 public:
     void Draw() override
     {
@@ -55,12 +56,9 @@ public:
     }
 
     GUIToolbarWindow(State* state, Scene* scene, bool isEnabled)
+        : mState(state), mScene(scene)
     {
         mType = GUI::TOOLBAR;
-        mIsEnabled = isEnabled;
-        mState = state;
-        mScene = scene;
-        mIconSize = ImVec2(50, 50);
 
         stbi_set_flip_vertically_on_load(false);
         for(Tool tool = Tool::SELECT; tool != Tool::LAST; tool = (Tool)((int)tool+1))

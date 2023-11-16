@@ -27,10 +27,10 @@ enum class GUI
 class IGUIWindow
 {
 protected:
-	GUI mType;
-	std::string mName;
-	glm::vec2 mScreenPos;
-	bool mIsEnabled;
+	GUI mType = GUI::NONE;
+	std::string mName = "";
+	glm::vec2 mScreenPos = glm::vec2(0, 0);
+	bool mIsEnabled = true;
 public:
 	// Draws the GUI to the screen
 	virtual void Draw() = 0;

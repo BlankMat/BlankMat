@@ -3,13 +3,8 @@
 // Opens a OpenGL window with the given name
 // -----------------------------------------
 Window::Window(int width, int height, const std::string& name, Config* config, State* state)
+    : mWidth(width), mHeight(height), mName(name)
 {
-    // Set class variables
-    // ---------------------------
-    mWidth = width;
-    mHeight = height;
-    mName = name;
-
     // Setup all components of the window, returning if any of them fail
     if (!SetupGLFW())
         return;
@@ -37,7 +32,7 @@ void Window::DrawGUI()
     if (mIO->ConfigFlags & ImGuiConfigFlags_DockingEnable)
     {
         // Create a docking space
-        if (!DockSpaceInitialized)
+        if (!mIsDockSpaceInitialized)
         {
             ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
             ImGuiViewport* viewport = ImGui::GetMainViewport();
@@ -53,7 +48,7 @@ void Window::DrawGUI()
             ImGuiID dockspace_id = ImGui::GetID("Dockspace");
             ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
 
-            DockSpaceInitialized = true;
+            mIsDockSpaceInitialized = true;
             ImGui::End();
         }
     }
@@ -178,7 +173,7 @@ bool Window::SetupImGui(Config* config)
     mIO->ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 
     // Dear ImGui Docking
-    DockSpaceInitialized = false;
+    mIsDockSpaceInitialized = false;
     mIO->ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
     // Setup style

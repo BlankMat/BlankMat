@@ -7,8 +7,8 @@
 class GUIInspectorWindow : public IGUIWindow
 {
 protected:
-	State* mState;
-	Scene* mScene;
+	State* mState = nullptr;
+	Scene* mScene = nullptr;
 public:
 	void Draw() override
 	{
@@ -63,10 +63,9 @@ public:
 	}
 
 	GUIInspectorWindow(State* state, Scene* scene, bool isEnabled)
+		: mState(state), mScene(scene)
 	{
 		mType = GUI::INSPECTOR;
-		mState = state;
-		mScene = scene;
 		mIsEnabled = isEnabled;
 	}
 };

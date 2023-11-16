@@ -14,8 +14,8 @@
 class GUIDebugToolsWindow : public IGUIWindow
 {
 protected:
-	State* mState;
-	Scene* mScene;
+	State* mState = nullptr;
+	Scene* mScene = nullptr;
 public:
 	void Draw() override
 	{
@@ -85,10 +85,9 @@ public:
 	}
 
 	GUIDebugToolsWindow(State* state, Scene* scene, bool isEnabled)
+		: mState(state), mScene(scene)
 	{
 		mType = GUI::DEBUG_TOOLS;
-		mState = state;
-		mScene = scene;
 		mIsEnabled = isEnabled;
 	}
 };

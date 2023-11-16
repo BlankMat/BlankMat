@@ -1,4 +1,5 @@
 #pragma once
+#include "interaction/oldinput.h"
 #include "interaction/input.h"
 #include "interaction/actionStack.h"
 
@@ -53,7 +54,7 @@ void OpenGLDraw(Window* window, State* state, Scene* scene);
 /// <param name="state">Global state</param>
 /// <param name="scene">Scene reference</param>
 /// <param name="config">Config file</param>
-void LoadGUIs(Window* window, State* state, Scene* scene, Config* config);
+void LoadGUIs(Window* window, State* state, Scene* scene, Input* input, Config* config);
 
 /// <summary>
 /// Loads all defined shaders
