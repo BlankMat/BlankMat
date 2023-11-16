@@ -19,7 +19,7 @@ void Input::KeyCallback(GLFWwindow* window, int key, int scancode, int action, i
 		change = UnPressKey(GetKeyCode(key));
 
 	if (change)
-		std::cout << "Called KeyCallback " << GetKeyCode(key) << ", key " << key << ", scancode " << scancode << ", action " << action << ", mods " << mods << std::endl;
+		std::cout << "Called KeyCallback " << GetActionCode(action) << " " << GetModCode(mods) << GetKeyCode(key) << std::endl;
 }
 
 // Handles mouse button interactions
@@ -36,7 +36,7 @@ void Input::MouseButtonCallback(GLFWwindow* window, int button, int action, int 
 		change = UnPressKey(GetMouseCode(button));
 
 	if (change)
-		std::cout << "Called MouseButtonCallback " << GetMouseCode(button) << ", button " << button << ", action " << action << ", mods " << mods << std::endl;
+		std::cout << "Called MouseButtonCallback " << GetActionCode(action) << " " << GetModCode(mods) << GetMouseCode(button) << std::endl;
 }
 
 // Handles mouse movement interactions

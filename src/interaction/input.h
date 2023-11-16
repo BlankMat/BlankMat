@@ -155,18 +155,41 @@ public:
 	/// <returns>Name of mouse button</returns>
 	static std::string GetMouseCode(int button)
 	{
-		if (button == GLFW_MOUSE_BUTTON_1)
+		switch (button)
+		{
+		case GLFW_MOUSE_BUTTON_1:
 			return "MB1";
-		else if (button == GLFW_MOUSE_BUTTON_2)
+		case GLFW_MOUSE_BUTTON_2:
 			return "MB2";
-		else if (button == GLFW_MOUSE_BUTTON_3)
+		case GLFW_MOUSE_BUTTON_3:
 			return "MB3";
-		else if (button == GLFW_MOUSE_BUTTON_4)
+		case GLFW_MOUSE_BUTTON_4:
 			return "MB4";
-		else if (button == GLFW_MOUSE_BUTTON_5)
+		case GLFW_MOUSE_BUTTON_5:
 			return "MB5";
-		else
-			return "";
+		default:
+			return "NULL";
+		}
+	}
+
+	/// <summary>
+	/// Returns the action code as a string
+	/// </summary>
+	/// <param name="action">Action</param>
+	/// <returns>Name of action</returns>
+	static std::string GetActionCode(int action)
+	{
+		switch (action)
+		{
+		case GLFW_PRESS:
+			return "PRESS";
+		case GLFW_RELEASE:
+			return "RELEASE";
+		case GLFW_REPEAT:
+			return "REPEAT";
+		default:
+			return "NULL";
+		}
 	}
 
 	/// <summary>
