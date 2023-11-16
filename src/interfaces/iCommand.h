@@ -8,6 +8,7 @@ class ICommand
 {
 protected:
 	bool mCanBeUndone = true;
+	bool mTrackable = true;
 public:
 	/// <summary>
 	/// Executes this command.
@@ -32,6 +33,12 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	bool Undoable() const { return mCanBeUndone; }
+
+	/// <summary>
+	/// Returns whether the command is trackable (ie. should be stored in ActionStack)
+	/// </summary>
+	/// <returns></returns>
+	bool Trackable() const { return mTrackable; }
 
 	/// <summary>
 	/// Returns the name of this command

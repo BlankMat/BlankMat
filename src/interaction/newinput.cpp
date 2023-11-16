@@ -44,7 +44,11 @@ void Input::ScrollCallback(GLFWwindow* window, double xOffset, double yOffset)
 }
 
 // Initializes the input module with the current hotkeys
-Input::Input(Config* hotkeyConfig)
+Input::Input(State* state, Config* hotkeyConfig)
+	: mState(state)
 {
-
+	// Copy the hotkeys from the config
+	auto& hotkeys = hotkeyConfig->GetStrings();
+	for (auto iter = hotkeys.begin(); iter != hotkeys.end(); ++iter)
+		mHotkeys.emplace(iter->first, iter->second);
 }

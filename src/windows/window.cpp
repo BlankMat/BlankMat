@@ -13,7 +13,7 @@ Window::Window(int width, int height, const std::string& name, Config* config, S
     // Setup all components of the window, returning if any of them fail
     if (!SetupGLFW())
         return;
-    if (!SetupInput(config))
+    if (!SetupInput(state, config))
         return;
     if (!SetupIcon(state))
         return;
@@ -47,10 +47,10 @@ void Window::DrawGUI()
             ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
             ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
             ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-            ImGui::Begin("DockSpace", nullptr, dockspace_flags);
+            ImGui::Begin("Dockspace", nullptr, dockspace_flags);
             ImGui::PopStyleVar(3);
 
-            ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+            ImGuiID dockspace_id = ImGui::GetID("Dockspace");
             ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
 
             DockSpaceInitialized = true;
@@ -133,10 +133,10 @@ bool Window::SetupGLAD()
 }
 
 // Sets up input for the app
-bool Window::SetupInput(Config* config)
+bool Window::SetupInput(State* state, Config* config)
 {
     // Setup window to be able to use the input module
-    mInput = new Input(config->GetConfig("hotkeys"));
+    mInput = new Input(state, config->GetConfig("hotkeys"));
     glfwSetWindowUserPointer(mWindow, this);
 
     glfwSetKeyCallback(mWindow, KeyCallback);

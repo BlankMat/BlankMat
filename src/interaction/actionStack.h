@@ -101,8 +101,8 @@ private:
 	/// <param name="command">Command executed</param>
 	void AppendNode(ICommand* command)
 	{
-		// Don't add empty commands
-		if (command == nullptr)
+		// Don't add empty or untrackable commands
+		if (command == nullptr || !command->Trackable())
 			return;
 
 		// Attempt to combine the new command with the previous one. If successful, don't change anything.

@@ -58,6 +58,16 @@ public:
 
 	// Returns the child configs
 	const std::unordered_map<std::string, Config*>& GetConfigs() const { return mChildConfigs; }
+	// Returns the child strings
+	const std::unordered_map<std::string, std::string>& GetStrings() { return mConfigStrings; }
+	// Returns the child vectors
+	const std::unordered_map<std::string, glm::vec3>& GetVecs() { return mConfigVecs; }
+	// Returns the child floats
+	const std::unordered_map<std::string, float>& GetFloats() { return mConfigFloats; }
+	// Returns the child ints
+	const std::unordered_map<std::string, int>& GetInts() { return mConfigInts; }
+	// Returns the child bools
+	const std::unordered_map<std::string, bool>& GetBools() { return mConfigBools; }
 
 	// Returns the given config
 	Config* GetConfig(const std::string& name);

@@ -1,15 +1,19 @@
 #pragma once
 #include "glIncludes.h"
 #include "files/config.h"
+#include "tools/state.h"
+#include "interfaces/iCommand.h"
 #include <unordered_map>
 #include <unordered_set>
 
 class Input
 {
 private:
+	State* mState = nullptr;
+
 	std::unordered_map<std::string, int> mKeysPressed;
 	std::unordered_map<std::string, std::string> mHotkeys;
-	std::unordered_map<std::string, std::string> mCommands;
+	std::unordered_map<std::string, ICommand*> mCommands;
 public:
 	/// <summary>
 	/// Returns whether the key is a modifier key
@@ -18,11 +22,8 @@ public:
 	/// <returns>Is the key a modifier key?</returns>
 	static bool IsModKey(int key)
 	{
-		return (key == GLFW_KEY_LEFT_SHIFT || key == GLFW_KEY_RIGHT_SHIFT
-			|| key == GLFW_KEY_LEFT_ALT || key == GLFW_KEY_RIGHT_ALT
-			|| key == GLFW_KEY_LEFT_CONTROL || key == GLFW_KEY_RIGHT_CONTROL
-			|| key == GLFW_KEY_LEFT_SUPER || key == GLFW_KEY_RIGHT_SUPER
-		);
+		// Keys in range 340 to 347 are Left/Right Shift/Alt/Control/Super
+		return (key >= GLFW_KEY_LEFT_SHIFT && key <= GLFW_KEY_RIGHT_SUPER);
 	}
 
 	/// <summary>
@@ -37,6 +38,11 @@ public:
 		if (IsKeyPressed(keyCode))
 			return false;
 		mKeysPressed.emplace(keyCode, mods);
+
+		// Trigger hotkey
+		std::string hotkey = GetModCode(mods) + keyCode;
+		if (mHotkeys.find(hotkey) != mHotkeys.end())
+			RunCommand(mHotkeys[hotkey]);
 		return true;
 	}
 
@@ -61,6 +67,16 @@ public:
 	bool IsKeyPressed(const std::string& keyCode) const
 	{
 		return mKeysPressed.find(keyCode) != mKeysPressed.end();
+	}
+
+	/// <summary>
+	/// Runs the command with the given name if it exists
+	/// </summary>
+	/// <param name="command">Command to run</param>
+	void RunCommand(const std::string& command)
+	{
+		if (mCommands.find(command) != mCommands.end())
+			mState->GetActionStack()->Execute(mCommands[command]);
 	}
 
 	/// <summary>
@@ -104,6 +120,8 @@ public:
 		{
 		case GLFW_KEY_ESCAPE:
 			return "ESC";
+		case GLFW_KEY_SPACE:
+			return "SPACE";
 		case GLFW_KEY_BACKSPACE:
 			return "BKSP";
 		case GLFW_KEY_DELETE:
@@ -256,5 +274,5 @@ public:
 	/// Initializes the input module with the current hotkeys
 	/// </summary>
 	/// <param name="hotkeyConfig">Hotkey configuration</param>
-	explicit Input(Config* hotkeyConfig);
+	explicit Input(State* state, Config* hotkeyConfig);
 };

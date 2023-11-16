@@ -30,7 +30,7 @@ private:
 	bool SetupGLAD();
 
 	// Sets up input for the app
-	bool SetupInput(Config* config);
+	bool SetupInput(State* state, Config* config);
 	
 	// Sets the icon for the app
 	bool SetupIcon(State* state);
