@@ -50,9 +50,10 @@ void OpenGLDraw(Window* window, State* state, Scene* scene);
 /// Opens all defined GUIs
 /// </summary>
 /// <param name="window">Window to load GUIs to</param>
-/// <param name="state"></param>
-/// <param name="scene"></param>
-void LoadGUIs(Window* window, State* state, Scene* scene);
+/// <param name="state">Global state</param>
+/// <param name="scene">Scene reference</param>
+/// <param name="config">Config file</param>
+void LoadGUIs(Window* window, State* state, Scene* scene, Config* config);
 
 /// <summary>
 /// Loads all defined shaders

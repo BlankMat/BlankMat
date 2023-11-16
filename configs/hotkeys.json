@@ -57,5 +57,8 @@
 
   "CTRL+Z": "UNDO",
   "CTRL+Y": "REDO",
-  "CTRL+G": "REPEAT"
+  "CTRL+G": "REPEAT",
+  "CTRL+C": "COPY",
+  "CTRL+X": "CUT",
+  "CTRL+V": "PASTE"
 }
