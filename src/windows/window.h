@@ -28,13 +28,13 @@ private:
 	bool SetupGLAD();
 
 	// Sets up input for the app
-	bool SetupInput(State* state, Config* config);
+	bool SetupInput();
 	
 	// Sets the icon for the app
 	bool SetupIcon(State* state);
 
 	// Sets up ImGui for the app
-	bool SetupImGui(Config* config);
+	bool SetupImGui(State* state, Config* config);
 
 	// Sets up the ImGui Style
 	bool SetupImGuiStyle(bool isDarkStyle, float alphaThreshold);

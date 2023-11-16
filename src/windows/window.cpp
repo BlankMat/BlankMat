@@ -8,13 +8,13 @@ Window::Window(int width, int height, const std::string& name, Config* config, S
     // Setup all components of the window, returning if any of them fail
     if (!SetupGLFW())
         return;
-    if (!SetupInput(state, config))
+    if (!SetupInput())
         return;
     if (!SetupIcon(state))
         return;
     if (!SetupGLAD())
         return;
-    if (!SetupImGui(config))
+    if (!SetupImGui(state, config))
         return;
     if (!SetupShadows(state))
         return;
@@ -128,10 +128,9 @@ bool Window::SetupGLAD()
 }
 
 // Sets up input for the app
-bool Window::SetupInput(State* state, Config* config)
+bool Window::SetupInput()
 {
     // Setup window to be able to use the input module
-    mInput = new Input(state, config->GetConfig("hotkeys"));
     glfwSetWindowUserPointer(mWindow, this);
 
     glfwSetKeyCallback(mWindow, KeyCallback);
@@ -155,7 +154,7 @@ bool Window::SetupIcon(State* state)
 }
 
 // Sets up ImGui for the app
-bool Window::SetupImGui(Config* config)
+bool Window::SetupImGui(State* state, Config* config)
 {
     Config* styleConfig = config->GetConfig("style");
 
@@ -178,6 +177,9 @@ bool Window::SetupImGui(Config* config)
 
     // Setup style
     SetupImGuiStyle(styleConfig->GetBool("darkTheme"), styleConfig->GetFloat("windowOpacity"));
+
+    // Connect ImGui to input module
+    mInput = new Input(mIO, state, config->GetConfig("hotkeys"));
 
     // Return success
     return true;

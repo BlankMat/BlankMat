@@ -4,6 +4,10 @@
 // Handles keyboard key interactions
 void Input::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
+	// If ImGui wants to capture the keyboard, don't handle it natively
+	if (mIO->WantCaptureKeyboard)
+		return;
+
 	// Ignore Alt/Ctrl/Shift
 	if (IsModKey(key))
 		return;
@@ -21,6 +25,10 @@ void Input::KeyCallback(GLFWwindow* window, int key, int scancode, int action, i
 // Handles mouse button interactions
 void Input::MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
+	// If ImGui wants to capture the mouse, don't handle it natively
+	if (mIO->WantCaptureMouse)
+		return;
+
 	bool change = false;
 	if (action == GLFW_PRESS)
 		change = PressKey(GetMouseCode(button), mods);
@@ -44,8 +52,8 @@ void Input::ScrollCallback(GLFWwindow* window, double xOffset, double yOffset)
 }
 
 // Initializes the input module with the current hotkeys
-Input::Input(State* state, Config* hotkeyConfig)
-	: mState(state)
+Input::Input(ImGuiIO* io, State* state, Config* hotkeyConfig)
+	: mIO(io), mState(state)
 {
 	// Copy the hotkeys from the config
 	auto& hotkeys = hotkeyConfig->GetStrings();

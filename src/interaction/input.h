@@ -9,6 +9,7 @@
 class Input
 {
 private:
+	ImGuiIO* mIO = nullptr;
 	State* mState = nullptr;
 
 	std::unordered_map<std::string, int> mKeysPressed;
@@ -274,6 +275,8 @@ public:
 	/// <summary>
 	/// Initializes the input module with the current hotkeys
 	/// </summary>
+	/// <param name="io">ImGui Input/Output module</param>
+	/// <param name="state">Global state</param>
 	/// <param name="hotkeyConfig">Hotkey configuration</param>
-	explicit Input(State* state, Config* hotkeyConfig);
+	explicit Input(ImGuiIO* io, State* state, Config* hotkeyConfig);
 };
