@@ -4,28 +4,29 @@
 class RunFunctionCommand : public ICommand
 {
 protected:
-	typedef void (*FunctionType)();
-	FunctionType mFunction;
+	std::function<void()> mFunction;
+	std::function<void()> mReverseFunction;
 public:
 	/// <summary>
 	/// Executes this command
 	/// </summary>
 	void Execute() override
 	{
-
+		if (mFunction != nullptr)
+			mFunction();
 	}
 
 	/// <summary>
-	/// Undoes this command
+	/// Undoes the command if it is undoable
 	/// </summary>
 	void Undo() override
 	{
-
+		if (mReverseFunction != nullptr)
+			mReverseFunction();
 	}
 
 	/// <summary>
-	/// Combine this command with another command if they modify the same variable.
-	/// WARNING: If combined, the other command is deleted and will be nullptr
+	/// Does not combine the commands
 	/// </summary>
 	/// <param name="other">Other command to combine with</param>
 	/// <returns>Whether the commands were combined</returns>
@@ -44,12 +45,13 @@ public:
 	}
 
 	/// <summary>
-	/// Instantiates a command that adds the given value to the value of the given reference once the command is executed
+	/// Instantiates a command that runs the given function once the command is executed
 	/// </summary>
-	explicit RunFunctionCommand(FunctionType function)
+	explicit RunFunctionCommand(std::function<void()> function, std::function<void()> reverseFunction = nullptr)
 	{
 		mFunction = function;
-		mCanBeUndone = false;
-		mTrackable = false;
+		mReverseFunction = reverseFunction;
+		mCanBeUndone = (reverseFunction != nullptr);
+		mTrackable = (reverseFunction != nullptr);
 	}
 };

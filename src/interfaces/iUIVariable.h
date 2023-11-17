@@ -14,7 +14,7 @@ protected:
 	/// <summary>
 	/// Name of the variable
 	/// </summary>
-	std::string mName;
+	std::string mName = "";
 
 	/// <summary>
 	/// Value of the variable
@@ -24,7 +24,7 @@ protected:
 	/// <summary>
 	/// Reference to the global action stack
 	/// </summary>
-	ActionStack* mActionStack;
+	ActionStack* mActionStack = nullptr;
 
 	/// <summary>
 	/// Callback function that runs whenever set is modified

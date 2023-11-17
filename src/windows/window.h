@@ -4,7 +4,9 @@
 #include "interaction/input.h"
 #include "files/config.h"
 #include "files/fileSystem.h"
+#include "files/fileOperations.h"
 #include "tools/state.h"
+#include "rendering/scene.h"
 #include <iostream>
 #include <unordered_map>
 #include <string>
@@ -13,11 +15,15 @@ class Window {
 private:
 	int mWidth = 1920;
 	int mHeight = 1080;
+	bool mIsDockSpaceInitialized = false;
 	std::string mName = "BlankMat";
+
 	GLFWwindow* mWindow = nullptr;
 	ImGuiIO* mIO = nullptr;
 	Input* mInput = nullptr;
-	bool mIsDockSpaceInitialized = false;
+	FileOperations* mFIO = nullptr;
+	Scene* mScene = nullptr;
+	State* mState = nullptr;
 
 	std::unordered_map<GUI, IGUIWindow*> mGUIList;
 
@@ -31,16 +37,16 @@ private:
 	bool SetupInput();
 	
 	// Sets the icon for the app
-	bool SetupIcon(State* state);
+	bool SetupIcon();
 
 	// Sets up ImGui for the app
-	bool SetupImGui(State* state, Config* config);
+	bool SetupImGui(Config* config);
 
 	// Sets up the ImGui Style
 	bool SetupImGuiStyle(bool isDarkStyle, float alphaThreshold);
 
 	// Sets up shadows for the app
-	bool SetupShadows(State* state);
+	bool SetupShadows();
 
 	// Wrapper to call input KeyCallback
 	static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) 
@@ -72,7 +78,7 @@ private:
 public:
 	// Opens a OpenGL window with the given name
 	// -----------------------------------------
-	Window(int width, int height, const std::string& name, Config* config, State* state);
+	Window(int width, int height, const std::string& name, Config* config);
 
 	// Draws all GUIs
 	void DrawGUI();
@@ -85,14 +91,26 @@ public:
 	// Gets and stores the current window size
 	void CalcWindowSize() { glfwGetWindowSize(mWindow, &mWidth, &mHeight); }
 
+	void Quit()
+	{
+		std::cout << "Ran command Quit" << std::endl;
+		glfwSetWindowShouldClose(mWindow, GLFW_TRUE);
+	}
+
 	// Returns the GLFW window reference
-	GLFWwindow* GetWindow() { return mWindow; }
+	inline GLFWwindow* GetWindow() const { return mWindow; }
 	// Returns the window's input module
-	Input* GetInput() { return mInput; }
+	inline Input* GetInput() const { return mInput; }
+	// Returns the window's file operations module
+	inline FileOperations* GetFIO() const { return mFIO; }
+	// Returns the window's scene
+	inline Scene* GetScene() const { return mScene; }
+	// Returns the window's global state
+	inline State* GetState() const { return mState; }
 	// Returns the width of the window, currently
-	int GetWidth() { return mWidth; }
+	inline int GetWidth() const { return mWidth; }
 	// Returns the height of the window, currently
-	int GetHeight() { return mHeight; }
+	inline int GetHeight() const { return mHeight; }
 	// Returns the aspect ratio of the screen
-	float GetAspect() { return (float)mWidth / (float)mHeight; }
+	inline float GetAspect() const { return (float)mWidth / (float)mHeight; }
 };

@@ -2,21 +2,25 @@
 
 // Opens a OpenGL window with the given name
 // -----------------------------------------
-Window::Window(int width, int height, const std::string& name, Config* config, State* state)
+Window::Window(int width, int height, const std::string& name, Config* config)
     : mWidth(width), mHeight(height), mName(name)
 {
+    mState = new State(config);
+    mScene = new Scene(mState);
+    mFIO = new FileOperations(mState, mScene);
+
     // Setup all components of the window, returning if any of them fail
     if (!SetupGLFW())
         return;
     if (!SetupInput())
         return;
-    if (!SetupIcon(state))
+    if (!SetupIcon())
         return;
     if (!SetupGLAD())
         return;
-    if (!SetupImGui(state, config))
+    if (!SetupImGui(config))
         return;
-    if (!SetupShadows(state))
+    if (!SetupShadows())
         return;
 }
 
@@ -142,19 +146,19 @@ bool Window::SetupInput()
 }
 
 // Sets the icon for the app
-bool Window::SetupIcon(State* state)
+bool Window::SetupIcon()
 {
     stbi_set_flip_vertically_on_load(false);
-    GLFWimage images[1];
+    GLFWimage images[1]{};
     images[0].pixels = stbi_load(FileSystem::GetPath(ICON).c_str(), &images[0].width, &images[0].height, 0, 4);
     glfwSetWindowIcon(mWindow, 1, images);
     stbi_image_free(images[0].pixels);
-    stbi_set_flip_vertically_on_load(state->flipTextures);
+    stbi_set_flip_vertically_on_load(mState->flipTextures);
     return true;
 }
 
 // Sets up ImGui for the app
-bool Window::SetupImGui(State* state, Config* config)
+bool Window::SetupImGui(Config* config)
 {
     Config* styleConfig = config->GetConfig("style");
 
@@ -179,7 +183,7 @@ bool Window::SetupImGui(State* state, Config* config)
     SetupImGuiStyle(styleConfig->GetBool("darkTheme"), styleConfig->GetFloat("windowOpacity"));
 
     // Connect ImGui to input module
-    mInput = new Input(mIO, state, config->GetConfig("hotkeys"));
+    mInput = new Input(mIO, mState, config->GetConfig("hotkeys"));
 
     // Return success
     return true;
@@ -217,10 +221,10 @@ bool Window::SetupImGuiStyle(bool isDarkStyle, float alphaThreshold)
 }
 
 // Sets up shadows for the app
-bool Window::SetupShadows(State* state)
+bool Window::SetupShadows()
 {
     // Quality Settings
-    unsigned int shadowWidth = state->depthMapSize;
+    unsigned int shadowWidth = mState->depthMapSize;
     unsigned int shadowHeight = shadowWidth;
 
     // Generate depth map frame buffer
@@ -245,8 +249,8 @@ bool Window::SetupShadows(State* state)
     glDrawBuffer(GL_NONE);
     glReadBuffer(GL_NONE);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    state->depthMapFBO = depthMapFBO;
-    state->depthMap = depthMap;
+    mState->depthMapFBO = depthMapFBO;
+    mState->depthMap = depthMap;
 
     // Return success
     return true;

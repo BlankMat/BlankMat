@@ -2,6 +2,7 @@
 #include "rendering/material.h"
 #include "interfaces/iMesh.h"
 #include "interfaces/iScene.h"
+#include "tools/selectTool.h"
 
 // Returns the entire selection as a selection of vertices
 void Selection::GetSelectedVerts(std::vector<unsigned int>& _verts)

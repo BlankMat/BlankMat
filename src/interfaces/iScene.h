@@ -1,14 +1,12 @@
 #pragma once
 #include "glIncludes.h"
 #include "files/config.h"
-#include "windows/window.h"
 #include "rendering/shader.h"
 #include "rendering/light.h"
 #include "rendering/camera.h"
 #include "rendering/material.h"
 #include "rendering/mesh.h"
 #include "rendering/node.h"
-#include "interaction/actionStack.h"
 #include "interfaces/iEntity.h"
 
 #include "containers/textureContainer.h"
@@ -19,6 +17,8 @@
 #include "containers/entityContainer.h"
 #include "containers/meshContainer.h"
 #include <unordered_map>
+
+class Window;
 
 class IScene
 {

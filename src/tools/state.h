@@ -3,16 +3,15 @@
 #include "files/config.h"
 #include "rendering/material.h"
 #include "interaction/actionStack.h"
+#include "interaction/selection.h"
 #include "windows/guiVariableTypes.h"
-
-class Selection;
 
 class State
 {
 private:
-	Config* mConfig;
-	Selection* mSelection;
-	ActionStack* mActionStack;
+	Config* mConfig = nullptr;
+	Selection* mSelection = nullptr;
+	ActionStack* mActionStack = nullptr;
 
 	std::unordered_map<std::string, Material*> mMaterialsThisFrame;
 public:
@@ -33,14 +32,14 @@ public:
 
 	UIInt DEBUG_fakeNumber;
 
-	unsigned int depthMapFBO;
-	unsigned int depthMap;
-	unsigned int depthMapSize;
-	std::string fps;
-	std::string frameTime;
+	unsigned int depthMapFBO = 0;
+	unsigned int depthMap = 0;
+	unsigned int depthMapSize = 1024;
+	std::string fps = "";
+	std::string frameTime = "";
 
-	std::string curShader;
-	Material* defaultMat;
+	std::string curShader = "";
+	Material* defaultMat = nullptr;
 
 	// Loads the given material, unless it's already been loaded this frame
 	void LoadMaterial(Material* material)
@@ -59,29 +58,30 @@ public:
 	}
 
 	// Returns the selection object
-	Selection* GetSel() 
+	Selection* GetSel() const
 	{
 		return mSelection; 
 	}
 
 	// Returns the current config
-	Config* GetConfig()
+	Config* GetConfig() const
 	{
 		return mConfig;
 	}
 	
 	// Returns the action stack
-	ActionStack* GetActionStack()
+	ActionStack* GetActionStack() const
 	{
 		return mActionStack;
 	}
 
-	State(Selection* selection, Config* config)
+	State(Config* config)
 	{
 		curShader = config->GetString("shader.file");
-		mSelection = selection;
 		mConfig = config;
+		mSelection = new Selection();
 		mActionStack = new ActionStack();
+
 		isDiscoLight = UIBool("Disco Light", false, mActionStack);
 		isRotatingLight = UIBool("Rotating Light", false, mActionStack);
 
@@ -98,8 +98,6 @@ public:
 		drawGUI = UIBool("Draw UI", true, mActionStack);
 		DEBUG_fakeNumber = UIInt("DEBUG number", 0, mActionStack);
 
-		depthMapFBO = 0;
-		depthMap = 0;
 		depthMapSize = config->GetInt("quality.shadowResolution");
 	}
 };

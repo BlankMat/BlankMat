@@ -1,11 +1,10 @@
 #pragma once
 #include "glIncludes.h"
-#include "tools/state.h"
 
 class ITool
 {
 protected:
-	bool mIsSelected;
+	bool mIsSelected = false;
 	
 public:
 	virtual void Select() = 0;

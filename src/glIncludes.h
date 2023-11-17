@@ -1,4 +1,5 @@
 #pragma once
+#include <portable-file-dialogs.h>
 #include <imgui/imgui.h>
 #include <imgui/imgui_internal.h>
 #include <imgui/imgui_stdlib.h>
@@ -19,8 +20,6 @@
 #include <string>
 constexpr float PI = 3.141592f;
 constexpr float HALF_PI = 1.57079f;
-
-constexpr size_t VERT_SHADER_SIZE = 12;
 
 constexpr auto GRID_OBJ = "grid";
 constexpr auto BG_PLANE_OBJ = "bgPlane";

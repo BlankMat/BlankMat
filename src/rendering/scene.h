@@ -2,8 +2,8 @@
 #include "glIncludes.h"
 #include "mesh.h"
 #include "node.h"
-#include "tools/state.h"
 #include "interfaces/iScene.h"
+#include "tools/state.h"
 
 class Scene : public IScene
 {

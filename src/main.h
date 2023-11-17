@@ -2,6 +2,7 @@
 #include "interaction/oldinput.h"
 #include "interaction/input.h"
 #include "interaction/actionStack.h"
+#include "interaction/commands.h"
 
 #include "tools/state.h"
 

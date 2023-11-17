@@ -8,16 +8,17 @@ int main()
     config->SetConfig("materials", ConfigReader::ReadFile(FileSystem::GetPath(MATS_JSON)));
     config->SetConfig("shaders", ConfigReader::ReadFile(FileSystem::GetPath(SHADERS_JSON)));
 
-    // Create state
-    State* state = new State(new Selection(), config);
-
     // Init window
-    Window* window = new Window(SCR_WIDTH, SCR_HEIGHT, APP_NAME, config, state);
+    Window* window = new Window(SCR_WIDTH, SCR_HEIGHT, APP_NAME, config);
     if (window == nullptr)
         return -1;
 
+    // Initialize commands for usage
+    State* state = window->GetState();
+    Commands::InitializeCommands(window, state);
+
     // Create scene
-    Scene* scene = new Scene(state);
+    Scene* scene = window->GetScene();
     scene->LoadMaterials(config->GetConfig("materials"));
     scene->LoadModel(FileSystem::GetPath(MODELS_DIR) + config->GetString("model.file"), 
         config->GetVec("model.pos"), config->GetVec("model.rot"), config->GetVec("model.scale"));
