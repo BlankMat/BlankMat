@@ -20,7 +20,7 @@ int main()
     // Create scene
     Scene* scene = window->GetScene();
     scene->LoadMaterials(config->GetConfig("materials"));
-    scene->LoadModel(FileSystem::GetPath(MODELS_DIR) + config->GetString("model.file"), 
+    SceneReader::LoadScene(scene, FileSystem::GetPath(MODELS_DIR) + config->GetString("model.file"), 
         config->GetVec("model.pos"), config->GetVec("model.rot"), config->GetVec("model.scale"));
 
     state->GetSel()->SetTransformHandle(new PHandle("transformHandle", 0.5f, 6, true, glm::vec3(0.0f)));

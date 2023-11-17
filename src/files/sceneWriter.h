@@ -1,7 +1,7 @@
 #pragma once
 #include "interfaces/iScene.h"
 
-class ModelReader
+class SceneWriter
 {
 private:
 	// Recursively processes the meshes in the given node and all its children
@@ -205,9 +205,14 @@ private:
 		return textures;
 	}
 public:
-	// Loads the model at the given path
-	static void LoadModel(IScene* scene, const std::string& path, const glm::vec3& startPos, const glm::vec3& startRot, const glm::vec3& startScale)
+	// Saves the scene to the given path
+	static void SaveScene(IScene* scene, const std::string& path, const glm::vec3& startPos = glm::vec3(0.0f), const glm::vec3& startRot = glm::vec3(0.0f), const glm::vec3& startScale = glm::vec3(1.0f))
 	{
+		return;
+
+		// TODO: Implement this function
+
+		/*
 		double loadStartTime = glfwGetTime();
 		std::cout << "Reading model from file " << path << std::endl;
 		Assimp::Importer importer;
@@ -245,5 +250,6 @@ public:
 		double loadTotalTime = loadEndTime - loadStartTime;
 		std::cout << "Read model from file " << path << " successfully in " << loadTotalTime << " seconds." << std::endl;
 		std::cout << "Project directory is " << scene->GetDirectory() << std::endl;
+		*/
 	}
 };

@@ -19,8 +19,6 @@ protected:
 	// Returns the projection matrix of the view axis handle
 	const glm::mat4& GetViewAxisProjection(Window* window);
 public:
-	// Loads the given model to the scene
-	void LoadModel(const std::string& path, const glm::vec3& startPos = glm::vec3(0.0f), const glm::vec3& startRot = glm::vec3(0.0f), const glm::vec3& startScale = glm::vec3(1.0f));
 	// Renders the current scene
 	void Draw(Window* window, Shader* shader) override;
 	// Renders the current scene's shadows

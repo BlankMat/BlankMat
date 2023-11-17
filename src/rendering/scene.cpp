@@ -1,6 +1,5 @@
 #include "scene.h"
 #include "primitives/pLightCube.h"
-#include "files/modelReader.h"
 #include "interaction/selection.h"
 #include "windows/window.h"
 
@@ -122,12 +121,6 @@ const glm::mat4& Scene::GetViewAxisProjection(Window* window)
 		mViewAxisProjection = glm::ortho(0.0f, (float)window->GetWidth(), 0.0f, (float)window->GetHeight(), -100.0f, 100.0f);
 	}
 	return mViewAxisProjection;
-}
-
-// Loads the model at the given path
-void Scene::LoadModel(const std::string& path, const glm::vec3& startPos, const glm::vec3& startRot, const glm::vec3& startScale)
-{
-	ModelReader::LoadModel(this, path, startPos, startRot, startScale);
 }
 
 // Sets the view axis handle to the given object
