@@ -4,7 +4,7 @@
 #include "interaction/input.h"
 #include "files/config.h"
 #include "files/fileSystem.h"
-#include "files/fileOperations.h"
+#include "files/sceneIO.h"
 #include "tools/state.h"
 #include "rendering/scene.h"
 #include <iostream>
@@ -21,7 +21,7 @@ private:
 	GLFWwindow* mWindow = nullptr;
 	ImGuiIO* mIO = nullptr;
 	Input* mInput = nullptr;
-	FileOperations* mFIO = nullptr;
+	SceneIO* mSceneIO = nullptr;
 	Scene* mScene = nullptr;
 	State* mState = nullptr;
 
@@ -88,21 +88,21 @@ public:
 	// Gets the GUI with the given type
 	IGUIWindow* GetGUI(GUI type);
 
+	// Updates the window title to match the current state of the application
+	void UpdateWindowTitle(const std::string& fileName, bool isSaved);
+
 	// Gets and stores the current window size
 	void CalcWindowSize() { glfwGetWindowSize(mWindow, &mWidth, &mHeight); }
 
-	void Quit()
-	{
-		std::cout << "Ran command Quit" << std::endl;
-		glfwSetWindowShouldClose(mWindow, GLFW_TRUE);
-	}
+	// Attempts to quit the window
+	void Quit() { glfwSetWindowShouldClose(mWindow, GLFW_TRUE); }
 
 	// Returns the GLFW window reference
 	inline GLFWwindow* GetWindow() const { return mWindow; }
 	// Returns the window's input module
 	inline Input* GetInput() const { return mInput; }
-	// Returns the window's file operations module
-	inline FileOperations* GetFIO() const { return mFIO; }
+	// Returns the window's scene file operations module
+	inline SceneIO* GetSceneIO() const { return mSceneIO; }
 	// Returns the window's scene
 	inline Scene* GetScene() const { return mScene; }
 	// Returns the window's global state

@@ -26,6 +26,11 @@ private:
 	ActionNode* mCurNode = nullptr;
 
 	/// <summary>
+	/// Reference to the most recently saved node. The state is saved if curNode equals savedNode
+	/// </summary>
+	ActionNode* mSavedNode = nullptr;
+
+	/// <summary>
 	/// Current number of actions stored. Cannot be higher than maxSize
 	/// </summary>
 	unsigned int mCurSize = 0;
@@ -247,6 +252,23 @@ public:
 		// Execute command and add it to undo stack
 		command->Execute();
 		AppendNode(command);
+	}
+
+	/// <summary>
+	/// Saves the current state of the action stack
+	/// </summary>
+	void Save()
+	{
+		mSavedNode = mCurNode;
+	}
+
+	/// <summary>
+	/// Returns whether the action stack is equal to the most recent save state
+	/// </summary>
+	/// <returns>Whether the action stack is saved</returns>
+	bool IsSaved() const
+	{
+		return mSavedNode != nullptr && mSavedNode == mCurNode;
 	}
 
 	/// <summary>

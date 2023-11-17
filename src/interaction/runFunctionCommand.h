@@ -1,5 +1,6 @@
 #pragma once
 #include "interfaces/iCommand.h"
+#include <functional>
 
 class RunFunctionCommand : public ICommand
 {

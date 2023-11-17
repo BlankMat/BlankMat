@@ -3,7 +3,7 @@
 #include "tools/state.h"
 #include "windows/window.h"
 #include "interaction/runFunctionCommand.h"
-#include "files/fileOperations.h"
+#include "files/sceneIO.h"
 
 class Commands
 {
@@ -59,13 +59,13 @@ public:
 		input->AddCommand("TOGGLE_UI", new RunFunctionCommand(nullptr));
 		input->AddCommand("TOGGLE_GRID", new RunFunctionCommand(nullptr));
 
-		input->AddCommand("NEW_SCENE", new RunFunctionCommand([&]() { window->GetFIO()->NewScene(); }));
-		input->AddCommand("OPEN_SCENE", new RunFunctionCommand([&]() { window->GetFIO()->OpenScene(); }));
-		input->AddCommand("SAVE_SCENE", new RunFunctionCommand([&]() { window->GetFIO()->SaveScene(); }));
-		input->AddCommand("SAVE_SCENE_AS", new RunFunctionCommand([&]() { window->GetFIO()->SaveSceneAs(); }));
-		input->AddCommand("SAVE_SCENE_INCREMENT", new RunFunctionCommand([&]() { window->GetFIO()->SaveSceneIncrement(); }));
-		input->AddCommand("IMPORT", new RunFunctionCommand([&]() { window->GetFIO()->Import(); }));
-		input->AddCommand("EXPORT", new RunFunctionCommand([&]() { window->GetFIO()->Export(); }));
+		input->AddCommand("NEW_SCENE", new RunFunctionCommand([&]() { window->GetSceneIO()->NewScene(); }));
+		input->AddCommand("OPEN_SCENE", new RunFunctionCommand([&]() { window->GetSceneIO()->OpenScene(); }));
+		input->AddCommand("SAVE_SCENE", new RunFunctionCommand([&]() { window->GetSceneIO()->SaveScene(); }));
+		input->AddCommand("SAVE_SCENE_AS", new RunFunctionCommand([&]() { window->GetSceneIO()->SaveSceneAs(); }));
+		input->AddCommand("SAVE_SCENE_INCREMENT", new RunFunctionCommand([&]() { window->GetSceneIO()->SaveSceneIncrement(); }));
+		input->AddCommand("IMPORT", new RunFunctionCommand([&]() { window->GetSceneIO()->Import(); }));
+		input->AddCommand("EXPORT", new RunFunctionCommand([&]() { window->GetSceneIO()->Export(); }));
 		input->AddCommand("QUIT", new RunFunctionCommand([&]() { window->Quit(); }));
 
 		input->AddCommand("UNDO", new RunFunctionCommand(nullptr));

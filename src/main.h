@@ -82,3 +82,11 @@ void LoadDefaultScene(Scene* scene, State* state, Material* defaultMat, bool def
 /// <param name="lastSecond">Time of the previous second</param>
 /// <param name="numFrames">Number of frames this second</param>
 void CalculateFPS(State* state, double& lastSecond, int& numFrames);
+
+/// <summary>
+/// Handles quitting from the window
+/// </summary>
+/// <param name="window">Window to quit</param>
+/// <param name="state">Global state</param>
+/// <returns>Whether the application should be quit</returns>
+bool HandleWindowQuit(Window* window, State* state);

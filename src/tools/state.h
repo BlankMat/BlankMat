@@ -13,6 +13,7 @@ private:
 	Selection* mSelection = nullptr;
 	ActionStack* mActionStack = nullptr;
 
+	std::string mCurFileName = "";
 	std::unordered_map<std::string, Material*> mMaterialsThisFrame;
 public:
 	UIBool isDiscoLight;
@@ -57,6 +58,18 @@ public:
 		mMaterialsThisFrame.clear();
 	}
 
+	// Returns the current filename
+	std::string GetCurFileName() const
+	{
+		return mCurFileName;
+	}
+
+	// Sets the current filename
+	void SetCurFileName(const std::string& fileName)
+	{
+		mCurFileName = fileName;
+	}
+
 	// Returns the selection object
 	Selection* GetSel() const
 	{
@@ -73,6 +86,18 @@ public:
 	ActionStack* GetActionStack() const
 	{
 		return mActionStack;
+	}
+
+	// Saves the current state of the action stack
+	void SaveActionStack()
+	{
+		mActionStack->Save();
+	}
+
+	// Returns whether the action stack is saved
+	bool IsSaved() const
+	{
+		return mActionStack->IsSaved();
 	}
 
 	State(Config* config)

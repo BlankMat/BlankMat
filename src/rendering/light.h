@@ -113,6 +113,22 @@ public:
 		CalcMatrices();
 	}
 
+	void UpdateRotatingLight(bool isRotating)
+	{
+		if (!isRotating)
+			SetPos(mOffset);
+		else
+			SetPos(glm::vec3(mOffset.x * sin(glfwGetTime()), mOffset.y, mOffset.z * cos(glfwGetTime())));
+	}
+
+	void UpdateDiscoLight(bool isDisco)
+	{
+		if (!isDisco)
+			SetColor(mBaseColor);
+		else
+			SetColor(glm::vec3(mBaseColor.x * sin(glfwGetTime() - PI * 0.5f), mBaseColor.y * sin(glfwGetTime()), mBaseColor.z * sin(glfwGetTime() + PI * 0.5f)));
+	}
+
 	void SetRange(const float lightRange)
 	{
 		mLightRange = (lightRange > 0.0f) ? lightRange : 0.1f;

@@ -6,11 +6,12 @@
 #include "files/sceneWriter.h"
 #include <iostream>
 
-class FileOperations
+class SceneIO
 {
 private:
 	State* mState = nullptr;
 	Scene* mScene = nullptr;
+	GLFWwindow* mCurWindow = nullptr;
 
 	std::string mCurDirectory = "";
 	std::string mCurFileName = "";
@@ -74,9 +75,10 @@ private:
 			mCurFileName += mCurExtension;
 			mCurExtension = ".blank";
 		}
+		mState->SetCurFileName(mCurFileName);
 	}
 public:
-	std::string GetFullPath() const
+	inline const std::string GetFullPath() const
 	{
 		return mCurDirectory + mCurFileName + mCurExtension;
 	}
@@ -93,64 +95,80 @@ public:
 		}
 		std::cout << "Saving scene to file " << mCurFileName << std::endl;
 		SceneWriter::SaveScene(mScene, GetFullPath());
+		mState->SaveActionStack();
 	}
 
 	void SaveSceneAs()
 	{
 		std::cout << "Ran command SaveSceneAs" << std::endl;
-		std::string fileName = pfd::save_file("Save Scene As...", mCurDirectory, { "BlankMat Scenes", "*.blank" }, pfd::opt::none).result();
+		std::string fileName = pfd::save_file("Save Scene As...", mCurDirectory, { 
+			"BlankMat Scenes (.blank)", "*.blank" 
+		}, pfd::opt::none).result();
+
 		if (fileName != "")
 		{
 			ReadPath(fileName);
 			std::cout << "Saving scene to file " << GetFullPath() << std::endl;
 			SceneWriter::SaveScene(mScene, GetFullPath());
+			mState->SaveActionStack();
 		}
 	}
 
 	void SaveSceneIncrement()
 	{
 		std::cout << "Ran command SaveSceneIncrement" << std::endl;
+		// TODO: Implement save scene increment
+		mState->SaveActionStack();
 	}
 
 	void OpenScene()
 	{
 		std::cout << "Ran command OpenScene" << std::endl;
-		auto selection = pfd::open_file("Open Scene", mCurDirectory, { "BlankMat Scenes", "*.blank" }, pfd::opt::none).result();
+		auto selection = pfd::open_file("Open Scene", mCurDirectory, { 
+			"BlankMat Scenes (.blank)", "*.blank" 
+		}, pfd::opt::none).result();
+
 		if (!selection.empty())
 		{
 			ReadPath(selection[0]);
 			SceneReader::LoadScene(mScene, GetFullPath());
+			mState->SaveActionStack();
 		}
 	}
 
 	void NewScene()
 	{
 		std::cout << "Ran command NewScene" << std::endl;
+		// TODO: Implement new scene
 	}
 
 	void Import()
 	{
 		std::cout << "Ran command Import" << std::endl;
-		auto selection = pfd::open_file("Import File", mCurDirectory, { "3D Models", "*.obj", "BlankMat Scenes", "*.blank"}, pfd::opt::none).result();
+		auto selection = pfd::open_file("Import File", mCurDirectory, { 
+			"3D Models (.obj)", "*.obj", 
+			"BlankMat Scenes (.blank)", "*.blank"
+		}, pfd::opt::none).result();
+
 		if (!selection.empty())
 		{
-			std::string fileName = selection[0];
+			std::string tempDir = "";
+			std::string tempFile = "";
+			std::string tempExt = "";
+			SplitPath(selection[0], tempDir, tempFile, tempExt);
+			// TODO: Implement import
 		}
 	}
 
 	void Export()
 	{
 		std::cout << "Ran command Export" << std::endl;
+		// TODO: Implement export
 	}
 
-	void SetCurDirectory(const std::string& dir)
+	explicit SceneIO(State* state, Scene* scene, GLFWwindow* window)
+		: mState(state), mScene(scene), mCurWindow(window)
 	{
-		mCurDirectory = dir;
-	}
-
-	explicit FileOperations(State* state, Scene* scene)
-		: mState(state), mScene(scene)
-	{
-
+		// No need to initialize anything beyond member variables
 	}
 };

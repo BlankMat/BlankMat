@@ -5,23 +5,32 @@
 Window::Window(int width, int height, const std::string& name, Config* config)
     : mWidth(width), mHeight(height), mName(name)
 {
+    // State and scene must be initialized first, since they are needed for other init
     mState = new State(config);
     mScene = new Scene(mState);
-    mFIO = new FileOperations(mState, mScene);
 
     // Setup all components of the window, returning if any of them fail
+    // GLFW must be setup first
     if (!SetupGLFW())
         return;
+    // Input must be setup before ImGui
     if (!SetupInput())
         return;
+    // Icon must be setup after window is created
     if (!SetupIcon())
         return;
+    // GLAD must be setup after GLFW
     if (!SetupGLAD())
         return;
+    // ImGui must be setup after GLFW and GLAD
     if (!SetupImGui(config))
         return;
+    // Setup shadows must be setup after GLFW and GLAD
     if (!SetupShadows())
         return;
+
+    // Once the window is setup, initialize file operations
+    mSceneIO = new SceneIO(mState, mScene, mWindow);
 }
 
 // Draws all GUIs
@@ -86,6 +95,16 @@ IGUIWindow* Window::GetGUI(GUI type)
         return nullptr;
     }
     return mGUIList[type];
+}
+
+// Updates the window title to match the current state of the application
+void Window::UpdateWindowTitle(const std::string& fileName, bool isSaved)
+{
+    std::string name = mName + " - ";
+    name += (fileName != "") ? fileName : "Untitled Scene";
+    if (!isSaved)
+        name += "*";
+    glfwSetWindowTitle(mWindow, name.c_str());
 }
 
 // Sets up GLFW for the app

@@ -50,10 +50,14 @@ int main()
 
     // render loop
     // -----------
-    while (!glfwWindowShouldClose(window->GetWindow()))
+    while (true)
     {
         // Poll events at the start of the loop
         glfwPollEvents();
+
+        // If the window should close, handle exiting
+        if (HandleWindowQuit(window, state))
+            break;
 
         // Get deltaTime
         prevFrameTime = curFrameTime;
@@ -61,21 +65,7 @@ int main()
         deltaTime = float(curFrameTime - prevFrameTime);
         CalculateFPS(state, lastSecond, numFrames);
 
-        // Rotate light over time
-        glm::vec3 lightOffset = scene->GetLight()->GetOffset();
-        if (state->isRotatingLight)
-            scene->GetLight()->SetPos(glm::vec3(lightOffset.x * sin(glfwGetTime()), lightOffset.y, lightOffset.z * cos(glfwGetTime())));
-        else
-            scene->GetLight()->SetPos(lightOffset);
-
-        // Change light color over time
-        glm::vec3 lightColor = scene->GetLight()->GetBaseColor();
-        if (state->isDiscoLight)
-            scene->GetLight()->SetColor(glm::vec3(lightColor.x * sin(glfwGetTime() - PI * 0.5f), lightColor.y * sin(glfwGetTime()), lightColor.z * sin(glfwGetTime() + PI * 0.5f)));
-        else
-            scene->GetLight()->SetColor(lightColor);
-
-        // Process input and render
+        // Process input
         ProcessInput(window, scene, state, &locks, deltaTime, &prevX, &prevY);
 
         // Render
@@ -83,12 +73,11 @@ int main()
 
         // Draw GUI
         if (state->drawGUI)
-        {
             window->DrawGUI();
-        }
 
         // Swap buffers at the end of the loop
         glfwSwapBuffers(window->GetWindow());
+        window->UpdateWindowTitle(state->GetCurFileName(), state->IsSaved());
     }
 
     // Clear up dynamic memory usage
@@ -107,6 +96,10 @@ int main()
 // --------------------------------------------------------
 void OpenGLDraw(Window* window, State* state, Scene* scene)
 {
+    // Update light
+    scene->GetLight()->UpdateRotatingLight(state->isRotatingLight);
+    scene->GetLight()->UpdateDiscoLight(state->isDiscoLight);
+    
     // Clear BG
     glm::vec3 bgColor = scene->GetCamera()->GetBGColor();
     glClearColor(bgColor.r, bgColor.g, bgColor.b, 1.0f);
@@ -216,5 +209,42 @@ void CalculateFPS(State* state, double& lastSecond, int& numFrames)
         // Reset frame times
         numFrames = 0;
         lastSecond = currentTime;
+    }
+}
+
+// Handles quitting from the window
+bool HandleWindowQuit(Window* window, State* state)
+{
+    if (!glfwWindowShouldClose(window->GetWindow()))
+        return false;
+
+    // If state is saved, break
+    if (state->IsSaved())
+        return true;
+
+    // If state is not saved, set a popup
+    pfd::button res = pfd::message(
+        "Unsaved Changes",
+        "You have made unsaved changes to the scene. Would you like to save them before quitting?",
+        pfd::choice::yes_no_cancel,
+        pfd::icon::warning
+    ).result();
+
+    switch (res)
+    {
+    case pfd::button::yes:
+        // If the user requested to save first, run the save command
+        window->GetInput()->RunCommand("SAVE_SCENE");
+        return true;
+        break;
+    case pfd::button::no:
+        // If the user did not request to save, don't run the save command
+        return true;
+        break;
+    case pfd::button::cancel:
+    default:
+        // If the user canceled, do not quit
+        glfwSetWindowShouldClose(window->GetWindow(), GLFW_FALSE);
+        return false;
     }
 }
