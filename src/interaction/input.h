@@ -82,6 +82,20 @@ public:
 	}
 
 	/// <summary>
+	/// Adds the given command to the command list
+	/// </summary>
+	/// <param name="name">Name of the command</param>
+	/// <param name="command">The command</param>
+	void AddCommand(const std::string& name, ICommand* command)
+	{
+		// If the command already exists, replace it
+		if (mCommands.find(name) != mCommands.end())
+			mCommands[name] = command;
+		else
+			mCommands.emplace(name, command);
+	}
+
+	/// <summary>
 	/// Returns the modifier keys of the pressed key
 	/// </summary>
 	/// <param name="keyCode">Key code of the key pressed</param>
