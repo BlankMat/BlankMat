@@ -26,26 +26,6 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
 
 
 
-    /* ==================================================== Window Stuff ===================================================== */
-    // Exit window
-    if (ESC_PRESS) {
-        glfwSetWindowShouldClose(glfwWindow, true);
-        return true;
-    }
-    // Focus object
-    if (F_PRESS && !CTRL_PRESS) {
-        // Only focus when not locked
-        if (!locks->lockF) {
-            glm::vec3 targetPos = (selEntity != nullptr) ? selEntity->GetWorldPos() : glm::vec3(0.0f);
-            camera->LookAt(targetPos);
-
-            locks->lockF = true;
-        }
-        didReceiveInput = true;
-    }
-
-
-
     /* ==================================================== Tool Selection ===================================================== */
     // Select selection tool
     if (Q_PRESS && !CTRL_PRESS && !locks->lockQ) {
@@ -251,25 +231,6 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
         didReceiveInput = true;
     }
 
-    /* =================================== Handle tools ================================== */
-    /* ========== Handle saving ============== */
-    if (S_PRESS && CTRL_PRESS) {
-        if (!locks->lockCtrlS) {
-            // TODO: Save file
-            locks->lockCtrlS = true;
-        }
-        didReceiveInput = true;
-    }
-
-    // Disable UI
-    if (SPACE_PRESS)
-    {
-        if (!locks->lockSpace) {
-            state->drawGUI.Set(!state->drawGUI);
-            locks->lockSpace = true;
-        }
-        didReceiveInput = true;
-    }
 
 
     /* ==================================================== Mouse Input ===================================================== */

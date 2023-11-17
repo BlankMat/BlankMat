@@ -231,6 +231,13 @@ IEntity* Selection::GetTransformHandle() { return mSelTransformHandle; }
 // Sets the selection's transform handle
 void Selection::SetTransformHandle(IEntity* transformHandle) { mSelTransformHandle = transformHandle; }
 
+// Toggles the visibility of the selection
+void Selection::ToggleSelectionVisibility()
+{
+	if (mSelEntity != nullptr)
+		mSelEntity->ToggleEnabled();
+}
+
 // Updates the transform handle's status
 void Selection::UpdateTransformHandle()
 {

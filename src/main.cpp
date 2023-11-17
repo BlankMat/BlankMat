@@ -15,10 +15,10 @@ int main()
 
     // Initialize commands for usage
     State* state = window->GetState();
-    Commands::InitializeCommands(window, state);
+    Scene* scene = window->GetScene();
+    Commands::InitializeCommands(window, state, scene);
 
     // Create scene
-    Scene* scene = window->GetScene();
     scene->LoadMaterials(config->GetConfig("materials"));
     SceneReader::LoadScene(scene, FileSystem::GetPath(MODELS_DIR) + config->GetString("model.file"), 
         config->GetVec("model.pos"), config->GetVec("model.rot"), config->GetVec("model.scale"));

@@ -26,6 +26,7 @@ public:
 	UIBool enableHeightMap;
 	UIBool enableAlphaMap;
 	UIBool enableShadows;
+	UIBool enableDefaultMat;
 	UIBool enableGrid;
 	UIBool drawByMaterial;
 	UIBool flipTextures;
@@ -100,6 +101,66 @@ public:
 		return mActionStack->IsSaved();
 	}
 
+	// Toggles the GUI display
+	void ToggleDisplayGUI()
+	{
+		drawGUI.Set(!drawGUI);
+	}
+
+	// Toggles the grid display
+	void ToggleDisplayGrid()
+	{
+		enableGrid.Set(!enableGrid);
+	}
+
+	// Toggles the diffuse maps
+	void ToggleDiffuseMap()
+	{
+		enableDiffuseMap.Set(!enableDiffuseMap);
+	}
+
+	// Toggles the ambient maps
+	void ToggleAmbientMap()
+	{
+		enableAmbientMap.Set(!enableAmbientMap);
+	}
+
+	// Toggles the specular maps
+	void ToggleSpecularMap()
+	{
+		enableSpecularMap.Set(!enableSpecularMap);
+	}
+
+	// Toggles the normal maps
+	void ToggleNormalMap()
+	{
+		enableNormalMap.Set(!enableNormalMap);
+	}
+
+	// Toggles the height maps
+	void ToggleHeightMap()
+	{
+		enableHeightMap.Set(!enableHeightMap);
+	}
+
+	// Toggles the alpha maps
+	void ToggleAlphaMap()
+	{
+		enableAlphaMap.Set(!enableAlphaMap);
+	}
+
+	// Toggles shadow display
+	void ToggleShadows()
+	{
+		enableShadows.Set(!enableShadows);
+	}
+
+	// Toggles default material display
+	void ToggleDefaultMat()
+	{
+		enableDefaultMat.Set(!enableDefaultMat);
+	}
+
 	State(Config* config)
 	{
 		curShader = config->GetString("shader.file");
@@ -117,6 +178,7 @@ public:
 		enableHeightMap = UIBool("Enable Height Map", true, mActionStack);
 		enableAlphaMap = UIBool("Enable Alpha Map", true, mActionStack);
 		enableShadows = UIBool("Enable Shadows", true, mActionStack);
+		enableDefaultMat = UIBool("Enable Default Material", true, mActionStack);
 		enableGrid = UIBool("Enabled Grid", true, mActionStack);
 		drawByMaterial = UIBool("Draw By Material", true, mActionStack);
 		flipTextures = UIBool("Flip Textures", true, mActionStack);

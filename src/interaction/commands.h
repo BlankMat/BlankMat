@@ -1,6 +1,7 @@
 #pragma once
 #include "glIncludes.h"
 #include "tools/state.h"
+#include "rendering/scene.h"
 #include "windows/window.h"
 #include "interaction/runFunctionCommand.h"
 #include "files/sceneIO.h"
@@ -8,7 +9,7 @@
 class Commands
 {
 public:
-	static void InitializeCommands(Window* window, State* state)
+	static void InitializeCommands(Window* window, State* state, Scene* scene)
 	{
 		Input* input = window->GetInput();
 
@@ -27,8 +28,14 @@ public:
 		input->AddCommand("CAMERA_ROT_M", new RunFunctionCommand(nullptr));
 		input->AddCommand("CAMERA_MOVE_M", new RunFunctionCommand(nullptr));
 
-		input->AddCommand("CAMERA_FOCUS", new RunFunctionCommand(nullptr));
-		input->AddCommand("TOGGLE_VISIBILITY", new RunFunctionCommand(nullptr));
+		input->AddCommand("CAMERA_FOCUS", new RunFunctionCommand([&]() {
+			std::cout << "Camera Focus command" << std::endl;
+			/*
+			IEntity* sel = state->GetSel()->GetSelectedEntity();
+			scene->GetCamera()->LookAt(sel != nullptr ? sel->GetPos() : glm::vec3(0.0f));
+			*/
+		}));
+		input->AddCommand("TOGGLE_VISIBILITY", new RunFunctionCommand([&]() { state->GetSel()->ToggleSelectionVisibility(); }));
 
 		input->AddCommand("SELECT_MODE", new RunFunctionCommand(nullptr));
 		input->AddCommand("MOVE_MODE", new RunFunctionCommand(nullptr));
@@ -45,19 +52,19 @@ public:
 		input->AddCommand("LIGHTING_TEXTURED", new RunFunctionCommand(nullptr));
 		input->AddCommand("LIGHTING_LIGHTS", new RunFunctionCommand(nullptr));
 		input->AddCommand("LIGHTING_WIREFRAME", new RunFunctionCommand(nullptr));
-		input->AddCommand("TOGGLE_SHADOWS", new RunFunctionCommand(nullptr));
-		input->AddCommand("TOGGLE_DEFAULT_MAT", new RunFunctionCommand(nullptr));
+		input->AddCommand("TOGGLE_SHADOWS", new RunFunctionCommand([&]() { state->ToggleShadows(); }));
+		input->AddCommand("TOGGLE_DEFAULT_MAT", new RunFunctionCommand([&]() { state->ToggleDefaultMat(); }));
 		input->AddCommand("RENDER", new RunFunctionCommand(nullptr));
 
-		input->AddCommand("TOGGLE_DIFFUSE_MAP", new RunFunctionCommand(nullptr));
-		input->AddCommand("TOGGLE_AMBIENT_MAP", new RunFunctionCommand(nullptr));
-		input->AddCommand("TOGGLE_SPECULAR_MAP", new RunFunctionCommand(nullptr));
-		input->AddCommand("TOGGLE_NORMAL_MAP", new RunFunctionCommand(nullptr));
-		input->AddCommand("TOGGLE_HEIGHT_MAP", new RunFunctionCommand(nullptr));
-		input->AddCommand("TOGGLE_ALPHA_MAP", new RunFunctionCommand(nullptr));
+		input->AddCommand("TOGGLE_DIFFUSE_MAP", new RunFunctionCommand([&]() { state->ToggleDiffuseMap(); }));
+		input->AddCommand("TOGGLE_AMBIENT_MAP", new RunFunctionCommand([&]() { state->ToggleAmbientMap(); }));
+		input->AddCommand("TOGGLE_SPECULAR_MAP", new RunFunctionCommand([&]() { state->ToggleSpecularMap(); }));
+		input->AddCommand("TOGGLE_NORMAL_MAP", new RunFunctionCommand([&]() { state->ToggleNormalMap(); }));
+		input->AddCommand("TOGGLE_HEIGHT_MAP", new RunFunctionCommand([&]() { state->ToggleHeightMap(); }));
+		input->AddCommand("TOGGLE_ALPHA_MAP", new RunFunctionCommand([&]() { state->ToggleAlphaMap(); }));
 
-		input->AddCommand("TOGGLE_UI", new RunFunctionCommand(nullptr));
-		input->AddCommand("TOGGLE_GRID", new RunFunctionCommand(nullptr));
+		input->AddCommand("TOGGLE_UI", new RunFunctionCommand([&]() { state->ToggleDisplayGUI(); }));
+		input->AddCommand("TOGGLE_GRID", new RunFunctionCommand([&]() { state->ToggleDisplayGrid(); }));
 
 		input->AddCommand("NEW_SCENE", new RunFunctionCommand([&]() { window->GetSceneIO()->NewScene(); }));
 		input->AddCommand("OPEN_SCENE", new RunFunctionCommand([&]() { window->GetSceneIO()->OpenScene(); }));

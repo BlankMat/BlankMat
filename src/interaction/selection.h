@@ -97,6 +97,9 @@ public:
 	bool IsVertSelected(unsigned int _id);
 	// Returns whether the given face is selected
 	bool IsFaceSelected(unsigned int _id);
+	
+	// Toggles the visibility of the selection
+	void ToggleSelectionVisibility();
 
 	// Sets the selection's transform handle
 	void SetTransformHandle(IEntity* transformHandle);
