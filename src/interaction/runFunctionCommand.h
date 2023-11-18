@@ -48,7 +48,7 @@ public:
 	/// <summary>
 	/// Instantiates a command that runs the given function once the command is executed
 	/// </summary>
-	explicit RunFunctionCommand(std::function<void()> function, std::function<void()> reverseFunction = nullptr)
+	explicit RunFunctionCommand(std::function<void()> function, std::function<void()> reverseFunction = std::function<void()>(nullptr))
 	{
 		mFunction = function;
 		mReverseFunction = reverseFunction;

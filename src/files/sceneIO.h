@@ -65,6 +65,8 @@ private:
 
 		if (lastPeriod < path.length())
 			ext = path.substr(lastPeriod);
+		else
+			ext = "";
 	}
 
 	void ReadPath(const std::string path)

@@ -16,7 +16,7 @@ int main()
     // Initialize commands for usage
     State* state = window->GetState();
     Scene* scene = window->GetScene();
-    Commands::InitializeCommands(window, state, scene);
+    Commands::InitializeCommands(window);
 
     // Create scene
     scene->LoadMaterials(config->GetConfig("materials"));

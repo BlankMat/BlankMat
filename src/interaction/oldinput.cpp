@@ -118,22 +118,6 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
         }
         didReceiveInput = true;
     }
-    if (Y_PRESS && CTRL_PRESS) {
-        if (!locks->lockCtrlY)
-        {
-            actions->Redo();
-            locks->lockCtrlY = true;
-        }
-        didReceiveInput = true;
-    }
-    if (Z_PRESS && CTRL_PRESS) {
-        if (!locks->lockCtrlZ)
-        {
-            actions->Undo();
-            locks->lockCtrlZ = true;
-        }
-        didReceiveInput = true;
-    }
 
 
     /* ==================================================== Keyboard Input ===================================================== */
