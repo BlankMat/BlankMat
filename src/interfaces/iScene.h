@@ -1,7 +1,6 @@
 #pragma once
 #include "glIncludes.h"
 #include "files/config.h"
-#include "windows/window.h"
 #include "rendering/shader.h"
 #include "rendering/light.h"
 #include "rendering/camera.h"
@@ -18,6 +17,8 @@
 #include "containers/entityContainer.h"
 #include "containers/meshContainer.h"
 #include <unordered_map>
+
+class Window;
 
 class IScene
 {
@@ -124,7 +125,7 @@ public:
 	const std::string GetCurShader();
 
 	// Sets up the scene's camera with the given options
-	void SetCamera(Config* config);
+	void SetCamera(ActionStack* actionStack, Config* config);
 
 	// Sets the scene's camera to the given camera
 	void SetCamera(Camera* cam);

@@ -193,7 +193,7 @@ const std::unordered_map<std::string, Texture*>& IScene::GetTextureList() { retu
 const std::string IScene::GetCurShader() { return mCurShader; }
 
 // Sets up the scene's camera with the given options
-void IScene::SetCamera(Config* config) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = new Camera(config); }
+void IScene::SetCamera(ActionStack* actionStack, Config* config) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = new Camera(actionStack, config); }
 
 // Sets the scene's camera to the given camera
 void IScene::SetCamera(Camera* cam) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = cam; }
@@ -277,7 +277,7 @@ void IScene::LoadMaterials(Config* config)
 	LoadMaterial(config->GetConfig("default"), "default");
 
 	// Load the rest of the materials
-	std::unordered_map<std::string, Config*> configs = config->GetConfigs();
+	const std::unordered_map<std::string, Config*>& configs = config->GetConfigs();
 	for (auto iter = configs.begin(); iter != configs.end(); ++iter)
 		if (GetMaterial(iter->first) == nullptr)
 			LoadMaterial(iter->second, iter->first);

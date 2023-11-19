@@ -3,117 +3,71 @@
 int main()
 {
     // Read Configs
-    std::cout << "Starting program, reading options from " << FileSystem::GetPath(CONFIG_JSON) << std::endl;
     Config* config = ConfigReader::ReadFile(FileSystem::GetPath(CONFIG_JSON));
-    Config* materialsConfig = ConfigReader::ReadFile(FileSystem::GetPath(MATS_JSON));
-    Config* shadersConfig = ConfigReader::ReadFile(FileSystem::GetPath(SHADERS_JSON));
-
-    // Create state
-    State* state = new State(new Selection(), config);
+    config->SetConfig("hotkeys", ConfigReader::ReadFile(FileSystem::GetPath(HOTKEYS_JSON)));
+    config->SetConfig("materials", ConfigReader::ReadFile(FileSystem::GetPath(MATS_JSON)));
+    config->SetConfig("shaders", ConfigReader::ReadFile(FileSystem::GetPath(SHADERS_JSON)));
 
     // Init window
-    Window* window = new Window(SCR_WIDTH, SCR_HEIGHT, APP_NAME, config, state);
+    Window* window = new Window(SCR_WIDTH, SCR_HEIGHT, APP_NAME, config);
     if (window == nullptr)
         return -1;
 
+    // Initialize commands for usage
+    State* state = window->GetState();
+    Scene* scene = window->GetScene();
+    Commands::InitializeCommands(window);
+
     // Create scene
-    Scene* scene = new Scene();
-    scene->SetState(state);
-    scene->LoadMaterials(materialsConfig);
-    scene->LoadModel(FileSystem::GetPath(MODELS_DIR) + config->GetString("model.file"), 
+    scene->LoadMaterials(config->GetConfig("materials"));
+    SceneReader::LoadScene(scene, FileSystem::GetPath(MODELS_DIR) + config->GetString("model.file"), 
         config->GetVec("model.pos"), config->GetVec("model.rot"), config->GetVec("model.scale"));
 
     state->GetSel()->SetTransformHandle(new PHandle("transformHandle", 0.5f, 6, true, glm::vec3(0.0f)));
     scene->SetTransformHandle(state->GetSel()->GetTransformHandle());
 
     // Load shaders
-    LoadShaders(scene, shadersConfig);
+    LoadShaders(scene, config->GetConfig("shaders"));
     state->defaultMat = scene->SetDefaultMaterial("default");
 
     // Load default scene
-    LoadDefaultScene(scene, state->defaultMat, config->GetBool("defaultCubes"), config->GetConfig("camera"), config->GetConfig("light"));
+    LoadDefaultScene(scene, state, state->defaultMat, config->GetBool("defaultCubes"), config->GetConfig("camera"), config->GetConfig("light"));
+    window->GetInput()->SetMouseRotFunction(std::bind(&Camera::Rotate, scene->GetCamera(), std::placeholders::_1));
+    window->GetInput()->SetMouseMoveFunction(std::bind(&Camera::Translate, scene->GetCamera(), std::placeholders::_1));
+    window->GetInput()->SetMouseZoomFunction(std::bind(&Camera::Translate, scene->GetCamera(), std::placeholders::_1));
 
     // Add GUIs
-    LoadGUIs(window, state, scene);
+    LoadGUIs(window, state, scene, window->GetInput(), config);
 
-    // Init variables to track user input.
-    InputLocks locks = InputLocks();
-    int prevX = -1;
-    int prevY = -1;
-
-    // Track time
-    double lastTime = glfwGetTime();
-    double currentTime = glfwGetTime();
-    double lastFrameTime = glfwGetTime();
-    float deltaTime = 0.0f;
-    int numFrames = 0;
-
-    float gammaKeyPressed = false;
-
-    // render loop
-    // -----------
-    while (!glfwWindowShouldClose(window->GetWindow()))
+    // Main program loop should run until the program is exited and the changes are saved or ignored
+    while (true)
     {
-        // Get deltaTime
-        lastTime = currentTime;
-        currentTime = glfwGetTime();
-        deltaTime = float(currentTime - lastTime);
+        // Poll events at the start of the loop
+        glfwPollEvents();
 
-        // Calculate FPS
-        double curFrameTime = glfwGetTime();
-        numFrames++;
-        if (currentTime - lastFrameTime >= 1.0)
-        {
-            // Calculate FPS and Frame Length in ms
-            state->fps = std::to_string(numFrames);
-            std::string frameTime = std::to_string(1000.0f / numFrames);
-            state->frameTime = frameTime.substr(0, frameTime.find(".") + 3) + "ms";
+        // If the window should close, handle exiting
+        if (HandleWindowQuit(window, state))
+            break;
 
-            // Reset frame times
-            numFrames = 0;
-            lastFrameTime = curFrameTime;
-        }
-
-        // Rotate light over time
-        glm::vec3 lightOffset = scene->GetLight()->GetOffset();
-        if (state->isRotatingLight)
-            scene->GetLight()->SetPos(glm::vec3(lightOffset.x * sin(glfwGetTime()), lightOffset.y, lightOffset.z * cos(glfwGetTime())));
-        else
-            scene->GetLight()->SetPos(lightOffset);
-
-        // Change light color over time
-        glm::vec3 lightColor = scene->GetLight()->GetBaseColor();
-        if (state->isDiscoLight)
-            scene->GetLight()->SetColor(glm::vec3(lightColor.x * sin(glfwGetTime() - PI * 0.5f), lightColor.y * sin(glfwGetTime()), lightColor.z * sin(glfwGetTime() + PI * 0.5f)));
-        else
-            scene->GetLight()->SetColor(lightColor);
-
-        // Draw GUI
-        if (state->drawGUI)
-            window->DrawGUI();
-        //ImGui::ShowDemoWindow();
-
-        // Process input and render
-        ProcessInput(window, scene, state, &locks, deltaTime, &prevX, &prevY);
+        // Calculate FPS and deltaTime
+        state->GetTimer()->HandleFrame();
 
         // Render
         OpenGLDraw(window, state, scene);
 
+        // Draw GUI
         if (state->drawGUI)
-        {
-            ImGui::Render();
-            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        }
+            window->DrawGUI();
 
-        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
+        // Swap buffers at the end of the loop
         glfwSwapBuffers(window->GetWindow());
-        glfwPollEvents();
+        window->UpdateWindowTitle(state->GetCurFileName(), state->IsSaved());
     }
 
     // Clear up dynamic memory usage
     delete scene;
 
-    // glfw: terminate, clearing all previously allocated GLFW resources.
+    // Deallocate all GLFW and ImGui resources.
     glfwTerminate();
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
@@ -126,6 +80,10 @@ int main()
 // --------------------------------------------------------
 void OpenGLDraw(Window* window, State* state, Scene* scene)
 {
+    // Update light
+    scene->GetLight()->UpdateRotatingLight(state->isRotatingLight);
+    scene->GetLight()->UpdateDiscoLight(state->isDiscoLight);
+    
     // Clear BG
     glm::vec3 bgColor = scene->GetCamera()->GetBGColor();
     glClearColor(bgColor.r, bgColor.g, bgColor.b, 1.0f);
@@ -157,7 +115,7 @@ void OpenGLDraw(Window* window, State* state, Scene* scene)
 
 // Opens all defined GUIs
 // ------------------------------------------------------
-void LoadGUIs(Window* window, State* state, Scene* scene)
+void LoadGUIs(Window* window, State* state, Scene* scene, Input* input, Config* config)
 {
     window->AddGUI(new GUILightViewer(state, scene, true));
     window->AddGUI(new GUIMaterialViewer(state, scene, true));
@@ -165,35 +123,32 @@ void LoadGUIs(Window* window, State* state, Scene* scene)
     window->AddGUI(new GUIDebugToolsWindow(state, scene, true));
     window->AddGUI(new GUIHierarchyWindow(state, scene, true));
     window->AddGUI(new GUIInspectorWindow(state, scene, true));
-    window->AddGUI(new GUIMenuBarWindow(true));
+    window->AddGUI(new GUIMenuBarWindow(input, config, true));
     window->AddGUI(new GUIToolbarWindow(state, scene, true));
     window->AddGUI(new GUIToolModeWindow(state, scene, true));
+    window->AddGUI(new GUIActionList(state, scene, true));
 }
 
 // Loads all defined shaders
 // --------------------------------------------------
 void LoadShaders(Scene* scene, Config* shaderConfig)
 {
-    double loadStartTime = glfwGetTime();
-
+    double startTime = glfwGetTime();
     std::unordered_map<std::string, Config*> shaders = shaderConfig->GetConfigs();
     for (auto iter = shaders.begin(); iter != shaders.end(); ++iter)
     {
         scene->CreateShader(iter->first, iter->second);
     }
     scene->UseShader("default");
-
-    double loadEndTime = glfwGetTime();
-    double loadTime = loadEndTime - loadStartTime;
-    std::cout << "Shaders loaded in " << loadTime << " seconds." << std::endl;
+    Timer::Time(startTime, "Shaders loaded");
 }
 
 // Loads the default scene
 // --------------------------------------------------------------------------------------------------------------------
-void LoadDefaultScene(Scene* scene, Material* defaultMat, bool defaultCubes, Config* cameraConfig, Config* lightConfig)
+void LoadDefaultScene(Scene* scene, State* state, Material* defaultMat, bool defaultCubes, Config* cameraConfig, Config* lightConfig)
 {
     // Add light and camera
-    scene->SetCamera(cameraConfig);
+    scene->SetCamera(state->GetActionStack(), cameraConfig);
     scene->SetLight(new PLightCube("globalLight", 1.0f, lightConfig));
 
     // Add renderables
@@ -212,5 +167,42 @@ void LoadDefaultScene(Scene* scene, Material* defaultMat, bool defaultCubes, Con
         scene->AddMesh(new VCube("cube4", 1.0f, new Material(glm::vec3(0, 1, 1)), glm::vec3(-5, 0, 1), glm::vec3(0, 45, 45), glm::vec3(1, 2, 2)));
         scene->AddMesh(new VCube("cube5", 1.0f, new Material(glm::vec3(1, 0, 1)), glm::vec3(-5, 0, 3), glm::vec3(45, 0, 45), glm::vec3(2, 1, 2)));
         scene->AddMesh(new VCube("cube6", 1.0f, new Material(glm::vec3(1, 1, 0)), glm::vec3(-5, 0, 5), glm::vec3(45, 45, 0), glm::vec3(2, 2, 1)));
+    }
+}
+
+// Handles quitting from the window
+bool HandleWindowQuit(Window* window, State* state)
+{
+    if (!glfwWindowShouldClose(window->GetWindow()))
+        return false;
+
+    // If state is saved, break
+    if (state->IsSaved())
+        return true;
+
+    // If state is not saved, set a popup
+    pfd::button res = pfd::message(
+        "Unsaved Changes",
+        "You have made unsaved changes to the scene. Would you like to save them before quitting?",
+        pfd::choice::yes_no_cancel,
+        pfd::icon::warning
+    ).result();
+
+    switch (res)
+    {
+    case pfd::button::yes:
+        // If the user requested to save first, run the save command
+        window->GetInput()->RunCommand("SAVE_SCENE");
+        return true;
+        break;
+    case pfd::button::no:
+        // If the user did not request to save, don't run the save command
+        return true;
+        break;
+    case pfd::button::cancel:
+    default:
+        // If the user canceled, do not quit
+        glfwSetWindowShouldClose(window->GetWindow(), GLFW_FALSE);
+        return false;
     }
 }

@@ -1,7 +1,7 @@
 #include "scene.h"
 #include "primitives/pLightCube.h"
-#include "files/modelReader.h"
-#include "selection.h"
+#include "interaction/selection.h"
+#include "windows/window.h"
 
 // Renders the current scene
 void Scene::Draw(Window* window, Shader* shader)
@@ -123,18 +123,6 @@ const glm::mat4& Scene::GetViewAxisProjection(Window* window)
 	return mViewAxisProjection;
 }
 
-// Saves the global state in the scene
-void Scene::SetState(State* state)
-{
-	mState = state;
-}
-
-// Loads the model at the given path
-void Scene::LoadModel(const std::string& path, const glm::vec3& startPos, const glm::vec3& startRot, const glm::vec3& startScale)
-{
-	ModelReader::LoadModel(this, path, startPos, startRot, startScale);
-}
-
 // Sets the view axis handle to the given object
 void Scene::SetViewAxisHandle(IEntity* viewHandle)
 {
@@ -153,10 +141,30 @@ void Scene::SetTransformHandle(IEntity* handle)
 	mTransformHandle = handle;
 }
 
+// Focuses the camera on the currently selected object (if any)
+void Scene::FocusCamera()
+{
+	IEntity* selEntity = mState->GetSel()->GetSelectedEntity();
+	GetCamera()->LookAt((selEntity != nullptr) ? selEntity->GetPos() : glm::vec3(0.0f));
+}
+
+// Toggles the camera between perspective and orthographic
+void Scene::TogglePerspective()
+{
+	GetCamera()->SetPerspective(!GetCamera()->IsPerspective());
+}
+
+// Toggles the rotation mode of the camera
+void Scene::ToggleCameraRotationMode()
+{
+	GetCamera()->SetPivotRotationMode(!GetCamera()->IsRotatingAroundPivot());
+}
+
 // Constructs the scene from the given file
-Scene::Scene()
+Scene::Scene(State* state)
 {
 	mCurShader = "";
+	mState = state;
 	mMainCamera = nullptr;
 	mGlobalLight = nullptr;
 	mRootNode = nullptr;

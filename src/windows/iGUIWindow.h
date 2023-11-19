@@ -19,16 +19,18 @@ enum class GUI
 
 	MATERIAL_VIEWER = 20,
 	LIGHT_VIEWER = 21,
-	CAMERA_VIEWER = 22
+	CAMERA_VIEWER = 22,
+
+	ACTION_LIST = 31
 };
 
 class IGUIWindow
 {
 protected:
-	GUI mType;
-	std::string mName;
-	glm::vec2 mScreenPos;
-	bool mIsEnabled;
+	GUI mType = GUI::NONE;
+	std::string mName = "";
+	glm::vec2 mScreenPos = glm::vec2(0, 0);
+	bool mIsEnabled = true;
 public:
 	// Draws the GUI to the screen
 	virtual void Draw() = 0;

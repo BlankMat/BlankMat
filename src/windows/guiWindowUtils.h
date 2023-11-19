@@ -4,6 +4,28 @@
 class GUIWindowUtils
 {
 public:
+	static bool Popup(const std::string& label, bool& showPopup)
+	{
+		if (ImGui::Button(("Open " + label).c_str()))
+		{
+			ImGui::OpenPopup(label.c_str());
+		}
+
+		ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+		ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+
+		if (ImGui::BeginPopupModal(label.c_str()))
+		{
+			ImGui::SetItemDefaultFocus();
+			if (ImGui::Button(("Close " + label).c_str()))
+			{
+				ImGui::CloseCurrentPopup();
+			}
+
+			ImGui::EndPopup();
+		}
+	}
+
 	template<typename T>
 	static bool Selectable(const std::string& label, T& selValue, T thisValue)
 	{
