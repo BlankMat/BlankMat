@@ -5,7 +5,7 @@
 void Input::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	// If ImGui wants to capture the keyboard, don't handle it natively
-	if (mIO->WantCaptureKeyboard)
+	if (mIO->WantTextInput)
 		return;
 
 	// Ignore Alt/Ctrl/Shift
