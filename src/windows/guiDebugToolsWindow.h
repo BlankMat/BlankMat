@@ -60,6 +60,15 @@ public:
 			mState->drawByMaterial.Display();
 			mState->DEBUG_fakeNumber.Display();
 
+			// Input debug
+			ImGui::Separator();
+			ImGui::Text("Input");
+			ImGui::InputInt("Current X", &mState->mouseCurX);
+			ImGui::InputInt("Current Y", &mState->mouseCurY);
+			ImGui::InputInt("Previous X", &mState->mousePrevX);
+			ImGui::InputInt("Previous Y", &mState->mousePrevY);
+			ImGui::InputFloat("Delta Time", &mState->deltaTime);
+
 			// Camera settings
 			ImGui::Separator();
 			ImGui::Text("Camera Settings");

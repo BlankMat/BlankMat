@@ -1,5 +1,4 @@
 #pragma once
-#include "interaction/oldinput.h"
 #include "interaction/input.h"
 #include "interaction/actionStack.h"
 #include "interaction/commands.h"
@@ -74,8 +73,6 @@ void LoadShaders(Scene* scene, Config* shaderConfig);
 /// <param name="cameraConfig">Default camera</param>
 /// <param name="lightConfig">Default light</param>
 void LoadDefaultScene(Scene* scene, State* state, Material* defaultMat, bool defaultCubes, Config* cameraConfig, Config* lightConfig);
-
-void ProcessCameraInput(Window* window, Scene* scene);
 
 /// <summary>
 /// Calculates the number of frames this second

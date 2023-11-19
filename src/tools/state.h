@@ -41,11 +41,11 @@ public:
 	// Frame information
 	std::string fps = "";
 	std::string frameTime = "";
-	double deltaTime = 0.0;
-	double mousePrevX = 0.0;
-	double mousePrevY = 0.0;
-	double mouseDeltaX = 0.0;
-	double mouseDeltaY = 0.0;
+	float deltaTime = 0.0f;
+	int mousePrevX = 0;
+	int mousePrevY = 0;
+	int mouseCurX = 0;
+	int mouseCurY = 0;
 
 	std::string curShader = "";
 	Material* defaultMat = nullptr;

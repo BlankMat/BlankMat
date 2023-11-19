@@ -5,6 +5,7 @@
 #include "interfaces/iCommand.h"
 #include <unordered_map>
 #include <unordered_set>
+#include <functional>
 
 enum class MouseInputMode { DEFAULT = 0, ROTATE, ZOOM, MOVE };
 
@@ -18,6 +19,10 @@ private:
 	float mMouseRotSpeed = 0.1f;
 	float mMouseZoomSpeed = 0.1f;
 	float mMouseMoveSpeed = 0.1f;
+
+	std::function<void(const glm::vec3& delta)> mMouseRotFunc = nullptr;
+	std::function<void(const glm::vec3& delta)> mMouseZoomFunc = nullptr;
+	std::function<void(const glm::vec3& delta)> mMouseMoveFunc = nullptr;
 
 	std::unordered_map<std::string, int> mKeysPressed;
 	std::unordered_map<std::string, std::string> mHotkeys;
@@ -49,32 +54,30 @@ public:
 	}
 
 	/// <summary>
-	/// Returns the current mouse input mode
+	/// Sets the callback function that runs whenever the mouse moves in rotation mode
 	/// </summary>
-	/// <returns>Current mouse input mode</returns>
-	MouseInputMode GetMouseInputMode()
+	/// <param name="func">Callback function to run</param>
+	void SetMouseRotFunction(std::function<void(const glm::vec3& delta)> func)
 	{
-		return mMouseInputMode;
+		mMouseRotFunc = func;
 	}
 
 	/// <summary>
-	/// Returns the current change in mouse input, adjusting it depending on the current input mode
+	/// Sets the callback function that runs whenever the mouse moves in zoom mode
 	/// </summary>
-	/// <returns>Change in mouse input for the selected input mode. This is (0,0,0) for the default input mode.</returns>
-	glm::vec3 GetMouseDelta()
+	/// <param name="func">Callback function to run</param>
+	void SetMouseZoomFunction(std::function<void(const glm::vec3& delta)> func)
 	{
-		switch (mMouseInputMode)
-		{
-		case MouseInputMode::ROTATE:
-			return float(mState->deltaTime) * mMouseRotSpeed * glm::vec3(mState->mouseDeltaX, mState->mouseDeltaY, 0.0f);
-		case MouseInputMode::ZOOM:
-			return float(mState->deltaTime) * mMouseZoomSpeed * glm::vec3(mState->mouseDeltaY, 0.0f, 0.0f);
-		case MouseInputMode::MOVE:
-			return float(mState->deltaTime) * mMouseMoveSpeed * glm::vec3(0.0f, mState->mouseDeltaX, mState->mouseDeltaY);
-		case MouseInputMode::DEFAULT:
-		default:
-			return glm::vec3(0.0f, 0.0f, 0.0f);
-		}
+		mMouseZoomFunc = func;
+	}
+
+	/// <summary>
+	/// Sets the callback function that runs whenever the mouse moves in move mode
+	/// </summary>
+	/// <param name="func">Callback function to run</param>
+	void SetMouseMoveFunction(std::function<void(const glm::vec3& delta)> func)
+	{
+		mMouseMoveFunc = func;
 	}
 
 	/// <summary>

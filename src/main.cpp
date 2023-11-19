@@ -32,14 +32,12 @@ int main()
 
     // Load default scene
     LoadDefaultScene(scene, state, state->defaultMat, config->GetBool("defaultCubes"), config->GetConfig("camera"), config->GetConfig("light"));
+    window->GetInput()->SetMouseRotFunction(std::bind(&Camera::Rotate, scene->GetCamera(), std::placeholders::_1));
+    window->GetInput()->SetMouseMoveFunction(std::bind(&Camera::Translate, scene->GetCamera(), std::placeholders::_1));
+    window->GetInput()->SetMouseZoomFunction(std::bind(&Camera::Translate, scene->GetCamera(), std::placeholders::_1));
 
     // Add GUIs
     LoadGUIs(window, state, scene, window->GetInput(), config);
-
-    // Init variables to track user input.
-    InputLocks locks = InputLocks();
-    int prevX = -1;
-    int prevY = -1;
 
     // Track time
     double prevFrameTime = glfwGetTime();
@@ -61,14 +59,8 @@ int main()
         // Get deltaTime
         prevFrameTime = curFrameTime;
         curFrameTime = glfwGetTime();
-        state->deltaTime = curFrameTime - prevFrameTime;
+        state->deltaTime = float(curFrameTime - prevFrameTime);
         CalculateFPS(state, lastSecond, numFrames);
-
-        // Process camera movement
-        ProcessCameraInput(window, scene);
-
-        // Process input
-        //ProcessInput(window, scene, state, &locks, state->deltaTime, &prevX, &prevY);
 
         // Render
         OpenGLDraw(window, state, scene);
@@ -189,25 +181,6 @@ void LoadDefaultScene(Scene* scene, State* state, Material* defaultMat, bool def
         scene->AddMesh(new VCube("cube4", 1.0f, new Material(glm::vec3(0, 1, 1)), glm::vec3(-5, 0, 1), glm::vec3(0, 45, 45), glm::vec3(1, 2, 2)));
         scene->AddMesh(new VCube("cube5", 1.0f, new Material(glm::vec3(1, 0, 1)), glm::vec3(-5, 0, 3), glm::vec3(45, 0, 45), glm::vec3(2, 1, 2)));
         scene->AddMesh(new VCube("cube6", 1.0f, new Material(glm::vec3(1, 1, 0)), glm::vec3(-5, 0, 5), glm::vec3(45, 45, 0), glm::vec3(2, 2, 1)));
-    }
-}
-
-// Processes user input to move camera
-// --------------------------------------------------
-void ProcessCameraInput(Window* window, Scene* scene)
-{
-    switch (window->GetInput()->GetMouseInputMode())
-    {
-    case MouseInputMode::ROTATE:
-        scene->GetCamera()->Rotate(window->GetInput()->GetMouseDelta());
-        break;
-    case MouseInputMode::ZOOM:
-    case MouseInputMode::MOVE:
-        scene->GetCamera()->Translate(window->GetInput()->GetMouseDelta());
-        break;
-    case MouseInputMode::DEFAULT:
-    default:
-        break;
     }
 }
 

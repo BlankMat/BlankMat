@@ -42,10 +42,31 @@ void Input::MouseButtonCallback(GLFWwindow* window, int button, int action, int 
 // Handles mouse movement interactions
 void Input::CursorPositionCallback(GLFWwindow* window, double xPos, double yPos)
 {
-	mState->mouseDeltaX = xPos - mState->mousePrevX;
-	mState->mouseDeltaY = yPos - mState->mousePrevY;
-	mState->mousePrevX = xPos;
-	mState->mousePrevY = yPos;
+	mState->mousePrevX = mState->mouseCurX;
+	mState->mousePrevY = mState->mouseCurY;
+	mState->mouseCurX = (int)glm::floor(xPos);
+	mState->mouseCurY = (int)glm::floor(yPos);
+
+	float mouseDeltaX = float(mState->mouseCurX - mState->mousePrevX);
+	float mouseDeltaY = float(mState->mouseCurY - mState->mousePrevY);
+	switch (mMouseInputMode)
+	{
+	case MouseInputMode::ROTATE:
+		if (mMouseRotFunc != nullptr)
+			mMouseRotFunc(mState->deltaTime * mMouseRotSpeed * glm::vec3(-mouseDeltaX, -mouseDeltaY, 0.0f));
+		break;
+	case MouseInputMode::ZOOM:
+		if (mMouseZoomFunc != nullptr)
+			mMouseZoomFunc(mState->deltaTime * mMouseZoomSpeed * glm::vec3(mouseDeltaY, 0.0f, 0.0f));
+		break;
+	case MouseInputMode::MOVE:
+		if (mMouseMoveFunc != nullptr)
+			mMouseMoveFunc(mState->deltaTime * mMouseMoveSpeed * glm::vec3(0.0f, mouseDeltaX, mouseDeltaY));
+		break;
+	case MouseInputMode::DEFAULT:
+	default:
+		break;
+	}
 }
 
 // Handles mouse scroll interactions
