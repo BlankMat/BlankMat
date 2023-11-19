@@ -141,6 +141,13 @@ void Scene::SetTransformHandle(IEntity* handle)
 	mTransformHandle = handle;
 }
 
+// Focuses the camera on the currently selected object (if any)
+void Scene::FocusCamera()
+{
+	IEntity* selEntity = mState->GetSel()->GetSelectedEntity();
+	GetCamera()->LookAt((selEntity != nullptr) ? selEntity->GetPos() : glm::vec3(0.0f));
+}
+
 // Constructs the scene from the given file
 Scene::Scene(State* state)
 {

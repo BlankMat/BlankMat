@@ -24,6 +24,9 @@ public:
 	// Renders the current scene's shadows
 	void DrawShadows(Window* window, Shader* shader);
 
+	// Focuses the camera on the currently selected object (if any)
+	void FocusCamera();
+
 	// Sets the view axis handle to the given object
 	void SetViewAxisHandle(IEntity* viewHandle);
 	// Sets the grid object

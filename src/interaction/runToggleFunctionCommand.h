@@ -2,11 +2,10 @@
 #include "interfaces/iCommand.h"
 #include <functional>
 
-class RunFunctionCommand : public ICommand
+class RunToggleFunctionCommand : public ICommand
 {
 protected:
 	std::function<void()> mFunction = nullptr;
-	std::function<void()> mReverseFunction = nullptr;
 	std::string mName = "";
 public:
 	/// <summary>
@@ -23,8 +22,8 @@ public:
 	/// </summary>
 	void Undo() override
 	{
-		if (mReverseFunction != nullptr)
-			mReverseFunction();
+		if (mFunction != nullptr)
+			mFunction();
 	}
 
 	/// <summary>
@@ -43,18 +42,17 @@ public:
 	/// <returns></returns>
 	std::string GetName() const override
 	{
-		return "RUN_FUNCTION_" + mName;
+		return "RUN_TOGGLE_FUNCTION_" + mName;
 	}
 
 	/// <summary>
 	/// Instantiates a command that runs the given function once the command is executed
 	/// </summary>
-	explicit RunFunctionCommand(const std::string& name, std::function<void()> function, std::function<void()> reverseFunction = std::function<void()>(nullptr))
+	explicit RunToggleFunctionCommand(const std::string& name, std::function<void()> function)
 		: mName(name)
 	{
 		mFunction = function;
-		mReverseFunction = reverseFunction;
-		mCanBeUndone = (reverseFunction != nullptr);
-		mTrackable = (reverseFunction != nullptr);
+		mCanBeUndone = true;
+		mTrackable = true;
 	}
 };
