@@ -53,15 +53,15 @@ void Input::CursorPositionCallback(GLFWwindow* window, double xPos, double yPos)
 	{
 	case MouseInputMode::ROTATE:
 		if (mMouseRotFunc != nullptr)
-			mMouseRotFunc(mState->deltaTime * mMouseRotSpeed * glm::vec3(-mouseDeltaX, -mouseDeltaY, 0.0f));
+			mMouseRotFunc(mState->GetTimer()->GetDeltaTime() * mMouseRotSpeed * glm::vec3(-mouseDeltaX, -mouseDeltaY, 0.0f));
 		break;
 	case MouseInputMode::ZOOM:
 		if (mMouseZoomFunc != nullptr)
-			mMouseZoomFunc(mState->deltaTime * mMouseZoomSpeed * glm::vec3(mouseDeltaY, 0.0f, 0.0f));
+			mMouseZoomFunc(mState->GetTimer()->GetDeltaTime() * mMouseZoomSpeed * glm::vec3(mouseDeltaY, 0.0f, 0.0f));
 		break;
 	case MouseInputMode::MOVE:
 		if (mMouseMoveFunc != nullptr)
-			mMouseMoveFunc(mState->deltaTime * mMouseMoveSpeed * glm::vec3(0.0f, mouseDeltaX, mouseDeltaY));
+			mMouseMoveFunc(mState->GetTimer()->GetDeltaTime() * mMouseMoveSpeed * glm::vec3(0.0f, mouseDeltaX, mouseDeltaY));
 		break;
 	case MouseInputMode::DEFAULT:
 	default:

@@ -54,7 +54,7 @@
   "CTRL+ALT+S": "SAVE_SCENE_INCREMENT",
   "CTRL+I": "IMPORT",
   "CTRL+E": "EXPORT",
-  "CTRL+Q": "QUIT",
+  "ALT+Q": "QUIT",
 
   "CTRL+Z": "UNDO",
   "CTRL+Y": "REDO",

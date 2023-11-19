@@ -25,7 +25,8 @@ public:
 
 		if (ImGui::Begin("Debug Tools", &mIsEnabled, ImGuiWindowFlags_AlwaysAutoResize))
 		{
-			ImGui::Text(("Frame Time : " + mState->frameTime + " [" + mState->fps + " FPS]").c_str());
+			ImGui::Text(("Frame Time : " + mState->GetTimer()->GetFrameTime() + " [" + mState->GetTimer()->GetFPS() + " FPS]").c_str());
+			ImGui::Text(("Delta Time: " + std::to_string(mState->GetTimer()->GetDeltaTime())).c_str());
 			// Shading settings
 			ImGui::Text("Shading");
 			// Select shader
@@ -67,7 +68,6 @@ public:
 			ImGui::InputInt("Current Y", &mState->mouseCurY);
 			ImGui::InputInt("Previous X", &mState->mousePrevX);
 			ImGui::InputInt("Previous Y", &mState->mousePrevY);
-			ImGui::InputFloat("Delta Time", &mState->deltaTime);
 
 			// Camera settings
 			ImGui::Separator();

@@ -39,14 +39,7 @@ int main()
     // Add GUIs
     LoadGUIs(window, state, scene, window->GetInput(), config);
 
-    // Track time
-    double prevFrameTime = glfwGetTime();
-    double curFrameTime = glfwGetTime();
-    double lastSecond = glfwGetTime();
-    int numFrames = 0;
-
-    // render loop
-    // -----------
+    // Main program loop should run until the program is exited and the changes are saved or ignored
     while (true)
     {
         // Poll events at the start of the loop
@@ -56,11 +49,8 @@ int main()
         if (HandleWindowQuit(window, state))
             break;
 
-        // Get deltaTime
-        prevFrameTime = curFrameTime;
-        curFrameTime = glfwGetTime();
-        state->deltaTime = float(curFrameTime - prevFrameTime);
-        CalculateFPS(state, lastSecond, numFrames);
+        // Calculate FPS and deltaTime
+        state->GetTimer()->HandleFrame();
 
         // Render
         OpenGLDraw(window, state, scene);
@@ -77,7 +67,7 @@ int main()
     // Clear up dynamic memory usage
     delete scene;
 
-    // glfw: terminate, clearing all previously allocated GLFW resources.
+    // Deallocate all GLFW and ImGui resources.
     glfwTerminate();
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
@@ -177,28 +167,6 @@ void LoadDefaultScene(Scene* scene, State* state, Material* defaultMat, bool def
         scene->AddMesh(new VCube("cube4", 1.0f, new Material(glm::vec3(0, 1, 1)), glm::vec3(-5, 0, 1), glm::vec3(0, 45, 45), glm::vec3(1, 2, 2)));
         scene->AddMesh(new VCube("cube5", 1.0f, new Material(glm::vec3(1, 0, 1)), glm::vec3(-5, 0, 3), glm::vec3(45, 0, 45), glm::vec3(2, 1, 2)));
         scene->AddMesh(new VCube("cube6", 1.0f, new Material(glm::vec3(1, 1, 0)), glm::vec3(-5, 0, 5), glm::vec3(45, 45, 0), glm::vec3(2, 2, 1)));
-    }
-}
-
-// Handles calculating the number of frames per second in state
-// ----------------------------------------------------------------
-void CalculateFPS(State* state, double& lastSecond, int& numFrames)
-{
-    // Calculate FPS
-    double currentTime = glfwGetTime();
-    numFrames++;
-
-    // Check whether a full second has passed since the last update
-    if (currentTime - lastSecond >= 1.0)
-    {
-        // Calculate FPS and Frame Length in ms
-        state->fps = std::to_string(numFrames);
-        std::string frameTime = std::to_string(1000.0f / numFrames);
-        state->frameTime = frameTime.substr(0, frameTime.find(".") + 3) + "ms";
-
-        // Reset frame times
-        numFrames = 0;
-        lastSecond = currentTime;
     }
 }
 

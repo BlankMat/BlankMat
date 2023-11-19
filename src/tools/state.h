@@ -1,5 +1,6 @@
 #pragma once
 #include "glIncludes.h"
+#include "timer.h"
 #include "files/config.h"
 #include "rendering/material.h"
 #include "interaction/actionStack.h"
@@ -12,6 +13,7 @@ private:
 	Config* mConfig = nullptr;
 	Selection* mSelection = nullptr;
 	ActionStack* mActionStack = nullptr;
+	Timer* mTimer = nullptr;
 
 	std::string mCurFileName = "";
 	std::unordered_map<std::string, Material*> mMaterialsThisFrame;
@@ -39,9 +41,6 @@ public:
 	unsigned int depthMapSize = 1024;
 
 	// Frame information
-	std::string fps = "";
-	std::string frameTime = "";
-	float deltaTime = 0.0f;
 	int mousePrevX = 0;
 	int mousePrevY = 0;
 	int mouseCurX = 0;
@@ -94,6 +93,12 @@ public:
 	ActionStack* GetActionStack() const
 	{
 		return mActionStack;
+	}
+
+	// Returns the timer
+	Timer* GetTimer() const
+	{
+		return mTimer;
 	}
 
 	// Saves the current state of the action stack
@@ -174,6 +179,7 @@ public:
 		mConfig = config;
 		mSelection = new Selection();
 		mActionStack = new ActionStack();
+		mTimer = new Timer();
 
 		isDiscoLight = UIBool("Disco Light", false, mActionStack);
 		isRotatingLight = UIBool("Rotating Light", false, mActionStack);
