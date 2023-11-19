@@ -6,11 +6,18 @@
 #include <unordered_map>
 #include <unordered_set>
 
+enum class MouseInputMode { DEFAULT = 0, ROTATE, ZOOM, MOVE };
+
 class Input
 {
 private:
 	ImGuiIO* mIO = nullptr;
 	State* mState = nullptr;
+	MouseInputMode mMouseInputMode = MouseInputMode::DEFAULT;
+
+	float mMouseRotSpeed = 0.1f;
+	float mMouseZoomSpeed = 0.1f;
+	float mMouseMoveSpeed = 0.1f;
 
 	std::unordered_map<std::string, int> mKeysPressed;
 	std::unordered_map<std::string, std::string> mHotkeys;
@@ -25,6 +32,49 @@ public:
 	{
 		// Keys in range 340 to 347 are Left/Right Shift/Alt/Control/Super
 		return (key >= GLFW_KEY_LEFT_SHIFT && key <= GLFW_KEY_RIGHT_SUPER);
+	}
+
+	/// <summary>
+	/// Sets the mouse input mode to the given mode
+	/// </summary>
+	/// <param name="window"></param>
+	/// <param name="newMode">Mode to set input to</param>
+	void SetMouseInputMode(GLFWwindow* window, MouseInputMode newMode)
+	{
+		mMouseInputMode = newMode;
+		if (newMode != MouseInputMode::DEFAULT)
+			DisableMouseCursor(window);
+		else
+			ShowMouseCursor(window);
+	}
+
+	/// <summary>
+	/// Returns the current mouse input mode
+	/// </summary>
+	/// <returns>Current mouse input mode</returns>
+	MouseInputMode GetMouseInputMode()
+	{
+		return mMouseInputMode;
+	}
+
+	/// <summary>
+	/// Returns the current change in mouse input, adjusting it depending on the current input mode
+	/// </summary>
+	/// <returns>Change in mouse input for the selected input mode. This is (0,0,0) for the default input mode.</returns>
+	glm::vec3 GetMouseDelta()
+	{
+		switch (mMouseInputMode)
+		{
+		case MouseInputMode::ROTATE:
+			return float(mState->deltaTime) * mMouseRotSpeed * glm::vec3(mState->mouseDeltaX, mState->mouseDeltaY, 0.0f);
+		case MouseInputMode::ZOOM:
+			return float(mState->deltaTime) * mMouseZoomSpeed * glm::vec3(mState->mouseDeltaY, 0.0f, 0.0f);
+		case MouseInputMode::MOVE:
+			return float(mState->deltaTime) * mMouseMoveSpeed * glm::vec3(0.0f, mState->mouseDeltaX, mState->mouseDeltaY);
+		case MouseInputMode::DEFAULT:
+		default:
+			return glm::vec3(0.0f, 0.0f, 0.0f);
+		}
 	}
 
 	/// <summary>
@@ -54,9 +104,16 @@ public:
 	/// <returns>Whether the key was successfully unpressed</returns>
 	bool UnPressKey(const std::string& keyCode)
 	{
+		// If the key is not pressed, don't unpress it
 		if (!IsKeyPressed(keyCode))
 			return false;
+		int mods = mKeysPressed[keyCode];
 		mKeysPressed.erase(keyCode);
+
+		// Trigger reverse hotkey if it exists
+		std::string hotkey = GetModCode(mods) + keyCode;
+		if (mHotkeys.find(hotkey) != mHotkeys.end())
+			RunCommand(mHotkeys[hotkey] + "_RELEASE");
 		return true;
 	}
 
@@ -314,6 +371,6 @@ public:
 	/// </summary>
 	/// <param name="io">ImGui Input/Output module</param>
 	/// <param name="state">Global state</param>
-	/// <param name="hotkeyConfig">Hotkey configuration</param>
-	explicit Input(ImGuiIO* io, State* state, Config* hotkeyConfig);
+	/// <param name="config">Top level config</param>
+	explicit Input(ImGuiIO* io, State* state, Config* config);
 };

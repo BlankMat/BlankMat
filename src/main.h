@@ -75,6 +75,8 @@ void LoadShaders(Scene* scene, Config* shaderConfig);
 /// <param name="lightConfig">Default light</param>
 void LoadDefaultScene(Scene* scene, State* state, Material* defaultMat, bool defaultCubes, Config* cameraConfig, Config* lightConfig);
 
+void ProcessCameraInput(Window* window, Scene* scene);
+
 /// <summary>
 /// Calculates the number of frames this second
 /// </summary>

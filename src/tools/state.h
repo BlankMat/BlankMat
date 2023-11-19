@@ -37,8 +37,15 @@ public:
 	unsigned int depthMapFBO = 0;
 	unsigned int depthMap = 0;
 	unsigned int depthMapSize = 1024;
+
+	// Frame information
 	std::string fps = "";
 	std::string frameTime = "";
+	double deltaTime = 0.0;
+	double mousePrevX = 0.0;
+	double mousePrevY = 0.0;
+	double mouseDeltaX = 0.0;
+	double mouseDeltaY = 0.0;
 
 	std::string curShader = "";
 	Material* defaultMat = nullptr;

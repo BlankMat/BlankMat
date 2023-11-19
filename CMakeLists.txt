@@ -124,6 +124,9 @@ add_library(GLAD "external/glad.c")
 # JsonCPP
 add_library(JSONCPP "external/jsoncpp.cpp")
 
+# Portable File Dialog
+add_library(PFD "external/pfd_impl.cpp")
+
 # IMGUI
 set(IMGUI_DIR "external/imgui")
 add_library(IMGUI "${IMGUI_DIR}/imgui.cpp"
@@ -136,7 +139,7 @@ add_library(IMGUI "${IMGUI_DIR}/imgui.cpp"
 	"${IMGUI_DIR}/imgui_impl_opengl3.cpp")
 
 # Combine all libs into one variable
-set(LIBS ${GLFW3_LIBRARY} ${OPENGL_LIBRARY} GLAD ${CMAKE_DL_LIBS} ${ASSIMP_LIBRARY} STB_IMAGE IMGUI JSONCPP)
+set(LIBS ${GLFW3_LIBRARY} ${OPENGL_LIBRARY} GLAD ${CMAKE_DL_LIBS} ${ASSIMP_LIBRARY} STB_IMAGE IMGUI JSONCPP PFD)
 
 # Define the include DIRs
 include_directories(

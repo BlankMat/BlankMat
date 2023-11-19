@@ -29,7 +29,8 @@ Window::Window(int width, int height, const std::string& name, Config* config)
     if (!SetupShadows())
         return;
 
-    // Once the window is setup, initialize file operations
+    // Once the window is setup, initialize IO and file operations
+    mInput = new Input(mIO, mState, config);
     mSceneIO = new SceneIO(mState, mScene, mWindow);
 }
 
@@ -200,9 +201,6 @@ bool Window::SetupImGui(Config* config)
 
     // Setup style
     SetupImGuiStyle(styleConfig->GetBool("darkTheme"), styleConfig->GetFloat("windowOpacity"));
-
-    // Connect ImGui to input module
-    mInput = new Input(mIO, mState, config->GetConfig("hotkeys"));
 
     // Return success
     return true;

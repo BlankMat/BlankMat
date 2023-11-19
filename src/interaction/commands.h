@@ -10,12 +10,13 @@
 class Commands
 {
 public:
-	static void InitializeCommands(Window* window)
+	static void InitializeCommands(Window* appWindow)
 	{
-		Input* input = window->GetInput();
-		State* state = window->GetState();
-		Scene* scene = window->GetScene();
-		SceneIO* sIO = window->GetSceneIO();
+		Input* input = appWindow->GetInput();
+		State* state = appWindow->GetState();
+		Scene* scene = appWindow->GetScene();
+		SceneIO* sIO = appWindow->GetSceneIO();
+		GLFWwindow* window = appWindow->GetWindow();
 
 		input->AddCommand("CAMERA_MOVE_F", new RunFunctionCommand("CAMERA_MOVE_F", nullptr));
 		input->AddCommand("CAMERA_MOVE_B", new RunFunctionCommand("CAMERA_MOVE_B", nullptr));
@@ -29,8 +30,12 @@ public:
 		input->AddCommand("CAMERA_ROT_L", new RunFunctionCommand("CAMERA_ROT_L", nullptr));
 		input->AddCommand("CAMERA_ROT_R", new RunFunctionCommand("CAMERA_ROT_R", nullptr));
 
-		input->AddCommand("CAMERA_ROT_M", new RunFunctionCommand("CAMERA_ROT_M", nullptr));
-		input->AddCommand("CAMERA_MOVE_M", new RunFunctionCommand("CAMERA_MOVE_M", nullptr));
+		input->AddCommand("CAMERA_ROT_M", new RunFunctionCommand("CAMERA_ROT_M", std::bind(&Input::SetMouseInputMode, input, window, MouseInputMode::ROTATE)));
+		input->AddCommand("CAMERA_ROT_M_RELEASE", new RunFunctionCommand("CAMERA_ROT_M_RELEASE", std::bind(&Input::SetMouseInputMode, input, window, MouseInputMode::DEFAULT)));
+		input->AddCommand("CAMERA_MOVE_M", new RunFunctionCommand("CAMERA_MOVE_M", std::bind(&Input::SetMouseInputMode, input, window, MouseInputMode::MOVE)));
+		input->AddCommand("CAMERA_MOVE_M_RELEASE", new RunFunctionCommand("CAMERA_MOVE_M_RELEASE", std::bind(&Input::SetMouseInputMode, input, window, MouseInputMode::DEFAULT)));
+		input->AddCommand("CAMERA_ZOOM_M", new RunFunctionCommand("CAMERA_ZOOM_M", std::bind(&Input::SetMouseInputMode, input, window, MouseInputMode::ZOOM)));
+		input->AddCommand("CAMERA_ZOOM_M_RELEASE", new RunFunctionCommand("CAMERA_ZOOM_M_RELEASE", std::bind(&Input::SetMouseInputMode, input, window, MouseInputMode::DEFAULT)));
 
 		input->AddCommand("CAMERA_FOCUS", new RunFunctionCommand("CAMERA_FOCUS", std::bind(&Scene::FocusCamera, scene)));
 		input->AddCommand("TOGGLE_VISIBILITY", new RunToggleFunctionCommand("TOGGLE_VISIBILITY", std::bind(&Selection::ToggleSelectionVisibility, state->GetSel())));
@@ -46,10 +51,10 @@ public:
 		input->AddCommand("TOGGLE_CAMERA_ROT_MODE", new RunFunctionCommand("TOGGLE_CAMERA_ROT_MODE", std::bind(&Scene::ToggleCameraRotationMode, scene)));
 		input->AddCommand("TOGGLE_CAMERA_PERSPECTIVE", new RunFunctionCommand("TOGGLE_CAMERA_PERSPECTIVE", std::bind(&Scene::TogglePerspective, scene)));
 
-		input->AddCommand("LIGHTING_SHADED", new RunFunctionCommand("LIGHTING_SHADED", nullptr));
-		input->AddCommand("LIGHTING_TEXTURED", new RunFunctionCommand("LIGHTING_TEXTURED", nullptr));
-		input->AddCommand("LIGHTING_LIGHTS", new RunFunctionCommand("LIGHTING_LIGHTS", nullptr));
-		input->AddCommand("LIGHTING_WIREFRAME", new RunFunctionCommand("LIGHTING_WIREFRAME", nullptr));
+		input->AddCommand("LIGHTING_SHADED", new RunFunctionCommand("LIGHTING_SHADED", nullptr)); // TODO: Implement shading
+		input->AddCommand("LIGHTING_TEXTURED", new RunFunctionCommand("LIGHTING_TEXTURED", nullptr)); // TODO: Implement shading
+		input->AddCommand("LIGHTING_LIGHTS", new RunFunctionCommand("LIGHTING_LIGHTS", nullptr)); // TODO: Implement shading
+		input->AddCommand("LIGHTING_WIREFRAME", new RunFunctionCommand("LIGHTING_WIREFRAME", nullptr)); // TODO: Implement shading
 		input->AddCommand("TOGGLE_SHADOWS", new RunToggleFunctionCommand("TOGGLE_SHADOWS", std::bind(&State::ToggleShadows, state)));
 		input->AddCommand("TOGGLE_DEFAULT_MAT", new RunToggleFunctionCommand("TOGGLE_DEFAULT_MAT", std::bind(&State::ToggleDefaultMat, state)));
 		input->AddCommand("RENDER", new RunFunctionCommand("RENDER", nullptr)); // TODO: Implement render
@@ -71,7 +76,7 @@ public:
 		input->AddCommand("SAVE_SCENE_INCREMENT", new RunFunctionCommand("SAVE_SCENE_INCREMENT", std::bind(&SceneIO::SaveSceneIncrement, sIO)));
 		input->AddCommand("IMPORT", new RunFunctionCommand("IMPORT", std::bind(&SceneIO::Import, sIO)));
 		input->AddCommand("EXPORT", new RunFunctionCommand("EXPORT", std::bind(&SceneIO::Export, sIO)));
-		input->AddCommand("QUIT", new RunFunctionCommand("QUIT", std::bind(&Window::Quit, window)));
+		input->AddCommand("QUIT", new RunFunctionCommand("QUIT", std::bind(&Window::Quit, appWindow)));
 
 		input->AddCommand("UNDO", new RunFunctionCommand("UNDO", std::bind(&ActionStack::Undo, state->GetActionStack())));
 		input->AddCommand("REDO", new RunFunctionCommand("REDO", std::bind(&ActionStack::Redo, state->GetActionStack())));

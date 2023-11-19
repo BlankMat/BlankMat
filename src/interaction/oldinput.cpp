@@ -163,7 +163,7 @@ bool ProcessInput(Window* window, IScene* scene, State* state, InputLocks* locks
             glfwSetCursorPos(window->GetWindow(), (float)(*prevX), (float)(*prevY));
         }
         // Handle selection/deselection
-        else if (LEFT_MOUSE_PRESS && !locks->lockLeftMouse) {
+        if (LEFT_MOUSE_PRESS && !locks->lockLeftMouse) {
             locks->lockLeftMouse = true;
             IEntity* transformHandle = scene->GetEntity(TRANSFORM_HANDLE);
             if (transformHandle != nullptr)

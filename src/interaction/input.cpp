@@ -42,7 +42,10 @@ void Input::MouseButtonCallback(GLFWwindow* window, int button, int action, int 
 // Handles mouse movement interactions
 void Input::CursorPositionCallback(GLFWwindow* window, double xPos, double yPos)
 {
-	//std::cout << "Called CursorPositionCallback, xPos " << xPos << ", yPos " << yPos << std::endl;
+	mState->mouseDeltaX = xPos - mState->mousePrevX;
+	mState->mouseDeltaY = yPos - mState->mousePrevY;
+	mState->mousePrevX = xPos;
+	mState->mousePrevY = yPos;
 }
 
 // Handles mouse scroll interactions
@@ -52,11 +55,15 @@ void Input::ScrollCallback(GLFWwindow* window, double xOffset, double yOffset)
 }
 
 // Initializes the input module with the current hotkeys
-Input::Input(ImGuiIO* io, State* state, Config* hotkeyConfig)
+Input::Input(ImGuiIO* io, State* state, Config* config)
 	: mIO(io), mState(state)
 {
 	// Copy the hotkeys from the config
-	auto& hotkeys = hotkeyConfig->GetStrings();
+	auto& hotkeys = config->GetConfig("hotkeys")->GetStrings();
 	for (auto iter = hotkeys.begin(); iter != hotkeys.end(); ++iter)
 		mHotkeys.emplace(iter->first, iter->second);
+
+	mMouseRotSpeed = config->GetFloat("speeds.mouseRot");
+	mMouseZoomSpeed = config->GetFloat("speeds.mouseZoom");
+	mMouseMoveSpeed = config->GetFloat("speeds.mouseMove");
 }
