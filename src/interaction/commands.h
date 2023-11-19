@@ -35,14 +35,14 @@ public:
 		input->AddCommand("CAMERA_FOCUS", new RunFunctionCommand("CAMERA_FOCUS", std::bind(&Scene::FocusCamera, scene)));
 		input->AddCommand("TOGGLE_VISIBILITY", new RunToggleFunctionCommand("TOGGLE_VISIBILITY", std::bind(&Selection::ToggleSelectionVisibility, state->GetSel())));
 
-		input->AddCommand("SELECT_MODE", new RunFunctionCommand("SELECT_MODE", nullptr));
-		input->AddCommand("MOVE_MODE", new RunFunctionCommand("MOVE_MODE", nullptr));
-		input->AddCommand("ROTATE_MODE", new RunFunctionCommand("ROTATE_MODE", nullptr));
-		input->AddCommand("SCALE_MODE", new RunFunctionCommand("SCALE_MODE", nullptr));
+		input->AddCommand("SELECT_MODE", new RunFunctionCommand("SELECT_MODE", std::bind(&Selection::SetTool, state->GetSel(), Tool::SELECT)));
+		input->AddCommand("MOVE_MODE", new RunFunctionCommand("MOVE_MODE", std::bind(&Selection::SetTool, state->GetSel(), Tool::MOVE)));
+		input->AddCommand("ROTATE_MODE", new RunFunctionCommand("ROTATE_MODE", std::bind(&Selection::SetTool, state->GetSel(), Tool::ROTATE)));
+		input->AddCommand("SCALE_MODE", new RunFunctionCommand("SCALE_MODE", std::bind(&Selection::SetTool, state->GetSel(), Tool::SCALE)));
 
-		input->AddCommand("MESH_MODE", new RunFunctionCommand("MESH_MODE", nullptr));
-		input->AddCommand("FACE_MODE", new RunFunctionCommand("FACE_MODE", nullptr));
-		input->AddCommand("VERTEX_MODE", new RunFunctionCommand("VERTEX_MODE", nullptr));
+		input->AddCommand("MESH_MODE", new RunFunctionCommand("MESH_MODE", std::bind(&Selection::SetSelMode, state->GetSel(), SelMode::MESH)));
+		input->AddCommand("FACE_MODE", new RunFunctionCommand("FACE_MODE", std::bind(&Selection::SetSelMode, state->GetSel(), SelMode::FACE)));
+		input->AddCommand("VERTEX_MODE", new RunFunctionCommand("VERTEX_MODE", std::bind(&Selection::SetSelMode, state->GetSel(), SelMode::VERT)));
 		input->AddCommand("TOGGLE_CAMERA_ROT_MODE", new RunFunctionCommand("TOGGLE_CAMERA_ROT_MODE", std::bind(&Scene::ToggleCameraRotationMode, scene)));
 		input->AddCommand("TOGGLE_CAMERA_PERSPECTIVE", new RunFunctionCommand("TOGGLE_CAMERA_PERSPECTIVE", std::bind(&Scene::TogglePerspective, scene)));
 
@@ -52,7 +52,7 @@ public:
 		input->AddCommand("LIGHTING_WIREFRAME", new RunFunctionCommand("LIGHTING_WIREFRAME", nullptr));
 		input->AddCommand("TOGGLE_SHADOWS", new RunToggleFunctionCommand("TOGGLE_SHADOWS", std::bind(&State::ToggleShadows, state)));
 		input->AddCommand("TOGGLE_DEFAULT_MAT", new RunToggleFunctionCommand("TOGGLE_DEFAULT_MAT", std::bind(&State::ToggleDefaultMat, state)));
-		input->AddCommand("RENDER", new RunFunctionCommand("RENDER", nullptr));
+		input->AddCommand("RENDER", new RunFunctionCommand("RENDER", nullptr)); // TODO: Implement render
 
 		input->AddCommand("TOGGLE_DIFFUSE_MAP", new RunToggleFunctionCommand("TOGGLE_DIFFUSE_MAP", std::bind(&State::ToggleDiffuseMap, state)));
 		input->AddCommand("TOGGLE_AMBIENT_MAP", new RunToggleFunctionCommand("TOGGLE_AMBIENT_MAP", std::bind(&State::ToggleAmbientMap, state)));
@@ -75,9 +75,9 @@ public:
 
 		input->AddCommand("UNDO", new RunFunctionCommand("UNDO", std::bind(&ActionStack::Undo, state->GetActionStack())));
 		input->AddCommand("REDO", new RunFunctionCommand("REDO", std::bind(&ActionStack::Redo, state->GetActionStack())));
-		input->AddCommand("REPEAT", new RunFunctionCommand("REPEAT", nullptr));
-		input->AddCommand("COPY", new RunFunctionCommand("COPY", nullptr));
-		input->AddCommand("CUT", new RunFunctionCommand("CUT", nullptr));
-		input->AddCommand("PASTE", new RunFunctionCommand("PASTE", nullptr));
+		input->AddCommand("REPEAT", new RunFunctionCommand("REPEAT", nullptr)); // TODO: Implement repeat
+		input->AddCommand("COPY", new RunFunctionCommand("COPY", nullptr)); // Copy works by default
+		input->AddCommand("CUT", new RunFunctionCommand("CUT", nullptr)); // Cut works by default
+		input->AddCommand("PASTE", new RunFunctionCommand("PASTE", nullptr)); // Paste works by default
 	}
 };
