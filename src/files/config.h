@@ -17,23 +17,23 @@ private:
 	std::unordered_map<std::string, bool> mConfigBools;
 
 	// Returns whether the requested name is a nested config
-	const bool IsNested(const std::string& name);
+	bool IsNested(const std::string& name) const;
 
 	// Returns the config with the given name
 	Config* GetNameTarget(std::string* name);
 
 	// Returns the given config
-	Config* GetThisConfig(const std::string& name);
+	Config* GetThisConfig(const std::string& name) const;
 	// Returns the given string
-	const std::string GetThisString(const std::string& name);
+	std::string GetThisString(const std::string& name) const;
 	// Returns the given vec3
-	const glm::vec3 GetThisVec(const std::string& name);
+	glm::vec3 GetThisVec(const std::string& name) const;
 	// Returns the given float
-	const float GetThisFloat(const std::string& name);
+	float GetThisFloat(const std::string& name) const;
 	// Returns the given int
-	const int GetThisInt(const std::string& name);
+	int GetThisInt(const std::string& name) const;
 	// Returns the given bool
-	const bool GetThisBool(const std::string& name);
+	bool GetThisBool(const std::string& name) const;
 
 	// Sets the given config to the given value
 	void SetThisConfig(const std::string& name, Config* val);
@@ -49,26 +49,38 @@ private:
 	void SetThisBool(const std::string& name, const bool val);
 public:
 	// Creates a config with the given name
-	Config(const std::string& name) { mName = name; }
+	explicit Config(const std::string& name) 
+		: mName(name)
+	{}
 
 	// Returns the config's name
-	const std::string GetName() { return mName; }
+	std::string GetName() const { return mName; }
 
 	// Returns the child configs
-	const std::unordered_map<std::string, Config*>& GetConfigs() { return mChildConfigs; }
+	const std::unordered_map<std::string, Config*>& GetConfigs() const { return mChildConfigs; }
+	// Returns the child strings
+	const std::unordered_map<std::string, std::string>& GetStrings() { return mConfigStrings; }
+	// Returns the child vectors
+	const std::unordered_map<std::string, glm::vec3>& GetVecs() { return mConfigVecs; }
+	// Returns the child floats
+	const std::unordered_map<std::string, float>& GetFloats() { return mConfigFloats; }
+	// Returns the child ints
+	const std::unordered_map<std::string, int>& GetInts() { return mConfigInts; }
+	// Returns the child bools
+	const std::unordered_map<std::string, bool>& GetBools() { return mConfigBools; }
 
 	// Returns the given config
 	Config* GetConfig(const std::string& name);
 	// Returns the given string
-	const std::string GetString(const std::string& name);
+	std::string GetString(const std::string& name);
 	// Returns the given vec3
-	const glm::vec3 GetVec(const std::string& name);
+	glm::vec3 GetVec(const std::string& name);
 	// Returns the given float
-	const float GetFloat(const std::string& name);
+	float GetFloat(const std::string& name);
 	// Returns the given int
-	const int GetInt(const std::string& name);
+	int GetInt(const std::string& name);
 	// Returns the given bool
-	const bool GetBool(const std::string& name);
+	bool GetBool(const std::string& name);
 
 	// Sets the given config to the given value
 	void SetConfig(const std::string& name, Config* val);
@@ -77,14 +89,14 @@ public:
 	// Sets the given vec3 to the given value
 	void SetVec(const std::string& name, const glm::vec3& val);
 	// Sets the given float to the given value
-	void SetFloat(const std::string& name, const float val);
+	void SetFloat(const std::string& name, float val);
 	// Sets the given int to the given value
-	void SetInt(const std::string& name, const int val);
+	void SetInt(const std::string& name, int val);
 	// Sets the given bool to the given value
-	void SetBool(const std::string& name, const bool val);
+	void SetBool(const std::string& name, bool val);
 
 	// Prints the config
-	void Print(const int depth = 0);
+	void Print(int depth = 0) const;
 	// Resets the config
 	void Reset();
 };

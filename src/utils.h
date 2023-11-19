@@ -7,6 +7,12 @@
 #include <sstream>
 #include <vector>
 
+#define IS_BOOL std::is_same<T, bool>::value
+#define IS_INT std::is_same<T, int>::value
+#define IS_FLOAT std::is_same<T, float>::value
+#define IS_VEC3 std::is_same<T, glm::vec3>::value
+#define IS_STRING std::is_same<T, std::string>::value
+
 /// <summary>
 /// Returns the euler degrees of the direction vector with respect to the up vector
 /// http://geom3d.com/data/documents/Calculation=20of=20Euler=20angles.pdf
@@ -256,4 +262,39 @@ static const glm::vec2 Vec2FromAssimp(const aiVector2D& vec)
 static const glm::vec2 Vec2FromAssimp(const aiVector3D& vec)
 {
 	return glm::vec2(vec.x, vec.y);
+}
+
+template<typename T>
+typename static std::enable_if<IS_STRING, const std::string>::type
+TypeToString(T value)
+{
+    return value;
+}
+
+template<typename T>
+typename static std::enable_if<IS_INT || IS_FLOAT, const std::string>::type
+TypeToString(T value)
+{
+    return std::to_string(value);
+}
+
+template<typename T>
+typename static std::enable_if<IS_VEC3, const std::string>::type
+TypeToString(T value)
+{
+    return Vec3ToString(value);
+}
+
+template<typename T>
+typename static std::enable_if<IS_BOOL, const std::string>::type
+TypeToString(T value)
+{
+    return (value) ? "True" : "False";
+}
+
+template<typename T>
+typename static std::enable_if<!IS_BOOL && !IS_INT && !IS_FLOAT && !IS_VEC3 && !IS_STRING, const std::string>::type
+TypeToString(T value)
+{
+    return "invalid_type";
 }

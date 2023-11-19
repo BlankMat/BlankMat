@@ -1,31 +1,31 @@
 #pragma once
-//#define STB_IMAGE_IMPLEMENTATION
-#include "iGUIWindow.h"
-#include "selection.h"
-#include "stb_image.h"
+#include "glIncludes.h"
+#include "renderingHelpers.h"
+#include "files/fileSystem.h"
+#include "windows/iGUIWindow.h"
+#include "interaction/selection.h"
+#include "rendering/scene.h"
+#include "tools/state.h"
 #include <vector>
 #include <iostream>
-#include "string.h"
-#include "renderingHelpers.h"
-#include "tools/state.h"
-#include "rendering/scene.h"
-#include "files/fileSystem.h"
+#include <string>
 
-#define TOOLS_DIR "resources/icons/toolIcons"
-#define SelectFileName "Select.png"
-#define MoveFileName "Move.png"
-#define RotateFileName "Rotate.png"
-#define ScaleFileName "Scale.png"
-#define ExtrudeFileName "Extrude.png"
+constexpr auto TOOLS_DIR = "resources/icons/toolIcons";
+constexpr auto SELECT_ICON = "Select.png";
+constexpr auto MOVE_ICON = "Move.png";
+constexpr auto ROTATE_ICON = "Rotate.png";
+constexpr auto SCALE_ICON = "Scale.png";
+constexpr auto EXTRUDE_ICON = "Extrude.png";
 
 class GUIToolbarWindow : public IGUIWindow
 {
 protected:
-    State* mState;
-    Scene* mScene;
-    const std::string fileNames[5] = {SelectFileName,MoveFileName,RotateFileName,ScaleFileName,ExtrudeFileName};
+    State* mState = nullptr;
+    Scene* mScene = nullptr;
+    ImVec2 mIconSize = ImVec2(50, 50);
+
+    const std::string fileNames[5] = { SELECT_ICON, MOVE_ICON, ROTATE_ICON, SCALE_ICON, EXTRUDE_ICON };
     std::vector<unsigned int> mTextureIDs;
-    ImVec2 mIconSize;
 public:
     void Draw() override
     {
@@ -56,12 +56,9 @@ public:
     }
 
     GUIToolbarWindow(State* state, Scene* scene, bool isEnabled)
+        : mState(state), mScene(scene)
     {
         mType = GUI::TOOLBAR;
-        mIsEnabled = isEnabled;
-        mState = state;
-        mScene = scene;
-        mIconSize = ImVec2(50, 50);
 
         stbi_set_flip_vertically_on_load(false);
         for(Tool tool = Tool::SELECT; tool != Tool::LAST; tool = (Tool)((int)tool+1))

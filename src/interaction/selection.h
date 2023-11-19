@@ -1,9 +1,9 @@
 #pragma once
 #include "glIncludes.h"
+#include "interfaces/iTool.h"
 #include <vector>
 #include <iostream>
 #include <set>
-#include "tools/selectTool.h"
 
 enum class Tool { NONE = 0, SELECT = 1, MOVE = 2, ROTATE = 3, SCALE = 4, EXTRUDE = 5 , LAST};
 enum class SelMode { MESH = 0, VERT = 1, FACE = 2, LAST };
@@ -97,6 +97,9 @@ public:
 	bool IsVertSelected(unsigned int _id);
 	// Returns whether the given face is selected
 	bool IsFaceSelected(unsigned int _id);
+	
+	// Toggles the visibility of the selection
+	void ToggleSelectionVisibility();
 
 	// Sets the selection's transform handle
 	void SetTransformHandle(IEntity* transformHandle);

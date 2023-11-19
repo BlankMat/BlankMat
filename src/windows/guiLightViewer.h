@@ -7,8 +7,8 @@
 class GUILightViewer : public IGUIWindow
 {
 protected:
-    State* mState;
-    Scene* mScene;
+    State* mState = nullptr;
+    Scene* mScene = nullptr;
 public:
     void Draw() override
     {
@@ -80,10 +80,9 @@ public:
     }
 
     GUILightViewer(State* state, Scene* scene, bool isEnabled)
+        : mState(state), mScene(scene)
     {
         mType = GUI::LIGHT_VIEWER;
-        mIsEnabled = isEnabled;
-        mState = state;
         mScene = scene;
     }
 };

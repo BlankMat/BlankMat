@@ -6,7 +6,7 @@ class EntityContainer : public IContainer<IEntity>
 {
 public:
 	// Draws the contents of the container
-	void Draw(Shader* shader, State* state, Material* defaultMat, glm::mat4 viewProj, bool drawMats = false)
+	void Draw(Shader* shader, State* state, Material* defaultMat, const glm::mat4& viewProj, bool drawMats = false)
 	{
 		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
 		{

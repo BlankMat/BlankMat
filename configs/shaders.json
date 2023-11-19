@@ -3,6 +3,10 @@
     "file": "defaultShader",
     "hasGeomShader": false
   },
+  "pbr": {
+    "file": "pbrShader",
+    "hasGeomShader": false
+  },
   "lambert": {
     "file": "lambertDefaultShader",
     "hasGeomShader": false

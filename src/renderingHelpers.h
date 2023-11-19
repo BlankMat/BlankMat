@@ -2,7 +2,6 @@
 #include <string>
 #include <iostream>
 #include "glIncludes.h"
-//#define STB_IMAGE_IMPLEMENTATION
 
 
 // Loads the given texture from a file

@@ -7,8 +7,8 @@
 class GUIMaterialEditor : public IGUIWindow
 {
 protected:
-	State* mState;
-	Scene* mScene;
+	State* mState = nullptr;
+	Scene* mScene = nullptr;
 
 	// Local state
 	std::string mSelColor = "";
@@ -72,10 +72,9 @@ public:
 	}
 
 	GUIMaterialEditor(State* state, Scene* scene, bool isEnabled)
+		: mState(state), mScene(scene)
 	{
 		mType = GUI::MATERIAL_EDITOR;
-		mState = state;
-		mScene = scene;
 		mIsEnabled = isEnabled;
 	}
 };

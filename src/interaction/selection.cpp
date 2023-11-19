@@ -2,6 +2,7 @@
 #include "rendering/material.h"
 #include "interfaces/iMesh.h"
 #include "interfaces/iScene.h"
+#include "tools/selectTool.h"
 
 // Returns the entire selection as a selection of vertices
 void Selection::GetSelectedVerts(std::vector<unsigned int>& _verts)
@@ -229,6 +230,13 @@ IEntity* Selection::GetTransformHandle() { return mSelTransformHandle; }
 
 // Sets the selection's transform handle
 void Selection::SetTransformHandle(IEntity* transformHandle) { mSelTransformHandle = transformHandle; }
+
+// Toggles the visibility of the selection
+void Selection::ToggleSelectionVisibility()
+{
+	if (mSelEntity != nullptr)
+		mSelEntity->ToggleEnabled();
+}
 
 // Updates the transform handle's status
 void Selection::UpdateTransformHandle()

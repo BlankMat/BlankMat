@@ -1,5 +1,8 @@
 #pragma once
-#include "input.h"
+#include "timer.h"
+#include "interaction/input.h"
+#include "interaction/actionStack.h"
+#include "interaction/commands.h"
 
 #include "tools/state.h"
 
@@ -18,6 +21,7 @@
 #include "windows/guiLightViewer.h"
 #include "windows/guiMaterialViewer.h"
 
+#include "windows/guiActionList.h"
 #include "windows/guiMaterialEditor.h"
 
 #include "rendering/shader.h"
@@ -30,8 +34,8 @@
 #include "primitives/vCube.h"
 #include "primitives/vPlane.h"
 
-const unsigned int SCR_WIDTH = 1280;
-const unsigned int SCR_HEIGHT = 720;
+constexpr unsigned int SCR_WIDTH = 1280;
+constexpr unsigned int SCR_HEIGHT = 720;
 
 // Main program loop
 int main();
@@ -48,9 +52,10 @@ void OpenGLDraw(Window* window, State* state, Scene* scene);
 /// Opens all defined GUIs
 /// </summary>
 /// <param name="window">Window to load GUIs to</param>
-/// <param name="state"></param>
-/// <param name="scene"></param>
-void LoadGUIs(Window* window, State* state, Scene* scene);
+/// <param name="state">Global state</param>
+/// <param name="scene">Scene reference</param>
+/// <param name="config">Config file</param>
+void LoadGUIs(Window* window, State* state, Scene* scene, Input* input, Config* config);
 
 /// <summary>
 /// Loads all defined shaders
@@ -63,8 +68,17 @@ void LoadShaders(Scene* scene, Config* shaderConfig);
 /// Loads the default testing scene
 /// </summary>
 /// <param name="scene">Scene to load to</param>
+/// <param name="state">Global state</param>
 /// <param name="defaultMat">Default material</param>
 /// <param name="defaultCubes">Whether to draw sample cubes or not</param>
 /// <param name="cameraConfig">Default camera</param>
 /// <param name="lightConfig">Default light</param>
-void LoadDefaultScene(Scene* scene, Material* defaultMat, bool defaultCubes, Config* cameraConfig, Config* lightConfig);
+void LoadDefaultScene(Scene* scene, State* state, Material* defaultMat, bool defaultCubes, Config* cameraConfig, Config* lightConfig);
+
+/// <summary>
+/// Handles quitting from the window
+/// </summary>
+/// <param name="window">Window to quit</param>
+/// <param name="state">Global state</param>
+/// <returns>Whether the application should be quit</returns>
+bool HandleWindowQuit(Window* window, State* state);

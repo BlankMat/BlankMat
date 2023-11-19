@@ -1,25 +1,25 @@
 #pragma once
-#include "iGUIWindow.h"
-#include "selection.h"
-#include "stb_image.h"
-#include <vector>
-#include <iostream>
-#include "string.h"
 #include "renderingHelpers.h"
 #include "tools/state.h"
-#include "rendering/scene.h"
 #include "files/fileSystem.h"
+#include "rendering/scene.h"
+#include "windows/iGUIWindow.h"
+#include "interaction/selection.h"
+#include <vector>
+#include <iostream>
+#include <string>
 
-#define MODES_DIR "resources/icons/modeIcons"
+constexpr auto MODES_DIR = "resources/icons/modeIcons";
 
 class GUIToolModeWindow : public IGUIWindow
 {
 protected:
-    const std::string mModeFileNames[3] = {"Mesh.png", "Vert.png", "Face.png"};
-    State* mState;
-    Scene* mScene;
+    State* mState = nullptr;
+    Scene* mScene = nullptr;
+    ImVec2 mIconSize = ImVec2(50, 50);
+
+    const std::string mModeFileNames[3] = { "Mesh.png", "Vert.png", "Face.png" };
     std::vector<unsigned int> mTextureIDs;
-    ImVec2 mIconSize;
 public:
     void Draw() override
     {
@@ -52,12 +52,10 @@ public:
     }
 
     GUIToolModeWindow(State* state, Scene* scene, bool isEnabled)
+        : mState(state), mScene(scene)
     {
         mType = GUI::MODEBAR;
         mIsEnabled = isEnabled;
-        mState = state;
-        mScene = scene;
-        mIconSize = ImVec2(50, 50);
 
         stbi_set_flip_vertically_on_load(false);
         for (SelMode mode = SelMode::MESH; mode != SelMode::LAST; mode = (SelMode)((int)mode+1))
