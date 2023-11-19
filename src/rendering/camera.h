@@ -121,7 +121,7 @@ public:
     {
         if (mRecalcView)
         {
-            mTarget.Set(mPos + mDir);
+            mTarget.SetNoUpdate(mPos + mDir);
             mView = glm::lookAt((glm::vec3)mPos, (glm::vec3)mTarget, (glm::vec3)mUp);
             mRecalcView = false;
         }

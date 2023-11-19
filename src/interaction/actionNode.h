@@ -82,7 +82,9 @@ struct ActionNode
 	/// <returns>Whether the commands were combined</returns>
 	bool Combine(ICommand*& newCommand)
 	{
-		return mCommand->Combine(newCommand);
+		if (mCommand != nullptr)
+			return mCommand->Combine(newCommand);
+		return false;
 	}
 
 	/// <summary>

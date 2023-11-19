@@ -293,6 +293,7 @@ public:
 		: mMaxSize(maxUndo)
 	{
 		mFirstNode = new ActionNode(nullptr, nullptr, nullptr);
+		mCurNode = mFirstNode;
 	}
 
 	/// <summary>

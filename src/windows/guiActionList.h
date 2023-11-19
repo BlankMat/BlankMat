@@ -23,10 +23,12 @@ public:
 			ActionStack* actions = mState->GetActionStack();
 			ActionNode* curAction = actions->GetCurAction();
 			ActionNode* tempAction = actions->GetAction(-1);
-			if (curAction != nullptr)
+
+			// Since the first action has no previous, if the current action has no previous it must be the first action
+			if (curAction != nullptr && curAction->HasPrev())
 			{
 				// List all actions
-				while (tempAction != nullptr)
+				while (tempAction != nullptr && tempAction->HasPrev())
 				{
 					GUIWindowUtils::Selectable(tempAction->GetName(), curAction, tempAction);
 					tempAction = tempAction->mPrevNode;

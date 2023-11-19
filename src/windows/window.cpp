@@ -229,7 +229,7 @@ bool Window::SetupImGuiStyle(bool isDarkStyle, float alphaThreshold)
     style.ChildBorderSize = 1.0f;
     style.FrameBorderSize = 0.0f;
     style.PopupBorderSize = 1.0f;
-    style.WindowBorderSize = 0.0f;
+    style.WindowBorderSize = 1.0f;
     style.FrameRounding = 3.0f;
     style.Alpha = 1.0f;
 
