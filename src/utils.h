@@ -1,5 +1,9 @@
 #pragma once
 #include "glIncludes.h"
+#include <assimp/Importer.hpp>
+#include <assimp/Exporter.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 #include <string>
 #include <fstream>
 #include <iostream>

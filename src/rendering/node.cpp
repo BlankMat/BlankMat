@@ -94,7 +94,7 @@ Node* Node::FindNode(const std::string& name)
 }
 
 // Recursively searches for the mesh with the given name
-IMesh* Node::FindMesh(const std::string& name)
+Mesh* Node::FindMesh(const std::string& name)
 {
 	// Search child meshes
 	for (unsigned int i = 0; i < (unsigned int)mMeshes.size(); i++)
@@ -115,7 +115,7 @@ IMesh* Node::FindMesh(const std::string& name)
 			continue;
 
 		// If the mesh is found, return it
-		IMesh* res = mChildren[i]->FindMesh(name);
+		Mesh* res = mChildren[i]->FindMesh(name);
 		if (res != nullptr)
 			return res;
 	}
@@ -123,7 +123,7 @@ IMesh* Node::FindMesh(const std::string& name)
 }
 
 // Returns the index of the given mesh or -1 if not found
-int Node::GetMeshIndex(IMesh* mesh)
+int Node::GetMeshIndex(Mesh* mesh)
 {
 	for (unsigned int i = 0; i < (unsigned int)mMeshes.size(); i++)
 	{
@@ -156,7 +156,7 @@ Node* Node::GetChild(unsigned int index)
 }
 
 // Returns the mesh with the given index, or none if out of bounds
-IMesh* Node::GetMesh(unsigned int index)
+Mesh* Node::GetMesh(unsigned int index)
 {
 	// Don't search out of bounds
 	if (index >= mMeshes.size())
@@ -181,7 +181,7 @@ void Node::UpdateEnabledStatus()
 }
 
 // Adds a mesh to the node
-void Node::AddMesh(IMesh* mesh)
+void Node::AddMesh(Mesh* mesh)
 {
 	if (HasMesh(mesh))
 	{
@@ -204,7 +204,7 @@ void Node::AddChild(Node* child)
 }
 
 // Moves the given mesh from this node to the given node. Returns whether it was successful
-bool Node::MoveMesh(IMesh* mesh, Node* other)
+bool Node::MoveMesh(Mesh* mesh, Node* other)
 {
 	// Don't move null mesh
 	if (mesh == nullptr)

@@ -26,6 +26,14 @@ protected:
 	std::string mDirectory;
 	std::string mName;
 
+	IEntity* mGrid = nullptr;
+	IEntity* mTransformHandle = nullptr;
+	IEntity* mViewAxisHandle = nullptr;
+
+	int mViewAxisPrevWidth = 0;
+	int mViewAxisPrevHeight = 0;
+	glm::mat4 mViewAxisProjection = glm::mat4(1.0f);
+
 	std::string mCurShader;
 	Shader* mShader;
 	Light* mGlobalLight;
@@ -52,6 +60,8 @@ protected:
 	// Loads the given texture or returns the existing one
 	Texture* LoadTexture(const std::string& type, const std::string& path, const std::string& defaultName);
 
+	// Returns the projection matrix of the view axis handle
+	const glm::mat4& GetViewAxisProjection(Window* window);
 public:
 	TextureContainer* mTextures;
 	MaterialContainer* mMaterials;
@@ -62,7 +72,27 @@ public:
 	EntityContainer* mEntities;
 
 	// Renders the current scene
-	virtual void Draw(Window* window, Shader* shader) = 0;
+	void Draw(Window* window, Shader* shader);
+	// Renders the current scene's shadows
+	void DrawShadows(Window* window, Shader* shader);
+
+	// Focuses the camera on the currently selected object (if any)
+	void FocusCamera();
+
+	// Toggles the camera between perspective and orthographic
+	void TogglePerspective();
+
+	// Toggles the rotation mode of the camera
+	void ToggleCameraRotationMode();
+
+	// Sets the view axis handle to the given object
+	void SetViewAxisHandle(IEntity* viewHandle);
+
+	// Sets the grid object
+	void SetGrid(IEntity* grid);
+	
+	// Sets the transform handle object
+	void SetTransformHandle(IEntity* handle);
 
 	// Activates the shader with the given name for the scene
 	void UseShader(const std::string& name = "");
@@ -165,4 +195,9 @@ public:
 
 	// Returns the view matrix of the scene's camera
 	const glm::mat4& GetViewMatrix();
+
+	// Constructs the scene, getting everything ready for manual setting
+	IScene(State* state);
+	// Destructs scene and cleans up all memory used
+	~IScene();
 };

@@ -1,6 +1,6 @@
 #pragma once
 #include "glIncludes.h"
-#include "interfaces/iMesh.h"
+#include "rendering/mesh.h"
 #include <vector>
 
 class Node : public IEntity
@@ -17,7 +17,7 @@ protected:
 	/// <summary>
 	/// List of contained meshes
 	/// </summary>
-	std::vector<IMesh*> mMeshes;
+	std::vector<Mesh*> mMeshes;
 
 	/// <summary>
 	/// Generates buffers. Nodes have no buffers.
@@ -78,7 +78,7 @@ public:
 	/// </summary>
 	/// <param name="mesh">Mesh to search for</param>
 	/// <returns>Index of the given mesh or -1</returns>
-	int GetMeshIndex(IMesh* mesh);
+	int GetMeshIndex(Mesh* mesh);
 
 	/// <summary>
 	/// Returns the child node with the given index, or none if out of bounds
@@ -92,14 +92,14 @@ public:
 	/// </summary>
 	/// <param name="index">Index of the mesh to find</param>
 	/// <returns>Mesh with given index or null</returns>
-	IMesh* GetMesh(unsigned int index);
+	Mesh* GetMesh(unsigned int index);
 
 	/// <summary>
 	/// Returns whether the node has the given mesh
 	/// </summary>
 	/// <param name="mesh">Mesh to search for</param>
 	/// <returns>Whether the mesh was found or not</returns>
-	bool HasMesh(IMesh* mesh) { return GetMeshIndex(mesh) > 0; }
+	bool HasMesh(Mesh* mesh) { return GetMeshIndex(mesh) > 0; }
 
 	/// <summary>
 	/// Returns whether the node has the given child
@@ -131,13 +131,13 @@ public:
 	/// </summary>
 	/// <param name="name">Name of the mesh</param>
 	/// <returns>Mesh with the given name or nullptr if not found</returns>
-	IMesh* FindMesh(const std::string& name);
+	Mesh* FindMesh(const std::string& name);
 
 	/// <summary>
 	/// Adds a mesh for the node
 	/// </summary>
 	/// <param name="mesh">Mesh to add</param>
-	void AddMesh(IMesh* mesh);
+	void AddMesh(Mesh* mesh);
 	
 	/// <summary>
 	/// Adds a child to the node
@@ -151,7 +151,7 @@ public:
 	/// <param name="mesh">Mesh to move</param>
 	/// <param name="other">Node to move mesh to</param>
 	/// <returns>Whether the moving was successful</returns>
-	bool MoveMesh(IMesh* mesh, Node* other);
+	bool MoveMesh(Mesh* mesh, Node* other);
 
 	/// <summary>
 	/// Moves the given child node from this node to the given node

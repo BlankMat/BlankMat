@@ -23,8 +23,7 @@ int main()
     SceneReader::LoadScene(scene, FileSystem::GetPath(MODELS_DIR) + config->GetString("model.file"), 
         config->GetVec("model.pos"), config->GetVec("model.rot"), config->GetVec("model.scale"));
 
-    state->GetSel()->SetTransformHandle(new PHandle("transformHandle", 0.5f, 6, true, glm::vec3(0.0f)));
-    scene->SetTransformHandle(state->GetSel()->GetTransformHandle());
+    state->GetSel()->SetTransformHandle(scene->GetTransformHandle());
 
     // Load shaders
     LoadShaders(scene, config->GetConfig("shaders"));
@@ -32,9 +31,6 @@ int main()
 
     // Load default scene
     LoadDefaultScene(scene, state, state->defaultMat, config->GetBool("defaultCubes"), config->GetConfig("camera"), config->GetConfig("light"));
-    window->GetInput()->SetMouseRotFunction(std::bind(&Camera::Rotate, scene->GetCamera(), std::placeholders::_1));
-    window->GetInput()->SetMouseMoveFunction(std::bind(&Camera::Translate, scene->GetCamera(), std::placeholders::_1));
-    window->GetInput()->SetMouseZoomFunction(std::bind(&Camera::Translate, scene->GetCamera(), std::placeholders::_1));
 
     // Add GUIs
     LoadGUIs(window, state, scene, window->GetInput(), config);
@@ -144,16 +140,12 @@ void LoadShaders(Scene* scene, Config* shaderConfig)
 }
 
 // Loads the default scene
-// --------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------------------
 void LoadDefaultScene(Scene* scene, State* state, Material* defaultMat, bool defaultCubes, Config* cameraConfig, Config* lightConfig)
 {
     // Add light and camera
     scene->SetCamera(state->GetActionStack(), cameraConfig);
     scene->SetLight(new PLightCube("globalLight", 1.0f, lightConfig));
-
-    // Add renderables
-    scene->SetGrid(new PGrid(GRID_OBJ, 5, 1.0f, new Material(glm::vec3(0.2f)), 2, true, glm::vec3(0.0f)));
-    scene->SetViewAxisHandle(new PHandle(CAMERA_AXIS_HANDLE, 45.0f, 6, false, glm::vec3(50, 50, 0)));
 
     scene->AddMesh(new VPlane(BG_PLANE_OBJ, 20.0f, defaultMat));
     scene->AddMesh(new VPlane("brickwall", 2.0f, scene->GetMaterial("brickwall"), glm::vec3(5, 2, 0), glm::vec3(90, 0, 0)));

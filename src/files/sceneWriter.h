@@ -1,11 +1,16 @@
 #pragma once
+#include "glIncludes.h"
 #include "interfaces/iScene.h"
+#include <assimp/Importer.hpp>
+#include <assimp/Exporter.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 
 class SceneWriter
 {
 private:
 	// Recursively processes the meshes in the given node and all its children
-	static void ProcessNode(IScene* scene, Node* sceneNode, const aiNode* node, const aiScene* assimpScene)
+	static void ProcessNode(Scene* scene, Node* sceneNode, const aiNode* node, const aiScene* assimpScene)
 	{
 		std::cout << " - Reading node " << node->mName.C_Str() << std::endl;
 		// Process all the node's meshes (if any)
@@ -25,7 +30,7 @@ private:
 	}
 
 	// Process the vertices, indices, and textures of the given mesh
-	static Mesh* ProcessMesh(IScene* scene, const aiMesh* mesh, const aiScene* assimpScene)
+	static Mesh* ProcessMesh(Scene* scene, const aiMesh* mesh, const aiScene* assimpScene)
 	{
 		// Process each part of the mesh
 		std::vector<Vertex> vertices = ProcessVertices(mesh);
@@ -93,7 +98,7 @@ private:
 	}
 
 	// Processes the material of the mesh
-	static Material* ProcessMaterial(IScene* scene, const aiMesh* mesh, const aiScene* assimpScene)
+	static Material* ProcessMaterial(Scene* scene, const aiMesh* mesh, const aiScene* assimpScene)
 	{
 		// If there are no textures, use default material
 		if (mesh->mMaterialIndex >= assimpScene->mNumMaterials)
@@ -177,7 +182,7 @@ private:
 	}
 
 	// Loads material textures
-	static std::vector<Texture*> LoadMaterialTextures(IScene* scene, const aiMaterial* mat, aiTextureType type, const std::string& typeName)
+	static std::vector<Texture*> LoadMaterialTextures(Scene* scene, const aiMaterial* mat, aiTextureType type, const std::string& typeName)
 	{
 		std::vector<Texture*> textures;
 		for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
@@ -206,7 +211,7 @@ private:
 	}
 public:
 	// Saves the scene to the given path
-	static void SaveScene(IScene* scene, const std::string& path, const glm::vec3& startPos = glm::vec3(0.0f), const glm::vec3& startRot = glm::vec3(0.0f), const glm::vec3& startScale = glm::vec3(1.0f))
+	static void SaveScene(Scene* scene, const std::string& path, const glm::vec3& startPos = glm::vec3(0.0f), const glm::vec3& startRot = glm::vec3(0.0f), const glm::vec3& startScale = glm::vec3(1.0f))
 	{
 		return;
 

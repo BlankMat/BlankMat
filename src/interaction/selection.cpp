@@ -1,6 +1,6 @@
 #include "selection.h"
 #include "rendering/material.h"
-#include "interfaces/iMesh.h"
+#include "rendering/mesh.h"
 #include "interfaces/iScene.h"
 #include "tools/selectTool.h"
 
@@ -67,7 +67,7 @@ void Selection::SelectVert(unsigned int _id, bool _deselect)
 }
 
 // Selects the given mesh
-void Selection::SelectMesh(IMesh* mesh)
+void Selection::SelectMesh(Mesh* mesh)
 {
 	mSelMesh = mesh;
 	std::cout << "Selected mesh [" << IEntity::GetNameNullSafe(mSelMesh) << "].\n";
@@ -220,7 +220,7 @@ Tool Selection::GetTool() { return mSelTool; }
 // Returns the selection mode
 SelMode Selection::GetSelMode() { return mSelMode; }
 // Returns the selected mesh
-IMesh* Selection::GetSelectedMesh() { return mSelMesh; }
+Mesh* Selection::GetSelectedMesh() { return mSelMesh; }
 // Returns the selected entity
 IEntity* Selection::GetSelectedEntity() { return mSelEntity; }
 // Returns the selected material
@@ -251,7 +251,7 @@ void Selection::UpdateTransformHandle()
 }
 
 // Returns the nearest mesh to the clicked position
-IMesh* Selection::GetNearestMesh(IScene* scene, float u, float v)
+Mesh* Selection::GetNearestMesh(IScene* scene, float u, float v)
 {
 	//std::cout << "Transformed click [" << u << ", " << v << "]\n";
 	//Ray ray = RayTracer::GenerateRay(scene, u, v, false);
