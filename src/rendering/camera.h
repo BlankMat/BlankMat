@@ -94,7 +94,7 @@ public:
     // Sets the FOV of the camera
     void SetFOV(float fov) { mFOV.Set(fov); }
     // Sets the camera's rotate mode to be around the pivot
-    void SetPivotRotatioMode(bool isPivotRotation) { mRotateAroundPivot.Set(isPivotRotation); }
+    void SetPivotRotationMode(bool isPivotRotation) { mRotateAroundPivot.Set(isPivotRotation); }
     // Sets the pivot of the camera
     void SetPivot(const glm::vec3& pivot) { mPivot.Set(pivot); }
 

@@ -148,6 +148,18 @@ void Scene::FocusCamera()
 	GetCamera()->LookAt((selEntity != nullptr) ? selEntity->GetPos() : glm::vec3(0.0f));
 }
 
+// Toggles the camera between perspective and orthographic
+void Scene::TogglePerspective()
+{
+	GetCamera()->SetPerspective(!GetCamera()->IsPerspective());
+}
+
+// Toggles the rotation mode of the camera
+void Scene::ToggleCameraRotationMode()
+{
+	GetCamera()->SetPivotRotationMode(!GetCamera()->IsRotatingAroundPivot());
+}
+
 // Constructs the scene from the given file
 Scene::Scene(State* state)
 {

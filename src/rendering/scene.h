@@ -27,6 +27,12 @@ public:
 	// Focuses the camera on the currently selected object (if any)
 	void FocusCamera();
 
+	// Toggles the camera between perspective and orthographic
+	void TogglePerspective();
+
+	// Toggles the rotation mode of the camera
+	void ToggleCameraRotationMode();
+
 	// Sets the view axis handle to the given object
 	void SetViewAxisHandle(IEntity* viewHandle);
 	// Sets the grid object

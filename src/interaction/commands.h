@@ -43,8 +43,8 @@ public:
 		input->AddCommand("MESH_MODE", new RunFunctionCommand("MESH_MODE", nullptr));
 		input->AddCommand("FACE_MODE", new RunFunctionCommand("FACE_MODE", nullptr));
 		input->AddCommand("VERTEX_MODE", new RunFunctionCommand("VERTEX_MODE", nullptr));
-		input->AddCommand("TOGGLE_CAMERA_ROT_MODE", new RunFunctionCommand("TOGGLE_CAMERA_ROT_MODE", nullptr));
-		input->AddCommand("TOGGLE_CAMERA_PERSPECTIVE", new RunFunctionCommand("TOGGLE_CAMERA_PERSPECTIVE", nullptr));
+		input->AddCommand("TOGGLE_CAMERA_ROT_MODE", new RunFunctionCommand("TOGGLE_CAMERA_ROT_MODE", std::bind(&Scene::ToggleCameraRotationMode, scene)));
+		input->AddCommand("TOGGLE_CAMERA_PERSPECTIVE", new RunFunctionCommand("TOGGLE_CAMERA_PERSPECTIVE", std::bind(&Scene::TogglePerspective, scene)));
 
 		input->AddCommand("LIGHTING_SHADED", new RunFunctionCommand("LIGHTING_SHADED", nullptr));
 		input->AddCommand("LIGHTING_TEXTURED", new RunFunctionCommand("LIGHTING_TEXTURED", nullptr));
