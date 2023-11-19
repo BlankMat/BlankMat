@@ -143,18 +143,14 @@ void LoadGUIs(Window* window, State* state, Scene* scene, Input* input, Config* 
 // --------------------------------------------------
 void LoadShaders(Scene* scene, Config* shaderConfig)
 {
-    double loadStartTime = glfwGetTime();
-
+    double startTime = glfwGetTime();
     std::unordered_map<std::string, Config*> shaders = shaderConfig->GetConfigs();
     for (auto iter = shaders.begin(); iter != shaders.end(); ++iter)
     {
         scene->CreateShader(iter->first, iter->second);
     }
     scene->UseShader("default");
-
-    double loadEndTime = glfwGetTime();
-    double loadTime = loadEndTime - loadStartTime;
-    std::cout << "Shaders loaded in " << loadTime << " seconds." << std::endl;
+    Timer::Time(startTime, "Shaders loaded");
 }
 
 // Loads the default scene
