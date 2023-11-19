@@ -1,15 +1,19 @@
 #pragma once
-#include "texture.h"
+#include "glIncludes.h"
 #include "files/config.h"
-#include "interfaces/iMaterial.h"
+#include "rendering/texture.h"
+#include "rendering/shader.h"
 
 // Forward declare state to prevent circular dependency
 class State;
 
+// Lighting mode of the material
+enum class IllumMode { FLAT = 0, LAMBERT = 1, PHONG = 2, REFLECTION = 3 };
+
 /// <summary>
 /// Class that stores all texture and render information for a material
 /// </summary>
-class Material : public IMaterial<Texture>
+class Material
 {
 protected:
     glm::vec3 mCurKD;
@@ -25,6 +29,68 @@ protected:
 	/// </summary>
 	std::vector<Texture*> mTextures;
 public:
+    /// <summary>
+    /// ambient color
+    /// </summary>
+    glm::vec3 ka;
+    /// <summary>
+    /// diffuse color
+    /// </summary>
+    glm::vec3 kd;
+    /// <summary>
+    /// specular color
+    /// </summary>
+    glm::vec3 ks;
+    /// <summary>
+    /// emissive color
+    /// </summary>
+    glm::vec3 ke;
+    /// <summary>
+    /// specular exponent
+    /// </summary>
+    float ns;
+    /// <summary>
+    /// index of refraction
+    /// </summary>
+    float ni;
+    /// <summary>
+    /// dissolve, AKA. transparency
+    /// </summary>
+    float d;
+    /// <summary>
+    /// Illumination mode
+    /// </summary>
+    int illum;
+
+    /// <summary>
+    /// ambient color texture
+    /// </summary>
+    Texture* map_ka;
+    /// <summary>
+    /// diffuse color texture
+    /// </summary>
+    Texture* map_kd;
+    /// <summary>
+    /// specular color texture
+    /// </summary>
+    Texture* map_ks;
+    /// <summary>
+    /// bump/normal texture
+    /// </summary>
+    Texture* map_bump;
+    /// <summary>
+    /// specular highlight texture
+    /// </summary>
+    Texture* map_ns;
+    /// <summary>
+    /// alpha (dissolve) texture
+    /// </summary>
+    Texture* map_d;
+    /// <summary>
+    /// name of the material
+    /// </summary>
+    std::string name;
+
     /// <summary>
     /// Loads the textures of this material into the OpenGL context
     /// </summary>
@@ -81,8 +147,7 @@ public:
     Material(const std::string& _name, Texture* _map_kd, Texture* _map_ka, Texture* _map_ks,
         Texture* _map_bump, Texture* _map_ns, Texture* _map_d,
         const glm::vec3& _ka = glm::vec3(), const glm::vec3& _kd = glm::vec3(), const glm::vec3& _ks = glm::vec3(),
-        const float _ns = 0, const float _ni = 1, const float _d = 1,
-        const glm::vec3& _ke = glm::vec3(), const int _illum = 2);
+        float _ns = 0, float _ni = 1, float _d = 1, const glm::vec3& _ke = glm::vec3(), int _illum = 2);
 
     /// <summary>
     /// Constructs a material out of lists of preloaded textures
@@ -106,6 +171,5 @@ public:
         const std::vector<Texture*>& _map_kd, const std::vector<Texture*>& _map_ka, const std::vector<Texture*>& _map_ks, 
         const std::vector<Texture*>& _map_bump, const std::vector<Texture*>& _map_ns, const std::vector<Texture*>& _map_d,
         const glm::vec3& _ka = glm::vec3(), const glm::vec3& _kd = glm::vec3(), const glm::vec3& _ks = glm::vec3(),
-        const float _ns = 0, const float _ni = 1, const float _d = 1,
-        const glm::vec3& _ke = glm::vec3(), const int _illum = 2);
+        float _ns = 0, float _ni = 1, float _d = 1, const glm::vec3& _ke = glm::vec3(), int _illum = 2);
 };

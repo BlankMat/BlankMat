@@ -165,8 +165,8 @@ Material::Material(const std::string& _name, Config* _config, Texture* _map_kd, 
 Material::Material(const std::string& _name, Texture* _map_kd, Texture* _map_ka, Texture* _map_ks,
     Texture* _map_bump, Texture* _map_ns, Texture* _map_d,
     const glm::vec3& _ka, const glm::vec3& _kd, const glm::vec3& _ks,
-    const float _ns, const float _ni, const float _d, const glm::vec3& _ke, const int _illum)
-    : IMaterial(_name, _ka, _kd, _ks, _ns, _ni, _d, _ke, _illum)
+    float _ns, float _ni, float _d, const glm::vec3& _ke, int _illum)
+    : name(_name), ka(_ka), kd(_kd), ks(_ks), ns(_ns), ni(_ni), d(_d), ke(_ke), illum(_illum)
 {
     map_kd = _map_kd;
     map_ka = _map_ka;
@@ -194,8 +194,8 @@ Material::Material(const std::string& _name,
     const std::vector<Texture*>& _map_kd, const std::vector<Texture*>& _map_ka, const std::vector<Texture*>& _map_ks,
     const std::vector<Texture*>& _map_bump, const std::vector<Texture*>& _map_ns, const std::vector<Texture*>& _map_d,
     const glm::vec3& _ka, const glm::vec3& _kd, const glm::vec3& _ks,
-    const float _ns, const float _ni, const float _d, const glm::vec3& _ke, const int _illum)
-    : IMaterial(_name, _ka, _kd, _ks, _ns, _ni, _d, _ke, _illum)
+    float _ns, float _ni, float _d, const glm::vec3& _ke, int _illum)
+    : name(_name), ka(_ka), kd(_kd), ks(_ks), ns(_ns), ni(_ni), d(_d), ke(_ke), illum(_illum)
 {
     map_kd = _map_kd[0];
     map_ka = _map_ka[0];
