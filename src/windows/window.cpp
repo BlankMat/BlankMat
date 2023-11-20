@@ -7,7 +7,6 @@ Window::Window(int width, int height, const std::string& name, Config* config)
 {
     // State and scene must be initialized first, since they are needed for other init
     mState = new State(config);
-    mScene = new Scene(mState);
 
     // Setup all components of the window, returning if any of them fail
     // GLFW must be setup first
@@ -30,6 +29,7 @@ Window::Window(int width, int height, const std::string& name, Config* config)
         return;
 
     // Once the window is setup, initialize IO and file operations
+    mScene = new Scene(mState);
     mInput = new Input(mIO, mState, config);
     mSceneIO = new SceneIO(mState, mScene, mWindow);
 }
