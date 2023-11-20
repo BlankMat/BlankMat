@@ -262,7 +262,7 @@ void Config::Print(const int depth) const
 	{
 		for (int i = 0; i < depth; i++)
 			std::cout << "-";
-		std::cout << "Vec3 [" << iter->first << "]: " << Vec3ToString(iter->second) << std::endl;
+		std::cout << "Vec3 [" << iter->first << "]: " << Vec3ToDisplayString(iter->second) << std::endl;
 	}
 
 	for (int i = 0; i < depth; i++)

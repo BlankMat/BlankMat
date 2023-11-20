@@ -218,6 +218,13 @@ static const std::string Vec3ToHex(const glm::vec3& vec)
 static const std::string Vec3ToString(const glm::vec3& vec)
 {
     std::ostringstream ss;
+    ss << vec.x << " " << vec.y << " " << vec.z;
+    return ss.str();
+}
+
+static const std::string Vec3ToDisplayString(const glm::vec3& vec)
+{
+    std::ostringstream ss;
     ss << "[" << vec.x << ", " << vec.y << ", " << vec.z << "]";
     return ss.str();
 }
@@ -286,7 +293,7 @@ template<typename T>
 typename static std::enable_if<IS_VEC3, const std::string>::type
 TypeToString(T value)
 {
-    return Vec3ToString(value);
+    return Vec3ToDisplayString(value);
 }
 
 template<typename T>

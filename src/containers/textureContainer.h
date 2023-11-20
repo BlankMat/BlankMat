@@ -23,6 +23,9 @@ protected:
 	/// <param name="file">File to write to</param>
 	void WriteItem(const std::string& key, Texture* item, std::ofstream& file) override
 	{
-
+		file << "TEXTURE " << key << std::endl;
+		file << "name " << item->name << std::endl;
+		file << "path " << item->path << std::endl;
+		file << "type " << item->type << std::endl;
 	}
 };

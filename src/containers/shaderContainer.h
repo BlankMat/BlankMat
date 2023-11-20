@@ -23,6 +23,6 @@ protected:
 	/// <param name="file">File to write to</param>
 	void WriteItem(const std::string& key, Shader* item, std::ofstream& file) override
 	{
-
+		file << "SHADER " << key << std::endl;
 	}
 };

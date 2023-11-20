@@ -26,6 +26,13 @@ private:
 		file << std::endl;
 	}
 
+	static void WriteTextures(Scene* scene, std::ofstream& file)
+	{
+		file << "# Textures" << std::endl;
+		scene->GetTextures()->Write(file);
+		file << std::endl;
+	}
+
 	static void WriteCameras(Scene* scene, std::ofstream& file)
 	{
 		file << "# Cameras" << std::endl;
@@ -46,6 +53,7 @@ public:
 		WriteNodes(scene, file);
 		WriteMeshes(scene, file);
 		WriteMaterials(scene, file);
+		WriteTextures(scene, file);
 		WriteCameras(scene, file);
 		WriteLights(scene, file);
 		file.close();

@@ -263,9 +263,7 @@ Shader* Scene::GetShader(const std::string& name)
 // Returns the material with the given name
 Material* Scene::GetMaterial(const std::string& name)
 {
-	if (mOldMaterials.find(name) != mOldMaterials.end())
-		return mOldMaterials[name];
-	return nullptr;
+	return mMaterials->GetItem(name);
 }
 
 // Returns the default material
@@ -277,9 +275,7 @@ Material* Scene::GetDefaultMat()
 // Returns the material with the given name
 Texture* Scene::GetTexture(const std::string& name)
 {
-	if (mOldTextures.find(name) != mOldTextures.end())
-		return mOldTextures[name];
-	return nullptr;
+	return mTextures->GetItem(name);
 }
 
 // Returns the entity with the given name
@@ -340,12 +336,6 @@ void Scene::SetRootNode(Node* rootNode)
 // Returns a reference to the shader list
 const std::unordered_map<std::string, Shader*>& Scene::GetShaderList() { return mOldShaders; }
 
-// Returns a reference to the material list
-const std::unordered_map<std::string, Material*>& Scene::GetMaterialList() { return mOldMaterials; }
-
-// Returns a reference to the texture list
-const std::unordered_map<std::string, Texture*>& Scene::GetTextureList() { return mOldTextures; }
-
 // Returns the texture container of the scene
 TextureContainer* Scene::GetTextures() { return mTextures; }
 
@@ -398,24 +388,23 @@ IEntity* Scene::AddEntity(const std::string& shaderName, IEntity* entity, bool p
 // Adds a texture to the scene's texture list
 Texture* Scene::AddTexture(const std::string& name, Texture* texture)
 {
-	if (mOldTextures.find(name) == mOldTextures.end())
-		mOldTextures.emplace(name, texture);
+	mTextures->Add(name, texture);
 	return texture;
 }
 
 // Adds a material to the scene's material list
 Material* Scene::AddMaterial(const std::string& name, Material* material)
 {
-	if (mOldMaterials.find(name) == mOldMaterials.end())
-		mOldMaterials.emplace(name, material);
+	mMaterials->Add(name, material);
 	return material;
 }
 
 // Sets the default material of the scene from the material list if the material exists.
 Material* Scene::SetDefaultMaterial(const std::string& name)
 {
-	if (mOldMaterials.find(name) != mOldMaterials.end())
-		mDefaultMat = mOldMaterials[name];
+	Material* tempMat = mMaterials->GetItem(name);
+	if (tempMat != nullptr)
+		mDefaultMat = tempMat;
 	return mDefaultMat;
 }
 
@@ -501,39 +490,12 @@ Scene::~Scene()
 		if (iter->second != nullptr)
 			delete iter->second;
 	}
-	/*
-	for (auto iter = mRenderList.begin(); iter != mRenderList.end(); ++iter)
-	{
-		if (iter->second != nullptr) {
-			iter->second->Cleanup();
-			delete iter->second;
-		}
-	}
-	for (auto iter = mPreRenderList.begin(); iter != mPreRenderList.end(); ++iter)
-	{
-		if (iter->second != nullptr) {
-			iter->second->Cleanup();
-			delete iter->second;
-		}
-	}
-	*/
-	for (auto iter = mOldMaterials.begin(); iter != mOldMaterials.end(); ++iter)
-		if (iter->second != nullptr)
-			delete iter->second;
-
-	for (auto iter = mOldTextures.begin(); iter != mOldTextures.end(); ++iter)
-		if (iter->second != nullptr)
-			delete iter->second;
 
 	for (unsigned int i = 0; i < mMeshList.size(); i++)
 		if (mMeshList[i] != nullptr)
 			delete mMeshList[i];
 
 	mOldShaders.clear();
-	//mPreRenderList.clear();
-	//mRenderList.clear();
-	mOldMaterials.clear();
-	mOldTextures.clear();
 	mMeshList.clear();
 
 	delete mTextures;

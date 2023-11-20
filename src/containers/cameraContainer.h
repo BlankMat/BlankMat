@@ -23,7 +23,7 @@ protected:
 	/// <param name="file">File to write to</param>
 	void WriteItem(const std::string& key, Camera* item, std::ofstream& file) override
 	{
-
+		file << "CAMERA " << key << std::endl;
 	}
 public:
 };

@@ -67,7 +67,7 @@ public:
 				continue;
 
 			// Check for tag markers
-			if (parse[0] == "StartItem")
+			if (parse[0] == "##StartItem")
 			{
 				auto newItem = ReadItem(file);
 				if (newItem->first != nullptr && newItem->second != nullptr)
@@ -89,9 +89,9 @@ public:
 		file << "#NumItems " << std::to_string(mData.size()) << std::endl;
 		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
 		{
-			file << "#StartItem" << std::endl;
+			file << "##StartItem" << std::endl;
 			WriteItem(iter->first, iter->second, file);
-			file << "#EndItem" << std::endl;
+			file << "##EndItem" << std::endl;
 			file << std::endl;
 		}
 		file << "#EndContainer" << std::endl;

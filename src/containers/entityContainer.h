@@ -23,7 +23,7 @@ protected:
 	/// <param name="file">File to write to</param>
 	void WriteItem(const std::string& key, IEntity* item, std::ofstream& file) override
 	{
-
+		file << "ENTITY " << key << std::endl;
 	}
 public:
 	// Draws the contents of the container

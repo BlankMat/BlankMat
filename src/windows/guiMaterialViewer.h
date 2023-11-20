@@ -19,9 +19,10 @@ public:
 		if (ImGui::Begin("Material Viewer", &mIsEnabled, ImGuiWindowFlags_AlwaysAutoResize))
 		{
 			IEntity* sel = mState->GetSel()->GetSelectedEntity();
-			const std::unordered_map<std::string, Material*>& mats = mScene->GetMaterialList();
+			MaterialContainer* materialList = mScene->GetMaterials();
 			if (sel != nullptr && sel->GetMaterial() != nullptr)
 			{
+				const auto& mats = materialList->Data();
 				Material* selMat = sel->GetMaterial();
 				// Draw all materials
 				float size = ImGui::GetTextLineHeight();

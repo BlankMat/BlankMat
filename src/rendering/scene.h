@@ -52,8 +52,8 @@ protected:
 	std::unordered_map<std::string, Light*> mOldLights;
 	std::unordered_map<std::string, Camera*> mOldCameras;
 	std::unordered_map<std::string, Shader*> mOldShaders;
-	std::unordered_map<std::string, Material*> mOldMaterials;
-	std::unordered_map<std::string, Texture*> mOldTextures;
+	//std::unordered_map<std::string, Material*> mOldMaterials;
+	//std::unordered_map<std::string, Texture*> mOldTextures;
 	//std::unordered_map<std::string, IEntity*> mPreRenderList;
 	//std::unordered_map<std::string, IEntity*> mRenderList;
 	
@@ -172,12 +172,6 @@ public:
 
 	// Returns a reference to the shader list
 	const std::unordered_map<std::string, Shader*>& GetShaderList();
-
-	// Returns a reference to the material list
-	const std::unordered_map<std::string, Material*>& GetMaterialList();
-
-	// Returns a reference to the texture list
-	const std::unordered_map<std::string, Texture*>& GetTextureList();
 
 	// Returns the current shader
 	const std::string GetCurShader();
