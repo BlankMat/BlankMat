@@ -25,14 +25,19 @@ protected:
 	void GenBuffers() override {}
 public:
 	/// <summary>
-	/// Creates a scene node with the given parent and name
+	/// Recursively reads all nodes from the given file
 	/// </summary>
-	/// <param name="parent">Parent node or nullptr</param>
-	/// <param name="name">Name of this node</param>
-	/// <param name="pos">Position of the node</param>
-	/// <param name="rot">Rotation of the node</param>
-	/// <param name="scale">Scale of the node</param>
-	Node(Node* parent, const std::string& name, const glm::vec3& pos = glm::vec3(0.0f), const glm::vec3& rot = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f));
+	/// <param name="file">File to read</param>
+	/// <returns>Node that was stored in the file</returns>
+	static Node* Read(std::ifstream& file);
+
+	/// <summary>
+	/// Recursively writes all nodes into the given file
+	/// </summary>
+	/// <param name="file">File to write to</param>
+	/// <param name="node">Node to write</param>
+	/// <param name="depth">Depth of the node to write</param>
+	static void Write(std::ofstream& file, Node* node, unsigned int depth = 0);
 
 	/// <summary>
 	/// Recursively draws the node and its children and child meshes
@@ -175,4 +180,14 @@ public:
 	/// Recursively deletes this node and all its children
 	/// </summary>
 	void Delete();
+
+	/// <summary>
+	/// Creates a scene node with the given parent and name
+	/// </summary>
+	/// <param name="parent">Parent node or nullptr</param>
+	/// <param name="name">Name of this node</param>
+	/// <param name="pos">Position of the node</param>
+	/// <param name="rot">Rotation of the node</param>
+	/// <param name="scale">Scale of the node</param>
+	Node(Node* parent, const std::string& name, const glm::vec3& pos = glm::vec3(0.0f), const glm::vec3& rot = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f));
 };

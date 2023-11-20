@@ -1,4 +1,5 @@
 #pragma once
+#include "timer.h"
 #include "rendering/scene.h"
 #include <iostream>
 #include <fstream>
@@ -9,6 +10,7 @@ private:
 	static void WriteNodes(Scene* scene, std::ofstream& file)
 	{
 		file << "# Nodes" << std::endl;
+		Node::Write(file, scene->GetRootNode());
 		file << std::endl;
 	}
 
@@ -49,13 +51,22 @@ private:
 public:
 	static void SaveScene(Scene* scene, const std::string& path)
 	{
+		double startTime = glfwGetTime();
 		std::ofstream file(path);
-		WriteNodes(scene, file);
-		WriteMeshes(scene, file);
-		WriteMaterials(scene, file);
-		WriteTextures(scene, file);
-		WriteCameras(scene, file);
-		WriteLights(scene, file);
+		try
+		{
+			WriteNodes(scene, file);
+			WriteMeshes(scene, file);
+			WriteMaterials(scene, file);
+			WriteTextures(scene, file);
+			WriteCameras(scene, file);
+			WriteLights(scene, file);
+			Timer::Time(startTime, "Save scene");
+		}
+		catch (std::exception const& e)
+		{
+			std::cout << "ERROR::SAVESCENE::WRITE " << e.what() << std::endl;
+		}
 		file.close();
 	}
 };

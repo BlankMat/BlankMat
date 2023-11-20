@@ -113,6 +113,19 @@ static const void ParseStringByDelim(std::vector<std::string>& out, const std::s
     out.push_back(tempStr);
 }
 
+/// <summary>
+/// Returns whitespace padding of the given depth
+/// </summary>
+/// <param name="depth">Number of spaces</param>
+/// <returns>Whitespace string of size depth</returns>
+static const std::string GetPadding(unsigned int depth)
+{
+    std::ostringstream ss;
+    for (unsigned int i = 0; i < depth; i++)
+        ss << " ";
+    return ss.str();
+}
+
 // Reads a vector 3 from the given strings, skipping ahead the given offset. Strings must have size >= 4 + offset to be read, and the first element + offset are ignored
 static const glm::vec3 ReadVec3FromStrings(const std::vector<std::string>& strings, int offset)
 {

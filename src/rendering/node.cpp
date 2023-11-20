@@ -1,14 +1,35 @@
 #include "node.h"
 
-// Creates a scene node with the given parent and name
-Node::Node(Node* parent, const std::string& name, const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scale)
-	: mParent(parent)
+// Recursively reads all nodes from the given file
+Node* Node::Read(std::ifstream& file)
 {
-	mName = name;
-	mPos = pos;
-	mRot = rot;
-	mScale = scale;
-	mParentModelMatrix = (parent != nullptr) ? parent->GetModelMatrix() : glm::mat4(1.0f);
+	// TODO: Implement node read
+	return nullptr;
+}
+
+// Recursively writes all nodes into the given file
+void Node::Write(std::ofstream& file, Node* node, unsigned int depth)
+{
+	file << GetPadding(depth) << "#StartNode" << std::endl;
+	file << GetPadding(depth) << "NODE " << node->mName << std::endl;
+	file << GetPadding(depth) << "pos " << Vec3ToString(node->GetPos()) << std::endl;
+	file << GetPadding(depth) << "rot " << Vec3ToString(node->GetRot()) << std::endl;
+	file << GetPadding(depth) << "scale " << Vec3ToString(node->GetScale()) << std::endl;
+
+	// Write all child meshes
+	file << GetPadding(depth) << "meshes " << node->GetMeshCount() << std::endl;
+	for (unsigned int i = 0; i < node->GetMeshCount(); i++)
+		if (node->mMeshes[i] != nullptr)
+			file << GetPadding(depth) << "NODEMESH " << i << std::endl;
+
+	// Write all child nodes
+	file << GetPadding(depth) << "children " << node->GetChildCount() << std::endl;
+	for (unsigned int i = 0; i < node->GetChildCount(); i++)
+		if (node->mChildren[i] != nullptr)
+			Write(file, node->mChildren[i], depth + 1);
+
+	file << GetPadding(depth) << "#EndNode " << node->mName << std::endl;
+	file << std::endl;
 }
 
 // Draws the node recursively
@@ -285,4 +306,15 @@ void Node::Delete()
 	for (unsigned int i = 0; i < (unsigned int)mChildren.size(); i++)
 		mChildren[i]->Delete();
 	delete this;
+}
+
+// Creates a scene node with the given parent and name
+Node::Node(Node* parent, const std::string& name, const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scale)
+	: mParent(parent)
+{
+	mName = name;
+	mPos = pos;
+	mRot = rot;
+	mScale = scale;
+	mParentModelMatrix = (parent != nullptr) ? parent->GetModelMatrix() : glm::mat4(1.0f);
 }
