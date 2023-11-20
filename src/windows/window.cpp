@@ -5,7 +5,7 @@
 Window::Window(int width, int height, const std::string& name, Config* config)
     : mWidth(width), mHeight(height), mName(name)
 {
-    // State and scene must be initialized first, since they are needed for other init
+    // State must be initialized first, since it is needed for other init
     mState = new State(config);
 
     // Setup all components of the window, returning if any of them fail
@@ -28,8 +28,10 @@ Window::Window(int width, int height, const std::string& name, Config* config)
     if (!SetupShadows())
         return;
 
-    // Once the window is setup, initialize IO and file operations
+    // Initialize scene last, since it it needs GLFW and GLAD to already be init
     mScene = new Scene(mState);
+
+    // Once the window is setup, initialize IO and file operations
     mInput = new Input(mIO, mState, config);
     mSceneIO = new SceneIO(mState, mScene, mWindow);
 }

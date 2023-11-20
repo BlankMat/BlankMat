@@ -1,12 +1,12 @@
 #pragma once
 #include "glIncludes.h"
-#include "rendering/scene.h"
+#include "interfaces/iScene.h"
 #include <assimp/Importer.hpp>
 #include <assimp/Exporter.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-class SceneReader
+class ModelWriter
 {
 private:
 	// Recursively processes the meshes in the given node and all its children
@@ -210,9 +210,14 @@ private:
 		return textures;
 	}
 public:
-	// Loads the scene at the given path
-	static void LoadScene(Scene* scene, const std::string& path, const glm::vec3& startPos = glm::vec3(0.0f), const glm::vec3& startRot = glm::vec3(0.0f), const glm::vec3& startScale = glm::vec3(1.0f))
+	// Saves the scene to the given path
+	static void SaveModel(Scene* scene, const std::string& path, const glm::vec3& startPos = glm::vec3(0.0f), const glm::vec3& startRot = glm::vec3(0.0f), const glm::vec3& startScale = glm::vec3(1.0f))
 	{
+		return;
+
+		// TODO: Implement this function
+
+		/*
 		double loadStartTime = glfwGetTime();
 		std::cout << "Reading model from file " << path << std::endl;
 		Assimp::Importer importer;
@@ -250,5 +255,6 @@ public:
 		double loadTotalTime = loadEndTime - loadStartTime;
 		std::cout << "Read model from file " << path << " successfully in " << loadTotalTime << " seconds." << std::endl;
 		std::cout << "Project directory is " << scene->GetDirectory() << std::endl;
+		*/
 	}
 };

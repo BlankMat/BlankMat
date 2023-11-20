@@ -71,7 +71,7 @@ public:
 
 		input->AddCommand("NEW_SCENE", new RunFunctionCommand("NEW_SCENE", std::bind(&SceneIO::NewScene, sIO)));
 		input->AddCommand("OPEN_SCENE", new RunFunctionCommand("OPEN_SCENE", std::bind(&SceneIO::OpenScene, sIO)));
-		input->AddCommand("SAVE_SCENE", new RunFunctionCommand("SAVE_SCENE", std::bind(&SceneIO::SaveScene, sIO)));
+		input->AddCommand("SAVE_SCENE", new RunFunctionCommand("SAVE_SCENE", std::bind(&SceneIO::SaveModel, sIO)));
 		input->AddCommand("SAVE_SCENE_AS", new RunFunctionCommand("SAVE_SCENE_AS", std::bind(&SceneIO::SaveSceneAs, sIO)));
 		input->AddCommand("SAVE_SCENE_INCREMENT", new RunFunctionCommand("SAVE_SCENE_INCREMENT", std::bind(&SceneIO::SaveSceneIncrement, sIO)));
 		input->AddCommand("IMPORT", new RunFunctionCommand("IMPORT", std::bind(&SceneIO::Import, sIO)));

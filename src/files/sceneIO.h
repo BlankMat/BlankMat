@@ -2,8 +2,8 @@
 #include "glIncludes.h"
 #include "tools/state.h"
 #include "rendering/scene.h"
-#include "files/sceneReader.h"
-#include "files/sceneWriter.h"
+#include "files/modelReader.h"
+#include "files/modelWriter.h"
 #include <iostream>
 
 class SceneIO
@@ -85,7 +85,7 @@ public:
 		return mCurDirectory + mCurFileName + mCurExtension;
 	}
 
-	void SaveScene()
+	void SaveModel()
 	{
 		std::cout << "Ran command SaveScene" << std::endl;
 
@@ -96,7 +96,7 @@ public:
 			return;
 		}
 		std::cout << "Saving scene to file " << mCurFileName << std::endl;
-		SceneWriter::SaveScene(mScene, GetFullPath());
+		ModelWriter::SaveModel(mScene, GetFullPath());
 		mState->SaveActionStack();
 	}
 
@@ -111,7 +111,7 @@ public:
 		{
 			ReadPath(fileName);
 			std::cout << "Saving scene to file " << GetFullPath() << std::endl;
-			SceneWriter::SaveScene(mScene, GetFullPath());
+			ModelWriter::SaveModel(mScene, GetFullPath());
 			mState->SaveActionStack();
 		}
 	}
@@ -133,7 +133,7 @@ public:
 		if (!selection.empty())
 		{
 			ReadPath(selection[0]);
-			SceneReader::LoadScene(mScene, GetFullPath());
+			ModelReader::LoadModel(mScene, GetFullPath());
 			mState->SaveActionStack();
 		}
 	}
