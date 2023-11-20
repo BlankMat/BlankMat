@@ -292,7 +292,7 @@ void Scene::AddMesh(Mesh* mesh, Node* parent)
 	if (parent == nullptr)
 		parent = mRootNode;
 	parent->AddMesh(mesh);
-	mMeshList.push_back(mesh);
+	mMeshes->Add(mesh->GetName(), mesh);
 	SetEntityMaterial(mesh, mesh->GetMaterial());
 }
 
@@ -484,12 +484,6 @@ Scene::~Scene()
 {
 	if (mMainCamera != nullptr)
 		delete mMainCamera;
-
-	for (unsigned int i = 0; i < mMeshList.size(); i++)
-		if (mMeshList[i] != nullptr)
-			delete mMeshList[i];
-
-	mMeshList.clear();
 
 	delete mTextures;
 	delete mMaterials;

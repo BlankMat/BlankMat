@@ -45,7 +45,6 @@ protected:
 	Node* mRootNode = nullptr;
 	State* mState = nullptr;
 
-	std::vector<Mesh*> mMeshList;
 	std::unordered_map<std::string, EntityContainer*> mMeshRenderList;
 	std::unordered_map<std::string, EntityContainer*> mEntityList;
 	

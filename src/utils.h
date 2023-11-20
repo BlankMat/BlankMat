@@ -228,6 +228,13 @@ static const std::string Vec3ToHex(const glm::vec3& vec)
     return hex;
 }
 
+static const std::string Vec2ToString(const glm::vec2& vec)
+{
+    std::ostringstream ss;
+    ss << vec.x << " " << vec.y;
+    return ss.str();
+}
+
 static const std::string Vec3ToString(const glm::vec3& vec)
 {
     std::ostringstream ss;

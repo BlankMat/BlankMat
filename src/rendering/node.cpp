@@ -15,12 +15,13 @@ void Node::Write(std::ofstream& file, Node* node, unsigned int depth)
 	file << GetPadding(depth) << "pos " << Vec3ToString(node->GetPos()) << std::endl;
 	file << GetPadding(depth) << "rot " << Vec3ToString(node->GetRot()) << std::endl;
 	file << GetPadding(depth) << "scale " << Vec3ToString(node->GetScale()) << std::endl;
+	file << GetPadding(depth) << "enabled " << (int)node->IsEnabled() << std::endl;
 
 	// Write all child meshes
 	file << GetPadding(depth) << "meshes " << node->GetMeshCount() << std::endl;
 	for (unsigned int i = 0; i < node->GetMeshCount(); i++)
 		if (node->mMeshes[i] != nullptr)
-			file << GetPadding(depth) << "NODEMESH " << i << std::endl;
+			file << GetPadding(depth + 1) << "NODEMESH " << node->mMeshes[i]->GetName() << std::endl;
 
 	// Write all child nodes
 	file << GetPadding(depth) << "children " << node->GetChildCount() << std::endl;

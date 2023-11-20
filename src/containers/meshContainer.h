@@ -24,5 +24,40 @@ protected:
 	void WriteItem(const std::string& key, Mesh* item, std::ofstream& file) override
 	{
 		file << "MESH " << key << std::endl;
+		file << "pos " << Vec3ToString(item->GetPos()) << std::endl;
+		file << "rot " << Vec3ToString(item->GetRot()) << std::endl;
+		file << "scale " << Vec3ToString(item->GetScale()) << std::endl;
+		file << "material " << (item->GetMaterial() != nullptr ? item->GetMaterial()->name : "none") << std::endl;
+		file << "enabled " << (int)item->IsEnabled() << std::endl;
+
+		// Write all vertices
+		const auto& verts = item->GetVertices();
+		file << "vertices " << verts.size() << std::endl;
+		file << "#StartVerts" << std::endl;
+		for (unsigned int i = 0; i < verts.size(); i++)
+		{
+			Vertex vert = verts[i];
+			file << "pos " << Vec3ToString(verts[i].pos) << std::endl;
+			file << "norm " << Vec3ToString(verts[i].normal) << std::endl;
+			file << "tan " << Vec3ToString(verts[i].tangent) << std::endl;
+			file << "uv " << Vec2ToString(verts[i].texCoords) << std::endl;
+		}
+		file << "#EndVerts" << std::endl;
+		file << std::endl;
+
+		// Write all indices
+		const auto& inds = item->GetIndices();
+		file << "indices " << inds.size() << std::endl;
+		file << "#StartInds" << std::endl;
+		unsigned int i = 0;
+		for (unsigned int i = 0; i < inds.size(); i++)
+		{
+			// Group together indices by 6s (2 tris)
+			if (i != 0 && i % 6 == 0)
+				file << std::endl;
+			file << inds[i];
+		}
+		file << "#EndInds" << std::endl;
+		file << std::endl;
 	}
 };
