@@ -11,7 +11,7 @@ enum class SelMode { MESH = 0, VERT = 1, FACE = 2, LAST };
 // Forward declare to prevent circular dependency
 class IEntity;
 class Mesh;
-class IScene;
+class Scene;
 class Material;
 
 class Selection
@@ -113,7 +113,7 @@ public:
 	/// <param name="u">U coordinate onscreen</param>
 	/// <param name="v">V coordinate onscreen</param>
 	/// <returns>Selected mesh</returns>
-	static Mesh* GetNearestMesh(IScene* scene, float u, float v);
+	static Mesh* GetNearestMesh(Scene* scene, float u, float v);
 
 	/// <summary>
 	/// Returns the nearest vertex to the clicked position
@@ -122,7 +122,7 @@ public:
 	/// <param name="u">U coordinate onscreen</param>
 	/// <param name="v">V coordinate onscreen</param>
 	/// <returns>Selected vertex index, or -1 if none was found</returns>
-	static int GetNearestVert(IScene* scene, float u, float v);
+	static int GetNearestVert(Scene* scene, float u, float v);
 
 	/// <summary>
 	/// Returns the nearest face to the clicked position
@@ -131,5 +131,5 @@ public:
 	/// <param name="u">U coordinate onscreen</param>
 	/// <param name="v">V coordinate onscreen</param>
 	/// <returns>Selected face index, or -1 if none was found</returns>
-	static int GetNearestFace(IScene* scene, float u, float v);
+	static int GetNearestFace(Scene* scene, float u, float v);
 };

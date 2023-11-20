@@ -4,6 +4,7 @@
 #include "rendering/scene.h"
 #include "files/modelReader.h"
 #include "files/modelWriter.h"
+#include "files/sceneWriter.h"
 #include <iostream>
 
 class SceneIO
@@ -85,7 +86,7 @@ public:
 		return mCurDirectory + mCurFileName + mCurExtension;
 	}
 
-	void SaveModel()
+	void SaveScene()
 	{
 		std::cout << "Ran command SaveScene" << std::endl;
 
@@ -96,7 +97,7 @@ public:
 			return;
 		}
 		std::cout << "Saving scene to file " << mCurFileName << std::endl;
-		ModelWriter::SaveModel(mScene, GetFullPath());
+		SceneWriter::SaveScene(mScene, GetFullPath());
 		mState->SaveActionStack();
 	}
 
@@ -165,7 +166,18 @@ public:
 	void Export()
 	{
 		std::cout << "Ran command Export" << std::endl;
-		// TODO: Implement export
+		std::string fileName = pfd::save_file("Export", mCurDirectory, {
+			"Obj (.obj)", "*.obj",
+			"BlankMat Scenes (.blank)", "*.blank"
+		}, pfd::opt::none).result();
+
+		if (fileName != "")
+		{
+			ReadPath(fileName);
+			std::cout << "Exporting scene to file " << GetFullPath() << std::endl;
+			ModelWriter::SaveModel(mScene, GetFullPath());
+			mState->SaveActionStack();
+		}
 	}
 
 	explicit SceneIO(State* state, Scene* scene, GLFWwindow* window)

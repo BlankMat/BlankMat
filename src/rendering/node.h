@@ -29,7 +29,10 @@ public:
 	/// </summary>
 	/// <param name="parent">Parent node or nullptr</param>
 	/// <param name="name">Name of this node</param>
-	Node(Node* parent, const std::string& name);
+	/// <param name="pos">Position of the node</param>
+	/// <param name="rot">Rotation of the node</param>
+	/// <param name="scale">Scale of the node</param>
+	Node(Node* parent, const std::string& name, const glm::vec3& pos = glm::vec3(0.0f), const glm::vec3& rot = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f));
 
 	/// <summary>
 	/// Recursively draws the node and its children and child meshes

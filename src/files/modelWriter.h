@@ -1,6 +1,6 @@
 #pragma once
 #include "glIncludes.h"
-#include "interfaces/iScene.h"
+#include "rendering/scene.h"
 #include <assimp/Importer.hpp>
 #include <assimp/Exporter.hpp>
 #include <assimp/scene.h>

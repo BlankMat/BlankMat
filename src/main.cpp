@@ -38,9 +38,6 @@ int main()
     // Main program loop should run until the program is exited and the changes are saved or ignored
     while (true)
     {
-        // Poll events at the start of the loop
-        glfwPollEvents();
-
         // If the window should close, handle exiting
         if (HandleWindowQuit(window, state))
             break;
@@ -57,6 +54,8 @@ int main()
 
         // Swap buffers at the end of the loop
         glfwSwapBuffers(window->GetWindow());
+        // Poll events at the start of the loop
+        glfwPollEvents();
         window->UpdateWindowTitle(state->GetCurFileName(), state->IsSaved());
     }
 

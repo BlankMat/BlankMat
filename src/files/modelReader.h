@@ -1,6 +1,7 @@
 #pragma once
 #include "glIncludes.h"
 #include "rendering/scene.h"
+#include "timer.h"
 #include <assimp/Importer.hpp>
 #include <assimp/Exporter.hpp>
 #include <assimp/scene.h>
@@ -10,22 +11,22 @@ class ModelReader
 {
 private:
 	// Recursively processes the meshes in the given node and all its children
-	static void ProcessNode(Scene* scene, Node* sceneNode, const aiNode* node, const aiScene* assimpScene)
+	static void ProcessNode(Scene* scene, Node* node, const aiNode* assimpNode, const aiScene* assimpScene)
 	{
-		std::cout << " - Reading node " << node->mName.C_Str() << std::endl;
+		std::cout << " - Reading node " << assimpNode->mName.C_Str() << std::endl;
 		// Process all the node's meshes (if any)
-		for (unsigned int i = 0; i < node->mNumMeshes; i++)
+		for (unsigned int i = 0; i < assimpNode->mNumMeshes; i++)
 		{
-			aiMesh* mesh = assimpScene->mMeshes[node->mMeshes[i]];
+			aiMesh* mesh = assimpScene->mMeshes[assimpNode->mMeshes[i]];
 			Mesh* newMesh = ProcessMesh(scene, mesh, assimpScene);
-			scene->AddMesh(newMesh, sceneNode);
+			scene->AddMesh(newMesh, node);
 		}
 		// Process each of the children
-		for (unsigned int i = 0; i < node->mNumChildren; i++)
+		for (unsigned int i = 0; i < assimpNode->mNumChildren; i++)
 		{
-			Node* childNode = new Node(sceneNode, node->mChildren[i]->mName.C_Str());
-			sceneNode->AddChild(childNode);
-			ProcessNode(scene, childNode, node->mChildren[i], assimpScene);
+			Node* childNode = new Node(node, assimpNode->mChildren[i]->mName.C_Str());
+			node->AddChild(childNode);
+			ProcessNode(scene, childNode, assimpNode->mChildren[i], assimpScene);
 		}
 	}
 
@@ -33,8 +34,11 @@ private:
 	static Mesh* ProcessMesh(Scene* scene, const aiMesh* mesh, const aiScene* assimpScene)
 	{
 		// Process each part of the mesh
-		std::vector<Vertex> vertices = ProcessVertices(mesh);
-		std::vector<unsigned int> indices = ProcessIndices(vertices, mesh);
+		std::vector<Vertex> vertices;
+		std::vector<unsigned int> indices;
+
+		ProcessVertices(mesh, vertices);
+		ProcessIndices(vertices, indices, mesh);
 		Material* newMaterial = ProcessMaterial(scene, mesh, assimpScene);
 
 		// Construct mesh
@@ -42,9 +46,8 @@ private:
 	}
 
 	// Processes the vertices of the mesh, emplacing them into the list given
-	static std::vector<Vertex> ProcessVertices(const aiMesh* mesh)
+	static void ProcessVertices(const aiMesh* mesh, std::vector<Vertex>& outVertices)
 	{
-		std::vector<Vertex> vertices;
 		// Process each vertex
 		for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 		{
@@ -56,15 +59,13 @@ private:
 			{
 				tangent = Vec3FromAssimp(mesh->mTangents[i]);
 			}
-			vertices.push_back(Vertex(pos, normal, texCoords, tangent));
+			outVertices.push_back(Vertex(pos, normal, texCoords, tangent));
 		}
-		return vertices;
 	}
 
 	// Processes the indices of the mesh
-	static std::vector<unsigned int> ProcessIndices(const std::vector<Vertex>& vertices, const aiMesh* mesh)
+	static void ProcessIndices(const std::vector<Vertex>& vertices, std::vector<unsigned int>& outIndices, const aiMesh* mesh)
 	{
-		std::vector<unsigned int> indices;
 		// Process each index
 		for (unsigned int i = 0; i < mesh->mNumFaces; i++)
 		{
@@ -91,10 +92,9 @@ private:
 			}
 			for (unsigned int j = 0; j < mesh->mFaces[i].mNumIndices; j++)
 			{
-				indices.push_back(mesh->mFaces[i].mIndices[j]);
+				outIndices.push_back(mesh->mFaces[i].mIndices[j]);
 			}
 		}
-		return indices;
 	}
 
 	// Processes the material of the mesh
@@ -236,19 +236,14 @@ public:
 			rootNode = new Node(nullptr, "root");
 			scene->SetRootNode(rootNode);
 		}
-		Node* sceneRootNode = new Node(rootNode, scene->GetName());
+		Node* sceneRootNode = new Node(rootNode, scene->GetName(), startPos, startRot, startScale);
 
 		// Process model
-		sceneRootNode->SetPos(startPos);
-		sceneRootNode->SetRot(startRot);
-		sceneRootNode->SetScale(startScale);
 		rootNode->AddChild(sceneRootNode);
 		ProcessNode(scene, sceneRootNode, assimpScene->mRootNode, assimpScene);
 		rootNode->SetParentModelMatrix(glm::mat4(1.0f));
 
-		double loadEndTime = glfwGetTime();
-		double loadTotalTime = loadEndTime - loadStartTime;
-		std::cout << "Read model from file " << path << " successfully in " << loadTotalTime << " seconds." << std::endl;
+		Timer::Time(loadStartTime, "Read model from file " + path + "successfully");
 		std::cout << "Project directory is " << scene->GetDirectory() << std::endl;
 	}
 };

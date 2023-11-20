@@ -1,7 +1,7 @@
 #include "selection.h"
 #include "rendering/material.h"
 #include "rendering/mesh.h"
-#include "interfaces/iScene.h"
+#include "rendering/scene.h"
 #include "tools/selectTool.h"
 
 // Returns the entire selection as a selection of vertices
@@ -251,7 +251,7 @@ void Selection::UpdateTransformHandle()
 }
 
 // Returns the nearest mesh to the clicked position
-Mesh* Selection::GetNearestMesh(IScene* scene, float u, float v)
+Mesh* Selection::GetNearestMesh(Scene* scene, float u, float v)
 {
 	//std::cout << "Transformed click [" << u << ", " << v << "]\n";
 	//Ray ray = RayTracer::GenerateRay(scene, u, v, false);
@@ -263,7 +263,7 @@ Mesh* Selection::GetNearestMesh(IScene* scene, float u, float v)
 }
 
 // Returns the nearest vertex to the clicked position
-int Selection::GetNearestVert(IScene* scene, float u, float v)
+int Selection::GetNearestVert(Scene* scene, float u, float v)
 {
 	//Ray ray = RayTracer::GenerateRay(scene, u, v, false);
 	//IndVertex res = ray.GetClosestVertex(scene->GetRenderTris());
@@ -272,7 +272,7 @@ int Selection::GetNearestVert(IScene* scene, float u, float v)
 }
 
 // Returns the nearest face to the clicked position
-int Selection::GetNearestFace(IScene* scene, float u, float v)
+int Selection::GetNearestFace(Scene* scene, float u, float v)
 {
 	//Ray ray = RayTracer::GenerateRay(scene, u, v, false);
 	//ITriangle res = ray.GetClosestTriangle(scene->GetRenderTris());

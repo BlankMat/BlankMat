@@ -1,5 +1,8 @@
 #pragma once
 #include "glIncludes.h"
+#include "utils.h"
+#include <iostream>
+#include <fstream>
 #include <string>
 #include <unordered_map>
 
@@ -27,14 +30,81 @@ protected:
 	/// Currently selected item
 	/// </summary>
 	T* mCurSelectedItem;
+
+	/// <summary>
+	/// Reads the next item from the input file stream
+	/// </summary>
+	/// <param name="file">File to read</param>
+	/// <returns>Newly constructed item from file</returns>
+	virtual const std::pair<std::string, T*> ReadItem(std::ifstream& file) = 0;
+
+	/// <summary>
+	/// Writes the given item into the output file stream
+	/// </summary>
+	/// <param name="key">Key of item</param>
+	/// <param name="item">Item to write</param>
+	/// <param name="file">File to write to</param>
+	virtual void WriteItem(const std::string& key, T* item, std::ofstream& file) = 0;
 public:
+	/// <summary>
+	/// Reads this container from the file
+	/// </summary>
+	/// <param name="file">File to read from</param>
+	void Read(std::ifstream& file)
+	{
+		std::string line;
+		while (std::getline(file, line))
+		{
+			// Don't parse empty lines
+			if (line == "")
+				continue;
+
+			std::vector<std::string> parse;
+			ParseStringByDelim(parse, line, " ");
+
+			// Don't parse empty lines
+			if (parse.empty())
+				continue;
+
+			// Check for tag markers
+			if (parse[0] == "StartItem")
+			{
+				auto newItem = ReadItem(file);
+				if (newItem->first != nullptr && newItem->second != nullptr)
+					Add(newItem->first, newItem->second);
+			}
+			// End parsing if the tag is found
+			else if (parse[0] == "#EndContainer")
+				break;
+		}
+	}
+
+	/// <summary>
+	/// Writs this container to the file
+	/// </summary>
+	/// <param name="file">File to output to</param>
+	void Write(std::ofstream& file)
+	{
+		file << "#StartContainer" << std::endl;
+		file << "#NumItems " << std::to_string(Count()) << std::endl;
+		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
+		{
+			file << "#StartItem" << std::endl;
+			WriteItem(iter->first, iter->second, file);
+			file << "#EndItem" << std::endl;
+			file << std::endl;
+		}
+		file << "#EndContainer" << std::endl;
+		file << std::endl;
+	}
+
 	/// <summary>
 	/// Returns the number of elements in the container
 	/// </summary>
 	/// <returns></returns>
 	unsigned int Count()
 	{
-		return mData.size();
+		return (unsigned int)mData.size();
 	}
 
 	/// <summary>
@@ -53,7 +123,7 @@ public:
 	/// <returns>Whether the item was selected or not</returns>
 	virtual bool Select(const std::string& name)
 	{
-		T* item = Get(name);
+		T* item = GetItem(name);
 		if (item != nullptr)
 		{
 			mCurSelectedItem = item;
@@ -70,7 +140,7 @@ public:
 	/// <returns>Whether the item was selected or not</returns>
 	virtual bool Select(T* item)
 	{
-		std::string name = Get(item);
+		std::string name = GetKey(item);
 		if (name != "")
 		{
 			mCurSelectedItem = item;
@@ -158,7 +228,7 @@ public:
 	/// </summary>
 	/// <param name="name">Name of item to find</param>
 	/// <returns>Item</returns>
-	virtual T* Get(const std::string& name)
+	virtual T* GetItem(const std::string& name)
 	{
 		if (mData.find(name) != mData.end())
 			return mData[name];
@@ -170,7 +240,7 @@ public:
 	/// </summary>
 	/// <param name="item">Item to search for</param>
 	/// <returns>Name of item</returns>
-	virtual const std::string Get(T* item)
+	virtual const std::string GetKey(T* item)
 	{
 		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
 		{
@@ -180,6 +250,18 @@ public:
 			}
 		}
 		return "";
+	}
+
+	/// <summary>
+	/// Clears the container of all items, deleting them
+	/// </summary>
+	void Clear()
+	{
+		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
+		{
+			delete iter->second;
+		}
+		mData.clear();
 	}
 
 	/// <summary>

@@ -1,10 +1,13 @@
 #include "node.h"
 
 // Creates a scene node with the given parent and name
-Node::Node(Node* parent, const std::string& name)
+Node::Node(Node* parent, const std::string& name, const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scale)
+	: mParent(parent)
 {
-	mParent = parent;
 	mName = name;
+	mPos = pos;
+	mRot = rot;
+	mScale = scale;
 	mParentModelMatrix = (parent != nullptr) ? parent->GetModelMatrix() : glm::mat4(1.0f);
 }
 

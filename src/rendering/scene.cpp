@@ -193,10 +193,10 @@ Texture* Scene::LoadTexture(const std::string& type, const std::string& path, co
 // Activates the shader with the given name for the scene
 void Scene::UseShader(const std::string& name)
 {
-	if (mShaderList.find(name) != mShaderList.end() && mShaderList[name] != nullptr)
+	if (mOldShaders.find(name) != mOldShaders.end() && mOldShaders[name] != nullptr)
 	{
 		mCurShader = name;
-		mShader = mShaderList[name];
+		mShader = mOldShaders[name];
 		mShader->Use();
 	}
 }
@@ -204,40 +204,40 @@ void Scene::UseShader(const std::string& name)
 // Creates a shader for the scene with the given name from the source file of the given name
 Shader* Scene::CreateShader(const std::string& name, bool loadGeom)
 {
-	if (mShaderList.find(name) == mShaderList.end())
+	if (mOldShaders.find(name) == mOldShaders.end())
 	{
 		Shader* newShader = new Shader(name, loadGeom);
 		newShader->name = name;
-		mShaderList.emplace(name, newShader);
+		mOldShaders.emplace(name, newShader);
 		return newShader;
 	}
-	return mShaderList[name];
+	return mOldShaders[name];
 }
 
 // Creates a shader for the scene with the given name, loading it from a different source than the name
 Shader* Scene::CreateShader(const std::string& name, const std::string& source, bool loadGeom)
 {
-	if (mShaderList.find(name) == mShaderList.end())
+	if (mOldShaders.find(name) == mOldShaders.end())
 	{
 		Shader* newShader = new Shader(source, loadGeom);
 		newShader->name = name;
-		mShaderList.emplace(name, newShader);
+		mOldShaders.emplace(name, newShader);
 		return newShader;
 	}
-	return mShaderList[name];
+	return mOldShaders[name];
 }
 
 // Creates a shader for the scene with the given name, loading it from a config
 Shader* Scene::CreateShader(const std::string& name, Config* config)
 {
-	if (mShaderList.find(name) == mShaderList.end())
+	if (mOldShaders.find(name) == mOldShaders.end())
 	{
 		Shader* newShader = new Shader(config->GetString("file"), config->GetBool("hasGeomShader"));
 		newShader->name = name;
-		mShaderList.emplace(name, newShader);
+		mOldShaders.emplace(name, newShader);
 		return newShader;
 	}
-	return mShaderList[name];
+	return mOldShaders[name];
 }
 
 // Returns the scene's camera
@@ -255,16 +255,16 @@ std::string Scene::GetDirectory() { return mDirectory; }
 // Returns the shader with the given name
 Shader* Scene::GetShader(const std::string& name)
 {
-	if (mShaderList.find(name) != mShaderList.end())
-		return mShaderList[name];
+	if (mOldShaders.find(name) != mOldShaders.end())
+		return mOldShaders[name];
 	return nullptr;
 }
 
 // Returns the material with the given name
 Material* Scene::GetMaterial(const std::string& name)
 {
-	if (mMaterialList.find(name) != mMaterialList.end())
-		return mMaterialList[name];
+	if (mOldMaterials.find(name) != mOldMaterials.end())
+		return mOldMaterials[name];
 	return nullptr;
 }
 
@@ -277,18 +277,20 @@ Material* Scene::GetDefaultMat()
 // Returns the material with the given name
 Texture* Scene::GetTexture(const std::string& name)
 {
-	if (mTextureList.find(name) != mTextureList.end())
-		return mTextureList[name];
+	if (mOldTextures.find(name) != mOldTextures.end())
+		return mOldTextures[name];
 	return nullptr;
 }
 
 // Returns the entity with the given name
 IEntity* Scene::GetEntity(const std::string& name)
 {
+	/*
 	if (mPreRenderList.find(name) != mPreRenderList.end())
 		return mPreRenderList[name];
 	else if (mRenderList.find(name) != mRenderList.end())
 		return mRenderList[name];
+	*/
 	return nullptr;
 }
 
@@ -336,13 +338,34 @@ void Scene::SetRootNode(Node* rootNode)
 }
 
 // Returns a reference to the shader list
-const std::unordered_map<std::string, Shader*>& Scene::GetShaderList() { return mShaderList; }
+const std::unordered_map<std::string, Shader*>& Scene::GetShaderList() { return mOldShaders; }
 
 // Returns a reference to the material list
-const std::unordered_map<std::string, Material*>& Scene::GetMaterialList() { return mMaterialList; }
+const std::unordered_map<std::string, Material*>& Scene::GetMaterialList() { return mOldMaterials; }
 
 // Returns a reference to the texture list
-const std::unordered_map<std::string, Texture*>& Scene::GetTextureList() { return mTextureList; }
+const std::unordered_map<std::string, Texture*>& Scene::GetTextureList() { return mOldTextures; }
+
+// Returns the texture container of the scene
+TextureContainer* Scene::GetTextures() { return mTextures; }
+
+// Returns the material container of the scene
+MaterialContainer* Scene::GetMaterials() { return mMaterials; }
+
+// Returns the light container of the scene
+LightContainer* Scene::GetLights() { return mLights; }
+
+// Returns the camera container of the scene
+CameraContainer* Scene::GetCameras() { return mCameras; }
+
+// Returns the shader container of the scene
+ShaderContainer* Scene::GetShaders() { return mShaders; }
+
+// Returns the mesh container of the scene
+MeshContainer* Scene::GetMeshes() { return mMeshes; }
+
+// Returns the entity container of the scene
+EntityContainer* Scene::GetEntities() { return mEntities; }
 
 // Returns the current shader
 const std::string Scene::GetCurShader() { return mCurShader; }
@@ -375,24 +398,24 @@ IEntity* Scene::AddEntity(const std::string& shaderName, IEntity* entity, bool p
 // Adds a texture to the scene's texture list
 Texture* Scene::AddTexture(const std::string& name, Texture* texture)
 {
-	if (mTextureList.find(name) == mTextureList.end())
-		mTextureList.emplace(name, texture);
+	if (mOldTextures.find(name) == mOldTextures.end())
+		mOldTextures.emplace(name, texture);
 	return texture;
 }
 
 // Adds a material to the scene's material list
 Material* Scene::AddMaterial(const std::string& name, Material* material)
 {
-	if (mMaterialList.find(name) == mMaterialList.end())
-		mMaterialList.emplace(name, material);
+	if (mOldMaterials.find(name) == mOldMaterials.end())
+		mOldMaterials.emplace(name, material);
 	return material;
 }
 
 // Sets the default material of the scene from the material list if the material exists.
 Material* Scene::SetDefaultMaterial(const std::string& name)
 {
-	if (mMaterialList.find(name) != mMaterialList.end())
-		mDefaultMat = mMaterialList[name];
+	if (mOldMaterials.find(name) != mOldMaterials.end())
+		mDefaultMat = mOldMaterials[name];
 	return mDefaultMat;
 }
 
@@ -412,7 +435,7 @@ void Scene::SetEntityMaterial(IEntity* entity, Material* material)
 	// If the material is already stored in the render list, remove it
 	if (mMeshRenderList.find(prevMatName) != mMeshRenderList.end())
 	{
-		if (mMeshRenderList[prevMatName]->Get(entity->GetName()) != nullptr)
+		if (mMeshRenderList[prevMatName]->GetItem(entity->GetName()) != nullptr)
 			mMeshRenderList[prevMatName]->Remove(entity->GetName());
 	}
 	entity->SetMaterial(material);
@@ -465,11 +488,12 @@ Scene::~Scene()
 	if (mMainCamera != nullptr)
 		delete mMainCamera;
 
-	for (auto iter = mShaderList.begin(); iter != mShaderList.end(); ++iter)
+	for (auto iter = mOldShaders.begin(); iter != mOldShaders.end(); ++iter)
 	{
 		if (iter->second != nullptr)
 			delete iter->second;
 	}
+	/*
 	for (auto iter = mRenderList.begin(); iter != mRenderList.end(); ++iter)
 	{
 		if (iter->second != nullptr) {
@@ -484,11 +508,12 @@ Scene::~Scene()
 			delete iter->second;
 		}
 	}
-	for (auto iter = mMaterialList.begin(); iter != mMaterialList.end(); ++iter)
+	*/
+	for (auto iter = mOldMaterials.begin(); iter != mOldMaterials.end(); ++iter)
 		if (iter->second != nullptr)
 			delete iter->second;
 
-	for (auto iter = mTextureList.begin(); iter != mTextureList.end(); ++iter)
+	for (auto iter = mOldTextures.begin(); iter != mOldTextures.end(); ++iter)
 		if (iter->second != nullptr)
 			delete iter->second;
 
@@ -496,10 +521,10 @@ Scene::~Scene()
 		if (mMeshList[i] != nullptr)
 			delete mMeshList[i];
 
-	mShaderList.clear();
-	mPreRenderList.clear();
-	mRenderList.clear();
-	mMaterialList.clear();
-	mTextureList.clear();
+	mOldShaders.clear();
+	//mPreRenderList.clear();
+	//mRenderList.clear();
+	mOldMaterials.clear();
+	mOldTextures.clear();
 	mMeshList.clear();
 }

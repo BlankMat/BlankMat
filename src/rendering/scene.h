@@ -49,13 +49,21 @@ protected:
 	std::unordered_map<std::string, EntityContainer*> mMeshRenderList;
 	std::unordered_map<std::string, EntityContainer*> mEntityList;
 
-	std::unordered_map<std::string, Light*> mLightList;
-	std::unordered_map<std::string, Camera*> mCameraList;
-	std::unordered_map<std::string, Shader*> mShaderList;
-	std::unordered_map<std::string, Material*> mMaterialList;
-	std::unordered_map<std::string, Texture*> mTextureList;
-	std::unordered_map<std::string, IEntity*> mPreRenderList;
-	std::unordered_map<std::string, IEntity*> mRenderList;
+	std::unordered_map<std::string, Light*> mOldLights;
+	std::unordered_map<std::string, Camera*> mOldCameras;
+	std::unordered_map<std::string, Shader*> mOldShaders;
+	std::unordered_map<std::string, Material*> mOldMaterials;
+	std::unordered_map<std::string, Texture*> mOldTextures;
+	//std::unordered_map<std::string, IEntity*> mPreRenderList;
+	//std::unordered_map<std::string, IEntity*> mRenderList;
+	
+	TextureContainer* mTextures;
+	MaterialContainer* mMaterials;
+	LightContainer* mLights;
+	CameraContainer* mCameras;
+	ShaderContainer* mShaders;
+	MeshContainer* mMeshes;
+	EntityContainer* mEntities;
 
 	// Loads the material of the given config. Must be bottom-level config
 	Material* LoadMaterial(Config* config, const std::string& name);
@@ -66,14 +74,6 @@ protected:
 	// Returns the projection matrix of the view axis handle
 	const glm::mat4& GetViewAxisProjection(Window* window);
 public:
-	TextureContainer* mTextures;
-	MaterialContainer* mMaterials;
-	LightContainer* mLights;
-	CameraContainer* mCameras;
-	ShaderContainer* mShaders;
-	MeshContainer* mMeshes;
-	EntityContainer* mEntities;
-
 	// Renders the current scene
 	void Draw(Window* window, Shader* shader);
 	
@@ -130,6 +130,27 @@ public:
 
 	// Returns the transform handle
 	IEntity* GetTransformHandle();
+
+	// Returns the texture container of the scene
+	TextureContainer* GetTextures();
+
+	// Returns the material container of the scene
+	MaterialContainer* GetMaterials();
+
+	// Returns the light container of the scene
+	LightContainer* GetLights();
+
+	// Returns the camera container of the scene
+	CameraContainer* GetCameras();
+
+	// Returns the shader container of the scene
+	ShaderContainer* GetShaders();
+
+	// Returns the mesh container of the scene
+	MeshContainer* GetMeshes();
+
+	// Returns the entity container of the scene
+	EntityContainer* GetEntities();
 
 	// Adds the given node to the scene
 	void AddNode(Node* node);
