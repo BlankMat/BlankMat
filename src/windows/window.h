@@ -91,6 +91,15 @@ public:
 	// Updates the window title to match the current state of the application
 	void UpdateWindowTitle(const std::string& fileName, bool isSaved);
 
+	// Resets the viewport to be the correct size
+	void ResetViewport()
+	{
+		CalcWindowSize();
+		glViewport(0, 0, mWidth, mHeight);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	}
+
 	// Gets and stores the current window size
 	void CalcWindowSize() { glfwGetWindowSize(mWindow, &mWidth, &mHeight); }
 
@@ -112,5 +121,5 @@ public:
 	// Returns the height of the window, currently
 	inline int GetHeight() const { return mHeight; }
 	// Returns the aspect ratio of the screen
-	inline float GetAspect() const { return (float)mWidth / (float)mHeight; }
+	inline float GetAspect() const { return (mHeight > 0) ? (float)mWidth / (float)mHeight : 1.0f; }
 };

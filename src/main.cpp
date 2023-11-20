@@ -38,6 +38,9 @@ int main()
     // Main program loop should run until the program is exited and the changes are saved or ignored
     while (true)
     {
+        // Poll events at the start of the loop
+        glfwPollEvents();
+
         // If the window should close, handle exiting
         if (HandleWindowQuit(window, state))
             break;
@@ -54,8 +57,6 @@ int main()
 
         // Swap buffers at the end of the loop
         glfwSwapBuffers(window->GetWindow());
-        // Poll events at the start of the loop
-        glfwPollEvents();
         window->UpdateWindowTitle(state->GetCurFileName(), state->IsSaved());
     }
 
@@ -96,9 +97,7 @@ void OpenGLDraw(Window* window, State* state, Scene* scene)
     }
 
     // Reset viewport
-    glViewport(0, 0, window->GetWidth(), window->GetHeight());
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    window->ResetViewport();
 
     // Render the scene
     scene->Draw(window, scene->GetShader(scene->GetCurShader()));

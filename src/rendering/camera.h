@@ -143,7 +143,7 @@ public:
     const glm::mat4& GetProjection(float aspect)
     {
         // Only recalculate projection matrix if needed
-        if (mRecalcProjection || aspect != mPrevAspect)
+        if (aspect != 0.0f && (mRecalcProjection || aspect != mPrevAspect))
         {
             // Projection
             glm::mat4 projection = glm::mat4(1.0f);
