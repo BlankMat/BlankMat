@@ -182,12 +182,14 @@ public:
 	/// </summary>
 	/// <param name="name">Name of the item</param>
 	/// <param name="item">The item to store</param>
-	virtual void Add(const std::string& name, T* item)
+	/// <returns>The element stored in the container</returns>
+	virtual T* Add(const std::string& name, T* item)
 	{
 		if (mData.find(name) == mData.end())
 			mData.emplace(name, item);
 		else
 			mData[name] = item;
+		return item;
 	}
 
 	/// <summary>
@@ -233,6 +235,16 @@ public:
 		if (mData.find(name) != mData.end())
 			return mData[name];
 		return nullptr;
+	}
+
+	/// <summary>
+	/// Returns whether the container contains an item with the given name
+	/// </summary>
+	/// <param name="name">Name of the item</param>
+	/// <returns>Whether the item exists</returns>
+	virtual bool Contains(const std::string& name)
+	{
+		return (mData.find(name) != mData.end());
 	}
 
 	/// <summary>

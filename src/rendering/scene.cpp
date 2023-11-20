@@ -193,10 +193,11 @@ Texture* Scene::LoadTexture(const std::string& type, const std::string& path, co
 // Activates the shader with the given name for the scene
 void Scene::UseShader(const std::string& name)
 {
-	if (mOldShaders.find(name) != mOldShaders.end() && mOldShaders[name] != nullptr)
+	Shader* shader = mShaders->GetItem(name);
+	if (shader != nullptr)
 	{
 		mCurShader = name;
-		mShader = mOldShaders[name];
+		mShader = shader;
 		mShader->Use();
 	}
 }
@@ -204,40 +205,25 @@ void Scene::UseShader(const std::string& name)
 // Creates a shader for the scene with the given name from the source file of the given name
 Shader* Scene::CreateShader(const std::string& name, bool loadGeom)
 {
-	if (mOldShaders.find(name) == mOldShaders.end())
-	{
-		Shader* newShader = new Shader(name, loadGeom);
-		newShader->name = name;
-		mOldShaders.emplace(name, newShader);
-		return newShader;
-	}
-	return mOldShaders[name];
+	if (mShaders->Contains(name))
+		return mShaders->GetItem(name);
+	return mShaders->Add(name, new Shader(name, loadGeom, name));
 }
 
 // Creates a shader for the scene with the given name, loading it from a different source than the name
 Shader* Scene::CreateShader(const std::string& name, const std::string& source, bool loadGeom)
 {
-	if (mOldShaders.find(name) == mOldShaders.end())
-	{
-		Shader* newShader = new Shader(source, loadGeom);
-		newShader->name = name;
-		mOldShaders.emplace(name, newShader);
-		return newShader;
-	}
-	return mOldShaders[name];
+	if (mShaders->Contains(name))
+		return mShaders->GetItem(name);
+	return mShaders->Add(name, new Shader(source, loadGeom, name));
 }
 
 // Creates a shader for the scene with the given name, loading it from a config
 Shader* Scene::CreateShader(const std::string& name, Config* config)
 {
-	if (mOldShaders.find(name) == mOldShaders.end())
-	{
-		Shader* newShader = new Shader(config->GetString("file"), config->GetBool("hasGeomShader"));
-		newShader->name = name;
-		mOldShaders.emplace(name, newShader);
-		return newShader;
-	}
-	return mOldShaders[name];
+	if (mShaders->Contains(name))
+		return mShaders->GetItem(name);
+	return mShaders->Add(name, new Shader(config->GetString("file"), config->GetBool("hasGeomShader"), name));
 }
 
 // Returns the scene's camera
@@ -255,9 +241,7 @@ std::string Scene::GetDirectory() { return mDirectory; }
 // Returns the shader with the given name
 Shader* Scene::GetShader(const std::string& name)
 {
-	if (mOldShaders.find(name) != mOldShaders.end())
-		return mOldShaders[name];
-	return nullptr;
+	return mShaders->GetItem(name);
 }
 
 // Returns the material with the given name
@@ -291,7 +275,10 @@ IEntity* Scene::GetEntity(const std::string& name)
 }
 
 // Returns the transform handle
-IEntity* Scene::GetTransformHandle() { return mTransformHandle; }
+IEntity* Scene::GetTransformHandle()
+{
+	return mTransformHandle;
+}
 
 // Adds the given node to the scene
 void Scene::AddNode(Node* node)
@@ -333,9 +320,6 @@ void Scene::SetRootNode(Node* rootNode)
 	mRootNode = rootNode;
 }
 
-// Returns a reference to the shader list
-const std::unordered_map<std::string, Shader*>& Scene::GetShaderList() { return mOldShaders; }
-
 // Returns the texture container of the scene
 TextureContainer* Scene::GetTextures() { return mTextures; }
 
@@ -361,13 +345,31 @@ EntityContainer* Scene::GetEntities() { return mEntities; }
 const std::string Scene::GetCurShader() { return mCurShader; }
 
 // Sets up the scene's camera with the given options
-void Scene::SetCamera(ActionStack* actionStack, Config* config) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = new Camera(actionStack, config); }
+void Scene::SetCamera(ActionStack* actionStack, Config* config)
+{
+	if (mMainCamera != nullptr)
+		delete mMainCamera;
+	mMainCamera = new Camera(actionStack, config);
+	mCameras->Add("main", mMainCamera);
+}
 
 // Sets the scene's camera to the given camera
-void Scene::SetCamera(Camera* cam) { if (mMainCamera != nullptr) { delete mMainCamera; } mMainCamera = cam; }
+void Scene::SetCamera(Camera* cam)
+{
+	if (mMainCamera != nullptr)
+		delete mMainCamera;
+	mMainCamera = cam;
+	mCameras->Add("main", mMainCamera);
+}
 
 // Sets the scene's light to the given light
-void Scene::SetLight(Light* light) { if (mGlobalLight != nullptr) { delete mGlobalLight; } mGlobalLight = light; }
+void Scene::SetLight(Light* light)
+{
+	if (mGlobalLight != nullptr)
+		delete mGlobalLight;
+	mGlobalLight = light;
+	mLights->Add("global", mGlobalLight);
+}
 
 // Sets the scene's name
 void Scene::SetName(const std::string& name) { mName = name; }
@@ -388,15 +390,13 @@ IEntity* Scene::AddEntity(const std::string& shaderName, IEntity* entity, bool p
 // Adds a texture to the scene's texture list
 Texture* Scene::AddTexture(const std::string& name, Texture* texture)
 {
-	mTextures->Add(name, texture);
-	return texture;
+	return mTextures->Add(name, texture);
 }
 
 // Adds a material to the scene's material list
 Material* Scene::AddMaterial(const std::string& name, Material* material)
 {
-	mMaterials->Add(name, material);
-	return material;
+	return mMaterials->Add(name, material);
 }
 
 // Sets the default material of the scene from the material list if the material exists.
@@ -485,17 +485,10 @@ Scene::~Scene()
 	if (mMainCamera != nullptr)
 		delete mMainCamera;
 
-	for (auto iter = mOldShaders.begin(); iter != mOldShaders.end(); ++iter)
-	{
-		if (iter->second != nullptr)
-			delete iter->second;
-	}
-
 	for (unsigned int i = 0; i < mMeshList.size(); i++)
 		if (mMeshList[i] != nullptr)
 			delete mMeshList[i];
 
-	mOldShaders.clear();
 	mMeshList.clear();
 
 	delete mTextures;

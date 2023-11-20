@@ -24,5 +24,16 @@ protected:
 	void WriteItem(const std::string& key, Light* item, std::ofstream& file) override
 	{
 		file << "LIGHT " << key << std::endl;
+		file << "type " << (int)item->GetType() << std::endl;
+		file << "pos " << Vec3ToString(item->GetPos()) << std::endl;
+		file << "dir " << Vec3ToString(item->GetDir()) << std::endl;
+		file << "color " << Vec3ToString(item->GetColor()) << std::endl;
+		file << "kd " << item->GetKD() << std::endl;
+		file << "ka " << item->GetKA() << std::endl;
+		file << "ks " << item->GetKS() << std::endl;
+		file << "gamma " << item->GetGamma() << std::endl;
+		file << "range " << item->GetRange() << std::endl;
+		file << "spotinner " << item->GetSpotInnerRadius() << std::endl;
+		file << "spotouter " << item->GetSpotOuterRadius() << std::endl;
 	}
 };

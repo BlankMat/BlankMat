@@ -62,6 +62,8 @@ public:
     UIVec3& GetRot() { return mRot; }
     // Returns the direction of the camera
     UIVec3& GetDir() { return mDir; }
+    // Returns the up direction of the camera
+    UIVec3& GetUp() { return mUp; }
     // Returns the camera's current look target
     UIVec3& GetTarget() { return mTarget; }
     // Returns the camera's pivot

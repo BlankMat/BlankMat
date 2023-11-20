@@ -48,14 +48,6 @@ protected:
 	std::vector<Mesh*> mMeshList;
 	std::unordered_map<std::string, EntityContainer*> mMeshRenderList;
 	std::unordered_map<std::string, EntityContainer*> mEntityList;
-
-	std::unordered_map<std::string, Light*> mOldLights;
-	std::unordered_map<std::string, Camera*> mOldCameras;
-	std::unordered_map<std::string, Shader*> mOldShaders;
-	//std::unordered_map<std::string, Material*> mOldMaterials;
-	//std::unordered_map<std::string, Texture*> mOldTextures;
-	//std::unordered_map<std::string, IEntity*> mPreRenderList;
-	//std::unordered_map<std::string, IEntity*> mRenderList;
 	
 	TextureContainer* mTextures = nullptr;
 	MaterialContainer* mMaterials = nullptr;
@@ -91,15 +83,6 @@ public:
 
 	// Activates the shader with the given name for the scene
 	void UseShader(const std::string& name = "");
-
-	// Creates a shader for the scene with the given name from the source file of the given name
-	Shader* CreateShader(const std::string& name, bool loadGeom);
-
-	// Creates a shader for the scene with the given name, loading it from a different source than the name
-	Shader* CreateShader(const std::string& name, const std::string& source, bool loadGeom);
-
-	// Creates a shader for the scene with the given name, loading it from a config
-	Shader* CreateShader(const std::string& name, Config* config);
 
 	// Returns the scene's camera
 	Camera* GetCamera();
@@ -157,6 +140,15 @@ public:
 
 	// Adds the given mesh to the scene as child of the given node
 	void AddMesh(Mesh* mesh, Node* parent = nullptr);
+
+	// Creates a shader for the scene with the given name from the source file of the given name
+	Shader* CreateShader(const std::string& name, bool loadGeom);
+
+	// Creates a shader for the scene with the given name, loading it from a different source than the name
+	Shader* CreateShader(const std::string& name, const std::string& source, bool loadGeom);
+
+	// Creates a shader for the scene with the given name, loading it from a config
+	Shader* CreateShader(const std::string& name, Config* config);
 	
 	// Rotates the current camera by the given delta degrees
 	void RotateCamera(const glm::vec3& delta);
@@ -169,9 +161,6 @@ public:
 	
 	// Sets the root node
 	void SetRootNode(Node* rootNode);
-
-	// Returns a reference to the shader list
-	const std::unordered_map<std::string, Shader*>& GetShaderList();
 
 	// Returns the current shader
 	const std::string GetCurShader();

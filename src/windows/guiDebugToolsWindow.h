@@ -30,7 +30,7 @@ public:
 			// Shading settings
 			ImGui::Text("Shading");
 			// Select shader
-			std::unordered_map<std::string, Shader*> shaderList = mScene->GetShaderList();
+			const auto& shaderList = mScene->GetShaders()->Data();
 			std::map<std::string, Shader*> sortedShaders;
 			for (auto iter = shaderList.begin(); iter != shaderList.end(); ++iter)
 				sortedShaders.emplace(iter->first, iter->second);

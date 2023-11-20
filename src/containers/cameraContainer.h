@@ -24,6 +24,16 @@ protected:
 	void WriteItem(const std::string& key, Camera* item, std::ofstream& file) override
 	{
 		file << "CAMERA " << key << std::endl;
+		file << "fov " << item->GetFOV() << std::endl;
+		file << "nearclip " << item->GetNearClip() << std::endl;
+		file << "farclip " << item->GetFarClip() << std::endl;
+		file << "pos " << Vec3ToString(item->GetPos()) << std::endl;
+		file << "dir " << Vec3ToString(item->GetDir()) << std::endl;
+		file << "up " << Vec3ToString(item->GetUp()) << std::endl;
+		file << "bgcolor " << Vec3ToString(item->GetBGColor()) << std::endl;
+		file << "orthsize " << item->GetOrthSize() << std::endl;
+		file << "perspective " << (int)item->IsPerspective() << std::endl;
+		file << "wireframe " << (int)item->IsWireframe() << std::endl;
 	}
 public:
 };
