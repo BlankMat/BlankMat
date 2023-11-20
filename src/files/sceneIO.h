@@ -112,7 +112,7 @@ public:
 		{
 			ReadPath(fileName);
 			std::cout << "Saving scene to file " << GetFullPath() << std::endl;
-			ModelWriter::SaveModel(mScene, GetFullPath());
+			SceneWriter::SaveScene(mScene, GetFullPath());
 			mState->SaveActionStack();
 		}
 	}

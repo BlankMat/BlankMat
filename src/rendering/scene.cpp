@@ -481,6 +481,14 @@ Scene::Scene(State* state)
 	mGrid = new PGrid(GRID_OBJ, 5, 1.0f, new Material(glm::vec3(0.2f)), 2, true, glm::vec3(0.0f));
 	mViewAxisHandle = new PHandle(CAMERA_AXIS_HANDLE, 45.0f, 6, false, glm::vec3(50, 50, 0));
 	mTransformHandle = new PHandle(TRANSFORM_HANDLE, 0.5f, 6, true, glm::vec3(0.0f));
+
+	mTextures = new TextureContainer();
+	mMaterials = new MaterialContainer();
+	mLights = new LightContainer();
+	mCameras = new CameraContainer();
+	mShaders = new ShaderContainer();
+	mMeshes = new MeshContainer();
+	mEntities = new EntityContainer();
 }
 
 Scene::~Scene()
@@ -527,4 +535,12 @@ Scene::~Scene()
 	mOldMaterials.clear();
 	mOldTextures.clear();
 	mMeshList.clear();
+
+	delete mTextures;
+	delete mMaterials;
+	delete mLights;
+	delete mCameras;
+	delete mShaders;
+	delete mMeshes;
+	delete mEntities;
 }

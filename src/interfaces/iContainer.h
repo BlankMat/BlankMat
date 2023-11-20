@@ -86,7 +86,7 @@ public:
 	void Write(std::ofstream& file)
 	{
 		file << "#StartContainer" << std::endl;
-		file << "#NumItems " << std::to_string(Count()) << std::endl;
+		file << "#NumItems " << std::to_string(mData.size()) << std::endl;
 		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
 		{
 			file << "#StartItem" << std::endl;

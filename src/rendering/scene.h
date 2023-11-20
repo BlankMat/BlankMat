@@ -57,13 +57,13 @@ protected:
 	//std::unordered_map<std::string, IEntity*> mPreRenderList;
 	//std::unordered_map<std::string, IEntity*> mRenderList;
 	
-	TextureContainer* mTextures;
-	MaterialContainer* mMaterials;
-	LightContainer* mLights;
-	CameraContainer* mCameras;
-	ShaderContainer* mShaders;
-	MeshContainer* mMeshes;
-	EntityContainer* mEntities;
+	TextureContainer* mTextures = nullptr;
+	MaterialContainer* mMaterials = nullptr;
+	LightContainer* mLights = nullptr;
+	CameraContainer* mCameras = nullptr;
+	ShaderContainer* mShaders = nullptr;
+	MeshContainer* mMeshes = nullptr;
+	EntityContainer* mEntities = nullptr;
 
 	// Loads the material of the given config. Must be bottom-level config
 	Material* LoadMaterial(Config* config, const std::string& name);
