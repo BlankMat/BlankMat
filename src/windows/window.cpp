@@ -188,10 +188,7 @@ bool Window::SetupImGui(Config* config)
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     mIO = &ImGui::GetIO();
-
-    // Initialize ImGui
-    ImGui_ImplGlfw_InitForOpenGL(mWindow, true);
-    ImGui_ImplOpenGL3_Init("#version 330");
+    (void)mIO;
 
     // Handle font
     mIO->Fonts->AddFontFromFileTTF(FileSystem::GetPath(FONT_DIR + styleConfig->GetString("font")).c_str(), styleConfig->GetFloat("fontSize"));
@@ -203,6 +200,10 @@ bool Window::SetupImGui(Config* config)
 
     // Setup style
     SetupImGuiStyle(styleConfig->GetBool("darkTheme"), styleConfig->GetFloat("windowOpacity"));
+
+    // Setup ImGui Renderer backends
+    ImGui_ImplGlfw_InitForOpenGL(mWindow, true);
+    ImGui_ImplOpenGL3_Init("#version 330");
 
     // Return success
     return true;
