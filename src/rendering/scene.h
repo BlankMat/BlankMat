@@ -206,6 +206,9 @@ public:
 	// Returns the view matrix of the scene's camera
 	const glm::mat4& GetViewMatrix();
 
+	// Clears the scene completely
+	void Clear();
+
 	// Constructs the scene, getting everything ready for manual setting
 	Scene(State* state);
 

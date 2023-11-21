@@ -5,6 +5,7 @@
 #include "files/modelReader.h"
 #include "files/modelWriter.h"
 #include "files/sceneWriter.h"
+#include "files/sceneReader.h"
 #include <iostream>
 
 class SceneIO
@@ -134,7 +135,7 @@ public:
 		if (!selection.empty())
 		{
 			ReadPath(selection[0]);
-			ModelReader::LoadModel(mScene, GetFullPath());
+			SceneReader::ReadScene(mScene, GetFullPath());
 			mState->SaveActionStack();
 		}
 	}

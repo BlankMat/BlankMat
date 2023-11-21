@@ -28,8 +28,9 @@ public:
 	/// Recursively reads all nodes from the given file
 	/// </summary>
 	/// <param name="file">File to read</param>
+	/// <param name="parent">Parent node</param>
 	/// <returns>Node that was stored in the file</returns>
-	static Node* Read(std::ifstream& file);
+	static Node* Read(std::ifstream& file, Node* parent);
 
 	/// <summary>
 	/// Recursively writes all nodes into the given file

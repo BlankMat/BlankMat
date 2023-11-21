@@ -57,6 +57,7 @@ protected:
 				file << std::endl;
 			file << inds[i] << " ";
 		}
+		file << std::endl;
 		file << "#EndInds" << std::endl;
 		file << std::endl;
 	}

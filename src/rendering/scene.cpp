@@ -462,6 +462,19 @@ const glm::mat4& Scene::GetViewMatrix()
 	return GetCamera()->GetView();
 }
 
+// Clears the scene completely
+void Scene::Clear()
+{
+	mTextures->Clear();
+	mMaterials->Clear();
+	mLights->Clear();
+	mCameras->Clear();
+	mShaders->Clear();
+	mMeshes->Clear();
+	mEntities->Clear();
+	mMeshRenderList.clear();
+}
+
 // Constructs the scene from the given file
 Scene::Scene(State* state)
 	: mState(state)

@@ -70,8 +70,8 @@ public:
 			if (parse[0] == "##StartItem")
 			{
 				auto newItem = ReadItem(file);
-				if (newItem->first != nullptr && newItem->second != nullptr)
-					Add(newItem->first, newItem->second);
+				if (newItem.first != "" && newItem.second != nullptr)
+					Add(newItem.first, newItem.second);
 			}
 			// End parsing if the tag is found
 			else if (parse[0] == "#EndContainer")
@@ -86,16 +86,15 @@ public:
 	void Write(std::ofstream& file)
 	{
 		file << "#StartContainer" << std::endl;
-		file << "#NumItems " << std::to_string(mData.size()) << std::endl;
+		file << "#NumItems " << std::to_string(mData.size());
 		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
 		{
+			file << std::endl;
 			file << "##StartItem" << std::endl;
 			WriteItem(iter->first, iter->second, file);
 			file << "##EndItem" << std::endl;
-			file << std::endl;
 		}
 		file << "#EndContainer" << std::endl;
-		file << std::endl;
 	}
 
 	/// <summary>

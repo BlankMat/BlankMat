@@ -1,10 +1,51 @@
 #include "node.h"
 
 // Recursively reads all nodes from the given file
-Node* Node::Read(std::ifstream& file)
+Node* Node::Read(std::ifstream& file, Node* parent)
 {
 	// TODO: Implement node read
-	return nullptr;
+	std::string name = "";
+	glm::vec3 pos = glm::vec3(0.0f);
+	glm::vec3 rot = glm::vec3(0.0f);
+	glm::vec3 scale = glm::vec3(1.0f);
+	bool enabled = true;
+	std::vector<Node*> children;
+	std::vector<Mesh*> meshes;
+
+	std::string line;
+	while (std::getline(file, line))
+	{
+		// Don't parse empty lines
+		if (line == "")
+			continue;
+
+		std::vector<std::string> parse;
+		ParseStringByDelim(parse, line, " ");
+
+		// Don't parse empty lines
+		if (parse.empty())
+			continue;
+
+		// Check for tag markers
+		if (parse[0] == "##StartNode")
+		{
+			std::cout << "Read node " << line << std::endl;
+		}
+		// End parsing if the tag is found
+		else if (parse[0] == "#EndNode")
+		{
+			break;
+		}
+	}
+
+	// Build node
+	Node* node = new Node(parent, name, pos, rot, scale);
+	node->Enable(enabled);
+	for (unsigned int i = 0; i < children.size(); i++)
+		node->AddChild(children[i]);
+	for (unsigned int i = 0; i < meshes.size(); i++)
+		node->AddMesh(meshes[i]);
+	return node;
 }
 
 // Recursively writes all nodes into the given file

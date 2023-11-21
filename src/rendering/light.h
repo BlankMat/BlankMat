@@ -118,7 +118,7 @@ public:
 		if (!isRotating)
 			SetPos(mOffset);
 		else
-			SetPos(glm::vec3(mOffset.x * sin(glfwGetTime()), mOffset.y, mOffset.z * cos(glfwGetTime())));
+			SetPos(glm::vec3(mOffset.x * sin((float)glfwGetTime()), mOffset.y, mOffset.z * cos((float)glfwGetTime())));
 	}
 
 	void UpdateDiscoLight(bool isDisco)
@@ -126,7 +126,7 @@ public:
 		if (!isDisco)
 			SetColor(mBaseColor);
 		else
-			SetColor(glm::vec3(mBaseColor.x * sin(glfwGetTime() - PI * 0.5f), mBaseColor.y * sin(glfwGetTime()), mBaseColor.z * sin(glfwGetTime() + PI * 0.5f)));
+			SetColor(glm::vec3(mBaseColor.x * sin((float)glfwGetTime() - PI * 0.5f), mBaseColor.y * sin((float)glfwGetTime()), mBaseColor.z * sin((float)glfwGetTime() + PI * 0.5f)));
 	}
 
 	void SetRange(const float lightRange)
