@@ -21,6 +21,13 @@ enum class TextureType
 /// </summary>
 struct Texture
 {
+private:
+    /// <summary>
+    /// Whether the texture is for internal use only
+    /// </summary>
+    bool mIsInternal = false;
+
+public:
 	/// <summary>
 	/// OpenGL texture index
 	/// </summary>
@@ -184,6 +191,15 @@ struct Texture
         return textureID;
     }
 
+    /// <summary>
+    /// Returns whether the texture is for internal use only
+    /// </summary>
+    /// <returns>Whether the texture is for internal use</returns>
+    bool IsInternal()
+    {
+        return mIsInternal;
+    }
+
 	/// <summary>
 	/// Creates a new instance of a texture that is already loaded into OpenGL
 	/// </summary>
@@ -191,8 +207,8 @@ struct Texture
 	/// <param name="_type">Texture type</param>
 	/// <param name="_path">Path of the referenced texture file</param>
 	/// <param name="_name">Name of the texture</param>
-	Texture::Texture(const unsigned int _id = -1, TextureType _type = TextureType::DIFFUSE, const std::string& _path = "", const std::string& _name = "")
-		: id(_id), type(_type), path(_path), name(_name)
+	Texture::Texture(unsigned int _id = -1, TextureType _type = TextureType::DIFFUSE, const std::string& _path = "", const std::string& _name = "", bool _internal = false)
+		: id(_id), type(_type), path(_path), name(_name), mIsInternal(_internal)
     {}
 
     /// <summary>
@@ -201,8 +217,8 @@ struct Texture
     /// <param name="_type">Type of the texture</param>
     /// <param name="_color">Color of the texture</param>
     /// <param name="_name">Name of the texture</param>
-    Texture::Texture(TextureType _type, const glm::vec3& _color, const std::string& _name)
-        : type(_type), path("color"), name(_name)
+    Texture::Texture(TextureType _type, const glm::vec3& _color, const std::string& _name, bool _internal = false)
+        : type(_type), path("color"), name(_name), mIsInternal(_internal)
     {
         id = TextureFromColor(_color, _name);
     }
@@ -214,8 +230,8 @@ struct Texture
 	/// <param name="_directory">Directory of the texture file</param>
 	/// <param name="_path">Name of the texture file</param>
 	/// <param name="_name">Name of the texture</param>
-	Texture::Texture(TextureType _type, const std::string& _directory, const std::string& _path, const std::string& _name)
-		: type(_type), path(_path), name(_name)
+	Texture::Texture(TextureType _type, const std::string& _directory, const std::string& _path, const std::string& _name, bool _internal = false)
+		: type(_type), path(_path), name(_name), mIsInternal(_internal)
 	{
 		id = TextureFromFile(_directory, _path);
 	}

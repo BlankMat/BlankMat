@@ -23,6 +23,10 @@ protected:
 	/// <param name="file">File to write to</param>
 	void WriteItem(const std::string& key, Texture* item, std::ofstream& file) override
 	{
+		// Skip the texture if it is internal
+		if (item->IsInternal())
+			return;
+
 		file << "TEXTURE " << key << std::endl;
 		file << "name " << item->name << std::endl;
 		file << "path " << item->path << std::endl;
@@ -45,11 +49,11 @@ public:
 	/// </summary>
 	explicit TextureContainer()
 	{
-		Add("default_diffuse", new Texture(TextureType::DIFFUSE, glm::vec3(1.0f), "default_diffuse"));
-		Add("default_ambient", new Texture(TextureType::AMBIENT, glm::vec3(1.0f), "default_ambient"));
-		Add("default_specular", new Texture(TextureType::SPECULAR, glm::vec3(1.0f), "default_specular"));
-		Add("default_normal", new Texture(TextureType::NORMAL, glm::vec3(0.5f, 0.5f, 1.0f), "default_normal"));
-		Add("default_height", new Texture(TextureType::HEIGHT, glm::vec3(1.0f), "default_height"));
-		Add("default_alpha", new Texture(TextureType::ALPHA, glm::vec3(1.0f), "default_alpha"));
+		Add("default_diffuse", new Texture(TextureType::DIFFUSE, glm::vec3(1.0f), "default_diffuse", true));
+		Add("default_ambient", new Texture(TextureType::AMBIENT, glm::vec3(1.0f), "default_ambient", true));
+		Add("default_specular", new Texture(TextureType::SPECULAR, glm::vec3(1.0f), "default_specular", true));
+		Add("default_normal", new Texture(TextureType::NORMAL, glm::vec3(0.5f, 0.5f, 1.0f), "default_normal", true));
+		Add("default_height", new Texture(TextureType::HEIGHT, glm::vec3(1.0f), "default_height", true));
+		Add("default_alpha", new Texture(TextureType::ALPHA, glm::vec3(1.0f), "default_alpha", true));
 	}
 };

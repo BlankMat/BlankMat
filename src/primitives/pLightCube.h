@@ -52,8 +52,8 @@ public:
         bool gamma = true, float range = 13.0f, float spotInner = 25, float spotOuter = 35)
         : Light(type, pos, dir, color, kd, ka, ks, gamma, range, spotInner, spotOuter)
     {
-        Material* lightMat = materials->AddMaterial(new Material("lightMat", color, textures));
-        Material* yellowMat = materials->AddMaterial(new Material("yellow", glm::vec3(1, 1, 0), textures));
+        Material* lightMat = materials->AddMaterial(new Material("internal_lightMat", color, textures, true));
+        Material* yellowMat = materials->AddMaterial(new Material("internal_yellow", glm::vec3(1, 1, 0), textures, true));
         mCube = new PCube(name, size, lightMat, 0.0f, false, pos);
         mDirLine = new PLine(name, glm::vec3(0, 0, 0), glm::vec3(0, 0, 1.5f), yellowMat, 15.0f, false, pos);
         SetDir(dir);

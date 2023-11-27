@@ -17,11 +17,12 @@ enum class IllumMode { FLAT = 0, LAMBERT = 1, PHONG = 2, REFLECTION = 3 };
 class Material
 {
 protected:
-    glm::vec3 mCurKD;
-    glm::vec3 mCurKA;
-    glm::vec3 mCurKS;
-    glm::vec3 mCurKE;
-    bool mShadowsEnabled;
+    glm::vec3 mCurKD = glm::vec3(1.0f);
+    glm::vec3 mCurKA = glm::vec3(0.0f);
+    glm::vec3 mCurKS = glm::vec3(1.0f);
+    glm::vec3 mCurKE = glm::vec3(0.0f);
+    bool mShadowsEnabled = true;
+    bool mIsInternal = false;
     std::vector<Texture*> mCurTextures;
     std::vector<std::string> mCurTextureNames;
 
@@ -93,6 +94,12 @@ public:
     std::string name;
 
     /// <summary>
+    /// Returns whether the material is for internal use only or not.
+    /// </summary>
+    /// <returns>Whether the material is internal</returns>
+    bool IsInternal();
+
+    /// <summary>
     /// Loads the textures of this material into the OpenGL context
     /// </summary>
     /// <param name="_state">Global state of the application</param>
@@ -118,7 +125,8 @@ public:
     /// <param name="_name">Name of the material</param>
     /// <param name="_color">Diffuse color of the material</param>
     /// <param name="_textures">Texture container for the scene</param>
-    explicit Material(const std::string& _name, const glm::vec3& _color, TextureContainer* _textures);
+    /// <param name="_internal">Whether the material is for internal use only</param>
+    explicit Material(const std::string& _name, const glm::vec3& _color, TextureContainer* _textures, bool _internal = true);
 
     /// <summary>
     /// Constructs a material out of a config file and preloaded textures

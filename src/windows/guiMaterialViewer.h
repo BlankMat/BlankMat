@@ -29,6 +29,10 @@ public:
 				float spacing = 5.0f;
 				for (auto iter = mats.begin(); iter != mats.end(); ++iter)
 				{
+					// Skip the material if it is for internal use only
+					if (iter->second->IsInternal())
+						continue;
+
 					ImVec2 pos = ImGui::GetCursorScreenPos();
 					GUIWindowUtils::DrawColor(iter->second->kd, pos, size);
 					pos.x += size + spacing;

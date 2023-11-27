@@ -156,12 +156,12 @@ void LoadDefaultScene(Scene* scene, State* state, Material* defaultMat, bool def
     if (defaultCubes)
     {
         // Add cube materials
-        Material* greenMat = mats->AddMaterial(new Material("green", glm::vec3(0, 1, 0), textures));
-        Material* redMat = mats->AddMaterial(new Material("red", glm::vec3(1, 0, 0), textures));
-        Material* blueMat = mats->AddMaterial(new Material("blue", glm::vec3(0, 0, 1), textures));
-        Material* cyanMat = mats->AddMaterial(new Material("cyan", glm::vec3(0, 1, 1), textures));
-        Material* purpleMat = mats->AddMaterial(new Material("purple", glm::vec3(1, 0, 1), textures));
-        Material* yellowMat = mats->AddMaterial(new Material("yellow", glm::vec3(1, 1, 0), textures));
+        Material* greenMat = mats->AddMaterial(new Material("green", glm::vec3(0, 1, 0), textures, false));
+        Material* redMat = mats->AddMaterial(new Material("red", glm::vec3(1, 0, 0), textures, false));
+        Material* blueMat = mats->AddMaterial(new Material("blue", glm::vec3(0, 0, 1), textures, false));
+        Material* cyanMat = mats->AddMaterial(new Material("cyan", glm::vec3(0, 1, 1), textures, false));
+        Material* purpleMat = mats->AddMaterial(new Material("purple", glm::vec3(1, 0, 1), textures, false));
+        Material* yellowMat = mats->AddMaterial(new Material("yellow", glm::vec3(1, 1, 0), textures, false));
 
         scene->AddMesh(new VCube("cube1", 1.0f, greenMat, glm::vec3(-5, 0, -5), glm::vec3(0, 45, 0), glm::vec3(1, 2, 1)));
         scene->AddMesh(new VCube("cube2", 1.0f, redMat, glm::vec3(-5, 0, -3), glm::vec3(45, 0, 0), glm::vec3(2, 1, 1)));

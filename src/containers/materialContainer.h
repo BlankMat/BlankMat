@@ -24,6 +24,10 @@ protected:
 	/// <param name="file">File to write to</param>
 	void WriteItem(const std::string& key, Material* item, std::ofstream& file) override
 	{
+		// Don't write internal materials
+		if (item->IsInternal())
+			return;
+
 		file << "MATERIAL " << key << std::endl;
 		file << "kd " << Vec3ToString(item->kd) << std::endl;
 		file << "ka " << Vec3ToString(item->ka) << std::endl;

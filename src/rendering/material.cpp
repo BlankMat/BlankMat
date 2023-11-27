@@ -1,6 +1,12 @@
 #include "material.h"
 #include "tools/state.h"
 
+// Returns whether the material is for internal use only or not.
+bool Material::IsInternal()
+{
+    return mIsInternal;
+}
+
 // Loads the textures of this material into the OpenGL context
 void Material::LoadTextures(State* _state, Material* _defaultMat)
 {
@@ -131,7 +137,8 @@ Material::Material(TextureContainer* _textures)
 }
 
 // Constructs a material out of a single color (diffuse)
-Material::Material(const std::string& _name, const glm::vec3& _color, TextureContainer* _textures)
+Material::Material(const std::string& _name, const glm::vec3& _color, TextureContainer* _textures, bool _internal)
+    : mIsInternal(_internal)
 {
     if (name == "")
         name = "Color" + Vec3ToHex(_color);
