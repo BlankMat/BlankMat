@@ -3,6 +3,8 @@
 #include "rendering/light.h"
 #include "primitives/pLine.h"
 #include "primitives/pCube.h"
+#include "containers/textureContainer.h"
+#include "containers/materialContainer.h"
 
 class PLightCube : public Light
 {
@@ -43,23 +45,26 @@ public:
         mDirLine->SetRot(GetRotationDegrees(dir));
     }
 
-	PLightCube(const std::string& name, const float size, const LightType type = LightType::POINT, 
+	PLightCube(const std::string& name, float size, LightType type = LightType::POINT, 
+        MaterialContainer* materials = nullptr, TextureContainer* textures = nullptr,
         const glm::vec3& pos = glm::vec3(1.0f), const glm::vec3& dir = glm::vec3(-1.0f),
-        const glm::vec3& color = glm::vec3(1.0f), const float kd = 1.0f, const float ka = 0.1f, const float ks = 0.5f, 
-        const bool gamma = true, const float range = 13.0f, const float spotInner = 25, const float spotOuter = 35)
+        const glm::vec3& color = glm::vec3(1.0f), float kd = 1.0f, float ka = 0.1f, float ks = 0.5f, 
+        bool gamma = true, float range = 13.0f, float spotInner = 25, float spotOuter = 35)
         : Light(type, pos, dir, color, kd, ka, ks, gamma, range, spotInner, spotOuter)
     {
-        Material* newMat = new Material(color);
-        mCube = new PCube(name, size, newMat, 0.0f, false, pos);
-        mDirLine = new PLine(name, glm::vec3(0, 0, 0), glm::vec3(0, 0, 1.5f), new Material(glm::vec3(1, 1, 0)), 15.0f, false, pos);
+        Material* lightMat = materials->AddMaterial(new Material("lightMat", color, textures));
+        Material* yellowMat = materials->AddMaterial(new Material("yellow", glm::vec3(1, 1, 0), textures));
+        mCube = new PCube(name, size, lightMat, 0.0f, false, pos);
+        mDirLine = new PLine(name, glm::vec3(0, 0, 0), glm::vec3(0, 0, 1.5f), yellowMat, 15.0f, false, pos);
         SetDir(dir);
     }
 
-    PLightCube(const std::string& name, const float size, Config* config)
-        : PLightCube(name, size, static_cast<LightType>(config->GetInt("type")), 
+    PLightCube(const std::string& name, float size, MaterialContainer* materials, TextureContainer* textures, Config* config)
+        : PLightCube(name, size, static_cast<LightType>(config->GetInt("type")), materials, textures,
             config->GetVec("pos"), config->GetVec("dir"), config->GetVec("color"), 
             config->GetFloat("diffuse"), config->GetFloat("ambient"), config->GetFloat("specular"), config->GetBool("gamma"),
-            config->GetFloat("range"), config->GetFloat("spotInnerRadius"), config->GetFloat("spotOuterRadius")) {}
+            config->GetFloat("range"), config->GetFloat("spotInnerRadius"), config->GetFloat("spotOuterRadius"))
+    {}
 
     ~PLightCube()
     {

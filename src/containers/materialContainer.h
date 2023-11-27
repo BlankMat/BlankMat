@@ -1,6 +1,7 @@
 #pragma once
 #include "rendering/material.h"
 #include "interfaces/iContainer.h"
+#include "containers/textureContainer.h"
 
 class MaterialContainer : public IContainer<Material>
 {
@@ -46,5 +47,34 @@ protected:
 			file << "map_ns " << item->map_ns->name << std::endl;
 		if (item->map_d != nullptr)
 			file << "map_d " << item->map_d->name << std::endl;
+	}
+
+public:
+	/// <summary>
+	/// Adds the material to the container, or if it already exists, updates the item to the given one
+	/// </summary>
+	/// <param name="item">The item to store</param>
+	/// <returns>The element stored in the container</returns>
+	Material* AddMaterial(Material* item)
+	{
+		return Add(item->name, item);
+	}
+
+	/// <summary>
+	/// Returns the default material
+	/// </summary>
+	/// <returns>Default material</returns>
+	Material* GetDefault()
+	{
+		return GetItem("default");
+	}
+
+	/// <summary>
+	/// Initializes a default material container with the default material
+	/// </summary>
+	/// <param name="textures">Texture container with default textures</param>
+	explicit MaterialContainer(TextureContainer* textures)
+	{
+		Add("default", new Material(textures));
 	}
 };

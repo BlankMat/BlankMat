@@ -26,43 +26,42 @@ void Material::LoadTextures(State* _state, Material* _defaultMat)
     {
         // Retrieve texture number (the N in texture_diffuseN)
         std::string number;
-        std::string type = mTextures[i]->type;
-        if (type == "texture_diffuse")
+        TextureType type = mTextures[i]->type;
+        switch (mTextures[i]->type)
         {
+        case TextureType::DIFFUSE:
             number = std::to_string(diffuseNum++);
             mCurTextures.push_back(useDiffuse ? mTextures[i] : _defaultMat->map_kd);
             mCurKD = (useDiffuse ? glm::vec3(1.0f) : kd);
-        }
-        else if (type == "texture_ambient")
-        {
+            break;
+        case TextureType::AMBIENT:
             number = std::to_string(ambientNum++);
             mCurTextures.push_back(useAmbient ? mTextures[i] : _defaultMat->map_ka);
             mCurKA = (useAmbient ? glm::vec3(1.0f) : ka);
-        }
-        else if (type == "texture_specular")
-        {
+            break;
+        case TextureType::SPECULAR:
             number = std::to_string(specularNum++);
             mCurTextures.push_back(useSpecular ? mTextures[i] : _defaultMat->map_ks);
             mCurKS = (useSpecular ? glm::vec3(1.0f) : ks);
-        }
-        else if (type == "texture_normal")
-        {
+            break;
+        case TextureType::NORMAL:
             number = std::to_string(normalNum++);
             mCurTextures.push_back(useNormal ? mTextures[i] : _defaultMat->map_bump);
-        }
-        else if (type == "texture_height")
-        {
+            break;
+        case TextureType::HEIGHT:
             number = std::to_string(heightNum++);
             mCurTextures.push_back(useHeight ? mTextures[i] : _defaultMat->map_ns);
-        }
-        else if (type == "texture_alpha")
-        {
+            break;
+        case TextureType::ALPHA:
             number = std::to_string(alphaNum++);
             mCurTextures.push_back(useAlpha ? mTextures[i] : _defaultMat->map_d);
+            break;
+        default:
+            break;
         }
 
         // Set the sampler to the correct texture unit
-        mCurTextureNames.push_back("material." + type + number);
+        mCurTextureNames.push_back("material." + Texture::TextureToTypeString(type) + number);
     }
 
     mShadowsEnabled = (_state == nullptr || _state->enableShadows);
@@ -93,8 +92,46 @@ unsigned int Material::UpdateShader(Shader* _shader)
     return (unsigned int)mTextures.size();
 }
 
+// Constructs the default material
+Material::Material(TextureContainer* _textures)
+{
+    // Initialize to default material values
+    name = "default";
+    kd = glm::vec3(0.6f);
+    ka = glm::vec3(0.0f);
+    ks = glm::vec3(1.0f);
+    ke = glm::vec3(0.0f);
+    ns = 8.0f;
+    ni = 0.0f;
+    d = 1.0f;
+    illum = 2;
+
+    // Setup current draw call
+    mCurKD = kd;
+    mCurKA = ka;
+    mCurKS = ks;
+    mCurKE = ke;
+    mShadowsEnabled = true;
+
+    // Create textures for material
+    map_kd = _textures->GetItem("default_diffuse");
+    map_ka = _textures->GetItem("default_ambient");
+    map_ks = _textures->GetItem("default_specular");
+    map_bump = _textures->GetItem("default_normal");
+    map_ns = _textures->GetItem("default_height");
+    map_d = _textures->GetItem("default_alpha");
+
+    // Push textures to render list
+    mTextures.push_back(map_kd);
+    mTextures.push_back(map_ka);
+    mTextures.push_back(map_ks);
+    mTextures.push_back(map_bump);
+    mTextures.push_back(map_ns);
+    mTextures.push_back(map_d);
+}
+
 // Constructs a material out of a single color (diffuse)
-Material::Material(const glm::vec3& _color, const std::string& _name)
+Material::Material(const std::string& _name, const glm::vec3& _color, TextureContainer* _textures)
 {
     if (name == "")
         name = "Color" + Vec3ToHex(_color);
@@ -108,18 +145,27 @@ Material::Material(const glm::vec3& _color, const std::string& _name)
     d = 1.0f;
     illum = 2;
 
-    map_kd = nullptr;
-    map_ka = nullptr;
-    map_ks = nullptr;
-    map_bump = nullptr;
-    map_ns = nullptr;
-    map_d = nullptr;
-
+    // Setup current draw call
     mCurKD = kd;
     mCurKA = ka;
     mCurKS = ks;
     mCurKE = ke;
-    mShadowsEnabled = true;
+
+    // Create textures for material
+    map_kd = _textures->GetItem("default_diffuse");
+    map_ka = _textures->GetItem("default_ambient");
+    map_ks = _textures->GetItem("default_specular");
+    map_bump = _textures->GetItem("default_normal");
+    map_ns = _textures->GetItem("default_height");
+    map_d = _textures->GetItem("default_alpha");
+
+    // Push textures to render list
+    mTextures.push_back(map_kd);
+    mTextures.push_back(map_ka);
+    mTextures.push_back(map_ks);
+    mTextures.push_back(map_bump);
+    mTextures.push_back(map_ns);
+    mTextures.push_back(map_d);
 }
 
 // Constructs a material out of a config file and preloaded textures

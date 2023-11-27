@@ -153,12 +153,12 @@ Material* Scene::LoadMaterial(Config* config, const std::string& name)
 		return material;
 
 	// Create textures
-	Texture* kd = LoadTexture("texture_diffuse", config->GetString("map_kd"), "default_diffuse");
-	Texture* ka = LoadTexture("texture_ambient", config->GetString("map_ka"), "default_ambient");
-	Texture* ks = LoadTexture("texture_specular", config->GetString("map_ks"), "default_specular");
-	Texture* normal = LoadTexture("texture_normal", config->GetString("map_bump"), "default_normal");
-	Texture* ns = LoadTexture("texture_height", config->GetString("map_ns"), "default_height");
-	Texture* d = LoadTexture("texture_alpha", config->GetString("map_d"), "default_alpha");
+	Texture* kd = LoadTexture(TextureType::DIFFUSE, config->GetString("map_kd"), "default_diffuse");
+	Texture* ka = LoadTexture(TextureType::AMBIENT, config->GetString("map_ka"), "default_ambient");
+	Texture* ks = LoadTexture(TextureType::SPECULAR, config->GetString("map_ks"), "default_specular");
+	Texture* normal = LoadTexture(TextureType::NORMAL, config->GetString("map_bump"), "default_normal");
+	Texture* ns = LoadTexture(TextureType::HEIGHT, config->GetString("map_ns"), "default_height");
+	Texture* d = LoadTexture(TextureType::ALPHA, config->GetString("map_d"), "default_alpha");
 
 	// Create material
 	material = new Material(name, config, kd, ka, ks, normal, ns, d);
@@ -167,7 +167,7 @@ Material* Scene::LoadMaterial(Config* config, const std::string& name)
 }
 
 // Loads the given texture or returns the existing one
-Texture* Scene::LoadTexture(const std::string& type, const std::string& path, const std::string& defaultName)
+Texture* Scene::LoadTexture(TextureType type, const std::string& path, const std::string& defaultName)
 {
 	// If no path is given, load the default texture
 	std::string pathToLoad = path;
@@ -251,7 +251,7 @@ Material* Scene::GetMaterial(const std::string& name)
 }
 
 // Returns the default material
-Material* Scene::GetDefaultMat()
+Material* Scene::GetDefaultMaterial()
 {
 	return mDefaultMat;
 }
@@ -399,22 +399,6 @@ Material* Scene::AddMaterial(const std::string& name, Material* material)
 	return mMaterials->Add(name, material);
 }
 
-// Sets the default material of the scene from the material list if the material exists.
-Material* Scene::SetDefaultMaterial(const std::string& name)
-{
-	Material* tempMat = mMaterials->GetItem(name);
-	if (tempMat != nullptr)
-		mDefaultMat = tempMat;
-	return mDefaultMat;
-}
-
-// Sets the default material of the scene. Note: Does not add it to the material list.
-Material* Scene::SetDefaultMaterial(Material* material)
-{
-	mDefaultMat = material;
-	return mDefaultMat;
-}
-
 // Sets the material of the given entity
 void Scene::SetEntityMaterial(IEntity* entity, Material* material)
 {
@@ -479,18 +463,20 @@ void Scene::Clear()
 Scene::Scene(State* state)
 	: mState(state)
 {
-	// Only state needs to be assigned 
-	mGrid = new PGrid(GRID_OBJ, 5, 1.0f, new Material(glm::vec3(0.2f)), 2, true, glm::vec3(0.0f));
-	mViewAxisHandle = new PHandle(CAMERA_AXIS_HANDLE, 45.0f, 6, false, glm::vec3(50, 50, 0));
-	mTransformHandle = new PHandle(TRANSFORM_HANDLE, 0.5f, 6, true, glm::vec3(0.0f));
-
 	mTextures = new TextureContainer();
-	mMaterials = new MaterialContainer();
+	mMaterials = new MaterialContainer(mTextures);
+	mDefaultMat = mMaterials->GetDefault();
+
 	mLights = new LightContainer();
 	mCameras = new CameraContainer();
 	mShaders = new ShaderContainer();
 	mMeshes = new MeshContainer();
 	mEntities = new EntityContainer();
+
+	mMaterials->AddMaterial(new Material("gray", glm::vec3(0.2f), mTextures));
+	mGrid = new PGrid(GRID_OBJ, 5, 1.0f, mMaterials->GetItem("gray"), 2, true, glm::vec3(0.0f));
+	mViewAxisHandle = new PHandle(CAMERA_AXIS_HANDLE, 45.0f, 6, false, mMaterials, mTextures, glm::vec3(50, 50, 0));
+	mTransformHandle = new PHandle(TRANSFORM_HANDLE, 0.5f, 6, true, mMaterials, mTextures, glm::vec3(0.0f));
 }
 
 Scene::~Scene()
@@ -498,6 +484,10 @@ Scene::~Scene()
 	if (mMainCamera != nullptr)
 		delete mMainCamera;
 
+	delete mGrid;
+	delete mViewAxisHandle;
+	delete mTransformHandle;
+	delete mDefaultMat;
 	delete mTextures;
 	delete mMaterials;
 	delete mLights;

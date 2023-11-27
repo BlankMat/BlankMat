@@ -60,7 +60,7 @@ protected:
 	Material* LoadMaterial(Config* config, const std::string& name);
 
 	// Loads the given texture or returns the existing one
-	Texture* LoadTexture(const std::string& type, const std::string& path, const std::string& defaultName);
+	Texture* LoadTexture(TextureType type, const std::string& path, const std::string& defaultName);
 
 	// Returns the projection matrix of the view axis handle
 	const glm::mat4& GetViewAxisProjection(Window* window);
@@ -102,7 +102,7 @@ public:
 	Material* GetMaterial(const std::string& name);
 
 	// Returns the default material
-	Material* GetDefaultMat();
+	Material* GetDefaultMaterial();
 
 	// Returns the material with the given name
 	Texture* GetTexture(const std::string& name);
@@ -187,12 +187,6 @@ public:
 
 	// Adds a material to the scene's material list
 	Material* AddMaterial(const std::string& name, Material* material);
-
-	// Sets the default material of the scene from the material list if the material exists.
-	Material* SetDefaultMaterial(const std::string& name);
-
-	// Sets the default material of the scene. Note: Does not add it to the material list.
-	Material* SetDefaultMaterial(Material* material);
 
 	// Sets the material of the given entity
 	void SetEntityMaterial(IEntity* entity, Material* material);

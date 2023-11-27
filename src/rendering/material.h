@@ -3,6 +3,7 @@
 #include "files/config.h"
 #include "rendering/texture.h"
 #include "rendering/shader.h"
+#include "containers/textureContainer.h"
 
 // Forward declare state to prevent circular dependency
 class State;
@@ -106,11 +107,18 @@ public:
     unsigned int UpdateShader(Shader* _shader);
 
     /// <summary>
+    /// Constructs the default material
+    /// </summary>
+    /// <param name="_textures">Texture container for the scene</param>
+    explicit Material(TextureContainer* _textures);
+
+    /// <summary>
     /// Constructs a material out of a single color (diffuse)
     /// </summary>
-    /// <param name="_color">Diffuse color of the material</param>
     /// <param name="_name">Name of the material</param>
-    Material(const glm::vec3& _color, const std::string& _name = "");
+    /// <param name="_color">Diffuse color of the material</param>
+    /// <param name="_textures">Texture container for the scene</param>
+    explicit Material(const std::string& _name, const glm::vec3& _color, TextureContainer* _textures);
 
     /// <summary>
     /// Constructs a material out of a config file and preloaded textures
@@ -123,7 +131,7 @@ public:
     /// <param name="_map_bump">Normal/Bump texture</param>
     /// <param name="_map_ns">Specular highlight/Height texture</param>
     /// <param name="_map_d">Alpha texture</param>
-    Material(const std::string& _name, Config* _config, Texture* _map_kd, Texture* _map_ka, Texture* _map_ks,
+    explicit Material(const std::string& _name, Config* _config, Texture* _map_kd, Texture* _map_ka, Texture* _map_ks,
         Texture* _map_bump, Texture* _map_ns, Texture* _map_d);
 
     /// <summary>
@@ -144,7 +152,7 @@ public:
     /// <param name="_d">Alpha</param>
     /// <param name="_ke">Emissive color</param>
     /// <param name="_illum">Illumination mode</param>
-    Material(const std::string& _name, Texture* _map_kd, Texture* _map_ka, Texture* _map_ks,
+    explicit Material(const std::string& _name, Texture* _map_kd, Texture* _map_ka, Texture* _map_ks,
         Texture* _map_bump, Texture* _map_ns, Texture* _map_d,
         const glm::vec3& _ka = glm::vec3(), const glm::vec3& _kd = glm::vec3(), const glm::vec3& _ks = glm::vec3(),
         float _ns = 0, float _ni = 1, float _d = 1, const glm::vec3& _ke = glm::vec3(), int _illum = 2);
@@ -167,7 +175,7 @@ public:
     /// <param name="_d">Alpha</param>
     /// <param name="_ke">Emissive color</param>
     /// <param name="_illum">Illumination mode</param>
-    Material(const std::string& _name, 
+    explicit Material(const std::string& _name, 
         const std::vector<Texture*>& _map_kd, const std::vector<Texture*>& _map_ka, const std::vector<Texture*>& _map_ks, 
         const std::vector<Texture*>& _map_bump, const std::vector<Texture*>& _map_ns, const std::vector<Texture*>& _map_d,
         const glm::vec3& _ka = glm::vec3(), const glm::vec3& _kd = glm::vec3(), const glm::vec3& _ks = glm::vec3(),

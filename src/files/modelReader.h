@@ -102,7 +102,7 @@ private:
 	{
 		// If there are no textures, use default material
 		if (mesh->mMaterialIndex >= assimpScene->mNumMaterials)
-			return scene->GetMaterial("default");
+			return scene->GetDefaultMaterial();
 
 		// Process each material's diffuse and specular maps
 		aiMaterial* material = assimpScene->mMaterials[mesh->mMaterialIndex];
@@ -113,16 +113,16 @@ private:
 			return newMaterial;
 
 		// 1. diffuse maps
-		std::vector<Texture*> diffuseMaps = LoadMaterialTextures(scene, material, aiTextureType_DIFFUSE, "texture_diffuse");
+		std::vector<Texture*> diffuseMaps = LoadMaterialTextures(scene, material, aiTextureType_DIFFUSE, TextureType::DIFFUSE);
 		if (diffuseMaps.empty())
 			diffuseMaps.push_back(scene->GetTexture("default_diffuse"));
 		// 2. ambient maps
-		std::vector<Texture*> ambientMaps = LoadMaterialTextures(scene, material, aiTextureType_AMBIENT, "texture_ambient");
+		std::vector<Texture*> ambientMaps = LoadMaterialTextures(scene, material, aiTextureType_AMBIENT, TextureType::AMBIENT);
 		if (ambientMaps.empty())
 		{
 			if (!diffuseMaps.empty())
 			{
-				Texture* ambientTexture = new Texture(diffuseMaps[0]->id, "texture_ambient", diffuseMaps[0]->path, diffuseMaps[0]->name);
+				Texture* ambientTexture = new Texture(diffuseMaps[0]->id, TextureType::AMBIENT, diffuseMaps[0]->path, diffuseMaps[0]->name);
 				scene->AddTexture(ambientTexture->name, ambientTexture);
 				ambientMaps.push_back(ambientTexture);
 			}
@@ -132,19 +132,19 @@ private:
 			}
 		}
 		// 3. specular maps
-		std::vector<Texture*> specularMaps = LoadMaterialTextures(scene, material, aiTextureType_SPECULAR, "texture_specular");
+		std::vector<Texture*> specularMaps = LoadMaterialTextures(scene, material, aiTextureType_SPECULAR, TextureType::SPECULAR);
 		if (specularMaps.empty())
 			specularMaps.push_back(scene->GetTexture("default_specular"));
 		// 4. normal maps
-		std::vector<Texture*> normalMaps = LoadMaterialTextures(scene, material, aiTextureType_HEIGHT, "texture_normal");
+		std::vector<Texture*> normalMaps = LoadMaterialTextures(scene, material, aiTextureType_HEIGHT, TextureType::NORMAL);
 		if (normalMaps.empty())
 			normalMaps.push_back(scene->GetTexture("default_normal"));
 		// 5. height maps
-		std::vector<Texture*> heightMaps = LoadMaterialTextures(scene, material, aiTextureType_DISPLACEMENT, "texture_height");
+		std::vector<Texture*> heightMaps = LoadMaterialTextures(scene, material, aiTextureType_DISPLACEMENT, TextureType::HEIGHT);
 		if (heightMaps.empty())
 			heightMaps.push_back(scene->GetTexture("default_height"));
 		// 6. alpha maps
-		std::vector<Texture*> alphaMaps = LoadMaterialTextures(scene, material, aiTextureType_OPACITY, "texture_alpha");
+		std::vector<Texture*> alphaMaps = LoadMaterialTextures(scene, material, aiTextureType_OPACITY, TextureType::ALPHA);
 		if (alphaMaps.empty())
 			alphaMaps.push_back(scene->GetTexture("default_alpha"));
 
@@ -182,13 +182,13 @@ private:
 	}
 
 	// Loads material textures
-	static std::vector<Texture*> LoadMaterialTextures(Scene* scene, const aiMaterial* mat, aiTextureType type, const std::string& typeName)
+	static std::vector<Texture*> LoadMaterialTextures(Scene* scene, const aiMaterial* mat, aiTextureType importType, TextureType type)
 	{
 		std::vector<Texture*> textures;
-		for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
+		for (unsigned int i = 0; i < mat->GetTextureCount(importType); i++)
 		{
 			aiString str;
-			mat->GetTexture(type, i, &str);
+			mat->GetTexture(importType, i, &str);
 			std::string path = str.C_Str();
 			std::string name = path.substr(0, path.find_last_of('.'));
 			std::string textureName = scene->GetName() + "_" + name;
@@ -202,7 +202,7 @@ private:
 			}
 
 			// if texture hasn't been loaded already, load it
-			texture = new Texture(typeName, scene->GetDirectory(), path, textureName);
+			texture = new Texture(type, scene->GetDirectory(), path, textureName);
 			textures.push_back(texture);
 			scene->AddTexture(textureName, texture);
 			std::cout << "  - Loaded texture " << textureName << std::endl;

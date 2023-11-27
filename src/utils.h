@@ -63,7 +63,16 @@ static glm::vec3 GetRotationDegrees(const glm::vec3& dir, const glm::vec3& up = 
     return glm::degrees(glm::vec3(rotX, 0.0f, atan2f(-up.x, right.x)));
 }
 
-// Taken from https://gamedev.stackexchange.com/questions/115032/how-should-i-rotate-vertices-around-the-origin-on-the-cpu
+// 
+
+/// <summary>
+/// Rotates the given point around the given center.
+/// Borrowed from: https://gamedev.stackexchange.com/questions/115032/how-should-i-rotate-vertices-around-the-origin-on-the-cpu
+/// </summary>
+/// <param name="aPointToRotate">Point to rotate</param>
+/// <param name="aRotationCenter">Point to rotate around</param>
+/// <param name="aRotationMatrix">Rotation to apply</param>
+/// <returns>Transformed position</returns>
 static const glm::vec4 RotateAround(const glm::vec4& aPointToRotate, const glm::vec4& aRotationCenter, const glm::mat4& aRotationMatrix)
 {
 	glm::mat4 translate = glm::translate(glm::mat4(1.0f), glm::vec3(aRotationCenter.x, aRotationCenter.y, aRotationCenter.z));
@@ -78,23 +87,38 @@ static const glm::vec4 RotateAround(const glm::vec4& aPointToRotate, const glm::
 	return transform * aPointToRotate;
 }
 
-// Returns whether the given file exists
+/// <summary>
+/// Returns whether the given file exists
+/// </summary>
+/// <param name="name">Name of the file</param>
+/// <returns>Whether the file exists</returns>
 static const bool FileExists(const std::string& name) {
     std::ifstream f(name.c_str());
     return f.good();
 }
 
-// Rounds the value to the given precision
-static const std::string RoundToPrecision(float _val, size_t _precision)
+/// <summary>
+/// Rounds the given value to the given precision
+/// </summary>
+/// <param name="value">Value to round</param>
+/// <param name="precision">Number of digits to keep</param>
+/// <returns>A string representation of the float</returns>
+static const std::string RoundToPrecision(float value, size_t precision)
 {
-    size_t nzero = _precision + 1;
-    std::string str = std::to_string(_val);
+    size_t nzero = precision + 1;
+    std::string str = std::to_string(value);
     auto new_str = std::string(nzero - std::min(nzero, str.length()), '0') + str;
     return new_str;
 }
 
-// Help parsing a string by token from:
-// https://stackoverflow.com/questions/14265581/parse-split-a-string-in-c-using-string-delimiter-standard-c
+/// <summary>
+/// Parses the given string into a list of strings by a given delimiter.
+/// Borrowed from: https://stackoverflow.com/questions/14265581/parse-split-a-string-in-c-using-string-delimiter-standard-c
+/// </summary>
+/// <param name="out">List of parsed strings</param>
+/// <param name="str">String to parse</param>
+/// <param name="delim">Delimiter to break up string by</param>
+/// <returns>A list of strings broken up from the original string</returns>
 static const void ParseStringByDelim(std::vector<std::string>& out, const std::string& str, const std::string& delim)
 {
     // Make sure out vec is cleared
@@ -126,7 +150,13 @@ static const std::string GetPadding(unsigned int depth)
     return ss.str();
 }
 
-// Reads a vector 3 from the given strings, skipping ahead the given offset. Strings must have size >= 4 + offset to be read, and the first element + offset are ignored
+/// <summary>
+/// Reads a vec3 from the given strings, skipping ahead the given offset. 
+/// Strings must have size >= 4 + offset to be read, and the first element + offset are ignored
+/// </summary>
+/// <param name="strings">List of strings to read</param>
+/// <param name="offset">Offset to start reading strings from</param>
+/// <returns>vec3 constructed from the given strings</returns>
 static const glm::vec3 ReadVec3FromStrings(const std::vector<std::string>& strings, int offset)
 {
     // Avoid errors
@@ -136,19 +166,28 @@ static const glm::vec3 ReadVec3FromStrings(const std::vector<std::string>& strin
         return glm::vec3();
 }
 
+/// <summary>
+/// Returns whether the given points are in counter-clockwise winding order
+/// </summary>
+/// <param name="a">Point a</param>
+/// <param name="b">Point b</param>
+/// <param name="c">Point c</param>
+/// <returns>Whether the points are in counter-clockwise winding order</returns>
 static const bool IsCCW(const glm::vec3& a, const glm::vec3& b, const glm::vec3& c)
 {
 	return ((b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y)) > 0;
 }
 
 /// <summary>
-/// Clamps the given value to be within min and max
+/// Clamps the given value to be between min and max
 /// </summary>
+/// <typeparam name="T">Type of value</typeparam>
 /// <param name="value">Value to clamp</param>
-/// <param name="min">Minimum</param>
+/// <param name="min">Minimum value</param>
 /// <param name="max">Maximum value</param>
 /// <returns>Value in range [min, max]</returns>
-static const int Clamp(int value, int min, int max)
+template<typename T = int>
+static const T Clamp(T value, T min, T max)
 {
     if (value > max)
         return max;
@@ -160,53 +199,44 @@ static const int Clamp(int value, int min, int max)
 
 /// <summary>
 /// Converts the given decimal value to hexadecimal.
-/// Borrowed from: 
-/// https://www.geeksforgeeks.org/convert-the-given-rgb-color-code-to-hex-color-code/
+/// Borrowed from: https://www.geeksforgeeks.org/convert-the-given-rgb-color-code-to-hex-color-code/
 /// </summary>
 /// <param name="value">Decimal value</param>
 /// <returns>Hexadecimal equivalent</returns>
 static const std::string DecimalToHex(int value)
 {
     // char array to store hexadecimal number
-    char hexValue[2];
+    char hexValue[2] = {};
 
     // counter for hexadecimal number array
     int i = 0;
-    while (value != 0) {
-
-        // temporary variable to store remainder
-        int temp = 0;
-
-        // storing remainder in temp variable.
-        temp = value % 16;
-
-        // check if temp < 10
-        if (temp < 10) {
-            hexValue[i] = temp + 48;
-            i++;
-        }
-        else {
-            hexValue[i] = temp + 55;
-            i++;
-        }
-
+    while (value != 0)
+    {
+        // Store remainder
+        int temp = value % 16;
         value = value / 16;
+
+        hexValue[i] = temp + (temp < 10 ? 48 : 55);
+        i++;
     }
 
     std::string hexCode = "";
-    if (i == 2) {
+    if (i == 2)
+    {
         hexCode.push_back(hexValue[0]);
         hexCode.push_back(hexValue[1]);
     }
-    else if (i == 1) {
+    else if (i == 1)
+    {
         hexCode = "0";
         hexCode.push_back(hexValue[0]);
     }
     else if (i == 0)
+    {
         hexCode = "00";
+    }
 
-    // Return the equivalent
-    // hexadecimal color code
+    // Return the equivalent hexadecimal color code
     return hexCode;
 }
 
@@ -228,6 +258,23 @@ static const std::string Vec3ToHex(const glm::vec3& vec)
     return hex;
 }
 
+/// <summary>
+/// Converts the given vec3 to its red, green, and blue value equivalent in [0,255]
+/// </summary>
+/// <param name="vec">Vec3 to convert</param>
+/// <param name="out">Output RGB array</param>
+static void Vec3ToRGB(const glm::vec3& vec, unsigned char out[3])
+{
+    out[0] = Clamp<unsigned char>((unsigned char)round(vec.r * 255), 0, 255);
+    out[1] = Clamp<unsigned char>((unsigned char)round(vec.g * 255), 0, 255);
+    out[2] = Clamp<unsigned char>((unsigned char)round(vec.b * 255), 0, 255);
+}
+
+/// <summary>
+/// Converts the given vec2 to a string
+/// </summary>
+/// <param name="vec">Vec2 to convert</param>
+/// <returns>String representation of the value</returns>
 static const std::string Vec2ToString(const glm::vec2& vec)
 {
     std::ostringstream ss;
@@ -235,6 +282,11 @@ static const std::string Vec2ToString(const glm::vec2& vec)
     return ss.str();
 }
 
+/// <summary>
+/// Converts the given vec3 to a string
+/// </summary>
+/// <param name="vec">Vec3 to convert</param>
+/// <returns>String representation of the value</returns>
 static const std::string Vec3ToString(const glm::vec3& vec)
 {
     std::ostringstream ss;
@@ -242,6 +294,11 @@ static const std::string Vec3ToString(const glm::vec3& vec)
     return ss.str();
 }
 
+/// <summary>
+/// Converts the given vec3 to a comma separated string
+/// </summary>
+/// <param name="vec">Vec3 to convert</param>
+/// <returns>Display string representation of the value</returns>
 static const std::string Vec3ToDisplayString(const glm::vec3& vec)
 {
     std::ostringstream ss;
@@ -249,47 +306,97 @@ static const std::string Vec3ToDisplayString(const glm::vec3& vec)
     return ss.str();
 }
 
+/// <summary>
+/// Converts an array of floats to a vec3
+/// </summary>
+/// <param name="vec">Floats to convert</param>
+/// <returns>Vec3 representation of the float array</returns>
 static const glm::vec3 Vec3FromFloats(const float vec[3])
 {
     return glm::vec3(vec[0], vec[1], vec[2]);
 }
 
+/// <summary>
+/// Converts an array of floats to a vec4
+/// </summary>
+/// <param name="vec">Floats to convert</param>
+/// <returns>Vec4 representation of the float array</returns>
 static const glm::vec4 Vec4FromFloats(const float vec[4])
 {
     return glm::vec4(vec[0], vec[1], vec[2], vec[3]);
 }
 
+/// <summary>
+/// Converts column arrays of floats to a mat3
+/// </summary>
+/// <param name="vec1">First column of the matrix</param>
+/// <param name="vec2">Second column of the matrix</param>
+/// <param name="vec3">Third column of the matrix</param>
+/// <returns>Mat3 representation of the floats</returns>
 static const glm::mat3 Mat3FromFloats(const float vec1[3], const float vec2[3], const float vec3[3])
 {
     return glm::mat3(Vec3FromFloats(vec1), Vec3FromFloats(vec2), Vec3FromFloats(vec3));
 }
 
+/// <summary>
+/// Converts column arrays of floats to a mat4
+/// </summary>
+/// <param name="vec1">First column of the matrix</param>
+/// <param name="vec2">Second column of the matrix</param>
+/// <param name="vec3">Third column of the matrix</param>
+/// <param name="vec4">Fourth column of the matrix</param>
+/// <returns>Mat4 representation of the floats</returns>
 static const glm::mat4 Mat4FromFloats(const float vec1[4], const float vec2[4], const float vec3[4], const float vec4[4])
 {
     return glm::mat4(Vec4FromFloats(vec1), Vec4FromFloats(vec2), Vec4FromFloats(vec3), Vec4FromFloats(vec4));
 }
 
+/// <summary>
+/// Converts the given vec3 to an array of floats
+/// </summary>
+/// <param name="vec">Vec3 to convert</param>
+/// <returns>Float array representation of the value</returns>
 static float* FloatsFromVec3(const glm::vec3& vec3)
 {
     float vec[3] = { vec3.x, vec3.y, vec3.z };
     return vec;
 }
 
+/// <summary>
+/// Converts the given assimp color vec3 to a vec3
+/// </summary>
+/// <param name="vec">Vec3 to convert</param>
+/// <returns>Vec3 representation of the value</returns>
 static const glm::vec3 Vec3FromAssimp(const aiColor3D& vec)
 {
     return glm::vec3(vec.r, vec.g, vec.b);
 }
 
+/// <summary>
+/// Converts the given assimp vec3 to a vec3
+/// </summary>
+/// <param name="vec">Vec3 to convert</param>
+/// <returns>Vec3 representation of the value</returns>
 static const glm::vec3 Vec3FromAssimp(const aiVector3D& vec)
 {
 	return glm::vec3(vec.x, vec.y, vec.z);
 }
 
+/// <summary>
+/// Converts the given assimp vec2 to a vec2
+/// </summary>
+/// <param name="vec">Vec2 to convert</param>
+/// <returns>Vec2 representation of the value</returns>
 static const glm::vec2 Vec2FromAssimp(const aiVector2D& vec)
 {
 	return glm::vec2(vec.x, vec.y);
 }
 
+/// <summary>
+/// Converts the given assimp vec3 to a vec2, ignoring the b/z channel
+/// </summary>
+/// <param name="vec">Vec2 to convert</param>
+/// <returns>Vec2 representation of the value</returns>
 static const glm::vec2 Vec2FromAssimp(const aiVector3D& vec)
 {
 	return glm::vec2(vec.x, vec.y);
