@@ -32,6 +32,16 @@ protected:
 	T* mCurSelectedItem;
 
 	/// <summary>
+	/// Returns whether the item should be skipped or not
+	/// </summary>
+	/// <param name="item">Item to consider</param>
+	/// <returns>Whether the item should be skipped</returns>
+	virtual bool SkipItem(T* item)
+	{
+		return false;
+	}
+
+	/// <summary>
 	/// Reads the next item from the input file stream
 	/// </summary>
 	/// <param name="file">File to read</param>
@@ -89,6 +99,10 @@ public:
 		file << "#NumItems " << std::to_string(mData.size());
 		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
 		{
+			// Skip internal items
+			if (SkipItem(iter->second))
+				continue;
+
 			file << std::endl;
 			file << "##StartItem" << std::endl;
 			WriteItem(iter->first, iter->second, file);

@@ -6,6 +6,16 @@ class TextureContainer : public IContainer<Texture>
 {
 protected:
 	/// <summary>
+	/// Returns whether the item should be skipped or not
+	/// </summary>
+	/// <param name="item">Item to consider</param>
+	/// <returns>Whether the item should be skipped</returns>
+	bool SkipItem(Texture* item) override
+	{
+		return item->IsInternal();
+	}
+
+	/// <summary>
 	/// Reads the next item from the input file stream
 	/// </summary>
 	/// <param name="file">File to read</param>
@@ -23,10 +33,6 @@ protected:
 	/// <param name="file">File to write to</param>
 	void WriteItem(const std::string& key, Texture* item, std::ofstream& file) override
 	{
-		// Skip the texture if it is internal
-		if (item->IsInternal())
-			return;
-
 		file << "TEXTURE " << key << std::endl;
 		file << "name " << item->name << std::endl;
 		file << "path " << item->path << std::endl;

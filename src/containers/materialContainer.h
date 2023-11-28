@@ -7,6 +7,15 @@ class MaterialContainer : public IContainer<Material>
 {
 protected:
 	/// <summary>
+	/// Returns whether the item should be skipped or not
+	/// </summary>
+	/// <param name="item">Item to consider</param>
+	/// <returns>Whether the item should be skipped</returns>
+	bool SkipItem(Material* item) override
+	{
+		return item->IsInternal();
+	} 
+	/// <summary>
 	/// Reads the next item from the input file stream
 	/// </summary>
 	/// <param name="file">File to read</param>
@@ -24,10 +33,6 @@ protected:
 	/// <param name="file">File to write to</param>
 	void WriteItem(const std::string& key, Material* item, std::ofstream& file) override
 	{
-		// Don't write internal materials
-		if (item->IsInternal())
-			return;
-
 		file << "MATERIAL " << key << std::endl;
 		file << "kd " << Vec3ToString(item->kd) << std::endl;
 		file << "ka " << Vec3ToString(item->ka) << std::endl;
