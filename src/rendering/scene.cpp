@@ -45,15 +45,10 @@ void Scene::Draw(Window* window, Shader* shader)
 				glBindTexture(GL_TEXTURE_2D, mState->depthMap);
 				shader->SetInt("shadowMap", mState->depthMapFBO);
 				glActiveTexture(GL_TEXTURE0);
+			}
 
-				// Draw mesh
-				iter->second->Draw(shader, mState, mDefaultMat, viewProj, false);
-			}
-			// If no material is defined, render the object with its own default mat
-			else
-			{
-				iter->second->Draw(shader, mState, mDefaultMat, viewProj, true);
-			}
+			// Draw mesh
+			iter->second->Draw(shader, mState, mDefaultMat, viewProj, mat == nullptr);
 		}
 	}
 	// Default draw
@@ -226,17 +221,77 @@ Shader* Scene::CreateShader(const std::string& name, Config* config)
 	return mShaders->Add(name, new Shader(config->GetString("file"), config->GetBool("hasGeomShader"), name));
 }
 
+// Returns the texture container of the scene
+TextureContainer* Scene::GetTextures()
+{
+	return mTextures;
+}
+
+// Returns the material container of the scene
+MaterialContainer* Scene::GetMaterials()
+{
+	return mMaterials;
+}
+
+// Returns the light container of the scene
+LightContainer* Scene::GetLights()
+{
+	return mLights;
+}
+
+// Returns the camera container of the scene
+CameraContainer* Scene::GetCameras()
+{
+	return mCameras;
+}
+
+// Returns the shader container of the scene
+ShaderContainer* Scene::GetShaders()
+{
+	return mShaders;
+}
+
+// Returns the mesh container of the scene
+MeshContainer* Scene::GetMeshes()
+{
+	return mMeshes;
+}
+
+// Returns the entity container of the scene
+EntityContainer* Scene::GetEntities()
+{
+	return mEntities;
+}
+
+// Returns the current shader
+const std::string Scene::GetCurShader()
+{
+	return mCurShader;
+}
+
 // Returns the scene's camera
-Camera* Scene::GetCamera() { return mMainCamera; }
+Camera* Scene::GetCamera()
+{
+	return mMainCamera;
+}
 
 // Returns the scene's light
-Light* Scene::GetLight() { return mGlobalLight; }
+Light* Scene::GetLight()
+{
+	return mGlobalLight;
+}
 
 // Returns the scene's name
-std::string Scene::GetName() { return mName; }
+std::string Scene::GetName()
+{
+	return mName;
+}
 
 // Returns the scene's directory
-std::string Scene::GetDirectory() { return mDirectory; }
+std::string Scene::GetDirectory()
+{
+	return mDirectory;
+}
 
 // Returns the shader with the given name
 Shader* Scene::GetShader(const std::string& name)
@@ -319,30 +374,6 @@ void Scene::SetRootNode(Node* rootNode)
 {
 	mRootNode = rootNode;
 }
-
-// Returns the texture container of the scene
-TextureContainer* Scene::GetTextures() { return mTextures; }
-
-// Returns the material container of the scene
-MaterialContainer* Scene::GetMaterials() { return mMaterials; }
-
-// Returns the light container of the scene
-LightContainer* Scene::GetLights() { return mLights; }
-
-// Returns the camera container of the scene
-CameraContainer* Scene::GetCameras() { return mCameras; }
-
-// Returns the shader container of the scene
-ShaderContainer* Scene::GetShaders() { return mShaders; }
-
-// Returns the mesh container of the scene
-MeshContainer* Scene::GetMeshes() { return mMeshes; }
-
-// Returns the entity container of the scene
-EntityContainer* Scene::GetEntities() { return mEntities; }
-
-// Returns the current shader
-const std::string Scene::GetCurShader() { return mCurShader; }
 
 // Sets up the scene's camera with the given options
 void Scene::SetCamera(ActionStack* actionStack, Config* config)
@@ -481,6 +512,8 @@ Scene::Scene(State* state)
 
 Scene::~Scene()
 {
+	Clear();
+
 	if (mMainCamera != nullptr)
 		delete mMainCamera;
 

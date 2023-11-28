@@ -12,7 +12,63 @@ protected:
 	/// <returns>Newly constructed item from file</returns>
 	const std::pair<std::string, Light*> ReadItem(std::ifstream& file) override
 	{
-		return std::pair<std::string, Light*>("", nullptr);
+		// Set up variables to store read information
+		std::string name = "main";
+		LightType type = LightType::POINT;
+		glm::vec3 pos = glm::vec3(5.0f, 5.0f, 5.0f);
+		glm::vec3 dir = glm::vec3(-5.0f, -5.0f, -5.0f);
+		glm::vec3 color = glm::vec3(1.0f);
+		float kd = 1.0f;
+		float ka = 0.1f;
+		float ks = 1.0f;
+		bool gamma = false;
+		float range = 30.0f;
+		float spotInner = 25.0f;
+		float spotOuter = 35.0f;
+
+		// Read the node
+		std::string line;
+		while (std::getline(file, line))
+		{
+			// Break when an empty line is encountered
+			if (line == "")
+				break;
+
+			std::vector<std::string> parse;
+			ParseStringByDelim(parse, line, " ");
+
+			// Don't parse empty lines
+			if (parse.empty())
+				break;
+
+			// Parse lines
+			if (parse[0] == "LIGHT")
+				name = parse[1];
+			if (parse[0] == "type")
+				type = (LightType)std::stoi(parse[1]);
+			else if (parse[0] == "pos")
+				pos = ReadVec3FromStrings(parse, 1);
+			else if (parse[0] == "dir")
+				dir = ReadVec3FromStrings(parse, 1);
+			else if (parse[0] == "color")
+				color = ReadVec3FromStrings(parse, 1);
+			else if (parse[0] == "kd")
+				kd = std::stof(parse[1]);
+			else if (parse[0] == "ka")
+				ka = std::stof(parse[1]);
+			else if (parse[0] == "ks")
+				ks = std::stof(parse[1]);
+			else if (parse[0] == "gamma")
+				gamma = (parse[1] == "1");
+			else if (parse[0] == "range")
+				range = std::stof(parse[1]);
+			else if (parse[0] == "spotouter")
+				spotOuter = std::stof(parse[1]);
+			else if (parse[0] == "spotinner")
+				spotInner = std::stof(parse[1]);
+		}
+
+		return std::pair<std::string, Light*>(name, new Light(type, pos, dir, color, kd, ka, ks, gamma, range, spotInner, spotOuter));
 	}
 
 	/// <summary>

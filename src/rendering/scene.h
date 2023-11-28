@@ -35,6 +35,7 @@ protected:
 
 	int mViewAxisPrevWidth = 0;
 	int mViewAxisPrevHeight = 0;
+
 	glm::mat4 mViewAxisProjection = glm::mat4(1.0f);
 
 	std::string mCurShader = "";
@@ -83,6 +84,27 @@ public:
 	// Activates the shader with the given name for the scene
 	void UseShader(const std::string& name = "");
 
+	// Returns the texture container of the scene
+	TextureContainer* GetTextures();
+
+	// Returns the material container of the scene
+	MaterialContainer* GetMaterials();
+
+	// Returns the light container of the scene
+	LightContainer* GetLights();
+
+	// Returns the camera container of the scene
+	CameraContainer* GetCameras();
+
+	// Returns the shader container of the scene
+	ShaderContainer* GetShaders();
+
+	// Returns the mesh container of the scene
+	MeshContainer* GetMeshes();
+
+	// Returns the entity container of the scene
+	EntityContainer* GetEntities();
+
 	// Returns the scene's camera
 	Camera* GetCamera();
 
@@ -112,27 +134,6 @@ public:
 
 	// Returns the transform handle
 	IEntity* GetTransformHandle();
-
-	// Returns the texture container of the scene
-	TextureContainer* GetTextures();
-
-	// Returns the material container of the scene
-	MaterialContainer* GetMaterials();
-
-	// Returns the light container of the scene
-	LightContainer* GetLights();
-
-	// Returns the camera container of the scene
-	CameraContainer* GetCameras();
-
-	// Returns the shader container of the scene
-	ShaderContainer* GetShaders();
-
-	// Returns the mesh container of the scene
-	MeshContainer* GetMeshes();
-
-	// Returns the entity container of the scene
-	EntityContainer* GetEntities();
 
 	// Adds the given node to the scene
 	void AddNode(Node* node);

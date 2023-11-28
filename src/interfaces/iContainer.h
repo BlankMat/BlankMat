@@ -81,16 +81,20 @@ public:
 			if (parse.empty())
 				continue;
 
-			// Check for tag markers
-			if (parse[0] == "##StartItem")
+			// Look for number of items
+			if (parse[0] == "items")
 			{
-				auto newItem = ReadItem(file);
-				if (newItem.first != "" && newItem.second != nullptr)
-					Add(newItem.first, newItem.second);
-			}
-			// End parsing if the tag is found
-			else if (parse[0] == "#EndContainer")
+				int numItems = std::stoi(parse[1]);
+				for (int i = 0; i < numItems; i++)
+				{
+					auto newItem = ReadItem(file);
+					if (newItem.first != "" && newItem.second != nullptr)
+						Add(newItem.first, newItem.second);
+				}
+
+				// Once the correct number of items has been read, the container is over
 				break;
+			}
 		}
 	}
 

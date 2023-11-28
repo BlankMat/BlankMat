@@ -22,7 +22,37 @@ protected:
 	/// <returns>Newly constructed item from file</returns>
 	const std::pair<std::string, Texture*> ReadItem(std::ifstream& file) override
 	{
-		return std::pair<std::string, Texture*>("", nullptr);
+		// Set up variables to store read information
+		std::string name = "default";
+		std::string path = "";
+		TextureType type = TextureType::DIFFUSE;
+
+		// Read the node
+		std::string line;
+		while (std::getline(file, line))
+		{
+			// Break when an empty line is encountered
+			if (line == "")
+				break;
+
+			std::vector<std::string> parse;
+			ParseStringByDelim(parse, line, " ");
+
+			// Don't parse empty lines
+			if (parse.empty())
+				break;
+
+			// Parse lines
+			if (parse[0] == "TEXTURE")
+				name = parse[1];
+			else if (parse[0] == "path")
+				path = parse[1];
+			else if (parse[0] == "type")
+				type = (TextureType)std::stoi(parse[1]);
+		}
+
+		// TODO: Load texture
+		return std::pair<std::string, Texture*>(name, new Texture(type, path, path, name, false));
 	}
 
 	/// <summary>

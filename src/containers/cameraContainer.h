@@ -12,7 +12,61 @@ protected:
 	/// <returns>Newly constructed item from file</returns>
 	const std::pair<std::string, Camera*> ReadItem(std::ifstream& file) override
 	{
-		return std::pair<std::string, Camera*>("", nullptr);
+		// Set up variables to store read information
+		std::string name = "main";
+		float fov = 45.0f;
+		float nearClip = 0.1f;
+		float farClip = 100.0f;
+		glm::vec3 pos = glm::vec3(5.0f, 5.0f, 5.0f);
+		glm::vec3 dir = glm::vec3(-5.0f, -5.0f, -5.0f);
+		glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+		glm::vec3 bgColor = glm::vec3(0.3f, 0.4f, 0.4f);
+		float orthSize = 10.0f;
+		bool isPerspective = true;
+		bool isWireframe = false;
+
+		// Read the node
+		std::string line;
+		while (std::getline(file, line))
+		{
+			// Break when an empty line is encountered
+			if (line == "")
+				break;
+
+			std::vector<std::string> parse;
+			ParseStringByDelim(parse, line, " ");
+
+			// Don't parse empty lines
+			if (parse.empty())
+				break;
+
+			// Parse lines
+			if (parse[0] == "CAMERA")
+				name = parse[1];
+			else if (parse[0] == "fov")
+				fov = std::stof(parse[1]);
+			else if (parse[0] == "nearclip")
+				nearClip = std::stof(parse[1]);
+			else if (parse[0] == "farclip")
+				farClip = std::stof(parse[1]);
+			else if (parse[0] == "pos")
+				pos = ReadVec3FromStrings(parse, 1);
+			else if (parse[0] == "dir")
+				dir = ReadVec3FromStrings(parse, 1);
+			else if (parse[0] == "up")
+				up = ReadVec3FromStrings(parse, 1);
+			else if (parse[0] == "bgcolor")
+				bgColor = ReadVec3FromStrings(parse, 1);
+			else if (parse[0] == "orthsize")
+				orthSize = std::stof(parse[1]);
+			else if (parse[0] == "perspective")
+				isPerspective = (parse[1] == "1");
+			else if (parse[0] == "wireframe")
+				isWireframe = (parse[1] == "1");
+		}
+
+		// TODO: Replace Action stack with real action stack
+		return std::pair<std::string, Camera*>(name, new Camera(new ActionStack(), fov, nearClip, farClip, pos, dir, up, bgColor, orthSize, isPerspective, isWireframe));
 	}
 
 	/// <summary>

@@ -176,8 +176,24 @@ static const std::string GetPadding(unsigned int depth)
 }
 
 /// <summary>
+/// Reads a vec2 from the given strings, skipping ahead the given offset. 
+/// Strings must have size >= 2 + offset to be read, and the first element + offset are ignored
+/// </summary>
+/// <param name="strings">List of strings to read</param>
+/// <param name="offset">Offset to start reading strings from</param>
+/// <returns>vec2 constructed from the given strings</returns>
+static const glm::vec2 ReadVec2FromStrings(const std::vector<std::string>& strings, int offset)
+{
+    // Avoid errors
+    if ((int)strings.size() >= 2 + offset)
+        return glm::vec2(std::stof(strings[offset]), std::stof(strings[1 + offset]));
+    else
+        return glm::vec2();
+}
+
+/// <summary>
 /// Reads a vec3 from the given strings, skipping ahead the given offset. 
-/// Strings must have size >= 4 + offset to be read, and the first element + offset are ignored
+/// Strings must have size >= 3 + offset to be read, and the first element + offset are ignored
 /// </summary>
 /// <param name="strings">List of strings to read</param>
 /// <param name="offset">Offset to start reading strings from</param>
@@ -185,8 +201,8 @@ static const std::string GetPadding(unsigned int depth)
 static const glm::vec3 ReadVec3FromStrings(const std::vector<std::string>& strings, int offset)
 {
     // Avoid errors
-    if ((int)strings.size() >= 4 + offset)
-        return glm::vec3(std::stof(strings[1 + offset]), std::stof(strings[2 + offset]), std::stof(strings[3 + offset]));
+    if ((int)strings.size() >= 3 + offset)
+        return glm::vec3(std::stof(strings[offset]), std::stof(strings[1 + offset]), std::stof(strings[2 + offset]));
     else
         return glm::vec3();
 }

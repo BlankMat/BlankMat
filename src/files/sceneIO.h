@@ -2,8 +2,6 @@
 #include "glIncludes.h"
 #include "tools/state.h"
 #include "rendering/scene.h"
-#include "files/modelReader.h"
-#include "files/modelWriter.h"
 #include "files/sceneWriter.h"
 #include "files/sceneReader.h"
 #include <iostream>
@@ -182,14 +180,7 @@ public:
 
 		if (!selection.empty())
 		{
-			std::string tempDir = "";
-			std::string tempFile = "";
-			std::string tempExt = "";
-			SplitPath(selection[0], tempDir, tempFile, tempExt);
-			if (tempExt == ".blank")
-				SceneReader::ReadScene(mScene, tempDir + tempFile + tempExt, false);
-			else
-				ModelReader::LoadModel(mScene, tempDir + tempFile + tempExt);
+			SceneReader::ReadScene(mScene, selection[0], false);
 			mState->SaveActionStack();
 		}
 	}
@@ -204,9 +195,12 @@ public:
 
 		if (fileName != "")
 		{
-			ReadPath(fileName);
-			std::cout << "Exporting scene to file " << GetFullPath() << std::endl;
-			ModelWriter::SaveModel(mScene, GetFullPath());
+			std::string tempDir = "";
+			std::string tempFile = "";
+			std::string tempExt = "";
+			SplitPath(fileName, tempDir, tempFile, tempExt);
+			// TODO: Validate export file extension
+			SceneWriter::SaveScene(mScene, tempDir + tempFile + tempExt);
 			mState->SaveActionStack();
 		}
 	}
