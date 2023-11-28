@@ -1,6 +1,7 @@
 #pragma once
 #include "glIncludes.h"
 #include "utils.h"
+#include "interfaces/iWritable.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -13,7 +14,7 @@
 /// </summary>
 /// <typeparam name="T">Type of item to store</typeparam>
 template<typename T>
-class IContainer
+class IContainer : public IWritable
 {
 protected:
 	/// <summary>
@@ -60,7 +61,7 @@ public:
 	/// Reads this container from the file
 	/// </summary>
 	/// <param name="file">File to read from</param>
-	void Read(std::ifstream& file)
+	void Read(std::ifstream& file) override
 	{
 		std::string line;
 		while (std::getline(file, line))
@@ -90,10 +91,10 @@ public:
 	}
 
 	/// <summary>
-	/// Writs this container to the file
+	/// Writes this container to the file
 	/// </summary>
 	/// <param name="file">File to output to</param>
-	void Write(std::ofstream& file)
+	void Write(std::ofstream& file) override
 	{
 		file << "#StartContainer" << std::endl;
 		file << "#NumItems " << std::to_string(mData.size());

@@ -1,9 +1,10 @@
 #pragma once
 #include "glIncludes.h"
 #include "rendering/mesh.h"
+#include "interfaces/iWritable.h"
 #include <vector>
 
-class Node : public IEntity
+class Node : public IEntity, public IWritable
 {
 protected:
 	/// <summary>
@@ -30,7 +31,7 @@ public:
 	/// <param name="file">File to read</param>
 	/// <param name="parent">Parent node</param>
 	/// <returns>Node that was stored in the file</returns>
-	static Node* Read(std::ifstream& file, Node* parent);
+	static Node* ReadRecurse(std::ifstream& file, Node* parent);
 
 	/// <summary>
 	/// Recursively writes all nodes into the given file
@@ -38,7 +39,19 @@ public:
 	/// <param name="file">File to write to</param>
 	/// <param name="node">Node to write</param>
 	/// <param name="depth">Depth of the node to write</param>
-	static void Write(std::ofstream& file, Node* node, unsigned int depth = 0);
+	static void WriteRecurse(std::ofstream& file, Node* node, unsigned int depth = 0);
+
+	/// <summary>
+	/// Reads child nodes for this node from the file
+	/// </summary>
+	/// <param name="file">File to read from</param>
+	void Read(std::ifstream& file) override;
+
+	/// <summary>
+	/// Writes this node to the file
+	/// </summary>
+	/// <param name="file">File to output to</param>
+	void Write(std::ofstream& file) override;
 
 	/// <summary>
 	/// Recursively draws the node and its children and child meshes

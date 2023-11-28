@@ -8,73 +8,28 @@
 class SceneWriter
 {
 private:
-	static void WriteNodes(Scene* scene, std::ofstream& file)
+	static void WriteItem(IWritable* item, std::ofstream& file, const std::string& label)
 	{
-		double startTime = glfwGetTime();
-		file << "# Nodes" << std::endl;
-		Node::Write(file, scene->GetRootNode());
+		double startTime = Timer::Start();
+		file << "# " << label << std::endl;
+		item->Write(file);
 		file << std::endl;
-		Timer::Time(startTime, "Wrote nodes");
-	}
-
-	static void WriteMeshes(Scene* scene, std::ofstream& file)
-	{
-		double startTime = glfwGetTime();
-		file << "# Meshes" << std::endl;
-		scene->GetMeshes()->Write(file);
-		file << std::endl;
-		Timer::Time(startTime, "Wrote meshes");
-	}
-
-	static void WriteMaterials(Scene* scene, std::ofstream& file)
-	{
-		double startTime = glfwGetTime();
-		file << "# Materials" << std::endl;
-		scene->GetMaterials()->Write(file);
-		file << std::endl;
-		Timer::Time(startTime, "Wrote materials");
-	}
-
-	static void WriteTextures(Scene* scene, std::ofstream& file)
-	{
-		double startTime = glfwGetTime();
-		file << "# Textures" << std::endl;
-		scene->GetTextures()->Write(file);
-		file << std::endl;
-		Timer::Time(startTime, "Wrote textures");
-	}
-
-	static void WriteCameras(Scene* scene, std::ofstream& file)
-	{
-		double startTime = glfwGetTime();
-		file << "# Cameras" << std::endl;
-		scene->GetCameras()->Write(file);
-		file << std::endl;
-		Timer::Time(startTime, "Wrote cameras");
-	}
-
-	static void WriteLights(Scene* scene, std::ofstream& file)
-	{
-		double startTime = glfwGetTime();
-		file << "# Lights" << std::endl;
-		scene->GetLights()->Write(file);
-		file << std::endl;
-		Timer::Time(startTime, "Wrote lights");
+		Timer::Time(startTime, "Wrote " + label);
 	}
 public:
 	static void SaveScene(Scene* scene, const std::string& path)
 	{
-		double startTime = glfwGetTime();
+		double startTime = Timer::Start();
 		std::ofstream file(path);
 		try
 		{
-			WriteNodes(scene, file);
-			WriteMeshes(scene, file);
-			WriteMaterials(scene, file);
-			WriteTextures(scene, file);
-			WriteCameras(scene, file);
-			WriteLights(scene, file);
-			Timer::Time(startTime, "Save scene");
+			WriteItem(scene->GetRootNode(), file, "Nodes");
+			WriteItem(scene->GetMeshes(), file, "Meshes");
+			WriteItem(scene->GetMaterials(), file, "Materials");
+			WriteItem(scene->GetTextures(), file, "Textures");
+			WriteItem(scene->GetCameras(), file, "Cameras");
+			WriteItem(scene->GetLights(), file, "Lights");
+			Timer::Time(startTime, "Saved scene");
 		}
 		catch (std::exception const& e)
 		{

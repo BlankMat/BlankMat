@@ -1,7 +1,7 @@
 #include "node.h"
 
 // Recursively reads all nodes from the given file
-Node* Node::Read(std::ifstream& file, Node* parent)
+Node* Node::ReadRecurse(std::ifstream& file, Node* parent)
 {
 	// TODO: Implement node read
 	std::string name = "";
@@ -49,7 +49,7 @@ Node* Node::Read(std::ifstream& file, Node* parent)
 }
 
 // Recursively writes all nodes into the given file
-void Node::Write(std::ofstream& file, Node* node, unsigned int depth)
+void Node::WriteRecurse(std::ofstream& file, Node* node, unsigned int depth)
 {
 	file << GetPadding(depth) << "#StartNode" << std::endl;
 	file << GetPadding(depth) << "NODE " << node->mName << std::endl;
@@ -68,10 +68,22 @@ void Node::Write(std::ofstream& file, Node* node, unsigned int depth)
 	file << GetPadding(depth) << "children " << node->GetChildCount() << std::endl;
 	for (unsigned int i = 0; i < node->GetChildCount(); i++)
 		if (node->mChildren[i] != nullptr)
-			Write(file, node->mChildren[i], depth + 1);
+			WriteRecurse(file, node->mChildren[i], depth + 1);
 
 	file << GetPadding(depth) << "#EndNode " << node->mName << std::endl;
 	file << std::endl;
+}
+
+// Reads child nodes for this node from the file
+void Node::Read(std::ifstream& file)
+{
+	ReadRecurse(file, this);
+}
+
+// Writes this node to the file
+void Node::Write(std::ofstream& file)
+{
+	WriteRecurse(file, this, 0);
 }
 
 // Draws the node recursively

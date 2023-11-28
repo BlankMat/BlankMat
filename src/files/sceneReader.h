@@ -7,39 +7,16 @@
 class SceneReader
 {
 private:
-	static void ReadNodes(Scene* scene, std::ifstream& file)
+	static void ReadItem(IWritable* item, std::ifstream& file, const std::string& label)
 	{
-		scene->AddNode(Node::Read(file, scene->GetRootNode()));
-	}
-
-	static void ReadMeshes(Scene* scene, std::ifstream& file)
-	{
-		scene->GetMeshes()->Read(file);
-	}
-
-	static void ReadMaterials(Scene* scene, std::ifstream& file)
-	{
-		scene->GetMaterials()->Read(file);
-	}
-
-	static void ReadTextures(Scene* scene, std::ifstream& file)
-	{
-		scene->GetTextures()->Read(file);
-	}
-
-	static void ReadCameras(Scene* scene, std::ifstream& file)
-	{
-		scene->GetCameras()->Read(file);
-	}
-
-	static void ReadLights(Scene* scene, std::ifstream& file)
-	{
-		scene->GetLights()->Read(file);
+		double startTime = Timer::Start();
+		item->Read(file);
+		Timer::Time(startTime, "Read " + label);
 	}
 public:
 	static void ReadScene(Scene* scene, const std::string& path)
 	{
-		double startTime = glfwGetTime();
+		double startTime = Timer::Start();
 		std::ifstream file(path);
 		if (!file.is_open())
 		{
@@ -49,13 +26,13 @@ public:
 
 		try
 		{
-			ReadNodes(scene, file);
-			ReadMeshes(scene, file);
-			ReadMaterials(scene, file);
-			ReadTextures(scene, file);
-			ReadCameras(scene, file);
-			ReadLights(scene, file);
-			Timer::Time(startTime, "Read scene");	
+			ReadItem(scene->GetRootNode(), file, "Nodes");
+			ReadItem(scene->GetMeshes(), file, "Meshes");
+			ReadItem(scene->GetMaterials(), file, "Materials");
+			ReadItem(scene->GetTextures(), file, "Textures");
+			ReadItem(scene->GetCameras(), file, "Cameras");
+			ReadItem(scene->GetLights(), file, "Lights");
+			Timer::Time(startTime, "Read scene");
 		}
 		catch (std::exception const& e)
 		{

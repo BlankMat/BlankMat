@@ -128,7 +128,7 @@ void LoadGUIs(Window* window, State* state, Scene* scene, Input* input, Config* 
 // --------------------------------------------------
 void LoadShaders(Scene* scene, Config* shaderConfig)
 {
-    double startTime = glfwGetTime();
+    double startTime = Timer::Start();
     std::unordered_map<std::string, Config*> shaders = shaderConfig->GetConfigs();
     for (auto iter = shaders.begin(); iter != shaders.end(); ++iter)
     {
