@@ -81,7 +81,7 @@ public:
 	Window(int width, int height, const std::string& name, Config* config);
 
 	// Draws all GUIs
-	void DrawGUI();
+	void DrawGUI(State* state);
 
 	// Adds the given GUI window
 	void AddGUI(IGUIWindow* gui);

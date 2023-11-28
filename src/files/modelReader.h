@@ -216,7 +216,7 @@ public:
 		double loadStartTime = glfwGetTime();
 		std::cout << "Reading model from file " << path << std::endl;
 		Assimp::Importer importer;
-		const aiScene* assimpScene = importer.ReadFile(path,
+		const aiScene* assimpScene = importer.ReadFile(path, aiProcess_JoinIdenticalVertices | aiProcess_FindInvalidData |
 			aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals | aiProcess_FixInfacingNormals | aiProcess_CalcTangentSpace);
 
 		if (!assimpScene || assimpScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !assimpScene->mRootNode)

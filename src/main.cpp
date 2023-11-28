@@ -52,8 +52,7 @@ int main()
         OpenGLDraw(window, state, scene);
 
         // Draw GUI
-        if (state->drawGUI)
-            window->DrawGUI();
+        window->DrawGUI(state);
 
         // Swap buffers at the end of the loop
         glfwSwapBuffers(window->GetWindow());

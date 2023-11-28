@@ -37,7 +37,7 @@ Window::Window(int width, int height, const std::string& name, Config* config)
 }
 
 // Draws all GUIs
-void Window::DrawGUI()
+void Window::DrawGUI(State* state)
 {
     // Start the Dear ImGUI frame
     ImGui_ImplOpenGL3_NewFrame();
@@ -69,9 +69,10 @@ void Window::DrawGUI()
         }
     }
 
-    for (auto iter = mGUIList.begin(); iter != mGUIList.end(); ++iter)
-        if (iter->second->IsEnabled())
-            iter->second->Draw();
+    if (state->drawGUI)
+        for (auto iter = mGUIList.begin(); iter != mGUIList.end(); ++iter)
+            if (iter->second->IsEnabled())
+                iter->second->Draw();
 
     // Rendering
     ImGui::Render();

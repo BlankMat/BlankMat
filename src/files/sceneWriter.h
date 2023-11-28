@@ -3,6 +3,7 @@
 #include "rendering/scene.h"
 #include <iostream>
 #include <fstream>
+#include <thread>
 
 class SceneWriter
 {
