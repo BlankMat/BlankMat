@@ -33,7 +33,6 @@ protected:
 		// Write all vertices
 		const auto& verts = item->GetVertices();
 		file << "vertices " << verts.size() << std::endl;
-		file << "#StartVerts" << std::endl;
 		for (unsigned int i = 0; i < verts.size(); i++)
 		{
 			Vertex vert = verts[i];
@@ -42,13 +41,11 @@ protected:
 			file << Vec3ToString(verts[i].tangent) << " ";
 			file << Vec2ToString(verts[i].texCoords) << std::endl;
 		}
-		file << "#EndVerts" << std::endl;
 		file << std::endl;
 
 		// Write all indices
 		const auto& inds = item->GetIndices();
 		file << "indices " << inds.size() << std::endl;
-		file << "#StartInds" << std::endl;
 		unsigned int i = 0;
 		for (unsigned int i = 0; i < inds.size(); i++)
 		{
@@ -57,8 +54,6 @@ protected:
 				file << std::endl;
 			file << inds[i] << " ";
 		}
-		file << std::endl;
-		file << "#EndInds" << std::endl;
 		file << std::endl;
 	}
 };

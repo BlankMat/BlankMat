@@ -61,7 +61,7 @@ public:
 	void Write(std::ofstream& file) override;
 
 	/// <summary>
-	/// Recursively deletes this node and all its children
+	/// Recursively deletes this node's children
 	/// </summary>
 	void Clear() override;
 
@@ -201,6 +201,12 @@ public:
 	/// <param name="name">Name of child node to delete</param>
 	/// <returns>Whether the deletion happened or not</returns>
 	bool DeleteNode(const std::string& name);
+
+	/// <summary>
+	/// Creates a default node under the given parent
+	/// </summary>
+	/// <param name="parent">Parent node or nulltpr</param>
+	Node(Node* parent);
 
 	/// <summary>
 	/// Creates a scene node with the given parent and name

@@ -243,7 +243,7 @@ public:
 		ProcessNode(scene, sceneRootNode, assimpScene->mRootNode, assimpScene);
 		rootNode->SetParentModelMatrix(glm::mat4(1.0f));
 
-		Timer::Time(loadStartTime, "Read model from file " + path + "successfully");
+		Timer::Time(loadStartTime, "Read model from file " + path + " successfully");
 		std::cout << "Project directory is " << scene->GetDirectory() << std::endl;
 	}
 };

@@ -100,7 +100,7 @@ public:
 	/// <param name="file">File to output to</param>
 	void Write(std::ofstream& file) override
 	{
-		file << "#Items " << std::to_string(mData.size());
+		file << "items " << std::to_string(mData.size());
 		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
 		{
 			// Skip internal items

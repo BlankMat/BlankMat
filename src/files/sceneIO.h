@@ -102,7 +102,7 @@ public:
 
 	void SaveScene()
 	{
-		std::cout << "Ran command SaveScene" << std::endl;
+		std::cout << "Ran function SaveScene" << std::endl;
 
 		// If no file has been opened, treat this as save scene as
 		if (mCurFileName == "")
@@ -117,7 +117,7 @@ public:
 
 	void SaveSceneAs()
 	{
-		std::cout << "Ran command SaveSceneAs" << std::endl;
+		std::cout << "Ran function SaveSceneAs" << std::endl;
 		std::string fileName = pfd::save_file("Save Scene As...", mCurDirectory, { 
 			"BlankMat Scenes (.blank)", "*.blank" 
 		}, pfd::opt::none).result();
@@ -133,7 +133,7 @@ public:
 
 	void SaveSceneIncrement()
 	{
-		std::cout << "Ran command SaveSceneIncrement" << std::endl;
+		std::cout << "Ran function SaveSceneIncrement" << std::endl;
 		// If no file has been opened, treat this as save scene as
 		if (mCurFileName == "")
 		{
@@ -153,8 +153,8 @@ public:
 
 	void OpenScene()
 	{
-		std::cout << "Ran command OpenScene" << std::endl;
-		auto selection = pfd::open_file("Open Scene", mCurDirectory, { 
+		std::cout << "Ran function OpenScene" << std::endl;
+		std::vector<std::string> selection = pfd::open_file("Open Scene", mCurDirectory, { 
 			"BlankMat Scenes (.blank)", "*.blank" 
 		}, pfd::opt::none).result();
 
@@ -168,14 +168,14 @@ public:
 
 	void NewScene()
 	{
-		std::cout << "Ran command NewScene" << std::endl;
+		std::cout << "Ran function NewScene" << std::endl;
 		// TODO: Implement new scene
 	}
 
 	void Import()
 	{
-		std::cout << "Ran command Import" << std::endl;
-		auto selection = pfd::open_file("Import File", mCurDirectory, { 
+		std::cout << "Ran function Import" << std::endl;
+		std::vector<std::string> selection = pfd::open_file("Import File", mCurDirectory, {
 			"3D Models (.obj)", "*.obj", 
 			"BlankMat Scenes (.blank)", "*.blank"
 		}, pfd::opt::none).result();
@@ -186,13 +186,17 @@ public:
 			std::string tempFile = "";
 			std::string tempExt = "";
 			SplitPath(selection[0], tempDir, tempFile, tempExt);
-			// TODO: Implement import
+			if (tempExt == ".blank")
+				SceneReader::ReadScene(mScene, tempDir + tempFile + tempExt, false);
+			else
+				ModelReader::LoadModel(mScene, tempDir + tempFile + tempExt);
+			mState->SaveActionStack();
 		}
 	}
 
 	void Export()
 	{
-		std::cout << "Ran command Export" << std::endl;
+		std::cout << "Ran function Export" << std::endl;
 		std::string fileName = pfd::save_file("Export", mCurDirectory, {
 			"Obj (.obj)", "*.obj",
 			"BlankMat Scenes (.blank)", "*.blank"

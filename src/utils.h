@@ -124,6 +124,19 @@ static const std::string IntToString(int value, size_t length)
 }
 
 /// <summary>
+/// Trims leading and trailing whitespace from the given text
+/// </summary>
+/// <param name="text">Text to trim</param>
+/// <returns>Trimmed text</returns>
+static std::string TrimWhitespace(const std::string& text)
+{
+    std::string res = text;
+    res.erase(0, res.find_first_not_of(" \t\n\r\f\v"));
+    res.erase(res.find_last_not_of(" \t\n\r\f\v") + 1);
+    return res;
+}
+
+/// <summary>
 /// Parses the given string into a list of strings by a given delimiter.
 /// Borrowed from: https://stackoverflow.com/questions/14265581/parse-split-a-string-in-c-using-string-delimiter-standard-c
 /// </summary>
@@ -139,7 +152,7 @@ static const void ParseStringByDelim(std::vector<std::string>& out, const std::s
     // Parse each part of the string
     size_t spos = 0;
     std::string token;
-    std::string tempStr = str;
+    std::string tempStr = TrimWhitespace(str);
     while ((spos = tempStr.find(delim)) != std::string::npos) {
         // Parse token
         token = tempStr.substr(0, spos);

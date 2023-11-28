@@ -3,7 +3,10 @@
 // Recursively reads all nodes from the given file
 Node* Node::ReadRecurse(std::ifstream& file, Node* parent)
 {
-	// TODO: Implement node read
+	// Construct empty node
+	Node* node = new Node(parent);
+
+	// Create variables to store all read information
 	std::string name = "";
 	glm::vec3 pos = glm::vec3(0.0f);
 	glm::vec3 rot = glm::vec3(0.0f);
@@ -12,34 +15,66 @@ Node* Node::ReadRecurse(std::ifstream& file, Node* parent)
 	std::vector<Node*> children;
 	std::vector<Mesh*> meshes;
 
+	// Read the node
 	std::string line;
 	while (std::getline(file, line))
 	{
-		// Don't parse empty lines
+		// Break when an empty line is encountered
 		if (line == "")
-			continue;
+			break;
 
 		std::vector<std::string> parse;
 		ParseStringByDelim(parse, line, " ");
 
 		// Don't parse empty lines
 		if (parse.empty())
-			continue;
-
-		// Check for tag markers
-		if (parse[0] == "##StartNode")
-		{
-			std::cout << "Read node " << line << std::endl;
-		}
-		// End parsing if the tag is found
-		else if (parse[0] == "#EndNode")
-		{
 			break;
+
+		// Parse lines
+		if (parse[0] == "NODE")
+		{
+			name = parse[1];
+		}
+		else if (parse[0] == "pos")
+		{
+			pos = ReadVec3FromStrings(parse, 0);
+		}
+		else if (parse[0] == "rot")
+		{
+			rot = ReadVec3FromStrings(parse, 0);
+		}
+		else if (parse[0] == "scale")
+		{
+			scale = ReadVec3FromStrings(parse, 0);
+		}
+		else if (parse[0] == "enabled")
+		{
+			enabled = (parse[1] == "1");
+		}
+		else if (parse[0] == "meshes")
+		{
+			int numMeshes = std::stoi(parse[1]);
+			for (int i = 0; i < numMeshes; i++)
+			{
+				std::string meshName;
+				std::getline(file, meshName);
+				meshName = TrimWhitespace(meshName);
+				std::cout << "Node " << name << " has child " << meshName << std::endl;
+			}
+		}
+		else if (parse[0] == "children")
+		{
+			int numChildren = std::stoi(parse[1]);
+			for (int i = 0; i < numChildren; i++)
+				ReadRecurse(file, node);
 		}
 	}
 
-	// Build node
-	Node* node = new Node(parent, name, pos, rot, scale);
+	// Build node from info
+	node->SetName(name);
+	node->SetPos(pos);
+	node->SetRot(rot);
+	node->SetScale(scale);
 	node->Enable(enabled);
 	for (unsigned int i = 0; i < children.size(); i++)
 		node->AddChild(children[i]);
@@ -51,7 +86,6 @@ Node* Node::ReadRecurse(std::ifstream& file, Node* parent)
 // Recursively writes all nodes into the given file
 void Node::WriteRecurse(std::ofstream& file, Node* node, unsigned int depth)
 {
-	file << GetPadding(depth) << "#StartNode" << std::endl;
 	file << GetPadding(depth) << "NODE " << node->mName << std::endl;
 	file << GetPadding(depth) << "pos " << Vec3ToString(node->GetPos()) << std::endl;
 	file << GetPadding(depth) << "rot " << Vec3ToString(node->GetRot()) << std::endl;
@@ -62,7 +96,7 @@ void Node::WriteRecurse(std::ofstream& file, Node* node, unsigned int depth)
 	file << GetPadding(depth) << "meshes " << node->GetMeshCount() << std::endl;
 	for (unsigned int i = 0; i < node->GetMeshCount(); i++)
 		if (node->mMeshes[i] != nullptr)
-			file << GetPadding(depth + 1) << "NODEMESH " << node->mMeshes[i]->GetName() << std::endl;
+			file << GetPadding(depth + 1) << node->mMeshes[i]->GetName() << std::endl;
 
 	// Write all child nodes
 	file << GetPadding(depth) << "children " << node->GetChildCount() << std::endl;
@@ -70,7 +104,6 @@ void Node::WriteRecurse(std::ofstream& file, Node* node, unsigned int depth)
 		if (node->mChildren[i] != nullptr)
 			WriteRecurse(file, node->mChildren[i], depth + 1);
 
-	file << GetPadding(depth) << "#EndNode " << node->mName << std::endl;
 	file << std::endl;
 }
 
@@ -356,12 +389,15 @@ bool Node::DeleteNode(const std::string& name)
 	return true;
 }
 
-// Recursively deletes this node and all its children
+// Recursively deletes this node's children
 void Node::Clear()
 {
 	for (unsigned int i = 0; i < (unsigned int)mChildren.size(); i++)
+	{
 		mChildren[i]->Clear();
-	delete this;
+		delete mChildren[i];
+	}
+	mChildren.clear();
 }
 
 // Returns the number of child nodes
@@ -393,6 +429,18 @@ bool Node::IsRootNode()
 {
 	return mParent == nullptr;
 }
+
+// Creates a default node under the given parent
+Node::Node(Node* parent)
+	: mParent(parent)
+{
+	mName = "null";
+	mPos = glm::vec3(0.0f);
+	mRot = glm::vec3(0.0f);
+	mScale = glm::vec3(1.0f);
+	mParentModelMatrix = (parent != nullptr) ? parent->GetModelMatrix() : glm::mat4(1.0f);
+}
+
 
 // Creates a scene node with the given parent and name
 Node::Node(Node* parent, const std::string& name, const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scale)

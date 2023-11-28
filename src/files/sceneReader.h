@@ -9,6 +9,7 @@ class SceneReader
 private:
 	static void ReadItem(IWritable* item, bool replace, std::ifstream& file, const std::string& label)
 	{
+		std::cout << "Reading " << label << std::endl;
 		double startTime = Timer::Start();
 		item->Read(file, replace);
 		Timer::Time(startTime, "Read " + label);
