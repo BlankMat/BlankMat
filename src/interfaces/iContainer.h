@@ -61,8 +61,12 @@ public:
 	/// Reads this container from the file
 	/// </summary>
 	/// <param name="file">File to read from</param>
-	void Read(std::ifstream& file) override
+	/// <param name="clear">Whether to overwrite the contents of the item</param>
+	void Read(std::ifstream& file, bool clear) override
 	{
+		if (clear)
+			Clear();
+
 		std::string line;
 		while (std::getline(file, line))
 		{
@@ -96,20 +100,26 @@ public:
 	/// <param name="file">File to output to</param>
 	void Write(std::ofstream& file) override
 	{
-		file << "#StartContainer" << std::endl;
-		file << "#NumItems " << std::to_string(mData.size());
+		file << "#Items " << std::to_string(mData.size());
 		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
 		{
 			// Skip internal items
 			if (SkipItem(iter->second))
 				continue;
 
-			file << std::endl;
-			file << "##StartItem" << std::endl;
+			file << std::endl; 
 			WriteItem(iter->first, iter->second, file);
-			file << "##EndItem" << std::endl;
 		}
-		file << "#EndContainer" << std::endl;
+	}
+
+	/// <summary>
+	/// Clears the container of all items, deleting them
+	/// </summary>
+	void Clear() override
+	{
+		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
+			delete iter->second;
+		mData.clear();
 	}
 
 	/// <summary>
@@ -269,25 +279,9 @@ public:
 	virtual const std::string GetKey(T* item)
 	{
 		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
-		{
 			if (iter->second == item)
-			{
 				return iter->first;
-			}
-		}
 		return "";
-	}
-
-	/// <summary>
-	/// Clears the container of all items, deleting them
-	/// </summary>
-	void Clear()
-	{
-		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
-		{
-			delete iter->second;
-		}
-		mData.clear();
 	}
 
 	/// <summary>

@@ -213,7 +213,7 @@ public:
 	// Loads the scene at the given path
 	static void LoadModel(Scene* scene, const std::string& path, const glm::vec3& startPos = glm::vec3(0.0f), const glm::vec3& startRot = glm::vec3(0.0f), const glm::vec3& startScale = glm::vec3(1.0f))
 	{
-		double loadStartTime = glfwGetTime();
+		double loadStartTime = Timer::Start();
 		std::cout << "Reading model from file " << path << std::endl;
 		Assimp::Importer importer;
 		const aiScene* assimpScene = importer.ReadFile(path, aiProcess_JoinIdenticalVertices | aiProcess_FindInvalidData |

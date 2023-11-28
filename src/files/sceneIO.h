@@ -71,6 +71,19 @@ private:
 			ext = "";
 	}
 
+	static std::string IncrementPath(const std::string path)
+	{
+		size_t numIndex = path.find_last_not_of("0123456789");
+		std::string endNums = path.substr(numIndex + 1);
+
+		// If the filename does not end in numbers, pad it with numbers
+		if (endNums.length() <= 0)
+			return path + "_000";
+
+		// If the filename ends in numbers, increment the number by one
+		return path.substr(0, numIndex + 1) + IntToString(std::stoi(endNums) + 1, endNums.length());
+	}
+
 	void ReadPath(const std::string path)
 	{
 		SplitPath(path, mCurDirectory, mCurFileName, mCurExtension);
@@ -121,7 +134,20 @@ public:
 	void SaveSceneIncrement()
 	{
 		std::cout << "Ran command SaveSceneIncrement" << std::endl;
-		// TODO: Implement save scene increment
+		// If no file has been opened, treat this as save scene as
+		if (mCurFileName == "")
+		{
+			SaveSceneAs();
+			return;
+		}
+
+		// Update filename
+		mCurFileName = IncrementPath(mCurFileName);
+		mState->SetCurFileName(mCurFileName);
+
+		// Save scene
+		std::cout << "Saving scene to file " << mCurFileName << std::endl;
+		SceneWriter::SaveScene(mScene, GetFullPath());
 		mState->SaveActionStack();
 	}
 
@@ -135,7 +161,7 @@ public:
 		if (!selection.empty())
 		{
 			ReadPath(selection[0]);
-			SceneReader::ReadScene(mScene, GetFullPath());
+			SceneReader::ReadScene(mScene, GetFullPath(), true);
 			mState->SaveActionStack();
 		}
 	}

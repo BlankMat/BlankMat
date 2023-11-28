@@ -75,8 +75,10 @@ void Node::WriteRecurse(std::ofstream& file, Node* node, unsigned int depth)
 }
 
 // Reads child nodes for this node from the file
-void Node::Read(std::ifstream& file)
+void Node::Read(std::ifstream& file, bool clear)
 {
+	if (clear)
+		Clear();
 	ReadRecurse(file, this);
 }
 
@@ -350,16 +352,46 @@ bool Node::DeleteNode(const std::string& name)
 		return false;
 
 	// Delete the node
-	node->Delete();
+	node->Clear();
 	return true;
 }
 
 // Recursively deletes this node and all its children
-void Node::Delete()
+void Node::Clear()
 {
 	for (unsigned int i = 0; i < (unsigned int)mChildren.size(); i++)
-		mChildren[i]->Delete();
+		mChildren[i]->Clear();
 	delete this;
+}
+
+// Returns the number of child nodes
+unsigned int Node::GetChildCount()
+{
+	return (unsigned int)mChildren.size();
+}
+
+// Returns the number of child meshes
+unsigned int Node::GetMeshCount()
+{
+	return (unsigned int)mMeshes.size();
+}
+
+// Returns whether the node has the given mesh
+bool Node::HasMesh(Mesh* mesh)
+{
+	return GetMeshIndex(mesh) > 0;
+}
+
+// Returns whether the node has the given child
+bool Node::HasNode(const std::string& child)
+{
+	return GetNodeIndex(child) > 0;
+}
+
+// Returns whether this node is the root node
+bool Node::IsRootNode()
+{
+	return mParent == nullptr;
 }
 
 // Creates a scene node with the given parent and name

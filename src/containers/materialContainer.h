@@ -43,7 +43,7 @@ protected:
 		file << "d " << item->d << std::endl;
 		file << "illum " << item->illum << std::endl;
 
-		// Draw textures only if they are used
+		// Write textures only if they are used
 		if (item->map_kd != nullptr)
 			file << "map_kd " << item->map_kd->name << std::endl;
 		if (item->map_ka != nullptr)

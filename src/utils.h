@@ -92,7 +92,8 @@ static const glm::vec4 RotateAround(const glm::vec4& aPointToRotate, const glm::
 /// </summary>
 /// <param name="name">Name of the file</param>
 /// <returns>Whether the file exists</returns>
-static const bool FileExists(const std::string& name) {
+static const bool FileExists(const std::string& name)
+{
     std::ifstream f(name.c_str());
     return f.good();
 }
@@ -107,8 +108,19 @@ static const std::string RoundToPrecision(float value, size_t precision)
 {
     size_t nzero = precision + 1;
     std::string str = std::to_string(value);
-    auto new_str = std::string(nzero - std::min(nzero, str.length()), '0') + str;
-    return new_str;
+    return std::string(nzero - std::min(nzero, str.length()), '0') + str;
+}
+
+/// <summary>
+/// Converts the given integer to a string of the given length, padding zeros in the beginning
+/// </summary>
+/// <param name="value">Value to convert</param>
+/// <param name="length">Minimum length of result</param>
+/// <returns>Padded string</returns>
+static const std::string IntToString(int value, size_t length)
+{
+    std::string str = std::to_string(value);
+    return std::string(length - std::min(length, str.length()), '0') + str;
 }
 
 /// <summary>

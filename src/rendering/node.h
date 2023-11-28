@@ -4,6 +4,9 @@
 #include "interfaces/iWritable.h"
 #include <vector>
 
+/// <summary>
+/// Node used to group together other nodes and meshes in a scene
+/// </summary>
 class Node : public IEntity, public IWritable
 {
 protected:
@@ -11,10 +14,12 @@ protected:
 	/// Parent node of this node. Nullptr if this is the root node
 	/// </summary>
 	Node* mParent;
+
 	/// <summary>
 	/// List of child nodes
 	/// </summary>
 	std::vector<Node*> mChildren;
+
 	/// <summary>
 	/// List of contained meshes
 	/// </summary>
@@ -24,7 +29,7 @@ protected:
 	/// Generates buffers. Nodes have no buffers.
 	/// </summary>
 	void GenBuffers() override {}
-public:
+
 	/// <summary>
 	/// Recursively reads all nodes from the given file
 	/// </summary>
@@ -41,17 +46,24 @@ public:
 	/// <param name="depth">Depth of the node to write</param>
 	static void WriteRecurse(std::ofstream& file, Node* node, unsigned int depth = 0);
 
+public:
 	/// <summary>
 	/// Reads child nodes for this node from the file
 	/// </summary>
 	/// <param name="file">File to read from</param>
-	void Read(std::ifstream& file) override;
+	/// <param name="clear">Whether to overwrite the contents of the item</param>
+	void Read(std::ifstream& file, bool clear) override;
 
 	/// <summary>
 	/// Writes this node to the file
 	/// </summary>
 	/// <param name="file">File to output to</param>
 	void Write(std::ofstream& file) override;
+
+	/// <summary>
+	/// Recursively deletes this node and all its children
+	/// </summary>
+	void Clear() override;
 
 	/// <summary>
 	/// Recursively draws the node and its children and child meshes
@@ -80,13 +92,33 @@ public:
 	/// Returns the number of child nodes
 	/// </summary>
 	/// <returns>Number of child nodes</returns>
-	unsigned int GetChildCount() { return (unsigned int)mChildren.size(); }
+	unsigned int GetChildCount();
 
 	/// <summary>
 	/// Returns the number of child meshes
 	/// </summary>
 	/// <returns>Number of child meshes</returns>
-	unsigned int GetMeshCount() { return (unsigned int)mMeshes.size(); }
+	unsigned int GetMeshCount();
+
+	/// <summary>
+	/// Returns whether the node has the given mesh
+	/// </summary>
+	/// <param name="mesh">Mesh to search for</param>
+	/// <returns>Whether the mesh was found or not</returns>
+	bool HasMesh(Mesh* mesh);
+
+	/// <summary>
+	/// Returns whether the node has the given child
+	/// </summary>
+	/// <param name="child">Child node to search for</param>
+	/// <returns>Whether the node was found or not</returns>
+	bool HasNode(const std::string& child);
+
+	/// <summary>
+	/// Returns whether this node is the root node
+	/// </summary>
+	/// <returns>Whether this node is the root node</returns>
+	bool IsRootNode();
 
 	/// <summary>
 	/// Returns the index of the given node or -1 if not found
@@ -115,26 +147,6 @@ public:
 	/// <param name="index">Index of the mesh to find</param>
 	/// <returns>Mesh with given index or null</returns>
 	Mesh* GetMesh(unsigned int index);
-
-	/// <summary>
-	/// Returns whether the node has the given mesh
-	/// </summary>
-	/// <param name="mesh">Mesh to search for</param>
-	/// <returns>Whether the mesh was found or not</returns>
-	bool HasMesh(Mesh* mesh) { return GetMeshIndex(mesh) > 0; }
-
-	/// <summary>
-	/// Returns whether the node has the given child
-	/// </summary>
-	/// <param name="child">Child node to search for</param>
-	/// <returns>Whether the node was found or not</returns>
-	bool HasNode(const std::string& child) { return GetNodeIndex(child) > 0; }
-
-	/// <summary>
-	/// Returns whether this node is the root node
-	/// </summary>
-	/// <returns>Whether this node is the root node</returns>
-	bool IsRootNode() { return mParent == nullptr; }
 
 	/// <summary>
 	/// Updates the enabled status of the object and its children
@@ -189,11 +201,6 @@ public:
 	/// <param name="name">Name of child node to delete</param>
 	/// <returns>Whether the deletion happened or not</returns>
 	bool DeleteNode(const std::string& name);
-
-	/// <summary>
-	/// Recursively deletes this node and all its children
-	/// </summary>
-	void Delete();
 
 	/// <summary>
 	/// Creates a scene node with the given parent and name
