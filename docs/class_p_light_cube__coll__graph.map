@@ -1,22 +1,20 @@
 <map id="PLightCube" name="PLightCube">
-<area shape="rect" id="Node000001" title=" " alt="" coords="81,601,170,628"/>
-<area shape="rect" id="Node000002" href="$class_light.html" title=" " alt="" coords="22,511,72,537"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="70,547,116,599,112,603,66,551"/>
-<area shape="rect" id="Node000003" href="$class_p_cube.html" title=" " alt="" coords="95,511,156,537"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="128,553,128,601,123,601,123,553"/>
-<area shape="rect" id="Node000004" href="$class_i_primitive.html" title=" " alt="" coords="5,419,150,461"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="100,473,120,509,116,512,95,476"/>
-<area shape="rect" id="Node000005" href="$class_i_entity.html" title=" " alt="" coords="131,343,189,369"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="139,382,100,420,96,417,135,378"/>
-<area shape="rect" id="Node000010" href="$class_i_primitive.html" title=" " alt="" coords="173,419,318,461"/>
-<area shape="poly" id="edge10_Node000010_Node000005" title=" " alt="" coords="186,378,226,417,223,421,182,382"/>
-<area shape="rect" id="Node000006" href="$class_material.html" title="Class that stores all texture and render information for a material." alt="" coords="127,252,194,279"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="163,294,163,342,158,342,158,294"/>
-<area shape="rect" id="Node000007" href="$class_i_material.html" title=" " alt="" coords="92,176,229,203"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="163,218,163,252,158,252,158,218"/>
-<area shape="rect" id="Node000008" href="$struct_texture.html" title=" " alt="" coords="128,5,192,32"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="163,47,163,176,158,176,158,47"/>
-<area shape="rect" id="Node000009" href="$class_p_line.html" title=" " alt="" coords="201,511,255,537"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="208,551,178,579,146,603,143,599,174,575,205,547"/>
-<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="241,477,233,511,228,510,235,476"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="81,525,170,552"/>
+<area shape="rect" id="Node000002" href="$class_light.html" title=" " alt="" coords="22,435,72,461"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="70,471,116,523,112,527,66,475"/>
+<area shape="rect" id="Node000003" href="$class_p_cube.html" title=" " alt="" coords="95,435,156,461"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="128,477,128,525,123,525,123,477"/>
+<area shape="rect" id="Node000004" href="$class_i_primitive.html" title=" " alt="" coords="5,343,150,385"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="100,397,120,433,116,436,95,400"/>
+<area shape="rect" id="Node000005" href="$class_i_entity.html" title=" " alt="" coords="131,267,189,293"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="139,306,100,344,96,341,135,302"/>
+<area shape="rect" id="Node000009" href="$class_i_primitive.html" title=" " alt="" coords="173,343,318,385"/>
+<area shape="poly" id="edge9_Node000009_Node000005" title=" " alt="" coords="186,302,226,341,223,345,182,306"/>
+<area shape="rect" id="Node000006" href="$class_material.html" title="Class that stores all texture and render information for a material." alt="" coords="127,176,194,203"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="163,218,163,266,158,266,158,218"/>
+<area shape="rect" id="Node000007" href="$struct_texture.html" title="A structure that stores a texture file that has been read into the OpenGL context." alt="" coords="128,5,192,32"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="163,47,163,176,158,176,158,47"/>
+<area shape="rect" id="Node000008" href="$class_p_line.html" title=" " alt="" coords="201,435,255,461"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="208,475,178,503,146,527,143,523,174,499,205,471"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="241,401,233,435,228,434,235,400"/>
 </map>

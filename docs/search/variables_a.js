@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['removedselverts_0',['removedSelVerts',['../class_selection.html#a656e5ec5c6455a3881ce9eb0ee28412d',1,'Selection']]],
-  ['rerender_1',['rerender',['../struct_input_locks.html#ac383e98a65314d592822ea004766fdfb',1,'InputLocks']]],
-  ['reselect_2',['reselect',['../struct_input_locks.html#af36a1b1bf17fe35e634ebcbf2a5a3fb4',1,'InputLocks']]]
+  ['tangent_0',['tangent',['../struct_vertex.html#a89587fd853d4f3f42900715620a7364d',1,'Vertex']]],
+  ['texcoords_1',['texCoords',['../struct_vertex.html#a8d5babcf0ee1f315dae1207c375759a4',1,'Vertex']]],
+  ['type_2',['type',['../struct_texture.html#ad83ed086abaa805a606a5ccd433f505c',1,'Texture']]]
 ];

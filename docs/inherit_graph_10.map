@@ -1,3 +1,23 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$class_i_container.html" title="Container class for storing key value pairs. Should not be instantiated directly, but should be overr..." alt="" coords="5,5,116,32"/>
+<area shape="rect" id="Node000000" href="$class_i_g_u_i_window.html" title=" " alt="" coords="5,233,98,260"/>
+<area shape="rect" id="Node000001" href="$class_g_u_i_action_list.html" title=" " alt="" coords="174,5,275,32"/>
+<area shape="poly" id="edge38_Node000000_Node000001" title=" " alt="" coords="56,218,66,179,83,132,109,84,144,42,172,26,174,31,147,46,113,87,88,134,71,180,61,219"/>
+<area shape="rect" id="Node000002" href="$class_g_u_i_debug_tools_window.html" title=" " alt="" coords="146,56,303,83"/>
+<area shape="poly" id="edge39_Node000000_Node000002" title=" " alt="" coords="60,218,91,155,115,121,144,93,164,81,166,86,147,97,119,125,96,158,65,220"/>
+<area shape="rect" id="Node000003" href="$class_g_u_i_hierarchy_window.html" title=" " alt="" coords="152,107,297,133"/>
+<area shape="poly" id="edge40_Node000000_Node000003" title=" " alt="" coords="69,219,101,180,144,143,167,132,170,136,147,148,105,184,73,222"/>
+<area shape="rect" id="Node000004" href="$class_g_u_i_inspector_window.html" title=" " alt="" coords="153,157,296,184"/>
+<area shape="poly" id="edge41_Node000000_Node000004" title=" " alt="" coords="88,223,145,194,175,182,177,187,147,198,90,227"/>
+<area shape="rect" id="Node000005" href="$class_g_u_i_light_viewer.html" title=" " alt="" coords="169,208,280,235"/>
+<area shape="poly" id="edge42_Node000000_Node000005" title=" " alt="" coords="112,235,168,227,169,232,113,240"/>
+<area shape="rect" id="Node000006" href="$class_g_u_i_material_editor.html" title=" " alt="" coords="163,259,286,285"/>
+<area shape="poly" id="edge43_Node000000_Node000006" title=" " alt="" coords="113,253,163,260,162,266,112,258"/>
+<area shape="rect" id="Node000007" href="$class_g_u_i_material_viewer.html" title=" " alt="" coords="160,309,289,336"/>
+<area shape="poly" id="edge44_Node000000_Node000007" title=" " alt="" coords="90,266,147,295,177,306,175,311,145,300,88,271"/>
+<area shape="rect" id="Node000008" href="$class_g_u_i_menu_bar_window.html" title=" " alt="" coords="154,360,295,387"/>
+<area shape="poly" id="edge45_Node000000_Node000008" title=" " alt="" coords="73,271,105,310,147,346,170,357,167,362,144,350,101,313,69,274"/>
+<area shape="rect" id="Node000009" href="$class_g_u_i_tool_mode_window.html" title=" " alt="" coords="152,411,297,437"/>
+<area shape="poly" id="edge46_Node000000_Node000009" title=" " alt="" coords="65,273,96,336,119,368,147,397,166,408,164,412,144,401,115,372,91,338,60,276"/>
+<area shape="rect" id="Node000010" href="$class_g_u_i_toolbar_window.html" title=" " alt="" coords="159,461,290,488"/>
+<area shape="poly" id="edge47_Node000000_Node000010" title=" " alt="" coords="61,274,71,313,88,360,113,407,147,447,165,459,162,463,144,451,109,410,83,362,66,315,56,275"/>
 </map>

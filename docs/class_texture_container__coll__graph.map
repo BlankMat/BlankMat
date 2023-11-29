@@ -1,7 +1,9 @@
 <map id="TextureContainer" name="TextureContainer">
-<area shape="rect" id="Node000001" title=" " alt="" coords="19,172,138,199"/>
-<area shape="rect" id="Node000002" href="$class_i_container.html" title=" " alt="" coords="5,96,152,123"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,138,81,172,76,172,76,138"/>
-<area shape="rect" id="Node000003" href="$struct_texture.html" title=" " alt="" coords="46,5,111,32"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="81,48,81,95,76,95,76,48"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="27,172,147,199"/>
+<area shape="rect" id="Node000002" href="$class_i_container.html" title=" " alt="" coords="14,96,160,123"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,138,90,172,84,172,84,138"/>
+<area shape="rect" id="Node000003" href="$class_i_writable.html" title=" " alt="" coords="5,5,78,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="57,45,83,94,78,97,53,47"/>
+<area shape="rect" id="Node000004" href="$struct_texture.html" title="A structure that stores a texture file that has been read into the OpenGL context." alt="" coords="101,5,166,32"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="122,47,96,97,91,94,117,45"/>
 </map>

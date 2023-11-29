@@ -1,0 +1,35 @@
+<map id="IWritable" name="IWritable">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,208,78,235"/>
+<area shape="rect" id="Node000002" href="$class_i_container.html" title=" " alt="" coords="126,5,275,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="46,192,56,158,72,118,94,77,124,42,142,30,145,35,127,46,98,80,76,120,61,160,51,194"/>
+<area shape="rect" id="Node000004" href="$class_i_container.html" title=" " alt="" coords="130,56,271,83"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="52,192,80,142,100,115,124,93,144,81,147,86,127,97,104,119,85,145,57,195"/>
+<area shape="rect" id="Node000006" href="$class_i_container.html" title=" " alt="" coords="135,107,266,133"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="63,195,91,168,124,143,148,132,151,136,127,148,94,172,66,199"/>
+<area shape="rect" id="Node000008" href="$class_i_container.html" title=" " alt="" coords="126,157,275,184"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="92,203,155,182,157,187,93,208"/>
+<area shape="rect" id="Node000010" href="$class_i_container.html" title=" " alt="" coords="133,208,268,235"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="93,219,132,219,132,224,93,224"/>
+<area shape="rect" id="Node000012" href="$class_i_container.html" title=" " alt="" coords="128,259,273,285"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="93,235,157,255,155,261,92,240"/>
+<area shape="rect" id="Node000014" href="$class_i_container.html" title=" " alt="" coords="127,309,274,336"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="66,244,94,271,127,295,151,306,148,311,124,300,91,275,63,248"/>
+<area shape="rect" id="Node000016" href="$class_i_container.html" title="Container class for storing key value pairs. Should not be instantiated directly, but should be overr..." alt="" coords="145,360,256,387"/>
+<area shape="poly" id="edge15_Node000001_Node000016" title=" " alt="" coords="57,248,85,298,104,324,127,346,147,357,144,362,124,350,100,327,80,301,52,250"/>
+<area shape="rect" id="Node000017" href="$class_node.html" title="Node used to group together other nodes and meshes in a scene." alt="" coords="175,411,226,437"/>
+<area shape="poly" id="edge16_Node000001_Node000017" title=" " alt="" coords="51,249,61,283,76,322,98,362,127,397,150,410,175,418,173,423,148,415,124,401,94,365,72,325,56,285,46,250"/>
+<area shape="rect" id="Node000003" href="$class_camera_container.html" title=" " alt="" coords="324,5,445,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="290,16,323,16,323,21,290,21"/>
+<area shape="rect" id="Node000005" href="$class_entity_container.html" title=" " alt="" coords="329,56,439,83"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="286,67,329,67,329,72,286,72"/>
+<area shape="rect" id="Node000007" href="$class_light_container.html" title=" " alt="" coords="332,107,436,133"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="282,117,331,117,331,123,282,123"/>
+<area shape="rect" id="Node000009" href="$class_material_container.html" title=" " alt="" coords="323,157,445,184"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="291,168,323,168,323,173,291,173"/>
+<area shape="rect" id="Node000011" href="$class_mesh_container.html" title=" " alt="" coords="330,208,438,235"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="283,219,330,219,330,224,283,224"/>
+<area shape="rect" id="Node000013" href="$class_shader_container.html" title=" " alt="" coords="326,259,443,285"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="288,269,325,269,325,275,288,275"/>
+<area shape="rect" id="Node000015" href="$class_texture_container.html" title=" " alt="" coords="325,309,444,336"/>
+<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="289,320,324,320,324,325,289,325"/>
+</map>

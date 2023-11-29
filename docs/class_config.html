@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.1</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.2</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -102,36 +102,46 @@ $(document).ready(function(){initNavTree('class_config.html',''); initResizable(
 Public Member Functions</h2></td></tr>
 <tr class="memitem:af9575ec8d6431b07b14c14c2cb3c96d3" id="r_af9575ec8d6431b07b14c14c2cb3c96d3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#af9575ec8d6431b07b14c14c2cb3c96d3">Config</a> (const std::string &amp;name)</td></tr>
 <tr class="separator:af9575ec8d6431b07b14c14c2cb3c96d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c0a2ea7225fe4f4ce7e4de0012ccdcd" id="r_a5c0a2ea7225fe4f4ce7e4de0012ccdcd"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#a5c0a2ea7225fe4f4ce7e4de0012ccdcd">GetName</a> ()</td></tr>
-<tr class="separator:a5c0a2ea7225fe4f4ce7e4de0012ccdcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a512a12bc368e313bd28f3438412a7a2e" id="r_a512a12bc368e313bd28f3438412a7a2e"><td class="memItemLeft" align="right" valign="top">const std::unordered_map&lt; std::string, <a class="el" href="class_config.html">Config</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#a512a12bc368e313bd28f3438412a7a2e">GetConfigs</a> ()</td></tr>
-<tr class="separator:a512a12bc368e313bd28f3438412a7a2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a797b1ab5446b95496b2308a91ab14070" id="r_a797b1ab5446b95496b2308a91ab14070"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#a797b1ab5446b95496b2308a91ab14070">GetName</a> () const</td></tr>
+<tr class="separator:a797b1ab5446b95496b2308a91ab14070"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ab894f0f2de23ea8b34748124d40ee8" id="r_a2ab894f0f2de23ea8b34748124d40ee8"><td class="memItemLeft" align="right" valign="top">const std::unordered_map&lt; std::string, <a class="el" href="class_config.html">Config</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#a2ab894f0f2de23ea8b34748124d40ee8">GetConfigs</a> () const</td></tr>
+<tr class="separator:a2ab894f0f2de23ea8b34748124d40ee8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35702aeca5d1a5debd7bef31a28f3c39" id="r_a35702aeca5d1a5debd7bef31a28f3c39"><td class="memItemLeft" align="right" valign="top">const std::unordered_map&lt; std::string, std::string &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#a35702aeca5d1a5debd7bef31a28f3c39">GetStrings</a> ()</td></tr>
+<tr class="separator:a35702aeca5d1a5debd7bef31a28f3c39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab13a8f4210fbe96cbc8257e1c862a0c5" id="r_ab13a8f4210fbe96cbc8257e1c862a0c5"><td class="memItemLeft" align="right" valign="top">const std::unordered_map&lt; std::string, glm::vec3 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#ab13a8f4210fbe96cbc8257e1c862a0c5">GetVecs</a> ()</td></tr>
+<tr class="separator:ab13a8f4210fbe96cbc8257e1c862a0c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fe648b892fb00c38d023b8e9bed15d4" id="r_a2fe648b892fb00c38d023b8e9bed15d4"><td class="memItemLeft" align="right" valign="top">const std::unordered_map&lt; std::string, float &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#a2fe648b892fb00c38d023b8e9bed15d4">GetFloats</a> ()</td></tr>
+<tr class="separator:a2fe648b892fb00c38d023b8e9bed15d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa9a623e673098fee369b7d8b32075a3" id="r_afa9a623e673098fee369b7d8b32075a3"><td class="memItemLeft" align="right" valign="top">const std::unordered_map&lt; std::string, int &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#afa9a623e673098fee369b7d8b32075a3">GetInts</a> ()</td></tr>
+<tr class="separator:afa9a623e673098fee369b7d8b32075a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b25e29267deb0e5ee20b090d6016cfd" id="r_a5b25e29267deb0e5ee20b090d6016cfd"><td class="memItemLeft" align="right" valign="top">const std::unordered_map&lt; std::string, bool &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#a5b25e29267deb0e5ee20b090d6016cfd">GetBools</a> ()</td></tr>
+<tr class="separator:a5b25e29267deb0e5ee20b090d6016cfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f361d5db0042b042d388d585f4bcb81" id="r_a9f361d5db0042b042d388d585f4bcb81"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_config.html">Config</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#a9f361d5db0042b042d388d585f4bcb81">GetConfig</a> (const std::string &amp;name)</td></tr>
 <tr class="separator:a9f361d5db0042b042d388d585f4bcb81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14f08d91fa1d30fbb300ed95c342b4f2" id="r_a14f08d91fa1d30fbb300ed95c342b4f2"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#a14f08d91fa1d30fbb300ed95c342b4f2">GetString</a> (const std::string &amp;name)</td></tr>
-<tr class="separator:a14f08d91fa1d30fbb300ed95c342b4f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07916547e38e04d5de45dd16b8a0a62e" id="r_a07916547e38e04d5de45dd16b8a0a62e"><td class="memItemLeft" align="right" valign="top">const glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#a07916547e38e04d5de45dd16b8a0a62e">GetVec</a> (const std::string &amp;name)</td></tr>
-<tr class="separator:a07916547e38e04d5de45dd16b8a0a62e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1249cafe7a1c1fea02534617bc3685a" id="r_ae1249cafe7a1c1fea02534617bc3685a"><td class="memItemLeft" align="right" valign="top">const float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#ae1249cafe7a1c1fea02534617bc3685a">GetFloat</a> (const std::string &amp;name)</td></tr>
-<tr class="separator:ae1249cafe7a1c1fea02534617bc3685a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b9abd8d1cd6ed8c507e0460122f29f7" id="r_a6b9abd8d1cd6ed8c507e0460122f29f7"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#a6b9abd8d1cd6ed8c507e0460122f29f7">GetInt</a> (const std::string &amp;name)</td></tr>
-<tr class="separator:a6b9abd8d1cd6ed8c507e0460122f29f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85e439fa4868c71331221983e25b556d" id="r_a85e439fa4868c71331221983e25b556d"><td class="memItemLeft" align="right" valign="top">const bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#a85e439fa4868c71331221983e25b556d">GetBool</a> (const std::string &amp;name)</td></tr>
-<tr class="separator:a85e439fa4868c71331221983e25b556d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bd01c5f6a2ed1c5a97878396864761a" id="r_a9bd01c5f6a2ed1c5a97878396864761a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#a9bd01c5f6a2ed1c5a97878396864761a">GetString</a> (const std::string &amp;name)</td></tr>
+<tr class="separator:a9bd01c5f6a2ed1c5a97878396864761a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4af56315c7d16be5d6517f2e2afe80ec" id="r_a4af56315c7d16be5d6517f2e2afe80ec"><td class="memItemLeft" align="right" valign="top">glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#a4af56315c7d16be5d6517f2e2afe80ec">GetVec</a> (const std::string &amp;name)</td></tr>
+<tr class="separator:a4af56315c7d16be5d6517f2e2afe80ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c87a32ced44f7fd64737088dc9bd1b2" id="r_a4c87a32ced44f7fd64737088dc9bd1b2"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#a4c87a32ced44f7fd64737088dc9bd1b2">GetFloat</a> (const std::string &amp;name)</td></tr>
+<tr class="separator:a4c87a32ced44f7fd64737088dc9bd1b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae69f3ba5bc0cb1393de57d7e19611e3c" id="r_ae69f3ba5bc0cb1393de57d7e19611e3c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#ae69f3ba5bc0cb1393de57d7e19611e3c">GetInt</a> (const std::string &amp;name)</td></tr>
+<tr class="separator:ae69f3ba5bc0cb1393de57d7e19611e3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbe4b82367bdcf615655d306c41e00de" id="r_abbe4b82367bdcf615655d306c41e00de"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#abbe4b82367bdcf615655d306c41e00de">GetBool</a> (const std::string &amp;name)</td></tr>
+<tr class="separator:abbe4b82367bdcf615655d306c41e00de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7cff2e0610210e3f349810de8d3a7595" id="r_a7cff2e0610210e3f349810de8d3a7595"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#a7cff2e0610210e3f349810de8d3a7595">SetConfig</a> (const std::string &amp;name, <a class="el" href="class_config.html">Config</a> *val)</td></tr>
 <tr class="separator:a7cff2e0610210e3f349810de8d3a7595"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37186227853e2381571ec907a4793f52" id="r_a37186227853e2381571ec907a4793f52"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#a37186227853e2381571ec907a4793f52">SetString</a> (const std::string &amp;name, const std::string &amp;val)</td></tr>
 <tr class="separator:a37186227853e2381571ec907a4793f52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab65e0c1b1ddd3ef37b80db1d9d86ea82" id="r_ab65e0c1b1ddd3ef37b80db1d9d86ea82"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#ab65e0c1b1ddd3ef37b80db1d9d86ea82">SetVec</a> (const std::string &amp;name, const glm::vec3 &amp;val)</td></tr>
 <tr class="separator:ab65e0c1b1ddd3ef37b80db1d9d86ea82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34c4626dcca7d16c4ee1753f8e5bad6e" id="r_a34c4626dcca7d16c4ee1753f8e5bad6e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#a34c4626dcca7d16c4ee1753f8e5bad6e">SetFloat</a> (const std::string &amp;name, const float val)</td></tr>
-<tr class="separator:a34c4626dcca7d16c4ee1753f8e5bad6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab63085e8e5b91b774be005e58e52b3bc" id="r_ab63085e8e5b91b774be005e58e52b3bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#ab63085e8e5b91b774be005e58e52b3bc">SetInt</a> (const std::string &amp;name, const int val)</td></tr>
-<tr class="separator:ab63085e8e5b91b774be005e58e52b3bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab86eccca04151ca73cddde9193a9ce1f" id="r_ab86eccca04151ca73cddde9193a9ce1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#ab86eccca04151ca73cddde9193a9ce1f">SetBool</a> (const std::string &amp;name, const bool val)</td></tr>
-<tr class="separator:ab86eccca04151ca73cddde9193a9ce1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b113133706ffa1ca46dd93db14e0079" id="r_a0b113133706ffa1ca46dd93db14e0079"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#a0b113133706ffa1ca46dd93db14e0079">Print</a> (const int depth=0)</td></tr>
-<tr class="separator:a0b113133706ffa1ca46dd93db14e0079"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8993ed906969498cdfda9a2891984b4" id="r_ab8993ed906969498cdfda9a2891984b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#ab8993ed906969498cdfda9a2891984b4">SetFloat</a> (const std::string &amp;name, float val)</td></tr>
+<tr class="separator:ab8993ed906969498cdfda9a2891984b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae875f1f41811b5c264ae91e7203e6578" id="r_ae875f1f41811b5c264ae91e7203e6578"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#ae875f1f41811b5c264ae91e7203e6578">SetInt</a> (const std::string &amp;name, int val)</td></tr>
+<tr class="separator:ae875f1f41811b5c264ae91e7203e6578"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d9c98ea7f9e45915752d088c2ec4feb" id="r_a6d9c98ea7f9e45915752d088c2ec4feb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#a6d9c98ea7f9e45915752d088c2ec4feb">SetBool</a> (const std::string &amp;name, bool val)</td></tr>
+<tr class="separator:a6d9c98ea7f9e45915752d088c2ec4feb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a63e981401ad2b90c7d12cd1fc1131e" id="r_a0a63e981401ad2b90c7d12cd1fc1131e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#a0a63e981401ad2b90c7d12cd1fc1131e">Print</a> (int depth=0) const</td></tr>
+<tr class="separator:a0a63e981401ad2b90c7d12cd1fc1131e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5ebf5cb409a0201cb6f1f20c4aee3a5" id="r_aa5ebf5cb409a0201cb6f1f20c4aee3a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config.html#aa5ebf5cb409a0201cb6f1f20c4aee3a5">Reset</a> ()</td></tr>
 <tr class="separator:aa5ebf5cb409a0201cb6f1f20c4aee3a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -155,7 +165,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -163,20 +173,45 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a85e439fa4868c71331221983e25b556d" name="a85e439fa4868c71331221983e25b556d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a85e439fa4868c71331221983e25b556d">&#9670;&#160;</a></span>GetBool()</h2>
+<a id="abbe4b82367bdcf615655d306c41e00de" name="abbe4b82367bdcf615655d306c41e00de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abbe4b82367bdcf615655d306c41e00de">&#9670;&#160;</a></span>GetBool()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const bool Config::GetBool </td>
+          <td class="memname">bool Config::GetBool </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5b25e29267deb0e5ee20b090d6016cfd" name="a5b25e29267deb0e5ee20b090d6016cfd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b25e29267deb0e5ee20b090d6016cfd">&#9670;&#160;</a></span>GetBools()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::unordered_map&lt; std::string, bool &gt; &amp; Config::GetBools </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
@@ -199,8 +234,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a512a12bc368e313bd28f3438412a7a2e" name="a512a12bc368e313bd28f3438412a7a2e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a512a12bc368e313bd28f3438412a7a2e">&#9670;&#160;</a></span>GetConfigs()</h2>
+<a id="a2ab894f0f2de23ea8b34748124d40ee8" name="a2ab894f0f2de23ea8b34748124d40ee8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ab894f0f2de23ea8b34748124d40ee8">&#9670;&#160;</a></span>GetConfigs()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -212,7 +247,7 @@ Public Member Functions</h2></td></tr>
           <td class="memname">const std::unordered_map&lt; std::string, <a class="el" href="class_config.html">Config</a> * &gt; &amp; Config::GetConfigs </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -224,14 +259,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ae1249cafe7a1c1fea02534617bc3685a" name="ae1249cafe7a1c1fea02534617bc3685a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae1249cafe7a1c1fea02534617bc3685a">&#9670;&#160;</a></span>GetFloat()</h2>
+<a id="a4c87a32ced44f7fd64737088dc9bd1b2" name="a4c87a32ced44f7fd64737088dc9bd1b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c87a32ced44f7fd64737088dc9bd1b2">&#9670;&#160;</a></span>GetFloat()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const float Config::GetFloat </td>
+          <td class="memname">float Config::GetFloat </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em></td><td>)</td>
@@ -242,26 +277,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a6b9abd8d1cd6ed8c507e0460122f29f7" name="a6b9abd8d1cd6ed8c507e0460122f29f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b9abd8d1cd6ed8c507e0460122f29f7">&#9670;&#160;</a></span>GetInt()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const int Config::GetInt </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a5c0a2ea7225fe4f4ce7e4de0012ccdcd" name="a5c0a2ea7225fe4f4ce7e4de0012ccdcd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c0a2ea7225fe4f4ce7e4de0012ccdcd">&#9670;&#160;</a></span>GetName()</h2>
+<a id="a2fe648b892fb00c38d023b8e9bed15d4" name="a2fe648b892fb00c38d023b8e9bed15d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fe648b892fb00c38d023b8e9bed15d4">&#9670;&#160;</a></span>GetFloats()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -270,7 +287,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string Config::GetName </td>
+          <td class="memname">const std::unordered_map&lt; std::string, float &gt; &amp; Config::GetFloats </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -285,14 +302,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a14f08d91fa1d30fbb300ed95c342b4f2" name="a14f08d91fa1d30fbb300ed95c342b4f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a14f08d91fa1d30fbb300ed95c342b4f2">&#9670;&#160;</a></span>GetString()</h2>
+<a id="ae69f3ba5bc0cb1393de57d7e19611e3c" name="ae69f3ba5bc0cb1393de57d7e19611e3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae69f3ba5bc0cb1393de57d7e19611e3c">&#9670;&#160;</a></span>GetInt()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string Config::GetString </td>
+          <td class="memname">int Config::GetInt </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em></td><td>)</td>
@@ -303,14 +320,64 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a07916547e38e04d5de45dd16b8a0a62e" name="a07916547e38e04d5de45dd16b8a0a62e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a07916547e38e04d5de45dd16b8a0a62e">&#9670;&#160;</a></span>GetVec()</h2>
+<a id="afa9a623e673098fee369b7d8b32075a3" name="afa9a623e673098fee369b7d8b32075a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa9a623e673098fee369b7d8b32075a3">&#9670;&#160;</a></span>GetInts()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::unordered_map&lt; std::string, int &gt; &amp; Config::GetInts </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a797b1ab5446b95496b2308a91ab14070" name="a797b1ab5446b95496b2308a91ab14070"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a797b1ab5446b95496b2308a91ab14070">&#9670;&#160;</a></span>GetName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Config::GetName </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9bd01c5f6a2ed1c5a97878396864761a" name="a9bd01c5f6a2ed1c5a97878396864761a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9bd01c5f6a2ed1c5a97878396864761a">&#9670;&#160;</a></span>GetString()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const glm::vec3 Config::GetVec </td>
+          <td class="memname">std::string Config::GetString </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em></td><td>)</td>
@@ -321,8 +388,76 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a0b113133706ffa1ca46dd93db14e0079" name="a0b113133706ffa1ca46dd93db14e0079"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b113133706ffa1ca46dd93db14e0079">&#9670;&#160;</a></span>Print()</h2>
+<a id="a35702aeca5d1a5debd7bef31a28f3c39" name="a35702aeca5d1a5debd7bef31a28f3c39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35702aeca5d1a5debd7bef31a28f3c39">&#9670;&#160;</a></span>GetStrings()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::unordered_map&lt; std::string, std::string &gt; &amp; Config::GetStrings </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4af56315c7d16be5d6517f2e2afe80ec" name="a4af56315c7d16be5d6517f2e2afe80ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4af56315c7d16be5d6517f2e2afe80ec">&#9670;&#160;</a></span>GetVec()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">glm::vec3 Config::GetVec </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab13a8f4210fbe96cbc8257e1c862a0c5" name="ab13a8f4210fbe96cbc8257e1c862a0c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab13a8f4210fbe96cbc8257e1c862a0c5">&#9670;&#160;</a></span>GetVecs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::unordered_map&lt; std::string, glm::vec3 &gt; &amp; Config::GetVecs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0a63e981401ad2b90c7d12cd1fc1131e" name="a0a63e981401ad2b90c7d12cd1fc1131e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a63e981401ad2b90c7d12cd1fc1131e">&#9670;&#160;</a></span>Print()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -330,9 +465,9 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void Config::Print </td>
           <td>(</td>
-          <td class="paramtype">const int&#160;</td>
+          <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>depth</em> = <code>0</code></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -356,8 +491,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab86eccca04151ca73cddde9193a9ce1f" name="ab86eccca04151ca73cddde9193a9ce1f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab86eccca04151ca73cddde9193a9ce1f">&#9670;&#160;</a></span>SetBool()</h2>
+<a id="a6d9c98ea7f9e45915752d088c2ec4feb" name="a6d9c98ea7f9e45915752d088c2ec4feb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d9c98ea7f9e45915752d088c2ec4feb">&#9670;&#160;</a></span>SetBool()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -371,7 +506,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const bool&#160;</td>
+          <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>val</em>&#160;</td>
         </tr>
         <tr>
@@ -412,8 +547,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a34c4626dcca7d16c4ee1753f8e5bad6e" name="a34c4626dcca7d16c4ee1753f8e5bad6e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a34c4626dcca7d16c4ee1753f8e5bad6e">&#9670;&#160;</a></span>SetFloat()</h2>
+<a id="ab8993ed906969498cdfda9a2891984b4" name="ab8993ed906969498cdfda9a2891984b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8993ed906969498cdfda9a2891984b4">&#9670;&#160;</a></span>SetFloat()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -427,7 +562,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const float&#160;</td>
+          <td class="paramtype">float&#160;</td>
           <td class="paramname"><em>val</em>&#160;</td>
         </tr>
         <tr>
@@ -440,8 +575,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab63085e8e5b91b774be005e58e52b3bc" name="ab63085e8e5b91b774be005e58e52b3bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab63085e8e5b91b774be005e58e52b3bc">&#9670;&#160;</a></span>SetInt()</h2>
+<a id="ae875f1f41811b5c264ae91e7203e6578" name="ae875f1f41811b5c264ae91e7203e6578"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae875f1f41811b5c264ae91e7203e6578">&#9670;&#160;</a></span>SetInt()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -455,7 +590,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const int&#160;</td>
+          <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>val</em>&#160;</td>
         </tr>
         <tr>

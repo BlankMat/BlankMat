@@ -1,17 +1,13 @@
 <map id="VCube" name="VCube">
-<area shape="rect" id="Node000001" title=" " alt="" coords="44,663,104,689"/>
-<area shape="rect" id="Node000002" href="$class_mesh.html" title=" " alt="" coords="47,587,101,613"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="77,628,77,662,71,662,71,628"/>
-<area shape="rect" id="Node000003" href="$class_i_mesh.html" title=" " alt="" coords="46,511,102,537"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="77,552,77,586,71,586,71,552"/>
-<area shape="rect" id="Node000004" href="$class_i_primitive.html" title=" " alt="" coords="10,419,138,461"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="77,477,77,510,71,510,71,477"/>
-<area shape="rect" id="Node000005" href="$class_i_entity.html" title=" " alt="" coords="45,343,103,369"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="77,385,77,419,71,419,71,385"/>
-<area shape="rect" id="Node000006" href="$class_material.html" title="Class that stores all texture and render information for a material." alt="" coords="40,252,108,279"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="77,294,77,342,71,342,71,294"/>
-<area shape="rect" id="Node000007" href="$class_i_material.html" title=" " alt="" coords="5,176,143,203"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="77,218,77,252,71,252,71,218"/>
-<area shape="rect" id="Node000008" href="$struct_texture.html" title=" " alt="" coords="42,5,106,32"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="77,47,77,176,71,176,71,47"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="39,511,99,537"/>
+<area shape="rect" id="Node000002" href="$class_mesh.html" title=" " alt="" coords="42,435,96,461"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="72,476,72,510,66,510,66,476"/>
+<area shape="rect" id="Node000003" href="$class_i_primitive.html" title=" " alt="" coords="5,343,133,385"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="72,401,72,434,66,434,66,401"/>
+<area shape="rect" id="Node000004" href="$class_i_entity.html" title=" " alt="" coords="40,267,98,293"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="72,309,72,343,66,343,66,309"/>
+<area shape="rect" id="Node000005" href="$class_material.html" title="Class that stores all texture and render information for a material." alt="" coords="35,176,103,203"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="72,218,72,266,66,266,66,218"/>
+<area shape="rect" id="Node000006" href="$struct_texture.html" title="A structure that stores a texture file that has been read into the OpenGL context." alt="" coords="37,5,101,32"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="72,47,72,176,66,176,66,47"/>
 </map>

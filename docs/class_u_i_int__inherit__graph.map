@@ -1,0 +1,5 @@
+<map id="UIInt" name="UIInt">
+<area shape="rect" id="Node000001" title="An integer that can be directly displayed and edited in the UI." alt="" coords="42,80,90,107"/>
+<area shape="rect" id="Node000002" href="$class_i_u_i_variable.html" title=" " alt="" coords="5,5,127,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="69,48,69,80,63,80,63,48"/>
+</map>

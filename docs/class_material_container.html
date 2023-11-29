@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.1</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.2</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -91,9 +91,358 @@ $(document).ready(function(){initNavTree('class_material_container.html',''); in
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="class_material_container-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">MaterialContainer Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+<div class="dynheader">
+Inheritance diagram for MaterialContainer:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_material_container__inherit__graph.png" border="0" usemap="#a_material_container_inherit__map" alt="Inheritance graph"/></div>
+<map name="a_material_container_inherit__map" id="a_material_container_inherit__map">
+<area shape="rect" title=" " alt="" coords="19,155,141,181"/>
+<area shape="rect" href="class_i_container.html" title=" " alt="" coords="5,80,155,107"/>
+<area shape="poly" title=" " alt="" coords="83,122,83,154,77,154,77,122"/>
+<area shape="rect" href="class_i_writable.html" title=" " alt="" coords="44,5,116,32"/>
+<area shape="poly" title=" " alt="" coords="83,48,83,80,77,80,77,48"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<div class="dynheader">
+Collaboration diagram for MaterialContainer:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_material_container__coll__graph.png" border="0" usemap="#a_material_container_coll__map" alt="Collaboration graph"/></div>
+<map name="a_material_container_coll__map" id="a_material_container_coll__map">
+<area shape="rect" title=" " alt="" coords="19,343,141,369"/>
+<area shape="rect" href="class_i_container.html" title=" " alt="" coords="5,267,155,293"/>
+<area shape="poly" title=" " alt="" coords="83,308,83,342,77,342,77,308"/>
+<area shape="rect" href="class_i_writable.html" title=" " alt="" coords="11,176,83,203"/>
+<area shape="poly" title=" " alt="" coords="59,216,78,265,73,267,54,218"/>
+<area shape="rect" href="class_material.html" title="Class that stores all texture and render information for a material." alt="" coords="106,176,174,203"/>
+<area shape="poly" title=" " alt="" coords="125,217,91,268,86,265,121,214"/>
+<area shape="rect" href="struct_texture.html" title="A structure that stores a texture file that has been read into the OpenGL context." alt="" coords="108,5,172,32"/>
+<area shape="poly" title=" " alt="" coords="143,47,143,176,137,176,137,47"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a8e9a67af317cf01bed824d1f95e7795c" id="r_a8e9a67af317cf01bed824d1f95e7795c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_material.html">Material</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_material_container.html#a8e9a67af317cf01bed824d1f95e7795c">AddMaterial</a> (<a class="el" href="class_material.html">Material</a> *item)</td></tr>
+<tr class="memdesc:a8e9a67af317cf01bed824d1f95e7795c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the material to the container, or if it already exists, updates the item to the given one.  <br /></td></tr>
+<tr class="separator:a8e9a67af317cf01bed824d1f95e7795c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a868a3aa369816112d02b8bc258f367aa" id="r_a868a3aa369816112d02b8bc258f367aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_material.html">Material</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_material_container.html#a868a3aa369816112d02b8bc258f367aa">GetDefault</a> ()</td></tr>
+<tr class="memdesc:a868a3aa369816112d02b8bc258f367aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the default material.  <br /></td></tr>
+<tr class="separator:a868a3aa369816112d02b8bc258f367aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bbdced7d7cd1dc8871131f2a8ce8d52" id="r_a0bbdced7d7cd1dc8871131f2a8ce8d52"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_material_container.html#a0bbdced7d7cd1dc8871131f2a8ce8d52">MaterialContainer</a> (<a class="el" href="class_texture_container.html">TextureContainer</a> *textures)</td></tr>
+<tr class="memdesc:a0bbdced7d7cd1dc8871131f2a8ce8d52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a default material container with the default material.  <br /></td></tr>
+<tr class="separator:a0bbdced7d7cd1dc8871131f2a8ce8d52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_i_container"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_i_container')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_i_container.html">IContainer&lt; Material &gt;</a></td></tr>
+<tr class="memitem:a7d3dd9069cbf4bcaa354ed589188c7cd inherit pub_methods_class_i_container" id="r_a7d3dd9069cbf4bcaa354ed589188c7cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a7d3dd9069cbf4bcaa354ed589188c7cd">Read</a> (std::ifstream &amp;file, bool clear) override</td></tr>
+<tr class="memdesc:a7d3dd9069cbf4bcaa354ed589188c7cd inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads this container from the file.  <br /></td></tr>
+<tr class="separator:a7d3dd9069cbf4bcaa354ed589188c7cd inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84e0ede86f3dda4615750a99a9f1a763 inherit pub_methods_class_i_container" id="r_a84e0ede86f3dda4615750a99a9f1a763"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a84e0ede86f3dda4615750a99a9f1a763">Write</a> (std::ofstream &amp;file) override</td></tr>
+<tr class="memdesc:a84e0ede86f3dda4615750a99a9f1a763 inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes this container to the file.  <br /></td></tr>
+<tr class="separator:a84e0ede86f3dda4615750a99a9f1a763 inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b608cf5d9f2efc8de6cd0bc5d9592a5 inherit pub_methods_class_i_container" id="r_a9b608cf5d9f2efc8de6cd0bc5d9592a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a9b608cf5d9f2efc8de6cd0bc5d9592a5">Clear</a> () override</td></tr>
+<tr class="memdesc:a9b608cf5d9f2efc8de6cd0bc5d9592a5 inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the container of all items, deleting them.  <br /></td></tr>
+<tr class="separator:a9b608cf5d9f2efc8de6cd0bc5d9592a5 inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48dd15bedf29600234f210560015a19c inherit pub_methods_class_i_container" id="r_a48dd15bedf29600234f210560015a19c"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a48dd15bedf29600234f210560015a19c">Count</a> ()</td></tr>
+<tr class="memdesc:a48dd15bedf29600234f210560015a19c inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of elements in the container.  <br /></td></tr>
+<tr class="separator:a48dd15bedf29600234f210560015a19c inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fe3b4981c2794348bac6c8196b42ee0 inherit pub_methods_class_i_container" id="r_a7fe3b4981c2794348bac6c8196b42ee0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a7fe3b4981c2794348bac6c8196b42ee0">Empty</a> ()</td></tr>
+<tr class="memdesc:a7fe3b4981c2794348bac6c8196b42ee0 inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the container is empty or not.  <br /></td></tr>
+<tr class="separator:a7fe3b4981c2794348bac6c8196b42ee0 inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2606e32b307da7379dfa7c2f8f7a85b inherit pub_methods_class_i_container" id="r_ac2606e32b307da7379dfa7c2f8f7a85b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#ac2606e32b307da7379dfa7c2f8f7a85b">Select</a> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:ac2606e32b307da7379dfa7c2f8f7a85b inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the given item. Does nothing if the item is not part of the container.  <br /></td></tr>
+<tr class="separator:ac2606e32b307da7379dfa7c2f8f7a85b inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a5eb4f3d7086dbefc09f10971dfef76 inherit pub_methods_class_i_container" id="r_a8a5eb4f3d7086dbefc09f10971dfef76"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a8a5eb4f3d7086dbefc09f10971dfef76">Select</a> (<a class="el" href="class_material.html">Material</a> *item)</td></tr>
+<tr class="memdesc:a8a5eb4f3d7086dbefc09f10971dfef76 inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the given item. Does nothing if the item is not part of the container.  <br /></td></tr>
+<tr class="separator:a8a5eb4f3d7086dbefc09f10971dfef76 inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad84c7aa2688311b202334e2ba6b7f81f inherit pub_methods_class_i_container" id="r_ad84c7aa2688311b202334e2ba6b7f81f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#ad84c7aa2688311b202334e2ba6b7f81f">Deselect</a> ()</td></tr>
+<tr class="memdesc:ad84c7aa2688311b202334e2ba6b7f81f inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deselects the currently selected item.  <br /></td></tr>
+<tr class="separator:ad84c7aa2688311b202334e2ba6b7f81f inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3323241672bde6234681df04040ad1f inherit pub_methods_class_i_container" id="r_aa3323241672bde6234681df04040ad1f"><td class="memItemLeft" align="right" valign="top">virtual const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#aa3323241672bde6234681df04040ad1f">GetSelectedName</a> ()</td></tr>
+<tr class="memdesc:aa3323241672bde6234681df04040ad1f inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the currently selected item.  <br /></td></tr>
+<tr class="separator:aa3323241672bde6234681df04040ad1f inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e9519455632ed88967aefc81e527c2f inherit pub_methods_class_i_container" id="r_a8e9519455632ed88967aefc81e527c2f"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_material.html">Material</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a8e9519455632ed88967aefc81e527c2f">GetSelectedItem</a> ()</td></tr>
+<tr class="memdesc:a8e9519455632ed88967aefc81e527c2f inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the currently selected item.  <br /></td></tr>
+<tr class="separator:a8e9519455632ed88967aefc81e527c2f inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b87f380ae21f3847d794a376cd125f1 inherit pub_methods_class_i_container" id="r_a2b87f380ae21f3847d794a376cd125f1"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_material.html">Material</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a2b87f380ae21f3847d794a376cd125f1">Add</a> (const std::string &amp;name, <a class="el" href="class_material.html">Material</a> *item)</td></tr>
+<tr class="memdesc:a2b87f380ae21f3847d794a376cd125f1 inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the given item to the container, or if it already exists, updates the item to the given one.  <br /></td></tr>
+<tr class="separator:a2b87f380ae21f3847d794a376cd125f1 inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4629b8adca9344380a5392074dc607b2 inherit pub_methods_class_i_container" id="r_a4629b8adca9344380a5392074dc607b2"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a4629b8adca9344380a5392074dc607b2">Remove</a> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:a4629b8adca9344380a5392074dc607b2 inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the given item from the container.  <br /></td></tr>
+<tr class="separator:a4629b8adca9344380a5392074dc607b2 inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a876fc638917833d77b4892e69287b7c7 inherit pub_methods_class_i_container" id="r_a876fc638917833d77b4892e69287b7c7"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a876fc638917833d77b4892e69287b7c7">Remove</a> (<a class="el" href="class_material.html">Material</a> *item)</td></tr>
+<tr class="memdesc:a876fc638917833d77b4892e69287b7c7 inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the given item from the container.  <br /></td></tr>
+<tr class="separator:a876fc638917833d77b4892e69287b7c7 inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef51eba0f2863666526ad443a50a2ff2 inherit pub_methods_class_i_container" id="r_aef51eba0f2863666526ad443a50a2ff2"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_material.html">Material</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#aef51eba0f2863666526ad443a50a2ff2">GetItem</a> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:aef51eba0f2863666526ad443a50a2ff2 inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the item with the given key, or nullptr if not found.  <br /></td></tr>
+<tr class="separator:aef51eba0f2863666526ad443a50a2ff2 inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45666636565268d3d954bddbf5b98dbb inherit pub_methods_class_i_container" id="r_a45666636565268d3d954bddbf5b98dbb"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a45666636565268d3d954bddbf5b98dbb">Contains</a> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:a45666636565268d3d954bddbf5b98dbb inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the container contains an item with the given name.  <br /></td></tr>
+<tr class="separator:a45666636565268d3d954bddbf5b98dbb inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb1247a043b77710f4a7e6c8263c0d95 inherit pub_methods_class_i_container" id="r_afb1247a043b77710f4a7e6c8263c0d95"><td class="memItemLeft" align="right" valign="top">virtual const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#afb1247a043b77710f4a7e6c8263c0d95">GetKey</a> (<a class="el" href="class_material.html">Material</a> *item)</td></tr>
+<tr class="memdesc:afb1247a043b77710f4a7e6c8263c0d95 inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the key of the item given, or an empty string if not found.  <br /></td></tr>
+<tr class="separator:afb1247a043b77710f4a7e6c8263c0d95 inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfeb72ac5979c220082e80afc4cd0815 inherit pub_methods_class_i_container" id="r_abfeb72ac5979c220082e80afc4cd0815"><td class="memItemLeft" align="right" valign="top">virtual const std::unordered_map&lt; std::string, <a class="el" href="class_material.html">Material</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#abfeb72ac5979c220082e80afc4cd0815">Data</a> ()</td></tr>
+<tr class="memdesc:abfeb72ac5979c220082e80afc4cd0815 inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a reference to the data stored in the container. WARNING: Only use this to iterate over the data, not to modify it.  <br /></td></tr>
+<tr class="separator:abfeb72ac5979c220082e80afc4cd0815 inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a5aab968c010ac135c8de5effb0367ae2" id="r_a5aab968c010ac135c8de5effb0367ae2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_material_container.html#a5aab968c010ac135c8de5effb0367ae2">SkipItem</a> (<a class="el" href="class_material.html">Material</a> *item) override</td></tr>
+<tr class="memdesc:a5aab968c010ac135c8de5effb0367ae2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the item should be skipped or not.  <br /></td></tr>
+<tr class="separator:a5aab968c010ac135c8de5effb0367ae2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf37d771830a60b4b9f03a436a0a081f" id="r_abf37d771830a60b4b9f03a436a0a081f"><td class="memItemLeft" align="right" valign="top">const std::pair&lt; std::string, <a class="el" href="class_material.html">Material</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_material_container.html#abf37d771830a60b4b9f03a436a0a081f">ReadItem</a> (std::ifstream &amp;file) override</td></tr>
+<tr class="memdesc:abf37d771830a60b4b9f03a436a0a081f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the next item from the input file stream.  <br /></td></tr>
+<tr class="separator:abf37d771830a60b4b9f03a436a0a081f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b1c6a4abe58198efee01433dec4791e" id="r_a2b1c6a4abe58198efee01433dec4791e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_material_container.html#a2b1c6a4abe58198efee01433dec4791e">WriteItem</a> (const std::string &amp;key, <a class="el" href="class_material.html">Material</a> *item, std::ofstream &amp;file) override</td></tr>
+<tr class="memdesc:a2b1c6a4abe58198efee01433dec4791e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the given item into the output file stream.  <br /></td></tr>
+<tr class="separator:a2b1c6a4abe58198efee01433dec4791e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_attribs_class_i_container"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_i_container')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_i_container.html">IContainer&lt; Material &gt;</a></td></tr>
+<tr class="memitem:ab89da7beaf54b83e3288b9220352d27a inherit pro_attribs_class_i_container" id="r_ab89da7beaf54b83e3288b9220352d27a"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, <a class="el" href="class_material.html">Material</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#ab89da7beaf54b83e3288b9220352d27a">mData</a></td></tr>
+<tr class="memdesc:ab89da7beaf54b83e3288b9220352d27a inherit pro_attribs_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data of the container.  <br /></td></tr>
+<tr class="separator:ab89da7beaf54b83e3288b9220352d27a inherit pro_attribs_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a242bfb4dd38374deead61b72bc898aeb inherit pro_attribs_class_i_container" id="r_a242bfb4dd38374deead61b72bc898aeb"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a242bfb4dd38374deead61b72bc898aeb">mCurSelectedName</a></td></tr>
+<tr class="memdesc:a242bfb4dd38374deead61b72bc898aeb inherit pro_attribs_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Currently selected item's name.  <br /></td></tr>
+<tr class="separator:a242bfb4dd38374deead61b72bc898aeb inherit pro_attribs_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab08485d4b950457d7daf99efb2b53438 inherit pro_attribs_class_i_container" id="r_ab08485d4b950457d7daf99efb2b53438"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_material.html">Material</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#ab08485d4b950457d7daf99efb2b53438">mCurSelectedItem</a></td></tr>
+<tr class="memdesc:ab08485d4b950457d7daf99efb2b53438 inherit pro_attribs_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Currently selected item.  <br /></td></tr>
+<tr class="separator:ab08485d4b950457d7daf99efb2b53438 inherit pro_attribs_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a0bbdced7d7cd1dc8871131f2a8ce8d52" name="a0bbdced7d7cd1dc8871131f2a8ce8d52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bbdced7d7cd1dc8871131f2a8ce8d52">&#9670;&#160;</a></span>MaterialContainer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">MaterialContainer::MaterialContainer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_texture_container.html">TextureContainer</a> *&#160;</td>
+          <td class="paramname"><em>textures</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initializes a default material container with the default material. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">textures</td><td><a class="el" href="struct_texture.html" title="A structure that stores a texture file that has been read into the OpenGL context.">Texture</a> container with default textures</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a8e9a67af317cf01bed824d1f95e7795c" name="a8e9a67af317cf01bed824d1f95e7795c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e9a67af317cf01bed824d1f95e7795c">&#9670;&#160;</a></span>AddMaterial()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_material.html">Material</a> * MaterialContainer::AddMaterial </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_material.html">Material</a> *&#160;</td>
+          <td class="paramname"><em>item</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Adds the material to the container, or if it already exists, updates the item to the given one. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">item</td><td>The item to store</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The element stored in the container</dd></dl>
+
+</div>
+</div>
+<a id="a868a3aa369816112d02b8bc258f367aa" name="a868a3aa369816112d02b8bc258f367aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a868a3aa369816112d02b8bc258f367aa">&#9670;&#160;</a></span>GetDefault()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_material.html">Material</a> * MaterialContainer::GetDefault </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the default material. </p>
+<dl class="section return"><dt>Returns</dt><dd>Default material</dd></dl>
+
+</div>
+</div>
+<a id="abf37d771830a60b4b9f03a436a0a081f" name="abf37d771830a60b4b9f03a436a0a081f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf37d771830a60b4b9f03a436a0a081f">&#9670;&#160;</a></span>ReadItem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::pair&lt; std::string, <a class="el" href="class_material.html">Material</a> * &gt; MaterialContainer::ReadItem </td>
+          <td>(</td>
+          <td class="paramtype">std::ifstream &amp;&#160;</td>
+          <td class="paramname"><em>file</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reads the next item from the input file stream. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">file</td><td>File to read</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Newly constructed item from file</dd></dl>
+
+<p>Implements <a class="el" href="class_i_container.html#ada0f6244655ad724c89c91194b7e090a">IContainer&lt; Material &gt;</a>.</p>
+
+</div>
+</div>
+<a id="a5aab968c010ac135c8de5effb0367ae2" name="a5aab968c010ac135c8de5effb0367ae2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5aab968c010ac135c8de5effb0367ae2">&#9670;&#160;</a></span>SkipItem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MaterialContainer::SkipItem </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_material.html">Material</a> *&#160;</td>
+          <td class="paramname"><em>item</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns whether the item should be skipped or not. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">item</td><td>Item to consider</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the item should be skipped</dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_i_container.html#a461928d21399ba227aa63261c507a758">IContainer&lt; Material &gt;</a>.</p>
+
+</div>
+</div>
+<a id="a2b1c6a4abe58198efee01433dec4791e" name="a2b1c6a4abe58198efee01433dec4791e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b1c6a4abe58198efee01433dec4791e">&#9670;&#160;</a></span>WriteItem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MaterialContainer::WriteItem </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_material.html">Material</a> *&#160;</td>
+          <td class="paramname"><em>item</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::ofstream &amp;&#160;</td>
+          <td class="paramname"><em>file</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Writes the given item into the output file stream. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Key of item</td></tr>
+    <tr><td class="paramname">item</td><td>Item to write</td></tr>
+    <tr><td class="paramname">file</td><td>File to write to</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="class_i_container.html#a248cf14a69d812ddbcb88bf35a5684ee">IContainer&lt; Material &gt;</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

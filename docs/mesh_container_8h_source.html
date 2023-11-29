@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.1</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.2</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -106,11 +106,190 @@ $(document).ready(function(){initNavTree('mesh_container_8h_source.html',''); in
 <div class="foldopen" id="foldopen00005" data-start="{" data-end="};">
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno"><a class="line" href="class_mesh_container.html">    5</a></span><span class="keyword">class </span><a class="code hl_class" href="class_mesh_container.html">MeshContainer</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_i_container.html">IContainer</a>&lt;Mesh&gt;</div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>{</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>};</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">protected</span>:</div>
+<div class="foldopen" id="foldopen00013" data-start="{" data-end="}">
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="class_mesh_container.html#a2f52aaac3f135341df6d83c45ff0f130">   13</a></span>    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_mesh_container.html#a2f52aaac3f135341df6d83c45ff0f130">ReadVertices</a>(std::vector&lt;Vertex&gt;&amp; outVerts, std::ifstream&amp; file)</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    {</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        std::string line;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <span class="keywordflow">while</span> (std::getline(file, line))</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        {</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>            <span class="comment">// Break when an empty line is encountered</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>            <span class="keywordflow">if</span> (line == <span class="stringliteral">&quot;&quot;</span>)</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>            std::vector&lt;std::string&gt; parse;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>            ParseStringByDelim(parse, line, <span class="stringliteral">&quot; &quot;</span>);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>            <span class="comment">// Don&#39;t parse empty lines</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>            <span class="keywordflow">if</span> (parse.empty())</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>            <span class="comment">// Parse lines</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>            glm::vec3 pos = ReadVec3FromStrings(parse, 1);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>            glm::vec3 normal = ReadVec3FromStrings(parse, 4);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>            glm::vec3 tangent = ReadVec3FromStrings(parse, 7);</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>            glm::vec2 texCoords = ReadVec2FromStrings(parse, 10);</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>            outVerts.push_back(<a class="code hl_struct" href="struct_vertex.html">Vertex</a>(pos, normal, texCoords, tangent));</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        }</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    }</div>
 </div>
-<div class="ttc" id="aclass_i_container_html"><div class="ttname"><a href="class_i_container.html">IContainer</a></div><div class="ttdoc">Container class for storing key value pairs. Should not be instantiated directly, but should be overr...</div><div class="ttdef"><b>Definition</b> iContainer.h:14</div></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="foldopen" id="foldopen00043" data-start="{" data-end="}">
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="class_mesh_container.html#ac2d87b0c6086c82200ad9197b6237c92">   43</a></span>    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_mesh_container.html#ac2d87b0c6086c82200ad9197b6237c92">ReadIndices</a>(std::vector&lt;unsigned int&gt;&amp; outInds, std::ifstream&amp; file)</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    {</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        std::string line;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="keywordflow">while</span> (std::getline(file, line))</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        {</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            <span class="comment">// Break when an empty line is encountered</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            <span class="keywordflow">if</span> (line == <span class="stringliteral">&quot;&quot;</span>)</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            std::vector&lt;std::string&gt; parse;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            ParseStringByDelim(parse, line, <span class="stringliteral">&quot; &quot;</span>);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            <span class="comment">// Don&#39;t parse empty lines</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            <span class="keywordflow">if</span> (parse.empty())</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            <span class="comment">// Parse lines</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; parse.size(); i++)</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                outInds.push_back(std::stoi(parse[i]));</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        }</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    }</div>
+</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="foldopen" id="foldopen00070" data-start="{" data-end="}">
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="class_mesh_container.html#abf01f642319794f9e33aa886d5dca5a7">   70</a></span>    <span class="keyword">const</span> std::pair&lt;std::string, Mesh*&gt; <a class="code hl_function" href="class_mesh_container.html#abf01f642319794f9e33aa886d5dca5a7">ReadItem</a>(std::ifstream&amp; file)<span class="keyword"> override</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <span class="comment">// Set up variables to store read information</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        std::string name = <span class="stringliteral">&quot;default&quot;</span>;</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        glm::vec3 pos = glm::vec3(0.0f);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        glm::vec3 rot = glm::vec3(0.0f);</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        glm::vec3 scale = glm::vec3(1.0f);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        std::string material = <span class="stringliteral">&quot;default&quot;</span>;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="keywordtype">bool</span> enabled = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        std::vector&lt;Vertex&gt; vertices;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        std::vector&lt;unsigned int&gt; indices;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        <span class="comment">// Read the node</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        std::string line;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        <span class="keywordflow">while</span> (std::getline(file, line))</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        {</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>            <span class="comment">// Break when an empty line is encountered</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            <span class="keywordflow">if</span> (line == <span class="stringliteral">&quot;&quot;</span>)</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            std::vector&lt;std::string&gt; parse;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            ParseStringByDelim(parse, line, <span class="stringliteral">&quot; &quot;</span>);</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>            <span class="comment">// Don&#39;t parse empty lines</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>            <span class="keywordflow">if</span> (parse.empty())</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            <span class="comment">// Parse lines</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;MESH&quot;</span>)</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>                name = parse[1];</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;pos&quot;</span>)</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>                pos = ReadVec3FromStrings(parse, 0);</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;rot&quot;</span>)</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>                rot = ReadVec3FromStrings(parse, 0);</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;scale&quot;</span>)</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>                scale = ReadVec3FromStrings(parse, 0);</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;material&quot;</span>)</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>                material = parse[1];</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;enabled&quot;</span>)</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>                enabled = (parse[1] == <span class="stringliteral">&quot;1&quot;</span>);</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;vertices&quot;</span>)</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>                <a class="code hl_function" href="class_mesh_container.html#a2f52aaac3f135341df6d83c45ff0f130">ReadVertices</a>(vertices, file);</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;indices&quot;</span>)</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>                <a class="code hl_function" href="class_mesh_container.html#ac2d87b0c6086c82200ad9197b6237c92">ReadIndices</a>(indices, file);</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        }</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        <span class="comment">// Combine information into a new mesh</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        <a class="code hl_class" href="class_mesh.html">Mesh</a>* tempMesh = <span class="keyword">new</span> <a class="code hl_class" href="class_mesh.html">Mesh</a>(name, vertices, indices, material);</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        tempMesh-&gt;<a class="code hl_function" href="class_i_entity.html#af55af3b2632f4a536ee6bc5ff4698d99">SetPos</a>(pos);</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        tempMesh-&gt;<a class="code hl_function" href="class_i_entity.html#ad0259ac28765ac813c0f6a9720776935">SetRot</a>(rot);</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        tempMesh-&gt;<a class="code hl_function" href="class_i_entity.html#ad02f56fc13c33100a691357ef5a09de5">SetScale</a>(scale);</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        tempMesh-&gt;<a class="code hl_function" href="class_i_entity.html#a1abbeac520f7b0f289793ca14b81c9b6">Enable</a>(enabled);</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        <span class="keywordflow">return</span> std::pair&lt;std::string, Mesh*&gt;(name, tempMesh);</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    }</div>
+</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
+<div class="foldopen" id="foldopen00131" data-start="{" data-end="}">
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno"><a class="line" href="class_mesh_container.html#a6196b3ae478e7a8789733d600a42b8ce">  131</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_mesh_container.html#a6196b3ae478e7a8789733d600a42b8ce">WriteItem</a>(<span class="keyword">const</span> std::string&amp; key, <a class="code hl_class" href="class_mesh.html">Mesh</a>* item, std::ofstream&amp; file)<span class="keyword"> override</span></div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        file &lt;&lt; <span class="stringliteral">&quot;MESH &quot;</span> &lt;&lt; key &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        file &lt;&lt; <span class="stringliteral">&quot;pos &quot;</span> &lt;&lt; Vec3ToString(item-&gt;<a class="code hl_function" href="class_i_entity.html#a626c053a2f1fbbdbb6ae7a6fcd094305">GetPos</a>()) &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        file &lt;&lt; <span class="stringliteral">&quot;rot &quot;</span> &lt;&lt; Vec3ToString(item-&gt;<a class="code hl_function" href="class_i_entity.html#ab1427c7b9b7837d8ffcbb96d8253bfbb">GetRot</a>()) &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        file &lt;&lt; <span class="stringliteral">&quot;scale &quot;</span> &lt;&lt; Vec3ToString(item-&gt;<a class="code hl_function" href="class_i_entity.html#a6c8dd25d3883c8817c4753eed6338d71">GetScale</a>()) &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        file &lt;&lt; <span class="stringliteral">&quot;material &quot;</span> &lt;&lt; (item-&gt;<a class="code hl_function" href="class_i_entity.html#af129f3b429b487ecbf596f949961ce79">GetMaterial</a>() != <span class="keyword">nullptr</span> ? item-&gt;<a class="code hl_function" href="class_i_entity.html#af129f3b429b487ecbf596f949961ce79">GetMaterial</a>()-&gt;<a class="code hl_variable" href="class_material.html#affe06990f884293d0fe2f39110f71730">name</a> : <span class="stringliteral">&quot;none&quot;</span>) &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        file &lt;&lt; <span class="stringliteral">&quot;enabled &quot;</span> &lt;&lt; (int)item-&gt;<a class="code hl_function" href="class_i_entity.html#a520103db0565c5ea0b903e6d8ee4599a">IsEnabled</a>() &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>        <span class="comment">// Write all vertices</span></div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        <span class="keyword">const</span> <span class="keyword">auto</span>&amp; verts = item-&gt;<a class="code hl_function" href="class_i_primitive.html#a8a9ae3fed0cccb3cf1092793bd58c35c">GetVertices</a>();</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        file &lt;&lt; <span class="stringliteral">&quot;vertices &quot;</span> &lt;&lt; verts.size() &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; verts.size(); i++)</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>        {</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>            <a class="code hl_struct" href="struct_vertex.html">Vertex</a> vert = verts[i];</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>            file &lt;&lt; i &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; Vec3ToString(verts[i].pos) &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>            file &lt;&lt; Vec3ToString(verts[i].normal) &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>            file &lt;&lt; Vec3ToString(verts[i].tangent) &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>            file &lt;&lt; Vec2ToString(verts[i].texCoords) &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        }</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        file &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        <span class="comment">// Write all indices</span></div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        <span class="keyword">const</span> <span class="keyword">auto</span>&amp; inds = item-&gt;<a class="code hl_function" href="class_i_primitive.html#a62ca887eb5773bedf1345bd399178a1d">GetIndices</a>();</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        file &lt;&lt; <span class="stringliteral">&quot;indices &quot;</span> &lt;&lt; inds.size() &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0;</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; inds.size(); i++)</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        {</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>            <span class="comment">// Group together indices by 6s (2 tris)</span></div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>            <span class="keywordflow">if</span> (i != 0 &amp;&amp; i % 6 == 0)</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>                file &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>            file &lt;&lt; inds[i] &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        }</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        file &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    }</div>
+</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span><span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00176" data-start="{" data-end="}">
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno"><a class="line" href="class_mesh_container.html#a7e9b7edf263fbd849d233fee691f5b16">  176</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_mesh_container.html#a7e9b7edf263fbd849d233fee691f5b16">Draw</a>(<a class="code hl_class" href="class_shader.html">Shader</a>* shader, <a class="code hl_class" href="class_state.html">State</a>* state, <a class="code hl_class" href="class_material.html">Material</a>* defaultMat, <span class="keyword">const</span> glm::mat4&amp; viewProj, <span class="keywordtype">bool</span> drawMats = <span class="keyword">false</span>)</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    {</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> iter = <a class="code hl_variable" href="class_i_container.html#ab89da7beaf54b83e3288b9220352d27a">mData</a>.begin(); iter != <a class="code hl_variable" href="class_i_container.html#ab89da7beaf54b83e3288b9220352d27a">mData</a>.end(); ++iter)</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>        {</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>            iter-&gt;second-&gt;Draw(shader, state, defaultMat, viewProj, drawMats);</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        }</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    }</div>
+</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>};</div>
+</div>
+<div class="ttc" id="aclass_i_container_html"><div class="ttname"><a href="class_i_container.html">IContainer</a></div><div class="ttdoc">Container class for storing key value pairs. Should not be instantiated directly, but should be overr...</div><div class="ttdef"><b>Definition</b> iContainer.h:18</div></div>
+<div class="ttc" id="aclass_i_container_html_ab89da7beaf54b83e3288b9220352d27a"><div class="ttname"><a href="class_i_container.html#ab89da7beaf54b83e3288b9220352d27a">IContainer&lt; Mesh &gt;::mData</a></div><div class="ttdeci">std::unordered_map&lt; std::string, Mesh * &gt; mData</div><div class="ttdoc">Data of the container.</div><div class="ttdef"><b>Definition</b> iContainer.h:23</div></div>
+<div class="ttc" id="aclass_i_entity_html_a1abbeac520f7b0f289793ca14b81c9b6"><div class="ttname"><a href="class_i_entity.html#a1abbeac520f7b0f289793ca14b81c9b6">IEntity::Enable</a></div><div class="ttdeci">void Enable(bool shouldEnable=true)</div><div class="ttdef"><b>Definition</b> iEntity.h:154</div></div>
+<div class="ttc" id="aclass_i_entity_html_a520103db0565c5ea0b903e6d8ee4599a"><div class="ttname"><a href="class_i_entity.html#a520103db0565c5ea0b903e6d8ee4599a">IEntity::IsEnabled</a></div><div class="ttdeci">bool IsEnabled()</div><div class="ttdef"><b>Definition</b> iEntity.h:149</div></div>
+<div class="ttc" id="aclass_i_entity_html_a626c053a2f1fbbdbb6ae7a6fcd094305"><div class="ttname"><a href="class_i_entity.html#a626c053a2f1fbbdbb6ae7a6fcd094305">IEntity::GetPos</a></div><div class="ttdeci">virtual const glm::vec3 GetPos()</div><div class="ttdef"><b>Definition</b> iEntity.h:67</div></div>
+<div class="ttc" id="aclass_i_entity_html_a6c8dd25d3883c8817c4753eed6338d71"><div class="ttname"><a href="class_i_entity.html#a6c8dd25d3883c8817c4753eed6338d71">IEntity::GetScale</a></div><div class="ttdeci">virtual const glm::vec3 GetScale()</div><div class="ttdef"><b>Definition</b> iEntity.h:71</div></div>
+<div class="ttc" id="aclass_i_entity_html_ab1427c7b9b7837d8ffcbb96d8253bfbb"><div class="ttname"><a href="class_i_entity.html#ab1427c7b9b7837d8ffcbb96d8253bfbb">IEntity::GetRot</a></div><div class="ttdeci">virtual const glm::vec3 GetRot()</div><div class="ttdef"><b>Definition</b> iEntity.h:69</div></div>
+<div class="ttc" id="aclass_i_entity_html_ad0259ac28765ac813c0f6a9720776935"><div class="ttname"><a href="class_i_entity.html#ad0259ac28765ac813c0f6a9720776935">IEntity::SetRot</a></div><div class="ttdeci">virtual void SetRot(const glm::vec3 &amp;rot)</div><div class="ttdef"><b>Definition</b> iEntity.h:108</div></div>
+<div class="ttc" id="aclass_i_entity_html_ad02f56fc13c33100a691357ef5a09de5"><div class="ttname"><a href="class_i_entity.html#ad02f56fc13c33100a691357ef5a09de5">IEntity::SetScale</a></div><div class="ttdeci">virtual void SetScale(const glm::vec3 &amp;scale)</div><div class="ttdef"><b>Definition</b> iEntity.h:118</div></div>
+<div class="ttc" id="aclass_i_entity_html_af129f3b429b487ecbf596f949961ce79"><div class="ttname"><a href="class_i_entity.html#af129f3b429b487ecbf596f949961ce79">IEntity::GetMaterial</a></div><div class="ttdeci">virtual Material * GetMaterial()</div><div class="ttdef"><b>Definition</b> iEntity.h:73</div></div>
+<div class="ttc" id="aclass_i_entity_html_af55af3b2632f4a536ee6bc5ff4698d99"><div class="ttname"><a href="class_i_entity.html#af55af3b2632f4a536ee6bc5ff4698d99">IEntity::SetPos</a></div><div class="ttdeci">virtual void SetPos(const glm::vec3 &amp;pos)</div><div class="ttdef"><b>Definition</b> iEntity.h:98</div></div>
+<div class="ttc" id="aclass_i_primitive_html_a62ca887eb5773bedf1345bd399178a1d"><div class="ttname"><a href="class_i_primitive.html#a62ca887eb5773bedf1345bd399178a1d">IPrimitive::GetIndices</a></div><div class="ttdeci">const std::vector&lt; I &gt; &amp; GetIndices() const</div><div class="ttdef"><b>Definition</b> iPrimitive.h:114</div></div>
+<div class="ttc" id="aclass_i_primitive_html_a8a9ae3fed0cccb3cf1092793bd58c35c"><div class="ttname"><a href="class_i_primitive.html#a8a9ae3fed0cccb3cf1092793bd58c35c">IPrimitive::GetVertices</a></div><div class="ttdeci">const std::vector&lt; V &gt; &amp; GetVertices() const</div><div class="ttdef"><b>Definition</b> iPrimitive.h:108</div></div>
+<div class="ttc" id="aclass_material_html"><div class="ttname"><a href="class_material.html">Material</a></div><div class="ttdoc">Class that stores all texture and render information for a material.</div><div class="ttdef"><b>Definition</b> material.h:18</div></div>
+<div class="ttc" id="aclass_material_html_affe06990f884293d0fe2f39110f71730"><div class="ttname"><a href="class_material.html#affe06990f884293d0fe2f39110f71730">Material::name</a></div><div class="ttdeci">std::string name</div><div class="ttdoc">name of the material</div><div class="ttdef"><b>Definition</b> material.h:101</div></div>
 <div class="ttc" id="aclass_mesh_container_html"><div class="ttname"><a href="class_mesh_container.html">MeshContainer</a></div><div class="ttdef"><b>Definition</b> meshContainer.h:6</div></div>
+<div class="ttc" id="aclass_mesh_container_html_a2f52aaac3f135341df6d83c45ff0f130"><div class="ttname"><a href="class_mesh_container.html#a2f52aaac3f135341df6d83c45ff0f130">MeshContainer::ReadVertices</a></div><div class="ttdeci">static void ReadVertices(std::vector&lt; Vertex &gt; &amp;outVerts, std::ifstream &amp;file)</div><div class="ttdoc">Reads the vertices for the current mesh in the input file.</div><div class="ttdef"><b>Definition</b> meshContainer.h:13</div></div>
+<div class="ttc" id="aclass_mesh_container_html_a6196b3ae478e7a8789733d600a42b8ce"><div class="ttname"><a href="class_mesh_container.html#a6196b3ae478e7a8789733d600a42b8ce">MeshContainer::WriteItem</a></div><div class="ttdeci">void WriteItem(const std::string &amp;key, Mesh *item, std::ofstream &amp;file) override</div><div class="ttdoc">Writes the given item into the output file stream.</div><div class="ttdef"><b>Definition</b> meshContainer.h:131</div></div>
+<div class="ttc" id="aclass_mesh_container_html_a7e9b7edf263fbd849d233fee691f5b16"><div class="ttname"><a href="class_mesh_container.html#a7e9b7edf263fbd849d233fee691f5b16">MeshContainer::Draw</a></div><div class="ttdeci">void Draw(Shader *shader, State *state, Material *defaultMat, const glm::mat4 &amp;viewProj, bool drawMats=false)</div><div class="ttdoc">Draws the contents of the container.</div><div class="ttdef"><b>Definition</b> meshContainer.h:176</div></div>
+<div class="ttc" id="aclass_mesh_container_html_abf01f642319794f9e33aa886d5dca5a7"><div class="ttname"><a href="class_mesh_container.html#abf01f642319794f9e33aa886d5dca5a7">MeshContainer::ReadItem</a></div><div class="ttdeci">const std::pair&lt; std::string, Mesh * &gt; ReadItem(std::ifstream &amp;file) override</div><div class="ttdoc">Reads the next item from the input file stream.</div><div class="ttdef"><b>Definition</b> meshContainer.h:70</div></div>
+<div class="ttc" id="aclass_mesh_container_html_ac2d87b0c6086c82200ad9197b6237c92"><div class="ttname"><a href="class_mesh_container.html#ac2d87b0c6086c82200ad9197b6237c92">MeshContainer::ReadIndices</a></div><div class="ttdeci">static void ReadIndices(std::vector&lt; unsigned int &gt; &amp;outInds, std::ifstream &amp;file)</div><div class="ttdoc">Reads the indices for the current mesh in the input file.</div><div class="ttdef"><b>Definition</b> meshContainer.h:43</div></div>
+<div class="ttc" id="aclass_mesh_html"><div class="ttname"><a href="class_mesh.html">Mesh</a></div><div class="ttdef"><b>Definition</b> mesh.h:8</div></div>
+<div class="ttc" id="aclass_shader_html"><div class="ttname"><a href="class_shader.html">Shader</a></div><div class="ttdef"><b>Definition</b> shader.h:13</div></div>
+<div class="ttc" id="aclass_state_html"><div class="ttname"><a href="class_state.html">State</a></div><div class="ttdef"><b>Definition</b> state.h:11</div></div>
+<div class="ttc" id="astruct_vertex_html"><div class="ttname"><a href="struct_vertex.html">Vertex</a></div><div class="ttdef"><b>Definition</b> vertex.h:4</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

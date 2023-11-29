@@ -1,0 +1,5 @@
+<map id="GUIActionList" name="GUIActionList">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,80,107,107"/>
+<area shape="rect" id="Node000002" href="$class_i_g_u_i_window.html" title=" " alt="" coords="10,5,102,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="59,48,59,80,53,80,53,48"/>
+</map>

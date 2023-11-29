@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.1</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.2</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -106,12 +106,12 @@ $(document).ready(function(){initNavTree('class_selection.html',''); initResizab
   <tr class="even"><td class="entry"><a class="el" href="class_selection.html#afdbf9e08f57f20864d00da148e97ed9e">DeselectMat</a>()</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="class_selection.html#a097eed175432a438373cb9a7d1b5cfe7">DeselectMesh</a>()</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_selection.html#adf497f66fd288e29b979a9a3fac1492d">DeselectVert</a>(unsigned int _id)</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="class_selection.html#a29d923916808c643295cbc6a90de5905">GetNearestFace</a>(IScene *scene, float u, float v)</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_selection.html#a05d90518d68ff1f2cc3a3c5af57d56d4">GetNearestMesh</a>(IScene *scene, float u, float v)</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="class_selection.html#aa8332f4a40e5e3fa772bf04468a95f7e">GetNearestVert</a>(IScene *scene, float u, float v)</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="class_selection.html#a0fc0bed43a6df2a00d8d4746973c4abd">GetNearestFace</a>(Scene *scene, float u, float v)</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_selection.html#a0e6c8136be917fd7d9923e29cae27b25">GetNearestMesh</a>(Scene *scene, float u, float v)</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="class_selection.html#a9635668ef017fe8265a537b1f64b7a5d">GetNearestVert</a>(Scene *scene, float u, float v)</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_selection.html#afc89f965c81a77879f36eae7432cd2d6">GetSelectedEntity</a>()</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="class_selection.html#a04b8cd8a07077d2cec787e27cf53eace">GetSelectedMat</a>()</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_selection.html#a800e0ebc46ce1ca6d91c460898fc49d4">GetSelectedMesh</a>()</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_selection.html#aede63f204624d7c83db9885264c23ff2">GetSelectedMesh</a>()</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="class_selection.html#ac171581296b858d2351213468d870754">GetSelectedVerts</a>(std::vector&lt; unsigned int &gt; &amp;_verts)</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_selection.html#a536e8b593ad414fd904838cba66388c3">GetSelectedVerts</a>(std::set&lt; unsigned int &gt; &amp;_verts)</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="class_selection.html#adbe02d976671f4f5ff03cd23796075d2">GetSelectionPivot</a>()</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
@@ -126,13 +126,14 @@ $(document).ready(function(){initNavTree('class_selection.html',''); initResizab
   <tr class="even"><td class="entry"><a class="el" href="class_selection.html#ac90abf87e6758dffc3dc07529e5e3ea7">SelectFace</a>(unsigned int _id, bool _deselect=false)</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="class_selection.html#a53d1bd270d6d257d34d5bc8d50028049">Selection</a>()</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_selection.html#abf00bad9e276d8b59abbf8aa8e59b193">SelectMat</a>(Material *material)</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="class_selection.html#a000f745b39fa2a8ffa94c0a93749fe0a">SelectMesh</a>(IMesh *mesh)</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="class_selection.html#a09b6cfd726e298cc13b2900c315ab81c">SelectMesh</a>(Mesh *mesh)</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_selection.html#ae16be2c70ae6f39d8fae5b7e989fa8d5">SelectVert</a>(unsigned int _id, bool _deselect=false)</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="class_selection.html#a4fa4b858d6b0062d6b5099fab3634daa">SetSelectionPivot</a>(glm::vec3 _pivot)</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_selection.html#aad3b872e155cfd3e7f52a9935b0452b4">SetSelMode</a>(SelMode _sel)</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="class_selection.html#ad6095139266ba8f1d0f092fd01bad81c">SetTool</a>(Tool _sel)</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_selection.html#a1b9ab3c47f88bc3fd969ea803bad4dcd">SetTransformHandle</a>(IEntity *transformHandle)</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="class_selection.html#a3c5694a1d4e7157e5b5f340eb8ed2e79">UpdateTransformHandle</a>()</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="class_selection.html#a29562e5ef091f2e69c8554b3a81b9447">ToggleSelectionVisibility</a>()</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_selection.html#a3c5694a1d4e7157e5b5f340eb8ed2e79">UpdateTransformHandle</a>()</td><td class="entry"><a class="el" href="class_selection.html">Selection</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

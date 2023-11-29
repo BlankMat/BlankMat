@@ -1,5 +1,65 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$class_i_container.html" title=" " alt="" coords="5,5,150,32"/>
-<area shape="rect" id="Node000001" href="$class_shader_container.html" title=" " alt="" coords="198,5,315,32"/>
-<area shape="poly" id="edge5_Node000000_Node000001" title=" " alt="" coords="165,16,197,16,197,21,165,21"/>
+<area shape="rect" id="Node000000" href="$class_i_entity.html" title=" " alt="" coords="12,245,71,272"/>
+<area shape="rect" id="Node000001" href="$class_i_primitive.html" title=" " alt="" coords="137,31,264,73"/>
+<area shape="poly" id="edge7_Node000000_Node000001" title=" " alt="" coords="49,229,76,162,97,124,124,90,147,72,150,76,128,94,101,127,81,164,53,231"/>
+<area shape="rect" id="Node000005" href="$class_i_primitive.html" title=" " alt="" coords="128,104,273,147"/>
+<area shape="poly" id="edge11_Node000000_Node000005" title=" " alt="" coords="58,231,86,193,124,157,142,145,145,150,127,161,90,197,62,234"/>
+<area shape="rect" id="Node000008" href="$class_i_primitive.html" title=" " alt="" coords="128,171,273,213"/>
+<area shape="poly" id="edge14_Node000000_Node000008" title=" " alt="" coords="84,238,147,212,149,216,86,243"/>
+<area shape="rect" id="Node000010" href="$class_i_primitive.html" title=" " alt="" coords="128,237,273,280"/>
+<area shape="poly" id="edge16_Node000000_Node000010" title=" " alt="" coords="86,256,128,256,128,261,86,261"/>
+<area shape="rect" id="Node000013" href="$class_i_primitive.html" title=" " alt="" coords="142,304,259,331"/>
+<area shape="poly" id="edge19_Node000000_Node000013" title=" " alt="" coords="86,274,127,290,158,301,156,306,125,294,84,279"/>
+<area shape="rect" id="Node000014" href="$class_node.html" title="Node used to group together other nodes and meshes in a scene." alt="" coords="175,405,226,432"/>
+<area shape="poly" id="edge20_Node000000_Node000014" title=" " alt="" coords="56,285,83,339,103,367,127,391,150,404,175,412,173,417,148,409,124,395,99,371,79,342,51,288"/>
+<area shape="rect" id="Node000031" href="$class_p_handle.html" title=" " alt="" coords="165,355,236,381"/>
+<area shape="poly" id="edge21_Node000000_Node000031" title=" " alt="" coords="64,282,92,313,127,340,166,357,164,362,124,345,89,316,61,286"/>
+<area shape="rect" id="Node000002" href="$class_mesh.html" title=" " alt="" coords="358,31,411,57"/>
+<area shape="poly" id="edge8_Node000001_Node000002" title=" " alt="" coords="280,46,357,42,357,48,280,51"/>
+<area shape="rect" id="Node000003" href="$class_v_cube.html" title=" " alt="" coords="495,5,555,32"/>
+<area shape="poly" id="edge9_Node000002_Node000003" title=" " alt="" coords="426,34,494,21,495,27,427,39"/>
+<area shape="rect" id="Node000004" href="$class_v_plane.html" title=" " alt="" coords="493,56,557,83"/>
+<area shape="poly" id="edge10_Node000002_Node000004" title=" " alt="" coords="427,49,493,61,492,66,426,54"/>
+<area shape="rect" id="Node000006" href="$class_p_cube.html" title=" " alt="" coords="354,81,414,108"/>
+<area shape="poly" id="edge12_Node000005_Node000006" title=" " alt="" coords="287,108,353,97,354,102,288,113"/>
+<area shape="rect" id="Node000007" href="$class_p_plane.html" title=" " alt="" coords="353,132,416,159"/>
+<area shape="poly" id="edge13_Node000005_Node000007" title=" " alt="" coords="288,132,352,139,352,145,287,137"/>
+<area shape="rect" id="Node000009" href="$class_p_grid.html" title=" " alt="" coords="357,183,411,209"/>
+<area shape="poly" id="edge15_Node000008_Node000009" title=" " alt="" coords="288,191,357,193,357,198,288,197"/>
+<area shape="rect" id="Node000011" href="$class_p_line.html" title=" " alt="" coords="357,237,411,264"/>
+<area shape="poly" id="edge17_Node000010_Node000011" title=" " alt="" coords="288,252,357,249,357,254,288,258"/>
+<area shape="rect" id="Node000012" href="$class_p_wire_cube.html" title=" " alt="" coords="341,288,428,315"/>
+<area shape="poly" id="edge18_Node000010_Node000012" title=" " alt="" coords="288,276,341,289,340,294,287,281"/>
+<area shape="rect" id="Node000015" href="$class_i_writable.html" title=" " alt="" coords="5,608,78,635"/>
+<area shape="poly" id="edge37_Node000015_Node000014" title=" " alt="" coords="46,592,56,558,72,518,94,477,124,442,148,427,173,420,175,425,150,432,127,446,98,480,76,520,61,560,51,594"/>
+<area shape="rect" id="Node000016" href="$class_i_container.html" title=" " alt="" coords="126,456,275,483"/>
+<area shape="poly" id="edge22_Node000015_Node000016" title=" " alt="" coords="52,592,80,542,100,515,124,493,144,481,147,486,127,497,104,519,85,545,57,595"/>
+<area shape="rect" id="Node000018" href="$class_i_container.html" title=" " alt="" coords="130,507,271,533"/>
+<area shape="poly" id="edge24_Node000015_Node000018" title=" " alt="" coords="63,595,91,568,124,543,148,532,151,536,127,548,94,572,66,599"/>
+<area shape="rect" id="Node000020" href="$class_i_container.html" title=" " alt="" coords="135,557,266,584"/>
+<area shape="poly" id="edge26_Node000015_Node000020" title=" " alt="" coords="92,603,155,582,157,587,93,608"/>
+<area shape="rect" id="Node000022" href="$class_i_container.html" title=" " alt="" coords="126,608,275,635"/>
+<area shape="poly" id="edge28_Node000015_Node000022" title=" " alt="" coords="94,619,125,619,125,624,94,624"/>
+<area shape="rect" id="Node000024" href="$class_i_container.html" title=" " alt="" coords="133,659,268,685"/>
+<area shape="poly" id="edge30_Node000015_Node000024" title=" " alt="" coords="93,635,157,655,155,661,92,640"/>
+<area shape="rect" id="Node000026" href="$class_i_container.html" title=" " alt="" coords="128,709,273,736"/>
+<area shape="poly" id="edge32_Node000015_Node000026" title=" " alt="" coords="66,644,94,671,127,695,151,706,148,711,124,700,91,675,63,648"/>
+<area shape="rect" id="Node000028" href="$class_i_container.html" title=" " alt="" coords="127,760,274,787"/>
+<area shape="poly" id="edge34_Node000015_Node000028" title=" " alt="" coords="57,648,85,698,104,724,127,746,147,757,144,762,124,750,100,727,80,701,52,650"/>
+<area shape="rect" id="Node000030" href="$class_i_container.html" title="Container class for storing key value pairs. Should not be instantiated directly, but should be overr..." alt="" coords="145,811,256,837"/>
+<area shape="poly" id="edge36_Node000015_Node000030" title=" " alt="" coords="51,649,61,683,76,722,98,762,127,797,146,809,143,813,124,801,94,765,72,725,56,685,46,650"/>
+<area shape="rect" id="Node000017" href="$class_camera_container.html" title=" " alt="" coords="324,456,445,483"/>
+<area shape="poly" id="edge23_Node000016_Node000017" title=" " alt="" coords="290,467,323,467,323,472,290,472"/>
+<area shape="rect" id="Node000019" href="$class_entity_container.html" title=" " alt="" coords="329,507,439,533"/>
+<area shape="poly" id="edge25_Node000018_Node000019" title=" " alt="" coords="286,517,329,517,329,523,286,523"/>
+<area shape="rect" id="Node000021" href="$class_light_container.html" title=" " alt="" coords="332,557,436,584"/>
+<area shape="poly" id="edge27_Node000020_Node000021" title=" " alt="" coords="282,568,331,568,331,573,282,573"/>
+<area shape="rect" id="Node000023" href="$class_material_container.html" title=" " alt="" coords="323,608,445,635"/>
+<area shape="poly" id="edge29_Node000022_Node000023" title=" " alt="" coords="291,619,323,619,323,624,291,624"/>
+<area shape="rect" id="Node000025" href="$class_mesh_container.html" title=" " alt="" coords="330,659,438,685"/>
+<area shape="poly" id="edge31_Node000024_Node000025" title=" " alt="" coords="283,669,330,669,330,675,283,675"/>
+<area shape="rect" id="Node000027" href="$class_shader_container.html" title=" " alt="" coords="326,709,443,736"/>
+<area shape="poly" id="edge33_Node000026_Node000027" title=" " alt="" coords="288,720,325,720,325,725,288,725"/>
+<area shape="rect" id="Node000029" href="$class_texture_container.html" title=" " alt="" coords="325,760,444,787"/>
+<area shape="poly" id="edge35_Node000028_Node000029" title=" " alt="" coords="289,771,324,771,324,776,289,776"/>
 </map>
