@@ -16,9 +16,9 @@ private:
 	State* mState = nullptr;
 	MouseInputMode mMouseInputMode = MouseInputMode::DEFAULT;
 
-	float mMouseRotSpeed = 0.1f;
-	float mMouseZoomSpeed = 0.1f;
-	float mMouseMoveSpeed = 0.1f;
+	float mMouseRotSpeed = 0.15f;
+	float mMouseZoomSpeed = 0.5f;
+	float mMouseMoveSpeed = 0.3f;
 
 	std::function<void(const glm::vec3& delta)> mMouseRotFunc = nullptr;
 	std::function<void(const glm::vec3& delta)> mMouseZoomFunc = nullptr;

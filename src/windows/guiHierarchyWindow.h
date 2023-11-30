@@ -71,6 +71,22 @@ protected:
             RenderNode(selEntity, node->GetChild(i), depth + 1);
         }
     }
+
+    void RenderNodeBase(IEntity* selEntity, Node* node)
+    {
+        // Render all meshes of the node
+        for (unsigned int j = 0; j < node->MeshCount(); j++)
+        {
+            // Get mesh
+            IEntity* mesh = node->GetMesh(j);
+            if (mesh == nullptr)
+                continue;
+            RenderSelectable(selEntity, mesh, "+  ");
+        }
+        // Render all child nodes of the node
+        for (unsigned int i = 0; i < node->ChildCount(); i++)
+            RenderNode(selEntity, node->GetChild(i), 0);
+    }
 public:
     void Draw() override
     {
@@ -84,7 +100,7 @@ public:
             if (ImGui::BeginListBox("##HierarchyRoot"))
             {
                 IEntity* prevSel = selEntity;
-                RenderNode(selEntity, root, 0);
+                RenderNodeBase(prevSel, root);
                 if (prevSel != selEntity)
                     mState->GetSel()->SelectEntity(selEntity);
                 ImGui::EndListBox();

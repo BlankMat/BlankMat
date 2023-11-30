@@ -36,9 +36,9 @@
     "modelMove": 0.3,
     "modelTurn": 30.0,
     "modelScale": 1.0,
-    "mouseRot": 0.1,
-    "mouseMove": 0.1,
-    "mouseZoom": 0.1
+    "mouseRot": 0.12,
+    "mouseMove": 0.2,
+    "mouseZoom": 0.3
   },
 
   "style": {
