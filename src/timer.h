@@ -14,6 +14,11 @@ private:
 	std::string mFrameTime = "";
 
 public:
+	static double Start()
+	{
+		return glfwGetTime();
+	}
+
 	static void Time(double startTime, const std::string& operationName)
 	{
 		double endTime = glfwGetTime();

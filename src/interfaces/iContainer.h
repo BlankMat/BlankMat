@@ -1,5 +1,9 @@
 #pragma once
 #include "glIncludes.h"
+#include "utils.h"
+#include "interfaces/iWritable.h"
+#include <iostream>
+#include <fstream>
 #include <string>
 #include <unordered_map>
 
@@ -10,7 +14,7 @@
 /// </summary>
 /// <typeparam name="T">Type of item to store</typeparam>
 template<typename T>
-class IContainer
+class IContainer : public IWritable
 {
 protected:
 	/// <summary>
@@ -27,14 +31,140 @@ protected:
 	/// Currently selected item
 	/// </summary>
 	T* mCurSelectedItem;
+
+	/// <summary>
+	/// Returns whether the item should be skipped or not
+	/// </summary>
+	/// <param name="item">Item to consider</param>
+	/// <returns>Whether the item should be skipped</returns>
+	virtual bool SkipItem(T* item)
+	{
+		return false;
+	}
+
+	/// <summary>
+	/// Reads the next item from the input file stream
+	/// </summary>
+	/// <param name="file">File to read</param>
+	/// <returns>Newly constructed item from file</returns>
+	virtual const std::pair<std::string, T*> ReadItem(std::ifstream& file) = 0;
+
+	/// <summary>
+	/// Writes the given item into the output file stream
+	/// </summary>
+	/// <param name="key">Key of item</param>
+	/// <param name="item">Item to write</param>
+	/// <param name="file">File to write to</param>
+	virtual void WriteItem(const std::string& key, T* item, std::ofstream& file) = 0;
 public:
+	/// <summary>
+	/// Reads this container from the file
+	/// </summary>
+	/// <param name="file">File to read from</param>
+	/// <param name="clear">Whether to overwrite the contents of the item</param>
+	void Read(std::ifstream& file, bool clear) override
+	{
+		if (clear)
+			Clear();
+
+		std::string line;
+		while (std::getline(file, line))
+		{
+			// Don't parse empty lines
+			if (line == "")
+				continue;
+
+			std::vector<std::string> parse;
+			ParseStringByDelim(parse, line, " ");
+
+			// Don't parse empty lines
+			if (parse.empty())
+				continue;
+
+			// Look for number of items
+			if (parse[0] == "items")
+			{
+				int numItems = std::stoi(parse[1]);
+				for (int i = 0; i < numItems; i++)
+				{
+					auto newItem = ReadItem(file);
+					if (newItem.first != "" && newItem.second != nullptr)
+						Add(newItem.first, newItem.second);
+				}
+
+				// Once the correct number of items has been read, the container is over
+				break;
+			}
+		}
+	}
+
+	/// <summary>
+	/// Writes this container to the file
+	/// </summary>
+	/// <param name="file">File to output to</param>
+	void Write(std::ofstream& file) override
+	{
+		file << "items " << std::to_string(WriteCount());
+		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
+		{
+			// Skip internal items
+			if (SkipItem(iter->second))
+				continue;
+
+			file << std::endl; 
+			WriteItem(iter->first, iter->second, file);
+		}
+	}
+
+	/// <summary>
+	/// Clears the container of all items, deleting them
+	/// </summary>
+	void Clear() override
+	{
+		// Delete and null all non-skippable items
+		for (auto iter = mData.cbegin(); iter != mData.cend();)
+		{
+			if (iter->second != nullptr && !SkipItem(iter->second))
+			{
+				delete iter->second;
+				iter = mData.erase(iter);
+			}
+			else
+			{
+				++iter;
+			}
+		}
+	}
+
+	/// <summary>
+	/// Clears the data of the container without deleting it. 
+	/// Only use this if pointers to the data exist elsewhere.
+	/// </summary>
+	void ClearData()
+	{
+		mData.clear();
+	}
+
+	/// <summary>
+	/// Returns the number of items that will be written from the container
+	/// </summary>
+	/// <returns>Number of writable items</returns>
+	unsigned int WriteCount() override
+	{
+		unsigned int count = 0;
+		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
+			if (iter->second != nullptr && !SkipItem(iter->second))
+				count++;
+		return count;
+	}
+
 	/// <summary>
 	/// Returns the number of elements in the container
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>Number of elements in the container</returns>
 	unsigned int Count()
 	{
-		return mData.size();
+		return (unsigned int)mData.size();
 	}
 
 	/// <summary>
@@ -53,7 +183,7 @@ public:
 	/// <returns>Whether the item was selected or not</returns>
 	virtual bool Select(const std::string& name)
 	{
-		T* item = Get(name);
+		T* item = GetItem(name);
 		if (item != nullptr)
 		{
 			mCurSelectedItem = item;
@@ -70,7 +200,7 @@ public:
 	/// <returns>Whether the item was selected or not</returns>
 	virtual bool Select(T* item)
 	{
-		std::string name = Get(item);
+		std::string name = GetKey(item);
 		if (name != "")
 		{
 			mCurSelectedItem = item;
@@ -112,12 +242,18 @@ public:
 	/// </summary>
 	/// <param name="name">Name of the item</param>
 	/// <param name="item">The item to store</param>
-	virtual void Add(const std::string& name, T* item)
+	/// <returns>The element stored in the container</returns>
+	virtual T* Add(const std::string& name, T* item)
 	{
 		if (mData.find(name) == mData.end())
 			mData.emplace(name, item);
 		else
 			mData[name] = item;
+
+		// If the item added was the first item, select it
+		if (mData.size() == 1)
+			Select(name);
+		return item;
 	}
 
 	/// <summary>
@@ -158,7 +294,7 @@ public:
 	/// </summary>
 	/// <param name="name">Name of item to find</param>
 	/// <returns>Item</returns>
-	virtual T* Get(const std::string& name)
+	virtual T* GetItem(const std::string& name)
 	{
 		if (mData.find(name) != mData.end())
 			return mData[name];
@@ -166,29 +302,45 @@ public:
 	}
 
 	/// <summary>
+	/// Returns whether the container contains an item with the given name
+	/// </summary>
+	/// <param name="name">Name of the item</param>
+	/// <returns>Whether the item exists</returns>
+	virtual bool Contains(const std::string& name)
+	{
+		return (mData.find(name) != mData.end());
+	}
+
+	/// <summary>
 	/// Returns the key of the item given, or an empty string if not found
 	/// </summary>
 	/// <param name="item">Item to search for</param>
 	/// <returns>Name of item</returns>
-	virtual const std::string Get(T* item)
+	virtual const std::string GetKey(T* item)
 	{
 		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
-		{
 			if (iter->second == item)
-			{
 				return iter->first;
-			}
-		}
 		return "";
 	}
 
 	/// <summary>
 	/// Returns a reference to the data stored in the container.
-	/// WARNING: Only use this to iterate over the data, not to modify it
 	/// </summary>
 	/// <returns>Data of the container</returns>
 	virtual const std::unordered_map<std::string, T*>& Data()
 	{
 		return mData;
+	}
+
+	/// <summary>
+	/// Clears all of the container, deleting its elements
+	/// </summary>
+	~IContainer()
+	{
+		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
+			if (iter->second != nullptr)
+				delete iter->second;
+		mData.clear();
 	}
 };

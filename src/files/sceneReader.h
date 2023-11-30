@@ -1,45 +1,55 @@
 #pragma once
-#include "interfaces/iScene.h"
+#include "glIncludes.h"
+#include "timer.h"
+#include "rendering/scene.h"
+#include <assimp/Importer.hpp>
+#include <assimp/Exporter.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+#include <iostream>
+#include <fstream>
 
 class SceneReader
 {
 private:
 	// Recursively processes the meshes in the given node and all its children
-	static void ProcessNode(IScene* scene, Node* sceneNode, const aiNode* node, const aiScene* assimpScene)
+	static void ProcessAssimpNode(Scene* scene, Node* node, const aiNode* assimpNode, const aiScene* assimpScene)
 	{
-		std::cout << " - Reading node " << node->mName.C_Str() << std::endl;
+		std::cout << " - Reading node " << assimpNode->mName.C_Str() << std::endl;
 		// Process all the node's meshes (if any)
-		for (unsigned int i = 0; i < node->mNumMeshes; i++)
+		for (unsigned int i = 0; i < assimpNode->mNumMeshes; i++)
 		{
-			aiMesh* mesh = assimpScene->mMeshes[node->mMeshes[i]];
-			Mesh* newMesh = ProcessMesh(scene, mesh, assimpScene);
-			scene->AddMesh(newMesh, sceneNode);
+			aiMesh* mesh = assimpScene->mMeshes[assimpNode->mMeshes[i]];
+			Mesh* newMesh = ProcessAssimpMesh(scene, mesh, assimpScene);
+			scene->AddMesh(newMesh, node);
 		}
 		// Process each of the children
-		for (unsigned int i = 0; i < node->mNumChildren; i++)
+		for (unsigned int i = 0; i < assimpNode->mNumChildren; i++)
 		{
-			Node* childNode = new Node(sceneNode, node->mChildren[i]->mName.C_Str());
-			sceneNode->AddChild(childNode);
-			ProcessNode(scene, childNode, node->mChildren[i], assimpScene);
+			Node* childNode = new Node(node, assimpNode->mChildren[i]->mName.C_Str());
+			node->AddChild(childNode);
+			ProcessAssimpNode(scene, childNode, assimpNode->mChildren[i], assimpScene);
 		}
 	}
 
 	// Process the vertices, indices, and textures of the given mesh
-	static Mesh* ProcessMesh(IScene* scene, const aiMesh* mesh, const aiScene* assimpScene)
+	static Mesh* ProcessAssimpMesh(Scene* scene, const aiMesh* assimpMesh, const aiScene* assimpScene)
 	{
 		// Process each part of the mesh
-		std::vector<Vertex> vertices = ProcessVertices(mesh);
-		std::vector<unsigned int> indices = ProcessIndices(vertices, mesh);
-		Material* newMaterial = ProcessMaterial(scene, mesh, assimpScene);
+		std::vector<Vertex> vertices;
+		std::vector<unsigned int> indices;
+
+		ProcessAssimpVertices(assimpMesh, vertices);
+		ProcessAssimpIndices(vertices, indices, assimpMesh);
+		Material* newMaterial = ProcessAssimpMaterial(scene, assimpMesh, assimpScene);
 
 		// Construct mesh
-		return new Mesh(mesh->mName.C_Str(), vertices, indices, newMaterial);
+		return new Mesh(assimpMesh->mName.C_Str(), vertices, indices, newMaterial);
 	}
 
 	// Processes the vertices of the mesh, emplacing them into the list given
-	static std::vector<Vertex> ProcessVertices(const aiMesh* mesh)
+	static void ProcessAssimpVertices(const aiMesh* mesh, std::vector<Vertex>& outVertices)
 	{
-		std::vector<Vertex> vertices;
 		// Process each vertex
 		for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 		{
@@ -51,24 +61,22 @@ private:
 			{
 				tangent = Vec3FromAssimp(mesh->mTangents[i]);
 			}
-			vertices.push_back(Vertex(pos, normal, texCoords, tangent));
+			outVertices.push_back(Vertex(pos, normal, texCoords, tangent));
 		}
-		return vertices;
 	}
 
 	// Processes the indices of the mesh
-	static std::vector<unsigned int> ProcessIndices(const std::vector<Vertex>& vertices, const aiMesh* mesh)
+	static void ProcessAssimpIndices(const std::vector<Vertex>& vertices, std::vector<unsigned int>& outIndices, const aiMesh* assimpMesh)
 	{
-		std::vector<unsigned int> indices;
 		// Process each index
-		for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+		for (unsigned int i = 0; i < assimpMesh->mNumFaces; i++)
 		{
-			if (mesh->mFaces[i].mNumIndices > 0 && vertices[mesh->mFaces[i].mIndices[0]].tangent == glm::vec3(0.0f))
+			if (assimpMesh->mFaces[i].mNumIndices > 0 && vertices[assimpMesh->mFaces[i].mIndices[0]].tangent == glm::vec3(0.0f))
 			{
 				// If vertex does not have tangents, calculate them
-				Vertex vertex1 = vertices[mesh->mFaces[i].mIndices[0]];
-				Vertex vertex2 = vertices[mesh->mFaces[i].mIndices[1]];
-				Vertex vertex3 = vertices[mesh->mFaces[i].mIndices[2]];
+				Vertex vertex1 = vertices[assimpMesh->mFaces[i].mIndices[0]];
+				Vertex vertex2 = vertices[assimpMesh->mFaces[i].mIndices[1]];
+				Vertex vertex3 = vertices[assimpMesh->mFaces[i].mIndices[2]];
 				glm::vec3 edge1 = vertex2.pos - vertex1.pos;
 				glm::vec3 edge2 = vertex3.pos - vertex1.pos;
 				glm::vec2 deltaUV1 = vertex2.texCoords - vertex1.texCoords;
@@ -84,23 +92,22 @@ private:
 				vertex2.tangent = tangent;
 				vertex3.tangent = tangent;
 			}
-			for (unsigned int j = 0; j < mesh->mFaces[i].mNumIndices; j++)
+			for (unsigned int j = 0; j < assimpMesh->mFaces[i].mNumIndices; j++)
 			{
-				indices.push_back(mesh->mFaces[i].mIndices[j]);
+				outIndices.push_back(assimpMesh->mFaces[i].mIndices[j]);
 			}
 		}
-		return indices;
 	}
 
 	// Processes the material of the mesh
-	static Material* ProcessMaterial(IScene* scene, const aiMesh* mesh, const aiScene* assimpScene)
+	static Material* ProcessAssimpMaterial(Scene* scene, const aiMesh* assimpMesh, const aiScene* assimpScene)
 	{
 		// If there are no textures, use default material
-		if (mesh->mMaterialIndex >= assimpScene->mNumMaterials)
-			return scene->GetMaterial("default");
+		if (assimpMesh->mMaterialIndex >= assimpScene->mNumMaterials)
+			return scene->GetDefaultMaterial();
 
 		// Process each material's diffuse and specular maps
-		aiMaterial* material = assimpScene->mMaterials[mesh->mMaterialIndex];
+		aiMaterial* material = assimpScene->mMaterials[assimpMesh->mMaterialIndex];
 
 		// If the material already exists, return it
 		Material* newMaterial = scene->GetMaterial(material->GetName().C_Str());
@@ -108,16 +115,16 @@ private:
 			return newMaterial;
 
 		// 1. diffuse maps
-		std::vector<Texture*> diffuseMaps = LoadMaterialTextures(scene, material, aiTextureType_DIFFUSE, "texture_diffuse");
+		std::vector<Texture*> diffuseMaps = LoadMaterialTextures(scene, material, aiTextureType_DIFFUSE, TextureType::DIFFUSE);
 		if (diffuseMaps.empty())
 			diffuseMaps.push_back(scene->GetTexture("default_diffuse"));
 		// 2. ambient maps
-		std::vector<Texture*> ambientMaps = LoadMaterialTextures(scene, material, aiTextureType_AMBIENT, "texture_ambient");
+		std::vector<Texture*> ambientMaps = LoadMaterialTextures(scene, material, aiTextureType_AMBIENT, TextureType::AMBIENT);
 		if (ambientMaps.empty())
 		{
 			if (!diffuseMaps.empty())
 			{
-				Texture* ambientTexture = new Texture(diffuseMaps[0]->id, "texture_ambient", diffuseMaps[0]->path, diffuseMaps[0]->name);
+				Texture* ambientTexture = new Texture(diffuseMaps[0]->id, TextureType::AMBIENT, diffuseMaps[0]->path, diffuseMaps[0]->name);
 				scene->AddTexture(ambientTexture->name, ambientTexture);
 				ambientMaps.push_back(ambientTexture);
 			}
@@ -127,19 +134,19 @@ private:
 			}
 		}
 		// 3. specular maps
-		std::vector<Texture*> specularMaps = LoadMaterialTextures(scene, material, aiTextureType_SPECULAR, "texture_specular");
+		std::vector<Texture*> specularMaps = LoadMaterialTextures(scene, material, aiTextureType_SPECULAR, TextureType::SPECULAR);
 		if (specularMaps.empty())
 			specularMaps.push_back(scene->GetTexture("default_specular"));
 		// 4. normal maps
-		std::vector<Texture*> normalMaps = LoadMaterialTextures(scene, material, aiTextureType_HEIGHT, "texture_normal");
+		std::vector<Texture*> normalMaps = LoadMaterialTextures(scene, material, aiTextureType_HEIGHT, TextureType::NORMAL);
 		if (normalMaps.empty())
 			normalMaps.push_back(scene->GetTexture("default_normal"));
 		// 5. height maps
-		std::vector<Texture*> heightMaps = LoadMaterialTextures(scene, material, aiTextureType_DISPLACEMENT, "texture_height");
+		std::vector<Texture*> heightMaps = LoadMaterialTextures(scene, material, aiTextureType_DISPLACEMENT, TextureType::HEIGHT);
 		if (heightMaps.empty())
 			heightMaps.push_back(scene->GetTexture("default_height"));
 		// 6. alpha maps
-		std::vector<Texture*> alphaMaps = LoadMaterialTextures(scene, material, aiTextureType_OPACITY, "texture_alpha");
+		std::vector<Texture*> alphaMaps = LoadMaterialTextures(scene, material, aiTextureType_OPACITY, TextureType::ALPHA);
 		if (alphaMaps.empty())
 			alphaMaps.push_back(scene->GetTexture("default_alpha"));
 
@@ -177,13 +184,13 @@ private:
 	}
 
 	// Loads material textures
-	static std::vector<Texture*> LoadMaterialTextures(IScene* scene, const aiMaterial* mat, aiTextureType type, const std::string& typeName)
+	static std::vector<Texture*> LoadMaterialTextures(Scene* scene, const aiMaterial* assimpMaterial, aiTextureType assimpTextureType, TextureType type)
 	{
 		std::vector<Texture*> textures;
-		for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
+		for (unsigned int i = 0; i < assimpMaterial->GetTextureCount(assimpTextureType); i++)
 		{
 			aiString str;
-			mat->GetTexture(type, i, &str);
+			assimpMaterial->GetTexture(assimpTextureType, i, &str);
 			std::string path = str.C_Str();
 			std::string name = path.substr(0, path.find_last_of('.'));
 			std::string textureName = scene->GetName() + "_" + name;
@@ -197,21 +204,28 @@ private:
 			}
 
 			// if texture hasn't been loaded already, load it
-			texture = new Texture(typeName, scene->GetDirectory(), path, textureName);
+			texture = new Texture(type, scene->GetDirectory(), path, textureName);
 			textures.push_back(texture);
 			scene->AddTexture(textureName, texture);
 			std::cout << "  - Loaded texture " << textureName << std::endl;
 		}
 		return textures;
 	}
-public:
-	// Loads the scene at the given path
-	static void LoadScene(IScene* scene, const std::string& path, const glm::vec3& startPos = glm::vec3(0.0f), const glm::vec3& startRot = glm::vec3(0.0f), const glm::vec3& startScale = glm::vec3(1.0f))
+
+	static void ReadBlankMatItem(IWritable* container, bool replace, std::ifstream& file, const std::string& label)
 	{
-		double loadStartTime = glfwGetTime();
+		std::cout << "Reading " << label << std::endl;
+		double startTime = Timer::Start();
+		container->Read(file, replace);
+		Timer::Time(startTime, "Read " + std::to_string(container->WriteCount()) + " " + label);
+	}
+
+	static void ReadAssimpScene(Scene* scene, const std::string& path, bool replace)
+	{
+		double loadStartTime = Timer::Start();
 		std::cout << "Reading model from file " << path << std::endl;
 		Assimp::Importer importer;
-		const aiScene* assimpScene = importer.ReadFile(path,
+		const aiScene* assimpScene = importer.ReadFile(path, aiProcess_JoinIdenticalVertices | aiProcess_FindInvalidData |
 			aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals | aiProcess_FixInfacingNormals | aiProcess_CalcTangentSpace);
 
 		if (!assimpScene || assimpScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !assimpScene->mRootNode)
@@ -234,16 +248,73 @@ public:
 		Node* sceneRootNode = new Node(rootNode, scene->GetName());
 
 		// Process model
-		sceneRootNode->SetPos(startPos);
-		sceneRootNode->SetRot(startRot);
-		sceneRootNode->SetScale(startScale);
 		rootNode->AddChild(sceneRootNode);
-		ProcessNode(scene, sceneRootNode, assimpScene->mRootNode, assimpScene);
+		ProcessAssimpNode(scene, sceneRootNode, assimpScene->mRootNode, assimpScene);
 		rootNode->SetParentModelMatrix(glm::mat4(1.0f));
 
-		double loadEndTime = glfwGetTime();
-		double loadTotalTime = loadEndTime - loadStartTime;
-		std::cout << "Read model from file " << path << " successfully in " << loadTotalTime << " seconds." << std::endl;
+		Timer::Time(loadStartTime, "Read model from file " + path + " successfully");
 		std::cout << "Project directory is " << scene->GetDirectory() << std::endl;
+	}
+
+	static void ReadBlankMatScene(Scene* scene, const std::string& path, bool replace)
+	{
+		double startTime = Timer::Start();
+		std::cout << "Reading model from file " << path << std::endl;
+		std::ifstream file(path);
+		if (!file.is_open())
+		{
+			std::cout << "ERROR::READSCENE::FILE_DOES_NOT_EXIST file " << path << " could not be opened." << std::endl;
+			return;
+		}
+
+		try
+		{
+			// Clears the scene of everything
+			if (replace)
+				scene->Clear();
+
+			// Read all items
+			ReadBlankMatItem(scene->GetRootNode(), replace, file, "Nodes");
+			ReadBlankMatItem(scene->GetMeshes(), replace, file, "Meshes");
+			ReadBlankMatItem(scene->GetMaterials(), replace, file, "Materials");
+			ReadBlankMatItem(scene->GetTextures(), replace, file, "Textures");
+			ReadBlankMatItem(scene->GetCameras(), replace, file, "Cameras");
+			ReadBlankMatItem(scene->GetLights(), replace, file, "Lights");
+
+			// Reconstruct relationships between items
+			scene->GetMaterials()->LoadTextures(scene->GetTextures());
+			scene->GetMeshes()->LoadMaterials(scene->GetMaterials());
+			scene->GetRootNode()->LoadMeshes(scene->GetMeshes());
+			scene->GetRootNode()->RecalcMatrices();
+			scene->UpdateRenderList();
+
+			Timer::Time(startTime, "Read scene from file " + path + " successfully");
+		}
+		catch (std::exception const& e)
+		{
+			std::cout << "ERROR::READSCENE::READ " << e.what() << std::endl;
+		}
+		file.close();
+	}
+public:
+	static void ReadScene(Scene* scene, const std::string& path, bool replace)
+	{
+		// Get extension
+		size_t lastPeriod = path.find_last_of('.');
+		std::string ext = "";
+		if (lastPeriod < path.length())
+			ext = path.substr(lastPeriod);
+
+		// Disable rendering until reading is done
+		scene->GetState()->shouldRender = false;
+		if (ext == ".blank")
+		{
+			ReadBlankMatScene(scene, path, replace);
+		}
+		else
+		{
+			ReadAssimpScene(scene, path, replace);
+		}
+		scene->GetState()->shouldRender = true;
 	}
 };

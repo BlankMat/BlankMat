@@ -10,8 +10,8 @@ enum class SelMode { MESH = 0, VERT = 1, FACE = 2, LAST };
 
 // Forward declare to prevent circular dependency
 class IEntity;
-class IMesh;
-class IScene;
+class Mesh;
+class Scene;
 class Material;
 
 class Selection
@@ -20,7 +20,7 @@ private:
 	glm::vec3 mPivot;
 	std::set<unsigned int> mSelVertices;
 	std::set<unsigned int> mSelFaces;
-	IMesh* mSelMesh;
+	Mesh* mSelMesh;
 	IEntity* mSelEntity;
 	Material* mSelMat;
 	IEntity* mSelTransformHandle;
@@ -48,7 +48,7 @@ public:
 	// Selects the vertex with the given ID
 	void SelectVert(unsigned int _id, bool _deselect = false);
 	// Selects the given mesh
-	void SelectMesh(IMesh* mesh);
+	void SelectMesh(Mesh* mesh);
 	// Selects the given entity
 	void SelectEntity(IEntity* entity);
 	// Selects the given material
@@ -86,7 +86,7 @@ public:
 	// Returns the selection mode
 	SelMode GetSelMode();
 	// Returns the selected mesh
-	IMesh* GetSelectedMesh();
+	Mesh* GetSelectedMesh();
 	// Returns the selected entity
 	IEntity* GetSelectedEntity();
 	// Returns the selected material
@@ -113,7 +113,7 @@ public:
 	/// <param name="u">U coordinate onscreen</param>
 	/// <param name="v">V coordinate onscreen</param>
 	/// <returns>Selected mesh</returns>
-	static IMesh* GetNearestMesh(IScene* scene, float u, float v);
+	static Mesh* GetNearestMesh(Scene* scene, float u, float v);
 
 	/// <summary>
 	/// Returns the nearest vertex to the clicked position
@@ -122,7 +122,7 @@ public:
 	/// <param name="u">U coordinate onscreen</param>
 	/// <param name="v">V coordinate onscreen</param>
 	/// <returns>Selected vertex index, or -1 if none was found</returns>
-	static int GetNearestVert(IScene* scene, float u, float v);
+	static int GetNearestVert(Scene* scene, float u, float v);
 
 	/// <summary>
 	/// Returns the nearest face to the clicked position
@@ -131,5 +131,5 @@ public:
 	/// <param name="u">U coordinate onscreen</param>
 	/// <param name="v">V coordinate onscreen</param>
 	/// <returns>Selected face index, or -1 if none was found</returns>
-	static int GetNearestFace(IScene* scene, float u, float v);
+	static int GetNearestFace(Scene* scene, float u, float v);
 };

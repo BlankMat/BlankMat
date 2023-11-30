@@ -1,0 +1,7 @@
+<map id="UIString" name="UIString">
+<area shape="rect" id="Node000001" title="A string that can be directly displayed and edited in the UI." alt="" coords="54,172,122,199"/>
+<area shape="rect" id="Node000002" href="$class_i_u_i_variable.html" title=" " alt="" coords="5,96,171,123"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,138,91,172,85,172,85,138"/>
+<area shape="rect" id="Node000003" href="$class_action_stack.html" title="Class that keeps track of all commands that have been run. Allows functionality for undo/redo." alt="" coords="42,5,134,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="91,48,91,95,85,95,85,48"/>
+</map>

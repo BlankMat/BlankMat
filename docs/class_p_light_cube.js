@@ -1,7 +1,7 @@
 var class_p_light_cube =
 [
-    [ "PLightCube", "class_p_light_cube.html#aadaa74bb47977af64960e9f05ec0da5a", null ],
-    [ "PLightCube", "class_p_light_cube.html#a7f1923e9576a9a570a6bd76037c4c808", null ],
+    [ "PLightCube", "class_p_light_cube.html#a7bbe9724d298625b5045c554e2a3b100", null ],
+    [ "PLightCube", "class_p_light_cube.html#a3847687661fe123afbb1242a3deb4861", null ],
     [ "~PLightCube", "class_p_light_cube.html#ae9ee19831145f7917f171f96a7e27439", null ],
     [ "Draw", "class_p_light_cube.html#ae763e892c17c2eee3721973cd11b1963", null ],
     [ "SetColor", "class_p_light_cube.html#a947513f044dc9fdf2021173cc78b159d", null ],

@@ -1,0 +1,7 @@
+<map id="UIFloat" name="UIFloat">
+<area shape="rect" id="Node000001" title="A float that can be directly displayed and edited in the UI." alt="" coords="40,172,102,199"/>
+<area shape="rect" id="Node000002" href="$class_i_u_i_variable.html" title=" " alt="" coords="5,96,137,123"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="74,138,74,172,68,172,68,138"/>
+<area shape="rect" id="Node000003" href="$class_action_stack.html" title="Class that keeps track of all commands that have been run. Allows functionality for undo/redo." alt="" coords="25,5,117,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="74,48,74,95,68,95,68,48"/>
+</map>

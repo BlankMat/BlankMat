@@ -1,35 +1,94 @@
 #pragma once
 #include "glIncludes.h"
-#include "interfaces/iMesh.h"
+#include "rendering/mesh.h"
+#include "interfaces/iWritable.h"
+#include "containers/meshContainer.h"
 #include <vector>
+#include <unordered_set>
 
-class Node : public IEntity
+/// <summary>
+/// Node used to group together other nodes and meshes in a scene
+/// </summary>
+class Node : public IEntity, public IWritable
 {
 protected:
 	/// <summary>
 	/// Parent node of this node. Nullptr if this is the root node
 	/// </summary>
 	Node* mParent;
+
 	/// <summary>
 	/// List of child nodes
 	/// </summary>
 	std::vector<Node*> mChildren;
+
 	/// <summary>
 	/// List of contained meshes
 	/// </summary>
-	std::vector<IMesh*> mMeshes;
+	std::vector<Mesh*> mMeshes;
+
+	/// <summary>
+	/// List of mesh names to load eventually
+	/// </summary>
+	std::unordered_set<std::string> mUnloadedMeshes;
 
 	/// <summary>
 	/// Generates buffers. Nodes have no buffers.
 	/// </summary>
 	void GenBuffers() override {}
+
+	/// <summary>
+	/// Recursively reads all nodes from the given file
+	/// </summary>
+	/// <param name="file">File to read</param>
+	/// <param name="parent">Parent node</param>
+	/// <returns>Node that was stored in the file</returns>
+	Node* ReadRecurse(std::ifstream& file, Node* parent);
+
+	/// <summary>
+	/// Recursively writes all nodes into the given file
+	/// </summary>
+	/// <param name="file">File to write to</param>
+	/// <param name="node">Node to write</param>
+	/// <param name="depth">Depth of the node to write</param>
+	void WriteRecurse(std::ofstream& file, Node* node, unsigned int depth = 0);
+
 public:
 	/// <summary>
-	/// Creates a scene node with the given parent and name
+	/// Reads child nodes for this node from the file
 	/// </summary>
-	/// <param name="parent">Parent node or nullptr</param>
-	/// <param name="name">Name of this node</param>
-	Node(Node* parent, const std::string& name);
+	/// <param name="file">File to read from</param>
+	/// <param name="clear">Whether to overwrite the contents of the item</param>
+	void Read(std::ifstream& file, bool clear) override;
+
+	/// <summary>
+	/// Writes this node to the file
+	/// </summary>
+	/// <param name="file">File to output to</param>
+	void Write(std::ofstream& file) override;
+
+	/// <summary>
+	/// Recursively deletes this node's children
+	/// </summary>
+	void Clear() override;
+
+	/// <summary>
+	/// Returns the number of elements that can be written
+	/// </summary>
+	/// <returns>Number of writable elements</returns>
+	unsigned int WriteCount();
+
+	/// <summary>
+	/// Returns the number of child nodes
+	/// </summary>
+	/// <returns>Number of child nodes</returns>
+	unsigned int ChildCount();
+
+	/// <summary>
+	/// Returns the number of child meshes
+	/// </summary>
+	/// <returns>Number of child meshes</returns>
+	unsigned int MeshCount();
 
 	/// <summary>
 	/// Recursively draws the node and its children and child meshes
@@ -55,16 +114,24 @@ public:
 	void RecalcMatrices() override;
 
 	/// <summary>
-	/// Returns the number of child nodes
+	/// Returns whether the node has the given mesh
 	/// </summary>
-	/// <returns>Number of child nodes</returns>
-	unsigned int GetChildCount() { return (unsigned int)mChildren.size(); }
+	/// <param name="mesh">Mesh to search for</param>
+	/// <returns>Whether the mesh was found or not</returns>
+	bool HasMesh(Mesh* mesh);
 
 	/// <summary>
-	/// Returns the number of child meshes
+	/// Returns whether the node has the given child
 	/// </summary>
-	/// <returns>Number of child meshes</returns>
-	unsigned int GetMeshCount() { return (unsigned int)mMeshes.size(); }
+	/// <param name="child">Child node to search for</param>
+	/// <returns>Whether the node was found or not</returns>
+	bool HasNode(const std::string& child);
+
+	/// <summary>
+	/// Returns whether this node is the root node
+	/// </summary>
+	/// <returns>Whether this node is the root node</returns>
+	bool IsRootNode();
 
 	/// <summary>
 	/// Returns the index of the given node or -1 if not found
@@ -78,7 +145,7 @@ public:
 	/// </summary>
 	/// <param name="mesh">Mesh to search for</param>
 	/// <returns>Index of the given mesh or -1</returns>
-	int GetMeshIndex(IMesh* mesh);
+	int GetMeshIndex(Mesh* mesh);
 
 	/// <summary>
 	/// Returns the child node with the given index, or none if out of bounds
@@ -92,27 +159,7 @@ public:
 	/// </summary>
 	/// <param name="index">Index of the mesh to find</param>
 	/// <returns>Mesh with given index or null</returns>
-	IMesh* GetMesh(unsigned int index);
-
-	/// <summary>
-	/// Returns whether the node has the given mesh
-	/// </summary>
-	/// <param name="mesh">Mesh to search for</param>
-	/// <returns>Whether the mesh was found or not</returns>
-	bool HasMesh(IMesh* mesh) { return GetMeshIndex(mesh) > 0; }
-
-	/// <summary>
-	/// Returns whether the node has the given child
-	/// </summary>
-	/// <param name="child">Child node to search for</param>
-	/// <returns>Whether the node was found or not</returns>
-	bool HasNode(const std::string& child) { return GetNodeIndex(child) > 0; }
-
-	/// <summary>
-	/// Returns whether this node is the root node
-	/// </summary>
-	/// <returns>Whether this node is the root node</returns>
-	bool IsRootNode() { return mParent == nullptr; }
+	Mesh* GetMesh(unsigned int index);
 
 	/// <summary>
 	/// Updates the enabled status of the object and its children
@@ -131,13 +178,25 @@ public:
 	/// </summary>
 	/// <param name="name">Name of the mesh</param>
 	/// <returns>Mesh with the given name or nullptr if not found</returns>
-	IMesh* FindMesh(const std::string& name);
+	Mesh* FindMesh(const std::string& name);
+
+	/// <summary>
+	/// Recursively loads the unloaded child meshes of this and child nodes
+	/// </summary>
+	/// <param name="meshes">Scene mesh list</param>
+	void LoadMeshes(MeshContainer* meshes);
+
+	/// <summary>
+	/// Adds the name of the mesh to the node, so that the mesh can later be obtained from a mesh container
+	/// </summary>
+	/// <param name="name">Name of the mesh</param>
+	void AddMeshName(const std::string& name);
 
 	/// <summary>
 	/// Adds a mesh for the node
 	/// </summary>
 	/// <param name="mesh">Mesh to add</param>
-	void AddMesh(IMesh* mesh);
+	void AddMesh(Mesh* mesh);
 	
 	/// <summary>
 	/// Adds a child to the node
@@ -151,7 +210,7 @@ public:
 	/// <param name="mesh">Mesh to move</param>
 	/// <param name="other">Node to move mesh to</param>
 	/// <returns>Whether the moving was successful</returns>
-	bool MoveMesh(IMesh* mesh, Node* other);
+	bool MoveMesh(Mesh* mesh, Node* other);
 
 	/// <summary>
 	/// Moves the given child node from this node to the given node
@@ -169,7 +228,18 @@ public:
 	bool DeleteNode(const std::string& name);
 
 	/// <summary>
-	/// Recursively deletes this node and all its children
+	/// Creates a default node under the given parent
 	/// </summary>
-	void Delete();
+	/// <param name="parent">Parent node or nulltpr</param>
+	Node(Node* parent);
+
+	/// <summary>
+	/// Creates a scene node with the given parent and name
+	/// </summary>
+	/// <param name="parent">Parent node or nullptr</param>
+	/// <param name="name">Name of this node</param>
+	/// <param name="pos">Position of the node</param>
+	/// <param name="rot">Rotation of the node</param>
+	/// <param name="scale">Scale of the node</param>
+	Node(Node* parent, const std::string& name, const glm::vec3& pos = glm::vec3(0.0f), const glm::vec3& rot = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f));
 };

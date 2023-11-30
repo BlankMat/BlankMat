@@ -4,6 +4,8 @@ var class_i_primitive =
     [ "Draw", "class_i_primitive.html#a61d1f4ed08f434cab1f4d39b6868b629", null ],
     [ "DrawShadows", "class_i_primitive.html#af341b16664ea4d63b3025d7ac332389c", null ],
     [ "GenBuffers", "class_i_primitive.html#a384a6be932d94ddb889989cd7478a00f", null ],
+    [ "GetIndices", "class_i_primitive.html#a62ca887eb5773bedf1345bd399178a1d", null ],
+    [ "GetVertices", "class_i_primitive.html#a8a9ae3fed0cccb3cf1092793bd58c35c", null ],
     [ "mIndexLen", "class_i_primitive.html#a6802d227212dbfc1259b17e4588b1a34", null ],
     [ "mIndices", "class_i_primitive.html#a5f66536d8f3e1f895ddaf19f1219f19d", null ],
     [ "mIsWireframe", "class_i_primitive.html#ac2cc3211d6d4627b2cb8dd348e095a16", null ],

@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.1</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.2</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -100,89 +100,98 @@ $(document).ready(function(){initNavTree('gui_material_viewer_8h_source.html',''
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;iGUIWindow.h&quot;</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;guiWindowUtils.h&quot;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;windows/iGUIWindow.h&quot;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;windows/guiWindowUtils.h&quot;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;rendering/scene.h&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;tools/state.h&quot;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="foldopen" id="foldopen00007" data-start="{" data-end="};">
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="class_g_u_i_material_viewer.html">    7</a></span><span class="keyword">class </span><a class="code hl_class" href="class_g_u_i_material_viewer.html">GUIMaterialViewer</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_i_g_u_i_window.html">IGUIWindow</a></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>{</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <a class="code hl_class" href="class_state.html">State</a>* mState;</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <a class="code hl_class" href="class_scene.html">Scene</a>* mScene;</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">public</span>:</div>
-<div class="foldopen" id="foldopen00013" data-start="{" data-end="}">
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="class_g_u_i_material_viewer.html#ad46bbb75e3e9fccb197265a0fb7ac33c">   13</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_g_u_i_material_viewer.html#ad46bbb75e3e9fccb197265a0fb7ac33c">Draw</a>()<span class="keyword"> override</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="class_i_g_u_i_window.html#a99aabf88516b9b3c4b14adc870ba7156">mIsEnabled</a>)</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>            <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <span class="keywordflow">if</span> (ImGui::Begin(<span class="stringliteral">&quot;Material Viewer&quot;</span>, &amp;<a class="code hl_variable" href="class_i_g_u_i_window.html#a99aabf88516b9b3c4b14adc870ba7156">mIsEnabled</a>, ImGuiWindowFlags_AlwaysAutoResize))</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        {</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>            <a class="code hl_class" href="class_i_entity.html">IEntity</a>* sel = mState-&gt;<a class="code hl_function" href="class_state.html#a4dfe8eede92b803fd438881b6f18b85b">GetSel</a>()-&gt;<a class="code hl_function" href="class_selection.html#afc89f965c81a77879f36eae7432cd2d6">GetSelectedEntity</a>();</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>            <span class="keyword">const</span> std::unordered_map&lt;std::string, Material*&gt;&amp; mats = mScene-&gt;<a class="code hl_function" href="class_i_scene.html#ab609d31bd3cd39aea5232cc824d8444c">GetMaterialList</a>();</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>            <span class="keywordflow">if</span> (sel != <span class="keyword">nullptr</span> &amp;&amp; sel-&gt;<a class="code hl_function" href="class_i_entity.html#af129f3b429b487ecbf596f949961ce79">GetMaterial</a>() != <span class="keyword">nullptr</span>)</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>            {</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>                <a class="code hl_class" href="class_material.html">Material</a>* selMat = sel-&gt;<a class="code hl_function" href="class_i_entity.html#af129f3b429b487ecbf596f949961ce79">GetMaterial</a>();</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>                <span class="comment">// Draw all materials</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>                <span class="keywordtype">float</span> size = ImGui::GetTextLineHeight();</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>                <span class="keywordtype">float</span> spacing = 5.0f;</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>                <span class="keywordflow">for</span> (<span class="keyword">auto</span> iter = mats.begin(); iter != mats.end(); ++iter)</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>                {</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>                    ImVec2 pos = ImGui::GetCursorScreenPos();</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>                    <a class="code hl_function" href="class_g_u_i_window_utils.html#a3c68b9bbbbe5a63c0934b20cf484bc30">GUIWindowUtils::DrawColor</a>(iter-&gt;second-&gt;kd, pos, size);</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>                    pos.x += size + spacing;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>                    <a class="code hl_function" href="class_g_u_i_window_utils.html#a3c68b9bbbbe5a63c0934b20cf484bc30">GUIWindowUtils::DrawColor</a>(iter-&gt;second-&gt;ka, pos, size);</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>                    pos.x += size + spacing;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>                    <a class="code hl_function" href="class_g_u_i_window_utils.html#a3c68b9bbbbe5a63c0934b20cf484bc30">GUIWindowUtils::DrawColor</a>(iter-&gt;second-&gt;ks, pos, size);</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>                    ImGui::Dummy(ImVec2((size + spacing)*3, size));</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>                    ImGui::SameLine();</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                    <a class="code hl_function" href="class_g_u_i_window_utils.html#afbf0f9f93f04f85309e967f2fad1abfd">GUIWindowUtils::Selectable</a>(iter-&gt;first, selMat, iter-&gt;second);</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                }</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                <span class="comment">// If the selected material changed, update sel</span></div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>                <span class="keywordflow">if</span> (selMat != sel-&gt;<a class="code hl_function" href="class_i_entity.html#af129f3b429b487ecbf596f949961ce79">GetMaterial</a>())</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>                    sel-&gt;<a class="code hl_function" href="class_i_entity.html#aa7b9f08861b651b35ef8e3b0dd9db195">SetMaterial</a>(selMat);</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>            }</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>            <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            {</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                ImGui::Text(<span class="stringliteral">&quot;No selection.&quot;</span>);</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            }</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        }</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        ImGui::End();</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    }</div>
-</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
-<div class="foldopen" id="foldopen00054" data-start="{" data-end="}">
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="class_g_u_i_material_viewer.html#a067bedd3b65b730188b83b8a44cef44d">   54</a></span>    <a class="code hl_function" href="class_g_u_i_material_viewer.html#a067bedd3b65b730188b83b8a44cef44d">GUIMaterialViewer</a>(<a class="code hl_class" href="class_state.html">State</a>* state, <a class="code hl_class" href="class_scene.html">Scene</a>* scene, <span class="keywordtype">bool</span> isEnabled)</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    {</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <a class="code hl_variable" href="class_i_g_u_i_window.html#aa6673bf3196758afd8acc3df9fc8df26">mType</a> = GUI::MATERIAL_VIEWER;</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        mState = state;</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        mScene = scene;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <a class="code hl_variable" href="class_i_g_u_i_window.html#a99aabf88516b9b3c4b14adc870ba7156">mIsEnabled</a> = isEnabled;</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;interaction/selection.h&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;tools/state.h&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="foldopen" id="foldopen00008" data-start="{" data-end="};">
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="class_g_u_i_material_viewer.html">    8</a></span><span class="keyword">class </span><a class="code hl_class" href="class_g_u_i_material_viewer.html">GUIMaterialViewer</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_i_g_u_i_window.html">IGUIWindow</a></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <a class="code hl_class" href="class_state.html">State</a>* mState = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <a class="code hl_class" href="class_scene.html">Scene</a>* mScene = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00014" data-start="{" data-end="}">
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="class_g_u_i_material_viewer.html#ad46bbb75e3e9fccb197265a0fb7ac33c">   14</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_g_u_i_material_viewer.html#ad46bbb75e3e9fccb197265a0fb7ac33c">Draw</a>()<span class="keyword"> override</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="class_i_g_u_i_window.html#a99aabf88516b9b3c4b14adc870ba7156">mIsEnabled</a>)</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <span class="keywordflow">if</span> (ImGui::Begin(<span class="stringliteral">&quot;Material Viewer&quot;</span>, &amp;<a class="code hl_variable" href="class_i_g_u_i_window.html#a99aabf88516b9b3c4b14adc870ba7156">mIsEnabled</a>, ImGuiWindowFlags_AlwaysAutoResize))</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        {</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>            <a class="code hl_class" href="class_i_entity.html">IEntity</a>* sel = mState-&gt;<a class="code hl_function" href="class_state.html#a25e1a0ddb0812cea17f6ccb8046595b3">GetSel</a>()-&gt;<a class="code hl_function" href="class_selection.html#afc89f965c81a77879f36eae7432cd2d6">GetSelectedEntity</a>();</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>            <a class="code hl_class" href="class_material_container.html">MaterialContainer</a>* materialList = mScene-&gt;<a class="code hl_function" href="class_scene.html#a7e96eb2693ee65a228e9ca3b8401c161">GetMaterials</a>();</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>            <span class="keywordflow">if</span> (sel != <span class="keyword">nullptr</span> &amp;&amp; sel-&gt;<a class="code hl_function" href="class_i_entity.html#af129f3b429b487ecbf596f949961ce79">GetMaterial</a>() != <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>            {</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>                <span class="keyword">const</span> <span class="keyword">auto</span>&amp; mats = materialList-&gt;<a class="code hl_function" href="class_i_container.html#abfeb72ac5979c220082e80afc4cd0815">Data</a>();</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>                <a class="code hl_class" href="class_material.html">Material</a>* selMat = sel-&gt;<a class="code hl_function" href="class_i_entity.html#af129f3b429b487ecbf596f949961ce79">GetMaterial</a>();</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>                <span class="comment">// Draw all materials</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>                <span class="keywordtype">float</span> size = ImGui::GetTextLineHeight();</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>                <span class="keywordtype">float</span> spacing = 5.0f;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>                <span class="keywordflow">for</span> (<span class="keyword">auto</span> iter = mats.begin(); iter != mats.end(); ++iter)</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>                {</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>                    <span class="comment">// Skip the material if it is for internal use only</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>                    <span class="keywordflow">if</span> (iter-&gt;second-&gt;IsInternal())</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>                        <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>                    ImVec2 pos = ImGui::GetCursorScreenPos();</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>                    <a class="code hl_function" href="class_g_u_i_window_utils.html#a3c68b9bbbbe5a63c0934b20cf484bc30">GUIWindowUtils::DrawColor</a>(iter-&gt;second-&gt;kd, pos, size);</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>                    pos.x += size + spacing;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                    <a class="code hl_function" href="class_g_u_i_window_utils.html#a3c68b9bbbbe5a63c0934b20cf484bc30">GUIWindowUtils::DrawColor</a>(iter-&gt;second-&gt;ka, pos, size);</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                    pos.x += size + spacing;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>                    <a class="code hl_function" href="class_g_u_i_window_utils.html#a3c68b9bbbbe5a63c0934b20cf484bc30">GUIWindowUtils::DrawColor</a>(iter-&gt;second-&gt;ks, pos, size);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                    ImGui::Dummy(ImVec2((size + spacing)*3, size));</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>                    ImGui::SameLine();</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                    <a class="code hl_function" href="class_g_u_i_window_utils.html#afbf0f9f93f04f85309e967f2fad1abfd">GUIWindowUtils::Selectable</a>(iter-&gt;first, selMat, iter-&gt;second);</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                }</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                <span class="comment">// If the selected material changed, update sel</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>                <span class="keywordflow">if</span> (selMat != sel-&gt;<a class="code hl_function" href="class_i_entity.html#af129f3b429b487ecbf596f949961ce79">GetMaterial</a>())</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                {</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                    mScene-&gt;<a class="code hl_function" href="class_scene.html#a7498d92d1bbbaa759b21666c7680716e">SetEntityMaterial</a>(sel, selMat);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                }</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            }</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            {</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                ImGui::Text(<span class="stringliteral">&quot;No selection.&quot;</span>);</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            }</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        }</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        ImGui::End();</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    }</div>
 </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>};</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="foldopen" id="foldopen00062" data-start="{" data-end="}">
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="class_g_u_i_material_viewer.html#a067bedd3b65b730188b83b8a44cef44d">   62</a></span>    <a class="code hl_function" href="class_g_u_i_material_viewer.html#a067bedd3b65b730188b83b8a44cef44d">GUIMaterialViewer</a>(<a class="code hl_class" href="class_state.html">State</a>* state, <a class="code hl_class" href="class_scene.html">Scene</a>* scene, <span class="keywordtype">bool</span> isEnabled)</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        : mState(state), mScene(scene)</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    {</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <a class="code hl_variable" href="class_i_g_u_i_window.html#aa6673bf3196758afd8acc3df9fc8df26">mType</a> = GUI::MATERIAL_VIEWER;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <a class="code hl_variable" href="class_i_g_u_i_window.html#a99aabf88516b9b3c4b14adc870ba7156">mIsEnabled</a> = isEnabled;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    }</div>
 </div>
-<div class="ttc" id="aclass_g_u_i_material_viewer_html"><div class="ttname"><a href="class_g_u_i_material_viewer.html">GUIMaterialViewer</a></div><div class="ttdef"><b>Definition</b> guiMaterialViewer.h:8</div></div>
-<div class="ttc" id="aclass_g_u_i_material_viewer_html_a067bedd3b65b730188b83b8a44cef44d"><div class="ttname"><a href="class_g_u_i_material_viewer.html#a067bedd3b65b730188b83b8a44cef44d">GUIMaterialViewer::GUIMaterialViewer</a></div><div class="ttdeci">GUIMaterialViewer(State *state, Scene *scene, bool isEnabled)</div><div class="ttdef"><b>Definition</b> guiMaterialViewer.h:54</div></div>
-<div class="ttc" id="aclass_g_u_i_material_viewer_html_ad46bbb75e3e9fccb197265a0fb7ac33c"><div class="ttname"><a href="class_g_u_i_material_viewer.html#ad46bbb75e3e9fccb197265a0fb7ac33c">GUIMaterialViewer::Draw</a></div><div class="ttdeci">void Draw() override</div><div class="ttdef"><b>Definition</b> guiMaterialViewer.h:13</div></div>
-<div class="ttc" id="aclass_g_u_i_window_utils_html_a3c68b9bbbbe5a63c0934b20cf484bc30"><div class="ttname"><a href="class_g_u_i_window_utils.html#a3c68b9bbbbe5a63c0934b20cf484bc30">GUIWindowUtils::DrawColor</a></div><div class="ttdeci">static void DrawColor(const glm::vec3 &amp;color, ImVec2 pos, float size)</div><div class="ttdef"><b>Definition</b> guiWindowUtils.h:108</div></div>
-<div class="ttc" id="aclass_g_u_i_window_utils_html_afbf0f9f93f04f85309e967f2fad1abfd"><div class="ttname"><a href="class_g_u_i_window_utils.html#afbf0f9f93f04f85309e967f2fad1abfd">GUIWindowUtils::Selectable</a></div><div class="ttdeci">static bool Selectable(const std::string &amp;label, T &amp;selValue, T thisValue)</div><div class="ttdef"><b>Definition</b> guiWindowUtils.h:8</div></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>};</div>
+</div>
+<div class="ttc" id="aclass_g_u_i_material_viewer_html"><div class="ttname"><a href="class_g_u_i_material_viewer.html">GUIMaterialViewer</a></div><div class="ttdef"><b>Definition</b> guiMaterialViewer.h:9</div></div>
+<div class="ttc" id="aclass_g_u_i_material_viewer_html_a067bedd3b65b730188b83b8a44cef44d"><div class="ttname"><a href="class_g_u_i_material_viewer.html#a067bedd3b65b730188b83b8a44cef44d">GUIMaterialViewer::GUIMaterialViewer</a></div><div class="ttdeci">GUIMaterialViewer(State *state, Scene *scene, bool isEnabled)</div><div class="ttdef"><b>Definition</b> guiMaterialViewer.h:62</div></div>
+<div class="ttc" id="aclass_g_u_i_material_viewer_html_ad46bbb75e3e9fccb197265a0fb7ac33c"><div class="ttname"><a href="class_g_u_i_material_viewer.html#ad46bbb75e3e9fccb197265a0fb7ac33c">GUIMaterialViewer::Draw</a></div><div class="ttdeci">void Draw() override</div><div class="ttdef"><b>Definition</b> guiMaterialViewer.h:14</div></div>
+<div class="ttc" id="aclass_g_u_i_window_utils_html_a3c68b9bbbbe5a63c0934b20cf484bc30"><div class="ttname"><a href="class_g_u_i_window_utils.html#a3c68b9bbbbe5a63c0934b20cf484bc30">GUIWindowUtils::DrawColor</a></div><div class="ttdeci">static void DrawColor(const glm::vec3 &amp;color, ImVec2 pos, float size)</div><div class="ttdef"><b>Definition</b> guiWindowUtils.h:130</div></div>
+<div class="ttc" id="aclass_g_u_i_window_utils_html_afbf0f9f93f04f85309e967f2fad1abfd"><div class="ttname"><a href="class_g_u_i_window_utils.html#afbf0f9f93f04f85309e967f2fad1abfd">GUIWindowUtils::Selectable</a></div><div class="ttdeci">static bool Selectable(const std::string &amp;label, T &amp;selValue, T thisValue)</div><div class="ttdef"><b>Definition</b> guiWindowUtils.h:30</div></div>
+<div class="ttc" id="aclass_i_container_html_abfeb72ac5979c220082e80afc4cd0815"><div class="ttname"><a href="class_i_container.html#abfeb72ac5979c220082e80afc4cd0815">IContainer::Data</a></div><div class="ttdeci">virtual const std::unordered_map&lt; std::string, T * &gt; &amp; Data()</div><div class="ttdoc">Returns a reference to the data stored in the container. WARNING: Only use this to iterate over the d...</div><div class="ttdef"><b>Definition</b> iContainer.h:296</div></div>
 <div class="ttc" id="aclass_i_entity_html"><div class="ttname"><a href="class_i_entity.html">IEntity</a></div><div class="ttdef"><b>Definition</b> iEntity.h:7</div></div>
-<div class="ttc" id="aclass_i_entity_html_aa7b9f08861b651b35ef8e3b0dd9db195"><div class="ttname"><a href="class_i_entity.html#aa7b9f08861b651b35ef8e3b0dd9db195">IEntity::SetMaterial</a></div><div class="ttdeci">virtual void SetMaterial(Material *material)</div><div class="ttdef"><b>Definition</b> iEntity.h:144</div></div>
 <div class="ttc" id="aclass_i_entity_html_af129f3b429b487ecbf596f949961ce79"><div class="ttname"><a href="class_i_entity.html#af129f3b429b487ecbf596f949961ce79">IEntity::GetMaterial</a></div><div class="ttdeci">virtual Material * GetMaterial()</div><div class="ttdef"><b>Definition</b> iEntity.h:73</div></div>
-<div class="ttc" id="aclass_i_g_u_i_window_html"><div class="ttname"><a href="class_i_g_u_i_window.html">IGUIWindow</a></div><div class="ttdef"><b>Definition</b> iGUIWindow.h:25</div></div>
-<div class="ttc" id="aclass_i_g_u_i_window_html_a99aabf88516b9b3c4b14adc870ba7156"><div class="ttname"><a href="class_i_g_u_i_window.html#a99aabf88516b9b3c4b14adc870ba7156">IGUIWindow::mIsEnabled</a></div><div class="ttdeci">bool mIsEnabled</div><div class="ttdef"><b>Definition</b> iGUIWindow.h:30</div></div>
-<div class="ttc" id="aclass_i_g_u_i_window_html_aa6673bf3196758afd8acc3df9fc8df26"><div class="ttname"><a href="class_i_g_u_i_window.html#aa6673bf3196758afd8acc3df9fc8df26">IGUIWindow::mType</a></div><div class="ttdeci">GUI mType</div><div class="ttdef"><b>Definition</b> iGUIWindow.h:27</div></div>
-<div class="ttc" id="aclass_i_scene_html_ab609d31bd3cd39aea5232cc824d8444c"><div class="ttname"><a href="class_i_scene.html#ab609d31bd3cd39aea5232cc824d8444c">IScene::GetMaterialList</a></div><div class="ttdeci">const std::unordered_map&lt; std::string, Material * &gt; &amp; GetMaterialList()</div><div class="ttdef"><b>Definition</b> iScene.cpp:186</div></div>
-<div class="ttc" id="aclass_material_html"><div class="ttname"><a href="class_material.html">Material</a></div><div class="ttdoc">Class that stores all texture and render information for a material.</div><div class="ttdef"><b>Definition</b> material.h:13</div></div>
-<div class="ttc" id="aclass_scene_html"><div class="ttname"><a href="class_scene.html">Scene</a></div><div class="ttdef"><b>Definition</b> scene.h:9</div></div>
-<div class="ttc" id="aclass_selection_html_afc89f965c81a77879f36eae7432cd2d6"><div class="ttname"><a href="class_selection.html#afc89f965c81a77879f36eae7432cd2d6">Selection::GetSelectedEntity</a></div><div class="ttdeci">IEntity * GetSelectedEntity()</div><div class="ttdef"><b>Definition</b> selection.cpp:224</div></div>
-<div class="ttc" id="aclass_state_html"><div class="ttname"><a href="class_state.html">State</a></div><div class="ttdef"><b>Definition</b> state.h:9</div></div>
-<div class="ttc" id="aclass_state_html_a4dfe8eede92b803fd438881b6f18b85b"><div class="ttname"><a href="class_state.html#a4dfe8eede92b803fd438881b6f18b85b">State::GetSel</a></div><div class="ttdeci">Selection * GetSel()</div><div class="ttdef"><b>Definition</b> state.h:54</div></div>
+<div class="ttc" id="aclass_i_g_u_i_window_html"><div class="ttname"><a href="class_i_g_u_i_window.html">IGUIWindow</a></div><div class="ttdef"><b>Definition</b> iGUIWindow.h:28</div></div>
+<div class="ttc" id="aclass_i_g_u_i_window_html_a99aabf88516b9b3c4b14adc870ba7156"><div class="ttname"><a href="class_i_g_u_i_window.html#a99aabf88516b9b3c4b14adc870ba7156">IGUIWindow::mIsEnabled</a></div><div class="ttdeci">bool mIsEnabled</div><div class="ttdef"><b>Definition</b> iGUIWindow.h:33</div></div>
+<div class="ttc" id="aclass_i_g_u_i_window_html_aa6673bf3196758afd8acc3df9fc8df26"><div class="ttname"><a href="class_i_g_u_i_window.html#aa6673bf3196758afd8acc3df9fc8df26">IGUIWindow::mType</a></div><div class="ttdeci">GUI mType</div><div class="ttdef"><b>Definition</b> iGUIWindow.h:30</div></div>
+<div class="ttc" id="aclass_material_container_html"><div class="ttname"><a href="class_material_container.html">MaterialContainer</a></div><div class="ttdef"><b>Definition</b> materialContainer.h:7</div></div>
+<div class="ttc" id="aclass_material_html"><div class="ttname"><a href="class_material.html">Material</a></div><div class="ttdoc">Class that stores all texture and render information for a material.</div><div class="ttdef"><b>Definition</b> material.h:18</div></div>
+<div class="ttc" id="aclass_scene_html"><div class="ttname"><a href="class_scene.html">Scene</a></div><div class="ttdef"><b>Definition</b> scene.h:27</div></div>
+<div class="ttc" id="aclass_scene_html_a7498d92d1bbbaa759b21666c7680716e"><div class="ttname"><a href="class_scene.html#a7498d92d1bbbaa759b21666c7680716e">Scene::SetEntityMaterial</a></div><div class="ttdeci">void SetEntityMaterial(IEntity *entity, Material *material)</div><div class="ttdef"><b>Definition</b> scene.cpp:434</div></div>
+<div class="ttc" id="aclass_scene_html_a7e96eb2693ee65a228e9ca3b8401c161"><div class="ttname"><a href="class_scene.html#a7e96eb2693ee65a228e9ca3b8401c161">Scene::GetMaterials</a></div><div class="ttdeci">MaterialContainer * GetMaterials()</div><div class="ttdef"><b>Definition</b> scene.cpp:231</div></div>
+<div class="ttc" id="aclass_selection_html_afc89f965c81a77879f36eae7432cd2d6"><div class="ttname"><a href="class_selection.html#afc89f965c81a77879f36eae7432cd2d6">Selection::GetSelectedEntity</a></div><div class="ttdeci">IEntity * GetSelectedEntity()</div><div class="ttdef"><b>Definition</b> selection.cpp:225</div></div>
+<div class="ttc" id="aclass_state_html"><div class="ttname"><a href="class_state.html">State</a></div><div class="ttdef"><b>Definition</b> state.h:11</div></div>
+<div class="ttc" id="aclass_state_html_a25e1a0ddb0812cea17f6ccb8046595b3"><div class="ttname"><a href="class_state.html#a25e1a0ddb0812cea17f6ccb8046595b3">State::GetSel</a></div><div class="ttdeci">Selection * GetSel() const</div><div class="ttdef"><b>Definition</b> state.h:81</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

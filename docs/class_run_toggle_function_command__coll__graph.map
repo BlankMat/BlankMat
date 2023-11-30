@@ -1,0 +1,5 @@
+<map id="RunToggleFunctionCommand" name="RunToggleFunctionCommand">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,80,197,107"/>
+<area shape="rect" id="Node000002" href="$class_i_command.html" title="Command interface. Allows executing the command and undoing it." alt="" coords="59,5,143,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,48,104,80,98,80,98,48"/>
+</map>

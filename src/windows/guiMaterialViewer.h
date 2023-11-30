@@ -19,15 +19,20 @@ public:
 		if (ImGui::Begin("Material Viewer", &mIsEnabled, ImGuiWindowFlags_AlwaysAutoResize))
 		{
 			IEntity* sel = mState->GetSel()->GetSelectedEntity();
-			const std::unordered_map<std::string, Material*>& mats = mScene->GetMaterialList();
+			MaterialContainer* materialList = mScene->GetMaterials();
 			if (sel != nullptr && sel->GetMaterial() != nullptr)
 			{
+				const auto& mats = materialList->Data();
 				Material* selMat = sel->GetMaterial();
 				// Draw all materials
 				float size = ImGui::GetTextLineHeight();
 				float spacing = 5.0f;
 				for (auto iter = mats.begin(); iter != mats.end(); ++iter)
 				{
+					// Skip the material if it is for internal use only
+					if (iter->second->IsInternal())
+						continue;
+
 					ImVec2 pos = ImGui::GetCursorScreenPos();
 					GUIWindowUtils::DrawColor(iter->second->kd, pos, size);
 					pos.x += size + spacing;

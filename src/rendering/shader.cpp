@@ -2,8 +2,11 @@
 
 // constructor generates the shader on the fly
 // ------------------------------------------------------------------------
-Shader::Shader(const std::string& path, bool loadGeom)
-    : Shader((path + ".vert").c_str(), (path + ".frag").c_str(), loadGeom ? (path + ".geom").c_str() : nullptr) {}
+Shader::Shader(const std::string& path, bool loadGeom, const std::string& shaderName)
+    : Shader((path + ".vert").c_str(), (path + ".frag").c_str(), loadGeom ? (path + ".geom").c_str() : nullptr) 
+{
+    name = (shaderName != "") ? shaderName : path;
+}
 
 // constructor generates the shader on the fly
 // ------------------------------------------------------------------------

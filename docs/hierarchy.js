@@ -1,36 +1,26 @@
 var hierarchy =
 [
+    [ "ActionNode", "struct_action_node.html", null ],
+    [ "ActionStack", "class_action_stack.html", null ],
     [ "Camera", "class_camera.html", null ],
+    [ "Commands", "class_commands.html", null ],
     [ "Config", "class_config.html", null ],
     [ "ConfigReader", "class_config_reader.html", null ],
     [ "FileSystem", "class_file_system.html", null ],
     [ "GUIWindowUtils", "class_g_u_i_window_utils.html", null ],
-    [ "IContainer< T >", "class_i_container.html", null ],
-    [ "IContainer< Camera >", "class_i_container.html", [
-      [ "CameraContainer", "class_camera_container.html", null ]
-    ] ],
-    [ "IContainer< IEntity >", "class_i_container.html", [
-      [ "EntityContainer", "class_entity_container.html", null ]
-    ] ],
-    [ "IContainer< Light >", "class_i_container.html", [
-      [ "LightContainer", "class_light_container.html", null ]
-    ] ],
-    [ "IContainer< Mesh >", "class_i_container.html", [
-      [ "MeshContainer", "class_mesh_container.html", null ]
-    ] ],
-    [ "IContainer< Shader >", "class_i_container.html", [
-      [ "ShaderContainer", "class_shader_container.html", null ]
-    ] ],
-    [ "IContainer< Texture >", "class_i_container.html", [
-      [ "TextureContainer", "class_texture_container.html", null ]
+    [ "ICommand", "class_i_command.html", [
+      [ "AddValueCommand< T >", "class_add_value_command.html", null ],
+      [ "ChangeValueCommand< T >", "class_change_value_command.html", null ],
+      [ "RedoCommand", "class_redo_command.html", null ],
+      [ "RunFunctionCommand", "class_run_function_command.html", null ],
+      [ "RunToggleFunctionCommand", "class_run_toggle_function_command.html", null ],
+      [ "UndoCommand", "class_undo_command.html", null ]
     ] ],
     [ "IEntity", "class_i_entity.html", [
       [ "IPrimitive< Vertex, unsigned int >", "class_i_primitive.html", [
-        [ "IMesh", "class_i_mesh.html", [
-          [ "Mesh", "class_mesh.html", [
-            [ "VCube", "class_v_cube.html", null ],
-            [ "VPlane", "class_v_plane.html", null ]
-          ] ]
+        [ "Mesh", "class_mesh.html", [
+          [ "VCube", "class_v_cube.html", null ],
+          [ "VPlane", "class_v_plane.html", null ]
         ] ]
       ] ],
       [ "IPrimitive< glm::vec3, glm::uvec3 >", "class_i_primitive.html", [
@@ -49,34 +39,76 @@ var hierarchy =
       [ "PHandle", "class_p_handle.html", null ]
     ] ],
     [ "IGUIWindow", "class_i_g_u_i_window.html", [
+      [ "GUIActionList", "class_g_u_i_action_list.html", null ],
       [ "GUIDebugToolsWindow", "class_g_u_i_debug_tools_window.html", null ],
       [ "GUIHierarchyWindow", "class_g_u_i_hierarchy_window.html", null ],
       [ "GUIInspectorWindow", "class_g_u_i_inspector_window.html", null ],
       [ "GUILightViewer", "class_g_u_i_light_viewer.html", null ],
       [ "GUIMaterialEditor", "class_g_u_i_material_editor.html", null ],
       [ "GUIMaterialViewer", "class_g_u_i_material_viewer.html", null ],
-      [ "GUIMenuBarWindow", "class_g_u_i_menu_bar_window.html", null ]
+      [ "GUIMenuBarWindow", "class_g_u_i_menu_bar_window.html", null ],
+      [ "GUIToolModeWindow", "class_g_u_i_tool_mode_window.html", null ],
+      [ "GUIToolbarWindow", "class_g_u_i_toolbar_window.html", null ]
     ] ],
-    [ "IMaterial< T >", "class_i_material.html", null ],
-    [ "IMaterial< Texture >", "class_i_material.html", [
-      [ "Material", "class_material.html", null ]
-    ] ],
-    [ "InputLocks", "struct_input_locks.html", null ],
-    [ "IScene", "class_i_scene.html", [
-      [ "Scene", "class_scene.html", null ]
-    ] ],
+    [ "Input", "class_input.html", null ],
     [ "ITool", "class_i_tool.html", [
       [ "SelectTool", "class_select_tool.html", null ]
+    ] ],
+    [ "IUIVariable< T >", "class_i_u_i_variable.html", null ],
+    [ "IUIVariable< bool >", "class_i_u_i_variable.html", [
+      [ "UIBool", "class_u_i_bool.html", null ]
+    ] ],
+    [ "IUIVariable< float >", "class_i_u_i_variable.html", [
+      [ "UIFloat", "class_u_i_float.html", null ]
+    ] ],
+    [ "IUIVariable< glm::vec3 >", "class_i_u_i_variable.html", [
+      [ "UIColor", "class_u_i_color.html", null ],
+      [ "UIVec3", "class_u_i_vec3.html", null ]
+    ] ],
+    [ "IUIVariable< int >", "class_i_u_i_variable.html", [
+      [ "UIInt", "class_u_i_int.html", null ]
+    ] ],
+    [ "IUIVariable< std::string >", "class_i_u_i_variable.html", [
+      [ "UIString", "class_u_i_string.html", null ]
+    ] ],
+    [ "IWritable", "class_i_writable.html", [
+      [ "IContainer< Camera >", "class_i_container.html", [
+        [ "CameraContainer", "class_camera_container.html", null ]
+      ] ],
+      [ "IContainer< IEntity >", "class_i_container.html", [
+        [ "EntityContainer", "class_entity_container.html", null ]
+      ] ],
+      [ "IContainer< Light >", "class_i_container.html", [
+        [ "LightContainer", "class_light_container.html", null ]
+      ] ],
+      [ "IContainer< Material >", "class_i_container.html", [
+        [ "MaterialContainer", "class_material_container.html", null ]
+      ] ],
+      [ "IContainer< Mesh >", "class_i_container.html", [
+        [ "MeshContainer", "class_mesh_container.html", null ]
+      ] ],
+      [ "IContainer< Shader >", "class_i_container.html", [
+        [ "ShaderContainer", "class_shader_container.html", null ]
+      ] ],
+      [ "IContainer< Texture >", "class_i_container.html", [
+        [ "TextureContainer", "class_texture_container.html", null ]
+      ] ],
+      [ "IContainer< T >", "class_i_container.html", null ],
+      [ "Node", "class_node.html", null ]
     ] ],
     [ "Light", "class_light.html", [
       [ "PLightCube", "class_p_light_cube.html", null ]
     ] ],
-    [ "MaterialContainer", "class_material_container.html", null ],
-    [ "ModelReader", "class_model_reader.html", null ],
+    [ "Material", "class_material.html", null ],
+    [ "Scene", "class_scene.html", null ],
+    [ "SceneIO", "class_scene_i_o.html", null ],
+    [ "SceneReader", "class_scene_reader.html", null ],
+    [ "SceneWriter", "class_scene_writer.html", null ],
     [ "Selection", "class_selection.html", null ],
     [ "Shader", "class_shader.html", null ],
     [ "State", "class_state.html", null ],
     [ "Texture", "struct_texture.html", null ],
+    [ "Timer", "class_timer.html", null ],
     [ "Vertex", "struct_vertex.html", null ],
     [ "Window", "class_window.html", null ]
 ];

@@ -1,12 +1,19 @@
 var class_window =
 [
-    [ "Window", "class_window.html#ac3346b3f363adac40ca7ef8b28ededf6", null ],
+    [ "Window", "class_window.html#aa3c538b13c0c41030082cc3cead1f0d9", null ],
     [ "AddGUI", "class_window.html#ae94b337a0789ab45e62834359140a8db", null ],
     [ "CalcWindowSize", "class_window.html#a29131beab27ceb4d83bbee62a11b917a", null ],
-    [ "DrawGUI", "class_window.html#a952d4c7669d021dfdb9a9de0d28e0ed3", null ],
-    [ "GetAspect", "class_window.html#a2223018cf38fa1d486689b4490892417", null ],
+    [ "DrawGUI", "class_window.html#a3e77535bab2f22bbacb2e3feb1edcfc7", null ],
+    [ "GetAspect", "class_window.html#a0d5c4c6a3bbdfa3e6cc5d5f2834e1b18", null ],
     [ "GetGUI", "class_window.html#a134dc6fd472e40a0dcb31855e3830dd0", null ],
-    [ "GetHeight", "class_window.html#aa234876b2ba5d3538b717e66c5ccbc5c", null ],
-    [ "GetWidth", "class_window.html#ac3ff975d1f881d7806656f01d1abad83", null ],
-    [ "GetWindow", "class_window.html#acb3c49667f6cf2d46f0fd477aab68b3e", null ]
+    [ "GetHeight", "class_window.html#a2196b5ae099037272cc85b223e80bd6d", null ],
+    [ "GetInput", "class_window.html#a53e08867088b10f855f803f3c1de5f13", null ],
+    [ "GetScene", "class_window.html#ad6eae09caa9fbe2a453d2370d2995f1d", null ],
+    [ "GetSceneIO", "class_window.html#ae7762db3916221c81c5222bfbed21458", null ],
+    [ "GetState", "class_window.html#a8bbb10a5af24821e3611287109117b2b", null ],
+    [ "GetWidth", "class_window.html#a451bdfeab37afce97712f23f5c2492aa", null ],
+    [ "GetWindow", "class_window.html#ad7e49197526473b23c01ecc9cd2292d2", null ],
+    [ "Quit", "class_window.html#a57d28573876dd89be70cd78b9302f461", null ],
+    [ "ResetViewport", "class_window.html#af5a7899f142f4fdc2cd46bea6ccf366e", null ],
+    [ "UpdateWindowTitle", "class_window.html#a3d228854818c6cb4880ce330b9fd623c", null ]
 ];

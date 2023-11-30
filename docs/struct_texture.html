@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.1</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.2</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -99,33 +99,60 @@ $(document).ready(function(){initNavTree('struct_texture.html',''); initResizabl
   <div class="headertitle"><div class="title">Texture Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A structure that stores a texture file that has been read into the OpenGL context.  
+ <a href="struct_texture.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a736e026d70ab374655230406b636545a" id="r_a736e026d70ab374655230406b636545a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_texture.html#a736e026d70ab374655230406b636545a">Texture</a> (const unsigned int _id=-1, const std::string &amp;_type=&quot;&quot;, const std::string &amp;_path=&quot;&quot;, const std::string &amp;_name=&quot;&quot;)</td></tr>
-<tr class="separator:a736e026d70ab374655230406b636545a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a641e1952a22fb888b7ee20d45448f516" id="r_a641e1952a22fb888b7ee20d45448f516"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_texture.html#a641e1952a22fb888b7ee20d45448f516">Texture</a> (const std::string &amp;_type, const std::string &amp;_directory, const std::string &amp;_path, const std::string &amp;_name)</td></tr>
-<tr class="separator:a641e1952a22fb888b7ee20d45448f516"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25e2b7e9ee748e611f53d6abea6eaf09" id="r_a25e2b7e9ee748e611f53d6abea6eaf09"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_texture.html#a25e2b7e9ee748e611f53d6abea6eaf09">IsInternal</a> ()</td></tr>
+<tr class="memdesc:a25e2b7e9ee748e611f53d6abea6eaf09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the texture is for internal use only.  <br /></td></tr>
+<tr class="separator:a25e2b7e9ee748e611f53d6abea6eaf09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2083081d0a8d7eb98a8f071b2807232c" id="r_a2083081d0a8d7eb98a8f071b2807232c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_texture.html#a2083081d0a8d7eb98a8f071b2807232c">Texture</a> (unsigned int _id=-1, TextureType _type=TextureType::DIFFUSE, const std::string &amp;_path=&quot;&quot;, const std::string &amp;_name=&quot;&quot;, bool _internal=false)</td></tr>
+<tr class="memdesc:a2083081d0a8d7eb98a8f071b2807232c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new instance of a texture that is already loaded into OpenGL.  <br /></td></tr>
+<tr class="separator:a2083081d0a8d7eb98a8f071b2807232c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a631bb0faaf1a68d6822254f1a1daed6a" id="r_a631bb0faaf1a68d6822254f1a1daed6a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_texture.html#a631bb0faaf1a68d6822254f1a1daed6a">Texture</a> (TextureType _type, const glm::vec3 &amp;_color, const std::string &amp;_name, bool _internal=false)</td></tr>
+<tr class="memdesc:a631bb0faaf1a68d6822254f1a1daed6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new texture from the given color.  <br /></td></tr>
+<tr class="separator:a631bb0faaf1a68d6822254f1a1daed6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab29863262d9246caed5bb7ee8980edca" id="r_ab29863262d9246caed5bb7ee8980edca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_texture.html#ab29863262d9246caed5bb7ee8980edca">Texture</a> (TextureType _type, const std::string &amp;_directory, const std::string &amp;_path, const std::string &amp;_name, bool _internal=false)</td></tr>
+<tr class="memdesc:ab29863262d9246caed5bb7ee8980edca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a new texture from the given file.  <br /></td></tr>
+<tr class="separator:ab29863262d9246caed5bb7ee8980edca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ad0089cad828b1b01f2a7ccf47ca0cdde" id="r_ad0089cad828b1b01f2a7ccf47ca0cdde"><td class="memItemLeft" align="right" valign="top">static unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_texture.html#ad0089cad828b1b01f2a7ccf47ca0cdde">TextureFromFile</a> (const std::string &amp;_directory, const std::string &amp;_name, bool _gamma=false)</td></tr>
-<tr class="separator:ad0089cad828b1b01f2a7ccf47ca0cdde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3c51e9b50f1570f1efea556b3bdfaaf" id="r_ab3c51e9b50f1570f1efea556b3bdfaaf"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_texture.html#ab3c51e9b50f1570f1efea556b3bdfaaf">TextureToTypeString</a> (TextureType <a class="el" href="struct_texture.html#ad83ed086abaa805a606a5ccd433f505c">type</a>)</td></tr>
+<tr class="memdesc:ab3c51e9b50f1570f1efea556b3bdfaaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casts the given texture type into its shader equivalent string.  <br /></td></tr>
+<tr class="separator:ab3c51e9b50f1570f1efea556b3bdfaaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adeead988c3136ae0c1c8c3fe490a6e03" id="r_adeead988c3136ae0c1c8c3fe490a6e03"><td class="memItemLeft" align="right" valign="top">static unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_texture.html#adeead988c3136ae0c1c8c3fe490a6e03">TextureFromColor</a> (const glm::vec3 &amp;color, const std::string &amp;<a class="el" href="struct_texture.html#a308bb32725dd45f36e62ba6ff8c9db8d">name</a>)</td></tr>
+<tr class="memdesc:adeead988c3136ae0c1c8c3fe490a6e03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a runtime texture from the given solid color.  <br /></td></tr>
+<tr class="separator:adeead988c3136ae0c1c8c3fe490a6e03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e6170843d63d033bc15c01c39d0144b" id="r_a1e6170843d63d033bc15c01c39d0144b"><td class="memItemLeft" align="right" valign="top">static unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_texture.html#a1e6170843d63d033bc15c01c39d0144b">TextureFromFile</a> (const std::string &amp;directory, const std::string &amp;<a class="el" href="struct_texture.html#a308bb32725dd45f36e62ba6ff8c9db8d">name</a>, bool gamma=false)</td></tr>
+<tr class="memdesc:a1e6170843d63d033bc15c01c39d0144b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the given texture from a file.  <br /></td></tr>
+<tr class="separator:a1e6170843d63d033bc15c01c39d0144b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ee118d296244318dff697dbe0cb2132" id="r_a3ee118d296244318dff697dbe0cb2132"><td class="memItemLeft" align="right" valign="top">static unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_texture.html#a3ee118d296244318dff697dbe0cb2132">TextureFromFile</a> (const std::string &amp;directory, const std::string &amp;<a class="el" href="struct_texture.html#a308bb32725dd45f36e62ba6ff8c9db8d">name</a>, int &amp;out_width, int &amp;out_height, bool gamma=false)</td></tr>
+<tr class="memdesc:a3ee118d296244318dff697dbe0cb2132"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the given texture from a file.  <br /></td></tr>
+<tr class="separator:a3ee118d296244318dff697dbe0cb2132"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:aed42161a5c00b6020c85833401da6da6" id="r_aed42161a5c00b6020c85833401da6da6"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_texture.html#aed42161a5c00b6020c85833401da6da6">id</a></td></tr>
+<tr class="memdesc:aed42161a5c00b6020c85833401da6da6"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenGL texture index.  <br /></td></tr>
 <tr class="separator:aed42161a5c00b6020c85833401da6da6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a308bb32725dd45f36e62ba6ff8c9db8d" id="r_a308bb32725dd45f36e62ba6ff8c9db8d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_texture.html#a308bb32725dd45f36e62ba6ff8c9db8d">name</a></td></tr>
+<tr class="memdesc:a308bb32725dd45f36e62ba6ff8c9db8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the texture. Used to distinguish textures, so it should be unique.  <br /></td></tr>
 <tr class="separator:a308bb32725dd45f36e62ba6ff8c9db8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a916a835d009806f2a57546c7705942b1" id="r_a916a835d009806f2a57546c7705942b1"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_texture.html#a916a835d009806f2a57546c7705942b1">type</a></td></tr>
-<tr class="separator:a916a835d009806f2a57546c7705942b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8ba4ade408b0df1fc9b6f605a4efd22" id="r_aa8ba4ade408b0df1fc9b6f605a4efd22"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_texture.html#aa8ba4ade408b0df1fc9b6f605a4efd22">path</a></td></tr>
+<tr class="memdesc:aa8ba4ade408b0df1fc9b6f605a4efd22"><td class="mdescLeft">&#160;</td><td class="mdescRight">The path of the file for the texture.  <br /></td></tr>
 <tr class="separator:aa8ba4ade408b0df1fc9b6f605a4efd22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad83ed086abaa805a606a5ccd433f505c" id="r_ad83ed086abaa805a606a5ccd433f505c"><td class="memItemLeft" align="right" valign="top">TextureType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_texture.html#ad83ed086abaa805a606a5ccd433f505c">type</a></td></tr>
+<tr class="memdesc:ad83ed086abaa805a606a5ccd433f505c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of the texture.  <br /></td></tr>
+<tr class="separator:ad83ed086abaa805a606a5ccd433f505c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a736e026d70ab374655230406b636545a" name="a736e026d70ab374655230406b636545a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a736e026d70ab374655230406b636545a">&#9670;&#160;</a></span>Texture() <span class="overload">[1/2]</span></h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A structure that stores a texture file that has been read into the OpenGL context. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a2083081d0a8d7eb98a8f071b2807232c" name="a2083081d0a8d7eb98a8f071b2807232c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2083081d0a8d7eb98a8f071b2807232c">&#9670;&#160;</a></span>Texture() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -136,14 +163,14 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="memname">Texture::Texture </td>
           <td>(</td>
-          <td class="paramtype">const unsigned int&#160;</td>
+          <td class="paramtype">unsigned int&#160;</td>
           <td class="paramname"><em>_id</em> = <code>-1</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>_type</em> = <code>&quot;&quot;</code>, </td>
+          <td class="paramtype">TextureType&#160;</td>
+          <td class="paramname"><em>_type</em> = <code>TextureType::DIFFUSE</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -155,7 +182,13 @@ Public Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>_name</em> = <code>&quot;&quot;</code>&#160;</td>
+          <td class="paramname"><em>_name</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>_internal</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -170,10 +203,21 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Creates a new instance of a texture that is already loaded into OpenGL. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_id</td><td>OpenGL textureID index</td></tr>
+    <tr><td class="paramname">_type</td><td><a class="el" href="struct_texture.html" title="A structure that stores a texture file that has been read into the OpenGL context.">Texture</a> type</td></tr>
+    <tr><td class="paramname">_path</td><td>Path of the referenced texture file</td></tr>
+    <tr><td class="paramname">_name</td><td>Name of the texture</td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
-<a id="a641e1952a22fb888b7ee20d45448f516" name="a641e1952a22fb888b7ee20d45448f516"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a641e1952a22fb888b7ee20d45448f516">&#9670;&#160;</a></span>Texture() <span class="overload">[2/2]</span></h2>
+<a id="a631bb0faaf1a68d6822254f1a1daed6a" name="a631bb0faaf1a68d6822254f1a1daed6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a631bb0faaf1a68d6822254f1a1daed6a">&#9670;&#160;</a></span>Texture() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -184,7 +228,65 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="memname">Texture::Texture </td>
           <td>(</td>
+          <td class="paramtype">TextureType&#160;</td>
+          <td class="paramname"><em>_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const glm::vec3 &amp;&#160;</td>
+          <td class="paramname"><em>_color</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>_internal</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a new texture from the given color. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_type</td><td>Type of the texture</td></tr>
+    <tr><td class="paramname">_color</td><td>Color of the texture</td></tr>
+    <tr><td class="paramname">_name</td><td>Name of the texture</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab29863262d9246caed5bb7ee8980edca" name="ab29863262d9246caed5bb7ee8980edca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab29863262d9246caed5bb7ee8980edca">&#9670;&#160;</a></span>Texture() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Texture::Texture </td>
+          <td>(</td>
+          <td class="paramtype">TextureType&#160;</td>
           <td class="paramname"><em>_type</em>, </td>
         </tr>
         <tr>
@@ -203,7 +305,13 @@ Public Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>_name</em>&#160;</td>
+          <td class="paramname"><em>_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>_internal</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -218,11 +326,22 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Loads a new texture from the given file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_type</td><td>Type of the texture</td></tr>
+    <tr><td class="paramname">_directory</td><td>Directory of the texture file</td></tr>
+    <tr><td class="paramname">_path</td><td>Name of the texture file</td></tr>
+    <tr><td class="paramname">_name</td><td>Name of the texture</td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ad0089cad828b1b01f2a7ccf47ca0cdde" name="ad0089cad828b1b01f2a7ccf47ca0cdde"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad0089cad828b1b01f2a7ccf47ca0cdde">&#9670;&#160;</a></span>TextureFromFile()</h2>
+<a id="a25e2b7e9ee748e611f53d6abea6eaf09" name="a25e2b7e9ee748e611f53d6abea6eaf09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25e2b7e9ee748e611f53d6abea6eaf09">&#9670;&#160;</a></span>IsInternal()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -231,22 +350,44 @@ Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static unsigned int Texture::TextureFromFile </td>
+          <td class="memname">bool Texture::IsInternal </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>_directory</em>, </td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns whether the texture is for internal use only. </p>
+<dl class="section return"><dt>Returns</dt><dd>Whether the texture is for internal use</dd></dl>
+
+</div>
+</div>
+<a id="adeead988c3136ae0c1c8c3fe490a6e03" name="adeead988c3136ae0c1c8c3fe490a6e03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adeead988c3136ae0c1c8c3fe490a6e03">&#9670;&#160;</a></span>TextureFromColor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static unsigned int Texture::TextureFromColor </td>
+          <td>(</td>
+          <td class="paramtype">const glm::vec3 &amp;&#160;</td>
+          <td class="paramname"><em>color</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>_name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>_gamma</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -260,6 +401,171 @@ Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Generates a runtime texture from the given solid color. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">color</td><td></td></tr>
+    <tr><td class="paramname">name</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="a1e6170843d63d033bc15c01c39d0144b" name="a1e6170843d63d033bc15c01c39d0144b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e6170843d63d033bc15c01c39d0144b">&#9670;&#160;</a></span>TextureFromFile() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static unsigned int Texture::TextureFromFile </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>directory</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>gamma</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Loads the given texture from a file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">directory</td><td>Directory of the texture</td></tr>
+    <tr><td class="paramname">name</td><td>Filename of the texture</td></tr>
+    <tr><td class="paramname">gamma</td><td>Whether to gamma correct the texture</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>OpenGL index of the texture</dd></dl>
+
+</div>
+</div>
+<a id="a3ee118d296244318dff697dbe0cb2132" name="a3ee118d296244318dff697dbe0cb2132"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ee118d296244318dff697dbe0cb2132">&#9670;&#160;</a></span>TextureFromFile() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static unsigned int Texture::TextureFromFile </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>directory</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>out_width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>out_height</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>gamma</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Loads the given texture from a file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">directory</td><td>Directory of the texture</td></tr>
+    <tr><td class="paramname">name</td><td>Filename of the texture</td></tr>
+    <tr><td class="paramname">out_width</td><td>Return width of the texture</td></tr>
+    <tr><td class="paramname">out_height</td><td>Return height of the texture</td></tr>
+    <tr><td class="paramname">gamma</td><td>Whether to gamma correct the texture</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>OpenGL index of the texture</dd></dl>
+
+</div>
+</div>
+<a id="ab3c51e9b50f1570f1efea556b3bdfaaf" name="ab3c51e9b50f1570f1efea556b3bdfaaf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3c51e9b50f1570f1efea556b3bdfaaf">&#9670;&#160;</a></span>TextureToTypeString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::string Texture::TextureToTypeString </td>
+          <td>(</td>
+          <td class="paramtype">TextureType&#160;</td>
+          <td class="paramname"><em>type</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Casts the given texture type into its shader equivalent string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">type</td><td><a class="el" href="struct_texture.html" title="A structure that stores a texture file that has been read into the OpenGL context.">Texture</a> Type</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_shader.html">Shader</a> texture type</dd></dl>
 
 </div>
 </div>
@@ -276,6 +582,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>OpenGL texture index. </p>
+
 </div>
 </div>
 <a id="a308bb32725dd45f36e62ba6ff8c9db8d" name="a308bb32725dd45f36e62ba6ff8c9db8d"></a>
@@ -289,6 +597,8 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The name of the texture. Used to distinguish textures, so it should be unique. </p>
 
 </div>
 </div>
@@ -304,19 +614,23 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>The path of the file for the texture. </p>
+
 </div>
 </div>
-<a id="a916a835d009806f2a57546c7705942b1" name="a916a835d009806f2a57546c7705942b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a916a835d009806f2a57546c7705942b1">&#9670;&#160;</a></span>type</h2>
+<a id="ad83ed086abaa805a606a5ccd433f505c" name="ad83ed086abaa805a606a5ccd433f505c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad83ed086abaa805a606a5ccd433f505c">&#9670;&#160;</a></span>type</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string Texture::type</td>
+          <td class="memname">TextureType Texture::type</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The type of the texture. </p>
 
 </div>
 </div>

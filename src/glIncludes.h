@@ -1,5 +1,5 @@
 #pragma once
-// PFD must be first import
+// PFD *MUST* be first import to prevent windows errors
 #include <portable-file-dialogs.h>
 
 // ImGui needs to be imported before GLAD
@@ -24,12 +24,6 @@
 
 #include <stb_image.h>
 
-// ASSIMP should be imported after GLM
-#include <assimp/Importer.hpp>
-#include <assimp/Exporter.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-#include <string>
 constexpr float PI = 3.141592f;
 constexpr float HALF_PI = 1.57079f;
 

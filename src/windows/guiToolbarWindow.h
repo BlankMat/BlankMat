@@ -1,6 +1,5 @@
 #pragma once
 #include "glIncludes.h"
-#include "renderingHelpers.h"
 #include "files/fileSystem.h"
 #include "windows/iGUIWindow.h"
 #include "interaction/selection.h"
@@ -67,7 +66,7 @@ public:
             //std::string fullFilePath = TOOLSDIR + std::string("/")+ fileName;
             int widthDim = 0;
             int heightDim = 0;
-            unsigned int textureID = TextureFromFile(FileSystem::GetPath(TOOLS_DIR), fileName, widthDim, heightDim, false);
+            unsigned int textureID = Texture::TextureFromFile(FileSystem::GetPath(TOOLS_DIR), fileName, widthDim, heightDim, false);
             mTextureIDs.push_back(textureID);
         }
         stbi_set_flip_vertically_on_load(state->flipTextures);

@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['readfile_0',['ReadFile',['../class_config_reader.html#a84137bdf0f2a2de3679880614b0d00ed',1,'ConfigReader']]],
-  ['recalcmatrices_1',['recalcmatrices',['../class_i_entity.html#ab7a84787ec4ef848e47944b7dddfde30',1,'IEntity::RecalcMatrices()'],['../class_node.html#a0752b07d9b9b89283dc36968804c8eb3',1,'Node::RecalcMatrices()']]],
-  ['remove_2',['remove',['../class_i_container.html#a4629b8adca9344380a5392074dc607b2',1,'IContainer::Remove(const std::string &amp;name)'],['../class_i_container.html#a876fc638917833d77b4892e69287b7c7',1,'IContainer::Remove(T *item)']]],
-  ['rendernode_3',['RenderNode',['../class_g_u_i_hierarchy_window.html#ac160517e3ae0f21ddc1afab1103266a6',1,'GUIHierarchyWindow']]],
-  ['renderselectable_4',['RenderSelectable',['../class_g_u_i_hierarchy_window.html#a310759123218690a094ca2bd416f1f6e',1,'GUIHierarchyWindow']]],
-  ['reset_5',['Reset',['../class_config.html#aa5ebf5cb409a0201cb6f1f20c4aee3a5',1,'Config']]],
-  ['rotate_6',['rotate',['../class_i_entity.html#adfdffd29d934902f947213ed8f541ede',1,'IEntity::Rotate()'],['../class_camera.html#af553afc9cd0d85523ddcff5d29e20ee1',1,'Camera::Rotate()']]]
+  ['openscene_0',['OpenScene',['../class_scene_i_o.html#a3bbb7bbf35db1784c11dc69536bd1a77',1,'SceneIO']]],
+  ['operator_20t_1',['operator T',['../class_i_u_i_variable.html#a20bdf43380c2ef64fef9007f763a316b',1,'IUIVariable']]],
+  ['operator_26_2',['operator&amp;',['../class_i_u_i_variable.html#aae14d3504346ff8cb80ad1a22e085dff',1,'IUIVariable']]],
+  ['operator_2a_3',['operator*',['../class_i_u_i_variable.html#a020c25bbf7e9c7214a0618effaa7807e',1,'IUIVariable::operator*()'],['../class_u_i_vec3.html#aabe88987707f707bc3bcd8f2949663f9',1,'UIVec3::operator*(float other) const'],['../class_u_i_vec3.html#a404d105fa4b729ed7de93209b9f4aeb5',1,'UIVec3::operator*(const glm::vec3 &amp;other) const'],['../class_u_i_vec3.html#a193c39f91579042d9dc8949579800131',1,'UIVec3::operator*(const UIVec3 &amp;other) const']]],
+  ['operator_2b_4',['operator+',['../class_u_i_int.html#a82a3162f8c065599c1ddf87daa833542',1,'UIInt::operator+(int other) const'],['../class_u_i_int.html#a063a6a48a2b2fe7c850f5ff437ecc910',1,'UIInt::operator+(const UIInt &amp;other) const'],['../class_u_i_float.html#a5df0747da340f72f85a5c45f8cf0c002',1,'UIFloat::operator+(float other) const'],['../class_u_i_float.html#adb8a452b3d96f566c68bb0eb96fdbfe6',1,'UIFloat::operator+(const UIFloat &amp;other) const'],['../class_u_i_vec3.html#a09cdae65e3eaee12aafddc542aae5de2',1,'UIVec3::operator+(const glm::vec3 &amp;other) const'],['../class_u_i_vec3.html#a6428eb8ef0c52aeecd7d5f2d15a95093',1,'UIVec3::operator+(const UIVec3 &amp;other) const'],['../class_u_i_string.html#a702b9dc5447117f4566bfd05f65e3309',1,'UIString::operator+(const std::string &amp;other) const'],['../class_u_i_string.html#ad9045de0dbdc3595c45c878f042c9ca8',1,'UIString::operator+(const UIString &amp;other) const']]],
+  ['operator_2d_5',['operator-',['../class_u_i_vec3.html#a7e8e5b5b8895242d9b98fc9409d29964',1,'UIVec3::operator-(const glm::vec3 &amp;other) const'],['../class_u_i_vec3.html#ae5580e29fb0e33762fd61cd2d1985c27',1,'UIVec3::operator-(const UIVec3 &amp;other) const']]],
+  ['operator_2d_3e_6',['operator-&gt;',['../class_i_u_i_variable.html#aa06f28b38029b8efdc5222c410e318a9',1,'IUIVariable']]]
 ];
