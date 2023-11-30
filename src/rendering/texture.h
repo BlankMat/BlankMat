@@ -185,7 +185,7 @@ public:
         }
         else
         {
-            std::cout << "Texture failed to load at path: " << name << std::endl;
+            std::cout << "Texture failed to load at path: " << fileName << std::endl;
             stbi_image_free(data);
         }
         return textureID;

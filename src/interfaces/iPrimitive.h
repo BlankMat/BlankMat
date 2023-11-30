@@ -135,4 +135,11 @@ public:
 		mIsWireframe = lineWidth > 0.0f;
 		mIndexLen = 0;
 	}
+
+	//
+	~IPrimitive()
+	{
+		mIndices.clear();
+		mVertices.clear();
+	}
 };

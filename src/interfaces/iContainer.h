@@ -104,7 +104,7 @@ public:
 	/// <param name="file">File to output to</param>
 	void Write(std::ofstream& file) override
 	{
-		file << "items " << std::to_string(mData.size());
+		file << "items " << std::to_string(WriteCount());
 		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
 		{
 			// Skip internal items
@@ -121,15 +121,38 @@ public:
 	/// </summary>
 	void Clear() override
 	{
+		// Delete and null all non-skippable items
+		for (auto iter = mData.cbegin(); iter != mData.cend();)
+		{
+			if (iter->second != nullptr && !SkipItem(iter->second))
+			{
+				delete iter->second;
+				iter = mData.erase(iter);
+			}
+			else
+			{
+				++iter;
+			}
+		}
+	}
+
+	/// <summary>
+	/// Returns the number of items that will be written from the container
+	/// </summary>
+	/// <returns>Number of writable items</returns>
+	unsigned int WriteCount() override
+	{
+		unsigned int count = 0;
 		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
-			delete iter->second;
-		mData.clear();
+			if (iter->second != nullptr && !SkipItem(iter->second))
+				count++;
+		return count;
 	}
 
 	/// <summary>
 	/// Returns the number of elements in the container
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>Number of elements in the container</returns>
 	unsigned int Count()
 	{
 		return (unsigned int)mData.size();
@@ -294,11 +317,21 @@ public:
 
 	/// <summary>
 	/// Returns a reference to the data stored in the container.
-	/// WARNING: Only use this to iterate over the data, not to modify it
 	/// </summary>
 	/// <returns>Data of the container</returns>
 	virtual const std::unordered_map<std::string, T*>& Data()
 	{
 		return mData;
+	}
+
+	/// <summary>
+	/// Clears all of the container, deleting its elements
+	/// </summary>
+	~IContainer()
+	{
+		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
+			if (iter->second != nullptr)
+				delete iter->second;
+		mData.clear();
 	}
 };

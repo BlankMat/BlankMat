@@ -79,14 +79,14 @@ void Node::WriteRecurse(std::ofstream& file, Node* node, unsigned int depth)
 	file << GetPadding(depth) << "enabled " << (int)node->IsEnabled() << std::endl;
 
 	// Write all child meshes
-	file << GetPadding(depth) << "meshes " << node->GetMeshCount() << std::endl;
-	for (unsigned int i = 0; i < node->GetMeshCount(); i++)
+	file << GetPadding(depth) << "meshes " << node->MeshCount() << std::endl;
+	for (unsigned int i = 0; i < node->MeshCount(); i++)
 		if (node->mMeshes[i] != nullptr)
 			file << GetPadding(depth + 1) << node->mMeshes[i]->GetName() << std::endl;
 
 	// Write all child nodes
-	file << GetPadding(depth) << "children " << node->GetChildCount() << std::endl;
-	for (unsigned int i = 0; i < node->GetChildCount(); i++)
+	file << GetPadding(depth) << "children " << node->ChildCount() << std::endl;
+	for (unsigned int i = 0; i < node->ChildCount(); i++)
 		if (node->mChildren[i] != nullptr)
 			WriteRecurse(file, node->mChildren[i], depth + 1);
 
@@ -106,6 +106,24 @@ void Node::Read(std::ifstream& file, bool clear)
 void Node::Write(std::ofstream& file)
 {
 	WriteRecurse(file, this, 0);
+}
+
+// Returns the number of elements that can be written
+unsigned int Node::WriteCount()
+{
+	return (unsigned int)mChildren.size();
+}
+
+// Returns the number of child nodes
+unsigned int Node::ChildCount()
+{
+	return (unsigned int)mChildren.size();
+}
+
+// Returns the number of child meshes
+unsigned int Node::MeshCount()
+{
+	return (unsigned int)mMeshes.size();
 }
 
 // Draws the node recursively
@@ -417,18 +435,6 @@ void Node::Clear()
 	mChildren.clear();
 	mMeshes.clear();
 	mUnloadedMeshes.clear();
-}
-
-// Returns the number of child nodes
-unsigned int Node::GetChildCount()
-{
-	return (unsigned int)mChildren.size();
-}
-
-// Returns the number of child meshes
-unsigned int Node::GetMeshCount()
-{
-	return (unsigned int)mMeshes.size();
 }
 
 // Returns whether the node has the given mesh

@@ -13,7 +13,7 @@ protected:
 	const std::pair<std::string, Light*> ReadItem(std::ifstream& file) override
 	{
 		// Set up variables to store read information
-		std::string name = "main";
+		std::string name = "global";
 		LightType type = LightType::POINT;
 		glm::vec3 pos = glm::vec3(5.0f, 5.0f, 5.0f);
 		glm::vec3 dir = glm::vec3(-5.0f, -5.0f, -5.0f);

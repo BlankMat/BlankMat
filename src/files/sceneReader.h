@@ -217,7 +217,7 @@ private:
 		std::cout << "Reading " << label << std::endl;
 		double startTime = Timer::Start();
 		container->Read(file, replace);
-		Timer::Time(startTime, "Read " + label);
+		Timer::Time(startTime, "Read " + std::to_string(container->WriteCount()) + " " + label);
 	}
 
 	static void ReadAssimpScene(Scene* scene, const std::string& path, bool replace)
@@ -282,7 +282,6 @@ private:
 			ReadBlankMatItem(scene->GetLights(), replace, file, "Lights");
 
 			// Reconstruct relationships between items
-			// TODO
 			scene->GetMaterials()->LoadTextures(scene->GetTextures());
 			scene->GetMeshes()->LoadMaterials(scene->GetMaterials());
 			scene->GetRootNode()->LoadMeshes(scene->GetMeshes());

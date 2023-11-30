@@ -6,6 +6,12 @@ class IWritable
 {
 public:
 	/// <summary>
+	/// Returns the number of elements that will be written as part of the object
+	/// </summary>
+	/// <returns>Number of elements to be written</returns>
+	virtual unsigned int WriteCount() = 0;
+
+	/// <summary>
 	/// Reads this item from the file
 	/// </summary>
 	/// <param name="file">File to read from</param>

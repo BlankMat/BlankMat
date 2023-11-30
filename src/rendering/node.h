@@ -73,6 +73,24 @@ public:
 	void Clear() override;
 
 	/// <summary>
+	/// Returns the number of elements that can be written
+	/// </summary>
+	/// <returns>Number of writable elements</returns>
+	unsigned int WriteCount();
+
+	/// <summary>
+	/// Returns the number of child nodes
+	/// </summary>
+	/// <returns>Number of child nodes</returns>
+	unsigned int ChildCount();
+
+	/// <summary>
+	/// Returns the number of child meshes
+	/// </summary>
+	/// <returns>Number of child meshes</returns>
+	unsigned int MeshCount();
+
+	/// <summary>
 	/// Recursively draws the node and its children and child meshes
 	/// </summary>
 	/// <param name="shader">Shader to draw to</param>
@@ -94,18 +112,6 @@ public:
 	/// Recalculates all matrices of the node
 	/// </summary>
 	void RecalcMatrices() override;
-
-	/// <summary>
-	/// Returns the number of child nodes
-	/// </summary>
-	/// <returns>Number of child nodes</returns>
-	unsigned int GetChildCount();
-
-	/// <summary>
-	/// Returns the number of child meshes
-	/// </summary>
-	/// <returns>Number of child meshes</returns>
-	unsigned int GetMeshCount();
 
 	/// <summary>
 	/// Returns whether the node has the given mesh

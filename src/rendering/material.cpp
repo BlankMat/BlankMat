@@ -137,6 +137,7 @@ Material::Material(TextureContainer* _textures)
     mCurKA = ka;
     mCurKS = ks;
     mCurKE = ke;
+    mIsInternal = true;
     mShadowsEnabled = true;
 
     // Load default textures
@@ -170,6 +171,7 @@ Material::Material(const std::string& _name, const glm::vec3& _color, TextureCon
     mCurKA = ka;
     mCurKS = ks;
     mCurKE = ke;
+    mShadowsEnabled = true;
 
     // Load default textures
     mTargetMapKD = "default_diffuse";
@@ -218,6 +220,7 @@ Material::Material(const std::string& _name, Config* _config, Texture* _map_kd, 
     mCurKS = ks;
     mCurKE = ke;
     mShadowsEnabled = true;
+    mIsInternal = false;
 }
 
 // Constructs a material out of preloaded textures
@@ -246,6 +249,7 @@ Material::Material(const std::string& _name, Texture* _map_kd, Texture* _map_ka,
     mCurKS = ks;
     mCurKE = ke;
     mShadowsEnabled = true;
+    mIsInternal = false;
 }
 
 // Construcst a material out of lists of preloaded textures
@@ -275,6 +279,7 @@ Material::Material(const std::string& _name,
     mCurKS = ks;
     mCurKE = ke;
     mShadowsEnabled = true;
+    mIsInternal = false;
 }
 
 Material::Material(const std::string& _name, const std::string& _map_kd, const std::string& _map_ka, const std::string& _map_ks,

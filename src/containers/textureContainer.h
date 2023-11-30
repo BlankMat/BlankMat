@@ -52,7 +52,7 @@ protected:
 		}
 
 		// TODO: Load texture
-		return std::pair<std::string, Texture*>(name, new Texture(type, path, path, name, false));
+		return std::pair<std::string, Texture*>(name, new Texture(type, "textures", path, name, false));
 	}
 
 	/// <summary>

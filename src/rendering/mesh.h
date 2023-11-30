@@ -83,11 +83,4 @@ public:
 	{
 		CalcBasis();
 	}
-
-	//
-	~Mesh()
-	{
-		mVertices.clear();
-		mIndices.clear();
-	}
 };
