@@ -111,7 +111,7 @@ void Node::Write(std::ofstream& file)
 // Returns the number of elements that will be written
 unsigned int Node::WriteCount()
 {
-	unsigned int count = mChildren.size();
+	unsigned int count = (unsigned int)mChildren.size();
 	for (unsigned int i = 0; i < mChildren.size(); i++)
 		count += mChildren[i]->WriteCount();
 	return count;

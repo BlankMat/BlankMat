@@ -25,6 +25,30 @@ public:
 			ImGui::EndPopup();
 		}
 	}
+	
+	static void Image(unsigned int textureID, const glm::vec2& size, const glm::vec3& borderColor = glm::vec3(0, 0, 0), float borderAlpha = 1.0f)
+	{
+		ImVec4 border = ImVec4(borderColor.x, borderColor.y, borderColor.z, borderAlpha);
+#pragma warning(suppress: 4312)
+		ImGui::Image((void*)textureID, ImVec2(size.x, size.y), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), border);
+	}
+
+	static void Image(unsigned int textureID, float size, const glm::vec3& borderColor = glm::vec3(0, 0, 0), float borderAlpha = 1.0f)
+	{
+		Image(textureID, glm::vec2(size, size), borderColor, borderAlpha);
+	}
+
+	static bool ImageButton(unsigned int textureID, const glm::vec2& size, const glm::vec3& tintColor = glm::vec3(0, 0, 0), float tintAlpha = 1.0f)
+	{
+		ImVec4 tint = ImVec4(tintColor.x, tintColor.y, tintColor.z, tintAlpha);
+#pragma warning(suppress: 4312)
+		return ImGui::ImageButton((void*)textureID, ImVec2(size.x, size.y), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), tint);
+	}
+
+	static bool ImageButton(unsigned int textureID, float size, const glm::vec3& tintColor = glm::vec3(0, 0, 0), float tintAlpha = 1.0f)
+	{
+		return ImageButton(textureID, glm::vec2(size, size), tintColor, tintAlpha);
+	}
 
 	template<typename T>
 	static bool Selectable(const std::string& label, T& selValue, T thisValue)

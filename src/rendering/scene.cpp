@@ -322,7 +322,7 @@ Material* Scene::GetDefaultMaterial()
 	return mMaterials->GetDefault();
 }
 
-// Returns the material with the given name
+// Returns the texture with the given name
 Texture* Scene::GetTexture(const std::string& name)
 {
 	return mTextures->GetItem(name);

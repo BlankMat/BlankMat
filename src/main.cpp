@@ -117,6 +117,7 @@ void LoadGUIs(Window* window, State* state, Scene* scene, Input* input, Config* 
 {
     window->AddGUI(new GUILightViewer(state, scene, true));
     window->AddGUI(new GUIMaterialViewer(state, scene, true));
+    window->AddGUI(new GUITextureViewer(state, scene, true));
     window->AddGUI(new GUIMaterialEditor(state, scene, true));
     window->AddGUI(new GUIDebugToolsWindow(state, scene, true));
     window->AddGUI(new GUIHierarchyWindow(state, scene, true));
