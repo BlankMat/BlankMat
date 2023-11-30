@@ -59,7 +59,7 @@ public:
 			mState->enableShadows.Display();
 			mState->enableGrid.Display();
 			mState->drawByMaterial.Display();
-			mState->DEBUG_fakeNumber.Display();
+			mState->collapseMeshNodes.Display();
 
 			// Input debug
 			ImGui::Separator();

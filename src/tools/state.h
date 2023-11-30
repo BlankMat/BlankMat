@@ -33,8 +33,7 @@ public:
 	UIBool drawByMaterial;
 	UIBool flipTextures;
 	UIBool drawGUI;
-
-	UIInt DEBUG_fakeNumber;
+	UIBool collapseMeshNodes;
 
 	unsigned int depthMapFBO = 0;
 	unsigned int depthMap = 0;
@@ -180,6 +179,12 @@ public:
 		enableDefaultMat.Set(!enableDefaultMat);
 	}
 
+	// Toggles collapsing of mesh nodes
+	void ToggleCollapseMeshNodes()
+	{
+		collapseMeshNodes.Set(!collapseMeshNodes);
+	}
+
 	State(Config* config)
 	{
 		curShader = config->GetString("shader.file");
@@ -203,7 +208,7 @@ public:
 		drawByMaterial = UIBool("Draw By Material", true, mActionStack);
 		flipTextures = UIBool("Flip Textures", true, mActionStack);
 		drawGUI = UIBool("Draw UI", true, mActionStack);
-		DEBUG_fakeNumber = UIInt("DEBUG number", 0, mActionStack);
+		collapseMeshNodes = UIBool("Collapse Mesh Nodes", true, mActionStack);
 
 		depthMapSize = config->GetInt("quality.shadowResolution");
 	}

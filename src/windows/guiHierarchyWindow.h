@@ -34,6 +34,13 @@ protected:
         for (int k = 0; k < depth; k++)
             depthMarker += "  ";
 
+        // If the node only holds a single mesh, render the mesh instead of the node
+        if (mState->collapseMeshNodes && node->ChildCount() == 0 && node->MeshCount() == 1)
+        {
+            RenderSelectable(selEntity, node->GetMesh(0), depthMarker + "+  ");
+            return;
+        }
+
         // Mark this node
         bool isSelected = (IEntity::GetNameNullSafe(node) == IEntity::GetNameNullSafe(selEntity));
         bool isExpanded = (mExpandedNodes.find(node) != mExpandedNodes.end());
@@ -92,8 +99,19 @@ public:
         if (!mIsEnabled)
             return;
 
-        if (ImGui::Begin("Hierarchy", &mIsEnabled, ImGuiWindowFlags_AlwaysAutoResize))
+        if (ImGui::Begin("Hierarchy", &mIsEnabled, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar))
         {
+            if (ImGui::BeginMenuBar())
+            {
+                if (ImGui::BeginMenu("Options"))
+                {
+                    if (ImGui::MenuItem("Collapse Mesh Nodes"))
+                        mState->ToggleCollapseMeshNodes();
+                    ImGui::EndMenu();
+                }
+                ImGui::EndMenuBar();
+            }
+
             Node* root = mScene->GetRootNode();
             IEntity* selEntity = mState->GetSel()->GetSelectedEntity();
             if (ImGui::BeginListBox("##HierarchyRoot"))
