@@ -26,6 +26,19 @@ public:
 		}
 	}
 	
+	static int Dropdown(const std::string& label, int& index, const std::vector<std::string>& options)
+	{
+		if (ImGui::BeginListBox(label.c_str()))
+		{
+			for (int i = 0; i < options.size(); i++)
+			{
+				GUIWindowUtils::Selectable(options[i], index, i);
+			}
+			ImGui::EndListBox();
+		}
+		return index;
+	}
+
 	static void Image(unsigned int textureID, const glm::vec2& size, const glm::vec3& borderColor = glm::vec3(0, 0, 0), float borderAlpha = 1.0f)
 	{
 		ImVec4 border = ImVec4(borderColor.x, borderColor.y, borderColor.z, borderAlpha);

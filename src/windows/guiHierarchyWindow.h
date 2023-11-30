@@ -16,8 +16,7 @@ protected:
     void RenderSelectable(IEntity*& selEntity, IEntity* curEntity, const std::string& depthMarker)
     {
         // Add checkbox for enabling or disabling elements
-        curEntity->Enable(
-            GUIWindowUtils::Checkbox("##entity" + curEntity->GetName(), curEntity->IsEnabled()));
+        curEntity->Enable(GUIWindowUtils::Checkbox("##entity" + curEntity->GetName(), curEntity->IsEnabled()));
         ImGui::SameLine();
 
         GUIWindowUtils::Deselectable(depthMarker + curEntity->GetName(), selEntity, curEntity);
@@ -72,7 +71,7 @@ protected:
         }
     }
 
-    void RenderNodeBase(IEntity* selEntity, Node* node)
+    void RenderNodeBase(IEntity*& selEntity, Node* node)
     {
         // Render all meshes of the node
         for (unsigned int j = 0; j < node->MeshCount(); j++)
@@ -100,7 +99,7 @@ public:
             if (ImGui::BeginListBox("##HierarchyRoot"))
             {
                 IEntity* prevSel = selEntity;
-                RenderNodeBase(prevSel, root);
+                RenderNodeBase(selEntity, root);
                 if (prevSel != selEntity)
                     mState->GetSel()->SelectEntity(selEntity);
                 ImGui::EndListBox();

@@ -13,6 +13,7 @@ private:
 
 	std::string mSelectedTexture = "";
 	const float TEXTURE_SIZE = 256.0f;
+	const std::vector<std::string> TEXTURE_TYPES = { "Diffuse", "Ambient", "Specular", "Normal", "Height", "Alpha" };
 public:
 	void Draw() override
 	{
@@ -25,8 +26,10 @@ public:
 			if (mSelectedTexture != "")
 			{
 				Texture* curTexture = mScene->GetTexture(mSelectedTexture);
+				int type = (int)curTexture->type;
 				GUIWindowUtils::InputText("Name", curTexture->name);
 				GUIWindowUtils::InputText("Path", curTexture->path);
+				curTexture->type = (TextureType)GUIWindowUtils::Dropdown("Type", type, TEXTURE_TYPES);
 				GUIWindowUtils::Image(curTexture->id, TEXTURE_SIZE);
 				ImGui::Separator();
 			}

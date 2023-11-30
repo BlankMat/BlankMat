@@ -75,6 +75,32 @@ public:
     }
 
     /// <summary>
+    /// Converts the texture type to a display-friendly string representation
+    /// </summary>
+    /// <param name="type">Texture type</param>
+    /// <returns>Display-friendly string representation of the texture type</returns>
+    static std::string TextureTypeToDisplayString(TextureType type)
+    {
+        switch (type)
+        {
+        case TextureType::DIFFUSE:
+            return "Diffuse";
+        case TextureType::AMBIENT:
+            return "Ambient";
+        case TextureType::SPECULAR:
+            return "Specular";
+        case TextureType::NORMAL:
+            return "Normal";
+        case TextureType::HEIGHT:
+            return "Height";
+        case TextureType::ALPHA:
+            return "Alpha";
+        default:
+            return "Null";
+        }
+    }
+
+    /// <summary>
     /// Generates a runtime texture from the given solid color
     /// </summary>
     /// <param name="color"></param>
