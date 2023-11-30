@@ -69,24 +69,6 @@ public:
 			ImGui::InputInt("Previous X", &mState->mousePrevX);
 			ImGui::InputInt("Previous Y", &mState->mousePrevY);
 
-			// Camera settings
-			ImGui::Separator();
-			ImGui::Text("Camera Settings");
-			Camera* cam = mScene->GetCamera();
-			if (cam != nullptr)
-			{
-				cam->GetPos().Display();
-				cam->GetTarget().Display();
-				cam->GetPivot().Display();
-				cam->GetOrthSize().Display();
-				cam->GetFOV().Display();
-				cam->GetNearClip().Display();
-				cam->GetFarClip().Display();
-				cam->IsPerspective().Display();
-				cam->IsWireframe().Display();
-				cam->IsRotatingAroundPivot().Display();
-			}
-
 			// Debug settings
 			ImGui::Separator();
 			ImGui::Text("Debug settings");

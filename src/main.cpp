@@ -116,6 +116,7 @@ void OpenGLDraw(Window* window, State* state, Scene* scene)
 void LoadGUIs(Window* window, State* state, Scene* scene, Input* input, Config* config)
 {
     window->AddGUI(new GUILightViewer(state, scene, true));
+    window->AddGUI(new GUICameraViewer(state, scene, true));
     window->AddGUI(new GUIMaterialViewer(state, scene, true));
     window->AddGUI(new GUITextureViewer(state, scene, true));
     window->AddGUI(new GUIMaterialEditor(state, scene, true));

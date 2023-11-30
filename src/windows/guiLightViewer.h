@@ -75,6 +75,15 @@ public:
             light->SetBaseColor(
                 GUIWindowUtils::ColorPicker("Light Color", light->GetBaseColor()));
 
+            // Display all lights
+            ImGui::Separator();
+            std::string selLight = mScene->GetLights()->GetSelectedName();
+            const auto& lights = mScene->GetLights()->Data();
+            for (auto iter = lights.begin(); iter != lights.end(); ++iter)
+            {
+                GUIWindowUtils::Selectable(iter->first, selLight, iter->first);
+            }
+            mScene->SetLight(selLight);
         }
         ImGui::End();
     }

@@ -18,6 +18,7 @@
 #include "windows/guiToolbarWindow.h"
 #include "windows/guiToolModeWindow.h"
 
+#include "windows/guiCameraViewer.h"
 #include "windows/guiLightViewer.h"
 #include "windows/guiMaterialViewer.h"
 #include "windows/guiTextureViewer.h"
