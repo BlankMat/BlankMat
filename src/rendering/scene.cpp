@@ -14,10 +14,9 @@ void Scene::Draw(Window* window, Shader* shader)
 	{
 		flatShader->Use();
 		if (mGrid != nullptr && mState->enableGrid)
-			mGrid->Draw(flatShader, mState, mDefaultMat, viewProj, true);
+			mGrid->Draw(flatShader, mState, GetDefaultMaterial(), viewProj, true);
 
-		if (mGlobalLight != nullptr)
-			mGlobalLight->Draw(flatShader, mState, mDefaultMat, viewProj, true);
+		mLights->Draw(flatShader, mState, GetDefaultMaterial(), viewProj, true);
 	}
 
 	// Draw all of the scene
@@ -39,7 +38,7 @@ void Scene::Draw(Window* window, Shader* shader)
 			if (mat != nullptr)
 			{
 				// Load textures
-				mat->LoadTextures(mState, mDefaultMat);
+				mat->LoadShaderTextures(mState, GetDefaultMaterial());
 				unsigned int shadowIndex = mat->UpdateShader(shader);
 				glActiveTexture(GL_TEXTURE0 + shadowIndex);
 				glBindTexture(GL_TEXTURE_2D, mState->depthMap);
@@ -48,13 +47,13 @@ void Scene::Draw(Window* window, Shader* shader)
 			}
 
 			// Draw mesh
-			iter->second->Draw(shader, mState, mDefaultMat, viewProj, mat == nullptr);
+			iter->second->Draw(shader, mState, GetDefaultMaterial(), viewProj, mat == nullptr);
 		}
 	}
 	// Default draw
 	else
 	{
-		mRootNode->Draw(shader, mState, mDefaultMat, viewProj, true);
+		mRootNode->Draw(shader, mState, GetDefaultMaterial(), viewProj, true);
 	}
 
 	// Draw all entities with their respective shaders
@@ -68,7 +67,7 @@ void Scene::Draw(Window* window, Shader* shader)
 				curShader->Use();
 				curShader->SetVec3("viewPos", GetCamera()->GetPos());
 				GetLight()->UpdateShader(curShader);
-				iter->second->Draw(curShader, mState, mDefaultMat, viewProj, true);
+				iter->second->Draw(curShader, mState, GetDefaultMaterial(), viewProj, true);
 			}
 		}
 	}
@@ -80,13 +79,13 @@ void Scene::Draw(Window* window, Shader* shader)
 		if (mViewAxisHandle != nullptr)
 		{
 			mViewAxisHandle->SetRot(GetRotationDegrees(GetCamera()->GetDir()));
-			mViewAxisHandle->Draw(flatShader, mState, mDefaultMat, GetViewAxisProjection(window), true);
+			mViewAxisHandle->Draw(flatShader, mState, GetDefaultMaterial(), GetViewAxisProjection(window), true);
 		}
 
 		if (mTransformHandle != nullptr)
 		{
 			mState->GetSel()->UpdateTransformHandle();
-			mTransformHandle->Draw(flatShader, mState, mDefaultMat, viewProj, true);
+			mTransformHandle->Draw(flatShader, mState, GetDefaultMaterial(), viewProj, true);
 		}
 	}
 }
@@ -272,13 +271,13 @@ const std::string Scene::GetCurShader()
 // Returns the scene's camera
 Camera* Scene::GetCamera()
 {
-	return mMainCamera;
+	return mCameras->GetSelectedItem();
 }
 
 // Returns the scene's light
 Light* Scene::GetLight()
 {
-	return mGlobalLight;
+	return mLights->GetSelectedItem();
 }
 
 // Returns the scene's name
@@ -308,7 +307,7 @@ Material* Scene::GetMaterial(const std::string& name)
 // Returns the default material
 Material* Scene::GetDefaultMaterial()
 {
-	return mDefaultMat;
+	return mMaterials->GetDefault();
 }
 
 // Returns the material with the given name
@@ -335,6 +334,12 @@ IEntity* Scene::GetTransformHandle()
 	return mTransformHandle;
 }
 
+// Returns the state of the application
+State* Scene::GetState()
+{
+	return mState;
+}
+
 // Adds the given node to the scene
 void Scene::AddNode(Node* node)
 {
@@ -349,6 +354,22 @@ void Scene::AddMesh(Mesh* mesh, Node* parent)
 	parent->AddMesh(mesh);
 	mMeshes->Add(mesh->GetName(), mesh);
 	SetEntityMaterial(mesh, mesh->GetMaterial());
+}
+
+// Adds the given camera to the scene
+void Scene::AddCamera(const std::string& name, Camera* camera, bool select)
+{
+	mCameras->Add(name, camera);
+	if (select)
+		mCameras->Select(name);
+}
+
+// Adds the given camera to the scene
+void Scene::AddLight(const std::string& name, Light* light, bool select)
+{
+	mLights->Add(name, light);
+	if (select)
+		mLights->Select(name);
 }
 
 // Rotates the current camera by the given delta degrees
@@ -375,31 +396,16 @@ void Scene::SetRootNode(Node* rootNode)
 	mRootNode = rootNode;
 }
 
-// Sets up the scene's camera with the given options
-void Scene::SetCamera(ActionStack* actionStack, Config* config)
-{
-	if (mMainCamera != nullptr)
-		delete mMainCamera;
-	mMainCamera = new Camera(actionStack, config);
-	mCameras->Add("main", mMainCamera);
-}
-
 // Sets the scene's camera to the given camera
-void Scene::SetCamera(Camera* cam)
+void Scene::SetCamera(const std::string& camera)
 {
-	if (mMainCamera != nullptr)
-		delete mMainCamera;
-	mMainCamera = cam;
-	mCameras->Add("main", mMainCamera);
+	mCameras->Select(camera);
 }
 
 // Sets the scene's light to the given light
-void Scene::SetLight(Light* light)
+void Scene::SetLight(const std::string& light)
 {
-	if (mGlobalLight != nullptr)
-		delete mGlobalLight;
-	mGlobalLight = light;
-	mLights->Add("global", mGlobalLight);
+	mLights->Select(light);
 }
 
 // Sets the scene's name
@@ -484,10 +490,10 @@ void Scene::Clear()
 	mMaterials->Clear();
 	mLights->Clear();
 	mCameras->Clear();
-	mShaders->Clear();
 	mMeshes->Clear();
 	mEntities->Clear();
 	mMeshRenderList.clear();
+	mRootNode->Clear();
 }
 
 // Constructs the scene from the given file
@@ -496,10 +502,9 @@ Scene::Scene(State* state)
 {
 	mTextures = new TextureContainer();
 	mMaterials = new MaterialContainer(mTextures);
-	mDefaultMat = mMaterials->GetDefault();
 
+	mCameras = new CameraContainer(state->GetActionStack());
 	mLights = new LightContainer();
-	mCameras = new CameraContainer();
 	mShaders = new ShaderContainer();
 	mMeshes = new MeshContainer();
 	mEntities = new EntityContainer();
@@ -513,14 +518,11 @@ Scene::Scene(State* state)
 Scene::~Scene()
 {
 	Clear();
-
-	if (mMainCamera != nullptr)
-		delete mMainCamera;
+	mShaders->Clear();
 
 	delete mGrid;
 	delete mViewAxisHandle;
 	delete mTransformHandle;
-	delete mDefaultMat;
 	delete mTextures;
 	delete mMaterials;
 	delete mLights;

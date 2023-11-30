@@ -1,6 +1,7 @@
 #pragma once
 #include "rendering/mesh.h"
 #include "interfaces/iContainer.h"
+#include "containers/materialContainer.h"
 
 class MeshContainer : public IContainer<Mesh>
 {
@@ -98,11 +99,11 @@ protected:
 			if (parse[0] == "MESH")
 				name = parse[1];
 			else if (parse[0] == "pos")
-				pos = ReadVec3FromStrings(parse, 0);
+				pos = ReadVec3FromStrings(parse, 1);
 			else if (parse[0] == "rot")
-				rot = ReadVec3FromStrings(parse, 0);
+				rot = ReadVec3FromStrings(parse, 1);
 			else if (parse[0] == "scale")
-				scale = ReadVec3FromStrings(parse, 0);
+				scale = ReadVec3FromStrings(parse, 1);
 			else if (parse[0] == "material")
 				material = parse[1];
 			else if (parse[0] == "enabled")
@@ -110,7 +111,10 @@ protected:
 			else if (parse[0] == "vertices")
 				ReadVertices(vertices, file);
 			else if (parse[0] == "indices")
+			{
 				ReadIndices(indices, file);
+				break;
+			}
 		}
 
 		// Combine information into a new mesh
@@ -165,6 +169,16 @@ protected:
 	}
 
 public:
+	/// <summary>
+	/// Loads the materials of meshes in this container
+	/// </summary>
+	/// <param name="materials">Material list of the scene</param>
+	void LoadMaterials(MaterialContainer* materials)
+	{
+		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
+			iter->second->LoadMaterial(materials);
+	}
+
 	/// <summary>
 	/// Draws the contents of the container
 	/// </summary>

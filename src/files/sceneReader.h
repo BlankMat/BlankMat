@@ -212,11 +212,11 @@ private:
 		return textures;
 	}
 
-	static void ReadBlankMatItem(IWritable* item, bool replace, std::ifstream& file, const std::string& label)
+	static void ReadBlankMatItem(IWritable* container, bool replace, std::ifstream& file, const std::string& label)
 	{
 		std::cout << "Reading " << label << std::endl;
 		double startTime = Timer::Start();
-		item->Read(file, replace);
+		container->Read(file, replace);
 		Timer::Time(startTime, "Read " + label);
 	}
 
@@ -269,12 +269,24 @@ private:
 
 		try
 		{
+			// Clears the scene of everything
+			if (replace)
+				scene->Clear();
+
+			// Read all items
 			ReadBlankMatItem(scene->GetRootNode(), replace, file, "Nodes");
 			ReadBlankMatItem(scene->GetMeshes(), replace, file, "Meshes");
 			ReadBlankMatItem(scene->GetMaterials(), replace, file, "Materials");
 			ReadBlankMatItem(scene->GetTextures(), replace, file, "Textures");
 			ReadBlankMatItem(scene->GetCameras(), replace, file, "Cameras");
 			ReadBlankMatItem(scene->GetLights(), replace, file, "Lights");
+
+			// Reconstruct relationships between items
+			// TODO
+			scene->GetMaterials()->LoadTextures(scene->GetTextures());
+			scene->GetMeshes()->LoadMaterials(scene->GetMaterials());
+			scene->GetRootNode()->LoadMeshes(scene->GetMeshes());
+
 			Timer::Time(startTime, "Read scene from file " + path + " successfully");
 		}
 		catch (std::exception const& e)
@@ -292,6 +304,8 @@ public:
 		if (lastPeriod < path.length())
 			ext = path.substr(lastPeriod);
 
+		// Disable rendering until reading is done
+		scene->GetState()->shouldRender = false;
 		if (ext == ".blank")
 		{
 			ReadBlankMatScene(scene, path, replace);
@@ -300,5 +314,6 @@ public:
 		{
 			ReadAssimpScene(scene, path, replace);
 		}
+		scene->GetState()->shouldRender = true;
 	}
 };

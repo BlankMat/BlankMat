@@ -7,8 +7,33 @@ bool Material::IsInternal()
     return mIsInternal;
 }
 
+// Updates the given shader with this material's properties
+unsigned int Material::UpdateShader(Shader* _shader)
+{
+    _shader->SetVec3("material.diffuse", mCurKD);
+    _shader->SetVec3("material.ambient", mCurKA);
+    _shader->SetVec3("material.specular", mCurKS);
+    _shader->SetVec3("material.emissive", mCurKE);
+    _shader->SetFloat("material.shininess", ns);
+    _shader->SetFloat("material.refraction", ni);
+    _shader->SetFloat("material.alpha", d);
+    _shader->SetInt("material.mode", illum);
+    _shader->SetBool("useShadows", mShadowsEnabled);
+
+    for (unsigned int i = 0; i < mCurTextures.size(); i++)
+    {
+        // Activate proper texture unit before binding
+        glActiveTexture(GL_TEXTURE0 + i);
+        _shader->SetInt(mCurTextureNames[i], i);
+        glBindTexture(GL_TEXTURE_2D, mCurTextures[i]->id);
+    }
+    glActiveTexture(GL_TEXTURE0);
+
+    return (unsigned int)mTextures.size();
+}
+
 // Loads the textures of this material into the OpenGL context
-void Material::LoadTextures(State* _state, Material* _defaultMat)
+void Material::LoadShaderTextures(State* _state, Material* _defaultMat)
 {
     // If the state has the map enabled, and the texture is not the default texture, use the texture
     bool useDiffuse = (map_kd != nullptr && map_kd->id != _defaultMat->map_kd->id) && (_state == nullptr || _state->enableDiffuseMap);
@@ -73,29 +98,24 @@ void Material::LoadTextures(State* _state, Material* _defaultMat)
     mShadowsEnabled = (_state == nullptr || _state->enableShadows);
 }
 
-// Updates the given shader with this material's properties
-unsigned int Material::UpdateShader(Shader* _shader)
+// Loads the textures of the material from the scene's texture list
+void Material::LoadMaterialTextures(TextureContainer* _textures)
 {
-    _shader->SetVec3("material.diffuse", mCurKD);
-    _shader->SetVec3("material.ambient", mCurKA);
-    _shader->SetVec3("material.specular", mCurKS);
-    _shader->SetVec3("material.emissive", mCurKE);
-    _shader->SetFloat("material.shininess", ns);
-    _shader->SetFloat("material.refraction", ni);
-    _shader->SetFloat("material.alpha", d);
-    _shader->SetInt("material.mode", illum);
-    _shader->SetBool("useShadows", mShadowsEnabled);
+    // Create textures for material
+    map_kd = _textures->GetItem(mTargetMapKD);
+    map_ka = _textures->GetItem(mTargetMapKA);
+    map_ks = _textures->GetItem(mTargetMapKS);
+    map_bump = _textures->GetItem(mTargetMapBump);
+    map_ns = _textures->GetItem(mTargetMapNS);
+    map_d = _textures->GetItem(mTargetMapD);
 
-    for (unsigned int i = 0; i < mCurTextures.size(); i++)
-    {
-        // Activate proper texture unit before binding
-        glActiveTexture(GL_TEXTURE0 + i);
-        _shader->SetInt(mCurTextureNames[i], i);
-        glBindTexture(GL_TEXTURE_2D, mCurTextures[i]->id);
-    }
-    glActiveTexture(GL_TEXTURE0);
-
-    return (unsigned int)mTextures.size();
+    // Push textures to render list
+    mTextures.push_back(map_kd);
+    mTextures.push_back(map_ka);
+    mTextures.push_back(map_ks);
+    mTextures.push_back(map_bump);
+    mTextures.push_back(map_ns);
+    mTextures.push_back(map_d);
 }
 
 // Constructs the default material
@@ -119,21 +139,14 @@ Material::Material(TextureContainer* _textures)
     mCurKE = ke;
     mShadowsEnabled = true;
 
-    // Create textures for material
-    map_kd = _textures->GetItem("default_diffuse");
-    map_ka = _textures->GetItem("default_ambient");
-    map_ks = _textures->GetItem("default_specular");
-    map_bump = _textures->GetItem("default_normal");
-    map_ns = _textures->GetItem("default_height");
-    map_d = _textures->GetItem("default_alpha");
-
-    // Push textures to render list
-    mTextures.push_back(map_kd);
-    mTextures.push_back(map_ka);
-    mTextures.push_back(map_ks);
-    mTextures.push_back(map_bump);
-    mTextures.push_back(map_ns);
-    mTextures.push_back(map_d);
+    // Load default textures
+    mTargetMapKD = "default_diffuse";
+    mTargetMapKA = "default_ambient";
+    mTargetMapKS = "default_specular";
+    mTargetMapBump = "default_normal";
+    mTargetMapNS = "default_height";
+    mTargetMapD = "default_alpha";
+    LoadMaterialTextures(_textures);
 }
 
 // Constructs a material out of a single color (diffuse)
@@ -158,21 +171,14 @@ Material::Material(const std::string& _name, const glm::vec3& _color, TextureCon
     mCurKS = ks;
     mCurKE = ke;
 
-    // Create textures for material
-    map_kd = _textures->GetItem("default_diffuse");
-    map_ka = _textures->GetItem("default_ambient");
-    map_ks = _textures->GetItem("default_specular");
-    map_bump = _textures->GetItem("default_normal");
-    map_ns = _textures->GetItem("default_height");
-    map_d = _textures->GetItem("default_alpha");
-
-    // Push textures to render list
-    mTextures.push_back(map_kd);
-    mTextures.push_back(map_ka);
-    mTextures.push_back(map_ks);
-    mTextures.push_back(map_bump);
-    mTextures.push_back(map_ns);
-    mTextures.push_back(map_d);
+    // Load default textures
+    mTargetMapKD = "default_diffuse";
+    mTargetMapKA = "default_ambient";
+    mTargetMapKS = "default_specular";
+    mTargetMapBump = "default_normal";
+    mTargetMapNS = "default_height";
+    mTargetMapD = "default_alpha";
+    LoadMaterialTextures(_textures);
 }
 
 // Constructs a material out of a config file and preloaded textures
@@ -235,10 +241,10 @@ Material::Material(const std::string& _name, Texture* _map_kd, Texture* _map_ka,
     mTextures.push_back(map_ns);
     mTextures.push_back(map_d);
 
-    mCurKD = glm::vec3(1, 1, 1);
-    mCurKA = glm::vec3(0, 0, 0);
-    mCurKS = glm::vec3(1, 1, 1);
-    mCurKE = glm::vec3(0, 0, 0);
+    mCurKD = kd;
+    mCurKA = ka;
+    mCurKS = ks;
+    mCurKE = ke;
     mShadowsEnabled = true;
 }
 
@@ -264,9 +270,29 @@ Material::Material(const std::string& _name,
     mTextures.insert(mTextures.end(), _map_ns.begin(), _map_ns.end());
     mTextures.insert(mTextures.end(), _map_d.begin(), _map_d.end());
 
-    mCurKD = glm::vec3(1, 1, 1);
-    mCurKA = glm::vec3(0, 0, 0);
-    mCurKS = glm::vec3(1, 1, 1);
-    mCurKE = glm::vec3(0, 0, 0);
+    mCurKD = kd;
+    mCurKA = ka;
+    mCurKS = ks;
+    mCurKE = ke;
+    mShadowsEnabled = true;
+}
+
+Material::Material(const std::string& _name, const std::string& _map_kd, const std::string& _map_ka, const std::string& _map_ks,
+    const std::string& _map_bump, const std::string& _map_ns, const std::string& _map_d,
+    const glm::vec3& _ka, const glm::vec3& _kd, const glm::vec3& _ks,
+    float _ns, float _ni, float _d, const glm::vec3& _ke, int _illum)
+    : name(_name), ka(_ka), kd(_kd), ks(_ks), ns(_ns), ni(_ni), d(_d), ke(_ke), illum(_illum)
+{
+    mTargetMapKD = _map_kd;
+    mTargetMapKA = _map_ka;
+    mTargetMapKS = _map_ks;
+    mTargetMapBump = _map_bump;
+    mTargetMapNS = _map_ns;
+    mTargetMapD = _map_d;
+
+    mCurKD = kd;
+    mCurKA = ka;
+    mCurKS = ks;
+    mCurKE = ke;
     mShadowsEnabled = true;
 }

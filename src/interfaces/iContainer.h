@@ -217,6 +217,10 @@ public:
 			mData.emplace(name, item);
 		else
 			mData[name] = item;
+
+		// If the item added was the first item, select it
+		if (mData.size() == 1)
+			Select(name);
 		return item;
 	}
 

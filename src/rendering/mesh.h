@@ -48,6 +48,17 @@ public:
 		return &mVertices[index];
 	}
 
+	//
+	Mesh(const std::string& name, const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::string& material)
+		: Mesh(name, material)
+	{
+		mVertices = vertices;
+		mIndices = indices;
+
+		Mesh::GenBuffers();
+	}
+
+	//
 	Mesh(const std::string& name, const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, Material* material)
 		: Mesh(name, material)
 	{
@@ -57,6 +68,15 @@ public:
 		Mesh::GenBuffers();
 	}
 
+	//
+	Mesh(std::string name, const std::string& material = "",
+		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
+		: IPrimitive(name, material, 0.0f, false, pos, rot, scale)
+	{
+		CalcBasis();
+	}
+
+	//
 	Mesh(std::string name, Material* material = nullptr,
 		glm::vec3 pos = glm::vec3(0.0f), glm::vec3 rot = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f))
 		: IPrimitive(name, material, 0.0f, false, pos, rot, scale)
@@ -64,6 +84,7 @@ public:
 		CalcBasis();
 	}
 
+	//
 	~Mesh()
 	{
 		mVertices.clear();

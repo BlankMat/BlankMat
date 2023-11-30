@@ -26,6 +26,13 @@ protected:
     std::vector<Texture*> mCurTextures;
     std::vector<std::string> mCurTextureNames;
 
+    std::string mTargetMapKD = "default_diffuse";
+    std::string mTargetMapKA = "default_ambient";
+    std::string mTargetMapKS = "default_specular";
+    std::string mTargetMapBump = "default_normal";
+    std::string mTargetMapNS = "default_height";
+    std::string mTargetMapD = "default_alpha";
+
 	/// <summary>
 	/// List of textures that are part of this material
 	/// </summary>
@@ -100,18 +107,24 @@ public:
     bool IsInternal();
 
     /// <summary>
-    /// Loads the textures of this material into the OpenGL context
-    /// </summary>
-    /// <param name="_state">Global state of the application</param>
-    /// <param name="_defaultMat">Default material</param>
-    void LoadTextures(State* _state, Material* _defaultMat);
-
-    /// <summary>
     /// Updates the given shader with this material's properties
     /// </summary>
     /// <param name="_shader">Shader to use for this material</param>
     /// <returns>Index of next available GL texture</returns>
     unsigned int UpdateShader(Shader* _shader);
+
+    /// <summary>
+    /// Loads the textures of this material into the OpenGL context
+    /// </summary>
+    /// <param name="_state">Global state of the application</param>
+    /// <param name="_defaultMat">Default material</param>
+    void LoadShaderTextures(State* _state, Material* _defaultMat);
+
+    /// <summary>
+    /// Loads the textures of the material from the scene's texture list
+    /// </summary>
+    /// <param name="_textures">Texture container for the scene</param>
+    void LoadMaterialTextures(TextureContainer* _textures);
 
     /// <summary>
     /// Constructs the default material
@@ -186,6 +199,29 @@ public:
     explicit Material(const std::string& _name, 
         const std::vector<Texture*>& _map_kd, const std::vector<Texture*>& _map_ka, const std::vector<Texture*>& _map_ks, 
         const std::vector<Texture*>& _map_bump, const std::vector<Texture*>& _map_ns, const std::vector<Texture*>& _map_d,
+        const glm::vec3& _ka = glm::vec3(), const glm::vec3& _kd = glm::vec3(), const glm::vec3& _ks = glm::vec3(),
+        float _ns = 0, float _ni = 1, float _d = 1, const glm::vec3& _ke = glm::vec3(), int _illum = 2);
+
+    /// <summary>
+    /// Constructs a material out of unloaded texture names
+    /// </summary>
+    /// <param name="_name">Name of the material</param>
+    /// <param name="_map_kd">Diffuse texture</param>
+    /// <param name="_map_ka">Ambient texture</param>
+    /// <param name="_map_ks">Specular texture</param>
+    /// <param name="_map_bump">Normal/Bump texture</param>
+    /// <param name="_map_ns">Specular highlight/Height texture</param>
+    /// <param name="_map_d">Alpha texture</param>
+    /// <param name="_ka">Alpha color</param>
+    /// <param name="_kd">Diffuse color</param>
+    /// <param name="_ks">Specular color</param>
+    /// <param name="_ns">Specular exponent</param>
+    /// <param name="_ni">Index of refraction</param>
+    /// <param name="_d">Alpha</param>
+    /// <param name="_ke">Emissive color</param>
+    /// <param name="_illum">Illumination mode</param>
+    explicit Material(const std::string& _name, const std::string& _map_kd, const std::string& _map_ka, const std::string& _map_ks,
+        const std::string& _map_bump, const std::string& _map_ns, const std::string& _map_d,
         const glm::vec3& _ka = glm::vec3(), const glm::vec3& _kd = glm::vec3(), const glm::vec3& _ks = glm::vec3(),
         float _ns = 0, float _ni = 1, float _d = 1, const glm::vec3& _ke = glm::vec3(), int _illum = 2);
 };

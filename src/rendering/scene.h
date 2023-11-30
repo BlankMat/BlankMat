@@ -40,9 +40,6 @@ protected:
 
 	std::string mCurShader = "";
 	Shader* mShader = nullptr;
-	Light* mGlobalLight = nullptr;
-	Camera* mMainCamera = nullptr;
-	Material* mDefaultMat = nullptr;
 	Node* mRootNode = nullptr;
 	State* mState = nullptr;
 
@@ -135,11 +132,20 @@ public:
 	// Returns the transform handle
 	IEntity* GetTransformHandle();
 
+	// Returns the state of the application
+	State* GetState();
+
 	// Adds the given node to the scene
 	void AddNode(Node* node);
 
 	// Adds the given mesh to the scene as child of the given node
 	void AddMesh(Mesh* mesh, Node* parent = nullptr);
+
+	// Adds the given camera to the scene
+	void AddCamera(const std::string& name, Camera* camera, bool select = false);
+
+	// Adds the given light to the scene
+	void AddLight(const std::string& name, Light* light, bool select = false);
 
 	// Creates a shader for the scene with the given name from the source file of the given name
 	Shader* CreateShader(const std::string& name, bool loadGeom);
@@ -165,14 +171,11 @@ public:
 	// Returns the current shader
 	const std::string GetCurShader();
 
-	// Sets up the scene's camera with the given options
-	void SetCamera(ActionStack* actionStack, Config* config);
-
 	// Sets the scene's camera to the given camera
-	void SetCamera(Camera* cam);
+	void SetCamera(const std::string& camera);
 
 	// Sets the scene's light to the given light
-	void SetLight(Light* light);
+	void SetLight(const std::string& light);
 
 	// Sets the scene's name
 	void SetName(const std::string& name);

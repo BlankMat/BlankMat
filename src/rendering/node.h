@@ -2,7 +2,9 @@
 #include "glIncludes.h"
 #include "rendering/mesh.h"
 #include "interfaces/iWritable.h"
+#include "containers/meshContainer.h"
 #include <vector>
+#include <unordered_set>
 
 /// <summary>
 /// Node used to group together other nodes and meshes in a scene
@@ -26,6 +28,11 @@ protected:
 	std::vector<Mesh*> mMeshes;
 
 	/// <summary>
+	/// List of mesh names to load eventually
+	/// </summary>
+	std::unordered_set<std::string> mUnloadedMeshes;
+
+	/// <summary>
 	/// Generates buffers. Nodes have no buffers.
 	/// </summary>
 	void GenBuffers() override {}
@@ -36,7 +43,7 @@ protected:
 	/// <param name="file">File to read</param>
 	/// <param name="parent">Parent node</param>
 	/// <returns>Node that was stored in the file</returns>
-	static Node* ReadRecurse(std::ifstream& file, Node* parent);
+	Node* ReadRecurse(std::ifstream& file, Node* parent);
 
 	/// <summary>
 	/// Recursively writes all nodes into the given file
@@ -44,7 +51,7 @@ protected:
 	/// <param name="file">File to write to</param>
 	/// <param name="node">Node to write</param>
 	/// <param name="depth">Depth of the node to write</param>
-	static void WriteRecurse(std::ofstream& file, Node* node, unsigned int depth = 0);
+	void WriteRecurse(std::ofstream& file, Node* node, unsigned int depth = 0);
 
 public:
 	/// <summary>
@@ -166,6 +173,18 @@ public:
 	/// <param name="name">Name of the mesh</param>
 	/// <returns>Mesh with the given name or nullptr if not found</returns>
 	Mesh* FindMesh(const std::string& name);
+
+	/// <summary>
+	/// Recursively loads the unloaded child meshes of this and child nodes
+	/// </summary>
+	/// <param name="meshes">Scene mesh list</param>
+	void LoadMeshes(MeshContainer* meshes);
+
+	/// <summary>
+	/// Adds the name of the mesh to the node, so that the mesh can later be obtained from a mesh container
+	/// </summary>
+	/// <param name="name">Name of the mesh</param>
+	void AddMeshName(const std::string& name);
 
 	/// <summary>
 	/// Adds a mesh for the node

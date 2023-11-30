@@ -92,4 +92,19 @@ protected:
 		file << "spotinner " << item->GetSpotInnerRadius() << std::endl;
 		file << "spotouter " << item->GetSpotOuterRadius() << std::endl;
 	}
+public:
+	/// <summary>
+	/// Draws all lights that are renderable
+	/// </summary>
+	/// <param name="shader">Shader to draw with</param>
+	/// <param name="state">Global state of the application</param>
+	/// <param name="defaultMat">Default material</param>
+	/// <param name="viewProj">View projection matrix</param>
+	/// <param name="drawMats">Whether to redraw the materials</param>
+	void Draw(Shader* shader, State* state, Material* defaultMat, const glm::mat4& viewProj, bool drawMats = false)
+	{
+		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
+		if (iter->second != nullptr)
+			iter->second->Draw(shader, state, defaultMat, viewProj, drawMats);
+	}
 };

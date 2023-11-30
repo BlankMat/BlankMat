@@ -4,16 +4,14 @@
 Node* Node::ReadRecurse(std::ifstream& file, Node* parent)
 {
 	// Construct empty node
-	Node* node = new Node(parent);
+	Node* node;
+	if (parent != nullptr)
+		node = new Node(parent);
+	else
+		node = this;
 
 	// Create variables to store all read information
-	std::string name = "";
-	glm::vec3 pos = glm::vec3(0.0f);
-	glm::vec3 rot = glm::vec3(0.0f);
-	glm::vec3 scale = glm::vec3(1.0f);
 	bool enabled = true;
-	std::vector<Node*> children;
-	std::vector<Mesh*> meshes;
 
 	// Read the node
 	std::string line;
@@ -33,23 +31,23 @@ Node* Node::ReadRecurse(std::ifstream& file, Node* parent)
 		// Parse lines
 		if (parse[0] == "NODE")
 		{
-			name = parse[1];
+			node->SetName(parse[1]);
 		}
 		else if (parse[0] == "pos")
 		{
-			pos = ReadVec3FromStrings(parse, 0);
+			node->SetPos(ReadVec3FromStrings(parse, 1));
 		}
 		else if (parse[0] == "rot")
 		{
-			rot = ReadVec3FromStrings(parse, 0);
+			node->SetRot(ReadVec3FromStrings(parse, 1));
 		}
 		else if (parse[0] == "scale")
 		{
-			scale = ReadVec3FromStrings(parse, 0);
+			node->SetScale(ReadVec3FromStrings(parse, 1));
 		}
 		else if (parse[0] == "enabled")
 		{
-			enabled = (parse[1] == "1");
+			node->Enable(parse[1] == "1");
 		}
 		else if (parse[0] == "meshes")
 		{
@@ -58,28 +56,16 @@ Node* Node::ReadRecurse(std::ifstream& file, Node* parent)
 			{
 				std::string meshName;
 				std::getline(file, meshName);
-				meshName = TrimWhitespace(meshName);
-				std::cout << "Node " << name << " has child " << meshName << std::endl;
+				node->AddMeshName(TrimWhitespace(meshName));
 			}
 		}
 		else if (parse[0] == "children")
 		{
 			int numChildren = std::stoi(parse[1]);
 			for (int i = 0; i < numChildren; i++)
-				ReadRecurse(file, node);
+				node->AddChild(ReadRecurse(file, node));
 		}
 	}
-
-	// Build node from info
-	node->SetName(name);
-	node->SetPos(pos);
-	node->SetRot(rot);
-	node->SetScale(scale);
-	node->Enable(enabled);
-	for (unsigned int i = 0; i < children.size(); i++)
-		node->AddChild(children[i]);
-	for (unsigned int i = 0; i < meshes.size(); i++)
-		node->AddMesh(meshes[i]);
 	return node;
 }
 
@@ -112,7 +98,8 @@ void Node::Read(std::ifstream& file, bool clear)
 {
 	if (clear)
 		Clear();
-	ReadRecurse(file, this);
+	// Replace this node with the new one
+	ReadRecurse(file, nullptr);
 }
 
 // Writes this node to the file
@@ -184,6 +171,22 @@ void Node::RecalcMatrices()
 	for (unsigned int i = 0; i < mChildren.size(); i++)
 		if (mChildren[i] != nullptr)
 			mChildren[i]->SetParentModelMatrix(mModelMatrix);
+}
+
+// Recursively loads the unloaded child meshes of this and child nodes
+void Node::LoadMeshes(MeshContainer* meshes)
+{
+	// Load unloaded meshes
+	for (auto iter = mUnloadedMeshes.begin(); iter != mUnloadedMeshes.end(); ++iter)
+		mMeshes.push_back(meshes->GetItem(*iter));
+
+	// Clear unloaded meshes
+	mUnloadedMeshes.clear();
+
+	// Load all meshes of child nodes
+	for (unsigned int i = 0; i < mChildren.size(); i++)
+		if (mChildren[i] != nullptr)
+			mChildren[i]->LoadMeshes(meshes);
 }
 
 // Finds the node with the given name, recursively
@@ -293,6 +296,17 @@ void Node::UpdateEnabledStatus()
 			mChildren[i]->EnableParent(mIsEnabled);
 }
 
+// Adds the name of the mesh to the node, so that the mesh can later be obtained from a mesh container
+void Node::AddMeshName(const std::string& name)
+{
+	if (mUnloadedMeshes.find(name) != mUnloadedMeshes.end())
+	{
+		std::cout << "WARNING::NODE::EXISTS Node already has the given mesh" << std::endl;
+		return;
+	}
+	mUnloadedMeshes.emplace(name);
+}
+
 // Adds a mesh to the node
 void Node::AddMesh(Mesh* mesh)
 {
@@ -394,10 +408,15 @@ void Node::Clear()
 {
 	for (unsigned int i = 0; i < (unsigned int)mChildren.size(); i++)
 	{
-		mChildren[i]->Clear();
-		delete mChildren[i];
+		if (mChildren[i] != nullptr)
+		{
+			mChildren[i]->Clear();
+			delete mChildren[i];
+		}
 	}
 	mChildren.clear();
+	mMeshes.clear();
+	mUnloadedMeshes.clear();
 }
 
 // Returns the number of child nodes

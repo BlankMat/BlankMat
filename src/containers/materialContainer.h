@@ -144,6 +144,16 @@ public:
 	}
 
 	/// <summary>
+	/// Loads the textures of materials in this container
+	/// </summary>
+	/// <param name="textures">Texture list of the scene</param>
+	void LoadTextures(TextureContainer* textures)
+	{
+		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
+			iter->second->LoadMaterialTextures(textures);
+	}
+
+	/// <summary>
 	/// Initializes a default material container with the default material
 	/// </summary>
 	/// <param name="textures">Texture container with default textures</param>

@@ -1,10 +1,16 @@
 #pragma once
 #include "rendering/camera.h"
 #include "interfaces/iContainer.h"
+#include "interaction/actionStack.h"
 
 class CameraContainer : public IContainer<Camera>
 {
 protected:
+	/// <summary>
+	/// Action stack used to connect camera to UI
+	/// </summary>
+	ActionStack* mActionStack = nullptr;
+
 	/// <summary>
 	/// Reads the next item from the input file stream
 	/// </summary>
@@ -66,7 +72,7 @@ protected:
 		}
 
 		// TODO: Replace Action stack with real action stack
-		return std::pair<std::string, Camera*>(name, new Camera(new ActionStack(), fov, nearClip, farClip, pos, dir, up, bgColor, orthSize, isPerspective, isWireframe));
+		return std::pair<std::string, Camera*>(name, new Camera(mActionStack, fov, nearClip, farClip, pos, dir, up, bgColor, orthSize, isPerspective, isWireframe));
 	}
 
 	/// <summary>
@@ -90,4 +96,11 @@ protected:
 		file << "wireframe " << (int)item->IsWireframe() << std::endl;
 	}
 public:
+	/// <summary>
+	/// Constructs a camera container with the action stack used to track UI variables
+	/// </summary>
+	/// <param name="actionStack">ActionStack of the app</param>
+	explicit CameraContainer(ActionStack* actionStack)
+		: mActionStack(actionStack)
+	{}
 };

@@ -45,6 +45,7 @@ public:
 	int mousePrevY = 0;
 	int mouseCurX = 0;
 	int mouseCurY = 0;
+	bool shouldRender = true;
 
 	std::string curShader = "";
 	Material* defaultMat = nullptr;
@@ -55,7 +56,7 @@ public:
 		if (mMaterialsThisFrame.find(material->name) != mMaterialsThisFrame.end())
 			return;
 
-		material->LoadTextures(this, defaultMat);
+		material->LoadShaderTextures(this, defaultMat);
 		mMaterialsThisFrame.emplace(material->name, material);
 	}
 

@@ -73,16 +73,19 @@ public:
 			ImGui::Separator();
 			ImGui::Text("Camera Settings");
 			Camera* cam = mScene->GetCamera();
-			cam->GetPos().Display();
-			cam->GetTarget().Display();
-			cam->GetPivot().Display();
-			cam->GetOrthSize().Display();
-			cam->GetFOV().Display();
-			cam->GetNearClip().Display();
-			cam->GetFarClip().Display();
-			cam->IsPerspective().Display();
-			cam->IsWireframe().Display();
-			cam->IsRotatingAroundPivot().Display();
+			if (cam != nullptr)
+			{
+				cam->GetPos().Display();
+				cam->GetTarget().Display();
+				cam->GetPivot().Display();
+				cam->GetOrthSize().Display();
+				cam->GetFOV().Display();
+				cam->GetNearClip().Display();
+				cam->GetFarClip().Display();
+				cam->IsPerspective().Display();
+				cam->IsWireframe().Display();
+				cam->IsRotatingAroundPivot().Display();
+			}
 
 			// Debug settings
 			ImGui::Separator();

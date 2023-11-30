@@ -44,14 +44,18 @@ int main()
         if (HandleWindowQuit(window, state))
             break;
 
-        // Calculate FPS and deltaTime
-        state->GetTimer()->HandleFrame();
+        // Only handle rendering if requested
+        if (state->shouldRender)
+        {
+            // Calculate FPS and deltaTime
+            state->GetTimer()->HandleFrame();
 
-        // Render
-        OpenGLDraw(window, state, scene);
+            // Render
+            OpenGLDraw(window, state, scene);
 
-        // Draw GUI
-        window->DrawGUI(state);
+            // Draw GUI
+            window->DrawGUI(state);
+        }
 
         // Swap buffers at the end of the loop
         glfwSwapBuffers(window->GetWindow());
@@ -145,8 +149,8 @@ void LoadDefaultScene(Scene* scene, State* state, Material* defaultMat, bool def
     TextureContainer* textures = scene->GetTextures();
 
     // Add light and camera
-    scene->SetCamera(state->GetActionStack(), cameraConfig);
-    scene->SetLight(new PLightCube("globalLight", 1.0f, mats, textures, lightConfig));
+    scene->AddCamera("main", new Camera(state->GetActionStack(), cameraConfig), true);
+    scene->AddLight("global", new PLightCube("global", 1.0f, mats, textures, lightConfig), true);
 
     scene->AddMesh(new VPlane(BG_PLANE_OBJ, 20.0f, defaultMat));
     scene->AddMesh(new VPlane("brickwall", 2.0f, scene->GetMaterial("brickwall"), glm::vec3(5, 2, 0), glm::vec3(90, 0, 0)));
