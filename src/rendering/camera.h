@@ -247,9 +247,9 @@ public:
     /// <param name="orthSize">Orthogonal size of orth camera</param>
     /// <param name="isPerspective">Whether the camera is in perspective or orthogonal view mode</param>
     /// <param name="isWireframe">Whether the camera is rendering in wireframe or not</param>
-    Camera(ActionStack* actionStack, float fov, float nearClip, float farClip, 
-        const glm::vec3& pos, const glm::vec3& dir, const glm::vec3& up, const glm::vec3& color, 
-        float orthSize = 10.0f, bool isPerspective = true, bool isWireframe = false)
+    Camera(ActionStack* actionStack, float fov = 45.0f, float nearClip = 0.1f, float farClip = 100.0f, 
+        const glm::vec3& pos = glm::vec3(5, 5, 5), const glm::vec3& dir = glm::vec3(-5, -5, -5), const glm::vec3& up = glm::vec3(0.0f, 1.0f, 0.0f), 
+        const glm::vec3& color = glm::vec3(0.3f, 0.4f, 0.4f), float orthSize = 10.0f, bool isPerspective = true, bool isWireframe = false)
     {
         mFOV = UIFloat("FOV", fov, actionStack, [this]() { TriggerRecalcProjection(); });
         mNearClip = UIFloat("Near Clip", nearClip, actionStack, [this]() { TriggerRecalcProjection(); });

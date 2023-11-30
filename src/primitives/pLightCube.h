@@ -47,7 +47,7 @@ public:
 
 	PLightCube(const std::string& name, float size, LightType type = LightType::POINT, 
         MaterialContainer* materials = nullptr, TextureContainer* textures = nullptr,
-        const glm::vec3& pos = glm::vec3(1.0f), const glm::vec3& dir = glm::vec3(-1.0f),
+        const glm::vec3& pos = glm::vec3(-5.0f, 5.0f, 5.0f), const glm::vec3& dir = glm::vec3(5.0f, 5.0f, 5.0f),
         const glm::vec3& color = glm::vec3(1.0f), float kd = 1.0f, float ka = 0.1f, float ks = 0.5f, 
         bool gamma = true, float range = 13.0f, float spotInner = 25, float spotOuter = 35)
         : Light(type, pos, dir, color, kd, ka, ks, gamma, range, spotInner, spotOuter)

@@ -108,6 +108,12 @@ public:
 		mActionStack->Save();
 	}
 
+	// Clears the action stack
+	void ClearActionStack()
+	{
+		mActionStack->Clear();
+	}
+
 	// Returns whether the action stack is saved
 	bool IsSaved() const
 	{

@@ -2,6 +2,7 @@
 #include "glIncludes.h"
 #include "timer.h"
 #include "rendering/scene.h"
+#include "primitives/pLightCube.h"
 #include <assimp/Importer.hpp>
 #include <assimp/Exporter.hpp>
 #include <assimp/scene.h>
@@ -269,9 +270,9 @@ private:
 
 		try
 		{
-			// Clears the scene of everything
+			// If replacing the scene, clear it
 			if (replace)
-				scene->Clear();
+				ClearScene(scene);
 
 			// Read all items
 			ReadBlankMatItem(scene->GetRootNode(), replace, file, "Nodes");
@@ -297,6 +298,18 @@ private:
 		file.close();
 	}
 public:
+	static void ClearScene(Scene* scene)
+	{
+		// Clears the scene of everything
+		scene->Clear();
+	}
+
+	static void LoadDefaultScene(Scene* scene)
+	{
+		scene->AddCamera("main", new Camera(scene->GetState()->GetActionStack()), true);
+		scene->AddLight("global", new PLightCube("global", 1.0f, LightType::POINT, scene->GetMaterials(), scene->GetTextures()), true);
+	}
+
 	static void ReadScene(Scene* scene, const std::string& path, bool replace)
 	{
 		// Get extension
