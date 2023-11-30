@@ -108,10 +108,13 @@ void Node::Write(std::ofstream& file)
 	WriteRecurse(file, this, 0);
 }
 
-// Returns the number of elements that can be written
+// Returns the number of elements that will be written
 unsigned int Node::WriteCount()
 {
-	return (unsigned int)mChildren.size();
+	unsigned int count = mChildren.size();
+	for (unsigned int i = 0; i < mChildren.size(); i++)
+		count += mChildren[i]->WriteCount();
+	return count;
 }
 
 // Returns the number of child nodes

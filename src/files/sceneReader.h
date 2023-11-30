@@ -285,6 +285,7 @@ private:
 			// Reconstruct relationships between items
 			scene->GetMaterials()->LoadTextures(scene->GetTextures());
 			scene->GetMeshes()->LoadMaterials(scene->GetMaterials());
+			scene->GetLights()->LoadMaterials(scene->GetMaterials(), scene->GetTextures());
 			scene->GetRootNode()->LoadMeshes(scene->GetMeshes());
 			scene->GetRootNode()->RecalcMatrices();
 			scene->UpdateRenderList();

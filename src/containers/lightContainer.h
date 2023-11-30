@@ -1,6 +1,9 @@
 #pragma once
 #include "rendering/light.h"
+#include "primitives/pLightCube.h"
 #include "interfaces/iContainer.h"
+#include "containers/materialContainer.h"
+#include "containers/textureContainer.h"
 
 class LightContainer : public IContainer<Light>
 {
@@ -22,6 +25,7 @@ protected:
 		float ka = 0.1f;
 		float ks = 1.0f;
 		bool gamma = false;
+		bool cube = false;
 		float range = 30.0f;
 		float spotInner = 25.0f;
 		float spotOuter = 35.0f;
@@ -46,6 +50,8 @@ protected:
 				name = parse[1];
 			if (parse[0] == "type")
 				type = (LightType)std::stoi(parse[1]);
+			if (parse[0] == "cube")
+				cube = (parse[1] == "1");
 			else if (parse[0] == "pos")
 				pos = ReadVec3FromStrings(parse, 1);
 			else if (parse[0] == "dir")
@@ -68,7 +74,11 @@ protected:
 				spotInner = std::stof(parse[1]);
 		}
 
-		return std::pair<std::string, Light*>(name, new Light(type, pos, dir, color, kd, ka, ks, gamma, range, spotInner, spotOuter));
+		// If the light stored was a lightcube, construct that instead
+		if (cube)
+			return std::pair<std::string, Light*>(name, new PLightCube(name, type, pos, dir, color, kd, ka, ks, gamma, range, spotInner, spotOuter));
+		else
+			return std::pair<std::string, Light*>(name, new Light(type, pos, dir, color, kd, ka, ks, gamma, range, spotInner, spotOuter));
 	}
 
 	/// <summary>
@@ -81,6 +91,7 @@ protected:
 	{
 		file << "LIGHT " << key << std::endl;
 		file << "type " << (int)item->GetType() << std::endl;
+		file << "cube " << (int)item->IsCube() << std::endl;
 		file << "pos " << Vec3ToString(item->GetPos()) << std::endl;
 		file << "dir " << Vec3ToString(item->GetDir()) << std::endl;
 		file << "color " << Vec3ToString(item->GetColor()) << std::endl;
@@ -93,6 +104,17 @@ protected:
 		file << "spotouter " << item->GetSpotOuterRadius() << std::endl;
 	}
 public:
+	/// <summary>
+	/// Loads all materials of lights, if they have any
+	/// </summary>
+	/// <param name="materials">Material list</param>
+	/// <param name="textures">Texture list</param>
+	void LoadMaterials(MaterialContainer* materials, TextureContainer* textures)
+	{
+		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
+			iter->second->LoadMaterials(materials, textures);
+	}
+
 	/// <summary>
 	/// Draws all lights that are renderable
 	/// </summary>

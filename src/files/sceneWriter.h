@@ -14,7 +14,7 @@ private:
 		file << "# " << label << std::endl;
 		item->Write(file);
 		file << std::endl;
-		Timer::Time(startTime, "Wrote " + label);
+		Timer::Time(startTime, "Wrote " + std::to_string(item->WriteCount()) + " " + label);
 	}
 
 	static void SaveAssimpScene(Scene* scene, const std::string& path)

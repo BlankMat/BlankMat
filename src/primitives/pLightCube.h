@@ -3,8 +3,6 @@
 #include "rendering/light.h"
 #include "primitives/pLine.h"
 #include "primitives/pCube.h"
-#include "containers/textureContainer.h"
-#include "containers/materialContainer.h"
 
 class PLightCube : public Light
 {
@@ -45,6 +43,23 @@ public:
         mDirLine->SetRot(GetRotationDegrees(dir));
     }
 
+    void LoadMaterials(MaterialContainer* materials, TextureContainer* textures) override
+    {
+        mCube->SetMaterial(materials->AddMaterial(new Material("internal_lightMat", mColor, textures, true)));
+        mDirLine->SetMaterial(materials->AddMaterial(new Material("internal_yellow", glm::vec3(1, 1, 0), textures, true)));
+    }
+
+    PLightCube(const std::string& name, LightType type = LightType::POINT, const glm::vec3& pos = glm::vec3(1.0f), const glm::vec3& dir = glm::vec3(-1.0f),
+        const glm::vec3& color = glm::vec3(1.0f), float kd = 1.0f, float ka = 0.1f, float ks = 0.5f, bool gamma = true,
+        float range = 13.0f, float spotInner = 25, float spotOuter = 35)
+        : Light(type, pos, dir, color, kd, ka, ks, gamma, range, spotInner, spotOuter)
+    {
+        mIsCube = true;
+        mCube = new PCube(name, 1.0f, nullptr, 0.0f, false, pos);
+        mDirLine = new PLine(name, glm::vec3(0, 0, 0), glm::vec3(0, 0, 1.5f), nullptr, 15.0f, false, pos);
+        SetDir(dir);
+    }
+
 	PLightCube(const std::string& name, float size, LightType type = LightType::POINT, 
         MaterialContainer* materials = nullptr, TextureContainer* textures = nullptr,
         const glm::vec3& pos = glm::vec3(-5.0f, 5.0f, 5.0f), const glm::vec3& dir = glm::vec3(5.0f, 5.0f, 5.0f),
@@ -52,10 +67,10 @@ public:
         bool gamma = true, float range = 13.0f, float spotInner = 25, float spotOuter = 35)
         : Light(type, pos, dir, color, kd, ka, ks, gamma, range, spotInner, spotOuter)
     {
-        Material* lightMat = materials->AddMaterial(new Material("internal_lightMat", color, textures, true));
-        Material* yellowMat = materials->AddMaterial(new Material("internal_yellow", glm::vec3(1, 1, 0), textures, true));
-        mCube = new PCube(name, size, lightMat, 0.0f, false, pos);
-        mDirLine = new PLine(name, glm::vec3(0, 0, 0), glm::vec3(0, 0, 1.5f), yellowMat, 15.0f, false, pos);
+        mIsCube = true;
+        mCube = new PCube(name, size, nullptr, 0.0f, false, pos);
+        mDirLine = new PLine(name, glm::vec3(0, 0, 0), glm::vec3(0, 0, 1.5f), nullptr, 15.0f, false, pos);
+        LoadMaterials(materials, textures);
         SetDir(dir);
     }
 
@@ -69,5 +84,6 @@ public:
     ~PLightCube()
     {
         delete mCube;
+        delete mDirLine;
     }
 };
