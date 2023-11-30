@@ -220,6 +220,18 @@ Shader* Scene::CreateShader(const std::string& name, Config* config)
 	return mShaders->Add(name, new Shader(config->GetString("file"), config->GetBool("hasGeomShader"), name));
 }
 
+// Updates the scene's material render list
+void Scene::UpdateRenderList()
+{
+	// Clear the render list
+	for (auto iter = mMeshRenderList.begin(); iter != mMeshRenderList.end(); ++iter)
+		iter->second->ClearData();
+
+	// Add all meshes to their appropriate render list
+	for (auto iter = mMeshes->Data().begin(); iter != mMeshes->Data().end(); ++iter)
+		SetEntityMaterial(iter->second, iter->second->GetMaterial());
+}
+
 // Returns the texture container of the scene
 TextureContainer* Scene::GetTextures()
 {
@@ -419,8 +431,7 @@ IEntity* Scene::AddEntity(const std::string& shaderName, IEntity* entity, bool p
 {
 	if (mEntityList.find(shaderName) == mEntityList.begin())
 		mEntityList.emplace(shaderName, new EntityContainer());
-	EntityContainer* entityList = mEntityList[shaderName];
-	entityList->Add(entity->GetName(), entity);
+	mEntityList[shaderName]->Add(entity->GetName(), entity);
 	return entity;
 }
 

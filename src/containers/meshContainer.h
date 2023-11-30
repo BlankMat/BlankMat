@@ -176,7 +176,9 @@ public:
 	void LoadMaterials(MaterialContainer* materials)
 	{
 		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
+		{
 			iter->second->LoadMaterial(materials);
+		}
 	}
 
 	/// <summary>

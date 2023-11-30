@@ -285,6 +285,7 @@ private:
 			scene->GetMaterials()->LoadTextures(scene->GetTextures());
 			scene->GetMeshes()->LoadMaterials(scene->GetMaterials());
 			scene->GetRootNode()->LoadMeshes(scene->GetMeshes());
+			scene->UpdateRenderList();
 
 			Timer::Time(startTime, "Read scene from file " + path + " successfully");
 		}

@@ -155,6 +155,9 @@ public:
 
 	// Creates a shader for the scene with the given name, loading it from a config
 	Shader* CreateShader(const std::string& name, Config* config);
+
+	// Updates the scene's material render list
+	void UpdateRenderList();
 	
 	// Rotates the current camera by the given delta degrees
 	void RotateCamera(const glm::vec3& delta);

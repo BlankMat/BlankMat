@@ -137,6 +137,15 @@ public:
 	}
 
 	/// <summary>
+	/// Clears the data of the container without deleting it. 
+	/// Only use this if pointers to the data exist elsewhere.
+	/// </summary>
+	void ClearData()
+	{
+		mData.clear();
+	}
+
+	/// <summary>
 	/// Returns the number of items that will be written from the container
 	/// </summary>
 	/// <returns>Number of writable items</returns>

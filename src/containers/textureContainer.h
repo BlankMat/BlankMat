@@ -74,7 +74,7 @@ public:
 	/// </summary>
 	/// <param name="item">The item to store</param>
 	/// <returns>The element stored in the container</returns>
-	Texture* AddMaterial(Texture* item)
+	Texture* AddTexture(Texture* item)
 	{
 		return Add(item->name, item);
 	}
