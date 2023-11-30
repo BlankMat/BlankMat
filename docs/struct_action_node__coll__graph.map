@@ -1,0 +1,6 @@
+<map id="ActionNode" name="ActionNode">
+<area shape="rect" id="Node000001" title="Doubly linked node that stores the do and undo command of an action." alt="" coords="5,99,94,125"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="111,103,120,112,112,121,94,124,94,118,110,116,115,112,107,107"/>
+<area shape="rect" id="Node000002" href="$class_i_command.html" title="Command interface. Allows executing the command and undoing it." alt="" coords="8,5,91,32"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="52,48,52,98,47,98,47,48"/>
+</map>

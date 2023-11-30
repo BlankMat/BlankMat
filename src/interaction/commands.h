@@ -84,5 +84,9 @@ public:
 		input->AddCommand("COPY", new RunFunctionCommand("COPY", nullptr)); // Copy works by default
 		input->AddCommand("CUT", new RunFunctionCommand("CUT", nullptr)); // Cut works by default
 		input->AddCommand("PASTE", new RunFunctionCommand("PASTE", nullptr)); // Paste works by default
+
+		input->SetMouseRotFunction(std::bind(&Scene::RotateCamera, scene, std::placeholders::_1));
+		input->SetMouseMoveFunction(std::bind(&Scene::TranslateCamera, scene, std::placeholders::_1));
+		input->SetMouseZoomFunction(std::bind(&Scene::TranslateCamera, scene, std::placeholders::_1));
 	}
 };

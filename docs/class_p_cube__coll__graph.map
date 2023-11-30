@@ -1,13 +1,11 @@
 <map id="PCube" name="PCube">
-<area shape="rect" id="Node000001" title=" " alt="" coords="47,511,108,537"/>
-<area shape="rect" id="Node000002" href="$class_i_primitive.html" title=" " alt="" coords="5,419,150,461"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,477,80,510,75,510,75,477"/>
-<area shape="rect" id="Node000003" href="$class_i_entity.html" title=" " alt="" coords="48,343,107,369"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="80,385,80,419,75,419,75,385"/>
-<area shape="rect" id="Node000004" href="$class_material.html" title="Class that stores all texture and render information for a material." alt="" coords="44,252,111,279"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="80,294,80,342,75,342,75,294"/>
-<area shape="rect" id="Node000005" href="$class_i_material.html" title=" " alt="" coords="9,176,146,203"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="80,218,80,252,75,252,75,218"/>
-<area shape="rect" id="Node000006" href="$struct_texture.html" title=" " alt="" coords="45,5,110,32"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="80,47,80,176,75,176,75,47"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="47,435,108,461"/>
+<area shape="rect" id="Node000002" href="$class_i_primitive.html" title=" " alt="" coords="5,343,150,385"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,401,80,434,75,434,75,401"/>
+<area shape="rect" id="Node000003" href="$class_i_entity.html" title=" " alt="" coords="48,267,107,293"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="80,309,80,343,75,343,75,309"/>
+<area shape="rect" id="Node000004" href="$class_material.html" title="Class that stores all texture and render information for a material." alt="" coords="44,176,111,203"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="80,218,80,266,75,266,75,218"/>
+<area shape="rect" id="Node000005" href="$struct_texture.html" title="A structure that stores a texture file that has been read into the OpenGL context." alt="" coords="45,5,110,32"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="80,47,80,176,75,176,75,47"/>
 </map>

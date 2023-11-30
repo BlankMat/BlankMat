@@ -1,5 +1,15 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$class_i_container.html" title=" " alt="" coords="5,5,141,32"/>
-<area shape="rect" id="Node000001" href="$class_mesh_container.html" title=" " alt="" coords="189,5,297,32"/>
-<area shape="poly" id="edge4_Node000000_Node000001" title=" " alt="" coords="156,16,188,16,188,21,156,21"/>
+<area shape="rect" id="Node000000" href="$class_i_command.html" title="Command interface. Allows executing the command and undoing it." alt="" coords="5,132,89,159"/>
+<area shape="rect" id="Node000001" href="$class_add_value_command.html" title=" " alt="" coords="149,5,316,32"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="62,118,93,78,113,59,135,42,159,30,162,35,138,46,116,63,97,82,67,121"/>
+<area shape="rect" id="Node000002" href="$class_change_value_command.html" title=" " alt="" coords="138,56,327,83"/>
+<area shape="poly" id="edge2_Node000000_Node000002" title=" " alt="" coords="80,121,136,92,169,81,171,86,138,97,83,126"/>
+<area shape="rect" id="Node000003" href="$class_redo_command.html" title=" " alt="" coords="177,107,288,133"/>
+<area shape="poly" id="edge3_Node000000_Node000003" title=" " alt="" coords="104,135,176,125,177,130,104,140"/>
+<area shape="rect" id="Node000004" href="$class_run_function_command.html" title=" " alt="" coords="156,157,309,184"/>
+<area shape="poly" id="edge4_Node000000_Node000004" title=" " alt="" coords="105,150,156,158,155,163,104,156"/>
+<area shape="rect" id="Node000005" href="$class_run_toggle_function_command.html" title=" " alt="" coords="137,208,328,235"/>
+<area shape="poly" id="edge5_Node000000_Node000005" title=" " alt="" coords="83,165,138,194,171,205,169,210,136,198,80,169"/>
+<area shape="rect" id="Node000006" href="$class_undo_command.html" title=" " alt="" coords="177,259,288,285"/>
+<area shape="poly" id="edge6_Node000000_Node000006" title=" " alt="" coords="67,170,97,209,116,228,138,244,178,261,176,266,135,249,113,232,93,212,62,173"/>
 </map>

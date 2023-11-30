@@ -1,7 +1,9 @@
 <map id="LightContainer" name="LightContainer">
-<area shape="rect" id="Node000001" title=" " alt="" coords="19,172,123,199"/>
-<area shape="rect" id="Node000002" href="$class_i_container.html" title=" " alt="" coords="5,96,137,123"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="74,138,74,172,68,172,68,138"/>
-<area shape="rect" id="Node000003" href="$class_light.html" title=" " alt="" coords="46,5,96,32"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="74,48,74,95,68,95,68,48"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="32,172,136,199"/>
+<area shape="rect" id="Node000002" href="$class_i_container.html" title=" " alt="" coords="18,96,150,123"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,138,87,172,82,172,82,138"/>
+<area shape="rect" id="Node000003" href="$class_i_writable.html" title=" " alt="" coords="5,5,78,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="57,45,80,94,76,97,52,47"/>
+<area shape="rect" id="Node000004" href="$class_light.html" title=" " alt="" coords="102,5,152,32"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="117,47,93,97,88,94,112,45"/>
 </map>

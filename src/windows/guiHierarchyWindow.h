@@ -56,7 +56,7 @@ protected:
             return;
 
         // Render all meshes of node
-        for (unsigned int j = 0; j < node->GetMeshCount(); j++)
+        for (unsigned int j = 0; j < node->MeshCount(); j++)
         {
             // Get mesh
             IEntity* mesh = node->GetMesh(j);
@@ -66,7 +66,7 @@ protected:
         }
 
         // Render all child nodes if requested
-        for (unsigned int i = 0; i < node->GetChildCount(); i++)
+        for (unsigned int i = 0; i < node->ChildCount(); i++)
         {
             RenderNode(selEntity, node->GetChild(i), depth + 1);
         }

@@ -5,9 +5,8 @@
 Window::Window(int width, int height, const std::string& name, Config* config)
     : mWidth(width), mHeight(height), mName(name)
 {
-    // State and scene must be initialized first, since they are needed for other init
+    // State must be initialized first, since it is needed for other init
     mState = new State(config);
-    mScene = new Scene(mState);
 
     // Setup all components of the window, returning if any of them fail
     // GLFW must be setup first
@@ -29,13 +28,16 @@ Window::Window(int width, int height, const std::string& name, Config* config)
     if (!SetupShadows())
         return;
 
+    // Initialize scene last, since it it needs GLFW and GLAD to already be init
+    mScene = new Scene(mState);
+
     // Once the window is setup, initialize IO and file operations
     mInput = new Input(mIO, mState, config);
     mSceneIO = new SceneIO(mState, mScene, mWindow);
 }
 
 // Draws all GUIs
-void Window::DrawGUI()
+void Window::DrawGUI(State* state)
 {
     // Start the Dear ImGUI frame
     ImGui_ImplOpenGL3_NewFrame();
@@ -67,9 +69,10 @@ void Window::DrawGUI()
         }
     }
 
-    for (auto iter = mGUIList.begin(); iter != mGUIList.end(); ++iter)
-        if (iter->second->IsEnabled())
-            iter->second->Draw();
+    if (state->drawGUI)
+        for (auto iter = mGUIList.begin(); iter != mGUIList.end(); ++iter)
+            if (iter->second->IsEnabled())
+                iter->second->Draw();
 
     // Rendering
     ImGui::Render();
@@ -186,10 +189,7 @@ bool Window::SetupImGui(Config* config)
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     mIO = &ImGui::GetIO();
-
-    // Initialize ImGui
-    ImGui_ImplGlfw_InitForOpenGL(mWindow, true);
-    ImGui_ImplOpenGL3_Init("#version 330");
+    (void)mIO;
 
     // Handle font
     mIO->Fonts->AddFontFromFileTTF(FileSystem::GetPath(FONT_DIR + styleConfig->GetString("font")).c_str(), styleConfig->GetFloat("fontSize"));
@@ -201,6 +201,10 @@ bool Window::SetupImGui(Config* config)
 
     // Setup style
     SetupImGuiStyle(styleConfig->GetBool("darkTheme"), styleConfig->GetFloat("windowOpacity"));
+
+    // Setup ImGui Renderer backends
+    ImGui_ImplGlfw_InitForOpenGL(mWindow, true);
+    ImGui_ImplOpenGL3_Init("#version 330");
 
     // Return success
     return true;

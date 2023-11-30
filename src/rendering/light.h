@@ -118,7 +118,7 @@ public:
 		if (!isRotating)
 			SetPos(mOffset);
 		else
-			SetPos(glm::vec3(mOffset.x * sin(glfwGetTime()), mOffset.y, mOffset.z * cos(glfwGetTime())));
+			SetPos(glm::vec3(mOffset.x * sin((float)glfwGetTime()), mOffset.y, mOffset.z * cos((float)glfwGetTime())));
 	}
 
 	void UpdateDiscoLight(bool isDisco)
@@ -126,7 +126,7 @@ public:
 		if (!isDisco)
 			SetColor(mBaseColor);
 		else
-			SetColor(glm::vec3(mBaseColor.x * sin(glfwGetTime() - PI * 0.5f), mBaseColor.y * sin(glfwGetTime()), mBaseColor.z * sin(glfwGetTime() + PI * 0.5f)));
+			SetColor(glm::vec3(mBaseColor.x * sin((float)glfwGetTime() - PI * 0.5f), mBaseColor.y * sin((float)glfwGetTime()), mBaseColor.z * sin((float)glfwGetTime() + PI * 0.5f)));
 	}
 
 	void SetRange(const float lightRange)
@@ -138,9 +138,9 @@ public:
 		CalcMatrices();
 	}
 
-	Light(const LightType type = LightType::POINT, const glm::vec3& pos = glm::vec3(1.0f), const glm::vec3& dir = glm::vec3(-1.0f), 
-		const glm::vec3& color = glm::vec3(1.0f), const float kd = 1.0f, const float ka = 0.1f, const float ks = 0.5f, const bool gamma = true, 
-		const float range = 13.0f, const float spotInner = 25, const float spotOuter = 35)
+	Light(LightType type = LightType::POINT, const glm::vec3& pos = glm::vec3(1.0f), const glm::vec3& dir = glm::vec3(-1.0f), 
+		const glm::vec3& color = glm::vec3(1.0f), float kd = 1.0f, float ka = 0.1f, float ks = 0.5f, bool gamma = true, 
+		float range = 13.0f, float spotInner = 25, float spotOuter = 35)
 		: mType(type), mColor(color), mBaseColor(color), mDir(dir), mPos(pos), mKD(kd), mKA(ka), mKS(ks), mOffset(pos), mGamma(gamma), 
 		mSpotInner(spotInner), mSpotOuter(spotOuter)
 	{

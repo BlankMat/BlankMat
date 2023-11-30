@@ -1,6 +1,5 @@
 #pragma once
 #include "fileSystem.h"
-#include "utils.h"
 #include "config.h"
 #include <json/json.h>
 #include <string>
@@ -93,9 +92,17 @@ public:
 			return nullptr;
 		}
 
-		std::ifstream f(fileName);
+		// Open the file
+		std::ifstream file(fileName);
+		if (!file.is_open())
+		{
+			std::cout << "ERROR::CONFIGREADER::DNE File " << fileName << " does not exist or cannot be accessed." << std::endl;
+			return nullptr;
+		}
+
 		Json::Value root;
-		f >> root;
+		file >> root;
+		file.close();
 
 		// If the root cannot be read
 		if (root.isNull() || root.empty())

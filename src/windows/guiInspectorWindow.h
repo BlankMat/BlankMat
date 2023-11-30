@@ -46,17 +46,6 @@ public:
 				// Enabled
 				sel->Enable(
 					GUIWindowUtils::Checkbox("Enabled", sel->IsEnabled()));
-
-				ImGui::Separator();
-				ImGui::Text("Internal Matrices (readonly)");
-				GUIWindowUtils::InputMat4("Model", sel->GetModelMatrix());
-				ImGui::Separator();
-				GUIWindowUtils::InputMat4("Self Model", sel->GetSelfModelMatrix());
-				ImGui::Separator();
-				GUIWindowUtils::InputMat4("Parent Model", sel->GetParentModelMatrix());
-				ImGui::Separator();
-				GUIWindowUtils::InputMat3("Normal Model", sel->GetNormalModelMatrix());
-				ImGui::Separator();
 			}
 		}
 		ImGui::End();

@@ -2,8 +2,8 @@
 #include "glIncludes.h"
 #include "tools/state.h"
 #include "rendering/scene.h"
-#include "files/sceneReader.h"
 #include "files/sceneWriter.h"
+#include "files/sceneReader.h"
 #include <iostream>
 
 class SceneIO
@@ -69,6 +69,19 @@ private:
 			ext = "";
 	}
 
+	static std::string IncrementPath(const std::string path)
+	{
+		size_t numIndex = path.find_last_not_of("0123456789");
+		std::string endNums = path.substr(numIndex + 1);
+
+		// If the filename does not end in numbers, pad it with numbers
+		if (endNums.length() <= 0)
+			return path + "_000";
+
+		// If the filename ends in numbers, increment the number by one
+		return path.substr(0, numIndex + 1) + IntToString(std::stoi(endNums) + 1, endNums.length());
+	}
+
 	void ReadPath(const std::string path)
 	{
 		SplitPath(path, mCurDirectory, mCurFileName, mCurExtension);
@@ -87,7 +100,7 @@ public:
 
 	void SaveScene()
 	{
-		std::cout << "Ran command SaveScene" << std::endl;
+		std::cout << "Ran function SaveScene" << std::endl;
 
 		// If no file has been opened, treat this as save scene as
 		if (mCurFileName == "")
@@ -102,7 +115,7 @@ public:
 
 	void SaveSceneAs()
 	{
-		std::cout << "Ran command SaveSceneAs" << std::endl;
+		std::cout << "Ran function SaveSceneAs" << std::endl;
 		std::string fileName = pfd::save_file("Save Scene As...", mCurDirectory, { 
 			"BlankMat Scenes (.blank)", "*.blank" 
 		}, pfd::opt::none).result();
@@ -118,54 +131,78 @@ public:
 
 	void SaveSceneIncrement()
 	{
-		std::cout << "Ran command SaveSceneIncrement" << std::endl;
-		// TODO: Implement save scene increment
+		std::cout << "Ran function SaveSceneIncrement" << std::endl;
+		// If no file has been opened, treat this as save scene as
+		if (mCurFileName == "")
+		{
+			SaveSceneAs();
+			return;
+		}
+
+		// Update filename
+		mCurFileName = IncrementPath(mCurFileName);
+		mState->SetCurFileName(mCurFileName);
+
+		// Save scene
+		std::cout << "Saving scene to file " << mCurFileName << std::endl;
+		SceneWriter::SaveScene(mScene, GetFullPath());
 		mState->SaveActionStack();
 	}
 
 	void OpenScene()
 	{
-		std::cout << "Ran command OpenScene" << std::endl;
-		auto selection = pfd::open_file("Open Scene", mCurDirectory, { 
+		std::cout << "Ran function OpenScene" << std::endl;
+		std::vector<std::string> selection = pfd::open_file("Open Scene", mCurDirectory, { 
 			"BlankMat Scenes (.blank)", "*.blank" 
 		}, pfd::opt::none).result();
 
 		if (!selection.empty())
 		{
 			ReadPath(selection[0]);
-			SceneReader::LoadScene(mScene, GetFullPath());
+			SceneReader::ReadScene(mScene, GetFullPath(), true);
 			mState->SaveActionStack();
 		}
 	}
 
 	void NewScene()
 	{
-		std::cout << "Ran command NewScene" << std::endl;
+		std::cout << "Ran function NewScene" << std::endl;
 		// TODO: Implement new scene
 	}
 
 	void Import()
 	{
-		std::cout << "Ran command Import" << std::endl;
-		auto selection = pfd::open_file("Import File", mCurDirectory, { 
+		std::cout << "Ran function Import" << std::endl;
+		std::vector<std::string> selection = pfd::open_file("Import File", mCurDirectory, {
 			"3D Models (.obj)", "*.obj", 
 			"BlankMat Scenes (.blank)", "*.blank"
 		}, pfd::opt::none).result();
 
 		if (!selection.empty())
 		{
-			std::string tempDir = "";
-			std::string tempFile = "";
-			std::string tempExt = "";
-			SplitPath(selection[0], tempDir, tempFile, tempExt);
-			// TODO: Implement import
+			SceneReader::ReadScene(mScene, selection[0], false);
+			mState->SaveActionStack();
 		}
 	}
 
 	void Export()
 	{
-		std::cout << "Ran command Export" << std::endl;
-		// TODO: Implement export
+		std::cout << "Ran function Export" << std::endl;
+		std::string fileName = pfd::save_file("Export", mCurDirectory, {
+			"Obj (.obj)", "*.obj",
+			"BlankMat Scenes (.blank)", "*.blank"
+		}, pfd::opt::none).result();
+
+		if (fileName != "")
+		{
+			std::string tempDir = "";
+			std::string tempFile = "";
+			std::string tempExt = "";
+			SplitPath(fileName, tempDir, tempFile, tempExt);
+			// TODO: Validate export file extension
+			SceneWriter::SaveScene(mScene, tempDir + tempFile + tempExt);
+			mState->SaveActionStack();
+		}
 	}
 
 	explicit SceneIO(State* state, Scene* scene, GLFWwindow* window)

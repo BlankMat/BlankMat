@@ -34,6 +34,8 @@
 #include "primitives/vCube.h"
 #include "primitives/vPlane.h"
 
+#include <thread>
+
 constexpr unsigned int SCR_WIDTH = 1280;
 constexpr unsigned int SCR_HEIGHT = 720;
 

@@ -62,6 +62,8 @@ public:
     UIVec3& GetRot() { return mRot; }
     // Returns the direction of the camera
     UIVec3& GetDir() { return mDir; }
+    // Returns the up direction of the camera
+    UIVec3& GetUp() { return mUp; }
     // Returns the camera's current look target
     UIVec3& GetTarget() { return mTarget; }
     // Returns the camera's pivot
@@ -143,7 +145,7 @@ public:
     const glm::mat4& GetProjection(float aspect)
     {
         // Only recalculate projection matrix if needed
-        if (mRecalcProjection || aspect != mPrevAspect)
+        if (aspect != 0.0f && (mRecalcProjection || aspect != mPrevAspect))
         {
             // Projection
             glm::mat4 projection = glm::mat4(1.0f);

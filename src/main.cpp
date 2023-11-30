@@ -20,21 +20,16 @@ int main()
 
     // Create scene
     scene->LoadMaterials(config->GetConfig("materials"));
-    SceneReader::LoadScene(scene, FileSystem::GetPath(MODELS_DIR) + config->GetString("model.file"), 
-        config->GetVec("model.pos"), config->GetVec("model.rot"), config->GetVec("model.scale"));
+    SceneReader::ReadScene(scene, FileSystem::GetPath(MODELS_DIR) + config->GetString("model.file"), true);
 
-    state->GetSel()->SetTransformHandle(new PHandle("transformHandle", 0.5f, 6, true, glm::vec3(0.0f)));
-    scene->SetTransformHandle(state->GetSel()->GetTransformHandle());
+    state->GetSel()->SetTransformHandle(scene->GetTransformHandle());
 
     // Load shaders
     LoadShaders(scene, config->GetConfig("shaders"));
-    state->defaultMat = scene->SetDefaultMaterial("default");
+    state->defaultMat = scene->GetDefaultMaterial();
 
     // Load default scene
     LoadDefaultScene(scene, state, state->defaultMat, config->GetBool("defaultCubes"), config->GetConfig("camera"), config->GetConfig("light"));
-    window->GetInput()->SetMouseRotFunction(std::bind(&Camera::Rotate, scene->GetCamera(), std::placeholders::_1));
-    window->GetInput()->SetMouseMoveFunction(std::bind(&Camera::Translate, scene->GetCamera(), std::placeholders::_1));
-    window->GetInput()->SetMouseZoomFunction(std::bind(&Camera::Translate, scene->GetCamera(), std::placeholders::_1));
 
     // Add GUIs
     LoadGUIs(window, state, scene, window->GetInput(), config);
@@ -49,15 +44,18 @@ int main()
         if (HandleWindowQuit(window, state))
             break;
 
-        // Calculate FPS and deltaTime
-        state->GetTimer()->HandleFrame();
+        // Only handle rendering if requested
+        if (state->shouldRender)
+        {
+            // Calculate FPS and deltaTime
+            state->GetTimer()->HandleFrame();
 
-        // Render
-        OpenGLDraw(window, state, scene);
+            // Render
+            OpenGLDraw(window, state, scene);
 
-        // Draw GUI
-        if (state->drawGUI)
-            window->DrawGUI();
+            // Draw GUI
+            window->DrawGUI(state);
+        }
 
         // Swap buffers at the end of the loop
         glfwSwapBuffers(window->GetWindow());
@@ -88,6 +86,7 @@ void OpenGLDraw(Window* window, State* state, Scene* scene)
     glm::vec3 bgColor = scene->GetCamera()->GetBGColor();
     glClearColor(bgColor.r, bgColor.g, bgColor.b, 1.0f);
 
+    /*
     // Render shadows
     if (state->enableShadows)
     {
@@ -99,11 +98,10 @@ void OpenGLDraw(Window* window, State* state, Scene* scene)
         // Render scene shadows
         scene->DrawShadows(window, scene->GetShader("shadowMap"));
     }
+    */
 
     // Reset viewport
-    glViewport(0, 0, window->GetWidth(), window->GetHeight());
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    window->ResetViewport();
 
     // Render the scene
     scene->Draw(window, scene->GetShader(scene->GetCurShader()));
@@ -133,7 +131,7 @@ void LoadGUIs(Window* window, State* state, Scene* scene, Input* input, Config* 
 // --------------------------------------------------
 void LoadShaders(Scene* scene, Config* shaderConfig)
 {
-    double startTime = glfwGetTime();
+    double startTime = Timer::Start();
     std::unordered_map<std::string, Config*> shaders = shaderConfig->GetConfigs();
     for (auto iter = shaders.begin(); iter != shaders.end(); ++iter)
     {
@@ -144,29 +142,35 @@ void LoadShaders(Scene* scene, Config* shaderConfig)
 }
 
 // Loads the default scene
-// --------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------------------
 void LoadDefaultScene(Scene* scene, State* state, Material* defaultMat, bool defaultCubes, Config* cameraConfig, Config* lightConfig)
 {
-    // Add light and camera
-    scene->SetCamera(state->GetActionStack(), cameraConfig);
-    scene->SetLight(new PLightCube("globalLight", 1.0f, lightConfig));
+    MaterialContainer* mats = scene->GetMaterials();
+    TextureContainer* textures = scene->GetTextures();
 
-    // Add renderables
-    scene->SetGrid(new PGrid(GRID_OBJ, 5, 1.0f, new Material(glm::vec3(0.2f)), 2, true, glm::vec3(0.0f)));
-    scene->SetViewAxisHandle(new PHandle(CAMERA_AXIS_HANDLE, 45.0f, 6, false, glm::vec3(50, 50, 0)));
+    // Add light and camera
+    scene->AddCamera("main", new Camera(state->GetActionStack(), cameraConfig), true);
+    scene->AddLight("global", new PLightCube("global", 1.0f, mats, textures, lightConfig), true);
 
     scene->AddMesh(new VPlane(BG_PLANE_OBJ, 20.0f, defaultMat));
     scene->AddMesh(new VPlane("brickwall", 2.0f, scene->GetMaterial("brickwall"), glm::vec3(5, 2, 0), glm::vec3(90, 0, 0)));
 
     if (defaultCubes)
     {
-        //scene->Addentity(CAMERA_AXIS_HANDLE, new Cube(15.0f, scene->GetShader(LINE_SHADER), glm::vec3(1.0f), 6, true, glm::vec3(100, 100, 0)));
-        scene->AddMesh(new VCube("cube1", 1.0f, new Material(glm::vec3(0, 1, 0)), glm::vec3(-5, 0, -5), glm::vec3(0, 45, 0), glm::vec3(1, 2, 1)));
-        scene->AddMesh(new VCube("cube2", 1.0f, new Material(glm::vec3(1, 0, 0)), glm::vec3(-5, 0, -3), glm::vec3(45, 0, 0), glm::vec3(2, 1, 1)));
-        scene->AddMesh(new VCube("cube3", 1.0f, new Material(glm::vec3(0, 0, 1)), glm::vec3(-5, 0, -1), glm::vec3(0, 0, 45), glm::vec3(1, 1, 2)));
-        scene->AddMesh(new VCube("cube4", 1.0f, new Material(glm::vec3(0, 1, 1)), glm::vec3(-5, 0, 1), glm::vec3(0, 45, 45), glm::vec3(1, 2, 2)));
-        scene->AddMesh(new VCube("cube5", 1.0f, new Material(glm::vec3(1, 0, 1)), glm::vec3(-5, 0, 3), glm::vec3(45, 0, 45), glm::vec3(2, 1, 2)));
-        scene->AddMesh(new VCube("cube6", 1.0f, new Material(glm::vec3(1, 1, 0)), glm::vec3(-5, 0, 5), glm::vec3(45, 45, 0), glm::vec3(2, 2, 1)));
+        // Add cube materials
+        Material* greenMat = mats->AddMaterial(new Material("green", glm::vec3(0, 1, 0), textures, false));
+        Material* redMat = mats->AddMaterial(new Material("red", glm::vec3(1, 0, 0), textures, false));
+        Material* blueMat = mats->AddMaterial(new Material("blue", glm::vec3(0, 0, 1), textures, false));
+        Material* cyanMat = mats->AddMaterial(new Material("cyan", glm::vec3(0, 1, 1), textures, false));
+        Material* purpleMat = mats->AddMaterial(new Material("purple", glm::vec3(1, 0, 1), textures, false));
+        Material* yellowMat = mats->AddMaterial(new Material("yellow", glm::vec3(1, 1, 0), textures, false));
+
+        scene->AddMesh(new VCube("cube1", 1.0f, greenMat, glm::vec3(-5, 0, -5), glm::vec3(0, 45, 0), glm::vec3(1, 2, 1)));
+        scene->AddMesh(new VCube("cube2", 1.0f, redMat, glm::vec3(-5, 0, -3), glm::vec3(45, 0, 0), glm::vec3(2, 1, 1)));
+        scene->AddMesh(new VCube("cube3", 1.0f, blueMat, glm::vec3(-5, 0, -1), glm::vec3(0, 0, 45), glm::vec3(1, 1, 2)));
+        scene->AddMesh(new VCube("cube4", 1.0f, cyanMat, glm::vec3(-5, 0, 1), glm::vec3(0, 45, 45), glm::vec3(1, 2, 2)));
+        scene->AddMesh(new VCube("cube5", 1.0f, purpleMat, glm::vec3(-5, 0, 3), glm::vec3(45, 0, 45), glm::vec3(2, 1, 2)));
+        scene->AddMesh(new VCube("cube6", 1.0f, yellowMat, glm::vec3(-5, 0, 5), glm::vec3(45, 45, 0), glm::vec3(2, 2, 1)));
     }
 }
 

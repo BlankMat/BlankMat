@@ -2,34 +2,36 @@
 #include "glIncludes.h"
 #include "rendering/shader.h"
 #include "rendering/material.h"
+#include "containers/materialContainer.h"
 #include "tools/state.h"
 
 class IEntity {
 protected:
-	unsigned int mVAO;
-	unsigned int mVBO;
-	unsigned int mEBO;
-	bool mDrawOver;
+	unsigned int mVAO = 0;
+	unsigned int mVBO = 0;
+	unsigned int mEBO = 0;
+	bool mDrawOver = false;
 
-	glm::vec3 mFront;
-	glm::vec3 mRight;
-	glm::vec3 mUp;
+	glm::vec3 mFront = glm::vec3(0.0f);
+	glm::vec3 mRight = glm::vec3(0.0f);
+	glm::vec3 mUp = glm::vec3(0.0f);
 
-	glm::vec3 mPos;
-	glm::vec3 mRot;
-	glm::vec3 mScale;
-	bool mIsEnabled;
-	bool mIsEnabledSelf;
-	bool mIsEnabledParent;
-	std::string mName;
+	glm::vec3 mPos = glm::vec3(0.0f);
+	glm::vec3 mRot = glm::vec3(0.0f);
+	glm::vec3 mScale = glm::vec3(1.0f);
+	bool mIsEnabled = true;
+	bool mIsEnabledSelf = true;
+	bool mIsEnabledParent = true;
+	std::string mName = "";
 
-	Material* mMaterial;
+	Material* mMaterial = nullptr;
+	std::string mMaterialName = "";
 
-	bool mRecalcMatrices;
-	glm::mat4 mParentModelMatrix;
-	glm::mat4 mSelfModelMatrix;
-	glm::mat4 mModelMatrix;
-	glm::mat3 mNormalModelMatrix;
+	bool mRecalcMatrices = true;
+	glm::mat4 mParentModelMatrix = glm::mat4(1.0f);
+	glm::mat4 mSelfModelMatrix = glm::mat4(1.0f);
+	glm::mat4 mModelMatrix = glm::mat4(1.0f);
+	glm::mat3 mNormalModelMatrix = glm::mat3(1.0f);
 
 	// Recalculates all matrices of the entity
 	virtual void RecalcMatrices()
@@ -139,6 +141,12 @@ public:
 		// Up vector : perpendicular to both direction and right
 		mUp = glm::normalize(glm::cross(mRight, mFront));
 	}
+	
+	// Loads the material for the entity from the material list
+	void LoadMaterial(MaterialContainer* materials)
+	{
+		mMaterial = materials->GetItem(mMaterialName);
+	}
 
 	// Sets the material of the object
 	virtual void SetMaterial(Material* material) { mMaterial = material; }
@@ -211,21 +219,19 @@ public:
 		return mNormalModelMatrix;
 	}
 
-	IEntity(const std::string& name = "", Material* material = nullptr, const bool drawOver = false,
+	//
+	IEntity(const std::string& name = "", Material* material = nullptr, bool drawOver = false,
 		const glm::vec3& pos = glm::vec3(0.0f), const glm::vec3& rot = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f))
 		: mName(name), mMaterial(material), mDrawOver(drawOver), mPos(pos), mRot(rot), mScale(scale)
 	{
-		mVAO = mVBO = mEBO = 0;
-		mModelMatrix = glm::mat4(1.0f);
-		mSelfModelMatrix = glm::mat4(1.0f);
-		mParentModelMatrix = glm::mat4(1.0f);
-		mNormalModelMatrix = glm::mat3(1.0f);
-		mRecalcMatrices = true;
-		mIsEnabled = true;
-		mIsEnabledSelf = true;
-		mIsEnabledParent = true;
+		CalcBasis();
+	}
 
-		mUp = mRight = mFront = glm::vec3(0.0f);
+	//
+	IEntity(const std::string& name, const std::string& material, bool drawOver = false,
+		const glm::vec3& pos = glm::vec3(0.0f), const glm::vec3& rot = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f))
+		: mName(name), mMaterialName(material), mDrawOver(drawOver), mPos(pos), mRot(rot), mScale(scale)
+	{
 		CalcBasis();
 	}
 

@@ -1,6 +1,6 @@
 var class_light =
 [
-    [ "Light", "class_light.html#ad92070eb9a7f15a370ecb4b4ab916b68", null ],
+    [ "Light", "class_light.html#ae17b00a2a401685ede5e8bf8c744949d", null ],
     [ "Light", "class_light.html#a102edf7940ae1fb528fc7e6a1229c98a", null ],
     [ "CalcMatrices", "class_light.html#a3fe1e0520df717eada73eb89abbed27a", null ],
     [ "Draw", "class_light.html#a58b5f98eb4a123aef1ccb8c1d50dcaf3", null ],
@@ -30,6 +30,8 @@ var class_light =
     [ "SetSpotInnerRadius", "class_light.html#aef5c62fda2cd93c029a40add19e5fdec", null ],
     [ "SetSpotOuterRadius", "class_light.html#aebcf5130c12eed43d7b3f6161995ad3f", null ],
     [ "SetType", "class_light.html#a75f6b875899d56ba1016d66241e1b9bd", null ],
+    [ "UpdateDiscoLight", "class_light.html#a39cea7d92387ccabd6e3f1dcdafe1b42", null ],
+    [ "UpdateRotatingLight", "class_light.html#a1e205d97bb9d631c453a9c0ceced39f4", null ],
     [ "UpdateShader", "class_light.html#ad9497ebb440c36182f1978f9e85c5351", null ],
     [ "mBaseColor", "class_light.html#ac12b571d6c7a9b38a1a17cab575ee553", null ],
     [ "mColor", "class_light.html#a7d74b1637c4f371fafa639469d77fff4", null ],

@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.1</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.2</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -103,13 +103,22 @@ Collaboration diagram for State:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_state__coll__graph.png" border="0" usemap="#a_state_coll__map" alt="Collaboration graph"/></div>
 <map name="a_state_coll__map" id="a_state_coll__map">
-<area shape="rect" title=" " alt="" coords="48,343,100,369"/>
-<area shape="rect" href="class_material.html" title="Class that stores all texture and render information for a material." alt="" coords="40,252,108,279"/>
-<area shape="poly" title=" " alt="" coords="77,294,77,342,71,342,71,294"/>
-<area shape="rect" href="class_i_material.html" title=" " alt="" coords="5,176,143,203"/>
-<area shape="poly" title=" " alt="" coords="77,218,77,252,71,252,71,218"/>
-<area shape="rect" href="struct_texture.html" title=" " alt="" coords="42,5,106,32"/>
-<area shape="poly" title=" " alt="" coords="77,47,77,176,71,176,71,47"/>
+<area shape="rect" title=" " alt="" coords="194,517,247,544"/>
+<area shape="rect" href="class_u_i_bool.html" title="A boolean that can be directly displayed and edited in the UI." alt="" coords="45,267,105,293"/>
+<area shape="poly" title=" " alt="" coords="73,308,69,348,71,397,82,448,92,471,106,492,125,507,148,518,194,526,193,532,146,523,122,512,102,495,87,473,76,449,65,398,64,348,68,308"/>
+<area shape="rect" href="class_i_u_i_variable.html" title=" " alt="" coords="5,96,137,123"/>
+<area shape="poly" title=" " alt="" coords="74,138,77,266,72,266,69,138"/>
+<area shape="rect" href="class_action_stack.html" title="Class that keeps track of all commands that have been run. Allows functionality for undo/redo." alt="" coords="100,5,192,32"/>
+<area shape="poly" title=" " alt="" coords="114,43,99,58,86,77,78,97,73,94,82,75,95,54,111,39"/>
+<area shape="rect" href="class_i_u_i_variable.html" title=" " alt="" coords="161,96,282,123"/>
+<area shape="poly" title=" " alt="" coords="173,41,185,54,215,94,211,97,181,58,169,45"/>
+<area shape="rect" href="class_u_i_int.html" title="An integer that can be directly displayed and edited in the UI." alt="" coords="197,267,244,293"/>
+<area shape="poly" title=" " alt="" coords="223,309,223,517,218,517,218,309"/>
+<area shape="poly" title=" " alt="" coords="224,138,223,266,218,266,219,138"/>
+<area shape="rect" href="class_material.html" title="Class that stores all texture and render information for a material." alt="" coords="344,267,411,293"/>
+<area shape="poly" title=" " alt="" coords="385,308,389,349,387,398,376,450,365,474,350,495,327,513,300,525,247,532,246,527,298,520,325,509,346,492,361,471,371,448,382,398,383,349,380,309"/>
+<area shape="rect" href="struct_texture.html" title="A structure that stores a texture file that has been read into the OpenGL context." alt="" coords="346,96,410,123"/>
+<area shape="poly" title=" " alt="" coords="380,138,380,266,375,266,375,138"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -119,55 +128,99 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aea92f3945507ac7350e38d69ad93c457"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7525a54b3ee929cbc26941f84a728313" id="r_a7525a54b3ee929cbc26941f84a728313"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a7525a54b3ee929cbc26941f84a728313">ClearLoadedMaterials</a> ()</td></tr>
 <tr class="separator:a7525a54b3ee929cbc26941f84a728313"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4dfe8eede92b803fd438881b6f18b85b" id="r_a4dfe8eede92b803fd438881b6f18b85b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_selection.html">Selection</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a4dfe8eede92b803fd438881b6f18b85b">GetSel</a> ()</td></tr>
-<tr class="separator:a4dfe8eede92b803fd438881b6f18b85b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acac0babc9bd83fd3b0b055fca4f7524f" id="r_acac0babc9bd83fd3b0b055fca4f7524f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_config.html">Config</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#acac0babc9bd83fd3b0b055fca4f7524f">GetConfig</a> ()</td></tr>
-<tr class="separator:acac0babc9bd83fd3b0b055fca4f7524f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6ae399a665b366f607535bee75841d1" id="r_aa6ae399a665b366f607535bee75841d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#aa6ae399a665b366f607535bee75841d1">State</a> (<a class="el" href="class_selection.html">Selection</a> *selection, <a class="el" href="class_config.html">Config</a> *config)</td></tr>
-<tr class="separator:aa6ae399a665b366f607535bee75841d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b2111f9d7483945024d953300c4cc7e" id="r_a0b2111f9d7483945024d953300c4cc7e"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a0b2111f9d7483945024d953300c4cc7e">GetCurFileName</a> () const</td></tr>
+<tr class="separator:a0b2111f9d7483945024d953300c4cc7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17cd741091534c3f65a3dc817f095709" id="r_a17cd741091534c3f65a3dc817f095709"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a17cd741091534c3f65a3dc817f095709">SetCurFileName</a> (const std::string &amp;fileName)</td></tr>
+<tr class="separator:a17cd741091534c3f65a3dc817f095709"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25e1a0ddb0812cea17f6ccb8046595b3" id="r_a25e1a0ddb0812cea17f6ccb8046595b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_selection.html">Selection</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a25e1a0ddb0812cea17f6ccb8046595b3">GetSel</a> () const</td></tr>
+<tr class="separator:a25e1a0ddb0812cea17f6ccb8046595b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e09bc9635e828e0bebd31fd5f5962e8" id="r_a7e09bc9635e828e0bebd31fd5f5962e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_config.html">Config</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a7e09bc9635e828e0bebd31fd5f5962e8">GetConfig</a> () const</td></tr>
+<tr class="separator:a7e09bc9635e828e0bebd31fd5f5962e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a953af08b96cbb631cd02f2515ebe223a" id="r_a953af08b96cbb631cd02f2515ebe223a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_action_stack.html">ActionStack</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a953af08b96cbb631cd02f2515ebe223a">GetActionStack</a> () const</td></tr>
+<tr class="separator:a953af08b96cbb631cd02f2515ebe223a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad29ca7a47472398e8117cbb4b064af57" id="r_ad29ca7a47472398e8117cbb4b064af57"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_timer.html">Timer</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#ad29ca7a47472398e8117cbb4b064af57">GetTimer</a> () const</td></tr>
+<tr class="separator:ad29ca7a47472398e8117cbb4b064af57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61fd64a549db5d9932dadab3fa8c10ea" id="r_a61fd64a549db5d9932dadab3fa8c10ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a61fd64a549db5d9932dadab3fa8c10ea">SaveActionStack</a> ()</td></tr>
+<tr class="separator:a61fd64a549db5d9932dadab3fa8c10ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f45c725b8064c9b7b2608ff80684dfb" id="r_a5f45c725b8064c9b7b2608ff80684dfb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a5f45c725b8064c9b7b2608ff80684dfb">IsSaved</a> () const</td></tr>
+<tr class="separator:a5f45c725b8064c9b7b2608ff80684dfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a096aa460e54e8b76f36963f3090666bc" id="r_a096aa460e54e8b76f36963f3090666bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a096aa460e54e8b76f36963f3090666bc">ToggleDisplayGUI</a> ()</td></tr>
+<tr class="separator:a096aa460e54e8b76f36963f3090666bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af723a3ae31acf3825012128c3a32238e" id="r_af723a3ae31acf3825012128c3a32238e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#af723a3ae31acf3825012128c3a32238e">ToggleDisplayGrid</a> ()</td></tr>
+<tr class="separator:af723a3ae31acf3825012128c3a32238e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8bc90f58d502bd5442bfcfc97bf9e64" id="r_ab8bc90f58d502bd5442bfcfc97bf9e64"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#ab8bc90f58d502bd5442bfcfc97bf9e64">ToggleDiffuseMap</a> ()</td></tr>
+<tr class="separator:ab8bc90f58d502bd5442bfcfc97bf9e64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a552daadf25dc248a9143696cc696d50f" id="r_a552daadf25dc248a9143696cc696d50f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a552daadf25dc248a9143696cc696d50f">ToggleAmbientMap</a> ()</td></tr>
+<tr class="separator:a552daadf25dc248a9143696cc696d50f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26ae217428eaef5e0bcb6f9364e38b3f" id="r_a26ae217428eaef5e0bcb6f9364e38b3f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a26ae217428eaef5e0bcb6f9364e38b3f">ToggleSpecularMap</a> ()</td></tr>
+<tr class="separator:a26ae217428eaef5e0bcb6f9364e38b3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a009ed55deb096ba9d54218d93186fec2" id="r_a009ed55deb096ba9d54218d93186fec2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a009ed55deb096ba9d54218d93186fec2">ToggleNormalMap</a> ()</td></tr>
+<tr class="separator:a009ed55deb096ba9d54218d93186fec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa337cfe8f07359af1d00e068459793d8" id="r_aa337cfe8f07359af1d00e068459793d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#aa337cfe8f07359af1d00e068459793d8">ToggleHeightMap</a> ()</td></tr>
+<tr class="separator:aa337cfe8f07359af1d00e068459793d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e177bb8c0dab02f77fd5c88f6afae03" id="r_a6e177bb8c0dab02f77fd5c88f6afae03"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a6e177bb8c0dab02f77fd5c88f6afae03">ToggleAlphaMap</a> ()</td></tr>
+<tr class="separator:a6e177bb8c0dab02f77fd5c88f6afae03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb0e1ef0e9c214af8f19cff1f66256ba" id="r_aeb0e1ef0e9c214af8f19cff1f66256ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#aeb0e1ef0e9c214af8f19cff1f66256ba">ToggleShadows</a> ()</td></tr>
+<tr class="separator:aeb0e1ef0e9c214af8f19cff1f66256ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad327d44702cec89e2f6cb00df257b1af" id="r_ad327d44702cec89e2f6cb00df257b1af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#ad327d44702cec89e2f6cb00df257b1af">ToggleDefaultMat</a> ()</td></tr>
+<tr class="separator:ad327d44702cec89e2f6cb00df257b1af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8233b402b9d7526c70161ff741281bca" id="r_a8233b402b9d7526c70161ff741281bca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a8233b402b9d7526c70161ff741281bca">State</a> (<a class="el" href="class_config.html">Config</a> *config)</td></tr>
+<tr class="separator:a8233b402b9d7526c70161ff741281bca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:af461a01ec2c43e7cd1ba085ea9b0f542" id="r_af461a01ec2c43e7cd1ba085ea9b0f542"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#af461a01ec2c43e7cd1ba085ea9b0f542">isDiscoLight</a></td></tr>
-<tr class="separator:af461a01ec2c43e7cd1ba085ea9b0f542"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe062545d5531792d5962a797d169146" id="r_abe062545d5531792d5962a797d169146"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#abe062545d5531792d5962a797d169146">isRotatingLight</a></td></tr>
-<tr class="separator:abe062545d5531792d5962a797d169146"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0ebd1ae62a42135df953fc4e5dce470" id="r_af0ebd1ae62a42135df953fc4e5dce470"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#af0ebd1ae62a42135df953fc4e5dce470">enableDiffuseMap</a></td></tr>
-<tr class="separator:af0ebd1ae62a42135df953fc4e5dce470"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3cef53d5f417152418e58572dcec0e92" id="r_a3cef53d5f417152418e58572dcec0e92"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a3cef53d5f417152418e58572dcec0e92">enableAmbientMap</a></td></tr>
-<tr class="separator:a3cef53d5f417152418e58572dcec0e92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0b0b8766d90816cf293afd086c091a1" id="r_af0b0b8766d90816cf293afd086c091a1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#af0b0b8766d90816cf293afd086c091a1">enableSpecularMap</a></td></tr>
-<tr class="separator:af0b0b8766d90816cf293afd086c091a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f35c39a7e85328f11c4c89bdb635015" id="r_a7f35c39a7e85328f11c4c89bdb635015"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a7f35c39a7e85328f11c4c89bdb635015">enableNormalMap</a></td></tr>
-<tr class="separator:a7f35c39a7e85328f11c4c89bdb635015"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af7583425f59b3b3c0f62f58ece120563" id="r_af7583425f59b3b3c0f62f58ece120563"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#af7583425f59b3b3c0f62f58ece120563">enableHeightMap</a></td></tr>
-<tr class="separator:af7583425f59b3b3c0f62f58ece120563"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a99faacc2f06a02e5af4459cfe084e1" id="r_a8a99faacc2f06a02e5af4459cfe084e1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a8a99faacc2f06a02e5af4459cfe084e1">enableAlphaMap</a></td></tr>
-<tr class="separator:a8a99faacc2f06a02e5af4459cfe084e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21c4570ea33c9b53e63d718cc88de33f" id="r_a21c4570ea33c9b53e63d718cc88de33f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a21c4570ea33c9b53e63d718cc88de33f">enableShadows</a></td></tr>
-<tr class="separator:a21c4570ea33c9b53e63d718cc88de33f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa20dab75b5b42b718e9f6f52952e5fa" id="r_afa20dab75b5b42b718e9f6f52952e5fa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#afa20dab75b5b42b718e9f6f52952e5fa">enableGrid</a></td></tr>
-<tr class="separator:afa20dab75b5b42b718e9f6f52952e5fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f938743d4abae2d207892319de683ac" id="r_a8f938743d4abae2d207892319de683ac"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a8f938743d4abae2d207892319de683ac">drawByMaterial</a></td></tr>
-<tr class="separator:a8f938743d4abae2d207892319de683ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94ae127b89332741742ee5d287d99b8b" id="r_a94ae127b89332741742ee5d287d99b8b"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a94ae127b89332741742ee5d287d99b8b">depthMapFBO</a></td></tr>
+<tr class="memitem:a829312ead11c07921b6548181a38a9ea" id="r_a829312ead11c07921b6548181a38a9ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_u_i_bool.html">UIBool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a829312ead11c07921b6548181a38a9ea">isDiscoLight</a></td></tr>
+<tr class="separator:a829312ead11c07921b6548181a38a9ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a486799b7b82e7af338c9a723dc56e7bf" id="r_a486799b7b82e7af338c9a723dc56e7bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_u_i_bool.html">UIBool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a486799b7b82e7af338c9a723dc56e7bf">isRotatingLight</a></td></tr>
+<tr class="separator:a486799b7b82e7af338c9a723dc56e7bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29f3e97fe9d07ddcd716e72e27bb4b98" id="r_a29f3e97fe9d07ddcd716e72e27bb4b98"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_u_i_bool.html">UIBool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a29f3e97fe9d07ddcd716e72e27bb4b98">enableDiffuseMap</a></td></tr>
+<tr class="separator:a29f3e97fe9d07ddcd716e72e27bb4b98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae399565b60aa6d42452c8bc148e07640" id="r_ae399565b60aa6d42452c8bc148e07640"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_u_i_bool.html">UIBool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#ae399565b60aa6d42452c8bc148e07640">enableAmbientMap</a></td></tr>
+<tr class="separator:ae399565b60aa6d42452c8bc148e07640"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a1d88eac4f0c1c61f3e7b7bc86ab7cd" id="r_a2a1d88eac4f0c1c61f3e7b7bc86ab7cd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_u_i_bool.html">UIBool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a2a1d88eac4f0c1c61f3e7b7bc86ab7cd">enableSpecularMap</a></td></tr>
+<tr class="separator:a2a1d88eac4f0c1c61f3e7b7bc86ab7cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6cab6e69a8afb30985da953d44d8083" id="r_ab6cab6e69a8afb30985da953d44d8083"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_u_i_bool.html">UIBool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#ab6cab6e69a8afb30985da953d44d8083">enableNormalMap</a></td></tr>
+<tr class="separator:ab6cab6e69a8afb30985da953d44d8083"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa5726683d245c4712a4ddd9b74a4a4e" id="r_afa5726683d245c4712a4ddd9b74a4a4e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_u_i_bool.html">UIBool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#afa5726683d245c4712a4ddd9b74a4a4e">enableHeightMap</a></td></tr>
+<tr class="separator:afa5726683d245c4712a4ddd9b74a4a4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa79793bb4ec6d385e07b8603df0ec359" id="r_aa79793bb4ec6d385e07b8603df0ec359"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_u_i_bool.html">UIBool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#aa79793bb4ec6d385e07b8603df0ec359">enableAlphaMap</a></td></tr>
+<tr class="separator:aa79793bb4ec6d385e07b8603df0ec359"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4074a713de25e880a0fa303cf7f16e6" id="r_aa4074a713de25e880a0fa303cf7f16e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_u_i_bool.html">UIBool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#aa4074a713de25e880a0fa303cf7f16e6">enableShadows</a></td></tr>
+<tr class="separator:aa4074a713de25e880a0fa303cf7f16e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32d2a15e55e52cbd9dfa6c2b6f0a7f0c" id="r_a32d2a15e55e52cbd9dfa6c2b6f0a7f0c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_u_i_bool.html">UIBool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a32d2a15e55e52cbd9dfa6c2b6f0a7f0c">enableDefaultMat</a></td></tr>
+<tr class="separator:a32d2a15e55e52cbd9dfa6c2b6f0a7f0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59bef074c6016bae36f2d91faccc908b" id="r_a59bef074c6016bae36f2d91faccc908b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_u_i_bool.html">UIBool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a59bef074c6016bae36f2d91faccc908b">enableGrid</a></td></tr>
+<tr class="separator:a59bef074c6016bae36f2d91faccc908b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad204e4109cb49d545ed46c51e11b5a0c" id="r_ad204e4109cb49d545ed46c51e11b5a0c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_u_i_bool.html">UIBool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#ad204e4109cb49d545ed46c51e11b5a0c">drawByMaterial</a></td></tr>
+<tr class="separator:ad204e4109cb49d545ed46c51e11b5a0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd3dcc11912d594d1189b23419d19c0f" id="r_afd3dcc11912d594d1189b23419d19c0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_u_i_bool.html">UIBool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#afd3dcc11912d594d1189b23419d19c0f">flipTextures</a></td></tr>
+<tr class="separator:afd3dcc11912d594d1189b23419d19c0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c7ac31601fefe4860e962651ccf6143" id="r_a5c7ac31601fefe4860e962651ccf6143"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_u_i_bool.html">UIBool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a5c7ac31601fefe4860e962651ccf6143">drawGUI</a></td></tr>
+<tr class="separator:a5c7ac31601fefe4860e962651ccf6143"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af043f3d885d3b60c3465a098edba4d6b" id="r_af043f3d885d3b60c3465a098edba4d6b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_u_i_int.html">UIInt</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#af043f3d885d3b60c3465a098edba4d6b">DEBUG_fakeNumber</a></td></tr>
+<tr class="separator:af043f3d885d3b60c3465a098edba4d6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94ae127b89332741742ee5d287d99b8b" id="r_a94ae127b89332741742ee5d287d99b8b"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a94ae127b89332741742ee5d287d99b8b">depthMapFBO</a> = 0</td></tr>
 <tr class="separator:a94ae127b89332741742ee5d287d99b8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5460d08d807c98cf30854b1c951efff6" id="r_a5460d08d807c98cf30854b1c951efff6"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a5460d08d807c98cf30854b1c951efff6">depthMap</a></td></tr>
+<tr class="memitem:a5460d08d807c98cf30854b1c951efff6" id="r_a5460d08d807c98cf30854b1c951efff6"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a5460d08d807c98cf30854b1c951efff6">depthMap</a> = 0</td></tr>
 <tr class="separator:a5460d08d807c98cf30854b1c951efff6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afca6fc39e49fcc9e196a990399d841fc" id="r_afca6fc39e49fcc9e196a990399d841fc"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#afca6fc39e49fcc9e196a990399d841fc">depthMapSize</a></td></tr>
+<tr class="memitem:afca6fc39e49fcc9e196a990399d841fc" id="r_afca6fc39e49fcc9e196a990399d841fc"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#afca6fc39e49fcc9e196a990399d841fc">depthMapSize</a> = 1024</td></tr>
 <tr class="separator:afca6fc39e49fcc9e196a990399d841fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a556ce29de03f04bc7e3ea7b531093e04" id="r_a556ce29de03f04bc7e3ea7b531093e04"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a556ce29de03f04bc7e3ea7b531093e04">fps</a></td></tr>
-<tr class="separator:a556ce29de03f04bc7e3ea7b531093e04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8cbff31ca713e41f602a47cd603bff7b" id="r_a8cbff31ca713e41f602a47cd603bff7b"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a8cbff31ca713e41f602a47cd603bff7b">frameTime</a></td></tr>
-<tr class="separator:a8cbff31ca713e41f602a47cd603bff7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa35d0ff6cd720a22ba6cabc6ee2030b8" id="r_aa35d0ff6cd720a22ba6cabc6ee2030b8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#aa35d0ff6cd720a22ba6cabc6ee2030b8">curShader</a></td></tr>
+<tr class="memitem:a59eaed7ce88614eb0717d7cec3b832cd" id="r_a59eaed7ce88614eb0717d7cec3b832cd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a59eaed7ce88614eb0717d7cec3b832cd">mousePrevX</a> = 0</td></tr>
+<tr class="separator:a59eaed7ce88614eb0717d7cec3b832cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06ca043b47ade3d1763930e34e39613b" id="r_a06ca043b47ade3d1763930e34e39613b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a06ca043b47ade3d1763930e34e39613b">mousePrevY</a> = 0</td></tr>
+<tr class="separator:a06ca043b47ade3d1763930e34e39613b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d7298a62e3234863c005c2458d32e81" id="r_a7d7298a62e3234863c005c2458d32e81"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a7d7298a62e3234863c005c2458d32e81">mouseCurX</a> = 0</td></tr>
+<tr class="separator:a7d7298a62e3234863c005c2458d32e81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a169fa4e2270c5cad1a9be02f56f5faea" id="r_a169fa4e2270c5cad1a9be02f56f5faea"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a169fa4e2270c5cad1a9be02f56f5faea">mouseCurY</a> = 0</td></tr>
+<tr class="separator:a169fa4e2270c5cad1a9be02f56f5faea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa35d0ff6cd720a22ba6cabc6ee2030b8" id="r_aa35d0ff6cd720a22ba6cabc6ee2030b8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#aa35d0ff6cd720a22ba6cabc6ee2030b8">curShader</a> = &quot;&quot;</td></tr>
 <tr class="separator:aa35d0ff6cd720a22ba6cabc6ee2030b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc8727b7830799cae529c1ee0c793729" id="r_acc8727b7830799cae529c1ee0c793729"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_material.html">Material</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#acc8727b7830799cae529c1ee0c793729">defaultMat</a></td></tr>
+<tr class="memitem:acc8727b7830799cae529c1ee0c793729" id="r_acc8727b7830799cae529c1ee0c793729"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_material.html">Material</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#acc8727b7830799cae529c1ee0c793729">defaultMat</a> = nullptr</td></tr>
 <tr class="separator:acc8727b7830799cae529c1ee0c793729"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aa6ae399a665b366f607535bee75841d1" name="aa6ae399a665b366f607535bee75841d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa6ae399a665b366f607535bee75841d1">&#9670;&#160;</a></span>State()</h2>
+<a id="a8233b402b9d7526c70161ff741281bca" name="a8233b402b9d7526c70161ff741281bca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8233b402b9d7526c70161ff741281bca">&#9670;&#160;</a></span>State()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -178,19 +231,9 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="memname">State::State </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_selection.html">Selection</a> *&#160;</td>
-          <td class="paramname"><em>selection</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype"><a class="el" href="class_config.html">Config</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
-        </tr>
-        <tr>
+          <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -228,8 +271,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="acac0babc9bd83fd3b0b055fca4f7524f" name="acac0babc9bd83fd3b0b055fca4f7524f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acac0babc9bd83fd3b0b055fca4f7524f">&#9670;&#160;</a></span>GetConfig()</h2>
+<a id="a953af08b96cbb631cd02f2515ebe223a" name="a953af08b96cbb631cd02f2515ebe223a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a953af08b96cbb631cd02f2515ebe223a">&#9670;&#160;</a></span>GetActionStack()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -238,10 +281,10 @@ Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_config.html">Config</a> * State::GetConfig </td>
+          <td class="memname"><a class="el" href="class_action_stack.html">ActionStack</a> * State::GetActionStack </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -253,8 +296,58 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a4dfe8eede92b803fd438881b6f18b85b" name="a4dfe8eede92b803fd438881b6f18b85b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4dfe8eede92b803fd438881b6f18b85b">&#9670;&#160;</a></span>GetSel()</h2>
+<a id="a7e09bc9635e828e0bebd31fd5f5962e8" name="a7e09bc9635e828e0bebd31fd5f5962e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e09bc9635e828e0bebd31fd5f5962e8">&#9670;&#160;</a></span>GetConfig()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_config.html">Config</a> * State::GetConfig </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0b2111f9d7483945024d953300c4cc7e" name="a0b2111f9d7483945024d953300c4cc7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b2111f9d7483945024d953300c4cc7e">&#9670;&#160;</a></span>GetCurFileName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string State::GetCurFileName </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a25e1a0ddb0812cea17f6ccb8046595b3" name="a25e1a0ddb0812cea17f6ccb8046595b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25e1a0ddb0812cea17f6ccb8046595b3">&#9670;&#160;</a></span>GetSel()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -266,7 +359,57 @@ Public Attributes</h2></td></tr>
           <td class="memname"><a class="el" href="class_selection.html">Selection</a> * State::GetSel </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad29ca7a47472398e8117cbb4b064af57" name="ad29ca7a47472398e8117cbb4b064af57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad29ca7a47472398e8117cbb4b064af57">&#9670;&#160;</a></span>GetTimer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_timer.html">Timer</a> * State::GetTimer </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5f45c725b8064c9b7b2608ff80684dfb" name="a5f45c725b8064c9b7b2608ff80684dfb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f45c725b8064c9b7b2608ff80684dfb">&#9670;&#160;</a></span>IsSaved()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool State::IsSaved </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -304,6 +447,307 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a61fd64a549db5d9932dadab3fa8c10ea" name="a61fd64a549db5d9932dadab3fa8c10ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61fd64a549db5d9932dadab3fa8c10ea">&#9670;&#160;</a></span>SaveActionStack()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void State::SaveActionStack </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a17cd741091534c3f65a3dc817f095709" name="a17cd741091534c3f65a3dc817f095709"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17cd741091534c3f65a3dc817f095709">&#9670;&#160;</a></span>SetCurFileName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void State::SetCurFileName </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>fileName</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6e177bb8c0dab02f77fd5c88f6afae03" name="a6e177bb8c0dab02f77fd5c88f6afae03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e177bb8c0dab02f77fd5c88f6afae03">&#9670;&#160;</a></span>ToggleAlphaMap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void State::ToggleAlphaMap </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a552daadf25dc248a9143696cc696d50f" name="a552daadf25dc248a9143696cc696d50f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a552daadf25dc248a9143696cc696d50f">&#9670;&#160;</a></span>ToggleAmbientMap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void State::ToggleAmbientMap </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad327d44702cec89e2f6cb00df257b1af" name="ad327d44702cec89e2f6cb00df257b1af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad327d44702cec89e2f6cb00df257b1af">&#9670;&#160;</a></span>ToggleDefaultMat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void State::ToggleDefaultMat </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab8bc90f58d502bd5442bfcfc97bf9e64" name="ab8bc90f58d502bd5442bfcfc97bf9e64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8bc90f58d502bd5442bfcfc97bf9e64">&#9670;&#160;</a></span>ToggleDiffuseMap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void State::ToggleDiffuseMap </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af723a3ae31acf3825012128c3a32238e" name="af723a3ae31acf3825012128c3a32238e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af723a3ae31acf3825012128c3a32238e">&#9670;&#160;</a></span>ToggleDisplayGrid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void State::ToggleDisplayGrid </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a096aa460e54e8b76f36963f3090666bc" name="a096aa460e54e8b76f36963f3090666bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a096aa460e54e8b76f36963f3090666bc">&#9670;&#160;</a></span>ToggleDisplayGUI()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void State::ToggleDisplayGUI </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa337cfe8f07359af1d00e068459793d8" name="aa337cfe8f07359af1d00e068459793d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa337cfe8f07359af1d00e068459793d8">&#9670;&#160;</a></span>ToggleHeightMap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void State::ToggleHeightMap </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a009ed55deb096ba9d54218d93186fec2" name="a009ed55deb096ba9d54218d93186fec2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a009ed55deb096ba9d54218d93186fec2">&#9670;&#160;</a></span>ToggleNormalMap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void State::ToggleNormalMap </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aeb0e1ef0e9c214af8f19cff1f66256ba" name="aeb0e1ef0e9c214af8f19cff1f66256ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb0e1ef0e9c214af8f19cff1f66256ba">&#9670;&#160;</a></span>ToggleShadows()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void State::ToggleShadows </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a26ae217428eaef5e0bcb6f9364e38b3f" name="a26ae217428eaef5e0bcb6f9364e38b3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26ae217428eaef5e0bcb6f9364e38b3f">&#9670;&#160;</a></span>ToggleSpecularMap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void State::ToggleSpecularMap </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a id="aa35d0ff6cd720a22ba6cabc6ee2030b8" name="aa35d0ff6cd720a22ba6cabc6ee2030b8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa35d0ff6cd720a22ba6cabc6ee2030b8">&#9670;&#160;</a></span>curShader</h2>
@@ -312,7 +756,21 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string State::curShader</td>
+          <td class="memname">std::string State::curShader = &quot;&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af043f3d885d3b60c3465a098edba4d6b" name="af043f3d885d3b60c3465a098edba4d6b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af043f3d885d3b60c3465a098edba4d6b">&#9670;&#160;</a></span>DEBUG_fakeNumber</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_u_i_int.html">UIInt</a> State::DEBUG_fakeNumber</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -326,7 +784,7 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_material.html">Material</a>* State::defaultMat</td>
+          <td class="memname"><a class="el" href="class_material.html">Material</a>* State::defaultMat = nullptr</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -340,7 +798,7 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int State::depthMap</td>
+          <td class="memname">unsigned int State::depthMap = 0</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -354,7 +812,7 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int State::depthMapFBO</td>
+          <td class="memname">unsigned int State::depthMapFBO = 0</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -368,189 +826,259 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int State::depthMapSize</td>
+          <td class="memname">unsigned int State::depthMapSize = 1024</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a8f938743d4abae2d207892319de683ac" name="a8f938743d4abae2d207892319de683ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8f938743d4abae2d207892319de683ac">&#9670;&#160;</a></span>drawByMaterial</h2>
+<a id="ad204e4109cb49d545ed46c51e11b5a0c" name="ad204e4109cb49d545ed46c51e11b5a0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad204e4109cb49d545ed46c51e11b5a0c">&#9670;&#160;</a></span>drawByMaterial</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool State::drawByMaterial</td>
+          <td class="memname"><a class="el" href="class_u_i_bool.html">UIBool</a> State::drawByMaterial</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a8a99faacc2f06a02e5af4459cfe084e1" name="a8a99faacc2f06a02e5af4459cfe084e1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a99faacc2f06a02e5af4459cfe084e1">&#9670;&#160;</a></span>enableAlphaMap</h2>
+<a id="a5c7ac31601fefe4860e962651ccf6143" name="a5c7ac31601fefe4860e962651ccf6143"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c7ac31601fefe4860e962651ccf6143">&#9670;&#160;</a></span>drawGUI</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool State::enableAlphaMap</td>
+          <td class="memname"><a class="el" href="class_u_i_bool.html">UIBool</a> State::drawGUI</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a3cef53d5f417152418e58572dcec0e92" name="a3cef53d5f417152418e58572dcec0e92"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3cef53d5f417152418e58572dcec0e92">&#9670;&#160;</a></span>enableAmbientMap</h2>
+<a id="aa79793bb4ec6d385e07b8603df0ec359" name="aa79793bb4ec6d385e07b8603df0ec359"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa79793bb4ec6d385e07b8603df0ec359">&#9670;&#160;</a></span>enableAlphaMap</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool State::enableAmbientMap</td>
+          <td class="memname"><a class="el" href="class_u_i_bool.html">UIBool</a> State::enableAlphaMap</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="af0ebd1ae62a42135df953fc4e5dce470" name="af0ebd1ae62a42135df953fc4e5dce470"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af0ebd1ae62a42135df953fc4e5dce470">&#9670;&#160;</a></span>enableDiffuseMap</h2>
+<a id="ae399565b60aa6d42452c8bc148e07640" name="ae399565b60aa6d42452c8bc148e07640"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae399565b60aa6d42452c8bc148e07640">&#9670;&#160;</a></span>enableAmbientMap</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool State::enableDiffuseMap</td>
+          <td class="memname"><a class="el" href="class_u_i_bool.html">UIBool</a> State::enableAmbientMap</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="afa20dab75b5b42b718e9f6f52952e5fa" name="afa20dab75b5b42b718e9f6f52952e5fa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa20dab75b5b42b718e9f6f52952e5fa">&#9670;&#160;</a></span>enableGrid</h2>
+<a id="a32d2a15e55e52cbd9dfa6c2b6f0a7f0c" name="a32d2a15e55e52cbd9dfa6c2b6f0a7f0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32d2a15e55e52cbd9dfa6c2b6f0a7f0c">&#9670;&#160;</a></span>enableDefaultMat</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool State::enableGrid</td>
+          <td class="memname"><a class="el" href="class_u_i_bool.html">UIBool</a> State::enableDefaultMat</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="af7583425f59b3b3c0f62f58ece120563" name="af7583425f59b3b3c0f62f58ece120563"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af7583425f59b3b3c0f62f58ece120563">&#9670;&#160;</a></span>enableHeightMap</h2>
+<a id="a29f3e97fe9d07ddcd716e72e27bb4b98" name="a29f3e97fe9d07ddcd716e72e27bb4b98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29f3e97fe9d07ddcd716e72e27bb4b98">&#9670;&#160;</a></span>enableDiffuseMap</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool State::enableHeightMap</td>
+          <td class="memname"><a class="el" href="class_u_i_bool.html">UIBool</a> State::enableDiffuseMap</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a7f35c39a7e85328f11c4c89bdb635015" name="a7f35c39a7e85328f11c4c89bdb635015"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f35c39a7e85328f11c4c89bdb635015">&#9670;&#160;</a></span>enableNormalMap</h2>
+<a id="a59bef074c6016bae36f2d91faccc908b" name="a59bef074c6016bae36f2d91faccc908b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59bef074c6016bae36f2d91faccc908b">&#9670;&#160;</a></span>enableGrid</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool State::enableNormalMap</td>
+          <td class="memname"><a class="el" href="class_u_i_bool.html">UIBool</a> State::enableGrid</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a21c4570ea33c9b53e63d718cc88de33f" name="a21c4570ea33c9b53e63d718cc88de33f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a21c4570ea33c9b53e63d718cc88de33f">&#9670;&#160;</a></span>enableShadows</h2>
+<a id="afa5726683d245c4712a4ddd9b74a4a4e" name="afa5726683d245c4712a4ddd9b74a4a4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa5726683d245c4712a4ddd9b74a4a4e">&#9670;&#160;</a></span>enableHeightMap</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool State::enableShadows</td>
+          <td class="memname"><a class="el" href="class_u_i_bool.html">UIBool</a> State::enableHeightMap</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="af0b0b8766d90816cf293afd086c091a1" name="af0b0b8766d90816cf293afd086c091a1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af0b0b8766d90816cf293afd086c091a1">&#9670;&#160;</a></span>enableSpecularMap</h2>
+<a id="ab6cab6e69a8afb30985da953d44d8083" name="ab6cab6e69a8afb30985da953d44d8083"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6cab6e69a8afb30985da953d44d8083">&#9670;&#160;</a></span>enableNormalMap</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool State::enableSpecularMap</td>
+          <td class="memname"><a class="el" href="class_u_i_bool.html">UIBool</a> State::enableNormalMap</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a556ce29de03f04bc7e3ea7b531093e04" name="a556ce29de03f04bc7e3ea7b531093e04"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a556ce29de03f04bc7e3ea7b531093e04">&#9670;&#160;</a></span>fps</h2>
+<a id="aa4074a713de25e880a0fa303cf7f16e6" name="aa4074a713de25e880a0fa303cf7f16e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4074a713de25e880a0fa303cf7f16e6">&#9670;&#160;</a></span>enableShadows</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string State::fps</td>
+          <td class="memname"><a class="el" href="class_u_i_bool.html">UIBool</a> State::enableShadows</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a8cbff31ca713e41f602a47cd603bff7b" name="a8cbff31ca713e41f602a47cd603bff7b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8cbff31ca713e41f602a47cd603bff7b">&#9670;&#160;</a></span>frameTime</h2>
+<a id="a2a1d88eac4f0c1c61f3e7b7bc86ab7cd" name="a2a1d88eac4f0c1c61f3e7b7bc86ab7cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a1d88eac4f0c1c61f3e7b7bc86ab7cd">&#9670;&#160;</a></span>enableSpecularMap</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string State::frameTime</td>
+          <td class="memname"><a class="el" href="class_u_i_bool.html">UIBool</a> State::enableSpecularMap</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="af461a01ec2c43e7cd1ba085ea9b0f542" name="af461a01ec2c43e7cd1ba085ea9b0f542"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af461a01ec2c43e7cd1ba085ea9b0f542">&#9670;&#160;</a></span>isDiscoLight</h2>
+<a id="afd3dcc11912d594d1189b23419d19c0f" name="afd3dcc11912d594d1189b23419d19c0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd3dcc11912d594d1189b23419d19c0f">&#9670;&#160;</a></span>flipTextures</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool State::isDiscoLight</td>
+          <td class="memname"><a class="el" href="class_u_i_bool.html">UIBool</a> State::flipTextures</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="abe062545d5531792d5962a797d169146" name="abe062545d5531792d5962a797d169146"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe062545d5531792d5962a797d169146">&#9670;&#160;</a></span>isRotatingLight</h2>
+<a id="a829312ead11c07921b6548181a38a9ea" name="a829312ead11c07921b6548181a38a9ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a829312ead11c07921b6548181a38a9ea">&#9670;&#160;</a></span>isDiscoLight</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool State::isRotatingLight</td>
+          <td class="memname"><a class="el" href="class_u_i_bool.html">UIBool</a> State::isDiscoLight</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a486799b7b82e7af338c9a723dc56e7bf" name="a486799b7b82e7af338c9a723dc56e7bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a486799b7b82e7af338c9a723dc56e7bf">&#9670;&#160;</a></span>isRotatingLight</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_u_i_bool.html">UIBool</a> State::isRotatingLight</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7d7298a62e3234863c005c2458d32e81" name="a7d7298a62e3234863c005c2458d32e81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d7298a62e3234863c005c2458d32e81">&#9670;&#160;</a></span>mouseCurX</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int State::mouseCurX = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a169fa4e2270c5cad1a9be02f56f5faea" name="a169fa4e2270c5cad1a9be02f56f5faea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a169fa4e2270c5cad1a9be02f56f5faea">&#9670;&#160;</a></span>mouseCurY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int State::mouseCurY = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a59eaed7ce88614eb0717d7cec3b832cd" name="a59eaed7ce88614eb0717d7cec3b832cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59eaed7ce88614eb0717d7cec3b832cd">&#9670;&#160;</a></span>mousePrevX</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int State::mousePrevX = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a06ca043b47ade3d1763930e34e39613b" name="a06ca043b47ade3d1763930e34e39613b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06ca043b47ade3d1763930e34e39613b">&#9670;&#160;</a></span>mousePrevY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int State::mousePrevY = 0</td>
         </tr>
       </table>
 </div><div class="memdoc">

@@ -1,0 +1,11 @@
+<map id="MaterialContainer" name="MaterialContainer">
+<area shape="rect" id="Node000001" title=" " alt="" coords="19,343,141,369"/>
+<area shape="rect" id="Node000002" href="$class_i_container.html" title=" " alt="" coords="5,267,155,293"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,308,83,342,77,342,77,308"/>
+<area shape="rect" id="Node000003" href="$class_i_writable.html" title=" " alt="" coords="11,176,83,203"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="59,216,78,265,73,267,54,218"/>
+<area shape="rect" id="Node000004" href="$class_material.html" title="Class that stores all texture and render information for a material." alt="" coords="106,176,174,203"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="125,217,91,268,86,265,121,214"/>
+<area shape="rect" id="Node000005" href="$struct_texture.html" title="A structure that stores a texture file that has been read into the OpenGL context." alt="" coords="108,5,172,32"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="143,47,143,176,137,176,137,47"/>
+</map>

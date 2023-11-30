@@ -1,0 +1,5 @@
+<map id="UIColor" name="UIColor">
+<area shape="rect" id="Node000001" title="A color (vector3) that can be directly displayed and edited in the UI." alt="" coords="55,80,118,107"/>
+<area shape="rect" id="Node000002" href="$class_i_u_i_variable.html" title=" " alt="" coords="5,5,168,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,48,89,80,84,80,84,48"/>
+</map>
