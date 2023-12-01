@@ -1,54 +1,48 @@
 #pragma once
-#include "iGUIWindow.h"
-#include "guiWindowUtils.h"
-#include "tools/state.h"
-#include "rendering/scene.h"
+#include "interfaces/iGUIContainerWindow.h"
+#include "windows/guiWindowUtils.h"
 
 /// <summary>
 /// UI window to select a camera and to display camera properties
 /// </summary>
-class GUICameraViewer : public IGUIWindow
+class GUICameraViewer : public IGUIContainerWindow<Camera>
 {
 protected:
-    State* mState = nullptr;
-    Scene* mScene = nullptr;
-public:
-    void Draw() override
+    Camera* GetSelectedItem() override
     {
-        if (ImGui::Begin("Camera Viewer", &mIsEnabled, ImGuiWindowFlags_AlwaysAutoResize))
-        {
-            Camera* curCamera = mScene->GetCamera();
-            if (curCamera != nullptr)
-            {
-                curCamera->GetPos().Display();
-                curCamera->GetTarget().Display();
-                curCamera->GetPivot().Display();
-                curCamera->GetOrthSize().Display();
-                curCamera->GetFOV().Display();
-                curCamera->GetNearClip().Display();
-                curCamera->GetFarClip().Display();
-                curCamera->IsPerspective().Display();
-                curCamera->IsWireframe().Display();
-                curCamera->IsRotatingAroundPivot().Display();
-            }
-
-            // Display all cameras
-            ImGui::Separator();
-            std::string selCamera = mScene->GetCameras()->GetSelectedName();
-            const auto& cameras = mScene->GetCameras()->Data();
-            for (auto iter = cameras.begin(); iter != cameras.end(); ++iter)
-            {
-                GUIWindowUtils::Selectable(iter->first, selCamera, iter->first);
-            }
-            mScene->SetCamera(selCamera);
-        }
-        ImGui::End();
+        return mScene->GetCamera();
     }
 
-    GUICameraViewer(State* state, Scene* scene, bool isEnabled)
-        : mState(state), mScene(scene)
+    IContainer<Camera>* GetContainer() override
     {
-        mType = GUI::CAMERA_VIEWER;
+        return mScene->GetCameras();
+    }
+
+    void DisplaySelectedItem(Camera* selection) override
+    {
+        if (selection == nullptr)
+            return;
+
+        selection->GetPos().Display();
+        selection->GetTarget().Display();
+        selection->GetPivot().Display();
+        selection->GetOrthSize().Display();
+        selection->GetFOV().Display();
+        selection->GetNearClip().Display();
+        selection->GetFarClip().Display();
+        selection->IsPerspective().Display();
+        selection->IsWireframe().Display();
+        selection->IsRotatingAroundPivot().Display();
+    }
+
+public:
+    GUICameraViewer(State* state, Scene* scene, bool isEnabled)
+    {
+        mState = state;
         mScene = scene;
+        mType = GUI::CAMERA_VIEWER;
+        mIsEnabled = isEnabled;
+        mMustSelect = true;
+        mWindowName = "Camera Viewer";
     }
 };

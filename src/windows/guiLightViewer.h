@@ -1,97 +1,93 @@
 #pragma once
-#include "iGUIWindow.h"
-#include "guiWindowUtils.h"
-#include "tools/state.h"
-#include "rendering/scene.h"
+#include "interfaces/iGUIContainerWindow.h"
+#include "windows/guiWindowUtils.h"
 
-class GUILightViewer : public IGUIWindow
+class GUILightViewer : public IGUIContainerWindow<Light>
 {
 protected:
-    State* mState = nullptr;
-    Scene* mScene = nullptr;
-public:
-    void Draw() override
+    Light* GetSelectedItem() override
     {
-        if (ImGui::Begin("Light Viewer", &mIsEnabled, ImGuiWindowFlags_AlwaysAutoResize))
-        {
-            Light* light = mScene->GetLight();
-            LightType type = light->GetType();
-
-            // Select light type
-            if (ImGui::BeginListBox("Type"))
-            {
-                GUIWindowUtils::Selectable("Point", type, LightType::POINT);
-                GUIWindowUtils::Selectable("Directional", type, LightType::DIR);
-                GUIWindowUtils::Selectable("Spot", type, LightType::SPOT);
-                light->SetType(type);
-                ImGui::EndListBox();
-            }
-
-            // Light position
-            if (type == LightType::SPOT || type == LightType::POINT)
-            {
-                light->SetOffset(
-                    GUIWindowUtils::InputVec3("Position", light->GetOffset()));
-            }
-
-            // Light direction
-            if (type == LightType::SPOT || type == LightType::DIR)
-            {
-                light->SetDir(
-                    GUIWindowUtils::InputVec3("Direction", light->GetDir()));
-            }
-
-            // Light Diffuse, Ambient, and Specular
-            light->SetKD(
-                GUIWindowUtils::InputFloat("Diffuse", light->GetKD()));
-            light->SetKA(
-                GUIWindowUtils::InputFloat("Ambient", light->GetKA()));
-            light->SetKS(
-                GUIWindowUtils::InputFloat("Specular", light->GetKS()));
-
-            // Light gamma
-            light->SetGamma(
-                GUIWindowUtils::Checkbox("Gamma", light->GetGamma()));
-
-            // Show attributes of point and spotlights
-            if (type == LightType::POINT || type == LightType::SPOT)
-            {
-                // Range coefficient
-                light->SetRange(
-                    GUIWindowUtils::InputFloat("Range", light->GetRange()));
-            }
-            // Show attributes of spotlight
-            if (type == LightType::SPOT)
-            {
-                // Inner radius
-                light->SetSpotInnerRadius(
-                    GUIWindowUtils::InputFloat("Inner Radius", light->GetSpotInnerRadius()));
-                // Outer radius
-                light->SetSpotOuterRadius(
-                    GUIWindowUtils::InputFloat("Outer Radius", light->GetSpotOuterRadius()));
-            }
-
-            // Light color
-            light->SetBaseColor(
-                GUIWindowUtils::ColorPicker("Light Color", light->GetBaseColor()));
-
-            // Display all lights
-            ImGui::Separator();
-            std::string selLight = mScene->GetLights()->GetSelectedName();
-            const auto& lights = mScene->GetLights()->Data();
-            for (auto iter = lights.begin(); iter != lights.end(); ++iter)
-            {
-                GUIWindowUtils::Selectable(iter->first, selLight, iter->first);
-            }
-            mScene->SetLight(selLight);
-        }
-        ImGui::End();
+        return mScene->GetLight();
     }
 
-    GUILightViewer(State* state, Scene* scene, bool isEnabled)
-        : mState(state), mScene(scene)
+    IContainer<Light>* GetContainer() override
     {
-        mType = GUI::LIGHT_VIEWER;
+        return mScene->GetLights();
+    }
+
+    void DisplaySelectedItem(Light* selection) override
+    {
+        if (selection == nullptr)
+            return;
+
+        // Select light type
+        LightType type = selection->GetType();
+        if (ImGui::BeginListBox("Type"))
+        {
+            GUIWindowUtils::Selectable("Point", type, LightType::POINT);
+            GUIWindowUtils::Selectable("Directional", type, LightType::DIR);
+            GUIWindowUtils::Selectable("Spot", type, LightType::SPOT);
+            selection->SetType(type);
+            ImGui::EndListBox();
+        }
+
+        // Light position
+        if (type == LightType::SPOT || type == LightType::POINT)
+        {
+            selection->SetOffset(
+                GUIWindowUtils::InputVec3("Position", selection->GetOffset()));
+        }
+
+        // Light direction
+        if (type == LightType::SPOT || type == LightType::DIR)
+        {
+            selection->SetDir(
+                GUIWindowUtils::InputVec3("Direction", selection->GetDir()));
+        }
+
+        // Light Diffuse, Ambient, and Specular
+        selection->SetKD(
+            GUIWindowUtils::InputFloat("Diffuse", selection->GetKD()));
+        selection->SetKA(
+            GUIWindowUtils::InputFloat("Ambient", selection->GetKA()));
+        selection->SetKS(
+            GUIWindowUtils::InputFloat("Specular", selection->GetKS()));
+
+        // Light gamma
+        selection->SetGamma(
+            GUIWindowUtils::Checkbox("Gamma", selection->GetGamma()));
+
+        // Show attributes of point and spotlights
+        if (type == LightType::POINT || type == LightType::SPOT)
+        {
+            // Range coefficient
+            selection->SetRange(
+                GUIWindowUtils::InputFloat("Range", selection->GetRange()));
+        }
+        // Show attributes of spotlight
+        if (type == LightType::SPOT)
+        {
+            // Inner radius
+            selection->SetSpotInnerRadius(
+                GUIWindowUtils::InputFloat("Inner Radius", selection->GetSpotInnerRadius()));
+            // Outer radius
+            selection->SetSpotOuterRadius(
+                GUIWindowUtils::InputFloat("Outer Radius", selection->GetSpotOuterRadius()));
+        }
+
+        // Light color
+        selection->SetBaseColor(
+            GUIWindowUtils::ColorPicker("Light Color", selection->GetBaseColor()));
+    }
+
+public:
+    GUILightViewer(State* state, Scene* scene, bool isEnabled)
+    {
+        mState = state;
         mScene = scene;
+        mType = GUI::LIGHT_VIEWER;
+        mIsEnabled = isEnabled;
+        mMustSelect = true;
+        mWindowName = "Light Viewer";
     }
 };

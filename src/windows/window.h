@@ -1,6 +1,6 @@
 #pragma once
 #include "glIncludes.h"
-#include "iGUIWindow.h"
+#include "interfaces/iGUIWindow.h"
 #include "interaction/input.h"
 #include "files/config.h"
 #include "files/fileSystem.h"

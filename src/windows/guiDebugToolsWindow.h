@@ -1,6 +1,6 @@
 #pragma once
 #include "utils.h"
-#include "windows/iGUIWindow.h"
+#include "interfaces/iGUIWindow.h"
 #include "windows/guiWindowUtils.h"
 #include "interaction/selection.h"
 #include "rendering/scene.h"
@@ -64,10 +64,10 @@ public:
 			// Input debug
 			ImGui::Separator();
 			ImGui::Text("Input");
-			ImGui::InputInt("Current X", &mState->mouseCurX);
-			ImGui::InputInt("Current Y", &mState->mouseCurY);
-			ImGui::InputInt("Previous X", &mState->mousePrevX);
-			ImGui::InputInt("Previous Y", &mState->mousePrevY);
+			ImGui::InputInt("Current X", &mState->mouseCurX, 0);
+			ImGui::InputInt("Current Y", &mState->mouseCurY, 0);
+			ImGui::InputInt("Previous X", &mState->mousePrevX, 0);
+			ImGui::InputInt("Previous Y", &mState->mousePrevY, 0);
 
 			// Debug settings
 			ImGui::Separator();

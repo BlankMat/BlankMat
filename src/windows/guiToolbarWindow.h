@@ -1,7 +1,7 @@
 #pragma once
 #include "glIncludes.h"
 #include "files/fileSystem.h"
-#include "windows/iGUIWindow.h"
+#include "interfaces/iGUIWindow.h"
 #include "interaction/selection.h"
 #include "rendering/scene.h"
 #include "tools/state.h"

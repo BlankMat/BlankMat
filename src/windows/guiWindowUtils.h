@@ -123,7 +123,7 @@ public:
 
 	static int InputInt(const std::string& label, int value)
 	{
-		ImGui::InputInt(label.c_str(), &value);
+		ImGui::InputInt(label.c_str(), &value, 0);
 		return value;
 	}
 

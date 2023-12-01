@@ -3,7 +3,7 @@
 #include "tools/state.h"
 #include "files/fileSystem.h"
 #include "rendering/scene.h"
-#include "windows/iGUIWindow.h"
+#include "interfaces/iGUIWindow.h"
 #include "interaction/selection.h"
 #include <vector>
 #include <iostream>

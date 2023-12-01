@@ -1,5 +1,5 @@
 #pragma once
-#include "iGUIWindow.h"
+#include "interfaces/iGUIWindow.h"
 #include "interaction/input.h"
 #include <unordered_map>
 

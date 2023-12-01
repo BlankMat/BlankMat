@@ -1,5 +1,5 @@
 #pragma once
-#include "iGUIWindow.h"
+#include "interfaces/iGUIWindow.h"
 #include "guiWindowUtils.h"
 #include "tools/state.h"
 #include "rendering/scene.h"
