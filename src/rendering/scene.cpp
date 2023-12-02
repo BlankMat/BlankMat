@@ -429,7 +429,7 @@ void Scene::SetDirectory(const std::string& dir) { mDirectory = dir; }
 // Adds an entity to the scene's render list
 IEntity* Scene::AddEntity(const std::string& shaderName, IEntity* entity, bool preRender)
 {
-	if (mEntityList.find(shaderName) == mEntityList.begin())
+	if (!mEntityList.contains(shaderName))
 		mEntityList.emplace(shaderName, new EntityContainer());
 	mEntityList[shaderName]->Add(entity->GetName(), entity);
 	return entity;
@@ -454,7 +454,7 @@ void Scene::SetEntityMaterial(IEntity* entity, Material* material)
 	std::string matName = material->name;
 
 	// If the material is already stored in the render list, remove it
-	if (mMeshRenderList.find(prevMatName) != mMeshRenderList.end())
+	if (mMeshRenderList.contains(prevMatName))
 	{
 		if (mMeshRenderList[prevMatName]->GetItem(entity->GetName()) != nullptr)
 			mMeshRenderList[prevMatName]->Remove(entity->GetName());
@@ -462,7 +462,7 @@ void Scene::SetEntityMaterial(IEntity* entity, Material* material)
 	entity->SetMaterial(material);
 
 	// Add the material to the appropriate render list
-	if (mMeshRenderList.find(material->name) == mMeshRenderList.end())
+	if (!mMeshRenderList.contains(material->name))
 	{
 		mMeshRenderList.emplace(material->name, new EntityContainer());
 	}

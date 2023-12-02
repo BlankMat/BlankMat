@@ -211,9 +211,9 @@ void Selection::SetSelMode(SelMode _sel)
 }
 
 // Returns whether the given vertex is selected
-bool Selection::IsVertSelected(unsigned int _id) { return mSelVertices.find(_id) != mSelVertices.end(); }
+bool Selection::IsVertSelected(unsigned int _id) { return mSelVertices.contains(_id); }
 // Returns whether the given face is selected
-bool Selection::IsFaceSelected(unsigned int _id) { return mSelFaces.find(_id) != mSelFaces.end(); }
+bool Selection::IsFaceSelected(unsigned int _id) { return mSelFaces.contains(_id); }
 
 // Returns the tool selection
 Tool Selection::GetTool() { return mSelTool; }

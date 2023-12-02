@@ -95,7 +95,7 @@ public:
 
 		// Trigger hotkey
 		std::string hotkey = GetModCode(mods) + keyCode;
-		if (mHotkeys.find(hotkey) != mHotkeys.end())
+		if (mHotkeys.contains(hotkey))
 			RunCommand(mHotkeys[hotkey]);
 		return true;
 	}
@@ -115,7 +115,7 @@ public:
 
 		// Trigger reverse hotkey if it exists
 		std::string hotkey = GetModCode(mods) + keyCode;
-		if (mHotkeys.find(hotkey) != mHotkeys.end())
+		if (mHotkeys.contains(hotkey))
 			RunCommand(mHotkeys[hotkey] + "_RELEASE");
 		return true;
 	}
@@ -127,7 +127,7 @@ public:
 	/// <returns>Whether the key is pressed</returns>
 	bool IsKeyPressed(const std::string& keyCode) const
 	{
-		return mKeysPressed.find(keyCode) != mKeysPressed.end();
+		return mKeysPressed.contains(keyCode);
 	}
 
 	/// <summary>
@@ -137,7 +137,7 @@ public:
 	void RunCommand(const std::string& command)
 	{
 		std::cout << "Ran command " << command << std::endl;
-		if (mCommands.find(command) != mCommands.end())
+		if (mCommands.contains(command))
 			mState->GetActionStack()->Execute(mCommands[command]);
 	}
 
@@ -149,7 +149,7 @@ public:
 	void AddCommand(const std::string& name, ICommand* command)
 	{
 		// If the command already exists, replace it
-		if (mCommands.find(name) != mCommands.end())
+		if (mCommands.contains(name))
 			mCommands[name] = command;
 		else
 			mCommands.emplace(name, command);

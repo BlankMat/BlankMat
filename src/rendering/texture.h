@@ -233,7 +233,7 @@ public:
 	/// <param name="_type">Texture type</param>
 	/// <param name="_path">Path of the referenced texture file</param>
 	/// <param name="_name">Name of the texture</param>
-	Texture::Texture(unsigned int _id = -1, TextureType _type = TextureType::DIFFUSE, const std::string& _path = "", const std::string& _name = "", bool _internal = false)
+	Texture(unsigned int _id = -1, TextureType _type = TextureType::DIFFUSE, const std::string& _path = "", const std::string& _name = "", bool _internal = false)
 		: id(_id), type(_type), path(_path), name(_name), mIsInternal(_internal)
     {}
 
@@ -243,7 +243,7 @@ public:
     /// <param name="_type">Type of the texture</param>
     /// <param name="_color">Color of the texture</param>
     /// <param name="_name">Name of the texture</param>
-    Texture::Texture(TextureType _type, const glm::vec3& _color, const std::string& _name, bool _internal = false)
+    Texture(TextureType _type, const glm::vec3& _color, const std::string& _name, bool _internal = false)
         : type(_type), path("color"), name(_name), mIsInternal(_internal)
     {
         id = TextureFromColor(_color, _name);
@@ -256,7 +256,7 @@ public:
 	/// <param name="_directory">Directory of the texture file</param>
 	/// <param name="_path">Name of the texture file</param>
 	/// <param name="_name">Name of the texture</param>
-	Texture::Texture(TextureType _type, const std::string& _directory, const std::string& _path, const std::string& _name, bool _internal = false)
+	Texture(TextureType _type, const std::string& _directory, const std::string& _path, const std::string& _name, bool _internal = false)
 		: type(_type), path(_path), name(_name), mIsInternal(_internal)
 	{
 		id = TextureFromFile(_directory, _path);

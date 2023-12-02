@@ -146,7 +146,7 @@ protected:
 
     const char* GetHotkey(const std::string& command)
     {
-        if (mHotkeys.find(command) != mHotkeys.end())
+        if (mHotkeys.contains(command))
             return mHotkeys[command].c_str();
         return "";
     }

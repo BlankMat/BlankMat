@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
+set(CMAKE_CXX_STANDARD 20)
 project(BlankMat)
 
 # Start project in PROJECT_NAME rather than ALL_BUILD or ZERO_CHECK

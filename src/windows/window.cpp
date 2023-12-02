@@ -82,7 +82,7 @@ void Window::DrawGUI(State* state)
 // Adds the given GUI window
 void Window::AddGUI(IGUIWindow* gui)
 {
-    if (mGUIList.find(gui->GetType()) != mGUIList.end())
+    if (mGUIList.contains(gui->GetType()))
     {
         std::cout << "ERROR::WINDOW::EXISTS GUI with type " << gui->GetName() << " already exists." << std::endl;
         return;
@@ -93,7 +93,7 @@ void Window::AddGUI(IGUIWindow* gui)
 // Gets the GUI with the given type
 IGUIWindow* Window::GetGUI(GUI type)
 {
-    if (mGUIList.find(type) == mGUIList.end())
+    if (!mGUIList.contains(type))
     {
         std::cout << "ERROR::WINDOW::NULL GUI with type " << (int)type << " is not open." << std::endl;
         return nullptr;

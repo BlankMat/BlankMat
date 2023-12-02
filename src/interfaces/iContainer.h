@@ -245,7 +245,7 @@ public:
 	/// <returns>The element stored in the container</returns>
 	virtual T* Add(const std::string& name, T* item)
 	{
-		if (mData.find(name) == mData.end())
+		if (!mData.contains(name))
 			mData.emplace(name, item);
 		else
 			mData[name] = item;
@@ -263,7 +263,7 @@ public:
 	/// <returns>Whether the item was removed or not</returns>
 	virtual bool Remove(const std::string& name)
 	{
-		if (mData.find(name) != mData.end())
+		if (mData.contains(name))
 		{
 			mData.erase(name);
 			return true;
@@ -296,7 +296,7 @@ public:
 	/// <returns>Item</returns>
 	virtual T* GetItem(const std::string& name)
 	{
-		if (mData.find(name) != mData.end())
+		if (mData.contains(name))
 			return mData[name];
 		return nullptr;
 	}
@@ -308,7 +308,7 @@ public:
 	/// <returns>Whether the item exists</returns>
 	virtual bool Contains(const std::string& name)
 	{
-		return (mData.find(name) != mData.end());
+		return mData.contains(name);
 	}
 
 	/// <summary>

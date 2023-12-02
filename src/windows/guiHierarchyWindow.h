@@ -43,8 +43,8 @@ protected:
 
         // Mark this node
         bool isSelected = (IEntity::GetNameNullSafe(node) == IEntity::GetNameNullSafe(selEntity));
-        bool isExpanded = (mExpandedNodes.find(node) != mExpandedNodes.end());
-        char* nodeMarker = isExpanded ? "v  " : ">  ";
+        bool isExpanded = mExpandedNodes.contains(node);
+        const char* nodeMarker = isExpanded ? "v  " : ">  ";
         RenderSelectable(selEntity, node, depthMarker + nodeMarker);
 
         // Toggle node expanded status on right click
@@ -54,7 +54,7 @@ protected:
                 mExpandedNodes.erase(node);
             else
                 mExpandedNodes.insert(node);
-            isExpanded = (mExpandedNodes.find(node) != mExpandedNodes.end());
+            isExpanded = mExpandedNodes.contains(node);
         }
 
         // If the node is not expanded, skip it

@@ -52,7 +52,7 @@ public:
 	// Loads the given material, unless it's already been loaded this frame
 	void LoadMaterial(Material* material)
 	{
-		if (mMaterialsThisFrame.find(material->name) != mMaterialsThisFrame.end())
+		if (mMaterialsThisFrame.contains(material->name))
 			return;
 
 		material->LoadShaderTextures(this, defaultMat);

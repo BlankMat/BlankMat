@@ -320,7 +320,7 @@ void Node::UpdateEnabledStatus()
 // Adds the name of the mesh to the node, so that the mesh can later be obtained from a mesh container
 void Node::AddMeshName(const std::string& name)
 {
-	if (mUnloadedMeshes.find(name) != mUnloadedMeshes.end())
+	if (mUnloadedMeshes.contains(name))
 	{
 		std::cout << "WARNING::NODE::EXISTS Node already has the given mesh" << std::endl;
 		return;
