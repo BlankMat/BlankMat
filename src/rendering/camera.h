@@ -262,7 +262,7 @@ public:
         mTarget = UIVec3("Target", pos + dir, actionStack, [this]() { TriggerRecalcView(); });
         mOrthSize = UIFloat("Size", orthSize, actionStack, [this]() { TriggerRecalcProjection(); });
         mIsPerspective = UIBool("Perspective", isPerspective, actionStack, [this]() { TriggerRecalcProjection(); });
-        mIsWireframe = UIBool("Wireframe", isWireframe, actionStack, [this]() { TriggerRecalcView(); });
+        mIsWireframe = UIBool("Wireframe", isWireframe, actionStack, [this]() { TriggerRecalcWireframe(); });
         mRotateAroundPivot = UIBool("Lock Rotation", false, actionStack);
         mBGColor = UIColor("Background", color, actionStack);
 
