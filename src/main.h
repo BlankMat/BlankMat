@@ -10,22 +10,6 @@
 #include "files/fileSystem.h"
 #include "files/configReader.h"
 
-#include "windows/window.h"
-#include "windows/guiDebugToolsWindow.h"
-#include "windows/guiMenuBarWindow.h"
-#include "windows/guiHierarchyWindow.h"
-#include "windows/guiInspectorWindow.h"
-#include "windows/guiToolbarWindow.h"
-#include "windows/guiToolModeWindow.h"
-
-#include "windows/guiCameraViewer.h"
-#include "windows/guiLightViewer.h"
-#include "windows/guiMaterialViewer.h"
-#include "windows/guiTextureViewer.h"
-
-#include "windows/guiActionList.h"
-#include "windows/guiMaterialEditor.h"
-
 #include "rendering/shader.h"
 #include "rendering/scene.h"
 
@@ -51,15 +35,6 @@ int main();
 /// <param name="scene">Scene to draw</param>
 /// <param name="state">Global state to use</param>
 void OpenGLDraw(Window* window, State* state, Scene* scene);
-
-/// <summary>
-/// Opens all defined GUIs
-/// </summary>
-/// <param name="window">Window to load GUIs to</param>
-/// <param name="state">Global state</param>
-/// <param name="scene">Scene reference</param>
-/// <param name="config">Config file</param>
-void LoadGUIs(Window* window, State* state, Scene* scene, Input* input, Config* config);
 
 /// <summary>
 /// Loads all defined shaders

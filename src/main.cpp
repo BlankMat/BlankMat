@@ -31,9 +31,6 @@ int main()
     // Load default scene
     LoadDefaultScene(scene, state, state->defaultMat, config->GetBool("defaultCubes"), config->GetConfig("camera"), config->GetConfig("light"));
 
-    // Add GUIs
-    LoadGUIs(window, state, scene, window->GetInput(), config);
-
     // Main program loop should run until the program is exited and the changes are saved or ignored
     while (true)
     {
@@ -109,24 +106,6 @@ void OpenGLDraw(Window* window, State* state, Scene* scene)
     // Clear materials loaded for this frame
     state->ClearLoadedMaterials();
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-}
-
-// Opens all defined GUIs
-// ------------------------------------------------------
-void LoadGUIs(Window* window, State* state, Scene* scene, Input* input, Config* config)
-{
-    window->AddGUI(new GUILightViewer(state, scene, true));
-    window->AddGUI(new GUICameraViewer(state, scene, true));
-    window->AddGUI(new GUIMaterialViewer(state, scene, true));
-    window->AddGUI(new GUITextureViewer(state, scene, true));
-    window->AddGUI(new GUIMaterialEditor(state, scene, true));
-    window->AddGUI(new GUIDebugToolsWindow(state, scene, true));
-    window->AddGUI(new GUIHierarchyWindow(state, scene, true));
-    window->AddGUI(new GUIInspectorWindow(state, scene, true));
-    window->AddGUI(new GUIMenuBarWindow(input, config, true));
-    window->AddGUI(new GUIToolbarWindow(state, scene, true));
-    window->AddGUI(new GUIToolModeWindow(state, scene, true));
-    window->AddGUI(new GUIActionList(state, scene, true));
 }
 
 // Loads all defined shaders

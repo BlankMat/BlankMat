@@ -40,6 +40,18 @@ public:
 		input->AddCommand("CAMERA_FOCUS", new RunFunctionCommand("CAMERA_FOCUS", std::bind(&Scene::FocusCamera, scene)));
 		input->AddCommand("TOGGLE_VISIBILITY", new RunToggleFunctionCommand("TOGGLE_VISIBILITY", std::bind(&Selection::ToggleSelectionVisibility, state->GetSel())));
 
+		input->AddCommand("OPEN_DEBUG_TOOLS", new RunFunctionCommand("OPEN_DEBUG_TOOLS", std::bind(&Window::OpenGUI, appWindow, GUI::DEBUG_TOOLS)));
+		input->AddCommand("OPEN_ACTION_LIST", new RunFunctionCommand("OPEN_ACTION_LIST", std::bind(&Window::OpenGUI, appWindow, GUI::ACTION_LIST)));
+		input->AddCommand("OPEN_MATERIAL_VIEWER", new RunFunctionCommand("OPEN_MATERIAL_VIEWER", std::bind(&Window::OpenGUI, appWindow, GUI::MATERIAL_VIEWER)));
+		input->AddCommand("OPEN_MATERIAL_EDITOR", new RunFunctionCommand("OPEN_MATERIAL_EDITOR", std::bind(&Window::OpenGUI, appWindow, GUI::MATERIAL_EDITOR)));
+		input->AddCommand("OPEN_TEXTURE_VIEWER", new RunFunctionCommand("OPEN_TEXTURE_VIEWER", std::bind(&Window::OpenGUI, appWindow, GUI::TEXTURE_VIEWER)));
+		input->AddCommand("OPEN_LIGHT_VIEWER", new RunFunctionCommand("OPEN_LIGHT_VIEWER", std::bind(&Window::OpenGUI, appWindow, GUI::LIGHT_VIEWER)));
+		input->AddCommand("OPEN_CAMERA_VIEWER", new RunFunctionCommand("OPEN_CAMERA_VIEWER", std::bind(&Window::OpenGUI, appWindow, GUI::CAMERA_VIEWER)));
+		input->AddCommand("OPEN_HIERARCHY", new RunFunctionCommand("OPEN_HIERARCHY", std::bind(&Window::OpenGUI, appWindow, GUI::HIERARCHY)));
+		input->AddCommand("OPEN_INSPECTOR", new RunFunctionCommand("OPEN_INSPECTOR", std::bind(&Window::OpenGUI, appWindow, GUI::INSPECTOR)));
+		input->AddCommand("OPEN_TOOLBAR", new RunFunctionCommand("OPEN_TOOLBAR", std::bind(&Window::OpenGUI, appWindow, GUI::TOOLBAR)));
+		input->AddCommand("OPEN_TOOL_MODE", new RunFunctionCommand("OPEN_TOOL_MODE", std::bind(&Window::OpenGUI, appWindow, GUI::MODEBAR)));
+		
 		input->AddCommand("SELECT_MODE", new RunFunctionCommand("SELECT_MODE", std::bind(&Selection::SetTool, state->GetSel(), Tool::SELECT)));
 		input->AddCommand("MOVE_MODE", new RunFunctionCommand("MOVE_MODE", std::bind(&Selection::SetTool, state->GetSel(), Tool::MOVE)));
 		input->AddCommand("ROTATE_MODE", new RunFunctionCommand("ROTATE_MODE", std::bind(&Selection::SetTool, state->GetSel(), Tool::ROTATE)));

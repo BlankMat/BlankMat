@@ -16,7 +16,7 @@ public:
 		if (!mIsEnabled)
 			return;
 
-		if (ImGui::Begin("Material Viewer", &mIsEnabled, ImGuiWindowFlags_AlwaysAutoResize))
+		if (ImGui::Begin("Material Viewer##Window", &mIsEnabled, ImGuiWindowFlags_AlwaysAutoResize))
 		{
 			IEntity* sel = mState->GetSel()->GetSelectedEntity();
 			MaterialContainer* materialList = mScene->GetMaterials();
