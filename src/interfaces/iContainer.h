@@ -43,6 +43,27 @@ protected:
 	}
 
 	/// <summary>
+	/// Returns a unique name, incrementing the existing name until it is unique
+	/// </summary>
+	/// <param name="name">Starting name</param>
+	/// <returns>New unique name</returns>
+	virtual std::string GetUniqueName(const std::string& name)
+	{
+		std::string uniqueName = name;
+		while (mData.contains(uniqueName))
+		{
+			uniqueName = IncrementName(uniqueName, 1);
+		}
+		return uniqueName;
+	}
+
+	/// <summary>
+	/// Renames the given item to the given name
+	/// </summary>
+	/// <param name="item">Item to rename</param>
+	virtual void RenameItem(T* item, const std::string& name) = 0;
+
+	/// <summary>
 	/// Reads the next item from the input file stream
 	/// </summary>
 	/// <param name="file">File to read</param>
@@ -309,6 +330,29 @@ public:
 	virtual bool Contains(const std::string& name)
 	{
 		return mData.contains(name);
+	}
+
+	/// <summary>
+	/// Renames the given item to the new name, or the new name with appended numbers
+	/// </summary>
+	/// <param name="name">Name of the item to rename</param>
+	/// <param name="newName">Name to rename to</param>
+	/// <returns>Whether the item was renamed</returns>
+	virtual bool Rename(const std::string& name, const std::string& newName)
+	{
+		// Don't rename an item that doesn't exist
+		if (!Contains(name))
+			return false;
+		
+		// Validate name
+		std::string itemName = GetUniqueName(newName);
+
+		// Rename item and replace it into the data
+		T* item = mData[name];
+		RenameItem(item, itemName);
+		mData.erase(name);
+		mData.emplace(itemName, item);
+		return true;
 	}
 
 	/// <summary>

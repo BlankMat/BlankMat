@@ -7,6 +7,15 @@ class MaterialContainer : public IContainer<Material>
 {
 protected:
 	/// <summary>
+	/// Renames the given item to the given name
+	/// </summary>
+	/// <param name="item">Item to rename</param>
+	void RenameItem(Material* item, const std::string& name) override
+	{
+		item->name = name;
+	}
+
+	/// <summary>
 	/// Returns whether the item should be skipped or not
 	/// </summary>
 	/// <param name="item">Item to consider</param>
@@ -15,6 +24,7 @@ protected:
 	{
 		return item->IsInternal();
 	} 
+
 	/// <summary>
 	/// Reads the next item from the input file stream
 	/// </summary>

@@ -115,52 +115,52 @@ public:
 		return value;
 	}
 	
-	static std::string InputText(const std::string& label, std::string value)
+	static std::string InputText(const std::string& label, std::string value, ImGuiInputTextFlags flags = ImGuiInputTextFlags_None)
 	{
-		ImGui::InputText(label.c_str(), &value);
+		ImGui::InputText(label.c_str(), &value, flags);
 		return value;
 	}
 
-	static int InputInt(const std::string& label, int value)
+	static int InputInt(const std::string& label, int value, ImGuiInputTextFlags flags = ImGuiInputTextFlags_None)
 	{
-		ImGui::InputInt(label.c_str(), &value, 0);
+		ImGui::InputInt(label.c_str(), &value, 0, 0, flags);
 		return value;
 	}
 
-	static float InputFloat(const std::string& label, float value)
+	static float InputFloat(const std::string& label, float value, ImGuiInputTextFlags flags = ImGuiInputTextFlags_None)
 	{
-		ImGui::InputFloat(label.c_str(), &value);
+		ImGui::InputFloat(label.c_str(), &value, 0.0f, 0.0f, "%.3f", flags);
 		return value;
 	}
 
-	static glm::vec3 InputVec3(const std::string& label, glm::vec3 value)
+	static glm::vec3 InputVec3(const std::string& label, glm::vec3 value, ImGuiInputTextFlags flags = ImGuiInputTextFlags_None)
 	{
 		float valueInput[3] = { value.x, value.y, value.z };
-		ImGui::InputFloat3(label.c_str(), valueInput);
+		ImGui::InputFloat3(label.c_str(), valueInput, "%.3f", flags);
 		return Vec3FromFloats(valueInput);
 	}
 
-	static glm::mat3 InputMat3(const std::string& label, const glm::mat3& value)
+	static glm::mat3 InputMat3(const std::string& label, const glm::mat3& value, ImGuiInputTextFlags flags = ImGuiInputTextFlags_None)
 	{
 		float valueInput1[3] = { value[0].x, value[1].x, value[2].x };
 		float valueInput2[3] = { value[0].y, value[1].y, value[2].y };
 		float valueInput3[3] = { value[0].z, value[1].z, value[2].z };
-		ImGui::InputFloat3(label.c_str(), valueInput1);
-		ImGui::InputFloat3(("##1" + label).c_str(), valueInput2);
-		ImGui::InputFloat3(("##2" + label).c_str(), valueInput3);
+		ImGui::InputFloat3(label.c_str(), valueInput1, "%.3f", flags);
+		ImGui::InputFloat3(("##1" + label).c_str(), valueInput2, "%.3f", flags);
+		ImGui::InputFloat3(("##2" + label).c_str(), valueInput3, "%.3f", flags);
 		return Mat3FromFloats(valueInput1, valueInput2, valueInput3);
 	}
 
-	static glm::mat4 InputMat4(const std::string& label, const glm::mat4& value)
+	static glm::mat4 InputMat4(const std::string& label, const glm::mat4& value, ImGuiInputTextFlags flags = ImGuiInputTextFlags_None)
 	{
 		float valueInput1[4] = { value[0].x, value[1].x, value[2].x, value[3].x };
 		float valueInput2[4] = { value[0].y, value[1].y, value[2].y, value[3].y };
 		float valueInput3[4] = { value[0].z, value[1].z, value[2].z, value[3].z };
 		float valueInput4[4] = { value[0].w, value[1].w, value[2].w, value[3].w };
-		ImGui::InputFloat4(label.c_str(), valueInput1);
-		ImGui::InputFloat4(("##1" + label).c_str(), valueInput2);
-		ImGui::InputFloat4(("##2" + label).c_str(), valueInput3);
-		ImGui::InputFloat4(("##3" + label).c_str(), valueInput4);
+		ImGui::InputFloat4(label.c_str(), valueInput1, "%.3f", flags);
+		ImGui::InputFloat4(("##1" + label).c_str(), valueInput2, "%.3f", flags);
+		ImGui::InputFloat4(("##2" + label).c_str(), valueInput3, "%.3f", flags);
+		ImGui::InputFloat4(("##3" + label).c_str(), valueInput4, "%.3f", flags);
 		return Mat4FromFloats(valueInput1, valueInput2, valueInput3, valueInput4);
 	}
 

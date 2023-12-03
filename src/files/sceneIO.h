@@ -98,24 +98,6 @@ private:
 	/// 
 	/// </summary>
 	/// <param name="path"></param>
-	/// <returns></returns>
-	static std::string IncrementPath(const std::string path)
-	{
-		size_t numIndex = path.find_last_not_of("0123456789");
-		std::string endNums = path.substr(numIndex + 1);
-
-		// If the filename does not end in numbers, pad it with numbers
-		if (endNums.length() <= 0)
-			return path + "_000";
-
-		// If the filename ends in numbers, increment the number by one
-		return path.substr(0, numIndex + 1) + IntToString(std::stoi(endNums) + 1, endNums.length());
-	}
-
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="path"></param>
 	void ReadPath(const std::string path)
 	{
 		SplitPath(path, mCurDirectory, mCurFileName, mCurExtension);
@@ -187,7 +169,7 @@ public:
 		}
 
 		// Update filename
-		mCurFileName = IncrementPath(mCurFileName);
+		mCurFileName = IncrementName(mCurFileName, 3);
 		mState->SetCurFileName(mCurFileName);
 
 		// Save scene

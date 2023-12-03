@@ -163,16 +163,36 @@ static const void ParseStringByDelim(std::vector<std::string>& out, const std::s
 }
 
 /// <summary>
-/// Returns whitespace padding of the given depth
+/// Creates a padded string of length depth that repeats the given pad
 /// </summary>
-/// <param name="depth">Number of spaces</param>
-/// <returns>Whitespace string of size depth</returns>
-static const std::string GetPadding(unsigned int depth)
+/// <param name="depth">Number of times to repeat the pad</param>
+/// <param name="pad">Character to pad</param>
+/// <returns>String of size depth * pad.length</returns>
+static const std::string GetPadding(unsigned int depth, const std::string& pad = " ")
 {
     std::ostringstream ss;
     for (unsigned int i = 0; i < depth; i++)
-        ss << " ";
+        ss << pad;
     return ss.str();
+}
+
+/// <summary>
+/// Increments the name by 1, adding padded numbers to the end
+/// </summary>
+/// <param name="name">Name to increment</param>
+/// <param name="padLen">Length of the padding after the underscore</param>
+/// <returns>Incremented name</returns>
+static std::string IncrementName(const std::string& name, int padLen = 3)
+{
+    size_t numIndex = name.find_last_not_of("0123456789");
+    std::string endNums = name.substr(numIndex + 1);
+
+    // If the name does not end in numbers, pad it with zeros
+    if (endNums.length() <= 0)
+        return name + "_" + GetPadding(padLen, "0");
+
+    // If the name ends in numbers, increment the number by one
+    return name.substr(0, numIndex + 1) + IntToString(std::stoi(endNums) + 1, endNums.length());
 }
 
 /// <summary>

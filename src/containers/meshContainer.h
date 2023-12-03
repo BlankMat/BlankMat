@@ -7,6 +7,15 @@ class MeshContainer : public IContainer<Mesh>
 {
 protected:
 	/// <summary>
+	/// Renames the given item to the given name
+	/// </summary>
+	/// <param name="item">Item to rename</param>
+	void RenameItem(Mesh* item, const std::string& name) override
+	{
+		item->SetName(name);
+	}
+
+	/// <summary>
 	/// Reads the vertices for the current mesh in the input file
 	/// </summary>
 	/// <param name="outVerts">Indices list to add to</param>

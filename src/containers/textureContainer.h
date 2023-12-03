@@ -6,6 +6,15 @@ class TextureContainer : public IContainer<Texture>
 {
 protected:
 	/// <summary>
+	/// Renames the given item to the given name
+	/// </summary>
+	/// <param name="item">Item to rename</param>
+	void RenameItem(Texture* item, const std::string& name) override
+	{
+		item->name = name;
+	}
+
+	/// <summary>
 	/// Returns whether the item should be skipped or not
 	/// </summary>
 	/// <param name="item">Item to consider</param>

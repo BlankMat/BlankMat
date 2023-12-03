@@ -9,6 +9,12 @@ class LightContainer : public IContainer<Light>
 {
 protected:
 	/// <summary>
+	/// Renames the given item to the given name
+	/// </summary>
+	/// <param name="item">Item to rename</param>
+	void RenameItem(Light* item, const std::string& name) override {}
+
+	/// <summary>
 	/// Reads the next item from the input file stream
 	/// </summary>
 	/// <param name="file">File to read</param>
