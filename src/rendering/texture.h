@@ -236,10 +236,8 @@ public:
 	/// <param name="_path">Path of the referenced texture file</param>
 	/// <param name="_name">Name of the texture</param>
 	Texture(unsigned int _id = -1, TextureType _type = TextureType::DIFFUSE, const std::string& _path = "", const std::string& _name = "", bool _internal = false)
-		: id(_id), type(_type), path(_path), name(_name), mIsInternal(_internal)
-    {
-        mSelectableType = SelectableType::TEXTURE;
-    }
+		: id(_id), type(_type), path(_path), name(_name), mIsInternal(_internal), ISelectable(SelectableType::TEXTURE)
+    {}
 
     /// <summary>
     /// Creates a new texture from the given color
@@ -248,9 +246,8 @@ public:
     /// <param name="_color">Color of the texture</param>
     /// <param name="_name">Name of the texture</param>
     Texture(TextureType _type, const glm::vec3& _color, const std::string& _name, bool _internal = false)
-        : type(_type), path("color"), name(_name), mIsInternal(_internal)
+        : type(_type), path("color"), name(_name), mIsInternal(_internal), ISelectable(SelectableType::TEXTURE)
     {
-        mSelectableType = SelectableType::TEXTURE;
         id = TextureFromColor(_color, _name);
     }
 
@@ -262,9 +259,8 @@ public:
 	/// <param name="_path">Name of the texture file</param>
 	/// <param name="_name">Name of the texture</param>
 	Texture(TextureType _type, const std::string& _directory, const std::string& _path, const std::string& _name, bool _internal = false)
-		: type(_type), path(_path), name(_name), mIsInternal(_internal)
+		: type(_type), path(_path), name(_name), mIsInternal(_internal), ISelectable(SelectableType::TEXTURE)
 	{
-        mSelectableType = SelectableType::TEXTURE;
 		id = TextureFromFile(_directory, _path);
 	}
 };

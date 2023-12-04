@@ -151,9 +151,8 @@ public:
 		const glm::vec3& color = glm::vec3(1.0f), float kd = 1.0f, float ka = 0.1f, float ks = 0.5f, bool gamma = true, 
 		float range = 13.0f, float spotInner = 25, float spotOuter = 35)
 		: mType(type), mColor(color), mBaseColor(color), mDir(dir), mPos(pos), mKD(kd), mKA(ka), mKS(ks), mOffset(pos), mGamma(gamma), 
-		mSpotInner(spotInner), mSpotOuter(spotOuter)
+		mSpotInner(spotInner), mSpotOuter(spotOuter), ISelectable(SelectableType::LIGHT)
 	{
-		mSelectableType = SelectableType::LIGHT;
 		mLightSize = 10.0f;
 		SetRange(range);
 		CalcMatrices();
