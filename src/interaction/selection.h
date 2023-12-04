@@ -1,5 +1,6 @@
 #pragma once
 #include "glIncludes.h"
+#include "interfaces/iSelectable.h"
 #include "interfaces/iTool.h"
 #include <vector>
 #include <iostream>
@@ -24,6 +25,7 @@ private:
 	IEntity* mSelEntity = nullptr;
 	Material* mSelMaterial = nullptr;
 	IEntity* mSelTransformHandle = nullptr;
+	ISelectable* mSelElement = nullptr;
 
 	Tool mSelTool = Tool::SELECT;
 	SelMode mSelMode = SelMode::MESH;
@@ -53,6 +55,8 @@ public:
 	void SelectEntity(IEntity* entity);
 	// Selects the given material
 	void SelectMaterial(Material* material);
+	// Selects the given selectable element
+	void SelectElement(ISelectable* element);
 	// Deselects the face with the given ID
 	void DeselectFace(unsigned int _id);
 	// Deselects the vertex with the given ID
@@ -63,6 +67,8 @@ public:
 	void DeselectMesh();
 	// Deselects the currently selected material
 	void DeselectMat();
+	// Deselects the currently selected element
+	void DeselectElement();
 
 	// Clears the vertex selection
 	void ClearVertSel();
@@ -93,6 +99,8 @@ public:
 	Material* GetSelectedMaterial();
 	// Returns the transform handle
 	IEntity* GetTransformHandle();
+	// Returns the currently selected element
+	ISelectable* GetSelectedElement();
 	// Returns whether the given vertex is selected
 	bool IsVertSelected(unsigned int _id);
 	// Returns whether the given face is selected

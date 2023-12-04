@@ -70,6 +70,7 @@ void Selection::SelectVert(unsigned int _id, bool _deselect)
 void Selection::SelectMesh(Mesh* mesh)
 {
 	mSelMesh = mesh;
+	SelectElement(mesh);
 	std::cout << "Selected mesh [" << IEntity::GetNameNullSafe(mSelMesh) << "].\n";
 }
 
@@ -77,6 +78,7 @@ void Selection::SelectMesh(Mesh* mesh)
 void Selection::SelectEntity(IEntity* entity)
 {
 	mSelEntity = entity;
+	SelectElement(entity);
 	UpdateTransformHandle();
 	std::cout << "Selected entity [" << IEntity::GetNameNullSafe(mSelEntity) << "].\n";
 }
@@ -85,7 +87,15 @@ void Selection::SelectEntity(IEntity* entity)
 void Selection::SelectMaterial(Material* material)
 {
 	mSelMaterial = material;
+	SelectElement(material);
 	std::cout << "Selected material [" << (material != nullptr ? material->name : "None") << "].\n";
+}
+
+// Selects the given selectable element
+void Selection::SelectElement(ISelectable* element)
+{
+	mSelElement = element;
+	std::cout << "Selected element [" << (element != nullptr ? (int)element->GetSelectableType() : -1) << "].\n";
 }
 
 // Deselects the face with the given ID
@@ -131,6 +141,16 @@ void Selection::DeselectMat()
 
 	mSelMaterial = nullptr;
 	std::cout << "Delected material\n";
+}
+
+// Deselects the currently selected element
+void Selection::DeselectElement()
+{
+	if (mSelElement == nullptr)
+		return;
+
+	mSelElement = nullptr;
+	std::cout << "Deselected element\n";
 }
 
 // Clears the vertex selection
@@ -227,6 +247,8 @@ IEntity* Selection::GetSelectedEntity() { return mSelEntity; }
 Material* Selection::GetSelectedMaterial() { return mSelMaterial; }
 // Returns the transform handle
 IEntity* Selection::GetTransformHandle() { return mSelTransformHandle; }
+// Returns the currently selected element
+ISelectable* Selection::GetSelectedElement() { return mSelElement; }
 
 // Sets the selection's transform handle
 void Selection::SetTransformHandle(IEntity* transformHandle) { mSelTransformHandle = transformHandle; }
