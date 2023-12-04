@@ -323,6 +323,19 @@ public:
 	}
 
 	/// <summary>
+	/// Returns the key of the item given, or an empty string if not found
+	/// </summary>
+	/// <param name="item">Item to search for</param>
+	/// <returns>Name of item</returns>
+	virtual const std::string GetKey(T* item)
+	{
+		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
+			if (iter->second == item)
+				return iter->first;
+		return "";
+	}
+
+	/// <summary>
 	/// Returns whether the container contains an item with the given name
 	/// </summary>
 	/// <param name="name">Name of the item</param>
@@ -353,19 +366,6 @@ public:
 		mData.erase(name);
 		mData.emplace(itemName, item);
 		return true;
-	}
-
-	/// <summary>
-	/// Returns the key of the item given, or an empty string if not found
-	/// </summary>
-	/// <param name="item">Item to search for</param>
-	/// <returns>Name of item</returns>
-	virtual const std::string GetKey(T* item)
-	{
-		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
-			if (iter->second == item)
-				return iter->first;
-		return "";
 	}
 
 	/// <summary>

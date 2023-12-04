@@ -19,6 +19,7 @@ public:
 		{
 			IEntity* selEntity = mState->GetSel()->GetSelectedEntity();
 			Material* selMat = (selEntity != nullptr) ? selEntity->GetMaterial() : nullptr;
+			Texture* selTexture = mScene->GetTextures()->GetSelectedItem();
 			if (selMat != nullptr)
 			{
 				selMat->name = GUIWindowUtils::InputText("##matName", selMat->name);
@@ -62,6 +63,18 @@ public:
 				selMat->ni = GUIWindowUtils::InputFloat("Index of Refraction", selMat->ni);
 				selMat->d = GUIWindowUtils::InputFloat("Alpha", selMat->d);
 				selMat->illum = GUIWindowUtils::InputInt("Illumination Mode", selMat->illum);
+
+				GUIWindowUtils::TextureSelect("Diffuse", selMat->map_kd, selTexture);
+				GUIWindowUtils::TextureSelect("Ambient", selMat->map_ka, selTexture);
+				GUIWindowUtils::TextureSelect("Specular", selMat->map_ks, selTexture);
+				GUIWindowUtils::TextureSelect("Normal", selMat->map_bump, selTexture);
+				GUIWindowUtils::TextureSelect("Height", selMat->map_ns, selTexture);
+				GUIWindowUtils::TextureSelect("Alpha", selMat->map_d, selTexture);
+
+				if (selTexture != mScene->GetTextures()->GetSelectedItem())
+				{
+					mScene->GetTextures()->Select(selTexture);
+				}
 			}
 			else
 			{

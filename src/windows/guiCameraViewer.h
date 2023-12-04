@@ -8,22 +8,17 @@
 class GUICameraViewer : public IGUIContainerWindow<Camera>
 {
 protected:
-    Camera* GetSelectedItem() override
-    {
-        return mScene->GetCamera();
-    }
-
     IContainer<Camera>* GetContainer() override
     {
         return mScene->GetCameras();
     }
 
-    void DisplaySelectedItem(Camera* selection) override
+    void DisplaySelectedItem() override
     {
+        Camera* selection = mScene->GetCameras()->GetSelectedItem();
         if (selection == nullptr)
             return;
 
-        selection->GetPos().Display();
         selection->GetTarget().Display();
         selection->GetPivot().Display();
         selection->GetOrthSize().Display();

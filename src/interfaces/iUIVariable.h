@@ -93,15 +93,6 @@ public:
 	}
 
 	/// <summary>
-	/// Returns a reference to the value stored in this variable
-	/// </summary>
-	/// <returns>Reference of the value of the variable</returns>
-	T* operator&()
-	{
-		return &mValue;
-	}
-
-	/// <summary>
 	/// Returns the name of the variable
 	/// </summary>
 	/// <returns>Name of the variable</returns>

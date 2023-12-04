@@ -121,6 +121,7 @@ void Material::LoadMaterialTextures(TextureContainer* _textures)
 // Constructs the default material
 Material::Material(TextureContainer* _textures)
 {
+    mSelectableType = SelectableType::MATERIAL;
     // Initialize to default material values
     name = "default";
     kd = glm::vec3(0.6f);
@@ -154,6 +155,7 @@ Material::Material(TextureContainer* _textures)
 Material::Material(const std::string& _name, const glm::vec3& _color, TextureContainer* _textures, bool _internal)
     : mIsInternal(_internal)
 {
+    mSelectableType = SelectableType::MATERIAL;
     if (name == "")
         name = "Color" + Vec3ToHex(_color);
     name = _name;
@@ -186,9 +188,9 @@ Material::Material(const std::string& _name, const glm::vec3& _color, TextureCon
 // Constructs a material out of a config file and preloaded textures
 Material::Material(const std::string& _name, Config* _config, Texture* _map_kd, Texture* _map_ka, Texture* _map_ks,
     Texture* _map_bump, Texture* _map_ns, Texture* _map_d)
+    : name(_name)
 {
-    name = _name;
-
+    mSelectableType = SelectableType::MATERIAL;
     // Load values from config
     kd = _config->GetVec("kd");
     ka = _config->GetVec("ka");
@@ -230,6 +232,7 @@ Material::Material(const std::string& _name, Texture* _map_kd, Texture* _map_ka,
     float _ns, float _ni, float _d, const glm::vec3& _ke, int _illum)
     : name(_name), ka(_ka), kd(_kd), ks(_ks), ns(_ns), ni(_ni), d(_d), ke(_ke), illum(_illum)
 {
+    mSelectableType = SelectableType::MATERIAL;
     map_kd = _map_kd;
     map_ka = _map_ka;
     map_ks = _map_ks;
@@ -260,6 +263,7 @@ Material::Material(const std::string& _name,
     float _ns, float _ni, float _d, const glm::vec3& _ke, int _illum)
     : name(_name), ka(_ka), kd(_kd), ks(_ks), ns(_ns), ni(_ni), d(_d), ke(_ke), illum(_illum)
 {
+    mSelectableType = SelectableType::MATERIAL;
     map_kd = _map_kd[0];
     map_ka = _map_ka[0];
     map_ks = _map_ks[0];
@@ -288,6 +292,7 @@ Material::Material(const std::string& _name, const std::string& _map_kd, const s
     float _ns, float _ni, float _d, const glm::vec3& _ke, int _illum)
     : name(_name), ka(_ka), kd(_kd), ks(_ks), ns(_ns), ni(_ni), d(_d), ke(_ke), illum(_illum)
 {
+    mSelectableType = SelectableType::MATERIAL;
     mTargetMapKD = _map_kd;
     mTargetMapKA = _map_ka;
     mTargetMapKS = _map_ks;

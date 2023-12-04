@@ -153,6 +153,7 @@ void Window::OpenGUI(GUI gui)
         AddGUI(new GUIMaterialEditor(mState, mScene, true));
         return;
     case GUI::TEXTURE_EDITOR:
+        AddGUI(new GUITextureEditor(mState, mScene, true));
         return;
     case GUI::UV_EDITOR:
         return;

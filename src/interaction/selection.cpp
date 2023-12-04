@@ -82,9 +82,9 @@ void Selection::SelectEntity(IEntity* entity)
 }
 
 // Selects the given material
-void Selection::SelectMat(Material* material)
+void Selection::SelectMaterial(Material* material)
 {
-	mSelMat = material;
+	mSelMaterial = material;
 	std::cout << "Selected material [" << (material != nullptr ? material->name : "None") << "].\n";
 }
 
@@ -126,10 +126,10 @@ void Selection::DeselectMesh()
 // Deselects the currently selected material
 void Selection::DeselectMat()
 {
-	if (mSelMat == nullptr)
+	if (mSelMaterial == nullptr)
 		return;
 
-	mSelMat = nullptr;
+	mSelMaterial = nullptr;
 	std::cout << "Delected material\n";
 }
 
@@ -224,7 +224,7 @@ Mesh* Selection::GetSelectedMesh() { return mSelMesh; }
 // Returns the selected entity
 IEntity* Selection::GetSelectedEntity() { return mSelEntity; }
 // Returns the selected material
-Material* Selection::GetSelectedMat() { return mSelMat; }
+Material* Selection::GetSelectedMaterial() { return mSelMaterial; }
 // Returns the transform handle
 IEntity* Selection::GetTransformHandle() { return mSelTransformHandle; }
 
@@ -283,13 +283,5 @@ int Selection::GetNearestFace(Scene* scene, float u, float v)
 // Storage container for information on all selections
 Selection::Selection()
 {
-	mSelTool = Tool::SELECT;
-	mSelMode = SelMode::MESH;
-	mPivot = glm::vec3(0, 0, 0);
-	mSelMesh = nullptr;
-	mSelMat = nullptr;
-	mSelEntity = nullptr;
-	mSelTransformHandle = nullptr;
-
 	mTools.push_back(new SelectTool());
 }

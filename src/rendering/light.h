@@ -1,14 +1,15 @@
 #pragma once
 #include "glIncludes.h"
 #include "files/config.h"
-#include "shader.h"
-#include "material.h"
+#include "rendering/shader.h"
+#include "rendering/material.h"
+#include "interfaces/iSelectable.h"
 #include "containers/textureContainer.h"
 #include "containers/materialContainer.h"
 
 enum class LightType { POINT = 0, DIR = 1, SPOT = 2 };
 
-class Light
+class Light : public ISelectable
 {
 protected:
 	glm::vec3 mColor = glm::vec3(1.0f);
@@ -152,6 +153,7 @@ public:
 		: mType(type), mColor(color), mBaseColor(color), mDir(dir), mPos(pos), mKD(kd), mKA(ka), mKS(ks), mOffset(pos), mGamma(gamma), 
 		mSpotInner(spotInner), mSpotOuter(spotOuter)
 	{
+		mSelectableType = SelectableType::LIGHT;
 		mLightSize = 10.0f;
 		SetRange(range);
 		CalcMatrices();

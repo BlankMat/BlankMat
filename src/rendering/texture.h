@@ -1,5 +1,7 @@
 #pragma once
 #include "glIncludes.h"
+#include "utils.h"
+#include "interfaces/iSelectable.h"
 #include <string>
 #include <iostream>
 
@@ -19,7 +21,7 @@ enum class TextureType
 /// <summary>
 /// A structure that stores a texture file that has been read into the OpenGL context.
 /// </summary>
-struct Texture
+struct Texture : public ISelectable
 {
 private:
     /// <summary>
@@ -235,7 +237,9 @@ public:
 	/// <param name="_name">Name of the texture</param>
 	Texture(unsigned int _id = -1, TextureType _type = TextureType::DIFFUSE, const std::string& _path = "", const std::string& _name = "", bool _internal = false)
 		: id(_id), type(_type), path(_path), name(_name), mIsInternal(_internal)
-    {}
+    {
+        mSelectableType = SelectableType::TEXTURE;
+    }
 
     /// <summary>
     /// Creates a new texture from the given color
@@ -246,6 +250,7 @@ public:
     Texture(TextureType _type, const glm::vec3& _color, const std::string& _name, bool _internal = false)
         : type(_type), path("color"), name(_name), mIsInternal(_internal)
     {
+        mSelectableType = SelectableType::TEXTURE;
         id = TextureFromColor(_color, _name);
     }
 
@@ -259,6 +264,7 @@ public:
 	Texture(TextureType _type, const std::string& _directory, const std::string& _path, const std::string& _name, bool _internal = false)
 		: type(_type), path(_path), name(_name), mIsInternal(_internal)
 	{
+        mSelectableType = SelectableType::TEXTURE;
 		id = TextureFromFile(_directory, _path);
 	}
 };

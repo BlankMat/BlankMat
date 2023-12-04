@@ -17,16 +17,16 @@ class Material;
 class Selection
 {
 private:
-	glm::vec3 mPivot;
+	glm::vec3 mPivot = glm::vec3(0.0f);
 	std::set<unsigned int> mSelVertices;
 	std::set<unsigned int> mSelFaces;
-	Mesh* mSelMesh;
-	IEntity* mSelEntity;
-	Material* mSelMat;
-	IEntity* mSelTransformHandle;
+	Mesh* mSelMesh = nullptr;
+	IEntity* mSelEntity = nullptr;
+	Material* mSelMaterial = nullptr;
+	IEntity* mSelTransformHandle = nullptr;
 
-	Tool mSelTool;
-	SelMode mSelMode;
+	Tool mSelTool = Tool::SELECT;
+	SelMode mSelMode = SelMode::MESH;
 	std::vector<ITool*> mTools;
 
 public:
@@ -52,7 +52,7 @@ public:
 	// Selects the given entity
 	void SelectEntity(IEntity* entity);
 	// Selects the given material
-	void SelectMat(Material* material);
+	void SelectMaterial(Material* material);
 	// Deselects the face with the given ID
 	void DeselectFace(unsigned int _id);
 	// Deselects the vertex with the given ID
@@ -90,7 +90,7 @@ public:
 	// Returns the selected entity
 	IEntity* GetSelectedEntity();
 	// Returns the selected material
-	Material* GetSelectedMat();
+	Material* GetSelectedMaterial();
 	// Returns the transform handle
 	IEntity* GetTransformHandle();
 	// Returns whether the given vertex is selected

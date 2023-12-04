@@ -460,20 +460,14 @@ bool Node::IsRootNode()
 
 // Creates a default node under the given parent
 Node::Node(Node* parent)
-	: mParent(parent)
-{
-	mName = "null";
-	mPos = glm::vec3(0.0f);
-	mRot = glm::vec3(0.0f);
-	mScale = glm::vec3(1.0f);
-	mParentModelMatrix = (parent != nullptr) ? parent->GetModelMatrix() : glm::mat4(1.0f);
-}
-
+	: Node(parent, "null", glm::vec3(0.0f), glm::vec3(0.0f), glm::vec3(1.0f))
+{}
 
 // Creates a scene node with the given parent and name
 Node::Node(Node* parent, const std::string& name, const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scale)
 	: mParent(parent)
 {
+	mSelectableType = SelectableType::NODE;
 	mName = name;
 	mPos = pos;
 	mRot = rot;

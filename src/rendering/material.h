@@ -1,6 +1,7 @@
 #pragma once
 #include "glIncludes.h"
 #include "files/config.h"
+#include "interfaces/iSelectable.h"
 #include "rendering/texture.h"
 #include "rendering/shader.h"
 #include "containers/textureContainer.h"
@@ -14,7 +15,7 @@ enum class IllumMode { FLAT = 0, LAMBERT = 1, PHONG = 2, REFLECTION = 3 };
 /// <summary>
 /// Class that stores all texture and render information for a material
 /// </summary>
-class Material
+class Material : public ISelectable
 {
 protected:
     glm::vec3 mCurKD = glm::vec3(1.0f);

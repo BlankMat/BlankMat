@@ -13,24 +13,27 @@ protected:
     bool mMustSelect = false;
     std::string mWindowName = "";
 
-    virtual T* GetSelectedItem() = 0;
-
     virtual IContainer<T>* GetContainer() = 0;
 
-    virtual void DisplaySelectedItem(T* selection) = 0;
+    virtual void DisplaySelectedItem() = 0;
+
+    virtual void DisplayListItem(const std::string& name, T* item, T*& selection)
+    {
+        if (mMustSelect)
+            GUIWindowUtils::Selectable(name, selection, item);
+        else
+            GUIWindowUtils::Deselectable(name, selection, item);
+    }
 
     void ListContainer(IContainer<T>* container)
     {
-        std::string selection = container->GetSelectedName();
+        T* selection = container->GetSelectedItem();
         const auto& data = container->Data();
         for (auto iter = data.begin(); iter != data.end(); ++iter)
         {
-            if (mMustSelect)
-                GUIWindowUtils::Selectable(iter->first, selection, iter->first);
-            else
-                GUIWindowUtils::Deselectable(iter->first, selection, iter->first);
+            DisplayListItem(iter->first, iter->second, selection);
         }
-        if (selection != container->GetSelectedName())
+        if (selection != container->GetSelectedItem())
         {
             container->Select(selection);
         }
@@ -40,7 +43,7 @@ public:
     {
         if (ImGui::Begin(mWindowName.c_str(), &mIsEnabled, ImGuiWindowFlags_AlwaysAutoResize))
         {
-            DisplaySelectedItem(GetSelectedItem());
+            DisplaySelectedItem();
             ImGui::Separator();
             ListContainer(GetContainer());
         }

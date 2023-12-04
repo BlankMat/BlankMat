@@ -4,6 +4,9 @@
 class GUIWindowUtils
 {
 public:
+	const static inline float TEXTURE_SIZE = 256.0f;
+	const static inline std::vector<std::string> TEXTURE_TYPES = { "Diffuse", "Ambient", "Specular", "Normal", "Height", "Alpha" };
+
 	static bool Popup(const std::string& label, bool& showPopup)
 	{
 		if (ImGui::Button(("Open " + label).c_str()))
@@ -37,6 +40,27 @@ public:
 			ImGui::EndListBox();
 		}
 		return index;
+	}
+
+	static void TextureEdit(Texture* texture)
+	{
+		int type = (int)texture->type;
+		GUIWindowUtils::InputText("Name", texture->name);
+		GUIWindowUtils::InputText("Path", texture->path);
+		texture->type = (TextureType)GUIWindowUtils::Dropdown("Type", type, TEXTURE_TYPES);
+		GUIWindowUtils::Image(texture->id, TEXTURE_SIZE);
+		ImGui::Separator();
+	}
+
+	static void TextureSelect(const std::string& name, Texture* texture, Texture*& selection)
+	{
+		if (texture == nullptr)
+			return;
+
+		GUIWindowUtils::Image(texture->id, ImGui::GetTextLineHeight());
+		ImGui::SameLine();
+
+		GUIWindowUtils::Deselectable(name, selection, texture);
 	}
 
 	static void Image(unsigned int textureID, const glm::vec2& size, const glm::vec3& borderColor = glm::vec3(0, 0, 0), float borderAlpha = 1.0f)

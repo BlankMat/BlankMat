@@ -9,8 +9,10 @@ public:
         : IPrimitive(name, material, lineWidth, drawOver, pos, rot, scale)
     {
         // Generate x lines for grid
-        for (int x = -gridSize; x <= gridSize; x++) {
-            for (int z = -gridSize; z <= gridSize; z++) {
+        for (int x = -gridSize; x <= gridSize; x++)
+        {
+            for (int z = -gridSize; z <= gridSize; z++)
+            {
                 mVertices.push_back(unitSize * glm::vec3(x, 0, z));
 
                 // Calculate indices

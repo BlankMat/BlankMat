@@ -1,11 +1,13 @@
 #pragma once
 #include "glIncludes.h"
+#include "interfaces/iSelectable.h"
 #include "rendering/shader.h"
 #include "rendering/material.h"
 #include "containers/materialContainer.h"
 #include "tools/state.h"
 
-class IEntity {
+class IEntity : public ISelectable
+{
 protected:
 	unsigned int mVAO = 0;
 	unsigned int mVBO = 0;
@@ -224,6 +226,7 @@ public:
 		const glm::vec3& pos = glm::vec3(0.0f), const glm::vec3& rot = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f))
 		: mName(name), mMaterial(material), mDrawOver(drawOver), mPos(pos), mRot(rot), mScale(scale)
 	{
+		mSelectableType = SelectableType::ENTITY;
 		CalcBasis();
 	}
 
@@ -232,6 +235,7 @@ public:
 		const glm::vec3& pos = glm::vec3(0.0f), const glm::vec3& rot = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f))
 		: mName(name), mMaterialName(material), mDrawOver(drawOver), mPos(pos), mRot(rot), mScale(scale)
 	{
+		mSelectableType = SelectableType::ENTITY;
 		CalcBasis();
 	}
 

@@ -17,6 +17,7 @@
 #include "windows/guiCameraViewer.h"
 #include "windows/guiLightViewer.h"
 #include "windows/guiTextureViewer.h"
+#include "windows/guiTextureEditor.h"
 #include "windows/guiMaterialViewer.h"
 #include "windows/guiMaterialEditor.h"
 
