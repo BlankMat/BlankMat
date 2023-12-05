@@ -63,10 +63,11 @@ public:
 		input->AddCommand("TOGGLE_CAMERA_ROT_MODE", new RunFunctionCommand("TOGGLE_CAMERA_ROT_MODE", std::bind(&Scene::ToggleCameraRotationMode, scene)));
 		input->AddCommand("TOGGLE_CAMERA_PERSPECTIVE", new RunFunctionCommand("TOGGLE_CAMERA_PERSPECTIVE", std::bind(&Scene::TogglePerspective, scene)));
 
-		input->AddCommand("LIGHTING_SHADED", new RunFunctionCommand("LIGHTING_SHADED", nullptr)); // TODO: Implement shading
-		input->AddCommand("LIGHTING_TEXTURED", new RunFunctionCommand("LIGHTING_TEXTURED", nullptr)); // TODO: Implement shading
-		input->AddCommand("LIGHTING_LIGHTS", new RunFunctionCommand("LIGHTING_LIGHTS", nullptr)); // TODO: Implement shading
-		input->AddCommand("LIGHTING_WIREFRAME", new RunFunctionCommand("LIGHTING_WIREFRAME", nullptr)); // TODO: Implement shading
+		input->AddCommand("LIGHTING_UNLIT", new RunFunctionCommand("LIGHTING_UNLIT", std::bind(&Scene::SetLightingMode, scene, LightingMode::UNLIT)));
+		input->AddCommand("LIGHTING_FLAT", new RunFunctionCommand("LIGHTING_FLAT", std::bind(&Scene::SetLightingMode, scene, LightingMode::FLAT)));
+		input->AddCommand("LIGHTING_LIT", new RunFunctionCommand("LIGHTING_LIT", std::bind(&Scene::SetLightingMode, scene, LightingMode::LIT)));
+		input->AddCommand("LIGHTING_TEXTURED", new RunFunctionCommand("LIGHTING_TEXTURED", std::bind(&Scene::SetLightingMode, scene, LightingMode::TEXTURED)));
+		input->AddCommand("LIGHTING_WIREFRAME", new RunFunctionCommand("LIGHTING_WIREFRAME", std::bind(&Scene::SetLightingMode, scene, LightingMode::WIREFRAME)));
 		input->AddCommand("TOGGLE_SHADOWS", new RunToggleFunctionCommand("TOGGLE_SHADOWS", std::bind(&State::ToggleShadows, state)));
 		input->AddCommand("TOGGLE_DEFAULT_MAT", new RunToggleFunctionCommand("TOGGLE_DEFAULT_MAT", std::bind(&State::ToggleDefaultMat, state)));
 		input->AddCommand("RENDER", new RunFunctionCommand("RENDER", nullptr)); // TODO: Implement render

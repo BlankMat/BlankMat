@@ -17,6 +17,7 @@ private:
 
 	std::string mCurFileName = "";
 	std::unordered_map<std::string, Material*> mMaterialsThisFrame;
+
 public:
 	UIBool isDiscoLight;
 	UIBool isRotatingLight;

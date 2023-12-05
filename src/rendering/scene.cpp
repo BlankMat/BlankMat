@@ -9,14 +9,14 @@ void Scene::Draw(Window* window, Shader* shader)
 	glm::mat4 viewProj = GetProjectionMatrix(window->GetAspect()) * GetViewMatrix();
 
 	// Draw flat objects
-	Shader* flatShader = GetShader("flat");
-	if (flatShader != nullptr)
+	Shader* unlitShader = GetShader("unlit");
+	if (unlitShader != nullptr)
 	{
-		flatShader->Use();
+		unlitShader->Use();
 		if (mGrid != nullptr && mState->enableGrid)
-			mGrid->Draw(flatShader, mState, GetDefaultMaterial(), viewProj, true);
+			mGrid->Draw(unlitShader, mState, GetDefaultMaterial(), viewProj, true);
 
-		mLights->Draw(flatShader, mState, GetDefaultMaterial(), viewProj, true);
+		mLights->Draw(unlitShader, mState, GetDefaultMaterial(), viewProj, true);
 	}
 
 	// Draw all of the scene
@@ -47,6 +47,8 @@ void Scene::Draw(Window* window, Shader* shader)
 			}
 
 			// Draw mesh
+			if (mMode == LightingMode::WIREFRAME)
+				glLineWidth(WIREFRAME_LINE);
 			iter->second->Draw(shader, mState, GetDefaultMaterial(), viewProj, mat == nullptr);
 		}
 	}
@@ -73,19 +75,19 @@ void Scene::Draw(Window* window, Shader* shader)
 	}
 
 	// Draw flat objects on top
-	if (flatShader != nullptr)
+	if (unlitShader != nullptr)
 	{
-		flatShader->Use();
+		unlitShader->Use();
 		if (mViewAxisHandle != nullptr)
 		{
 			mViewAxisHandle->SetRot(GetRotationDegrees(GetCamera()->GetDir()));
-			mViewAxisHandle->Draw(flatShader, mState, GetDefaultMaterial(), GetViewAxisProjection(window), true);
+			mViewAxisHandle->Draw(unlitShader, mState, GetDefaultMaterial(), GetViewAxisProjection(window), true);
 		}
 
 		if (mTransformHandle != nullptr)
 		{
 			mState->GetSel()->UpdateTransformHandle();
-			mTransformHandle->Draw(flatShader, mState, GetDefaultMaterial(), viewProj, true);
+			mTransformHandle->Draw(unlitShader, mState, GetDefaultMaterial(), viewProj, true);
 		}
 	}
 }
@@ -132,6 +134,32 @@ void Scene::TogglePerspective()
 void Scene::ToggleCameraRotationMode()
 {
 	GetCamera()->SetPivotRotationMode(!GetCamera()->IsRotatingAroundPivot());
+}
+
+// Enables or disables wireframe
+void Scene::HandleWireframe()
+{
+	if (mMode == LightingMode::WIREFRAME)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		// Disable culling
+		glDisable(GL_CULL_FACE);
+		glDisable(GL_DEPTH_TEST);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
+	else
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		// Enable culling
+		glEnable(GL_CULL_FACE);
+
+		// Enable depth buffer
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LESS);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
 }
 
 // Loads the material of the given config. Must be bottom-level config
@@ -352,6 +380,12 @@ State* Scene::GetState()
 	return mState;
 }
 
+// Returns the lighting mode of the application
+LightingMode Scene::GetLightingMode()
+{
+	return mMode;
+}
+
 // Adds the given node to the scene
 void Scene::AddNode(Node* node)
 {
@@ -421,10 +455,43 @@ void Scene::SetLight(const std::string& light)
 }
 
 // Sets the scene's name
-void Scene::SetName(const std::string& name) { mName = name; }
+void Scene::SetName(const std::string& name)
+{
+	mName = name;
+}
 
 // Sets the scene's directory
-void Scene::SetDirectory(const std::string& dir) { mDirectory = dir; }
+void Scene::SetDirectory(const std::string& dir)
+{
+	mDirectory = dir;
+}
+
+// Sets the lighting mode of the scene
+void Scene::SetLightingMode(LightingMode mode)
+{
+	mMode = mode;
+	switch (mode)
+	{
+	case LightingMode::UNLIT:
+		UseShader("unlit");
+		break;
+	case LightingMode::FLAT:
+		UseShader("flat");
+		break;
+	case LightingMode::LIT:
+		UseShader("lit");
+		break;
+	case LightingMode::TEXTURED:
+		UseShader("textured");
+		break;
+	case LightingMode::WIREFRAME:
+		UseShader("wireframe");
+		break;
+	default:
+		break;
+	}
+	HandleWireframe();
+}
 
 // Adds an entity to the scene's render list
 IEntity* Scene::AddEntity(const std::string& shaderName, IEntity* entity, bool preRender)

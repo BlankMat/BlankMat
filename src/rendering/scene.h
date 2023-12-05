@@ -21,6 +21,15 @@
 #include "containers/meshContainer.h"
 #include <unordered_map>
 
+enum class LightingMode
+{
+	UNLIT = 0,
+	FLAT,
+	LIT,
+	TEXTURED,
+	WIREFRAME
+};
+
 class Window;
 
 class Scene
@@ -42,6 +51,8 @@ protected:
 	Shader* mShader = nullptr;
 	Node* mRootNode = nullptr;
 	State* mState = nullptr;
+	LightingMode mMode = LightingMode::FLAT;
+	static const inline float WIREFRAME_LINE = 0.5f;
 
 	std::unordered_map<std::string, EntityContainer*> mMeshRenderList;
 	std::unordered_map<std::string, EntityContainer*> mEntityList;
@@ -59,6 +70,9 @@ protected:
 
 	// Loads the given texture or returns the existing one
 	Texture* LoadTexture(TextureType type, const std::string& path, const std::string& defaultName);
+
+	// Enables or disables wireframe
+	void HandleWireframe();
 
 	// Returns the projection matrix of the view axis handle
 	const glm::mat4& GetViewAxisProjection(Window* window);
@@ -135,6 +149,9 @@ public:
 	// Returns the state of the application
 	State* GetState();
 
+	// Returns the lighting mode of the application
+	LightingMode GetLightingMode();
+
 	// Adds the given node to the scene
 	void AddNode(Node* node);
 
@@ -185,6 +202,9 @@ public:
 
 	// Sets the scene's directory
 	void SetDirectory(const std::string& dir);
+
+	// Sets the lighting mode of the scene
+	void SetLightingMode(LightingMode mode);
 
 	// Adds an entity to the scene's render list
 	IEntity* AddEntity(const std::string& shaderName, IEntity* entity, bool preRender = false);

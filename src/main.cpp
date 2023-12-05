@@ -118,7 +118,7 @@ void LoadShaders(Scene* scene, Config* shaderConfig)
     {
         scene->CreateShader(iter->first, iter->second);
     }
-    scene->UseShader("default");
+    scene->UseShader("unlit");
     Timer::Time(startTime, "Shaders loaded");
 }
 

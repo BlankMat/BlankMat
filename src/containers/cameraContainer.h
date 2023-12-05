@@ -35,7 +35,6 @@ protected:
 		glm::vec3 bgColor = glm::vec3(0.3f, 0.4f, 0.4f);
 		float orthSize = 10.0f;
 		bool isPerspective = true;
-		bool isWireframe = false;
 
 		// Read the node
 		std::string line;
@@ -73,12 +72,10 @@ protected:
 				orthSize = std::stof(parse[1]);
 			else if (parse[0] == "perspective")
 				isPerspective = (parse[1] == "1");
-			else if (parse[0] == "wireframe")
-				isWireframe = (parse[1] == "1");
 		}
 
 		// TODO: Replace Action stack with real action stack
-		return std::pair<std::string, Camera*>(name, new Camera(mActionStack, fov, nearClip, farClip, pos, dir, up, bgColor, orthSize, isPerspective, isWireframe));
+		return std::pair<std::string, Camera*>(name, new Camera(mActionStack, fov, nearClip, farClip, pos, dir, up, bgColor, orthSize, isPerspective));
 	}
 
 	/// <summary>
@@ -99,7 +96,6 @@ protected:
 		file << "bgcolor " << Vec3ToString(item->GetBGColor()) << std::endl;
 		file << "orthsize " << item->GetOrthSize() << std::endl;
 		file << "perspective " << (int)item->IsPerspective() << std::endl;
-		file << "wireframe " << (int)item->IsWireframe() << std::endl;
 	}
 public:
 	/// <summary>

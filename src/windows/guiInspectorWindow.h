@@ -146,7 +146,6 @@ protected:
 		element->GetNearClip().Display();
 		element->GetFarClip().Display();
 		element->IsPerspective().Display();
-		element->IsWireframe().Display();
 		element->IsRotatingAroundPivot().Display();
 	}
 
