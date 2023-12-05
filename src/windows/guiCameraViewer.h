@@ -16,19 +16,17 @@ protected:
     void DisplaySelectedItem() override
     {
         Camera* selection = mScene->GetCameras()->GetSelectedItem();
-        if (selection == nullptr)
+        if (selection != nullptr)
             return;
 
-        selection->GetTarget().Display();
-        selection->GetPivot().Display();
-        selection->GetOrthSize().Display();
-        selection->GetFOV().Display();
-        selection->GetNearClip().Display();
-        selection->GetFarClip().Display();
-        selection->IsPerspective().Display();
-        selection->IsWireframe().Display();
-        selection->IsRotatingAroundPivot().Display();
+        ImGui::Text("No camera selected");
     }
+
+    void SelectItem(Camera* selection) override
+    {
+        mState->GetSel()->SelectElement(selection);
+    }
+
 
 public:
     GUICameraViewer(State* state, Scene* scene, bool isEnabled)

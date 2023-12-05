@@ -30,7 +30,7 @@ public:
 	/// Returns the type of the selectable
 	/// </summary>
 	/// <returns>Type of the selectable</returns>
-	SelectableType GetSelectableType()
+	virtual SelectableType GetSelectableType()
 	{
 		return mSelectableType;
 	}

@@ -61,14 +61,6 @@ public:
 			mState->drawByMaterial.Display();
 			mState->collapseMeshNodes.Display();
 
-			// Input debug
-			ImGui::Separator();
-			ImGui::Text("Input");
-			ImGui::InputInt("Current X", &mState->mouseCurX, 0);
-			ImGui::InputInt("Current Y", &mState->mouseCurY, 0);
-			ImGui::InputInt("Previous X", &mState->mousePrevX, 0);
-			ImGui::InputInt("Previous Y", &mState->mousePrevY, 0);
-
 			// Debug settings
 			ImGui::Separator();
 			ImGui::Text("Debug settings");

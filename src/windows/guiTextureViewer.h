@@ -1,6 +1,5 @@
 #pragma once
 #include "interfaces/iGUIContainerWindow.h"
-#include "windows/guiWindowUtils.h"
 
 class GUITextureViewer : public IGUIContainerWindow<Texture>
 {
@@ -18,10 +17,15 @@ protected:
 
         ImGui::Text("No texture selected");
     }
-
-    void DisplayListItem(const std::string& name, Texture* item, Texture*& selection) override
+    
+    void SelectItem(Texture* selection) override
     {
-        GUIWindowUtils::TextureSelect(name, item, selection);
+        mState->GetSel()->SelectElement(selection);
+    }
+
+    bool DisplayListItem(const std::string& name, Texture* item, Texture*& selection) override
+    {
+        return GUIWindowUtils::TextureSelect(name, item, selection);
     }
 
 public:

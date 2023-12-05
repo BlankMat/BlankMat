@@ -42,6 +42,18 @@ public:
 		return index;
 	}
 
+	static void ColorEdit(const std::string& label, glm::vec3& color, std::string& selColor, float spacing)
+	{
+		float size = ImGui::GetTextLineHeight();
+		ImVec2 pos = ImGui::GetCursorScreenPos();
+		GUIWindowUtils::DrawColor(color, pos, size);
+		ImGui::Dummy(ImVec2(size, size));
+		ImGui::SameLine();
+		GUIWindowUtils::Deselectable(label, selColor, label);
+		if (selColor == label)
+			color = GUIWindowUtils::ColorPicker("##" + label, color);
+	}
+
 	static void TextureEdit(Texture* texture)
 	{
 		int type = (int)texture->type;
@@ -52,15 +64,37 @@ public:
 		ImGui::Separator();
 	}
 
-	static void TextureSelect(const std::string& name, Texture* texture, Texture*& selection)
+	static bool TextureSelect(const std::string& name, Texture* texture, Texture*& selection)
 	{
 		if (texture == nullptr)
-			return;
+			return false;
 
 		GUIWindowUtils::Image(texture->id, ImGui::GetTextLineHeight());
 		ImGui::SameLine();
 
-		GUIWindowUtils::Deselectable(name, selection, texture);
+		bool wasPressed = false;
+		GUIWindowUtils::Deselectable(name, selection, texture, &wasPressed);
+		return wasPressed;
+	}
+
+	static bool MaterialSelect(const std::string& name, Material* material, Material*& selection, float spacing)
+	{
+		if (material == nullptr)
+			return false;
+
+		float size = ImGui::GetTextLineHeight();
+		ImVec2 pos = ImGui::GetCursorScreenPos();
+		GUIWindowUtils::DrawColor(material->kd, pos, size);
+		pos.x += size + spacing;
+		GUIWindowUtils::DrawColor(material->ka, pos, size);
+		pos.x += size + spacing;
+		GUIWindowUtils::DrawColor(material->ks, pos, size);
+		ImGui::Dummy(ImVec2((size + spacing) * 3, size));
+		ImGui::SameLine();
+
+		bool wasPressed = false;
+		GUIWindowUtils::Selectable(name, selection, material, &wasPressed);
+		return wasPressed;
 	}
 
 	static void Image(unsigned int textureID, const glm::vec2& size, const glm::vec3& borderColor = glm::vec3(0, 0, 0), float borderAlpha = 1.0f)
@@ -88,21 +122,28 @@ public:
 	}
 
 	template<typename T>
-	static bool Selectable(const std::string& label, T& selValue, T thisValue)
+	static bool Selectable(const std::string& label, T& selValue, T thisValue, bool* wasPressed = nullptr)
 	{
 		bool isSelected = (selValue == thisValue);
 		if (ImGui::Selectable(label.c_str(), &isSelected))
+		{
 			selValue = thisValue;
+			if (wasPressed != nullptr)
+				*wasPressed = true;
+		}
 		if (isSelected)
+		{
 			ImGui::SetItemDefaultFocus();
+		}
 		return isSelected;
 	}
 	
 	template<typename T>
-	static bool Deselectable(const std::string& label, T*& selValue, T* thisValue)
+	static bool Deselectable(const std::string& label, T*& selValue, T* thisValue, bool* wasPressed = nullptr)
 	{
 		bool isSelected = (selValue == thisValue);
-		ImGui::Selectable(label.c_str(), &isSelected);
+		if (ImGui::Selectable(label.c_str(), &isSelected) && wasPressed != nullptr)
+			*wasPressed = true;
 
 		// If the item is clicked, toggle selection
 		if (ImGui::IsItemClicked(ImGuiMouseButton_Left))

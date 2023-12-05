@@ -149,12 +149,6 @@ void Window::OpenGUI(GUI gui)
         return;
     case GUI::MODEL_EDITOR:
         return;
-    case GUI::MATERIAL_EDITOR:
-        AddGUI(new GUIMaterialEditor(mState, mScene, true));
-        return;
-    case GUI::TEXTURE_EDITOR:
-        AddGUI(new GUITextureEditor(mState, mScene, true));
-        return;
     case GUI::UV_EDITOR:
         return;
     case GUI::MATERIAL_VIEWER:

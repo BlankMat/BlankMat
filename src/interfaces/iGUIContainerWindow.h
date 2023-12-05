@@ -17,21 +17,31 @@ protected:
 
     virtual void DisplaySelectedItem() = 0;
 
-    virtual void DisplayListItem(const std::string& name, T* item, T*& selection)
+    virtual bool DisplayListItem(const std::string& name, T* item, T*& selection)
     {
+        bool wasPressed = false;
         if (mMustSelect)
-            GUIWindowUtils::Selectable(name, selection, item);
+            GUIWindowUtils::Selectable(name, selection, item, &wasPressed);
         else
-            GUIWindowUtils::Deselectable(name, selection, item);
+            GUIWindowUtils::Deselectable(name, selection, item, &wasPressed);
+        return wasPressed;
     }
+
+    virtual void SelectItem(T* selection) = 0;
 
     void ListContainer(IContainer<T>* container)
     {
+        bool wasPressed = false;
         T* selection = container->GetSelectedItem();
         const auto& data = container->Data();
         for (auto iter = data.begin(); iter != data.end(); ++iter)
         {
-            DisplayListItem(iter->first, iter->second, selection);
+            if (DisplayListItem(iter->first, iter->second, selection))
+                wasPressed = true;
+        }
+        if (wasPressed)
+        {
+            SelectItem(selection);
         }
         if (selection != container->GetSelectedItem())
         {
