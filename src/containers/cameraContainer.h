@@ -55,25 +55,25 @@ protected:
 				break;
 
 			// Parse lines
-			if (parse[0] == "CAMERA")
+			if (parse[0] == "CAMERA" && parse.size() > 1)
 				name = parse[1];
-			else if (parse[0] == "fov")
+			else if (parse[0] == "fov" && parse.size() > 1)
 				fov = std::stof(parse[1]);
-			else if (parse[0] == "nearclip")
+			else if (parse[0] == "nearclip" && parse.size() > 1)
 				nearClip = std::stof(parse[1]);
-			else if (parse[0] == "farclip")
+			else if (parse[0] == "farclip" && parse.size() > 1)
 				farClip = std::stof(parse[1]);
-			else if (parse[0] == "pos")
+			else if (parse[0] == "pos" && parse.size() > 3)
 				pos = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "dir")
+			else if (parse[0] == "dir" && parse.size() > 3)
 				dir = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "up")
+			else if (parse[0] == "up" && parse.size() > 3)
 				up = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "bgcolor")
+			else if (parse[0] == "bgcolor" && parse.size() > 3)
 				bgColor = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "orthsize")
+			else if (parse[0] == "orthsize" && parse.size() > 1)
 				orthSize = std::stof(parse[1]);
-			else if (parse[0] == "perspective")
+			else if (parse[0] == "perspective" && parse.size() > 1)
 				isPerspective = (parse[1] == "1");
 		}
 

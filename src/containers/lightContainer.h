@@ -55,31 +55,31 @@ protected:
 				break;
 
 			// Parse lines
-			if (parse[0] == "LIGHT")
+			if (parse[0] == "LIGHT" && parse.size() > 1)
 				name = parse[1];
-			if (parse[0] == "type")
+			if (parse[0] == "type" && parse.size() > 1)
 				type = (LightType)std::stoi(parse[1]);
-			if (parse[0] == "cube")
+			if (parse[0] == "cube" && parse.size() > 1)
 				cube = (parse[1] == "1");
-			else if (parse[0] == "pos")
+			else if (parse[0] == "pos" && parse.size() > 3)
 				pos = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "dir")
+			else if (parse[0] == "dir" && parse.size() > 3)
 				dir = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "color")
+			else if (parse[0] == "color" && parse.size() > 3)
 				color = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "kd")
+			else if (parse[0] == "kd" && parse.size() > 1)
 				kd = std::stof(parse[1]);
-			else if (parse[0] == "ka")
+			else if (parse[0] == "ka" && parse.size() > 1)
 				ka = std::stof(parse[1]);
-			else if (parse[0] == "ks")
+			else if (parse[0] == "ks" && parse.size() > 1)
 				ks = std::stof(parse[1]);
-			else if (parse[0] == "gamma")
+			else if (parse[0] == "gamma" && parse.size() > 1)
 				gamma = (parse[1] == "1");
-			else if (parse[0] == "range")
+			else if (parse[0] == "range" && parse.size() > 1)
 				range = std::stof(parse[1]);
-			else if (parse[0] == "spotouter")
+			else if (parse[0] == "spotouter" && parse.size() > 1)
 				spotOuter = std::stof(parse[1]);
-			else if (parse[0] == "spotinner")
+			else if (parse[0] == "spotinner" && parse.size() > 1)
 				spotInner = std::stof(parse[1]);
 		}
 

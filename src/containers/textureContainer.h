@@ -53,13 +53,13 @@ protected:
 				break;
 
 			// Parse lines
-			if (parse[0] == "TEXTURE")
+			if (parse[0] == "TEXTURE" && parse.size() > 1)
 				name = parse[1];
-			else if (parse[0] == "file")
+			else if (parse[0] == "file" && parse.size() > 1)
 				filename = parse[1];
-			else if (parse[0] == "dir")
+			else if (parse[0] == "dir" && parse.size() > 1)
 				dir = parse[1];
-			else if (parse[0] == "type")
+			else if (parse[0] == "type" && parse.size() > 1)
 				type = (TextureType)std::stoi(parse[1]);
 		}
 

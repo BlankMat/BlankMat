@@ -36,12 +36,16 @@ protected:
 			if (parse.empty())
 				break;
 
-			// Parse lines
-			glm::vec3 pos = ReadVec3FromStrings(parse, 1);
-			glm::vec3 normal = ReadVec3FromStrings(parse, 4);
-			glm::vec3 tangent = ReadVec3FromStrings(parse, 7);
-			glm::vec2 texCoords = ReadVec2FromStrings(parse, 10);
-			outVerts.push_back(Vertex(pos, normal, texCoords, tangent));
+			// Don't parse incomplete lines
+			if (parse.size() > 11)
+			{
+				// Parse lines
+				glm::vec3 pos = ReadVec3FromStrings(parse, 1);
+				glm::vec3 normal = ReadVec3FromStrings(parse, 4);
+				glm::vec3 tangent = ReadVec3FromStrings(parse, 7);
+				glm::vec2 texCoords = ReadVec2FromStrings(parse, 10);
+				outVerts.push_back(Vertex(pos, normal, texCoords, tangent));
+			}
 		}
 	}
 
@@ -105,17 +109,17 @@ protected:
 				break;
 
 			// Parse lines
-			if (parse[0] == "MESH")
+			if (parse[0] == "MESH" && parse.size() > 1)
 				name = parse[1];
-			else if (parse[0] == "pos")
+			else if (parse[0] == "pos" && parse.size() > 3)
 				pos = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "rot")
+			else if (parse[0] == "rot" && parse.size() > 3)
 				rot = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "scale")
+			else if (parse[0] == "scale" && parse.size() > 3)
 				scale = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "material")
+			else if (parse[0] == "material" && parse.size() > 1)
 				material = parse[1];
-			else if (parse[0] == "enabled")
+			else if (parse[0] == "enabled" && parse.size() > 1)
 				enabled = (parse[1] == "1");
 			else if (parse[0] == "vertices")
 				ReadVertices(vertices, file);

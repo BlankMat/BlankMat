@@ -131,7 +131,7 @@ static std::string GetFileExtension(const std::string path)
 
     size_t lastPeriod = path.find_last_of('.');
     if (lastPeriod < path.length())
-        return path.substr(lastPeriod - 1);
+        return path.substr(lastPeriod);
     else
         return "";
 }

@@ -66,35 +66,35 @@ protected:
 				break;
 
 			// Parse lines
-			if (parse[0] == "MATERIAL")
+			if (parse[0] == "MATERIAL" && parse.size() > 1)
 				name = parse[1];
-			else if (parse[0] == "kd")
+			else if (parse[0] == "kd" && parse.size() > 3)
 				kd = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "ka")
+			else if (parse[0] == "ka" && parse.size() > 3)
 				ka = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "ks")
+			else if (parse[0] == "ks" && parse.size() > 3)
 				ks = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "ke")
+			else if (parse[0] == "ke" && parse.size() > 3)
 				ke = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "ns")
+			else if (parse[0] == "ns" && parse.size() > 1)
 				ns = std::stof(parse[1]);
-			else if (parse[0] == "ni")
+			else if (parse[0] == "ni" && parse.size() > 1)
 				ni = std::stof(parse[1]);
-			else if (parse[0] == "d")
+			else if (parse[0] == "d" && parse.size() > 1)
 				d = std::stof(parse[1]);
-			else if (parse[0] == "illum")
+			else if (parse[0] == "illum" && parse.size() > 1)
 				illum = std::stoi(parse[1]);
-			else if (parse[0] == "map_kd")
+			else if (parse[0] == "map_kd" && parse.size() > 1)
 				map_kd = parse[1];
-			else if (parse[0] == "map_ka")
+			else if (parse[0] == "map_ka" && parse.size() > 1)
 				map_ka = parse[1];
-			else if (parse[0] == "map_ks")
+			else if (parse[0] == "map_ks" && parse.size() > 1)
 				map_ks = parse[1];
-			else if (parse[0] == "map_bump")
+			else if (parse[0] == "map_bump" && parse.size() > 1)
 				map_bump = parse[1];
-			else if (parse[0] == "map_ns")
+			else if (parse[0] == "map_ns" && parse.size() > 1)
 				map_ns = parse[1];
-			else if (parse[0] == "map_d")
+			else if (parse[0] == "map_d" && parse.size() > 1)
 				map_d = parse[1];
 		}
 
