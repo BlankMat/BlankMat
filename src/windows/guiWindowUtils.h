@@ -1,5 +1,6 @@
 #pragma once
 #include "glIncludes.h"
+#include "interfaces/iContainer.h"
 
 class GUIWindowUtils
 {
@@ -57,7 +58,7 @@ public:
 	static void TextureEdit(Texture* texture)
 	{
 		int type = (int)texture->mType;
-		GUIWindowUtils::InputText("Name", texture->GetScopedName());
+		texture->SetName(GUIWindowUtils::InputText("Name", texture->GetScopedName()));
 		GUIWindowUtils::InputText("Path", texture->mDir);
 		texture->mType = (TextureType)GUIWindowUtils::Dropdown("Type", type, TEXTURE_TYPES);
 		GUIWindowUtils::Image(texture->mID, TEXTURE_SIZE);
@@ -179,10 +180,35 @@ public:
 		ImGui::Checkbox(label.c_str(), &value);
 		return value;
 	}
-	
-	static std::string InputText(const std::string& label, std::string value, ImGuiInputTextFlags flags = ImGuiInputTextFlags_None)
+
+	template<typename T>
+	static bool InputName(const std::string& label, const std::string& prevValue, std::string& curValue, IContainer<T>* container, ImGuiInputTextFlags flags = ImGuiInputTextFlags_None)
 	{
-		ImGui::InputText(label.c_str(), &value, flags);
+		bool enterPressed = false;
+		curValue = GUIWindowUtils::InputText((label + "##ItemName").c_str(), curValue, &enterPressed, flags);
+
+		// Don't allow inputting a name that already exists
+		if (curValue != prevValue && container->Contains(curValue))
+		{
+			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.0f, 0.0f, 1.0f));
+			ImGui::Text((label + " with name " + curValue + " already exists.").c_str());
+			ImGui::PopStyleColor();
+			return false;
+		}
+		// If the text is valid and enter was pressed
+		else if (curValue != "" && enterPressed)
+		{
+			return true;
+		}
+		// If enter was not pressed, return false
+		return false;
+	}
+
+	static std::string InputText(const std::string& label, std::string value, bool* enterPressed = nullptr, ImGuiInputTextFlags flags = ImGuiInputTextFlags_None)
+	{
+		bool enter = ImGui::InputText(label.c_str(), &value, flags | ImGuiInputTextFlags_EnterReturnsTrue);
+		if (enterPressed != nullptr)
+			*enterPressed = enter;
 		return value;
 	}
 

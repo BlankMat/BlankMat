@@ -171,6 +171,6 @@ public:
 	/// <param name="textures">Texture container with default textures</param>
 	explicit MaterialContainer(TextureContainer* textures)
 	{
-		Add("default", new Material(textures), true);
+		mCurSelectedItem = Add("default", new Material(textures), true);
 	}
 };

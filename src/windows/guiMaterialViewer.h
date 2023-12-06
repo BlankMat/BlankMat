@@ -6,7 +6,7 @@ class GUIMaterialViewer : public IGUIContainerWindow<Material>
 private:
 	void AddNewItem(const std::string& name) override
 	{
-		mScene->AddMaterial(name, new Material(name, "", glm::vec3(1.0f), mScene->GetTextures(), false));
+		mState->GetSel()->SelectElement(mScene->AddMaterial(name, new Material(name, "", mScene->GetTextures())));
 	}
 
 	IContainer<Material>* GetContainer() override
@@ -30,7 +30,7 @@ private:
 
 	bool DisplayListItem(const std::string& name, Material* item, Material*& selection) override
 	{
-		if (item->IsInternal())
+		if (item->IsInternal() && name != "default")
 			return false;
 
 		return GUIWindowUtils::MaterialSelect(name, item, selection, 5.0f);
@@ -44,5 +44,6 @@ public:
 		mIsEnabled = isEnabled;
 		mMustSelect = false;
 		mWindowName = "Material Viewer";
+		mItemName = "Material";
 	}
 };

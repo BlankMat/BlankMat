@@ -16,10 +16,11 @@ protected:
     void RenderSelectable(IEntity*& selEntity, IEntity* curEntity, const std::string& depthMarker)
     {
         // Add checkbox for enabling or disabling elements
+        std::string name = (mState->collapseScope) ? curEntity->GetUnscopedName() : curEntity->GetScopedName();
         curEntity->Enable(GUIWindowUtils::Checkbox("##entity" + curEntity->GetScopedName(), curEntity->IsEnabled()));
         ImGui::SameLine();
 
-        GUIWindowUtils::Deselectable(depthMarker + curEntity->GetScopedName(), selEntity, curEntity);
+        GUIWindowUtils::Deselectable(depthMarker + name + "##" + curEntity->GetScopedName(), selEntity, curEntity);
     }
 
     // Recursively renders the node and its children
@@ -43,7 +44,7 @@ protected:
 
         // Mark this node
         bool isSelected = (IEntity::GetNameNullSafe(node) == IEntity::GetNameNullSafe(selEntity));
-        bool isExpanded = mExpandedNodes.contains(node);
+        bool isExpanded = mExpandedNodes.contains(node) || mState->expandAllNodes;
         const char* nodeMarker = isExpanded ? "v  " : ">  ";
         RenderSelectable(selEntity, node, depthMarker + nodeMarker);
 
@@ -107,6 +108,10 @@ public:
                 {
                     if (ImGui::MenuItem("Collapse Mesh Nodes"))
                         mState->ToggleCollapseMeshNodes();
+                    if (ImGui::MenuItem("Collapse Scope"))
+                        mState->ToggleCollapseScope();
+                    if (ImGui::MenuItem("Expand All"))
+                        mState->ToggleExpandAllNodes();
                     ImGui::EndMenu();
                 }
                 ImGui::EndMenuBar();

@@ -12,9 +12,10 @@ protected:
     Scene* mScene = nullptr;
     bool mMustSelect = false;
     std::string mWindowName = "";
+    std::string mItemName = "";
     
     bool mIsAddingItem = false;
-    std::string mNewItemName = "";
+    std::string mAddItemName = "";
 
     virtual IContainer<T>* GetContainer() = 0;
 
@@ -54,10 +55,36 @@ protected:
         }
 
         // Support adding items to list
-        ImGui::Selectable("+##AddContainerItem", &mIsAddingItem);
+        ImGui::Separator();
+        ImGui::Selectable(("+ Add " + mItemName + "##AddContainerItem").c_str(), &mIsAddingItem);
         if (mIsAddingItem)
         {
-            mNewItemName = GUIWindowUtils::InputText("Name##NewItemName", mNewItemName);
+            if (GUIWindowUtils::InputName(mItemName, "", mAddItemName, container))
+            {
+                AddNewItem(mAddItemName);
+                mAddItemName = "";
+                mIsAddingItem = false;
+            }
+
+            /*
+            bool enterPressed = false;
+            curValue = GUIWindowUtils::InputText("Name##NewItemName", curValue, &enterPressed);
+
+            // Don't allow creating of items with duplicate names
+            if (container->Contains(curValue))
+            {
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.0f, 0.0f, 1.0f));
+                ImGui::Text((mItemName + " with name " + curValue + " already exists.").c_str());
+                ImGui::PopStyleColor();
+            }
+            // If the text is valid and enter was pressed
+            else if (curValue != "" && enterPressed)
+            {
+                AddNewItem(curValue);
+                curValue = "";
+                mIsAddingItem = false;
+            }
+            */
         }
     }
 public:

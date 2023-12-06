@@ -45,8 +45,8 @@ public:
 
     void LoadMaterials(MaterialContainer* materials, TextureContainer* textures) override
     {
-        mCube->SetMaterial(materials->AddMaterial(new Material("internal_lightMat", "", mColor, textures, true), true));
-        mDirLine->SetMaterial(materials->AddMaterial(new Material("internal_yellow", "", glm::vec3(1, 1, 0), textures, true), true));
+        mCube->SetMaterial(materials->AddMaterial(new Material("internal_lightMat", "", textures, mColor, true), true));
+        mDirLine->SetMaterial(materials->AddMaterial(new Material("internal_yellow", "", textures, glm::vec3(1, 1, 0), true), true));
     }
 
     PLightCube(const std::string& name, const std::string& scope, LightType type = LightType::POINT, const glm::vec3& pos = glm::vec3(1.0f), const glm::vec3& dir = glm::vec3(-1.0f),

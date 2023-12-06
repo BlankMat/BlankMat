@@ -54,10 +54,10 @@ public:
 		const glm::vec3& xColor = glm::vec3(1,0,0), const glm::vec3& yColor = glm::vec3(0,1,0), const glm::vec3& zColor = glm::vec3(0,0,1))
 		: IEntity(name, scope, nullptr, drawOver, pos, rot, scale)
 	{
-		Material* xMat = materials->AddMaterial(new Material("internal_handleX", "", xColor, textures, true), true);
-		Material* yMat = materials->AddMaterial(new Material("internal_handleY", "", yColor, textures, true), true);
-		Material* zMat = materials->AddMaterial(new Material("internal_handleZ", "", zColor, textures, true), true);
-		Material* allMat = materials->AddMaterial(new Material("internal_handleAll", "", allColor, textures, true), true);
+		Material* xMat = materials->AddMaterial(new Material("internal_handleX", "", textures, xColor, true), true);
+		Material* yMat = materials->AddMaterial(new Material("internal_handleY", "", textures, yColor, true), true);
+		Material* zMat = materials->AddMaterial(new Material("internal_handleZ", "", textures, zColor, true), true);
+		Material* allMat = materials->AddMaterial(new Material("internal_handleAll", "", textures, allColor, true), true);
 
 		mXHandle = new PLine(name + "x", scope, glm::vec3(len * 0.05f, 0, 0), glm::vec3(len, 0, 0), xMat, lineWidth, drawOver);
 		mYHandle = new PLine(name + "y", scope, glm::vec3(0, len * 0.05f, 0), glm::vec3(0, len, 0), yMat, lineWidth, drawOver);

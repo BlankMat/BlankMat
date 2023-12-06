@@ -19,7 +19,7 @@ void SceneReader::ProcessAssimpNode(const std::string& scope, Scene* scene, Node
 	// Process each of the children
 	for (unsigned int i = 0; i < assimpNode->mNumChildren; i++)
 	{
-		Node* childNode = new Node(node, assimpNode->mChildren[i]->mName.C_Str());
+		Node* childNode = new Node(node, assimpNode->mChildren[i]->mName.C_Str(), scope);
 		node->AddChild(childNode);
 		ProcessAssimpNode(scope, scene, childNode, assimpNode->mChildren[i], assimpScene);
 	}
@@ -118,11 +118,10 @@ Material* SceneReader::ProcessAssimpMaterial(const std::string& scope, Scene* sc
 	LoadMaterialTextures(scope, scene, ambientMaps, material, aiTextureType_AMBIENT, TextureType::AMBIENT);
 	if (ambientMaps.empty())
 	{
-		if (!diffuseMaps.empty())
+		if (!diffuseMaps.empty() && diffuseMaps[0]->GetUnscopedName() != "default_diffuse")
 		{
-			Texture* ambientTexture = new Texture(diffuseMaps[0]->GetUnscopedName(), diffuseMaps[0]->GetScope(), diffuseMaps[0]->mID, TextureType::AMBIENT, diffuseMaps[0]->mDir);
-			scene->AddTexture(ambientTexture->GetScopedName(), ambientTexture);
-			ambientMaps.push_back(ambientTexture);
+			ambientMaps.push_back(scene->AddTexture(diffuseMaps[0]->GetScopedName() + "_ambient",
+				new Texture(diffuseMaps[0]->GetUnscopedName() + "_ambient", diffuseMaps[0]->GetScope(), diffuseMaps[0]->mID, TextureType::AMBIENT, diffuseMaps[0]->mDir), true));
 		}
 		else
 		{
@@ -181,10 +180,8 @@ Material* SceneReader::ProcessAssimpMaterial(const std::string& scope, Scene* sc
 	material->Get(AI_MATKEY_OPACITY, d);
 
 	// Make material out of loaded textures
-	newMaterial = new Material(material->GetName().C_Str(), scope, diffuseMaps, ambientMaps, specularMaps, normalMaps, heightMaps, alphaMaps,
-		ka, kd, ks, ns, ni, d, ke);
-	scene->AddMaterial(material->GetName().C_Str(), newMaterial);
-	return newMaterial;
+	return scene->AddMaterial(Scope(material->GetName().C_Str(), scope), 
+		new Material(material->GetName().C_Str(), scope, diffuseMaps, ambientMaps, specularMaps, normalMaps, heightMaps, alphaMaps, ka, kd, ks, ns, ni, d, ke), true);
 }
 
 // Loads material textures
@@ -195,11 +192,11 @@ void SceneReader::LoadMaterialTextures(const std::string& scope, Scene* scene, s
 		aiString str;
 		assimpMaterial->GetTexture(assimpTextureType, i, &str);
 		std::string path = str.C_Str();
-		std::string name = path.substr(0, path.find_last_of('.'));
-		std::string textureName = scene->GetName() + "_" + name;
+		std::string textureName = scene->GetName() + "_" + path.substr(0, path.find_last_of('.'));
+		std::string scopedTexture = Scope(textureName, scope);
 
 		// Check if texture is loaded already
-		Texture* texture = scene->GetTexture(textureName);
+		Texture* texture = scene->GetTexture(scopedTexture);
 		if (texture != nullptr)
 		{
 			outTextures.push_back(texture);
@@ -207,8 +204,8 @@ void SceneReader::LoadMaterialTextures(const std::string& scope, Scene* scene, s
 		}
 
 		// if texture hasn't been loaded already, load it
-		outTextures.push_back(scene->AddTexture(textureName, new Texture(textureName, scope, type, scene->GetDirectory(), path)));
-		std::cout << "  - Loaded texture " << textureName << std::endl;
+		outTextures.push_back(scene->AddTexture(scopedTexture, new Texture(textureName, scope, type, scene->GetDirectory(), path), true));
+		std::cout << "  - Loaded texture " << scopedTexture << std::endl;
 	}
 }
 
@@ -252,10 +249,10 @@ void SceneReader::ReadAssimpScene(Scene* scene, const std::string& path, bool re
 	Node* rootNode = scene->GetRootNode();
 	if (rootNode == nullptr)
 	{
-		rootNode = new Node(nullptr, "root");
+		rootNode = new Node(nullptr, "root", "");
 		scene->SetRootNode(rootNode);
 	}
-	Node* sceneRootNode = new Node(rootNode, scene->GetName());
+	Node* sceneRootNode = new Node(rootNode, scene->GetName(), scene->GetScope());
 
 	// Process model
 	rootNode->AddChild(sceneRootNode);

@@ -35,6 +35,8 @@ public:
 	UIBool flipTextures;
 	UIBool drawGUI;
 	UIBool collapseMeshNodes;
+	UIBool collapseScope;
+	UIBool expandAllNodes;
 
 	unsigned int depthMapFBO = 0;
 	unsigned int depthMap = 0;
@@ -186,6 +188,18 @@ public:
 		collapseMeshNodes.Set(!collapseMeshNodes);
 	}
 
+	// Toggles collapsing of scope
+	void ToggleCollapseScope()
+	{
+		collapseScope.Set(!collapseScope);
+	}
+
+	// Toggles expanding of all nodes
+	void ToggleExpandAllNodes()
+	{
+		expandAllNodes.Set(!expandAllNodes);
+	}
+
 	State(Config* config)
 	{
 		curShader = config->GetString("shader.file");
@@ -210,6 +224,8 @@ public:
 		flipTextures = UIBool("Flip Textures", true, mActionStack);
 		drawGUI = UIBool("Draw UI", true, mActionStack);
 		collapseMeshNodes = UIBool("Collapse Mesh Nodes", true, mActionStack);
+		collapseScope = UIBool("Collapse Scope", true, mActionStack);
+		expandAllNodes = UIBool("Expand All Nodes", false, mActionStack);
 
 		depthMapSize = config->GetInt("quality.shadowResolution");
 	}

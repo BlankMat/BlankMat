@@ -106,5 +106,7 @@ public:
 	/// <param name="actionStack">ActionStack of the app</param>
 	explicit CameraContainer(ActionStack* actionStack)
 		: mActionStack(actionStack)
-	{}
+	{
+		mCurSelectedItem = nullptr;
+	}
 };

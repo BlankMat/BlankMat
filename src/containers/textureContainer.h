@@ -97,7 +97,7 @@ public:
 	/// </summary>
 	explicit TextureContainer()
 	{
-		Add("default_diffuse", new Texture("default_diffuse", "", TextureType::DIFFUSE, glm::vec3(1.0f), true), true);
+		mCurSelectedItem = Add("default_diffuse", new Texture("default_diffuse", "", TextureType::DIFFUSE, glm::vec3(1.0f), true), true);
 		Add("default_ambient", new Texture("default_ambient", "", TextureType::AMBIENT, glm::vec3(1.0f), true), true);
 		Add("default_specular", new Texture("default_specular", "", TextureType::SPECULAR, glm::vec3(1.0f), true), true);
 		Add("default_normal", new Texture("default_normal", "", TextureType::NORMAL, glm::vec3(0.5f, 0.5f, 1.0f), true), true);

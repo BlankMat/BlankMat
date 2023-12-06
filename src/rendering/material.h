@@ -134,10 +134,10 @@ public:
     /// </summary>
     /// <param name="name">Name of the material</param>
     /// <param name="scope">Scope of the material</param>
-    /// <param name="color">Diffuse color of the material</param>
     /// <param name="textures">Texture container for the scene</param>
+    /// <param name="color">Diffuse color of the material</param>
     /// <param name="internal">Whether the material is for internal use only</param>
-    explicit Material(const std::string& name, const std::string& scope, const glm::vec3& color, TextureContainer* textures, bool internal = true);
+    explicit Material(const std::string& name, const std::string& scope, TextureContainer* textures, const glm::vec3& color = glm::vec3(1.0f), bool internal = false);
 
     /// <summary>
     /// Constructs a material out of a config file and preloaded textures

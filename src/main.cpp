@@ -23,18 +23,26 @@ int main(int argc, char* argv[])
     Scene* scene = window->GetScene();
     Commands::InitializeCommands(window);
 
-    // Create scene
-    scene->LoadMaterials(config->GetConfig("materials"));
-    SceneReader::ReadScene(scene, FileSystem::GetPath(MODELS_DIR) + config->GetString("model.file"), true);
-
-    state->GetSel()->SetTransformHandle(scene->GetTransformHandle());
-
     // Load shaders
     LoadShaders(scene, config->GetConfig("shaders"));
     state->defaultMat = scene->GetDefaultMaterial();
+    scene->SetLightingMode(LightingMode::TEXTURED);
+    state->GetSel()->SetTransformHandle(scene->GetTransformHandle());
 
-    // Load default scene
-    LoadDefaultScene(scene, state, state->defaultMat, config->GetBool("defaultCubes"), config->GetConfig("camera"), config->GetConfig("light"));
+    // If an argument was passed for a starting file, attempt to load it
+    if (argc > 1)
+    {
+        SceneReader::ReadScene(scene, argv[1], true);
+    }
+    // If opened without arguments, load demo scene
+    else
+    {
+        SceneReader::ReadScene(scene, FileSystem::GetPath(MODELS_DIR) + config->GetString("model.file"), true);
+        scene->LoadMaterials(config->GetConfig("materials"));
+
+        // Load default scene
+        LoadDefaultScene(scene, state, scene->GetDefaultMaterial(), config->GetBool("defaultCubes"), config->GetConfig("camera"), config->GetConfig("light"));
+    }
 
     // Main program loop should run until the program is exited and the changes are saved or ignored
     while (true)
@@ -123,7 +131,6 @@ void LoadShaders(Scene* scene, Config* shaderConfig)
     {
         scene->CreateShader(iter->first, iter->second);
     }
-    scene->UseShader("unlit");
     Timer::Time(startTime, "Shaders loaded");
 }
 
@@ -144,12 +151,12 @@ void LoadDefaultScene(Scene* scene, State* state, Material* defaultMat, bool def
     if (defaultCubes)
     {
         // Add cube materials
-        Material* greenMat = mats->AddMaterial(new Material("green", "", glm::vec3(0, 1, 0), textures, false));
-        Material* redMat = mats->AddMaterial(new Material("red", "", glm::vec3(1, 0, 0), textures, false));
-        Material* blueMat = mats->AddMaterial(new Material("blue", "", glm::vec3(0, 0, 1), textures, false));
-        Material* cyanMat = mats->AddMaterial(new Material("cyan", "", glm::vec3(0, 1, 1), textures, false));
-        Material* purpleMat = mats->AddMaterial(new Material("purple", "", glm::vec3(1, 0, 1), textures, false));
-        Material* yellowMat = mats->AddMaterial(new Material("yellow", "", glm::vec3(1, 1, 0), textures, false));
+        Material* greenMat = mats->AddMaterial(new Material("green", "", textures, glm::vec3(0, 1, 0), false));
+        Material* redMat = mats->AddMaterial(new Material("red", "", textures, glm::vec3(1, 0, 0), false));
+        Material* blueMat = mats->AddMaterial(new Material("blue", "", textures, glm::vec3(0, 0, 1), false));
+        Material* cyanMat = mats->AddMaterial(new Material("cyan", "", textures, glm::vec3(0, 1, 1), false));
+        Material* purpleMat = mats->AddMaterial(new Material("purple", "", textures, glm::vec3(1, 0, 1), false));
+        Material* yellowMat = mats->AddMaterial(new Material("yellow", "", textures, glm::vec3(1, 1, 0), false));
 
         scene->AddMesh(new VCube("cube1", "", 1.0f, greenMat, glm::vec3(-5, 0, -5), glm::vec3(0, 45, 0), glm::vec3(1, 2, 1)));
         scene->AddMesh(new VCube("cube2", "", 1.0f, redMat, glm::vec3(-5, 0, -3), glm::vec3(45, 0, 0), glm::vec3(2, 1, 1)));

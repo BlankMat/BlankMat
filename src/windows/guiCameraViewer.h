@@ -10,7 +10,7 @@ class GUICameraViewer : public IGUIContainerWindow<Camera>
 protected:
     void AddNewItem(const std::string& name) override
     {
-        mScene->AddCamera(name, new Camera(mState->GetActionStack(), name, ""));
+        mState->GetSel()->SelectElement(mScene->AddCamera(name, new Camera(mState->GetActionStack(), name, "")));
     }
 
     IContainer<Camera>* GetContainer() override
@@ -32,7 +32,6 @@ protected:
         mState->GetSel()->SelectElement(selection);
     }
 
-
 public:
     GUICameraViewer(State* state, Scene* scene, bool isEnabled)
     {
@@ -42,5 +41,6 @@ public:
         mIsEnabled = isEnabled;
         mMustSelect = true;
         mWindowName = "Camera Viewer";
+        mItemName = "Camera";
     }
 };

@@ -11,6 +11,58 @@ protected:
 	Scene* mScene = nullptr;
 	std::string mSelColor = "";
 
+	std::string mNameInEdit = "";
+	ISelectable* mElementInEdit = nullptr;
+
+	const static inline float TEXTURE_SIZE = 256.0f;
+	const static inline std::vector<std::string> TEXTURE_TYPES = { "Diffuse", "Ambient", "Specular", "Normal", "Height", "Alpha" };
+
+	static bool InputName(const std::string& label, const std::string& prevValue, std::string& curValue, Node* node, ImGuiInputTextFlags flags = ImGuiInputTextFlags_None)
+	{
+		bool enterPressed = false;
+		curValue = GUIWindowUtils::InputText((label + "##ItemName").c_str(), curValue, &enterPressed, flags);
+
+		// Don't allow inputting a name that already exists
+		if (curValue != prevValue && node->FindNode(curValue) != nullptr)
+		{
+			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.0f, 0.0f, 1.0f));
+			ImGui::Text((label + " with name " + curValue + " already exists.").c_str());
+			ImGui::PopStyleColor();
+			return false;
+		}
+		// If the text is valid and enter was pressed
+		else if (curValue != "" && enterPressed)
+		{
+			return true;
+		}
+		// If enter was not pressed, return false
+		return false;
+	}
+
+	static bool RenameItem(const std::string& label, IContainer<ISelectable>* container, ISelectable* element, std::string& name)
+	{
+		if (name == "")
+			name = element->GetScopedName();
+
+		std::string newName = GUIWindowUtils::InputText(label, name);
+		if (newName == name && newName != element->GetScopedName())
+		{
+			// Don't allow creating of items with duplicate names
+			if (container->Contains(newName))
+			{
+				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.0f, 0.0f, 1.0f));
+				ImGui::Text((label + " with name " + newName + " already exists.").c_str());
+				ImGui::PopStyleColor();
+			}
+			// If there is any text, display the add button
+			else if (newName != "")
+			{
+				container->Rename(element->GetScopedName(), newName);
+				name = "";
+			}
+		}
+	}
+
 	void DisplayMesh(Mesh* element)
 	{
 		// Don't show null entities
@@ -18,7 +70,10 @@ protected:
 			return;
 
 		// Change name of selection
-		element->SetName(GUIWindowUtils::InputText("Mesh", element->GetScopedName()));
+		if (GUIWindowUtils::InputName("Mesh", element->GetScopedName(), mNameInEdit, mScene->GetMeshes()))
+		{
+			mScene->GetMeshes()->Rename(element->GetScopedName(), mNameInEdit);
+		}
 
 		// Position
 		element->SetPos(GUIWindowUtils::InputVec3("Position", element->GetPos()));
@@ -40,7 +95,10 @@ protected:
 			return;
 
 		// Change name of selection
-		element->SetName(GUIWindowUtils::InputText("Node", element->GetScopedName()));
+		if (InputName("Node", element->GetScopedName(), mNameInEdit, mScene->GetRootNode()))
+		{
+			element->Rename(mNameInEdit, true);
+		}
 
 		// Position
 		element->SetPos(GUIWindowUtils::InputVec3("Position", element->GetPos()));
@@ -82,8 +140,13 @@ protected:
 		if (element == nullptr)
 			return;
 
+		// Change name of selection
+		if (GUIWindowUtils::InputName("Light", element->GetScopedName(), mNameInEdit, mScene->GetLights()))
+		{
+			mScene->GetLights()->Rename(element->GetScopedName(), mNameInEdit);
+		}
+
 		// Select light type
-		ImGui::Text("Light");
 		LightType type = element->GetType();
 		if (ImGui::BeginListBox("Type"))
 		{
@@ -138,7 +201,11 @@ protected:
 		if (element == nullptr)
 			return;
 
-		ImGui::Text("Camera");
+		if (GUIWindowUtils::InputName("Camera", element->GetScopedName(), mNameInEdit, mScene->GetCameras()))
+		{
+			mScene->GetCameras()->Rename(element->GetScopedName(), mNameInEdit);
+		}
+
 		element->GetTarget().Display();
 		element->GetPivot().Display();
 		element->GetOrthSize().Display();
@@ -151,7 +218,16 @@ protected:
 
 	void DisplayTexture(Texture* element)
 	{
-		GUIWindowUtils::TextureEdit(element);
+		if (GUIWindowUtils::InputName("Texture", element->GetScopedName(), mNameInEdit, mScene->GetTextures()))
+		{
+			mScene->GetTextures()->Rename(element->GetScopedName(), mNameInEdit);
+		}
+		GUIWindowUtils::InputText("Path", element->mDir);
+
+		int type = (int)element->mType;
+		element->mType = (TextureType)GUIWindowUtils::Dropdown("Type", type, TEXTURE_TYPES);
+
+		GUIWindowUtils::Image(element->mID, TEXTURE_SIZE);
 	}
 
 	void DisplayMaterial(Material* element)
@@ -159,8 +235,10 @@ protected:
 		if (element == nullptr)
 			return;
 
-		Texture* selTexture = mScene->GetTextures()->GetSelectedItem();
-		element->GetScopedName() = GUIWindowUtils::InputText("Material", element->GetScopedName());
+		if (GUIWindowUtils::InputName("Material", element->GetScopedName(), mNameInEdit, mScene->GetMaterials()))
+		{
+			mScene->GetMaterials()->Rename(element->GetScopedName(), mNameInEdit);
+		}
 
 		float spacing = 15.0f;
 		GUIWindowUtils::ColorEdit("Diffuse", element->mKD, mSelColor, spacing);
@@ -173,6 +251,7 @@ protected:
 		element->mD = GUIWindowUtils::InputFloat("Alpha", element->mD);
 		element->mIllum = GUIWindowUtils::InputInt("Illumination Mode", element->mIllum);
 
+		Texture* selTexture = mScene->GetTextures()->GetSelectedItem();
 		GUIWindowUtils::TextureSelect("Diffuse", element->mMapKD, selTexture);
 		GUIWindowUtils::TextureSelect("Ambient", element->mMapKA, selTexture);
 		GUIWindowUtils::TextureSelect("Specular", element->mMapKS, selTexture);
@@ -199,6 +278,14 @@ public:
 			if (sel != nullptr)
 			{
 				ImGui::Text(("Selected Type: " + std::to_string(sel != nullptr ? (int)sel->GetSelectableType() : -1)).c_str());
+
+
+				// If changing the element selected, change the name in edit
+				if (sel != mElementInEdit)
+				{
+					mElementInEdit = sel;
+					mNameInEdit = sel->GetScopedName();
+				}
 
 				switch (sel->GetSelectableType())
 				{

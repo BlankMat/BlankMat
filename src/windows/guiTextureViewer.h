@@ -6,7 +6,7 @@ class GUITextureViewer : public IGUIContainerWindow<Texture>
 protected:
     void AddNewItem(const std::string& name) override
     {
-        mScene->AddTexture(name, new Texture(name, "", TextureType::DIFFUSE, glm::vec3(1.0f), false));
+        mState->GetSel()->SelectElement(mScene->AddTexture(name, new Texture(name, "")));
     }
 
     IContainer<Texture>* GetContainer() override
@@ -42,5 +42,6 @@ public:
         mIsEnabled = isEnabled;
         mMustSelect = false;
         mWindowName = "Texture Viewer";
+        mItemName = "Texture";
     }
 };

@@ -7,7 +7,7 @@ class GUILightViewer : public IGUIContainerWindow<Light>
 protected:
     void AddNewItem(const std::string& name) override
     {
-        mScene->AddLight(name, new Light(name, ""));
+        mState->GetSel()->SelectElement(mScene->AddLight(name, new Light(name, "")));
     }
 
     IContainer<Light>* GetContainer() override
@@ -38,5 +38,6 @@ public:
         mIsEnabled = isEnabled;
         mMustSelect = true;
         mWindowName = "Light Viewer";
+        mItemName = "Light";
     }
 };

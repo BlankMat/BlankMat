@@ -54,7 +54,6 @@ protected:
 	static const inline float WIREFRAME_LINE = 0.5f;
 
 	std::unordered_map<std::string, EntityContainer*> mMeshRenderList;
-	std::unordered_map<std::string, EntityContainer*> mEntityList;
 	
 	TextureContainer* mTextures = nullptr;
 	MaterialContainer* mMaterials = nullptr;
@@ -139,9 +138,6 @@ public:
 	// Returns the material with the given name
 	Texture* GetTexture(const std::string& name);
 
-	// Returns the entity with the given name
-	IEntity* GetEntity(const std::string& name);
-
 	// Returns the transform handle
 	IEntity* GetTransformHandle();
 
@@ -158,19 +154,16 @@ public:
 	Mesh* AddMesh(Mesh* mesh, Node* parent = nullptr);
 
 	// Adds the given camera to the scene
-	Camera* AddCamera(const std::string& name, Camera* camera, bool select = false);
+	Camera* AddCamera(const std::string& name, Camera* camera, bool select = false, bool replace = false);
 
 	// Adds the given light to the scene
-	Light* AddLight(const std::string& name, Light* light, bool select = false);
-
-	// Adds an entity to the scene's render list
-	IEntity* AddEntity(const std::string& shaderName, IEntity* entity, bool preRender = false);
+	Light* AddLight(const std::string& name, Light* light, bool select = false, bool replace = false);
 
 	// Adds a texture to the scene's texture list
-	Texture* AddTexture(const std::string& name, Texture* texture);
+	Texture* AddTexture(const std::string& name, Texture* texture, bool replace = false);
 
 	// Adds a material to the scene's material list
-	Material* AddMaterial(const std::string& name, Material* material);
+	Material* AddMaterial(const std::string& name, Material* material, bool replace = false);
 
 	// Creates a shader for the scene with the given name from the source file of the given name
 	Shader* CreateShader(const std::string& name, bool loadGeom);

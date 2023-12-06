@@ -152,7 +152,7 @@ Material::Material(TextureContainer* textures)
 }
 
 // Constructs a material out of a single color (diffuse)
-Material::Material(const std::string& name, const std::string& scope, const glm::vec3& color, TextureContainer* textures, bool internal)
+Material::Material(const std::string& name, const std::string& scope, TextureContainer* textures, const glm::vec3& color, bool internal)
     : mIsInternal(internal), ISelectable(SelectableType::MATERIAL)
 {
     InitName((name != "" ? name : "Color" + Vec3ToHex(color)), scope);

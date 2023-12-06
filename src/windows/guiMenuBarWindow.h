@@ -133,12 +133,14 @@ protected:
 
         ImGui::Separator();
 
-        if (ImGui::MenuItem("Flat Lighting##Rendering", GetHotkey("LIGHTING_SHADED")))
-            mInput->RunCommand("LIGHTING_SHADED");
-        if (ImGui::MenuItem("Textured Flat Lighting##Rendering", GetHotkey("LIGHTING_TEXTURED")))
+        if (ImGui::MenuItem("Textured Lighting##Rendering", GetHotkey("LIGHTING_TEXTURED")))
             mInput->RunCommand("LIGHTING_TEXTURED");
-        if (ImGui::MenuItem("Textured Lit Lighting##Rendering", GetHotkey("LIGHTING_LIGHTS")))
-            mInput->RunCommand("LIGHTING_LIGHTS");
+        if (ImGui::MenuItem("Lit Lighting##Rendering", GetHotkey("LIGHTING_LIT")))
+            mInput->RunCommand("LIGHTING_LIT");
+        if (ImGui::MenuItem("Flat Lighting##Rendering", GetHotkey("LIGHTING_FLAT")))
+            mInput->RunCommand("LIGHTING_FLAT");
+        if (ImGui::MenuItem("Unlit Lighting##Rendering", GetHotkey("LIGHTING_UNLIT")))
+            mInput->RunCommand("LIGHTING_UNLIT");
         if (ImGui::MenuItem("Wireframe Lighting##Rendering", GetHotkey("LIGHTING_WIREFRAME")))
             mInput->RunCommand("LIGHTING_WIREFRAME");
 

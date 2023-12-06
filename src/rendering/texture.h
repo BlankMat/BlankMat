@@ -196,21 +196,6 @@ public:
         return mIsInternal;
     }
 
-    /// <summary>
-    /// Creates a new texture from the given color
-    /// </summary>
-    /// <param name="name">Name of the texture</param>
-    /// <param name="scope">Scope of the texture</param>
-    /// <param name="type">Type of the texture</param>
-    /// <param name="color">Color of the texture</param>
-	/// <param name="internal">Whether the texture is internal only</param>
-    Texture(const std::string& name, const std::string& scope, TextureType type, const glm::vec3& color, bool internal = false)
-        : mType(type), mDir(""), mFile(""), mIsInternal(internal), ISelectable(SelectableType::TEXTURE)
-    {
-        InitName(name, scope);
-        mID = TextureFromColor(color);
-    }
-
 	/// <summary>
 	/// Loads a new texture from the given file
 	/// </summary>
@@ -237,10 +222,25 @@ public:
     /// <param name="dir">Path of the referenced texture file</param>
     /// <param name="filename">Name of the texture</param>
     /// <param name="internal">Whether the texture is internal only</param>
-    Texture(const std::string& name = "", const std::string& scope = "", unsigned int id = -1, TextureType type = TextureType::DIFFUSE,
+    Texture(const std::string& name, const std::string& scope, unsigned int id, TextureType type = TextureType::DIFFUSE,
         const std::string& dir = "", const std::string& filename = "", bool internal = false)
         : mID(id), mType(type), mDir(dir), mFile(filename), mIsInternal(internal), ISelectable(SelectableType::TEXTURE)
     {
         InitName(name, scope);
+    }
+
+    /// <summary>
+    /// Creates a new texture from the given color
+    /// </summary>
+    /// <param name="name">Name of the texture</param>
+    /// <param name="scope">Scope of the texture</param>
+    /// <param name="type">Type of the texture</param>
+    /// <param name="color">Color of the texture</param>
+    /// <param name="internal">Whether the texture is internal only</param>
+    Texture(const std::string& name = "", const std::string& scope = "", TextureType type = TextureType::DIFFUSE, const glm::vec3& color = glm::vec3(1.0f), bool internal = false)
+        : mType(type), mDir(""), mFile(""), mIsInternal(internal), ISelectable(SelectableType::TEXTURE)
+    {
+        InitName(name, scope);
+        mID = TextureFromColor(color);
     }
 };

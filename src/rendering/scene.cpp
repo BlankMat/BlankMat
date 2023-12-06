@@ -58,22 +58,6 @@ void Scene::Draw(Window* window, Shader* shader)
 		mRootNode->Draw(shader, mState, GetDefaultMaterial(), viewProj, true);
 	}
 
-	// Draw all entities with their respective shaders
-	for (auto iter = mEntityList.begin(); iter != mEntityList.end(); ++iter)
-	{
-		if (iter->second != nullptr)
-		{
-			Shader* curShader = GetShader(iter->first);
-			if (curShader != nullptr)
-			{
-				curShader->Use();
-				curShader->SetVec3("viewPos", GetCamera()->GetPos());
-				GetLight()->UpdateShader(curShader);
-				iter->second->Draw(curShader, mState, GetDefaultMaterial(), viewProj, true);
-			}
-		}
-	}
-
 	// Draw flat objects on top
 	if (unlitShader != nullptr)
 	{
@@ -352,18 +336,6 @@ Texture* Scene::GetTexture(const std::string& name)
 	return mTextures->GetItem(name);
 }
 
-// Returns the entity with the given name
-IEntity* Scene::GetEntity(const std::string& name)
-{
-	/*
-	if (mPreRenderList.find(name) != mPreRenderList.end())
-		return mPreRenderList[name];
-	else if (mRenderList.find(name) != mRenderList.end())
-		return mRenderList[name];
-	*/
-	return nullptr;
-}
-
 // Returns the transform handle
 IEntity* Scene::GetTransformHandle()
 {
@@ -399,36 +371,27 @@ Mesh* Scene::AddMesh(Mesh* mesh, Node* parent)
 }
 
 // Adds the given camera to the scene
-Camera* Scene::AddCamera(const std::string& name, Camera* camera, bool select)
+Camera* Scene::AddCamera(const std::string& name, Camera* camera, bool select, bool replace)
 {
-	return mCameras->Add(name, camera, false, select);
+	return mCameras->Add(name, camera, replace, select);
 }
 
 // Adds the given camera to the scene
-Light* Scene::AddLight(const std::string& name, Light* light, bool select)
+Light* Scene::AddLight(const std::string& name, Light* light, bool select, bool replace)
 {
-	return mLights->Add(name, light, false, select);
-}
-
-// Adds an entity to the scene's render list
-IEntity* Scene::AddEntity(const std::string& shaderName, IEntity* entity, bool preRender)
-{
-	if (!mEntityList.contains(shaderName))
-		mEntityList.emplace(shaderName, new EntityContainer());
-	mEntityList[shaderName]->Add(entity->GetScopedName(), entity, false);
-	return entity;
+	return mLights->Add(name, light, replace, select);
 }
 
 // Adds a texture to the scene's texture list
-Texture* Scene::AddTexture(const std::string& name, Texture* texture)
+Texture* Scene::AddTexture(const std::string& name, Texture* texture, bool replace)
 {
-	return mTextures->Add(name, texture, false, true);
+	return mTextures->Add(name, texture, replace, true);
 }
 
 // Adds a material to the scene's material list
-Material* Scene::AddMaterial(const std::string& name, Material* material)
+Material* Scene::AddMaterial(const std::string& name, Material* material, bool replace)
 {
-	return mMaterials->Add(name, material, false, true);
+	return mMaterials->Add(name, material, replace, true);
 }
 
 // Rotates the current camera by the given delta degrees
@@ -597,8 +560,8 @@ Scene::Scene(State* state)
 	mMeshes = new MeshContainer();
 	mEntities = new EntityContainer();
 
-	mMaterials->AddMaterial(new Material("gray", "", glm::vec3(0.2f), mTextures));
-	mGrid = new PGrid(GRID_OBJ, "", 5, 1.0f, mMaterials->GetItem("gray"), 2, true, glm::vec3(0.0f));
+	mMaterials->AddMaterial(new Material("internal_gray", "", mTextures, glm::vec3(0.2f), true), true);
+	mGrid = new PGrid(GRID_OBJ, "", 5, 1.0f, mMaterials->GetItem("internal_gray"), 2, true, glm::vec3(0.0f));
 	mViewAxisHandle = new PHandle(CAMERA_AXIS_HANDLE, "", 45.0f, 6, false, mMaterials, mTextures, glm::vec3(50, 50, 0));
 	mTransformHandle = new PHandle(TRANSFORM_HANDLE, "", 0.5f, 6, true, mMaterials, mTextures, glm::vec3(0.0f));
 }

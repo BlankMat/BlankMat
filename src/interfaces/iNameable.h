@@ -53,6 +53,8 @@ public:
 	/// <param name="name">Raw name of the object</param>
 	virtual void SetName(const std::string& name)
 	{
+		if (mName == name)
+			return;
 		mName = name;
 	}
 
@@ -62,6 +64,8 @@ public:
 	/// <param name="scope">Scope to set the object to</param>
 	virtual void SetScope(const std::string& scope)
 	{
+		if (mScope == scope)
+			return;
 		mScope = scope;
 	}
 
