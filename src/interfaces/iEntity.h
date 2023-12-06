@@ -4,7 +4,7 @@
 #include "rendering/shader.h"
 #include "rendering/material.h"
 #include "containers/materialContainer.h"
-#include "tools/state.h"
+#include "interaction/state.h"
 
 class IEntity : public ISelectable
 {

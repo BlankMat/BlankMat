@@ -23,9 +23,10 @@ protected:
 	/// <summary>
 	/// Reads the next item from the input file stream
 	/// </summary>
+	/// <param name="scope">Scope to read item in</param>
 	/// <param name="file">File to read</param>
 	/// <returns>Newly constructed item from file</returns>
-	const std::pair<std::string, Camera*> ReadItem(std::ifstream& file) override
+	const std::pair<std::string, Camera*> ReadItem(const std::string& scope, std::ifstream& file) override
 	{
 		// Set up variables to store read information
 		std::string name = "main";
@@ -56,7 +57,7 @@ protected:
 
 			// Parse lines
 			if (parse[0] == "CAMERA" && parse.size() > 1)
-				name = parse[1];
+				name = Scope(parse[1], scope);
 			else if (parse[0] == "fov" && parse.size() > 1)
 				fov = std::stof(parse[1]);
 			else if (parse[0] == "nearclip" && parse.size() > 1)

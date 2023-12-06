@@ -98,7 +98,7 @@ static std::string GetDirectory(const std::string path)
     if (path == "")
         return "";
 
-    size_t lastSlash = path.find_last_of('/') + 1;
+    size_t lastSlash = path.find_last_of("/\\") + 1;
     return path.substr(0, lastSlash);
 }
 
@@ -113,7 +113,7 @@ static std::string GetFileName(const std::string path)
     if (path == "")
         return "";
 
-    size_t lastSlash = path.find_last_of('/') + 1;
+    size_t lastSlash = path.find_last_of("/\\") + 1;
     size_t lastPeriod = path.find_last_of('.');
     return path.substr(lastSlash, lastPeriod - lastSlash);
 }
@@ -149,7 +149,7 @@ static void SplitPath(const std::string path, std::string& dir, std::string& nam
     if (path == "")
         return;
 
-    size_t lastSlash = path.find_last_of('/') + 1;
+    size_t lastSlash = path.find_last_of("/\\") + 1;
     size_t lastPeriod = path.find_last_of('.');
 
     dir = path.substr(0, lastSlash);

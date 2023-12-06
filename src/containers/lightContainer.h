@@ -20,9 +20,10 @@ protected:
 	/// <summary>
 	/// Reads the next item from the input file stream
 	/// </summary>
+	/// <param name="scope">Scope to read item in</param>
 	/// <param name="file">File to read</param>
 	/// <returns>Newly constructed item from file</returns>
-	const std::pair<std::string, Light*> ReadItem(std::ifstream& file) override
+	const std::pair<std::string, Light*> ReadItem(const std::string& scope, std::ifstream& file) override
 	{
 		// Set up variables to store read information
 		std::string name = "global";
@@ -56,7 +57,7 @@ protected:
 
 			// Parse lines
 			if (parse[0] == "LIGHT" && parse.size() > 1)
-				name = parse[1];
+				name = Scope(parse[1], scope);
 			if (parse[0] == "type" && parse.size() > 1)
 				type = (LightType)std::stoi(parse[1]);
 			if (parse[0] == "cube" && parse.size() > 1)

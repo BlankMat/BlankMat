@@ -27,9 +27,10 @@ protected:
 	/// <summary>
 	/// Reads the next item from the input file stream
 	/// </summary>
+	/// <param name="scope">Scope to read item in</param>
 	/// <param name="file">File to read</param>
 	/// <returns>Newly constructed item from file</returns>
-	const std::pair<std::string, Texture*> ReadItem(std::ifstream& file) override
+	const std::pair<std::string, Texture*> ReadItem(const std::string& scope, std::ifstream& file) override
 	{
 		// Set up variables to store read information
 		std::string name = "default";
@@ -54,7 +55,7 @@ protected:
 
 			// Parse lines
 			if (parse[0] == "TEXTURE" && parse.size() > 1)
-				name = parse[1];
+				name = Scope(parse[1], scope);
 			else if (parse[0] == "file" && parse.size() > 1)
 				filename = parse[1];
 			else if (parse[0] == "dir" && parse.size() > 1)

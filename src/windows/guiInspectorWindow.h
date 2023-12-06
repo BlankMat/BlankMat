@@ -1,7 +1,7 @@
 #pragma once
 #include "interfaces/iGUIWindow.h"
 #include "guiWindowUtils.h"
-#include "tools/state.h"
+#include "interaction/state.h"
 #include "rendering/scene.h"
 
 class GUIInspectorWindow : public IGUIWindow

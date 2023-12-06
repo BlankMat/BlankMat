@@ -232,17 +232,22 @@ void SceneReader::ReadAssimpScene(Scene* scene, const std::string& path, bool re
 
 	// Split path into the appropriate parts
 	std::string dir;
-	std::string file;
+	std::string filename;
 	std::string ext;
-	SplitPath(path, dir, file, ext);
+	SplitPath(path, dir, filename, ext);
+	std::string scope = "";
 
 	// If replacing the previous scene, set this scene to be the scope
 	if (replace)
 	{
 		scene->ClearRendering();
 		scene->SetDirectory(dir);
-		scene->SetScope(file);
-		scene->SetName(file);
+		scene->SetName(filename);
+		scene->SetScope("");
+	}
+	else
+	{
+		scope = scene->GetUniqueScope(filename);
 	}
 
 	// Get root node
@@ -252,22 +257,22 @@ void SceneReader::ReadAssimpScene(Scene* scene, const std::string& path, bool re
 		rootNode = new Node(nullptr, "root", "");
 		scene->SetRootNode(rootNode);
 	}
-	Node* sceneRootNode = new Node(rootNode, scene->GetName(), scene->GetScope());
+	Node* sceneRootNode = new Node(rootNode, scene->GetName(), scope);
 
 	// Process model
 	rootNode->AddChild(sceneRootNode);
-	ProcessAssimpNode(file, scene, sceneRootNode, assimpScene->mRootNode, assimpScene);
+	ProcessAssimpNode(filename, scene, sceneRootNode, assimpScene->mRootNode, assimpScene);
 	rootNode->SetParentModelMatrix(glm::mat4(1.0f));
 
 	Timer::Time(loadStartTime, "Read model from file " + path + " successfully");
 	std::cout << "Project directory is " << scene->GetDirectory() << ", scope is " << scene->GetScope() << std::endl;
 }
 
-void SceneReader::ReadBlankMatItem(IWritable* container, bool replace, std::ifstream& file, const std::string& label)
+void SceneReader::ReadBlankMatItem(const std::string& scope, IWritable* container, bool replace, std::ifstream& file, const std::string& label)
 {
 	std::cout << "Reading " << label << std::endl;
 	double startTime = Timer::Start();
-	container->Read(file, replace);
+	container->Read(scope, file, replace);
 	Timer::Time(startTime, "Read " + std::to_string(container->WriteCount()) + " " + label);
 }
 
@@ -284,17 +289,33 @@ void SceneReader::ReadBlankMatScene(Scene* scene, const std::string& path, bool 
 
 	try
 	{
+		// Split path into the appropriate parts
+		std::string dir;
+		std::string filename;
+		std::string ext;
+		std::string scope = "";
+		SplitPath(path, dir, filename, ext);
+
 		// If replacing the scene, clear it
 		if (replace)
+		{
 			ClearScene(scene);
+			scene->SetDirectory(dir);
+			scene->SetName(filename);
+			scene->SetScope("");
+		}
+		else
+		{
+			scope = scene->GetUniqueScope(filename);
+		}
 
 		// Read all items
-		ReadBlankMatItem(scene->GetRootNode(), replace, file, "Nodes");
-		ReadBlankMatItem(scene->GetMeshes(), replace, file, "Meshes");
-		ReadBlankMatItem(scene->GetMaterials(), replace, file, "Materials");
-		ReadBlankMatItem(scene->GetTextures(), replace, file, "Textures");
-		ReadBlankMatItem(scene->GetCameras(), replace, file, "Cameras");
-		ReadBlankMatItem(scene->GetLights(), replace, file, "Lights");
+		ReadBlankMatItem(scope, scene->GetRootNode(), replace, file, "Nodes");
+		ReadBlankMatItem(scope, scene->GetMeshes(), replace, file, "Meshes");
+		ReadBlankMatItem(scope, scene->GetMaterials(), replace, file, "Materials");
+		ReadBlankMatItem(scope, scene->GetTextures(), replace, file, "Textures");
+		ReadBlankMatItem(scope, scene->GetCameras(), replace, file, "Cameras");
+		ReadBlankMatItem(scope, scene->GetLights(), replace, file, "Lights");
 
 		// Reconstruct relationships between items
 		scene->GetMaterials()->LoadTextures(scene->GetTextures());
@@ -317,6 +338,7 @@ void SceneReader::ClearScene(Scene* scene)
 {
 	// Clears the scene of everything
 	scene->Clear();
+	scene->GetState()->GetSel()->Reset();
 }
 
 void SceneReader::LoadDefaultScene(Scene* scene)

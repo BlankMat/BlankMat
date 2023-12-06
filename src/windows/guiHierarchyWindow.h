@@ -1,7 +1,7 @@
 #pragma once
 #include "interfaces/iGUIWindow.h"
 #include "guiWindowUtils.h"
-#include "tools/state.h"
+#include "interaction/state.h"
 #include "rendering/scene.h"
 #include <set>
 
@@ -15,6 +15,10 @@ protected:
     // Render one row of the hierarchy
     void RenderSelectable(IEntity*& selEntity, IEntity* curEntity, const std::string& depthMarker)
     {
+        // Don't render null entities
+        if (curEntity == nullptr)
+            return;
+
         // Add checkbox for enabling or disabling elements
         std::string name = (mState->collapseScope) ? curEntity->GetUnscopedName() : curEntity->GetScopedName();
         curEntity->Enable(GUIWindowUtils::Checkbox("##entity" + curEntity->GetScopedName(), curEntity->IsEnabled()));

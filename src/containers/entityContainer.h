@@ -17,9 +17,10 @@ protected:
 	/// <summary>
 	/// Reads the next item from the input file stream
 	/// </summary>
+	/// <param name="scope">Scope to read item in</param>
 	/// <param name="file">File to read</param>
 	/// <returns>Newly constructed item from file</returns>
-	const std::pair<std::string, IEntity*> ReadItem(std::ifstream& file) override
+	const std::pair<std::string, IEntity*> ReadItem(const std::string& scope, std::ifstream& file) override
 	{
 		return std::pair<std::string, IEntity*>("", nullptr);
 	}

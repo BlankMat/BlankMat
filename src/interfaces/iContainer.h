@@ -51,9 +51,10 @@ protected:
 	/// <summary>
 	/// Reads the next item from the input file stream
 	/// </summary>
+	/// <param name="scope">Scope to read item in</param>
 	/// <param name="file">File to read</param>
 	/// <returns>Newly constructed item from file</returns>
-	virtual const std::pair<std::string, T*> ReadItem(std::ifstream& file) = 0;
+	virtual const std::pair<std::string, T*> ReadItem(const std::string& scope, std::ifstream& file) = 0;
 
 	/// <summary>
 	/// Writes the given item into the output file stream
@@ -66,9 +67,10 @@ public:
 	/// <summary>
 	/// Reads this container from the file
 	/// </summary>
+	/// <param name="scope">Scope to read in</param>
 	/// <param name="file">File to read from</param>
 	/// <param name="clear">Whether to overwrite the contents of the item</param>
-	void Read(std::ifstream& file, bool clear) override
+	void Read(const std::string& scope, std::ifstream& file, bool clear) override
 	{
 		if (clear)
 			Clear();
@@ -88,14 +90,14 @@ public:
 				continue;
 
 			// Look for number of items
-			if (parse[0] == "items")
+			if (parse[0] == "items" && parse.size() > 1)
 			{
 				int numItems = std::stoi(parse[1]);
 				for (int i = 0; i < numItems; i++)
 				{
-					auto newItem = ReadItem(file);
+					auto newItem = ReadItem(scope, file);
 					if (newItem.first != "" && newItem.second != nullptr)
-						Add(newItem.first, newItem.second, false);
+						Add(Scope(newItem.first, scope), newItem.second, false);
 				}
 
 				// Once the correct number of items has been read, the container is over

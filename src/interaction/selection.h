@@ -1,7 +1,6 @@
 #pragma once
 #include "glIncludes.h"
 #include "interfaces/iSelectable.h"
-#include "interfaces/iTool.h"
 #include <vector>
 #include <iostream>
 #include <set>
@@ -29,16 +28,10 @@ private:
 
 	Tool mSelTool = Tool::SELECT;
 	SelMode mSelMode = SelMode::MESH;
-	std::vector<ITool*> mTools;
 
 public:
 	std::set<unsigned int> newSelVerts;
 	std::set<unsigned int> removedSelVerts;
-
-	/// <summary>
-	/// Storage container for information on all selections
-	/// </summary>
-	Selection();
 
 	// Returns the entire selection as a selection of vertices
 	void GetSelectedVerts(std::vector<unsigned int>& _verts);
@@ -114,6 +107,9 @@ public:
 	// Updates the transform handle's status
 	void UpdateTransformHandle();
 
+	// Resets the selection
+	void Reset();
+
 	/// <summary>
 	/// Returns the nearest mesh to the clicked position
 	/// </summary>
@@ -140,4 +136,9 @@ public:
 	/// <param name="v">V coordinate onscreen</param>
 	/// <returns>Selected face index, or -1 if none was found</returns>
 	static int GetNearestFace(Scene* scene, float u, float v);
+
+	/// <summary>
+	/// Storage container for information on all selections
+	/// </summary>
+	Selection();
 };

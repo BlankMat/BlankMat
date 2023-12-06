@@ -29,7 +29,7 @@ private:
 
 	static void ReadAssimpScene(Scene* scene, const std::string& path, bool replace);
 
-	static void ReadBlankMatItem(IWritable* container, bool replace, std::ifstream& file, const std::string& label);
+	static void ReadBlankMatItem(const std::string& scope, IWritable* container, bool replace, std::ifstream& file, const std::string& label);
 
 	static void ReadBlankMatScene(Scene* scene, const std::string& path, bool replace);
 

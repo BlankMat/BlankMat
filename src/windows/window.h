@@ -5,7 +5,7 @@
 #include "files/config.h"
 #include "files/fileSystem.h"
 #include "files/sceneIO.h"
-#include "tools/state.h"
+#include "interaction/state.h"
 #include "rendering/scene.h"
 
 #include "windows/guiMenuBarWindow.h"

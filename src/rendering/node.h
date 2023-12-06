@@ -40,10 +40,11 @@ protected:
 	/// <summary>
 	/// Recursively reads all nodes from the given file
 	/// </summary>
+	/// <param name="scope">Scope to read in</param>
 	/// <param name="file">File to read</param>
 	/// <param name="parent">Parent node</param>
 	/// <returns>Node that was stored in the file</returns>
-	Node* ReadRecurse(std::ifstream& file, Node* parent);
+	Node* ReadRecurse(const std::string& scope, std::ifstream& file, Node* parent);
 
 	/// <summary>
 	/// Recursively writes all nodes into the given file
@@ -57,9 +58,10 @@ public:
 	/// <summary>
 	/// Reads child nodes for this node from the file
 	/// </summary>
+	/// <param name="scope">Scope to read in</param>
 	/// <param name="file">File to read from</param>
 	/// <param name="clear">Whether to overwrite the contents of the item</param>
-	void Read(std::ifstream& file, bool clear) override;
+	void Read(const std::string& scope, std::ifstream& file, bool clear) override;
 
 	/// <summary>
 	/// Writes this node to the file

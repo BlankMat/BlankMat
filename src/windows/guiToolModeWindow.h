@@ -1,7 +1,7 @@
 #pragma once
 #include "glIncludes.h"
 #include "blankMatConfig.h"
-#include "tools/state.h"
+#include "interaction/state.h"
 #include "files/fileSystem.h"
 #include "rendering/scene.h"
 #include "interfaces/iGUIWindow.h"

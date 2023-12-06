@@ -28,13 +28,13 @@ protected:
 	/// <summary>
 	/// Reads the next item from the input file stream
 	/// </summary>
+	/// <param name="scope">Scope to read item in</param>
 	/// <param name="file">File to read</param>
 	/// <returns>Newly constructed item from file</returns>
-	const std::pair<std::string, Material*> ReadItem(std::ifstream& file) override
+	const std::pair<std::string, Material*> ReadItem(const std::string& scope, std::ifstream& file) override
 	{
 		// Set up variables to store read information
 		std::string name = "default";
-		std::string scope = "";
 		glm::vec3 kd = glm::vec3(1.0f);
 		glm::vec3 ka = glm::vec3(0.1f);
 		glm::vec3 ks = glm::vec3(1.0f);
@@ -67,7 +67,7 @@ protected:
 
 			// Parse lines
 			if (parse[0] == "MATERIAL" && parse.size() > 1)
-				name = parse[1];
+				name = Scope(parse[1], scope);
 			else if (parse[0] == "kd" && parse.size() > 3)
 				kd = ReadVec3FromStrings(parse, 1);
 			else if (parse[0] == "ka" && parse.size() > 3)

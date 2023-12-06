@@ -1,7 +1,7 @@
 #pragma once
 #include "interfaces/iGUIWindow.h"
 #include "windows/guiWindowUtils.h"
-#include "tools/state.h"
+#include "interaction/state.h"
 #include "rendering/scene.h"
 
 template<typename T>

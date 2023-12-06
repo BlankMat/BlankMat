@@ -288,6 +288,12 @@ const std::string Scene::GetCurShader()
 	return mCurShader;
 }
 
+// Returns the root node
+Node* Scene::GetRootNode()
+{
+	return mRootNode;
+}
+
 // Returns the scene's camera
 Camera* Scene::GetCamera()
 {
@@ -354,6 +360,31 @@ LightingMode Scene::GetLightingMode()
 	return mMode;
 }
 
+// Returns a unique scope, using the given name as the starting point
+std::string Scene::GetUniqueScope(const std::string& scope)
+{
+	// If the scope is not active, use it
+	if (!IsScopeActive(scope))
+	{
+		mScopes.insert(scope);
+		return scope;
+	}
+
+	// If the scope is active, increment the scope until it is valid
+	std::string uniqueScope = scope;
+	while (mScopes.contains(uniqueScope))
+	{
+		uniqueScope = IncrementName(uniqueScope, 1);
+	}
+	return uniqueScope;
+}
+
+// Returns whether the given scope is active in the scene
+bool Scene::IsScopeActive(const std::string& scope)
+{
+	return mScopes.contains(scope);
+}
+
 // Adds the given node to the scene
 void Scene::AddNode(Node* node)
 {
@@ -404,12 +435,6 @@ void Scene::RotateCamera(const glm::vec3& delta)
 void Scene::TranslateCamera(const glm::vec3& delta)
 {
 	GetCamera()->Translate(delta);
-}
-
-// Returns the root node
-Node* Scene::GetRootNode()
-{
-	return mRootNode;
 }
 
 // Sets the root node
@@ -523,16 +548,10 @@ const glm::mat4& Scene::GetViewMatrix()
 // Clears the scene completely
 void Scene::Clear()
 {
-	mTextures->Clear();
-	mMaterials->Clear();
+	ClearRendering();
 	mLights->Clear();
 	mCameras->Clear();
-	mMeshes->Clear();
 	mEntities->Clear();
-	if (mRootNode != nullptr)
-		mRootNode->Clear();
-
-	mMeshRenderList.clear();
 }
 
 // Clears all items that would render
@@ -545,6 +564,7 @@ void Scene::ClearRendering()
 	if (mRootNode != nullptr)
 		mRootNode->Clear();
 	mMeshRenderList.clear();
+	mScopes.clear();
 }
 
 // Constructs the scene from the given file

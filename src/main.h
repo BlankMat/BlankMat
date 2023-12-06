@@ -5,7 +5,7 @@
 #include "interaction/actionStack.h"
 #include "interaction/commands.h"
 
-#include "tools/state.h"
+#include "interaction/state.h"
 
 #include "files/config.h"
 #include "files/fileSystem.h"

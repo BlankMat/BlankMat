@@ -1,7 +1,7 @@
 #include "node.h"
 
 // Recursively reads all nodes from the given file
-Node* Node::ReadRecurse(std::ifstream& file, Node* parent)
+Node* Node::ReadRecurse(const std::string& scope, std::ifstream& file, Node* parent)
 {
 	// Construct empty node
 	Node* node;
@@ -29,41 +29,41 @@ Node* Node::ReadRecurse(std::ifstream& file, Node* parent)
 			break;
 
 		// Parse lines
-		if (parse[0] == "NODE")
+		if (parse[0] == "NODE" && parse.size() > 1)
 		{
-			node->Rename(parse[1], true);
+			node->Rename(Scope(parse[1], scope), true);
 		}
-		else if (parse[0] == "pos")
+		else if (parse[0] == "pos" && parse.size() > 3)
 		{
 			node->SetPos(ReadVec3FromStrings(parse, 1));
 		}
-		else if (parse[0] == "rot")
+		else if (parse[0] == "rot" && parse.size() > 3)
 		{
 			node->SetRot(ReadVec3FromStrings(parse, 1));
 		}
-		else if (parse[0] == "scale")
+		else if (parse[0] == "scale" && parse.size() > 3)
 		{
 			node->SetScale(ReadVec3FromStrings(parse, 1));
 		}
-		else if (parse[0] == "enabled")
+		else if (parse[0] == "enabled" && parse.size() > 1)
 		{
 			node->Enable(parse[1] == "1");
 		}
-		else if (parse[0] == "meshes")
+		else if (parse[0] == "meshes" && parse.size() > 1)
 		{
 			int numMeshes = std::stoi(parse[1]);
 			for (int i = 0; i < numMeshes; i++)
 			{
 				std::string meshName;
 				std::getline(file, meshName);
-				node->AddMeshName(TrimWhitespace(meshName));
+				node->AddMeshName(Scope(TrimWhitespace(meshName), scope));
 			}
 		}
-		else if (parse[0] == "children")
+		else if (parse[0] == "children" && parse.size() > 1)
 		{
 			int numChildren = std::stoi(parse[1]);
 			for (int i = 0; i < numChildren; i++)
-				node->AddChild(ReadRecurse(file, node));
+				node->AddChild(ReadRecurse(scope, file, node));
 		}
 	}
 	return node;
@@ -94,12 +94,12 @@ void Node::WriteRecurse(std::ofstream& file, Node* node, unsigned int depth)
 }
 
 // Reads child nodes for this node from the file
-void Node::Read(std::ifstream& file, bool clear)
+void Node::Read(const std::string& scope, std::ifstream& file, bool clear)
 {
 	if (clear)
 		Clear();
 	// Replace this node with the new one
-	ReadRecurse(file, nullptr);
+	ReadRecurse(scope, file, nullptr);
 }
 
 // Writes this node to the file

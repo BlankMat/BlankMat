@@ -1,7 +1,7 @@
 #pragma once
 #include "glIncludes.h"
 #include "files/config.h"
-#include "tools/state.h"
+#include "interaction/state.h"
 #include "interfaces/iCommand.h"
 #include <unordered_map>
 #include <unordered_set>

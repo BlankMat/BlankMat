@@ -5,7 +5,7 @@
 #include "interfaces/iGUIWindow.h"
 #include "interaction/selection.h"
 #include "rendering/scene.h"
-#include "tools/state.h"
+#include "interaction/state.h"
 #include <vector>
 #include <iostream>
 #include <string>

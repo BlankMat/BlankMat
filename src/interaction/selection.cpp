@@ -2,7 +2,6 @@
 #include "rendering/material.h"
 #include "rendering/mesh.h"
 #include "rendering/scene.h"
-#include "tools/selectTool.h"
 
 // Returns the entire selection as a selection of vertices
 void Selection::GetSelectedVerts(std::vector<unsigned int>& _verts)
@@ -302,8 +301,20 @@ int Selection::GetNearestFace(Scene* scene, float u, float v)
 	return -1;
 }
 
+// Resets the selection
+void Selection::Reset()
+{
+	mSelMesh = nullptr;
+	mSelEntity = nullptr;
+	mSelMaterial = nullptr;
+	mSelElement = nullptr;
+
+	mSelTool = Tool::SELECT;
+	mSelMode = SelMode::MESH;
+}
+
 // Storage container for information on all selections
 Selection::Selection()
 {
-	mTools.push_back(new SelectTool());
+	Reset();
 }

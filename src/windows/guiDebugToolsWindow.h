@@ -5,7 +5,7 @@
 #include "interaction/selection.h"
 #include "rendering/scene.h"
 #include "rendering/camera.h"
-#include "tools/state.h"
+#include "interaction/state.h"
 #include <map>
 
 /// <summary>

@@ -20,6 +20,7 @@
 #include "containers/entityContainer.h"
 #include "containers/meshContainer.h"
 #include <unordered_map>
+#include <unordered_set>
 
 enum class LightingMode
 {
@@ -54,6 +55,7 @@ protected:
 	static const inline float WIREFRAME_LINE = 0.5f;
 
 	std::unordered_map<std::string, EntityContainer*> mMeshRenderList;
+	std::unordered_set<std::string> mScopes;
 	
 	TextureContainer* mTextures = nullptr;
 	MaterialContainer* mMaterials = nullptr;
@@ -126,6 +128,12 @@ public:
 	// Returns the scene's directory
 	std::string GetDirectory();
 
+	// Returns the current shader
+	const std::string GetCurShader();
+
+	// Returns the root node
+	Node* GetRootNode();
+
 	// Returns the shader with the given name
 	Shader* GetShader(const std::string& name);
 
@@ -146,6 +154,12 @@ public:
 
 	// Returns the lighting mode of the application
 	LightingMode GetLightingMode();
+
+	// Returns a unique scope, using the given name as the starting point
+	std::string GetUniqueScope(const std::string& scope);
+
+	// Returns whether the given scope is active in the scene
+	bool IsScopeActive(const std::string& scope);
 
 	// Adds the given node to the scene
 	void AddNode(Node* node);
@@ -183,14 +197,8 @@ public:
 	// Translates the current camera by the given delta
 	void TranslateCamera(const glm::vec3& delta);
 
-	// Returns the root node
-	Node* GetRootNode();
-	
 	// Sets the root node
 	void SetRootNode(Node* rootNode);
-
-	// Returns the current shader
-	const std::string GetCurShader();
 
 	// Sets the scene's camera to the given camera
 	void SetCamera(const std::string& camera);

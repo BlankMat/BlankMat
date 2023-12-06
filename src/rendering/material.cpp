@@ -1,5 +1,5 @@
 #include "material.h"
-#include "tools/state.h"
+#include "interaction/state.h"
 
 // Returns whether the material is for internal use only or not.
 bool Material::IsInternal()

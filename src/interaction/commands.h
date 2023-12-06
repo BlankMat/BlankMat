@@ -1,6 +1,6 @@
 #pragma once
 #include "glIncludes.h"
-#include "tools/state.h"
+#include "interaction/state.h"
 #include "rendering/scene.h"
 #include "windows/window.h"
 #include "interaction/runFunctionCommand.h"
