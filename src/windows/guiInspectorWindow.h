@@ -277,7 +277,7 @@ public:
 			ISelectable* sel = mState->GetSel()->GetSelectedElement();
 			if (sel != nullptr)
 			{
-				ImGui::Text(("Selected Type: " + std::to_string(sel != nullptr ? (int)sel->GetSelectableType() : -1)).c_str());
+				ImGui::Text(("Selected Type: " + SelectableTypeToString(sel->GetSelectableType())).c_str());
 
 
 				// If changing the element selected, change the name in edit

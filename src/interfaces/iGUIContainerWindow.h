@@ -25,29 +25,35 @@ protected:
 
     virtual void SelectItem(T* selection) = 0;
 
-    virtual void DisplayDeleteItem(T* item, T*& deleteItem = nullptr)
+    virtual bool ShouldDisplayItem(T* item)
     {
+        return true;
+    }
+
+    virtual bool DisplayDeleteItem(const std::string& name, T* item)
+    {
+        ImVec2 size = ImVec2(ImGui::GetTextLineHeight(), ImGui::GetTextLineHeight());
         // If the item can be removed, show delete icon
         if (GetContainer()->IsDeleteable(item))
         {
-            ImGui::SameLine(ImGui::GetWindowWidth() - ImGui::GetTextLineHeight());
-            if (ImGui::Button("-##RemoveItem"))
-            {
-                if (deleteItem != nullptr)
-                    deleteItem = item;
-            }
+            return ImGui::Selectable((" - ##RemoveItem" + name).c_str(), false, ImGuiSelectableFlags_None, size);
+        }
+        else
+        {
+            //ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f, 0.0f, 0.0f, 0.1f));
+            ImGui::Selectable(("##DontRemoveItem" + name).c_str(), false, ImGuiSelectableFlags_Disabled, size);
+            //ImGui::PopStyleColor();
+            return false;
         }
     }
 
-    virtual bool DisplayListItem(const std::string& name, T* item, T*& selection, T*& deleteItem = nullptr)
+    virtual bool DisplayListItem(const std::string& name, T* item, T*& selection)
     {
         bool wasPressed = false;
         if (mMustSelect)
-            GUIWindowUtils::Selectable(name, selection, item, &wasPressed);
+            GUIWindowUtils::Selectable(name, selection, item, &wasPressed, glm::vec2(0.0f, ImGui::GetTextLineHeight()));
         else
-            GUIWindowUtils::Deselectable(name, selection, item, &wasPressed);
-
-        DisplayDeleteItem(item, deleteItem);
+            GUIWindowUtils::Deselectable(name, selection, item, &wasPressed, glm::vec2(0.0f, ImGui::GetTextLineHeight()));
         return wasPressed;
     }
 
@@ -57,19 +63,31 @@ protected:
         T* deleteItem = nullptr;
         T* selection = container->GetSelectedItem();
 
+        // Define column layout
+        ImGui::Columns(2, nullptr, false);
+        ImGui::SetColumnWidth(0, ImGui::GetWindowWidth() - ImGui::GetTextLineHeightWithSpacing() * 2.5f);
+        ImGui::SetColumnWidth(1, ImGui::GetTextLineHeightWithSpacing() * 2.0f);
+
         // List all elements in the container
         const auto& data = container->Data();
         for (auto iter = data.cbegin(); iter != data.cend(); ++iter)
         {
-            if (DisplayListItem(iter->first, iter->second, selection, deleteItem))
+            if (DisplayListItem(iter->first, iter->second, selection))
                 wasPressed = true;
+        }
+
+        // List delete buttons for all applicable items
+        ImGui::NextColumn();
+        for (auto iter = data.cbegin(); iter != data.cend(); ++iter)
+        {
+            if (ShouldDisplayItem(iter->second) && DisplayDeleteItem(iter->first, iter->second))
+                deleteItem = iter->second;
         }
 
         // If an item was selected for deletion, delete it after the loop is complete
         if (deleteItem != nullptr)
         {
-            container->Remove(deleteItem);
-            mState->GetSel()->DeselectElement();
+            mScene->DeleteSelectable(deleteItem);
         }
 
         // Select the item that was pressed
@@ -85,6 +103,7 @@ protected:
         }
 
         // Support adding items to list
+        ImGui::Columns(1, nullptr, false);
         ImGui::Separator();
         ImGui::Selectable(("+ Add " + mItemName + "##AddContainerItem").c_str(), &mIsAddingItem);
         if (mIsAddingItem)

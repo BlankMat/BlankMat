@@ -14,6 +14,13 @@ private:
 		return mScene->GetMaterials();
 	}
 
+	bool ShouldDisplayItem(Material* item) override
+	{
+		if (item->IsInternal() && item->GetScopedName() != "default")
+			return false;
+		return true;
+	}
+
 	void DisplaySelectedItem() override
 	{
 		Material* selection = mScene->GetMaterials()->GetSelectedItem();
@@ -28,14 +35,12 @@ private:
 		mState->GetSel()->SelectElement(selection);
 	}
 
-	bool DisplayListItem(const std::string& name, Material* item, Material*& selection, Material*& deleteItem) override
+	bool DisplayListItem(const std::string& name, Material* item, Material*& selection) override
 	{
-		if (item->IsInternal() && name != "default")
+		if (!ShouldDisplayItem(item))
 			return false;
 
-		bool wasSelected = GUIWindowUtils::MaterialSelect(name, item, selection, 5.0f);
-		DisplayDeleteItem(item, deleteItem);
-		return wasSelected;
+		return GUIWindowUtils::MaterialSelect(name, item, selection, 5.0f);
 	}
 public:
 	GUIMaterialViewer(State* state, Scene* scene, bool isEnabled)

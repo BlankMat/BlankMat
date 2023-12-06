@@ -123,10 +123,10 @@ public:
 	}
 
 	template<typename T>
-	static bool Selectable(const std::string& label, T& selValue, T thisValue, bool* wasPressed = nullptr)
+	static bool Selectable(const std::string& label, T& selValue, T thisValue, bool* wasPressed = nullptr, const glm::vec2& size = glm::vec2(0.0f))
 	{
 		bool isSelected = (selValue == thisValue);
-		if (ImGui::Selectable(label.c_str(), &isSelected, ImGuiSelectableFlags_None))
+		if (ImGui::Selectable(label.c_str(), &isSelected, ImGuiSelectableFlags_None, ImVec2(size.x, size.y)))
 		{
 			selValue = thisValue;
 			if (wasPressed != nullptr)
@@ -140,10 +140,10 @@ public:
 	}
 	
 	template<typename T>
-	static bool Deselectable(const std::string& label, T*& selValue, T* thisValue, bool* wasPressed = nullptr)
+	static bool Deselectable(const std::string& label, T*& selValue, T* thisValue, bool* wasPressed = nullptr, const glm::vec2& size = glm::vec2(0.0f))
 	{
 		bool isSelected = (selValue == thisValue);
-		if (ImGui::Selectable(label.c_str(), &isSelected) && wasPressed != nullptr)
+		if (ImGui::Selectable(label.c_str(), &isSelected, ImGuiSelectableFlags_None, ImVec2(size.x, size.y)) && wasPressed != nullptr)
 			*wasPressed = true;
 
 		// If the item is clicked, toggle selection

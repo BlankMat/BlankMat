@@ -281,18 +281,17 @@ void Scene::DeleteNode(Node* node)
 	mState->GetSel()->DeselectEntity();
 }
 
-// Deletes the current selection
-void Scene::DeleteSelection()
+// Delete the given item
+void Scene::DeleteSelectable(ISelectable* item)
 {
-	// If therer is no selection, delete nothing 
-	ISelectable* sel = mState->GetSel()->GetSelectedElement();
-	if (sel == nullptr)
+	// Don't delete null values
+	if (item == nullptr)
 		return;
 
 	// Provide delete confirmation popup
 	pfd::button res = pfd::message(
 		"Confirm Delete",
-		"Are you sure you wish to delete " + sel->GetScopedName() + "? This action cannot be undone.",
+		"Are you sure you wish to delete " + SelectableTypeToString(item->GetSelectableType()) + " " + item->GetScopedName() + "? This action cannot be undone.",
 		pfd::choice::yes_no,
 		pfd::icon::warning
 	).result();
@@ -309,28 +308,28 @@ void Scene::DeleteSelection()
 	}
 
 	// Delete the selection from the appropriate list
-	switch (sel->GetSelectableType())
+	switch (item->GetSelectableType())
 	{
 	case SelectableType::MATERIAL:
-		mMaterials->TryDelete(dynamic_cast<Material*>(sel));
+		mMaterials->TryDelete(dynamic_cast<Material*>(item));
 		break;
 	case SelectableType::TEXTURE:
-		mTextures->TryDelete(dynamic_cast<Texture*>(sel));
+		mTextures->TryDelete(dynamic_cast<Texture*>(item));
 		break;
 	case SelectableType::CAMERA:
-		mCameras->TryDelete(dynamic_cast<Camera*>(sel));
+		mCameras->TryDelete(dynamic_cast<Camera*>(item));
 		break;
 	case SelectableType::LIGHT:
-		mLights->TryDelete(dynamic_cast<Light*>(sel));
+		mLights->TryDelete(dynamic_cast<Light*>(item));
 		break;
 	case SelectableType::MESH:
-		DeleteMesh(dynamic_cast<Mesh*>(sel));
+		DeleteMesh(dynamic_cast<Mesh*>(item));
 		break;
 	case SelectableType::NODE:
-		DeleteNode(dynamic_cast<Node*>(sel));
+		DeleteNode(dynamic_cast<Node*>(item));
 		break;
 	case SelectableType::ENTITY:
-		mEntities->TryDelete(dynamic_cast<IEntity*>(sel));
+		mEntities->TryDelete(dynamic_cast<IEntity*>(item));
 		break;
 	case SelectableType::NONE:
 	default:
@@ -339,6 +338,18 @@ void Scene::DeleteSelection()
 
 	// Since the selection is deleted, deselect it
 	mState->GetSel()->DeselectElement();
+}
+
+// Deletes the current selection
+void Scene::DeleteSelection()
+{
+	// If therer is no selection, delete nothing 
+	ISelectable* sel = mState->GetSel()->GetSelectedElement();
+	if (sel == nullptr)
+		return;
+
+	// If the selection is valid, delete it
+	DeleteSelectable(sel);
 }
 
 // Updates the scene's material render list

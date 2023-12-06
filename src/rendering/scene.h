@@ -197,6 +197,9 @@ public:
 	// Deletes the given node
 	void DeleteNode(Node* node);
 
+	// Delete the given item
+	void DeleteSelectable(ISelectable* item);
+
 	// Deletes the current selection
 	void DeleteSelection();
 
