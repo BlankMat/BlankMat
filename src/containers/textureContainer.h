@@ -11,7 +11,7 @@ protected:
 	/// <param name="item">Item to rename</param>
 	void RenameItem(Texture* item, const std::string& name) override
 	{
-		item->name = name;
+		item->SetName(name);
 	}
 
 	/// <summary>
@@ -33,7 +33,8 @@ protected:
 	{
 		// Set up variables to store read information
 		std::string name = "default";
-		std::string path = "";
+		std::string dir = "";
+		std::string filename = "";
 		TextureType type = TextureType::DIFFUSE;
 
 		// Read the node
@@ -54,14 +55,15 @@ protected:
 			// Parse lines
 			if (parse[0] == "TEXTURE")
 				name = parse[1];
-			else if (parse[0] == "path")
-				path = parse[1];
+			else if (parse[0] == "file")
+				filename = parse[1];
+			else if (parse[0] == "dir")
+				dir = parse[1];
 			else if (parse[0] == "type")
 				type = (TextureType)std::stoi(parse[1]);
 		}
 
-		// TODO: Load texture
-		return std::pair<std::string, Texture*>(name, new Texture(type, "textures", path, name, false));
+		return std::pair<std::string, Texture*>(name, new Texture(UnscopeName(name), UnscopeScope(name), type, dir, filename, false));
 	}
 
 	/// <summary>
@@ -72,20 +74,22 @@ protected:
 	/// <param name="file">File to write to</param>
 	void WriteItem(const std::string& key, Texture* item, std::ofstream& file) override
 	{
-		file << "TEXTURE " << item->name << std::endl;
-		file << "path " << item->path << std::endl;
-		file << "type " << (int)item->type << std::endl;
+		file << "TEXTURE " << item->GetScopedName() << std::endl;
+		file << "file " << item->mFile << std::endl;
+		file << "dir " << item->mDir << std::endl;
+		file << "type " << (int)item->mType << std::endl;
 	}
 
 public:
 	/// <summary>
-	/// Adds the texture to the container, or if it already exists, updates the item to the given one
+	/// Adds the texture to the container
 	/// </summary>
 	/// <param name="item">The item to store</param>
+	/// <param name="replace">Whether to replace the existing item if this is a duplicate</param>
 	/// <returns>The element stored in the container</returns>
-	Texture* AddTexture(Texture* item)
+	Texture* AddTexture(Texture* item, bool replace = false)
 	{
-		return Add(item->name, item);
+		return Add(item->GetScopedName(), item, replace);
 	}
 
 	/// <summary>
@@ -93,11 +97,11 @@ public:
 	/// </summary>
 	explicit TextureContainer()
 	{
-		Add("default_diffuse", new Texture(TextureType::DIFFUSE, glm::vec3(1.0f), "default_diffuse", true));
-		Add("default_ambient", new Texture(TextureType::AMBIENT, glm::vec3(1.0f), "default_ambient", true));
-		Add("default_specular", new Texture(TextureType::SPECULAR, glm::vec3(1.0f), "default_specular", true));
-		Add("default_normal", new Texture(TextureType::NORMAL, glm::vec3(0.5f, 0.5f, 1.0f), "default_normal", true));
-		Add("default_height", new Texture(TextureType::HEIGHT, glm::vec3(1.0f), "default_height", true));
-		Add("default_alpha", new Texture(TextureType::ALPHA, glm::vec3(1.0f), "default_alpha", true));
+		Add("default_diffuse", new Texture("default_diffuse", "", TextureType::DIFFUSE, glm::vec3(1.0f), true), true);
+		Add("default_ambient", new Texture("default_ambient", "", TextureType::AMBIENT, glm::vec3(1.0f), true), true);
+		Add("default_specular", new Texture("default_specular", "", TextureType::SPECULAR, glm::vec3(1.0f), true), true);
+		Add("default_normal", new Texture("default_normal", "", TextureType::NORMAL, glm::vec3(0.5f, 0.5f, 1.0f), true), true);
+		Add("default_height", new Texture("default_height", "", TextureType::HEIGHT, glm::vec3(1.0f), true), true);
+		Add("default_alpha", new Texture("default_alpha", "", TextureType::ALPHA, glm::vec3(1.0f), true), true);
 	}
 };

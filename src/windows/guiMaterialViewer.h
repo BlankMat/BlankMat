@@ -4,6 +4,11 @@
 class GUIMaterialViewer : public IGUIContainerWindow<Material>
 {
 private:
+	void AddNewItem(const std::string& name) override
+	{
+		mScene->AddMaterial(name, new Material(name, "", glm::vec3(1.0f), mScene->GetTextures(), false));
+	}
+
 	IContainer<Material>* GetContainer() override
 	{
 		return mScene->GetMaterials();

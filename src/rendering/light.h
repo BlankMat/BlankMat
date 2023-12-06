@@ -147,19 +147,20 @@ public:
 	virtual void LoadMaterials(MaterialContainer* materials, TextureContainer* textures) 
 	{}
 
-	Light(LightType type = LightType::POINT, const glm::vec3& pos = glm::vec3(1.0f), const glm::vec3& dir = glm::vec3(-1.0f), 
+	Light(const std::string& name = "default", const std::string& scope = "", LightType type = LightType::POINT, const glm::vec3& pos = glm::vec3(1.0f), const glm::vec3& dir = glm::vec3(-1.0f),
 		const glm::vec3& color = glm::vec3(1.0f), float kd = 1.0f, float ka = 0.1f, float ks = 0.5f, bool gamma = true, 
 		float range = 13.0f, float spotInner = 25, float spotOuter = 35)
 		: mType(type), mColor(color), mBaseColor(color), mDir(dir), mPos(pos), mKD(kd), mKA(ka), mKS(ks), mOffset(pos), mGamma(gamma), 
 		mSpotInner(spotInner), mSpotOuter(spotOuter), ISelectable(SelectableType::LIGHT)
 	{
+		InitName(name, scope);
 		mLightSize = 10.0f;
 		SetRange(range);
 		CalcMatrices();
 	}
 
 	Light(Config* config)
-		: Light(static_cast<LightType>(config->GetInt("type")), config->GetVec("pos"), config->GetVec("dir"), 
+		: Light(config->GetString("name"), "", static_cast<LightType>(config->GetInt("type")), config->GetVec("pos"), config->GetVec("dir"),
 			config->GetVec("color"), config->GetFloat("diffuse"), config->GetFloat("ambient"), config->GetFloat("specular"), 
 			config->GetBool("gamma"), config->GetFloat("range"), config->GetFloat("spotInnerRadius"), config->GetFloat("spotOuterRadius")) {}
 };

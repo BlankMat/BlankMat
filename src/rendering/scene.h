@@ -32,11 +32,10 @@ enum class LightingMode
 
 class Window;
 
-class Scene
+class Scene : public INameable
 {
 protected:
 	std::string mDirectory = "";
-	std::string mName = "";
 
 	IEntity* mGrid = nullptr;
 	IEntity* mTransformHandle = nullptr;
@@ -66,10 +65,10 @@ protected:
 	EntityContainer* mEntities = nullptr;
 
 	// Loads the material of the given config. Must be bottom-level config
-	Material* LoadMaterial(Config* config, const std::string& name);
+	Material* LoadMaterial(Config* config, const std::string& name, const std::string& scope);
 
 	// Loads the given texture or returns the existing one
-	Texture* LoadTexture(TextureType type, const std::string& path, const std::string& defaultName);
+	Texture* LoadTexture(TextureType type, const std::string& path, const std::string& scope, const std::string& defaultName);
 
 	// Enables or disables wireframe
 	void HandleWireframe();
@@ -156,13 +155,22 @@ public:
 	void AddNode(Node* node);
 
 	// Adds the given mesh to the scene as child of the given node
-	void AddMesh(Mesh* mesh, Node* parent = nullptr);
+	Mesh* AddMesh(Mesh* mesh, Node* parent = nullptr);
 
 	// Adds the given camera to the scene
-	void AddCamera(const std::string& name, Camera* camera, bool select = false);
+	Camera* AddCamera(const std::string& name, Camera* camera, bool select = false);
 
 	// Adds the given light to the scene
-	void AddLight(const std::string& name, Light* light, bool select = false);
+	Light* AddLight(const std::string& name, Light* light, bool select = false);
+
+	// Adds an entity to the scene's render list
+	IEntity* AddEntity(const std::string& shaderName, IEntity* entity, bool preRender = false);
+
+	// Adds a texture to the scene's texture list
+	Texture* AddTexture(const std::string& name, Texture* texture);
+
+	// Adds a material to the scene's material list
+	Material* AddMaterial(const std::string& name, Material* material);
 
 	// Creates a shader for the scene with the given name from the source file of the given name
 	Shader* CreateShader(const std::string& name, bool loadGeom);
@@ -206,15 +214,6 @@ public:
 	// Sets the lighting mode of the scene
 	void SetLightingMode(LightingMode mode);
 
-	// Adds an entity to the scene's render list
-	IEntity* AddEntity(const std::string& shaderName, IEntity* entity, bool preRender = false);
-
-	// Adds a texture to the scene's texture list
-	Texture* AddTexture(const std::string& name, Texture* texture);
-
-	// Adds a material to the scene's material list
-	Material* AddMaterial(const std::string& name, Material* material);
-
 	// Sets the material of the given entity
 	void SetEntityMaterial(IEntity* entity, Material* material);
 
@@ -229,6 +228,9 @@ public:
 
 	// Clears the scene completely
 	void Clear();
+
+	// Clears all items that would render
+	void ClearRendering();
 
 	// Constructs the scene, getting everything ready for manual setting
 	Scene(State* state);

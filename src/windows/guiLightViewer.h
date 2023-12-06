@@ -5,6 +5,11 @@
 class GUILightViewer : public IGUIContainerWindow<Light>
 {
 protected:
+    void AddNewItem(const std::string& name) override
+    {
+        mScene->AddLight(name, new Light(name, ""));
+    }
+
     IContainer<Light>* GetContainer() override
     {
         return mScene->GetLights();

@@ -53,11 +53,11 @@ public:
 	// Loads the given material, unless it's already been loaded this frame
 	void LoadMaterial(Material* material)
 	{
-		if (mMaterialsThisFrame.contains(material->name))
+		if (mMaterialsThisFrame.contains(material->GetScopedName()))
 			return;
 
 		material->LoadShaderTextures(this, defaultMat);
-		mMaterialsThisFrame.emplace(material->name, material);
+		mMaterialsThisFrame.emplace(material->GetScopedName(), material);
 	}
 
 	// Clears the loaded materials from this frame

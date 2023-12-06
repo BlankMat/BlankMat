@@ -25,6 +25,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <string>
+#include <stb_image.h>
 
 class Window {
 private:

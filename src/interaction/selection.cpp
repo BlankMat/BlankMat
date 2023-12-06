@@ -88,7 +88,7 @@ void Selection::SelectMaterial(Material* material)
 {
 	mSelMaterial = material;
 	SelectElement(material);
-	std::cout << "Selected material [" << (material != nullptr ? material->name : "None") << "].\n";
+	std::cout << "Selected material [" << (material != nullptr ? material->GetScopedName() : "None") << "].\n";
 }
 
 // Selects the given selectable element

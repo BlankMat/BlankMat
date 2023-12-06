@@ -16,10 +16,10 @@ protected:
     void RenderSelectable(IEntity*& selEntity, IEntity* curEntity, const std::string& depthMarker)
     {
         // Add checkbox for enabling or disabling elements
-        curEntity->Enable(GUIWindowUtils::Checkbox("##entity" + curEntity->GetName(), curEntity->IsEnabled()));
+        curEntity->Enable(GUIWindowUtils::Checkbox("##entity" + curEntity->GetScopedName(), curEntity->IsEnabled()));
         ImGui::SameLine();
 
-        GUIWindowUtils::Deselectable(depthMarker + curEntity->GetName(), selEntity, curEntity);
+        GUIWindowUtils::Deselectable(depthMarker + curEntity->GetScopedName(), selEntity, curEntity);
     }
 
     // Recursively renders the node and its children

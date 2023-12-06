@@ -12,10 +12,17 @@ protected:
     Scene* mScene = nullptr;
     bool mMustSelect = false;
     std::string mWindowName = "";
+    
+    bool mIsAddingItem = false;
+    std::string mNewItemName = "";
 
     virtual IContainer<T>* GetContainer() = 0;
 
     virtual void DisplaySelectedItem() = 0;
+
+    virtual void AddNewItem(const std::string& name) = 0;
+
+    virtual void SelectItem(T* selection) = 0;
 
     virtual bool DisplayListItem(const std::string& name, T* item, T*& selection)
     {
@@ -26,8 +33,6 @@ protected:
             GUIWindowUtils::Deselectable(name, selection, item, &wasPressed);
         return wasPressed;
     }
-
-    virtual void SelectItem(T* selection) = 0;
 
     void ListContainer(IContainer<T>* container)
     {
@@ -46,6 +51,13 @@ protected:
         if (selection != container->GetSelectedItem())
         {
             container->Select(selection);
+        }
+
+        // Support adding items to list
+        ImGui::Selectable("+##AddContainerItem", &mIsAddingItem);
+        if (mIsAddingItem)
+        {
+            mNewItemName = GUIWindowUtils::InputText("Name##NewItemName", mNewItemName);
         }
     }
 public:

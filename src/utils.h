@@ -88,6 +88,80 @@ static const glm::vec4 RotateAround(const glm::vec4& aPointToRotate, const glm::
 }
 
 /// <summary>
+/// Returns the directory portion of the given path
+/// </summary>
+/// <param name="path">Path to split</param>
+/// <returns>Directory of the path</returns>
+static std::string GetDirectory(const std::string path)
+{
+    // Don't parse empty paths
+    if (path == "")
+        return "";
+
+    size_t lastSlash = path.find_last_of('/') + 1;
+    return path.substr(0, lastSlash);
+}
+
+/// <summary>
+/// Returns the filename of the given path
+/// </summary>
+/// <param name="path">Path to split</param>
+/// <returns>Filename of the path</returns>
+static std::string GetFileName(const std::string path)
+{
+    // Don't parse empty paths
+    if (path == "")
+        return "";
+
+    size_t lastSlash = path.find_last_of('/') + 1;
+    size_t lastPeriod = path.find_last_of('.');
+    return path.substr(lastSlash, lastPeriod - lastSlash);
+}
+
+/// <summary>
+/// Returns the file extension of the given path
+/// </summary>
+/// <param name="path">Path to split</param>
+/// <returns>Extension of the path</returns>
+static std::string GetFileExtension(const std::string path)
+{
+    // Don't parse empty paths
+    if (path == "")
+        return "";
+
+    size_t lastPeriod = path.find_last_of('.');
+    if (lastPeriod < path.length())
+        return path.substr(lastPeriod - 1);
+    else
+        return "";
+}
+
+/// <summary>
+/// Splits the given path into its directory, filename, and extension
+/// </summary>
+/// <param name="path">Path to split</param>
+/// <param name="dir">Directory</param>
+/// <param name="name">Filename</param>
+/// <param name="ext">Extension</param>
+static void SplitPath(const std::string path, std::string& dir, std::string& name, std::string& ext)
+{
+    // Don't parse empty paths
+    if (path == "")
+        return;
+
+    size_t lastSlash = path.find_last_of('/') + 1;
+    size_t lastPeriod = path.find_last_of('.');
+
+    dir = path.substr(0, lastSlash);
+    name = path.substr(lastSlash, lastPeriod - lastSlash);
+
+    if (lastPeriod < path.length())
+        ext = path.substr(lastPeriod);
+    else
+        ext = "";
+}
+
+/// <summary>
 /// Returns whether the given file exists
 /// </summary>
 /// <param name="name">Name of the file</param>
@@ -177,6 +251,55 @@ static const std::string GetPadding(unsigned int depth, const std::string& pad =
 }
 
 /// <summary>
+/// Returns whether the name is part of a scope or not
+/// </summary>
+/// <param name="name">Name</param>
+/// <returns>Whether the name is part of a scope</returns>
+static bool IsScoped(const std::string& name)
+{
+    return (name.find("::") < name.length());
+}
+
+/// <summary>
+/// Scopes the name to the given scope (scope::name)
+/// </summary>
+/// <param name="name">Name to scope</param>
+/// <param name="scope">Scope to move to</param>
+/// <returns>scope::name</returns>
+static std::string Scope(const std::string& name, const std::string& scope)
+{
+    if (scope != "")
+        return scope + "::" + name;
+    return name;
+}
+
+/// <summary>
+/// Removes the scope, if any, from the name (scope::name)
+/// </summary>
+/// <param name="name">Scoped name</param>
+/// <returns>Name without the scope</returns>
+static std::string UnscopeName(const std::string& name)
+{
+    size_t scopeIndex = name.find("::");
+    if (scopeIndex >= name.length())
+        return name;
+    return name.substr(scopeIndex + 2);
+}
+
+/// <summary>
+/// Removes the scope, if any, from the name (scope::name)
+/// </summary>
+/// <param name="name">Scoped name</param>
+/// <returns>Scope without the name</returns>
+static std::string UnscopeScope(const std::string& name)
+{
+    size_t scopeIndex = name.find("::");
+    if (scopeIndex >= name.length())
+        return name;
+    return name.substr(0, scopeIndex);
+}
+
+/// <summary>
 /// Increments the name by 1, adding padded numbers to the end
 /// </summary>
 /// <param name="name">Name to increment</param>
@@ -202,10 +325,10 @@ static std::string IncrementName(const std::string& name, int padLen = 3)
 /// <param name="strings">List of strings to read</param>
 /// <param name="offset">Offset to start reading strings from</param>
 /// <returns>vec2 constructed from the given strings</returns>
-static const glm::vec2 ReadVec2FromStrings(const std::vector<std::string>& strings, int offset)
+static const glm::vec2 ReadVec2FromStrings(const std::vector<std::string>& strings, size_t offset)
 {
     // Avoid errors
-    if ((int)strings.size() >= 2 + offset)
+    if (strings.size() >= 2U + offset)
         return glm::vec2(std::stof(strings[offset]), std::stof(strings[1 + offset]));
     else
         return glm::vec2();
@@ -218,10 +341,10 @@ static const glm::vec2 ReadVec2FromStrings(const std::vector<std::string>& strin
 /// <param name="strings">List of strings to read</param>
 /// <param name="offset">Offset to start reading strings from</param>
 /// <returns>vec3 constructed from the given strings</returns>
-static const glm::vec3 ReadVec3FromStrings(const std::vector<std::string>& strings, int offset)
+static const glm::vec3 ReadVec3FromStrings(const std::vector<std::string>& strings, size_t offset)
 {
     // Avoid errors
-    if ((int)strings.size() >= 3 + offset)
+    if (strings.size() >= 3U + offset)
         return glm::vec3(std::stof(strings[offset]), std::stof(strings[1 + offset]), std::stof(strings[2 + offset]));
     else
         return glm::vec3();

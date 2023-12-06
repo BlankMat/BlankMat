@@ -1,4 +1,5 @@
 #pragma once
+#include "blankMatConfig.h"
 #include "timer.h"
 #include "interaction/input.h"
 #include "interaction/actionStack.h"
@@ -26,7 +27,7 @@ constexpr unsigned int SCR_WIDTH = 1280;
 constexpr unsigned int SCR_HEIGHT = 720;
 
 // Main program loop
-int main();
+int main(int argc, char* argv[]);
 
 /// <summary>
 /// Draws the current scene

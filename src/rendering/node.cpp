@@ -31,7 +31,7 @@ Node* Node::ReadRecurse(std::ifstream& file, Node* parent)
 		// Parse lines
 		if (parse[0] == "NODE")
 		{
-			node->SetName(parse[1]);
+			node->Rename(parse[1], true);
 		}
 		else if (parse[0] == "pos")
 		{
@@ -72,7 +72,7 @@ Node* Node::ReadRecurse(std::ifstream& file, Node* parent)
 // Recursively writes all nodes into the given file
 void Node::WriteRecurse(std::ofstream& file, Node* node, unsigned int depth)
 {
-	file << GetPadding(depth) << "NODE " << node->mName << std::endl;
+	file << GetPadding(depth) << "NODE " << node->GetScopedName() << std::endl;
 	file << GetPadding(depth) << "pos " << Vec3ToString(node->GetPos()) << std::endl;
 	file << GetPadding(depth) << "rot " << Vec3ToString(node->GetRot()) << std::endl;
 	file << GetPadding(depth) << "scale " << Vec3ToString(node->GetScale()) << std::endl;
@@ -82,7 +82,7 @@ void Node::WriteRecurse(std::ofstream& file, Node* node, unsigned int depth)
 	file << GetPadding(depth) << "meshes " << node->MeshCount() << std::endl;
 	for (unsigned int i = 0; i < node->MeshCount(); i++)
 		if (node->mMeshes[i] != nullptr)
-			file << GetPadding(depth + 1) << node->mMeshes[i]->GetName() << std::endl;
+			file << GetPadding(depth + 1) << node->mMeshes[i]->GetScopedName() << std::endl;
 
 	// Write all child nodes
 	file << GetPadding(depth) << "children " << node->ChildCount() << std::endl;
@@ -216,6 +216,8 @@ Node* Node::FindNode(const std::string& name)
 	// If this node is the node that is being looked for, return it
 	if (mName == name)
 		return this;
+
+	// If this node isn't being searched for, search the children
 	for (unsigned int i = 0; i < (unsigned int)mChildren.size(); i++)
 	{
 		// Don't check null nodes
@@ -227,6 +229,8 @@ Node* Node::FindNode(const std::string& name)
 		if (res != nullptr)
 			return res;
 	}
+
+	// If the node is not found, return nothing
 	return nullptr;
 }
 
@@ -240,7 +244,7 @@ Mesh* Node::FindMesh(const std::string& name)
 		if (mMeshes[i] == nullptr)
 			continue;
 		// If the node is found, return it
-		if (mMeshes[i]->GetName() == name)
+		if (mMeshes[i]->GetScopedName() == name)
 			return mMeshes[i];
 	}
 
@@ -265,7 +269,7 @@ int Node::GetMeshIndex(Mesh* mesh)
 	for (unsigned int i = 0; i < (unsigned int)mMeshes.size(); i++)
 	{
 		if (mMeshes[i] != nullptr)
-			if (mMeshes[i]->GetName() == mesh->GetName())
+			if (mMeshes[i]->GetScopedName() == mesh->GetScopedName())
 				return i;
 	}
 	return -1;

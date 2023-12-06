@@ -1,5 +1,6 @@
 #pragma once
 #include "glIncludes.h"
+#include "blankMatConfig.h"
 #include "files/fileSystem.h"
 #include "interfaces/iGUIWindow.h"
 #include "interaction/selection.h"
@@ -8,13 +9,7 @@
 #include <vector>
 #include <iostream>
 #include <string>
-
-constexpr auto TOOLS_DIR = "resources/icons/toolIcons";
-constexpr auto SELECT_ICON = "Select.png";
-constexpr auto MOVE_ICON = "Move.png";
-constexpr auto ROTATE_ICON = "Rotate.png";
-constexpr auto SCALE_ICON = "Scale.png";
-constexpr auto EXTRUDE_ICON = "Extrude.png";
+#include <stb_image.h>
 
 class GUIToolbarWindow : public IGUIWindow
 {
@@ -63,10 +58,7 @@ public:
         for(Tool tool = Tool::SELECT; tool != Tool::LAST; tool = (Tool)((int)tool+1))
         {
             std::string fileName = fileNames[(int)tool-1];
-            //std::string fullFilePath = TOOLSDIR + std::string("/")+ fileName;
-            int widthDim = 0;
-            int heightDim = 0;
-            unsigned int textureID = Texture::TextureFromFile(FileSystem::GetPath(TOOLS_DIR), fileName, widthDim, heightDim, false);
+            unsigned int textureID = Texture::TextureFromFile(FileSystem::GetPath(TOOL_ICON_DIR), fileName);
             mTextureIDs.push_back(textureID);
         }
         stbi_set_flip_vertically_on_load(state->flipTextures);

@@ -1,5 +1,6 @@
 #pragma once
 #include "glIncludes.h"
+#include "blankMatConfig.h"
 #include "tools/state.h"
 #include "rendering/scene.h"
 #include "files/sceneWriter.h"
@@ -7,92 +8,41 @@
 #include <iostream>
 
 /// <summary>
-/// 
+/// Class that handles all scene input and output operations by opening popups to select files 
+/// and passing all read/write operations to the appropriate classes.
 /// </summary>
 class SceneIO
 {
 private:
+	/// <summary>
+	/// Global state
+	/// </summary>
 	State* mState = nullptr;
+
+	/// <summary>
+	/// Current scene
+	/// </summary>
 	Scene* mScene = nullptr;
+
+	/// <summary>
+	/// Current GLFW window
+	/// </summary>
 	GLFWwindow* mCurWindow = nullptr;
 
+	/// <summary>
+	/// Directory of the current scene
+	/// </summary>
 	std::string mCurDirectory = "";
+
+	/// <summary>
+	/// Filename of the current scene
+	/// </summary>
 	std::string mCurFileName = "";
+
+	/// <summary>
+	/// Extension of the current scene
+	/// </summary>
 	std::string mCurExtension = "";
-
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="path"></param>
-	/// <returns></returns>
-	static std::string GetDirectory(const std::string path)
-	{
-		// Don't parse empty paths
-		if (path == "")
-			return "";
-
-		size_t lastSlash = path.find_last_of('/') + 1;
-		return path.substr(0, lastSlash);
-	}
-
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="path"></param>
-	/// <returns></returns>
-	static std::string GetFileName(const std::string path)
-	{
-		// Don't parse empty paths
-		if (path == "")
-			return "";
-
-		size_t lastSlash = path.find_last_of('/') + 1;
-		size_t lastPeriod = path.find_last_of('.');
-		return path.substr(lastSlash, lastPeriod - lastSlash);
-	}
-
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="path"></param>
-	/// <returns></returns>
-	static std::string GetFileExtension(const std::string path)
-	{
-		// Don't parse empty paths
-		if (path == "")
-			return "";
-
-		size_t lastPeriod = path.find_last_of('.');
-		if (lastPeriod < path.length())
-			return path.substr(lastPeriod - 1);
-		else
-			return "";
-	}
-
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="path"></param>
-	/// <param name="dir"></param>
-	/// <param name="name"></param>
-	/// <param name="ext"></param>
-	static void SplitPath(const std::string path, std::string& dir, std::string& name, std::string& ext)
-	{
-		// Don't parse empty paths
-		if (path == "")
-			return;
-
-		size_t lastSlash = path.find_last_of('/') + 1;
-		size_t lastPeriod = path.find_last_of('.');
-
-		dir = path.substr(0, lastSlash);
-		name = path.substr(lastSlash, lastPeriod - lastSlash);
-
-		if (lastPeriod < path.length())
-			ext = path.substr(lastPeriod);
-		else
-			ext = "";
-	}
 
 	/// <summary>
 	/// 
@@ -110,7 +60,7 @@ private:
 	}
 public:
 	/// <summary>
-	/// 
+	/// Returns the full path of the currently open savefile
 	/// </summary>
 	/// <returns></returns>
 	const std::string GetFullPath() const
@@ -119,7 +69,7 @@ public:
 	}
 
 	/// <summary>
-	/// 
+	/// Saves the scene to a .blank file.
 	/// </summary>
 	void SaveScene()
 	{
@@ -137,7 +87,7 @@ public:
 	}
 
 	/// <summary>
-	/// 
+	/// Saves the scene to a .blank file of the chosen name.
 	/// </summary>
 	void SaveSceneAs()
 	{
@@ -156,7 +106,7 @@ public:
 	}
 
 	/// <summary>
-	/// 
+	/// Saves the scene to a .blank file, incrementing the name of the previously saved scene.
 	/// </summary>
 	void SaveSceneIncrement()
 	{
@@ -179,7 +129,7 @@ public:
 	}
 
 	/// <summary>
-	/// 
+	/// Opens the chosen .blank scene file.
 	/// </summary>
 	void OpenScene()
 	{
@@ -198,7 +148,7 @@ public:
 	}
 
 	/// <summary>
-	/// 
+	/// Creates a new empty .blank scene.
 	/// </summary>
 	void NewScene()
 	{
@@ -219,7 +169,7 @@ public:
 	}
 
 	/// <summary>
-	/// 
+	/// Imports any 3D scene or model, including .blank.
 	/// </summary>
 	void Import()
 	{
@@ -237,7 +187,7 @@ public:
 	}
 
 	/// <summary>
-	/// 
+	/// Exports the selected node to any 3D scene, including .blank.
 	/// </summary>
 	void Export()
 	{
@@ -298,11 +248,11 @@ public:
 	}
 
 	/// <summary>
-	/// 
+	/// Creates a new scene reader/writer
 	/// </summary>
-	/// <param name="state"></param>
-	/// <param name="scene"></param>
-	/// <param name="window"></param>
+	/// <param name="state">Global state of the application</param>
+	/// <param name="scene">Current scene</param>
+	/// <param name="window">Current window</param>
 	explicit SceneIO(State* state, Scene* scene, GLFWwindow* window)
 		: mState(state), mScene(scene), mCurWindow(window)
 	{

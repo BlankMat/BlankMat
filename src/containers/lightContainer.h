@@ -12,7 +12,10 @@ protected:
 	/// Renames the given item to the given name
 	/// </summary>
 	/// <param name="item">Item to rename</param>
-	void RenameItem(Light* item, const std::string& name) override {}
+	void RenameItem(Light* item, const std::string& name) override
+	{
+		item->SetName(name);
+	}
 
 	/// <summary>
 	/// Reads the next item from the input file stream
@@ -82,9 +85,9 @@ protected:
 
 		// If the light stored was a lightcube, construct that instead
 		if (cube)
-			return std::pair<std::string, Light*>(name, new PLightCube(name, type, pos, dir, color, kd, ka, ks, gamma, range, spotInner, spotOuter));
+			return std::pair<std::string, Light*>(name, new PLightCube(UnscopeName(name), UnscopeScope(name), type, pos, dir, color, kd, ka, ks, gamma, range, spotInner, spotOuter));
 		else
-			return std::pair<std::string, Light*>(name, new Light(type, pos, dir, color, kd, ka, ks, gamma, range, spotInner, spotOuter));
+			return std::pair<std::string, Light*>(name, new Light(UnscopeName(name), UnscopeScope(name), type, pos, dir, color, kd, ka, ks, gamma, range, spotInner, spotOuter));
 	}
 
 	/// <summary>

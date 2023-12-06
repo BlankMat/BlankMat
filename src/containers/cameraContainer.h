@@ -15,7 +15,10 @@ protected:
 	/// Renames the given item to the given name
 	/// </summary>
 	/// <param name="item">Item to rename</param>
-	void RenameItem(Camera* item, const std::string& name) override {}
+	void RenameItem(Camera* item, const std::string& name) override
+	{
+		item->SetName(name);
+	}
 
 	/// <summary>
 	/// Reads the next item from the input file stream
@@ -74,8 +77,7 @@ protected:
 				isPerspective = (parse[1] == "1");
 		}
 
-		// TODO: Replace Action stack with real action stack
-		return std::pair<std::string, Camera*>(name, new Camera(mActionStack, fov, nearClip, farClip, pos, dir, up, bgColor, orthSize, isPerspective));
+		return std::pair<std::string, Camera*>(name, new Camera(mActionStack, UnscopeName(name), UnscopeScope(name), fov, nearClip, farClip, pos, dir, up, bgColor, orthSize, isPerspective));
 	}
 
 	/// <summary>

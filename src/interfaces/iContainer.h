@@ -4,8 +4,8 @@
 #include "interfaces/iWritable.h"
 #include <iostream>
 #include <fstream>
-#include <string>
 #include <unordered_map>
+#include <string>
 
 /// <summary>
 /// Container class for storing key value pairs. 
@@ -40,21 +40,6 @@ protected:
 	virtual bool SkipItem(T* item)
 	{
 		return false;
-	}
-
-	/// <summary>
-	/// Returns a unique name, incrementing the existing name until it is unique
-	/// </summary>
-	/// <param name="name">Starting name</param>
-	/// <returns>New unique name</returns>
-	virtual std::string GetUniqueName(const std::string& name)
-	{
-		std::string uniqueName = name;
-		while (mData.contains(uniqueName))
-		{
-			uniqueName = IncrementName(uniqueName, 1);
-		}
-		return uniqueName;
 	}
 
 	/// <summary>
@@ -110,7 +95,7 @@ public:
 				{
 					auto newItem = ReadItem(file);
 					if (newItem.first != "" && newItem.second != nullptr)
-						Add(newItem.first, newItem.second);
+						Add(newItem.first, newItem.second, false);
 				}
 
 				// Once the correct number of items has been read, the container is over
@@ -132,7 +117,7 @@ public:
 			if (SkipItem(iter->second))
 				continue;
 
-			file << std::endl; 
+			file << std::endl;
 			WriteItem(iter->first, iter->second, file);
 		}
 	}
@@ -195,6 +180,22 @@ public:
 	bool Empty()
 	{
 		return mData.size() == 0;
+	}
+
+	/// <summary>
+	/// Returns a unique name, incrementing the existing name until it is unique
+	/// </summary>
+	/// <param name="name">Starting name</param>
+	/// <param name="scope">Namespace of the item</param>
+	/// <returns>New unique name</returns>
+	virtual std::string GetUniqueName(const std::string& name)
+	{
+		std::string uniqueName = name;
+		while (mData.contains(uniqueName))
+		{
+			uniqueName = IncrementName(uniqueName, 1);
+		}
+		return uniqueName;
 	}
 
 	/// <summary>
@@ -263,16 +264,23 @@ public:
 	/// </summary>
 	/// <param name="name">Name of the item</param>
 	/// <param name="item">The item to store</param>
+	/// <param name="replace">Whether to replace duplicate items (true) or rename the incoming item (false)</param>
+	/// <param name="select">Whether to select the item after adding it</param>
 	/// <returns>The element stored in the container</returns>
-	virtual T* Add(const std::string& name, T* item)
+	virtual T* Add(const std::string& name, T* item, bool replace, bool select = false)
 	{
+		// If the item is new, add it
 		if (!mData.contains(name))
 			mData.emplace(name, item);
-		else
+		// If the item isn't new, replace the existing item
+		else if (replace)
 			mData[name] = item;
+		// If the item isn't new and shouldn't be replaced, rename the item
+		else
+			mData.emplace(GetUniqueName(name), item);
 
 		// If the item added was the first item, select it
-		if (mData.size() == 1)
+		if (select || mData.size() == 1)
 			Select(name);
 		return item;
 	}
@@ -356,7 +364,7 @@ public:
 		// Don't rename an item that doesn't exist
 		if (!Contains(name))
 			return false;
-		
+
 		// Validate name
 		std::string itemName = GetUniqueName(newName);
 

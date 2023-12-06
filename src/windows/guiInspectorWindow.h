@@ -18,7 +18,7 @@ protected:
 			return;
 
 		// Change name of selection
-		element->SetName(GUIWindowUtils::InputText("Mesh", element->GetName()));
+		element->SetName(GUIWindowUtils::InputText("Mesh", element->GetScopedName()));
 
 		// Position
 		element->SetPos(GUIWindowUtils::InputVec3("Position", element->GetPos()));
@@ -40,7 +40,7 @@ protected:
 			return;
 
 		// Change name of selection
-		element->SetName(GUIWindowUtils::InputText("Node", element->GetName()));
+		element->SetName(GUIWindowUtils::InputText("Node", element->GetScopedName()));
 
 		// Position
 		element->SetPos(GUIWindowUtils::InputVec3("Position", element->GetPos()));
@@ -62,7 +62,7 @@ protected:
 			return;
 
 		// Change name of selection
-		element->SetName(GUIWindowUtils::InputText("Entity", element->GetName()));
+		element->SetName(GUIWindowUtils::InputText("Entity", element->GetScopedName()));
 
 		// Position
 		element->SetPos(GUIWindowUtils::InputVec3("Position", element->GetPos()));
@@ -160,25 +160,25 @@ protected:
 			return;
 
 		Texture* selTexture = mScene->GetTextures()->GetSelectedItem();
-		element->name = GUIWindowUtils::InputText("Material", element->name);
+		element->GetScopedName() = GUIWindowUtils::InputText("Material", element->GetScopedName());
 
 		float spacing = 15.0f;
-		GUIWindowUtils::ColorEdit("Diffuse", element->kd, mSelColor, spacing);
-		GUIWindowUtils::ColorEdit("Ambient", element->ka, mSelColor, spacing);
-		GUIWindowUtils::ColorEdit("Specular", element->ks, mSelColor, spacing);
-		GUIWindowUtils::ColorEdit("Emissive", element->ke, mSelColor, spacing);
+		GUIWindowUtils::ColorEdit("Diffuse", element->mKD, mSelColor, spacing);
+		GUIWindowUtils::ColorEdit("Ambient", element->mKA, mSelColor, spacing);
+		GUIWindowUtils::ColorEdit("Specular", element->mKS, mSelColor, spacing);
+		GUIWindowUtils::ColorEdit("Emissive", element->mKE, mSelColor, spacing);
 
-		element->ns = GUIWindowUtils::InputFloat("Specular Exponent", element->ns);
-		element->ni = GUIWindowUtils::InputFloat("Index of Refraction", element->ni);
-		element->d = GUIWindowUtils::InputFloat("Alpha", element->d);
-		element->illum = GUIWindowUtils::InputInt("Illumination Mode", element->illum);
+		element->mNS = GUIWindowUtils::InputFloat("Specular Exponent", element->mNS);
+		element->mNI = GUIWindowUtils::InputFloat("Index of Refraction", element->mNI);
+		element->mD = GUIWindowUtils::InputFloat("Alpha", element->mD);
+		element->mIllum = GUIWindowUtils::InputInt("Illumination Mode", element->mIllum);
 
-		GUIWindowUtils::TextureSelect("Diffuse", element->map_kd, selTexture);
-		GUIWindowUtils::TextureSelect("Ambient", element->map_ka, selTexture);
-		GUIWindowUtils::TextureSelect("Specular", element->map_ks, selTexture);
-		GUIWindowUtils::TextureSelect("Normal", element->map_bump, selTexture);
-		GUIWindowUtils::TextureSelect("Height", element->map_ns, selTexture);
-		GUIWindowUtils::TextureSelect("Alpha", element->map_d, selTexture);
+		GUIWindowUtils::TextureSelect("Diffuse", element->mMapKD, selTexture);
+		GUIWindowUtils::TextureSelect("Ambient", element->mMapKA, selTexture);
+		GUIWindowUtils::TextureSelect("Specular", element->mMapKS, selTexture);
+		GUIWindowUtils::TextureSelect("Normal", element->mMapBump, selTexture);
+		GUIWindowUtils::TextureSelect("Height", element->mMapNS, selTexture);
+		GUIWindowUtils::TextureSelect("Alpha", element->mMapD, selTexture);
 
 		if (selTexture != mScene->GetTextures()->GetSelectedItem())
 		{

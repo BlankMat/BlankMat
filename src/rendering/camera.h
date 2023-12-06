@@ -202,6 +202,8 @@ public:
     /// Constructs a camera from the given parameters.
     /// </summary>
     /// <param name="actionStack">Global action stack</param>
+    /// <param name="name">Name of the camera</param>
+    /// <param name="scope">Scope of the camera</param>
     /// <param name="fov">Field of View of perspective camera</param>
     /// <param name="nearClip">Near clip plane</param>
     /// <param name="farClip">Far clip plane</param>
@@ -211,11 +213,12 @@ public:
     /// <param name="color">Background color displayed by the camera</param>
     /// <param name="orthSize">Orthogonal size of orth camera</param>
     /// <param name="isPerspective">Whether the camera is in perspective or orthogonal view mode</param>
-    Camera(ActionStack* actionStack, float fov = 45.0f, float nearClip = 0.1f, float farClip = 100.0f,
+    Camera(ActionStack* actionStack, const std::string& name = "", const std::string& scope = "", float fov = 45.0f, float nearClip = 0.1f, float farClip = 100.0f,
         const glm::vec3& pos = glm::vec3(5, 5, 5), const glm::vec3& dir = glm::vec3(-5, -5, -5), const glm::vec3& up = glm::vec3(0.0f, 1.0f, 0.0f),
         const glm::vec3& color = glm::vec3(0.3f, 0.4f, 0.4f), float orthSize = 10.0f, bool isPerspective = true)
         : ISelectable(SelectableType::CAMERA)
     {
+        InitName(name, scope);
         mFOV = UIFloat("FOV", fov, actionStack, [this]() { TriggerRecalcProjection(); });
         mNearClip = UIFloat("Near Clip", nearClip, actionStack, [this]() { TriggerRecalcProjection(); });
         mFarClip = UIFloat("Far Clip", farClip, actionStack, [this]() { TriggerRecalcProjection(); });
@@ -239,7 +242,7 @@ public:
     /// <param name="actionStack">Global action stack</param>
     /// <param name="config">Config to build camera from</param>
     Camera(ActionStack* actionStack, Config* config)
-        : Camera(actionStack, config->GetFloat("fov"), config->GetFloat("nearClip"), config->GetFloat("farClip"),
+        : Camera(actionStack, config->GetString("name"), "", config->GetFloat("fov"), config->GetFloat("nearClip"), config->GetFloat("farClip"),
             config->GetVec("pos"), config->GetVec("dir"), config->GetVec("up"), config->GetVec("bgColor"),
             config->GetFloat("size"), config->GetBool("perspective"))
     {}

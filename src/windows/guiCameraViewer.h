@@ -8,6 +8,11 @@
 class GUICameraViewer : public IGUIContainerWindow<Camera>
 {
 protected:
+    void AddNewItem(const std::string& name) override
+    {
+        mScene->AddCamera(name, new Camera(mState->GetActionStack(), name, ""));
+    }
+
     IContainer<Camera>* GetContainer() override
     {
         return mScene->GetCameras();

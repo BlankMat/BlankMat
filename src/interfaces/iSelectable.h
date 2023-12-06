@@ -1,4 +1,5 @@
 #pragma once
+#include "interfaces/iNameable.h"
 
 /// <summary>
 /// Enum for which kind of selectable the class is
@@ -18,7 +19,7 @@ enum class SelectableType
 /// <summary>
 /// Interface for all items that can be selected to be viewed in the inspector
 /// </summary>
-class ISelectable
+class ISelectable : public INameable
 {
 protected:
 	/// <summary>

@@ -127,7 +127,7 @@ protected:
 		}
 
 		// Combine information into a new mesh
-		Mesh* tempMesh = new Mesh(name, vertices, indices, material);
+		Mesh* tempMesh = new Mesh(UnscopeName(name), UnscopeScope(name), vertices, indices, material);
 		tempMesh->SetPos(pos);
 		tempMesh->SetRot(rot);
 		tempMesh->SetScale(scale);
@@ -147,7 +147,8 @@ protected:
 		file << "pos " << Vec3ToString(item->GetPos()) << std::endl;
 		file << "rot " << Vec3ToString(item->GetRot()) << std::endl;
 		file << "scale " << Vec3ToString(item->GetScale()) << std::endl;
-		file << "material " << (item->GetMaterial() != nullptr ? item->GetMaterial()->name : "none") << std::endl;
+		if (item->GetMaterial() != nullptr)
+			file << "material " << item->GetMaterial()->GetScopedName() << std::endl;
 		file << "enabled " << (int)item->IsEnabled() << std::endl;
 
 		// Write all vertices

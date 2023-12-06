@@ -56,11 +56,11 @@ public:
 
 	static void TextureEdit(Texture* texture)
 	{
-		int type = (int)texture->type;
-		GUIWindowUtils::InputText("Name", texture->name);
-		GUIWindowUtils::InputText("Path", texture->path);
-		texture->type = (TextureType)GUIWindowUtils::Dropdown("Type", type, TEXTURE_TYPES);
-		GUIWindowUtils::Image(texture->id, TEXTURE_SIZE);
+		int type = (int)texture->mType;
+		GUIWindowUtils::InputText("Name", texture->GetScopedName());
+		GUIWindowUtils::InputText("Path", texture->mDir);
+		texture->mType = (TextureType)GUIWindowUtils::Dropdown("Type", type, TEXTURE_TYPES);
+		GUIWindowUtils::Image(texture->mID, TEXTURE_SIZE);
 		ImGui::Separator();
 	}
 
@@ -69,7 +69,7 @@ public:
 		if (texture == nullptr)
 			return false;
 
-		GUIWindowUtils::Image(texture->id, ImGui::GetTextLineHeight());
+		GUIWindowUtils::Image(texture->mID, ImGui::GetTextLineHeight());
 		ImGui::SameLine();
 
 		bool wasPressed = false;
@@ -84,11 +84,11 @@ public:
 
 		float size = ImGui::GetTextLineHeight();
 		ImVec2 pos = ImGui::GetCursorScreenPos();
-		GUIWindowUtils::DrawColor(material->kd, pos, size);
+		GUIWindowUtils::DrawColor(material->mKD, pos, size);
 		pos.x += size + spacing;
-		GUIWindowUtils::DrawColor(material->ka, pos, size);
+		GUIWindowUtils::DrawColor(material->mKA, pos, size);
 		pos.x += size + spacing;
-		GUIWindowUtils::DrawColor(material->ks, pos, size);
+		GUIWindowUtils::DrawColor(material->mKS, pos, size);
 		ImGui::Dummy(ImVec2((size + spacing) * 3, size));
 		ImGui::SameLine();
 

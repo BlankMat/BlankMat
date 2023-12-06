@@ -1,7 +1,12 @@
 #include "main.h"
 
-int main()
+int main(int argc, char* argv[])
 {
+    // Read and print input params
+    std::cout << "Opened BlankMat with " << argc << " arguments:" << std::endl;
+    for (int i = 0; i < argc; i++)
+        std::cout << "[" << i << "]: " << argv[i] << std::endl;
+
     // Read Configs
     Config* config = ConfigReader::ReadFile(FileSystem::GetPath(CONFIG_JSON));
     config->SetConfig("hotkeys", ConfigReader::ReadFile(FileSystem::GetPath(HOTKEYS_JSON)));
@@ -131,27 +136,27 @@ void LoadDefaultScene(Scene* scene, State* state, Material* defaultMat, bool def
 
     // Add light and camera
     scene->AddCamera("main", new Camera(state->GetActionStack(), cameraConfig), true);
-    scene->AddLight("global", new PLightCube("global", 1.0f, mats, textures, lightConfig), true);
+    scene->AddLight("global", new PLightCube(1.0f, mats, textures, lightConfig), true);
 
-    scene->AddMesh(new VPlane(BG_PLANE_OBJ, 20.0f, defaultMat));
-    scene->AddMesh(new VPlane("brickwall", 2.0f, scene->GetMaterial("brickwall"), glm::vec3(5, 2, 0), glm::vec3(90, 0, 0)));
+    scene->AddMesh(new VPlane(BG_PLANE_OBJ, "", 20.0f, defaultMat));
+    scene->AddMesh(new VPlane("brickwall", "", 2.0f, scene->GetMaterial("brickwall"), glm::vec3(5, 2, 0), glm::vec3(90, 0, 0)));
 
     if (defaultCubes)
     {
         // Add cube materials
-        Material* greenMat = mats->AddMaterial(new Material("green", glm::vec3(0, 1, 0), textures, false));
-        Material* redMat = mats->AddMaterial(new Material("red", glm::vec3(1, 0, 0), textures, false));
-        Material* blueMat = mats->AddMaterial(new Material("blue", glm::vec3(0, 0, 1), textures, false));
-        Material* cyanMat = mats->AddMaterial(new Material("cyan", glm::vec3(0, 1, 1), textures, false));
-        Material* purpleMat = mats->AddMaterial(new Material("purple", glm::vec3(1, 0, 1), textures, false));
-        Material* yellowMat = mats->AddMaterial(new Material("yellow", glm::vec3(1, 1, 0), textures, false));
+        Material* greenMat = mats->AddMaterial(new Material("green", "", glm::vec3(0, 1, 0), textures, false));
+        Material* redMat = mats->AddMaterial(new Material("red", "", glm::vec3(1, 0, 0), textures, false));
+        Material* blueMat = mats->AddMaterial(new Material("blue", "", glm::vec3(0, 0, 1), textures, false));
+        Material* cyanMat = mats->AddMaterial(new Material("cyan", "", glm::vec3(0, 1, 1), textures, false));
+        Material* purpleMat = mats->AddMaterial(new Material("purple", "", glm::vec3(1, 0, 1), textures, false));
+        Material* yellowMat = mats->AddMaterial(new Material("yellow", "", glm::vec3(1, 1, 0), textures, false));
 
-        scene->AddMesh(new VCube("cube1", 1.0f, greenMat, glm::vec3(-5, 0, -5), glm::vec3(0, 45, 0), glm::vec3(1, 2, 1)));
-        scene->AddMesh(new VCube("cube2", 1.0f, redMat, glm::vec3(-5, 0, -3), glm::vec3(45, 0, 0), glm::vec3(2, 1, 1)));
-        scene->AddMesh(new VCube("cube3", 1.0f, blueMat, glm::vec3(-5, 0, -1), glm::vec3(0, 0, 45), glm::vec3(1, 1, 2)));
-        scene->AddMesh(new VCube("cube4", 1.0f, cyanMat, glm::vec3(-5, 0, 1), glm::vec3(0, 45, 45), glm::vec3(1, 2, 2)));
-        scene->AddMesh(new VCube("cube5", 1.0f, purpleMat, glm::vec3(-5, 0, 3), glm::vec3(45, 0, 45), glm::vec3(2, 1, 2)));
-        scene->AddMesh(new VCube("cube6", 1.0f, yellowMat, glm::vec3(-5, 0, 5), glm::vec3(45, 45, 0), glm::vec3(2, 2, 1)));
+        scene->AddMesh(new VCube("cube1", "", 1.0f, greenMat, glm::vec3(-5, 0, -5), glm::vec3(0, 45, 0), glm::vec3(1, 2, 1)));
+        scene->AddMesh(new VCube("cube2", "", 1.0f, redMat, glm::vec3(-5, 0, -3), glm::vec3(45, 0, 0), glm::vec3(2, 1, 1)));
+        scene->AddMesh(new VCube("cube3", "", 1.0f, blueMat, glm::vec3(-5, 0, -1), glm::vec3(0, 0, 45), glm::vec3(1, 1, 2)));
+        scene->AddMesh(new VCube("cube4", "", 1.0f, cyanMat, glm::vec3(-5, 0, 1), glm::vec3(0, 45, 45), glm::vec3(1, 2, 2)));
+        scene->AddMesh(new VCube("cube5", "", 1.0f, purpleMat, glm::vec3(-5, 0, 3), glm::vec3(45, 0, 45), glm::vec3(2, 1, 2)));
+        scene->AddMesh(new VCube("cube6", "", 1.0f, yellowMat, glm::vec3(-5, 0, 5), glm::vec3(45, 45, 0), glm::vec3(2, 2, 1)));
     }
 }
 

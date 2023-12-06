@@ -163,7 +163,7 @@ void Scene::HandleWireframe()
 }
 
 // Loads the material of the given config. Must be bottom-level config
-Material* Scene::LoadMaterial(Config* config, const std::string& name)
+Material* Scene::LoadMaterial(Config* config, const std::string& name, const std::string& scope)
 {
 	// Don't handle null configs
 	if (config == nullptr)
@@ -175,21 +175,19 @@ Material* Scene::LoadMaterial(Config* config, const std::string& name)
 		return material;
 
 	// Create textures
-	Texture* kd = LoadTexture(TextureType::DIFFUSE, config->GetString("map_kd"), "default_diffuse");
-	Texture* ka = LoadTexture(TextureType::AMBIENT, config->GetString("map_ka"), "default_ambient");
-	Texture* ks = LoadTexture(TextureType::SPECULAR, config->GetString("map_ks"), "default_specular");
-	Texture* normal = LoadTexture(TextureType::NORMAL, config->GetString("map_bump"), "default_normal");
-	Texture* ns = LoadTexture(TextureType::HEIGHT, config->GetString("map_ns"), "default_height");
-	Texture* d = LoadTexture(TextureType::ALPHA, config->GetString("map_d"), "default_alpha");
+	Texture* kd = LoadTexture(TextureType::DIFFUSE, config->GetString("map_kd"), scope, "default_diffuse");
+	Texture* ka = LoadTexture(TextureType::AMBIENT, config->GetString("map_ka"), scope, "default_ambient");
+	Texture* ks = LoadTexture(TextureType::SPECULAR, config->GetString("map_ks"), scope, "default_specular");
+	Texture* normal = LoadTexture(TextureType::NORMAL, config->GetString("map_bump"), scope, "default_normal");
+	Texture* ns = LoadTexture(TextureType::HEIGHT, config->GetString("map_ns"), scope, "default_height");
+	Texture* d = LoadTexture(TextureType::ALPHA, config->GetString("map_d"), scope, "default_alpha");
 
 	// Create material
-	material = new Material(name, config, kd, ka, ks, normal, ns, d);
-	AddMaterial(name, material);
-	return material;
+	return AddMaterial(name, new Material(name, scope, config, kd, ka, ks, normal, ns, d));
 }
 
 // Loads the given texture or returns the existing one
-Texture* Scene::LoadTexture(TextureType type, const std::string& path, const std::string& defaultName)
+Texture* Scene::LoadTexture(TextureType type, const std::string& path, const std::string& scope, const std::string& defaultName)
 {
 	// If no path is given, load the default texture
 	std::string pathToLoad = path;
@@ -203,13 +201,11 @@ Texture* Scene::LoadTexture(TextureType type, const std::string& path, const std
 
 	// If the texture is already loaded with the same type, return it
 	Texture* texture = GetTexture(name);
-	if (texture != nullptr && texture->type == type)
+	if (texture != nullptr && texture->mType == type)
 		return texture;
 
 	// If the texture is not loaded, load the texture and store it
-	texture = new Texture(type, FileSystem::GetPath(TEXTURE_DIR), pathToLoad, name);
-	AddTexture(name, texture);
-	return texture;
+	return AddTexture(name, new Texture(name, scope, type, FileSystem::GetPath(TEXTURE_DIR), pathToLoad));
 }
 
 // Activates the shader with the given name for the scene
@@ -229,7 +225,7 @@ Shader* Scene::CreateShader(const std::string& name, bool loadGeom)
 {
 	if (mShaders->Contains(name))
 		return mShaders->GetItem(name);
-	return mShaders->Add(name, new Shader(name, loadGeom, name));
+	return mShaders->Add(name, new Shader(name, loadGeom, name), false);
 }
 
 // Creates a shader for the scene with the given name, loading it from a different source than the name
@@ -237,7 +233,7 @@ Shader* Scene::CreateShader(const std::string& name, const std::string& source, 
 {
 	if (mShaders->Contains(name))
 		return mShaders->GetItem(name);
-	return mShaders->Add(name, new Shader(source, loadGeom, name));
+	return mShaders->Add(name, new Shader(source, loadGeom, name), false);
 }
 
 // Creates a shader for the scene with the given name, loading it from a config
@@ -245,7 +241,7 @@ Shader* Scene::CreateShader(const std::string& name, Config* config)
 {
 	if (mShaders->Contains(name))
 		return mShaders->GetItem(name);
-	return mShaders->Add(name, new Shader(config->GetString("file"), config->GetBool("hasGeomShader"), name));
+	return mShaders->Add(name, new Shader(config->GetString("file"), config->GetBool("hasGeomShader"), name), false);
 }
 
 // Updates the scene's material render list
@@ -393,29 +389,46 @@ void Scene::AddNode(Node* node)
 }
 
 // Adds the given mesh to the scene
-void Scene::AddMesh(Mesh* mesh, Node* parent)
+Mesh* Scene::AddMesh(Mesh* mesh, Node* parent)
 {
 	if (parent == nullptr)
 		parent = mRootNode;
 	parent->AddMesh(mesh);
-	mMeshes->Add(mesh->GetName(), mesh);
 	SetEntityMaterial(mesh, mesh->GetMaterial());
+	return mMeshes->Add(mesh->GetScopedName(), mesh, false, true);
 }
 
 // Adds the given camera to the scene
-void Scene::AddCamera(const std::string& name, Camera* camera, bool select)
+Camera* Scene::AddCamera(const std::string& name, Camera* camera, bool select)
 {
-	mCameras->Add(name, camera);
-	if (select)
-		mCameras->Select(name);
+	return mCameras->Add(name, camera, false, select);
 }
 
 // Adds the given camera to the scene
-void Scene::AddLight(const std::string& name, Light* light, bool select)
+Light* Scene::AddLight(const std::string& name, Light* light, bool select)
 {
-	mLights->Add(name, light);
-	if (select)
-		mLights->Select(name);
+	return mLights->Add(name, light, false, select);
+}
+
+// Adds an entity to the scene's render list
+IEntity* Scene::AddEntity(const std::string& shaderName, IEntity* entity, bool preRender)
+{
+	if (!mEntityList.contains(shaderName))
+		mEntityList.emplace(shaderName, new EntityContainer());
+	mEntityList[shaderName]->Add(entity->GetScopedName(), entity, false);
+	return entity;
+}
+
+// Adds a texture to the scene's texture list
+Texture* Scene::AddTexture(const std::string& name, Texture* texture)
+{
+	return mTextures->Add(name, texture, false, true);
+}
+
+// Adds a material to the scene's material list
+Material* Scene::AddMaterial(const std::string& name, Material* material)
+{
+	return mMaterials->Add(name, material, false, true);
 }
 
 // Rotates the current camera by the given delta degrees
@@ -493,60 +506,43 @@ void Scene::SetLightingMode(LightingMode mode)
 	HandleWireframe();
 }
 
-// Adds an entity to the scene's render list
-IEntity* Scene::AddEntity(const std::string& shaderName, IEntity* entity, bool preRender)
-{
-	if (!mEntityList.contains(shaderName))
-		mEntityList.emplace(shaderName, new EntityContainer());
-	mEntityList[shaderName]->Add(entity->GetName(), entity);
-	return entity;
-}
-
-// Adds a texture to the scene's texture list
-Texture* Scene::AddTexture(const std::string& name, Texture* texture)
-{
-	return mTextures->Add(name, texture);
-}
-
-// Adds a material to the scene's material list
-Material* Scene::AddMaterial(const std::string& name, Material* material)
-{
-	return mMaterials->Add(name, material);
-}
-
 // Sets the material of the given entity
 void Scene::SetEntityMaterial(IEntity* entity, Material* material)
 {
-	std::string prevMatName = entity->GetMaterial()->name;
-	std::string matName = material->name;
+	// Don't set material of empty entity or set material to empty
+	if (entity == nullptr || material == nullptr)
+		return;
+
+	std::string prevMatName = (entity->GetMaterial() != nullptr) ? entity->GetMaterial()->GetScopedName() : "";
+	std::string matName = material->GetScopedName();
 
 	// If the material is already stored in the render list, remove it
-	if (mMeshRenderList.contains(prevMatName))
+	if (prevMatName != "" && mMeshRenderList.contains(prevMatName))
 	{
-		if (mMeshRenderList[prevMatName]->GetItem(entity->GetName()) != nullptr)
-			mMeshRenderList[prevMatName]->Remove(entity->GetName());
+		if (mMeshRenderList[prevMatName]->GetItem(entity->GetScopedName()) != nullptr)
+			mMeshRenderList[prevMatName]->Remove(entity->GetScopedName());
 	}
 	entity->SetMaterial(material);
 
 	// Add the material to the appropriate render list
-	if (!mMeshRenderList.contains(material->name))
+	if (!mMeshRenderList.contains(material->GetScopedName()))
 	{
-		mMeshRenderList.emplace(material->name, new EntityContainer());
+		mMeshRenderList.emplace(material->GetScopedName(), new EntityContainer());
 	}
-	mMeshRenderList[material->name]->Add(entity->GetName(), entity);
+	mMeshRenderList[material->GetScopedName()]->Add(entity->GetScopedName(), entity, false);
 }
 
 // Loads the materials from the given config
 void Scene::LoadMaterials(Config* config)
 {
 	// Load the default material if it exists
-	LoadMaterial(config->GetConfig("default"), "default");
+	LoadMaterial(config->GetConfig("default"), "default", "");
 
 	// Load the rest of the materials
 	const std::unordered_map<std::string, Config*>& configs = config->GetConfigs();
 	for (auto iter = configs.begin(); iter != configs.end(); ++iter)
 		if (GetMaterial(iter->first) == nullptr)
-			LoadMaterial(iter->second, iter->first);
+			LoadMaterial(iter->second, iter->first, "");
 }
 
 // Returns the projection matrix of the scene's camera
@@ -570,8 +566,22 @@ void Scene::Clear()
 	mCameras->Clear();
 	mMeshes->Clear();
 	mEntities->Clear();
+	if (mRootNode != nullptr)
+		mRootNode->Clear();
+
 	mMeshRenderList.clear();
-	mRootNode->Clear();
+}
+
+// Clears all items that would render
+void Scene::ClearRendering()
+{
+	mTextures->Clear();
+	mMaterials->Clear();
+	mMeshes->Clear();
+
+	if (mRootNode != nullptr)
+		mRootNode->Clear();
+	mMeshRenderList.clear();
 }
 
 // Constructs the scene from the given file
@@ -587,10 +597,10 @@ Scene::Scene(State* state)
 	mMeshes = new MeshContainer();
 	mEntities = new EntityContainer();
 
-	mMaterials->AddMaterial(new Material("gray", glm::vec3(0.2f), mTextures));
-	mGrid = new PGrid(GRID_OBJ, 5, 1.0f, mMaterials->GetItem("gray"), 2, true, glm::vec3(0.0f));
-	mViewAxisHandle = new PHandle(CAMERA_AXIS_HANDLE, 45.0f, 6, false, mMaterials, mTextures, glm::vec3(50, 50, 0));
-	mTransformHandle = new PHandle(TRANSFORM_HANDLE, 0.5f, 6, true, mMaterials, mTextures, glm::vec3(0.0f));
+	mMaterials->AddMaterial(new Material("gray", "", glm::vec3(0.2f), mTextures));
+	mGrid = new PGrid(GRID_OBJ, "", 5, 1.0f, mMaterials->GetItem("gray"), 2, true, glm::vec3(0.0f));
+	mViewAxisHandle = new PHandle(CAMERA_AXIS_HANDLE, "", 45.0f, 6, false, mMaterials, mTextures, glm::vec3(50, 50, 0));
+	mTransformHandle = new PHandle(TRANSFORM_HANDLE, "", 0.5f, 6, true, mMaterials, mTextures, glm::vec3(0.0f));
 }
 
 Scene::~Scene()

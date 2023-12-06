@@ -67,7 +67,7 @@ public:
 	}
 
 	/// <summary>
-	/// Implicitly converts this variable to its internal value
+	/// Explicitly converts this variable to its internal value
 	/// </summary>
 	operator T()
 	{
