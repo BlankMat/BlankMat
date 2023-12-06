@@ -28,12 +28,14 @@ private:
 		mState->GetSel()->SelectElement(selection);
 	}
 
-	bool DisplayListItem(const std::string& name, Material* item, Material*& selection) override
+	bool DisplayListItem(const std::string& name, Material* item, Material*& selection, Material*& deleteItem) override
 	{
 		if (item->IsInternal() && name != "default")
 			return false;
 
-		return GUIWindowUtils::MaterialSelect(name, item, selection, 5.0f);
+		bool wasSelected = GUIWindowUtils::MaterialSelect(name, item, selection, 5.0f);
+		DisplayDeleteItem(item, deleteItem);
+		return wasSelected;
 	}
 public:
 	GUIMaterialViewer(State* state, Scene* scene, bool isEnabled)

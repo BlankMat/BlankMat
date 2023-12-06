@@ -25,30 +25,60 @@ protected:
 
     virtual void SelectItem(T* selection) = 0;
 
-    virtual bool DisplayListItem(const std::string& name, T* item, T*& selection)
+    virtual void DisplayDeleteItem(T* item, T*& deleteItem = nullptr)
+    {
+        // If the item can be removed, show delete icon
+        if (GetContainer()->IsDeleteable(item))
+        {
+            ImGui::SameLine(ImGui::GetWindowWidth() - ImGui::GetTextLineHeight());
+            if (ImGui::Button("-##RemoveItem"))
+            {
+                if (deleteItem != nullptr)
+                    deleteItem = item;
+            }
+        }
+    }
+
+    virtual bool DisplayListItem(const std::string& name, T* item, T*& selection, T*& deleteItem = nullptr)
     {
         bool wasPressed = false;
         if (mMustSelect)
             GUIWindowUtils::Selectable(name, selection, item, &wasPressed);
         else
             GUIWindowUtils::Deselectable(name, selection, item, &wasPressed);
+
+        DisplayDeleteItem(item, deleteItem);
         return wasPressed;
     }
 
     void ListContainer(IContainer<T>* container)
     {
         bool wasPressed = false;
+        T* deleteItem = nullptr;
         T* selection = container->GetSelectedItem();
+
+        // List all elements in the container
         const auto& data = container->Data();
-        for (auto iter = data.begin(); iter != data.end(); ++iter)
+        for (auto iter = data.cbegin(); iter != data.cend(); ++iter)
         {
-            if (DisplayListItem(iter->first, iter->second, selection))
+            if (DisplayListItem(iter->first, iter->second, selection, deleteItem))
                 wasPressed = true;
         }
+
+        // If an item was selected for deletion, delete it after the loop is complete
+        if (deleteItem != nullptr)
+        {
+            container->Remove(deleteItem);
+            mState->GetSel()->DeselectElement();
+        }
+
+        // Select the item that was pressed
         if (wasPressed)
         {
             SelectItem(selection);
         }
+
+        // If a new item was selected, set that item to be the container's selected item
         if (selection != container->GetSelectedItem())
         {
             container->Select(selection);
@@ -65,26 +95,6 @@ protected:
                 mAddItemName = "";
                 mIsAddingItem = false;
             }
-
-            /*
-            bool enterPressed = false;
-            curValue = GUIWindowUtils::InputText("Name##NewItemName", curValue, &enterPressed);
-
-            // Don't allow creating of items with duplicate names
-            if (container->Contains(curValue))
-            {
-                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.0f, 0.0f, 1.0f));
-                ImGui::Text((mItemName + " with name " + curValue + " already exists.").c_str());
-                ImGui::PopStyleColor();
-            }
-            // If the text is valid and enter was pressed
-            else if (curValue != "" && enterPressed)
-            {
-                AddNewItem(curValue);
-                curValue = "";
-                mIsAddingItem = false;
-            }
-            */
         }
     }
 public:

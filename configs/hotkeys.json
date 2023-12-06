@@ -18,6 +18,8 @@
   "F": "CAMERA_FOCUS",
   "H": "TOGGLE_VISIBILITY",
 
+  "DEL": "DELETE_SELECTION",
+
   "Q": "SELECT_MODE",
   "W": "MOVE_MODE",
   "E": "ROTATE_MODE",

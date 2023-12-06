@@ -94,6 +94,16 @@ public:
 	}
 
 	/// <summary>
+	/// Returns whether the given item is deletable (ie. not a default element or internal)
+	/// </summary>
+	/// <param name="item">Item to consider</param>
+	/// <returns>Whether the item can be deleted safely</returns>
+	virtual bool IsDeleteable(Texture* item)
+	{
+		return (Count() > 1 && !SkipItem(item));
+	}
+
+	/// <summary>
 	/// Initializes a default texture container with default textures
 	/// </summary>
 	explicit TextureContainer()

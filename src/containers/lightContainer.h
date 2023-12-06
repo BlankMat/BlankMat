@@ -115,6 +115,16 @@ protected:
 	}
 public:
 	/// <summary>
+	/// Returns whether the given item is deletable (ie. not a default element or internal)
+	/// </summary>
+	/// <param name="item">Item to consider</param>
+	/// <returns>Whether the item can be deleted safely</returns>
+	virtual bool IsDeleteable(Light* item)
+	{
+		return (Count() > 1 && item->GetScopedName() != "global");
+	}
+
+	/// <summary>
 	/// Loads all materials of lights, if they have any
 	/// </summary>
 	/// <param name="materials">Material list</param>

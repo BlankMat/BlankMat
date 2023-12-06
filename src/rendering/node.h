@@ -223,11 +223,32 @@ public:
 	bool MoveChild(const std::string& child, Node* other);
 
 	/// <summary>
+	/// Attempts to delete the given node. Does nothing if the node is root or is null.
+	/// </summary>
+	/// <param name="node">Node to delete</param>
+	/// <returns>Whether the item was deleted or not</returns>
+	bool TryDelete(Node* node);
+
+	/// <summary>
 	/// Removes the node with the given name along with its children
 	/// </summary>
 	/// <param name="name">Name of child node to delete</param>
 	/// <returns>Whether the deletion happened or not</returns>
 	bool DeleteNode(const std::string& name);
+
+	/// <summary>
+	/// Removes the given mesh from the node that holds it
+	/// </summary>
+	/// <param name="name">Name of the mesh</param>
+	/// <returns>Whether the mesh was found and removed</returns>
+	bool DeleteMesh(const std::string& name);
+
+	/// <summary>
+	/// Deletes the given child node if it is a direct child of this node
+	/// </summary>
+	/// <param name="node">Node to delete</param>
+	/// <returns>Whether deletion was successful</returns>
+	bool DeleteChild(Node* node);
 
 	/// <summary>
 	/// Creates a default node under the given parent

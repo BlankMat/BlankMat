@@ -228,6 +228,119 @@ Shader* Scene::CreateShader(const std::string& name, Config* config)
 	return mShaders->Add(name, new Shader(config->GetString("file"), config->GetBool("hasGeomShader"), name), false);
 }
 
+// Deletes the given mesh
+void Scene::DeleteMesh(Mesh* mesh)
+{
+	// Don't delete null meshes
+	if (mesh == nullptr)
+		return;
+
+	// Attempt to delete the mesh
+	Material* meshMat = mesh->GetMaterial();
+	std::string meshName = mesh->GetScopedName();
+	if (!mMeshes->TryDelete(mesh))
+		return;
+
+	// If the mesh is not in the render list, ignore it
+	if (!mMeshRenderList.contains(meshMat->GetScopedName()))
+		return;
+
+	// Remove mesh from render list
+	mMeshRenderList[meshMat->GetScopedName()]->Remove(meshName);
+
+	// Delete mesh from its parent node
+	mRootNode->DeleteMesh(meshName);
+	mState->GetSel()->DeselectMesh();
+	mState->GetSel()->DeselectEntity();
+}
+
+// Recursively deletes the contents of the node (children and meshes)
+void Scene::DeleteNodeContents(Node* node)
+{
+	// Delete all child meshes of the node
+	for (unsigned int i = 0; i < node->MeshCount(); i++)
+		DeleteMesh(node->GetMesh(i));
+
+	// Delete all meshes of all children
+	for (unsigned int i = 0; i < node->ChildCount(); i++)
+		DeleteNodeContents(node->GetChild(i));
+}
+
+// Deletes the given node
+void Scene::DeleteNode(Node* node)
+{
+	// Don't delete null or root nodes
+	if (node == nullptr || node->IsRootNode())
+		return;
+
+	// Deletes the meshes and nested meshes of this node
+	DeleteNodeContents(node);
+
+	// Deletes the node
+	mRootNode->TryDelete(node);
+	mState->GetSel()->DeselectEntity();
+}
+
+// Deletes the current selection
+void Scene::DeleteSelection()
+{
+	// If therer is no selection, delete nothing 
+	ISelectable* sel = mState->GetSel()->GetSelectedElement();
+	if (sel == nullptr)
+		return;
+
+	// Provide delete confirmation popup
+	pfd::button res = pfd::message(
+		"Confirm Delete",
+		"Are you sure you wish to delete " + sel->GetScopedName() + "? This action cannot be undone.",
+		pfd::choice::yes_no,
+		pfd::icon::warning
+	).result();
+
+	switch (res)
+	{
+	case pfd::button::yes:
+		// If the user confirmed, go ahead with deletion
+		break;
+	case pfd::button::no:
+	default:
+		// If the user canceled deletion, exit out of deletion
+		return;
+	}
+
+	// Delete the selection from the appropriate list
+	switch (sel->GetSelectableType())
+	{
+	case SelectableType::MATERIAL:
+		mMaterials->TryDelete(dynamic_cast<Material*>(sel));
+		break;
+	case SelectableType::TEXTURE:
+		mTextures->TryDelete(dynamic_cast<Texture*>(sel));
+		break;
+	case SelectableType::CAMERA:
+		mCameras->TryDelete(dynamic_cast<Camera*>(sel));
+		break;
+	case SelectableType::LIGHT:
+		mLights->TryDelete(dynamic_cast<Light*>(sel));
+		break;
+	case SelectableType::MESH:
+		DeleteMesh(dynamic_cast<Mesh*>(sel));
+		break;
+	case SelectableType::NODE:
+		DeleteNode(dynamic_cast<Node*>(sel));
+		break;
+	case SelectableType::ENTITY:
+		mEntities->TryDelete(dynamic_cast<IEntity*>(sel));
+		break;
+	case SelectableType::NONE:
+	default:
+		break;
+	}
+
+	// Since the selection is deleted, deselect it
+	mState->GetSel()->DeselectElement();
+}
+
 // Updates the scene's material render list
 void Scene::UpdateRenderList()
 {

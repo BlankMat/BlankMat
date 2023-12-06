@@ -76,6 +76,9 @@ protected:
 
 	// Returns the projection matrix of the view axis handle
 	const glm::mat4& GetViewAxisProjection(Window* window);
+
+	// Recursively deletes the contents of the node (children and meshes)
+	void DeleteNodeContents(Node* node);
 public:
 	// Renders the current scene
 	void Draw(Window* window, Shader* shader);
@@ -187,6 +190,15 @@ public:
 
 	// Creates a shader for the scene with the given name, loading it from a config
 	Shader* CreateShader(const std::string& name, Config* config);
+
+	// Deletes the given mesh
+	void DeleteMesh(Mesh* mesh);
+
+	// Deletes the given node
+	void DeleteNode(Node* node);
+
+	// Deletes the current selection
+	void DeleteSelection();
 
 	// Updates the scene's material render list
 	void UpdateRenderList();

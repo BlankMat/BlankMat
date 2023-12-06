@@ -28,9 +28,11 @@ protected:
         mState->GetSel()->SelectElement(selection);
     }
 
-    bool DisplayListItem(const std::string& name, Texture* item, Texture*& selection) override
+    bool DisplayListItem(const std::string& name, Texture* item, Texture*& selection, Texture*& deleteItem) override
     {
-        return GUIWindowUtils::TextureSelect(name, item, selection);
+        bool wasSelected = GUIWindowUtils::TextureSelect(name, item, selection);
+        DisplayDeleteItem(item, deleteItem);
+        return wasSelected;
     }
 
 public:

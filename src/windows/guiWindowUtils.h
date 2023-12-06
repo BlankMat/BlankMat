@@ -126,7 +126,7 @@ public:
 	static bool Selectable(const std::string& label, T& selValue, T thisValue, bool* wasPressed = nullptr)
 	{
 		bool isSelected = (selValue == thisValue);
-		if (ImGui::Selectable(label.c_str(), &isSelected))
+		if (ImGui::Selectable(label.c_str(), &isSelected, ImGuiSelectableFlags_None))
 		{
 			selValue = thisValue;
 			if (wasPressed != nullptr)

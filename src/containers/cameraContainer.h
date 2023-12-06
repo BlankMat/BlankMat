@@ -102,6 +102,16 @@ protected:
 	}
 public:
 	/// <summary>
+	/// Returns whether the given item is deletable (ie. not a default element or internal)
+	/// </summary>
+	/// <param name="item">Item to consider</param>
+	/// <returns>Whether the item can be deleted safely</returns>
+	virtual bool IsDeleteable(Camera* item)
+	{
+		return (Count() > 1 && item->GetScopedName() != "main");
+	}
+
+	/// <summary>
 	/// Constructs a camera container with the action stack used to track UI variables
 	/// </summary>
 	/// <param name="actionStack">ActionStack of the app</param>

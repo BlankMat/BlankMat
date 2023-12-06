@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_ICON ${CMAKE_SOURCE_DIR}/icon.ico)
 project(BlankMat)
 
 # Start project in PROJECT_NAME rather than ALL_BUILD or ZERO_CHECK

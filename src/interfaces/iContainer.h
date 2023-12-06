@@ -218,6 +218,16 @@ public:
 	}
 
 	/// <summary>
+	/// Returns whether the given item is deletable (ie. not a default element or internal)
+	/// </summary>
+	/// <param name="name">Item to consider</param>
+	/// <returns>Whether the item can be deleted safely</returns>
+	virtual bool IsDeleteable(T* item)
+	{
+		return true;
+	}
+
+	/// <summary>
 	/// Selects the given item. Does nothing if the item is not part of the container.
 	/// </summary>
 	/// <param name="item">Item to select</param>
@@ -285,6 +295,18 @@ public:
 		if (select || mData.size() == 1)
 			Select(name);
 		return item;
+	}
+
+	/// <summary>
+	/// Attempts to delete the given item. Does nothing if the item is not deleteable or is null.
+	/// </summary>
+	/// <param name="item">Item to try to delete</param>
+	/// <returns>Whether the item was deleted or not</returns>
+	virtual bool TryDelete(T* item)
+	{
+		if (item == nullptr || !IsDeleteable(item))
+			return false;
+		return Remove(item);
 	}
 
 	/// <summary>

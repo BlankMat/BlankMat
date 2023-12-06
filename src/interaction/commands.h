@@ -52,6 +52,7 @@ public:
 		input->AddCommand("OPEN_TOOLBAR", new RunFunctionCommand("OPEN_TOOLBAR", std::bind(&Window::OpenGUI, appWindow, GUI::TOOLBAR)));
 		input->AddCommand("OPEN_TOOL_MODE", new RunFunctionCommand("OPEN_TOOL_MODE", std::bind(&Window::OpenGUI, appWindow, GUI::MODEBAR)));
 		
+		input->AddCommand("DELETE_SELECTION", new RunFunctionCommand("DELETE_SELECTION", std::bind(&Scene::DeleteSelection, scene)));
 		input->AddCommand("SELECT_MODE", new RunFunctionCommand("SELECT_MODE", std::bind(&Selection::SetTool, state->GetSel(), Tool::SELECT)));
 		input->AddCommand("MOVE_MODE", new RunFunctionCommand("MOVE_MODE", std::bind(&Selection::SetTool, state->GetSel(), Tool::MOVE)));
 		input->AddCommand("ROTATE_MODE", new RunFunctionCommand("ROTATE_MODE", std::bind(&Selection::SetTool, state->GetSel(), Tool::ROTATE)));

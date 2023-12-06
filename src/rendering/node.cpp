@@ -408,11 +408,26 @@ bool Node::MoveChild(const std::string& child, Node* other)
 	return true;
 }
 
+// Attempts to delete the given node. Does nothing if the node is root or is null.
+bool Node::TryDelete(Node* node)
+{
+	// Do not delete null or root nodes
+	if (node == nullptr || node->IsRootNode())
+		return false;
+
+	// Delete the node
+	if (node->mParent != nullptr)
+		return node->mParent->DeleteChild(node);
+
+	// If the node does not have a parent, it cannot be deleted
+	return false;
+}
+
 // Removes the node with the given name along with its children. Returns whether the deletion happened
 bool Node::DeleteNode(const std::string& name)
 {
 	// Do not delete the node itself
-	if (mName == name)
+	if (IsRootNode() && mName == name)
 	{
 		std::cout << "ERROR::NODE::ROOT Attempted to delete root node." << std::endl;
 		return false;
@@ -424,8 +439,50 @@ bool Node::DeleteNode(const std::string& name)
 		return false;
 
 	// Delete the node
-	node->Clear();
-	return true;
+	if (node->mParent != nullptr)
+		return node->mParent->DeleteChild(node);
+
+	// If the node does not have a parent, it cannot be deleted
+	return false;
+}
+
+// Removes the given mesh from the node that holds it
+bool Node::DeleteMesh(const std::string& name)
+{
+	// If the mesh is a child of this node, delete it and return
+	for (unsigned int i = 0; i < mMeshes.size(); i++)
+	{
+		if (mMeshes[i] != nullptr && mMeshes[i]->GetScopedName() == name)
+		{
+			mMeshes.erase(mMeshes.begin() + i);
+			return true;
+		}
+	}
+
+	// Search all child nodes for the mesh
+	for (unsigned int i = 0; i < mChildren.size(); i++)
+		if (mChildren[i] != nullptr && mChildren[i]->DeleteMesh(name))
+			return true;
+
+	// If the mesh was not found, return false
+	return false;
+}
+
+// Deletes the given child node if it is a direct child of this node
+bool Node::DeleteChild(Node* node)
+{
+	for (unsigned int i = 0; i < mChildren.size(); i++)
+	{
+		if (mChildren[i] != nullptr && mChildren[i]->GetScopedName() == node->GetScopedName())
+		{
+			node->Clear();
+			mChildren.erase(mChildren.begin() + i);
+			delete node;
+			return true;
+		}
+	}
+
+	return false;
 }
 
 // Recursively deletes this node's children
