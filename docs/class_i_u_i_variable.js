@@ -6,7 +6,6 @@ var class_i_u_i_variable =
     [ "GetRef", "class_i_u_i_variable.html#a387692ecfb11aed819919aa91e0fe5c5", null ],
     [ "Name", "class_i_u_i_variable.html#afce7d71edf4d562acf5e80693d396342", null ],
     [ "operator T", "class_i_u_i_variable.html#a20bdf43380c2ef64fef9007f763a316b", null ],
-    [ "operator&", "class_i_u_i_variable.html#aae14d3504346ff8cb80ad1a22e085dff", null ],
     [ "operator*", "class_i_u_i_variable.html#a020c25bbf7e9c7214a0618effaa7807e", null ],
     [ "operator->", "class_i_u_i_variable.html#aa06f28b38029b8efdc5222c410e318a9", null ],
     [ "Set", "class_i_u_i_variable.html#a2d3ff6a180deb58af0d1476323240bdd", null ],

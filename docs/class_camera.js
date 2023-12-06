@@ -1,6 +1,6 @@
 var class_camera =
 [
-    [ "Camera", "class_camera.html#aff6ba351303ac7c29cb307a13d603ce8", null ],
+    [ "Camera", "class_camera.html#afd2a8b4fed435e68aa554565cb9b1361", null ],
     [ "Camera", "class_camera.html#a6fe17882d68c57e977b8ee415084a284", null ],
     [ "GetBGColor", "class_camera.html#afbd5acdf222388351d5fb50ecb69df20", null ],
     [ "GetDir", "class_camera.html#a3853a88ed19c72112773a495c5608e68", null ],
@@ -18,7 +18,6 @@ var class_camera =
     [ "GetView", "class_camera.html#a6d19225bb5bcec1974e5454cbcb9bd9f", null ],
     [ "IsPerspective", "class_camera.html#a7cc464b0554464ef6673db2b3d26056d", null ],
     [ "IsRotatingAroundPivot", "class_camera.html#a6828178f4ab7fa11ed1b783b716b2336", null ],
-    [ "IsWireframe", "class_camera.html#a1f75c84ec63f932b20a3367ee279c1d0", null ],
     [ "LookAt", "class_camera.html#a59aa6d8d5c5efeaf573971b06c454e88", null ],
     [ "Rotate", "class_camera.html#af553afc9cd0d85523ddcff5d29e20ee1", null ],
     [ "SetFarClip", "class_camera.html#a325241622afb962cfd560210428e0009", null ],
@@ -29,10 +28,8 @@ var class_camera =
     [ "SetPivot", "class_camera.html#aa6bfca45342905a3c58dfc83baae2c9e", null ],
     [ "SetPivotRotationMode", "class_camera.html#ab7f0ca5922d66ee99a95f487fe09b77a", null ],
     [ "SetPos", "class_camera.html#a115a6bfe895bd9c8a529e91645d42586", null ],
-    [ "SetWireframe", "class_camera.html#aa9a19e18aadb408f2577159f9a6c1a56", null ],
     [ "Translate", "class_camera.html#ab44ece7a58a94262fd1bc18e829add32", null ],
     [ "TriggerRecalcProjection", "class_camera.html#a4a10a3c4c8672ae3783905fc8e775fa7", null ],
     [ "TriggerRecalcRotation", "class_camera.html#af28c800ffb3f12a6846f39d786bbe3d1", null ],
-    [ "TriggerRecalcView", "class_camera.html#a5be78f1d8b26d55f1b3fa59cacc3929e", null ],
-    [ "TriggerRecalcWireframe", "class_camera.html#a9d2e11730ede80356c9b9c77ae5baeff", null ]
+    [ "TriggerRecalcView", "class_camera.html#a5be78f1d8b26d55f1b3fa59cacc3929e", null ]
 ];

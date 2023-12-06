@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['name_0',['name',['../class_i_u_i_variable.html#afce7d71edf4d562acf5e80693d396342',1,'IUIVariable::Name()'],['../class_material.html#affe06990f884293d0fe2f39110f71730',1,'Material::name'],['../class_shader.html#a8c8fba8311ca3a7cfeac5afeb346e51b',1,'Shader::name'],['../struct_texture.html#a308bb32725dd45f36e62ba6ff8c9db8d',1,'Texture::name']]],
+  ['name_0',['name',['../class_material.html#affe06990f884293d0fe2f39110f71730',1,'Material::name'],['../class_shader.html#a8c8fba8311ca3a7cfeac5afeb346e51b',1,'Shader::name'],['../struct_texture.html#a308bb32725dd45f36e62ba6ff8c9db8d',1,'Texture::name'],['../class_i_u_i_variable.html#afce7d71edf4d562acf5e80693d396342',1,'IUIVariable::Name()']]],
   ['newscene_1',['NewScene',['../class_scene_i_o.html#a70ea22ec68abeecc980985d84e5fd0c2',1,'SceneIO']]],
   ['newselverts_2',['newSelVerts',['../class_selection.html#a529547407c0694a95a474caed68e2b4f',1,'Selection']]],
   ['ni_3',['ni',['../class_material.html#a9132d1f6cc468abe6c40659962e06236',1,'Material']]],

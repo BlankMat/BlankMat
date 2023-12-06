@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.2</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.3</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -136,74 +136,95 @@ Collaboration diagram for MeshContainer:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a1084bab7afcee50fded452495ca95131" id="r_a1084bab7afcee50fded452495ca95131"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_mesh_container.html#a1084bab7afcee50fded452495ca95131">LoadMaterials</a> (<a class="el" href="class_material_container.html">MaterialContainer</a> *materials)</td></tr>
+<tr class="memdesc:a1084bab7afcee50fded452495ca95131"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the materials of meshes in this container.  <br /></td></tr>
+<tr class="separator:a1084bab7afcee50fded452495ca95131"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e9b7edf263fbd849d233fee691f5b16" id="r_a7e9b7edf263fbd849d233fee691f5b16"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_mesh_container.html#a7e9b7edf263fbd849d233fee691f5b16">Draw</a> (<a class="el" href="class_shader.html">Shader</a> *shader, <a class="el" href="class_state.html">State</a> *state, <a class="el" href="class_material.html">Material</a> *defaultMat, const glm::mat4 &amp;viewProj, bool drawMats=false)</td></tr>
 <tr class="memdesc:a7e9b7edf263fbd849d233fee691f5b16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws the contents of the container.  <br /></td></tr>
 <tr class="separator:a7e9b7edf263fbd849d233fee691f5b16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_class_i_container"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_i_container')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_i_container.html">IContainer&lt; Mesh &gt;</a></td></tr>
-<tr class="memitem:a7d3dd9069cbf4bcaa354ed589188c7cd inherit pub_methods_class_i_container" id="r_a7d3dd9069cbf4bcaa354ed589188c7cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a7d3dd9069cbf4bcaa354ed589188c7cd">Read</a> (std::ifstream &amp;file, bool clear) override</td></tr>
-<tr class="memdesc:a7d3dd9069cbf4bcaa354ed589188c7cd inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads this container from the file.  <br /></td></tr>
-<tr class="separator:a7d3dd9069cbf4bcaa354ed589188c7cd inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a84e0ede86f3dda4615750a99a9f1a763 inherit pub_methods_class_i_container" id="r_a84e0ede86f3dda4615750a99a9f1a763"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a84e0ede86f3dda4615750a99a9f1a763">Write</a> (std::ofstream &amp;file) override</td></tr>
-<tr class="memdesc:a84e0ede86f3dda4615750a99a9f1a763 inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes this container to the file.  <br /></td></tr>
-<tr class="separator:a84e0ede86f3dda4615750a99a9f1a763 inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b608cf5d9f2efc8de6cd0bc5d9592a5 inherit pub_methods_class_i_container" id="r_a9b608cf5d9f2efc8de6cd0bc5d9592a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a9b608cf5d9f2efc8de6cd0bc5d9592a5">Clear</a> () override</td></tr>
-<tr class="memdesc:a9b608cf5d9f2efc8de6cd0bc5d9592a5 inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the container of all items, deleting them.  <br /></td></tr>
-<tr class="separator:a9b608cf5d9f2efc8de6cd0bc5d9592a5 inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48dd15bedf29600234f210560015a19c inherit pub_methods_class_i_container" id="r_a48dd15bedf29600234f210560015a19c"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a48dd15bedf29600234f210560015a19c">Count</a> ()</td></tr>
-<tr class="memdesc:a48dd15bedf29600234f210560015a19c inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of elements in the container.  <br /></td></tr>
-<tr class="separator:a48dd15bedf29600234f210560015a19c inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7fe3b4981c2794348bac6c8196b42ee0 inherit pub_methods_class_i_container" id="r_a7fe3b4981c2794348bac6c8196b42ee0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a7fe3b4981c2794348bac6c8196b42ee0">Empty</a> ()</td></tr>
-<tr class="memdesc:a7fe3b4981c2794348bac6c8196b42ee0 inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the container is empty or not.  <br /></td></tr>
-<tr class="separator:a7fe3b4981c2794348bac6c8196b42ee0 inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2606e32b307da7379dfa7c2f8f7a85b inherit pub_methods_class_i_container" id="r_ac2606e32b307da7379dfa7c2f8f7a85b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#ac2606e32b307da7379dfa7c2f8f7a85b">Select</a> (const std::string &amp;name)</td></tr>
-<tr class="memdesc:ac2606e32b307da7379dfa7c2f8f7a85b inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the given item. Does nothing if the item is not part of the container.  <br /></td></tr>
-<tr class="separator:ac2606e32b307da7379dfa7c2f8f7a85b inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a5eb4f3d7086dbefc09f10971dfef76 inherit pub_methods_class_i_container" id="r_a8a5eb4f3d7086dbefc09f10971dfef76"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a8a5eb4f3d7086dbefc09f10971dfef76">Select</a> (<a class="el" href="class_mesh.html">Mesh</a> *item)</td></tr>
-<tr class="memdesc:a8a5eb4f3d7086dbefc09f10971dfef76 inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the given item. Does nothing if the item is not part of the container.  <br /></td></tr>
-<tr class="separator:a8a5eb4f3d7086dbefc09f10971dfef76 inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad84c7aa2688311b202334e2ba6b7f81f inherit pub_methods_class_i_container" id="r_ad84c7aa2688311b202334e2ba6b7f81f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#ad84c7aa2688311b202334e2ba6b7f81f">Deselect</a> ()</td></tr>
-<tr class="memdesc:ad84c7aa2688311b202334e2ba6b7f81f inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deselects the currently selected item.  <br /></td></tr>
-<tr class="separator:ad84c7aa2688311b202334e2ba6b7f81f inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3323241672bde6234681df04040ad1f inherit pub_methods_class_i_container" id="r_aa3323241672bde6234681df04040ad1f"><td class="memItemLeft" align="right" valign="top">virtual const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#aa3323241672bde6234681df04040ad1f">GetSelectedName</a> ()</td></tr>
-<tr class="memdesc:aa3323241672bde6234681df04040ad1f inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the currently selected item.  <br /></td></tr>
-<tr class="separator:aa3323241672bde6234681df04040ad1f inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e9519455632ed88967aefc81e527c2f inherit pub_methods_class_i_container" id="r_a8e9519455632ed88967aefc81e527c2f"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_mesh.html">Mesh</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a8e9519455632ed88967aefc81e527c2f">GetSelectedItem</a> ()</td></tr>
-<tr class="memdesc:a8e9519455632ed88967aefc81e527c2f inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the currently selected item.  <br /></td></tr>
-<tr class="separator:a8e9519455632ed88967aefc81e527c2f inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b87f380ae21f3847d794a376cd125f1 inherit pub_methods_class_i_container" id="r_a2b87f380ae21f3847d794a376cd125f1"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_mesh.html">Mesh</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a2b87f380ae21f3847d794a376cd125f1">Add</a> (const std::string &amp;name, <a class="el" href="class_mesh.html">Mesh</a> *item)</td></tr>
-<tr class="memdesc:a2b87f380ae21f3847d794a376cd125f1 inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the given item to the container, or if it already exists, updates the item to the given one.  <br /></td></tr>
-<tr class="separator:a2b87f380ae21f3847d794a376cd125f1 inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4629b8adca9344380a5392074dc607b2 inherit pub_methods_class_i_container" id="r_a4629b8adca9344380a5392074dc607b2"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a4629b8adca9344380a5392074dc607b2">Remove</a> (const std::string &amp;name)</td></tr>
-<tr class="memdesc:a4629b8adca9344380a5392074dc607b2 inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the given item from the container.  <br /></td></tr>
-<tr class="separator:a4629b8adca9344380a5392074dc607b2 inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a876fc638917833d77b4892e69287b7c7 inherit pub_methods_class_i_container" id="r_a876fc638917833d77b4892e69287b7c7"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a876fc638917833d77b4892e69287b7c7">Remove</a> (<a class="el" href="class_mesh.html">Mesh</a> *item)</td></tr>
-<tr class="memdesc:a876fc638917833d77b4892e69287b7c7 inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the given item from the container.  <br /></td></tr>
-<tr class="separator:a876fc638917833d77b4892e69287b7c7 inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef51eba0f2863666526ad443a50a2ff2 inherit pub_methods_class_i_container" id="r_aef51eba0f2863666526ad443a50a2ff2"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_mesh.html">Mesh</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#aef51eba0f2863666526ad443a50a2ff2">GetItem</a> (const std::string &amp;name)</td></tr>
-<tr class="memdesc:aef51eba0f2863666526ad443a50a2ff2 inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the item with the given key, or nullptr if not found.  <br /></td></tr>
-<tr class="separator:aef51eba0f2863666526ad443a50a2ff2 inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45666636565268d3d954bddbf5b98dbb inherit pub_methods_class_i_container" id="r_a45666636565268d3d954bddbf5b98dbb"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a45666636565268d3d954bddbf5b98dbb">Contains</a> (const std::string &amp;name)</td></tr>
-<tr class="memdesc:a45666636565268d3d954bddbf5b98dbb inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the container contains an item with the given name.  <br /></td></tr>
-<tr class="separator:a45666636565268d3d954bddbf5b98dbb inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb1247a043b77710f4a7e6c8263c0d95 inherit pub_methods_class_i_container" id="r_afb1247a043b77710f4a7e6c8263c0d95"><td class="memItemLeft" align="right" valign="top">virtual const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#afb1247a043b77710f4a7e6c8263c0d95">GetKey</a> (<a class="el" href="class_mesh.html">Mesh</a> *item)</td></tr>
-<tr class="memdesc:afb1247a043b77710f4a7e6c8263c0d95 inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the key of the item given, or an empty string if not found.  <br /></td></tr>
-<tr class="separator:afb1247a043b77710f4a7e6c8263c0d95 inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abfeb72ac5979c220082e80afc4cd0815 inherit pub_methods_class_i_container" id="r_abfeb72ac5979c220082e80afc4cd0815"><td class="memItemLeft" align="right" valign="top">virtual const std::unordered_map&lt; std::string, <a class="el" href="class_mesh.html">Mesh</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#abfeb72ac5979c220082e80afc4cd0815">Data</a> ()</td></tr>
-<tr class="memdesc:abfeb72ac5979c220082e80afc4cd0815 inherit pub_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a reference to the data stored in the container. WARNING: Only use this to iterate over the data, not to modify it.  <br /></td></tr>
-<tr class="separator:abfeb72ac5979c220082e80afc4cd0815 inherit pub_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_i_data_container"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_i_data_container')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_i_data_container.html">IDataContainer&lt; Mesh &gt;</a></td></tr>
+<tr class="memitem:aa6b40ee44b2f85951257a0953fc926b7 inherit pub_methods_class_i_data_container" id="r_aa6b40ee44b2f85951257a0953fc926b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#aa6b40ee44b2f85951257a0953fc926b7">Read</a> (std::ifstream &amp;file, bool clear) override</td></tr>
+<tr class="memdesc:aa6b40ee44b2f85951257a0953fc926b7 inherit pub_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads this container from the file.  <br /></td></tr>
+<tr class="separator:aa6b40ee44b2f85951257a0953fc926b7 inherit pub_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83b602522908aee7d035c219a24731cf inherit pub_methods_class_i_data_container" id="r_a83b602522908aee7d035c219a24731cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#a83b602522908aee7d035c219a24731cf">Write</a> (std::ofstream &amp;file) override</td></tr>
+<tr class="memdesc:a83b602522908aee7d035c219a24731cf inherit pub_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes this container to the file.  <br /></td></tr>
+<tr class="separator:a83b602522908aee7d035c219a24731cf inherit pub_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acaff1473c099b702f3c11208f817d462 inherit pub_methods_class_i_data_container" id="r_acaff1473c099b702f3c11208f817d462"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#acaff1473c099b702f3c11208f817d462">Clear</a> () override</td></tr>
+<tr class="memdesc:acaff1473c099b702f3c11208f817d462 inherit pub_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the container of all items, deleting them.  <br /></td></tr>
+<tr class="separator:acaff1473c099b702f3c11208f817d462 inherit pub_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a912ea2c884745fd1f0f69e6592622319 inherit pub_methods_class_i_data_container" id="r_a912ea2c884745fd1f0f69e6592622319"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#a912ea2c884745fd1f0f69e6592622319">ClearData</a> ()</td></tr>
+<tr class="memdesc:a912ea2c884745fd1f0f69e6592622319 inherit pub_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the data of the container without deleting it. Only use this if pointers to the data exist elsewhere.  <br /></td></tr>
+<tr class="separator:a912ea2c884745fd1f0f69e6592622319 inherit pub_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab55b270810fef937bed9732228ded0e6 inherit pub_methods_class_i_data_container" id="r_ab55b270810fef937bed9732228ded0e6"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#ab55b270810fef937bed9732228ded0e6">WriteCount</a> () override</td></tr>
+<tr class="memdesc:ab55b270810fef937bed9732228ded0e6 inherit pub_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of items that will be written from the container.  <br /></td></tr>
+<tr class="separator:ab55b270810fef937bed9732228ded0e6 inherit pub_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8a35e0c7e6ab19d9d1f38f5183469a5 inherit pub_methods_class_i_data_container" id="r_ac8a35e0c7e6ab19d9d1f38f5183469a5"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#ac8a35e0c7e6ab19d9d1f38f5183469a5">Count</a> ()</td></tr>
+<tr class="memdesc:ac8a35e0c7e6ab19d9d1f38f5183469a5 inherit pub_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of elements in the container.  <br /></td></tr>
+<tr class="separator:ac8a35e0c7e6ab19d9d1f38f5183469a5 inherit pub_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4a0d3d9308d4bccbe7f1858978b28b5 inherit pub_methods_class_i_data_container" id="r_ae4a0d3d9308d4bccbe7f1858978b28b5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#ae4a0d3d9308d4bccbe7f1858978b28b5">Empty</a> ()</td></tr>
+<tr class="memdesc:ae4a0d3d9308d4bccbe7f1858978b28b5 inherit pub_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the container is empty or not.  <br /></td></tr>
+<tr class="separator:ae4a0d3d9308d4bccbe7f1858978b28b5 inherit pub_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace231444d12d62173e4ae3d48d18d7d6 inherit pub_methods_class_i_data_container" id="r_ace231444d12d62173e4ae3d48d18d7d6"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#ace231444d12d62173e4ae3d48d18d7d6">Select</a> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:ace231444d12d62173e4ae3d48d18d7d6 inherit pub_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the given item. Does nothing if the item is not part of the container.  <br /></td></tr>
+<tr class="separator:ace231444d12d62173e4ae3d48d18d7d6 inherit pub_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36006761a6ba71df0c2d2f19fd6e7f47 inherit pub_methods_class_i_data_container" id="r_a36006761a6ba71df0c2d2f19fd6e7f47"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#a36006761a6ba71df0c2d2f19fd6e7f47">Select</a> (<a class="el" href="class_mesh.html">Mesh</a> *item)</td></tr>
+<tr class="memdesc:a36006761a6ba71df0c2d2f19fd6e7f47 inherit pub_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the given item. Does nothing if the item is not part of the container.  <br /></td></tr>
+<tr class="separator:a36006761a6ba71df0c2d2f19fd6e7f47 inherit pub_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31560fb7952997c386ea9f1238990098 inherit pub_methods_class_i_data_container" id="r_a31560fb7952997c386ea9f1238990098"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#a31560fb7952997c386ea9f1238990098">Deselect</a> ()</td></tr>
+<tr class="memdesc:a31560fb7952997c386ea9f1238990098 inherit pub_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deselects the currently selected item.  <br /></td></tr>
+<tr class="separator:a31560fb7952997c386ea9f1238990098 inherit pub_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51fc9658b82d07d6de4a961b6b73b216 inherit pub_methods_class_i_data_container" id="r_a51fc9658b82d07d6de4a961b6b73b216"><td class="memItemLeft" align="right" valign="top">virtual const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#a51fc9658b82d07d6de4a961b6b73b216">GetSelectedName</a> ()</td></tr>
+<tr class="memdesc:a51fc9658b82d07d6de4a961b6b73b216 inherit pub_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the currently selected item.  <br /></td></tr>
+<tr class="separator:a51fc9658b82d07d6de4a961b6b73b216 inherit pub_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6320c930cf3bc1566d4feeabcd2d045 inherit pub_methods_class_i_data_container" id="r_ad6320c930cf3bc1566d4feeabcd2d045"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_mesh.html">Mesh</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#ad6320c930cf3bc1566d4feeabcd2d045">GetSelectedItem</a> ()</td></tr>
+<tr class="memdesc:ad6320c930cf3bc1566d4feeabcd2d045 inherit pub_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the currently selected item.  <br /></td></tr>
+<tr class="separator:ad6320c930cf3bc1566d4feeabcd2d045 inherit pub_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52c96101e11da43d6f7a12a9b867d0b1 inherit pub_methods_class_i_data_container" id="r_a52c96101e11da43d6f7a12a9b867d0b1"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_mesh.html">Mesh</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#a52c96101e11da43d6f7a12a9b867d0b1">Add</a> (const std::string &amp;name, <a class="el" href="class_mesh.html">Mesh</a> *item, bool replace)</td></tr>
+<tr class="memdesc:a52c96101e11da43d6f7a12a9b867d0b1 inherit pub_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the given item to the container, or if it already exists, updates the item to the given one.  <br /></td></tr>
+<tr class="separator:a52c96101e11da43d6f7a12a9b867d0b1 inherit pub_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77095ccfab56c3c3b1699e6a03043300 inherit pub_methods_class_i_data_container" id="r_a77095ccfab56c3c3b1699e6a03043300"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#a77095ccfab56c3c3b1699e6a03043300">Remove</a> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:a77095ccfab56c3c3b1699e6a03043300 inherit pub_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the given item from the container.  <br /></td></tr>
+<tr class="separator:a77095ccfab56c3c3b1699e6a03043300 inherit pub_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2378f43f93b60f23b5c28b38e1fdf14e inherit pub_methods_class_i_data_container" id="r_a2378f43f93b60f23b5c28b38e1fdf14e"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#a2378f43f93b60f23b5c28b38e1fdf14e">Remove</a> (<a class="el" href="class_mesh.html">Mesh</a> *item)</td></tr>
+<tr class="memdesc:a2378f43f93b60f23b5c28b38e1fdf14e inherit pub_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the given item from the container.  <br /></td></tr>
+<tr class="separator:a2378f43f93b60f23b5c28b38e1fdf14e inherit pub_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c48b08c115ca1afa84163da9a55480b inherit pub_methods_class_i_data_container" id="r_a0c48b08c115ca1afa84163da9a55480b"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_mesh.html">Mesh</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#a0c48b08c115ca1afa84163da9a55480b">GetItem</a> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:a0c48b08c115ca1afa84163da9a55480b inherit pub_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the item with the given key, or nullptr if not found.  <br /></td></tr>
+<tr class="separator:a0c48b08c115ca1afa84163da9a55480b inherit pub_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27fa1f34c8b018692fab6c73bb717d4a inherit pub_methods_class_i_data_container" id="r_a27fa1f34c8b018692fab6c73bb717d4a"><td class="memItemLeft" align="right" valign="top">virtual const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#a27fa1f34c8b018692fab6c73bb717d4a">GetKey</a> (<a class="el" href="class_mesh.html">Mesh</a> *item)</td></tr>
+<tr class="memdesc:a27fa1f34c8b018692fab6c73bb717d4a inherit pub_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the key of the item given, or an empty string if not found.  <br /></td></tr>
+<tr class="separator:a27fa1f34c8b018692fab6c73bb717d4a inherit pub_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfa4d53d554c6a6e2a3f29e9ca8f24f0 inherit pub_methods_class_i_data_container" id="r_abfa4d53d554c6a6e2a3f29e9ca8f24f0"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#abfa4d53d554c6a6e2a3f29e9ca8f24f0">Contains</a> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:abfa4d53d554c6a6e2a3f29e9ca8f24f0 inherit pub_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the container contains an item with the given name.  <br /></td></tr>
+<tr class="separator:abfa4d53d554c6a6e2a3f29e9ca8f24f0 inherit pub_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13cc3b7dea1e3d34df0cbde3b0538190 inherit pub_methods_class_i_data_container" id="r_a13cc3b7dea1e3d34df0cbde3b0538190"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#a13cc3b7dea1e3d34df0cbde3b0538190">Rename</a> (const std::string &amp;name, const std::string &amp;newName)</td></tr>
+<tr class="memdesc:a13cc3b7dea1e3d34df0cbde3b0538190 inherit pub_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Renames the given item to the new name, or the new name with appended numbers.  <br /></td></tr>
+<tr class="separator:a13cc3b7dea1e3d34df0cbde3b0538190 inherit pub_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a108eb73a81e0d810068294400015f29c inherit pub_methods_class_i_data_container" id="r_a108eb73a81e0d810068294400015f29c"><td class="memItemLeft" align="right" valign="top">virtual const std::unordered_map&lt; std::string, <a class="el" href="class_mesh.html">Mesh</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#a108eb73a81e0d810068294400015f29c">Data</a> ()</td></tr>
+<tr class="memdesc:a108eb73a81e0d810068294400015f29c inherit pub_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a reference to the data stored in the container.  <br /></td></tr>
+<tr class="separator:a108eb73a81e0d810068294400015f29c inherit pub_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fed335f742f3616463c24c045b58460 inherit pub_methods_class_i_data_container" id="r_a7fed335f742f3616463c24c045b58460"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#a7fed335f742f3616463c24c045b58460">~IContainer</a> ()</td></tr>
+<tr class="memdesc:a7fed335f742f3616463c24c045b58460 inherit pub_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all of the container, deleting its elements.  <br /></td></tr>
+<tr class="separator:a7fed335f742f3616463c24c045b58460 inherit pub_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
+<tr class="memitem:affbb591d919addaf272e1af6c69dc7fd" id="r_affbb591d919addaf272e1af6c69dc7fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_mesh_container.html#affbb591d919addaf272e1af6c69dc7fd">RenameItem</a> (<a class="el" href="class_mesh.html">Mesh</a> *item, const std::string &amp;name) override</td></tr>
+<tr class="memdesc:affbb591d919addaf272e1af6c69dc7fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Renames the given item to the given name.  <br /></td></tr>
+<tr class="separator:affbb591d919addaf272e1af6c69dc7fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abf01f642319794f9e33aa886d5dca5a7" id="r_abf01f642319794f9e33aa886d5dca5a7"><td class="memItemLeft" align="right" valign="top">const std::pair&lt; std::string, <a class="el" href="class_mesh.html">Mesh</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_mesh_container.html#abf01f642319794f9e33aa886d5dca5a7">ReadItem</a> (std::ifstream &amp;file) override</td></tr>
 <tr class="memdesc:abf01f642319794f9e33aa886d5dca5a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the next item from the input file stream.  <br /></td></tr>
 <tr class="separator:abf01f642319794f9e33aa886d5dca5a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6196b3ae478e7a8789733d600a42b8ce" id="r_a6196b3ae478e7a8789733d600a42b8ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_mesh_container.html#a6196b3ae478e7a8789733d600a42b8ce">WriteItem</a> (const std::string &amp;key, <a class="el" href="class_mesh.html">Mesh</a> *item, std::ofstream &amp;file) override</td></tr>
 <tr class="memdesc:a6196b3ae478e7a8789733d600a42b8ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the given item into the output file stream.  <br /></td></tr>
 <tr class="separator:a6196b3ae478e7a8789733d600a42b8ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_methods_class_i_container"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_i_container')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_i_container.html">IContainer&lt; Mesh &gt;</a></td></tr>
-<tr class="memitem:a461928d21399ba227aa63261c507a758 inherit pro_methods_class_i_container" id="r_a461928d21399ba227aa63261c507a758"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a461928d21399ba227aa63261c507a758">SkipItem</a> (<a class="el" href="class_mesh.html">Mesh</a> *item)</td></tr>
-<tr class="memdesc:a461928d21399ba227aa63261c507a758 inherit pro_methods_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the item should be skipped or not.  <br /></td></tr>
-<tr class="separator:a461928d21399ba227aa63261c507a758 inherit pro_methods_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_class_i_data_container"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_i_data_container')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_i_data_container.html">IDataContainer&lt; Mesh &gt;</a></td></tr>
+<tr class="memitem:a06aef5e6e5d51dc012b2d15f627cd1a6 inherit pro_methods_class_i_data_container" id="r_a06aef5e6e5d51dc012b2d15f627cd1a6"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#a06aef5e6e5d51dc012b2d15f627cd1a6">SkipItem</a> (<a class="el" href="class_mesh.html">Mesh</a> *item)</td></tr>
+<tr class="memdesc:a06aef5e6e5d51dc012b2d15f627cd1a6 inherit pro_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the item should be skipped or not.  <br /></td></tr>
+<tr class="separator:a06aef5e6e5d51dc012b2d15f627cd1a6 inherit pro_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bbbfcf34b6c01db0049637495367032 inherit pro_methods_class_i_data_container" id="r_a5bbbfcf34b6c01db0049637495367032"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#a5bbbfcf34b6c01db0049637495367032">GetUniqueName</a> (const std::string &amp;name, const std::string &amp;space)</td></tr>
+<tr class="memdesc:a5bbbfcf34b6c01db0049637495367032 inherit pro_methods_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a unique name, incrementing the existing name until it is unique.  <br /></td></tr>
+<tr class="separator:a5bbbfcf34b6c01db0049637495367032 inherit pro_methods_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-methods" name="pro-static-methods"></a>
 Static Protected Member Functions</h2></td></tr>
@@ -216,16 +237,16 @@ Static Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pro_attribs_class_i_container"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_i_container')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_i_container.html">IContainer&lt; Mesh &gt;</a></td></tr>
-<tr class="memitem:ab89da7beaf54b83e3288b9220352d27a inherit pro_attribs_class_i_container" id="r_ab89da7beaf54b83e3288b9220352d27a"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, <a class="el" href="class_mesh.html">Mesh</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#ab89da7beaf54b83e3288b9220352d27a">mData</a></td></tr>
-<tr class="memdesc:ab89da7beaf54b83e3288b9220352d27a inherit pro_attribs_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data of the container.  <br /></td></tr>
-<tr class="separator:ab89da7beaf54b83e3288b9220352d27a inherit pro_attribs_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a242bfb4dd38374deead61b72bc898aeb inherit pro_attribs_class_i_container" id="r_a242bfb4dd38374deead61b72bc898aeb"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#a242bfb4dd38374deead61b72bc898aeb">mCurSelectedName</a></td></tr>
-<tr class="memdesc:a242bfb4dd38374deead61b72bc898aeb inherit pro_attribs_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Currently selected item's name.  <br /></td></tr>
-<tr class="separator:a242bfb4dd38374deead61b72bc898aeb inherit pro_attribs_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab08485d4b950457d7daf99efb2b53438 inherit pro_attribs_class_i_container" id="r_ab08485d4b950457d7daf99efb2b53438"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_mesh.html">Mesh</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_container.html#ab08485d4b950457d7daf99efb2b53438">mCurSelectedItem</a></td></tr>
-<tr class="memdesc:ab08485d4b950457d7daf99efb2b53438 inherit pro_attribs_class_i_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Currently selected item.  <br /></td></tr>
-<tr class="separator:ab08485d4b950457d7daf99efb2b53438 inherit pro_attribs_class_i_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_i_data_container"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_i_data_container')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_i_data_container.html">IDataContainer&lt; Mesh &gt;</a></td></tr>
+<tr class="memitem:a58bf4f7c977ee21b42f9f9cce1c754b3 inherit pro_attribs_class_i_data_container" id="r_a58bf4f7c977ee21b42f9f9cce1c754b3"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, <a class="el" href="class_mesh.html">Mesh</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#a58bf4f7c977ee21b42f9f9cce1c754b3">mData</a></td></tr>
+<tr class="memdesc:a58bf4f7c977ee21b42f9f9cce1c754b3 inherit pro_attribs_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data of the container.  <br /></td></tr>
+<tr class="separator:a58bf4f7c977ee21b42f9f9cce1c754b3 inherit pro_attribs_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08596d13ddd2f33347a1504ddd199386 inherit pro_attribs_class_i_data_container" id="r_a08596d13ddd2f33347a1504ddd199386"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#a08596d13ddd2f33347a1504ddd199386">mCurSelectedName</a></td></tr>
+<tr class="memdesc:a08596d13ddd2f33347a1504ddd199386 inherit pro_attribs_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Currently selected item's name.  <br /></td></tr>
+<tr class="separator:a08596d13ddd2f33347a1504ddd199386 inherit pro_attribs_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acac8675c6a79e080a329017d4aca04e4 inherit pro_attribs_class_i_data_container" id="r_acac8675c6a79e080a329017d4aca04e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_mesh.html">Mesh</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_data_container.html#acac8675c6a79e080a329017d4aca04e4">mCurSelectedItem</a></td></tr>
+<tr class="memdesc:acac8675c6a79e080a329017d4aca04e4 inherit pro_attribs_class_i_data_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Currently selected item.  <br /></td></tr>
+<tr class="separator:acac8675c6a79e080a329017d4aca04e4 inherit pro_attribs_class_i_data_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a7e9b7edf263fbd849d233fee691f5b16" name="a7e9b7edf263fbd849d233fee691f5b16"></a>
@@ -288,6 +309,40 @@ Additional Inherited Members</h2></td></tr>
     <tr><td class="paramname">defaultMat</td><td>Default material</td></tr>
     <tr><td class="paramname">viewProj</td><td>View Projection matrix</td></tr>
     <tr><td class="paramname">drawMats</td><td>Whether to draw materials</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a1084bab7afcee50fded452495ca95131" name="a1084bab7afcee50fded452495ca95131"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1084bab7afcee50fded452495ca95131">&#9670;&#160;</a></span>LoadMaterials()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MeshContainer::LoadMaterials </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_material_container.html">MaterialContainer</a> *&#160;</td>
+          <td class="paramname"><em>materials</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Loads the materials of meshes in this container. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">materials</td><td><a class="el" href="class_material.html" title="Class that stores all texture and render information for a material.">Material</a> list of the scene</td></tr>
   </table>
   </dd>
 </dl>
@@ -372,7 +427,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Newly constructed item from file</dd></dl>
 
-<p>Implements <a class="el" href="class_i_container.html#ada0f6244655ad724c89c91194b7e090a">IContainer&lt; Mesh &gt;</a>.</p>
+<p>Implements <a class="el" href="class_i_data_container.html#a5f0137a4ea830e0d42c2ac633725b2a9">IDataContainer&lt; Mesh &gt;</a>.</p>
 
 </div>
 </div>
@@ -418,6 +473,52 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="affbb591d919addaf272e1af6c69dc7fd" name="affbb591d919addaf272e1af6c69dc7fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affbb591d919addaf272e1af6c69dc7fd">&#9670;&#160;</a></span>RenameItem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MeshContainer::RenameItem </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_mesh.html">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>item</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Renames the given item to the given name. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">item</td><td>Item to rename</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="class_i_data_container.html#a70716f656419269474b39a3a6d912463">IDataContainer&lt; Mesh &gt;</a>.</p>
 
 </div>
 </div>
@@ -471,7 +572,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="class_i_container.html#a248cf14a69d812ddbcb88bf35a5684ee">IContainer&lt; Mesh &gt;</a>.</p>
+<p>Implements <a class="el" href="class_i_data_container.html#ac0c9e5be269f3fd1e56ca805f35bfd6c">IDataContainer&lt; Mesh &gt;</a>.</p>
 
 </div>
 </div>

@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.2</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.3</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -116,6 +116,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:acab793c3f5b273da65335600ea2ba4fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a611da9dcf67d113100685d54276aae00" id="r_a611da9dcf67d113100685d54276aae00"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene_i_o.html#a611da9dcf67d113100685d54276aae00">Export</a> ()</td></tr>
 <tr class="separator:a611da9dcf67d113100685d54276aae00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3591fb3ca14c68d92fcf50f9b36a5a0" id="r_ab3591fb3ca14c68d92fcf50f9b36a5a0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene_i_o.html#ab3591fb3ca14c68d92fcf50f9b36a5a0">PromptSaveChanges</a> (GLFWwindow *window, <a class="el" href="class_state.html">State</a> *state)</td></tr>
+<tr class="memdesc:ab3591fb3ca14c68d92fcf50f9b36a5a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prompts to save changes if there are any unsaved changes.  <br /></td></tr>
+<tr class="separator:ab3591fb3ca14c68d92fcf50f9b36a5a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af7773c68b5523097a24ee5df9a3fec08" id="r_af7773c68b5523097a24ee5df9a3fec08"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene_i_o.html#af7773c68b5523097a24ee5df9a3fec08">SceneIO</a> (<a class="el" href="class_state.html">State</a> *state, <a class="el" href="class_scene.html">Scene</a> *scene, GLFWwindow *window)</td></tr>
 <tr class="separator:af7773c68b5523097a24ee5df9a3fec08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -159,6 +162,14 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td></td></tr>
+    <tr><td class="paramname">scene</td><td></td></tr>
+    <tr><td class="paramname">window</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -210,6 +221,7 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
 </div>
 </div>
@@ -285,6 +297,52 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab3591fb3ca14c68d92fcf50f9b36a5a0" name="ab3591fb3ca14c68d92fcf50f9b36a5a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3591fb3ca14c68d92fcf50f9b36a5a0">&#9670;&#160;</a></span>PromptSaveChanges()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SceneIO::PromptSaveChanges </td>
+          <td>(</td>
+          <td class="paramtype">GLFWwindow *&#160;</td>
+          <td class="paramname"><em>window</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_state.html">State</a> *&#160;</td>
+          <td class="paramname"><em>state</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Prompts to save changes if there are any unsaved changes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">window</td><td>The current window of the app</td></tr>
+    <tr><td class="paramname">state</td><td>Global state of the app</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether to continue with the prompting operation</dd></dl>
 
 </div>
 </div>

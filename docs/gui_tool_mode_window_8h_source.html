@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.2</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.3</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -104,7 +104,7 @@ $(document).ready(function(){initNavTree('gui_tool_mode_window_8h_source.html','
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;tools/state.h&quot;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;files/fileSystem.h&quot;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;rendering/scene.h&quot;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;windows/iGUIWindow.h&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;interfaces/iGUIWindow.h&quot;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;interaction/selection.h&quot;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -186,17 +186,17 @@ $(document).ready(function(){initNavTree('gui_tool_mode_window_8h_source.html','
 <div class="ttc" id="aclass_g_u_i_tool_mode_window_html_aad9ec0a5ef8b1100392e400eb6066be0"><div class="ttname"><a href="class_g_u_i_tool_mode_window.html#aad9ec0a5ef8b1100392e400eb6066be0">GUIToolModeWindow::mState</a></div><div class="ttdeci">State * mState</div><div class="ttdef"><b>Definition</b> guiToolModeWindow.h:17</div></div>
 <div class="ttc" id="aclass_g_u_i_tool_mode_window_html_ab38e96ab707a6ad3f29c6d2b68fa6d34"><div class="ttname"><a href="class_g_u_i_tool_mode_window.html#ab38e96ab707a6ad3f29c6d2b68fa6d34">GUIToolModeWindow::mModeFileNames</a></div><div class="ttdeci">const std::string mModeFileNames[3]</div><div class="ttdef"><b>Definition</b> guiToolModeWindow.h:21</div></div>
 <div class="ttc" id="aclass_g_u_i_tool_mode_window_html_ad17caa92d141c15fa992d75b5f7ff3bf"><div class="ttname"><a href="class_g_u_i_tool_mode_window.html#ad17caa92d141c15fa992d75b5f7ff3bf">GUIToolModeWindow::mTextureIDs</a></div><div class="ttdeci">std::vector&lt; unsigned int &gt; mTextureIDs</div><div class="ttdef"><b>Definition</b> guiToolModeWindow.h:22</div></div>
-<div class="ttc" id="aclass_i_g_u_i_window_html"><div class="ttname"><a href="class_i_g_u_i_window.html">IGUIWindow</a></div><div class="ttdef"><b>Definition</b> iGUIWindow.h:28</div></div>
-<div class="ttc" id="aclass_i_g_u_i_window_html_a99aabf88516b9b3c4b14adc870ba7156"><div class="ttname"><a href="class_i_g_u_i_window.html#a99aabf88516b9b3c4b14adc870ba7156">IGUIWindow::mIsEnabled</a></div><div class="ttdeci">bool mIsEnabled</div><div class="ttdef"><b>Definition</b> iGUIWindow.h:33</div></div>
-<div class="ttc" id="aclass_i_g_u_i_window_html_aa6673bf3196758afd8acc3df9fc8df26"><div class="ttname"><a href="class_i_g_u_i_window.html#aa6673bf3196758afd8acc3df9fc8df26">IGUIWindow::mType</a></div><div class="ttdeci">GUI mType</div><div class="ttdef"><b>Definition</b> iGUIWindow.h:30</div></div>
-<div class="ttc" id="aclass_scene_html"><div class="ttname"><a href="class_scene.html">Scene</a></div><div class="ttdef"><b>Definition</b> scene.h:27</div></div>
-<div class="ttc" id="aclass_selection_html"><div class="ttname"><a href="class_selection.html">Selection</a></div><div class="ttdef"><b>Definition</b> selection.h:18</div></div>
-<div class="ttc" id="aclass_selection_html_a28f4e9e54d7d46f1e1f7bc5bb95d887f"><div class="ttname"><a href="class_selection.html#a28f4e9e54d7d46f1e1f7bc5bb95d887f">Selection::GetSelMode</a></div><div class="ttdeci">SelMode GetSelMode()</div><div class="ttdef"><b>Definition</b> selection.cpp:221</div></div>
-<div class="ttc" id="aclass_selection_html_aad3b872e155cfd3e7f52a9935b0452b4"><div class="ttname"><a href="class_selection.html#aad3b872e155cfd3e7f52a9935b0452b4">Selection::SetSelMode</a></div><div class="ttdeci">void SetSelMode(SelMode _sel)</div><div class="ttdef"><b>Definition</b> selection.cpp:197</div></div>
+<div class="ttc" id="aclass_i_g_u_i_window_html"><div class="ttname"><a href="class_i_g_u_i_window.html">IGUIWindow</a></div><div class="ttdef"><b>Definition</b> iGUIWindow.h:30</div></div>
+<div class="ttc" id="aclass_i_g_u_i_window_html_a99aabf88516b9b3c4b14adc870ba7156"><div class="ttname"><a href="class_i_g_u_i_window.html#a99aabf88516b9b3c4b14adc870ba7156">IGUIWindow::mIsEnabled</a></div><div class="ttdeci">bool mIsEnabled</div><div class="ttdef"><b>Definition</b> iGUIWindow.h:35</div></div>
+<div class="ttc" id="aclass_i_g_u_i_window_html_aa6673bf3196758afd8acc3df9fc8df26"><div class="ttname"><a href="class_i_g_u_i_window.html#aa6673bf3196758afd8acc3df9fc8df26">IGUIWindow::mType</a></div><div class="ttdeci">GUI mType</div><div class="ttdef"><b>Definition</b> iGUIWindow.h:32</div></div>
+<div class="ttc" id="aclass_scene_html"><div class="ttname"><a href="class_scene.html">Scene</a></div><div class="ttdef"><b>Definition</b> scene.h:36</div></div>
+<div class="ttc" id="aclass_selection_html"><div class="ttname"><a href="class_selection.html">Selection</a></div><div class="ttdef"><b>Definition</b> selection.h:19</div></div>
+<div class="ttc" id="aclass_selection_html_a28f4e9e54d7d46f1e1f7bc5bb95d887f"><div class="ttname"><a href="class_selection.html#a28f4e9e54d7d46f1e1f7bc5bb95d887f">Selection::GetSelMode</a></div><div class="ttdeci">SelMode GetSelMode()</div><div class="ttdef"><b>Definition</b> selection.cpp:241</div></div>
+<div class="ttc" id="aclass_selection_html_aad3b872e155cfd3e7f52a9935b0452b4"><div class="ttname"><a href="class_selection.html#aad3b872e155cfd3e7f52a9935b0452b4">Selection::SetSelMode</a></div><div class="ttdeci">void SetSelMode(SelMode _sel)</div><div class="ttdef"><b>Definition</b> selection.cpp:217</div></div>
 <div class="ttc" id="aclass_state_html"><div class="ttname"><a href="class_state.html">State</a></div><div class="ttdef"><b>Definition</b> state.h:11</div></div>
-<div class="ttc" id="aclass_state_html_a25e1a0ddb0812cea17f6ccb8046595b3"><div class="ttname"><a href="class_state.html#a25e1a0ddb0812cea17f6ccb8046595b3">State::GetSel</a></div><div class="ttdeci">Selection * GetSel() const</div><div class="ttdef"><b>Definition</b> state.h:81</div></div>
-<div class="ttc" id="aclass_state_html_afd3dcc11912d594d1189b23419d19c0f"><div class="ttname"><a href="class_state.html#afd3dcc11912d594d1189b23419d19c0f">State::flipTextures</a></div><div class="ttdeci">UIBool flipTextures</div><div class="ttdef"><b>Definition</b> state.h:34</div></div>
-<div class="ttc" id="astruct_texture_html_a1e6170843d63d033bc15c01c39d0144b"><div class="ttname"><a href="struct_texture.html#a1e6170843d63d033bc15c01c39d0144b">Texture::TextureFromFile</a></div><div class="ttdeci">static unsigned int TextureFromFile(const std::string &amp;directory, const std::string &amp;name, bool gamma=false)</div><div class="ttdoc">Loads the given texture from a file.</div><div class="ttdef"><b>Definition</b> texture.h:110</div></div>
+<div class="ttc" id="aclass_state_html_a25e1a0ddb0812cea17f6ccb8046595b3"><div class="ttname"><a href="class_state.html#a25e1a0ddb0812cea17f6ccb8046595b3">State::GetSel</a></div><div class="ttdeci">Selection * GetSel() const</div><div class="ttdef"><b>Definition</b> state.h:82</div></div>
+<div class="ttc" id="aclass_state_html_afd3dcc11912d594d1189b23419d19c0f"><div class="ttname"><a href="class_state.html#afd3dcc11912d594d1189b23419d19c0f">State::flipTextures</a></div><div class="ttdeci">UIBool flipTextures</div><div class="ttdef"><b>Definition</b> state.h:35</div></div>
+<div class="ttc" id="astruct_texture_html_a1e6170843d63d033bc15c01c39d0144b"><div class="ttname"><a href="struct_texture.html#a1e6170843d63d033bc15c01c39d0144b">Texture::TextureFromFile</a></div><div class="ttdeci">static unsigned int TextureFromFile(const std::string &amp;directory, const std::string &amp;name, bool gamma=false)</div><div class="ttdoc">Loads the given texture from a file.</div><div class="ttdef"><b>Definition</b> texture.h:138</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

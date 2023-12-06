@@ -1,6 +1,7 @@
 var class_i_entity =
 [
-    [ "IEntity", "class_i_entity.html#a2ad297529d4ae454e1a2bd675df70b87", null ],
+    [ "IEntity", "class_i_entity.html#a7c34755f748d6b7c9314822ec84973cc", null ],
+    [ "IEntity", "class_i_entity.html#ae1a68f57ab67a30d922d2d0b1d705175", null ],
     [ "CalcBasis", "class_i_entity.html#ae5f9babc56657e83dbd44753dcb766c1", null ],
     [ "Cleanup", "class_i_entity.html#ad990478f053057beb7a848225e42a09d", null ],
     [ "Draw", "class_i_entity.html#abf8bfeee61dc8fffd69fad4d1599cd5f", null ],
@@ -23,6 +24,7 @@ var class_i_entity =
     [ "GetWorldPos", "class_i_entity.html#adc8b678082db32d027d7b4c82eab4154", null ],
     [ "IsEnabled", "class_i_entity.html#a520103db0565c5ea0b903e6d8ee4599a", null ],
     [ "IsEnabledInHierarchy", "class_i_entity.html#a2469feac2c6d36cf5bd487b21d6b201e", null ],
+    [ "LoadMaterial", "class_i_entity.html#a72edb08f8768d02765be5b2df7d3b2da", null ],
     [ "RecalcMatrices", "class_i_entity.html#ab7a84787ec4ef848e47944b7dddfde30", null ],
     [ "Rotate", "class_i_entity.html#adfdffd29d934902f947213ed8f541ede", null ],
     [ "Scale", "class_i_entity.html#a672e2fe17d88f760b4f434eb2c281243", null ],
@@ -42,6 +44,7 @@ var class_i_entity =
     [ "mIsEnabledParent", "class_i_entity.html#aaa72fa1aef6f1c9086ad491b615a6eef", null ],
     [ "mIsEnabledSelf", "class_i_entity.html#af6a11df5a5763c8e7a0046959c5471a2", null ],
     [ "mMaterial", "class_i_entity.html#a854806eacfc7477cad34365e946d7c0b", null ],
+    [ "mMaterialName", "class_i_entity.html#a6a74825eae0878a191bb9abd8262295d", null ],
     [ "mModelMatrix", "class_i_entity.html#a0ddee8a1dbbafa7940d15d360ef3c906", null ],
     [ "mName", "class_i_entity.html#a83eda7c0eb837eaf23dd07fdf2e441c0", null ],
     [ "mNormalModelMatrix", "class_i_entity.html#a21880cacb03422931dd4a7031c539a43", null ],

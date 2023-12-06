@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.2</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.3</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -109,6 +109,11 @@ Inheritance diagram for Light:</div>
 <area shape="poly" title=" " alt="" coords="52,48,52,80,47,80,47,48"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<div class="dynheader">
+Collaboration diagram for Light:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_light__coll__graph.png" border="0" usemap="#a_light_coll__map" alt="Collaboration graph"/></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -116,6 +121,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a58b5f98eb4a123aef1ccb8c1d50dcaf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9497ebb440c36182f1978f9e85c5351" id="r_ad9497ebb440c36182f1978f9e85c5351"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#ad9497ebb440c36182f1978f9e85c5351">UpdateShader</a> (<a class="el" href="class_shader.html">Shader</a> *shader)</td></tr>
 <tr class="separator:ad9497ebb440c36182f1978f9e85c5351"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56b5071e4a615c919fce053ba1d695c5" id="r_a56b5071e4a615c919fce053ba1d695c5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a56b5071e4a615c919fce053ba1d695c5">IsCube</a> ()</td></tr>
+<tr class="separator:a56b5071e4a615c919fce053ba1d695c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aacc425b195c1db3d95f55728dd74dca5" id="r_aacc425b195c1db3d95f55728dd74dca5"><td class="memItemLeft" align="right" valign="top">LightType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#aacc425b195c1db3d95f55728dd74dca5">GetType</a> ()</td></tr>
 <tr class="separator:aacc425b195c1db3d95f55728dd74dca5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e932002262c3abb251911b48b306bfe" id="r_a1e932002262c3abb251911b48b306bfe"><td class="memItemLeft" align="right" valign="top">glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a1e932002262c3abb251911b48b306bfe">GetColor</a> ()</td></tr>
@@ -172,10 +179,19 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a39cea7d92387ccabd6e3f1dcdafe1b42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e48fa1ba33c33d9be80b48de107a8fd" id="r_a5e48fa1ba33c33d9be80b48de107a8fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a5e48fa1ba33c33d9be80b48de107a8fd">SetRange</a> (const float lightRange)</td></tr>
 <tr class="separator:a5e48fa1ba33c33d9be80b48de107a8fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e89edad8ae8013e5f40758342f82c06" id="r_a9e89edad8ae8013e5f40758342f82c06"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a9e89edad8ae8013e5f40758342f82c06">LoadMaterials</a> (<a class="el" href="class_material_container.html">MaterialContainer</a> *materials, <a class="el" href="class_texture_container.html">TextureContainer</a> *textures)</td></tr>
+<tr class="separator:a9e89edad8ae8013e5f40758342f82c06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae17b00a2a401685ede5e8bf8c744949d" id="r_ae17b00a2a401685ede5e8bf8c744949d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#ae17b00a2a401685ede5e8bf8c744949d">Light</a> (LightType type=LightType::POINT, const glm::vec3 &amp;pos=glm::vec3(1.0f), const glm::vec3 &amp;dir=glm::vec3(-1.0f), const glm::vec3 &amp;color=glm::vec3(1.0f), float kd=1.0f, float ka=0.1f, float ks=0.5f, bool gamma=true, float range=13.0f, float spotInner=25, float spotOuter=35)</td></tr>
 <tr class="separator:ae17b00a2a401685ede5e8bf8c744949d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a102edf7940ae1fb528fc7e6a1229c98a" id="r_a102edf7940ae1fb528fc7e6a1229c98a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a102edf7940ae1fb528fc7e6a1229c98a">Light</a> (<a class="el" href="class_config.html">Config</a> *config)</td></tr>
 <tr class="separator:a102edf7940ae1fb528fc7e6a1229c98a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_i_selectable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_i_selectable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_i_selectable.html">ISelectable</a></td></tr>
+<tr class="memitem:a24c43a8d7f3b13e5a00b70599c145d99 inherit pub_methods_class_i_selectable" id="r_a24c43a8d7f3b13e5a00b70599c145d99"><td class="memItemLeft" align="right" valign="top">virtual SelectableType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_selectable.html#a24c43a8d7f3b13e5a00b70599c145d99">GetSelectableType</a> ()</td></tr>
+<tr class="memdesc:a24c43a8d7f3b13e5a00b70599c145d99 inherit pub_methods_class_i_selectable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the type of the selectable.  <br /></td></tr>
+<tr class="separator:a24c43a8d7f3b13e5a00b70599c145d99 inherit pub_methods_class_i_selectable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecc50cbbcfd4a303e20fb2aedf624ff7 inherit pub_methods_class_i_selectable" id="r_aecc50cbbcfd4a303e20fb2aedf624ff7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_selectable.html#aecc50cbbcfd4a303e20fb2aedf624ff7">ISelectable</a> (SelectableType type=SelectableType::NONE)</td></tr>
+<tr class="memdesc:aecc50cbbcfd4a303e20fb2aedf624ff7 inherit pub_methods_class_i_selectable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the type of the selectable.  <br /></td></tr>
+<tr class="separator:aecc50cbbcfd4a303e20fb2aedf624ff7 inherit pub_methods_class_i_selectable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -184,25 +200,27 @@ Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a7d74b1637c4f371fafa639469d77fff4" id="r_a7d74b1637c4f371fafa639469d77fff4"><td class="memItemLeft" align="right" valign="top">glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a7d74b1637c4f371fafa639469d77fff4">mColor</a></td></tr>
+<tr class="memitem:a7d74b1637c4f371fafa639469d77fff4" id="r_a7d74b1637c4f371fafa639469d77fff4"><td class="memItemLeft" align="right" valign="top">glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a7d74b1637c4f371fafa639469d77fff4">mColor</a> = glm::vec3(1.0f)</td></tr>
 <tr class="separator:a7d74b1637c4f371fafa639469d77fff4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac12b571d6c7a9b38a1a17cab575ee553" id="r_ac12b571d6c7a9b38a1a17cab575ee553"><td class="memItemLeft" align="right" valign="top">glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#ac12b571d6c7a9b38a1a17cab575ee553">mBaseColor</a></td></tr>
+<tr class="memitem:ac12b571d6c7a9b38a1a17cab575ee553" id="r_ac12b571d6c7a9b38a1a17cab575ee553"><td class="memItemLeft" align="right" valign="top">glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#ac12b571d6c7a9b38a1a17cab575ee553">mBaseColor</a> = glm::vec3(1.0f)</td></tr>
 <tr class="separator:ac12b571d6c7a9b38a1a17cab575ee553"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28a9f55c6c7a442601561a2b05278f1b" id="r_a28a9f55c6c7a442601561a2b05278f1b"><td class="memItemLeft" align="right" valign="top">glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a28a9f55c6c7a442601561a2b05278f1b">mOffset</a></td></tr>
+<tr class="memitem:a28a9f55c6c7a442601561a2b05278f1b" id="r_a28a9f55c6c7a442601561a2b05278f1b"><td class="memItemLeft" align="right" valign="top">glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a28a9f55c6c7a442601561a2b05278f1b">mOffset</a> = glm::vec3(0.0f)</td></tr>
 <tr class="separator:a28a9f55c6c7a442601561a2b05278f1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a176f81f9b66ca6fdb4d154b5ecb4821e" id="r_a176f81f9b66ca6fdb4d154b5ecb4821e"><td class="memItemLeft" align="right" valign="top">glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a176f81f9b66ca6fdb4d154b5ecb4821e">mDir</a></td></tr>
+<tr class="memitem:a176f81f9b66ca6fdb4d154b5ecb4821e" id="r_a176f81f9b66ca6fdb4d154b5ecb4821e"><td class="memItemLeft" align="right" valign="top">glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a176f81f9b66ca6fdb4d154b5ecb4821e">mDir</a> = glm::vec3(5, -5, -5)</td></tr>
 <tr class="separator:a176f81f9b66ca6fdb4d154b5ecb4821e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab777e05e29cf5b105a0017ba03131fa" id="r_aab777e05e29cf5b105a0017ba03131fa"><td class="memItemLeft" align="right" valign="top">glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#aab777e05e29cf5b105a0017ba03131fa">mPos</a></td></tr>
+<tr class="memitem:aab777e05e29cf5b105a0017ba03131fa" id="r_aab777e05e29cf5b105a0017ba03131fa"><td class="memItemLeft" align="right" valign="top">glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#aab777e05e29cf5b105a0017ba03131fa">mPos</a> = glm::vec3(-5, 5, 5)</td></tr>
 <tr class="separator:aab777e05e29cf5b105a0017ba03131fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b609e78b30877a4b562fec7f283e41a" id="r_a0b609e78b30877a4b562fec7f283e41a"><td class="memItemLeft" align="right" valign="top">LightType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a0b609e78b30877a4b562fec7f283e41a">mType</a></td></tr>
+<tr class="memitem:a0b609e78b30877a4b562fec7f283e41a" id="r_a0b609e78b30877a4b562fec7f283e41a"><td class="memItemLeft" align="right" valign="top">LightType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a0b609e78b30877a4b562fec7f283e41a">mType</a> = LightType::POINT</td></tr>
 <tr class="separator:a0b609e78b30877a4b562fec7f283e41a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae39e5dda3caffa0221215f4b52a9c2db" id="r_ae39e5dda3caffa0221215f4b52a9c2db"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#ae39e5dda3caffa0221215f4b52a9c2db">mKD</a></td></tr>
+<tr class="memitem:a248d2b48bcd449843359907851570cb4" id="r_a248d2b48bcd449843359907851570cb4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a248d2b48bcd449843359907851570cb4">mIsCube</a> = false</td></tr>
+<tr class="separator:a248d2b48bcd449843359907851570cb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae39e5dda3caffa0221215f4b52a9c2db" id="r_ae39e5dda3caffa0221215f4b52a9c2db"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#ae39e5dda3caffa0221215f4b52a9c2db">mKD</a> = 1.0f</td></tr>
 <tr class="separator:ae39e5dda3caffa0221215f4b52a9c2db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9dc9284c0df89318e02b9a29001e55e" id="r_ad9dc9284c0df89318e02b9a29001e55e"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#ad9dc9284c0df89318e02b9a29001e55e">mKA</a></td></tr>
+<tr class="memitem:ad9dc9284c0df89318e02b9a29001e55e" id="r_ad9dc9284c0df89318e02b9a29001e55e"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#ad9dc9284c0df89318e02b9a29001e55e">mKA</a> = 0.1f</td></tr>
 <tr class="separator:ad9dc9284c0df89318e02b9a29001e55e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71f391054e598d1aab7d948dbba3e574" id="r_a71f391054e598d1aab7d948dbba3e574"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a71f391054e598d1aab7d948dbba3e574">mKS</a></td></tr>
+<tr class="memitem:a71f391054e598d1aab7d948dbba3e574" id="r_a71f391054e598d1aab7d948dbba3e574"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a71f391054e598d1aab7d948dbba3e574">mKS</a> = 1.0f</td></tr>
 <tr class="separator:a71f391054e598d1aab7d948dbba3e574"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86425bb98f561f42308f89959032e899" id="r_a86425bb98f561f42308f89959032e899"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a86425bb98f561f42308f89959032e899">mGamma</a></td></tr>
+<tr class="memitem:a86425bb98f561f42308f89959032e899" id="r_a86425bb98f561f42308f89959032e899"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a86425bb98f561f42308f89959032e899">mGamma</a> = false</td></tr>
 <tr class="separator:a86425bb98f561f42308f89959032e899"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad64b805c63590530a8444f30ec1fca3b" id="r_ad64b805c63590530a8444f30ec1fca3b"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#ad64b805c63590530a8444f30ec1fca3b">mPointC</a></td></tr>
 <tr class="separator:ad64b805c63590530a8444f30ec1fca3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -212,9 +230,9 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:ac9081e5b82f4ee3b182dc42cb530d90d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78dd06509f87002e90d6806921f6400e" id="r_a78dd06509f87002e90d6806921f6400e"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a78dd06509f87002e90d6806921f6400e">mLightRange</a></td></tr>
 <tr class="separator:a78dd06509f87002e90d6806921f6400e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7692c752347c7daf13db5076ae70128b" id="r_a7692c752347c7daf13db5076ae70128b"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a7692c752347c7daf13db5076ae70128b">mSpotInner</a></td></tr>
+<tr class="memitem:a7692c752347c7daf13db5076ae70128b" id="r_a7692c752347c7daf13db5076ae70128b"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a7692c752347c7daf13db5076ae70128b">mSpotInner</a> = 25.0f</td></tr>
 <tr class="separator:a7692c752347c7daf13db5076ae70128b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20ec33a6d1745c22ed4126f026c25668" id="r_a20ec33a6d1745c22ed4126f026c25668"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a20ec33a6d1745c22ed4126f026c25668">mSpotOuter</a></td></tr>
+<tr class="memitem:a20ec33a6d1745c22ed4126f026c25668" id="r_a20ec33a6d1745c22ed4126f026c25668"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a20ec33a6d1745c22ed4126f026c25668">mSpotOuter</a> = 35.0f</td></tr>
 <tr class="separator:a20ec33a6d1745c22ed4126f026c25668"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f3a31a6e60363ab8d0597ea7e902a4d" id="r_a0f3a31a6e60363ab8d0597ea7e902a4d"><td class="memItemLeft" align="right" valign="top">glm::mat4&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a0f3a31a6e60363ab8d0597ea7e902a4d">mLightSpace</a></td></tr>
 <tr class="separator:a0f3a31a6e60363ab8d0597ea7e902a4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -224,6 +242,10 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a284717a92d0101cc41cd43e1df29746f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a740b7eb3202c2f16f0381b53b5b498f9" id="r_a740b7eb3202c2f16f0381b53b5b498f9"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html#a740b7eb3202c2f16f0381b53b5b498f9">mLightSize</a></td></tr>
 <tr class="separator:a740b7eb3202c2f16f0381b53b5b498f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_i_selectable"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_i_selectable')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_i_selectable.html">ISelectable</a></td></tr>
+<tr class="memitem:abd17378357a7f2f1b607e8ff4b12f678 inherit pro_attribs_class_i_selectable" id="r_abd17378357a7f2f1b607e8ff4b12f678"><td class="memItemLeft" align="right" valign="top">SelectableType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_selectable.html#abd17378357a7f2f1b607e8ff4b12f678">mSelectableType</a> = SelectableType::NONE</td></tr>
+<tr class="memdesc:abd17378357a7f2f1b607e8ff4b12f678 inherit pro_attribs_class_i_selectable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of the selectable.  <br /></td></tr>
+<tr class="separator:abd17378357a7f2f1b607e8ff4b12f678 inherit pro_attribs_class_i_selectable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ae17b00a2a401685ede5e8bf8c744949d" name="ae17b00a2a401685ede5e8bf8c744949d"></a>
@@ -749,6 +771,69 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a56b5071e4a615c919fce053ba1d695c5" name="a56b5071e4a615c919fce053ba1d695c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56b5071e4a615c919fce053ba1d695c5">&#9670;&#160;</a></span>IsCube()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Light::IsCube </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9e89edad8ae8013e5f40758342f82c06" name="a9e89edad8ae8013e5f40758342f82c06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e89edad8ae8013e5f40758342f82c06">&#9670;&#160;</a></span>LoadMaterials()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Light::LoadMaterials </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_material_container.html">MaterialContainer</a> *&#160;</td>
+          <td class="paramname"><em>materials</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_texture_container.html">TextureContainer</a> *&#160;</td>
+          <td class="paramname"><em>textures</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="class_p_light_cube.html#adcd71c5a456373dbb534bebf51ea3d0e">PLightCube</a>.</p>
+
+</div>
+</div>
 <a id="a9a8423679ea1bca136a70cfe8784d2bf" name="a9a8423679ea1bca136a70cfe8784d2bf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9a8423679ea1bca136a70cfe8784d2bf">&#9670;&#160;</a></span>SetBaseColor()</h2>
 
@@ -1182,7 +1267,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">glm::vec3 Light::mBaseColor</td>
+          <td class="memname">glm::vec3 Light::mBaseColor = glm::vec3(1.0f)</td>
         </tr>
       </table>
   </td>
@@ -1204,7 +1289,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">glm::vec3 Light::mColor</td>
+          <td class="memname">glm::vec3 Light::mColor = glm::vec3(1.0f)</td>
         </tr>
       </table>
   </td>
@@ -1226,7 +1311,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">glm::vec3 Light::mDir</td>
+          <td class="memname">glm::vec3 Light::mDir = glm::vec3(5, -5, -5)</td>
         </tr>
       </table>
   </td>
@@ -1270,7 +1355,29 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool Light::mGamma</td>
+          <td class="memname">bool Light::mGamma = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a248d2b48bcd449843359907851570cb4" name="a248d2b48bcd449843359907851570cb4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a248d2b48bcd449843359907851570cb4">&#9670;&#160;</a></span>mIsCube</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Light::mIsCube = false</td>
         </tr>
       </table>
   </td>
@@ -1292,7 +1399,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">float Light::mKA</td>
+          <td class="memname">float Light::mKA = 0.1f</td>
         </tr>
       </table>
   </td>
@@ -1314,7 +1421,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">float Light::mKD</td>
+          <td class="memname">float Light::mKD = 1.0f</td>
         </tr>
       </table>
   </td>
@@ -1336,7 +1443,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">float Light::mKS</td>
+          <td class="memname">float Light::mKS = 1.0f</td>
         </tr>
       </table>
   </td>
@@ -1446,7 +1553,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">glm::vec3 Light::mOffset</td>
+          <td class="memname">glm::vec3 Light::mOffset = glm::vec3(0.0f)</td>
         </tr>
       </table>
   </td>
@@ -1534,7 +1641,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">glm::vec3 Light::mPos</td>
+          <td class="memname">glm::vec3 Light::mPos = glm::vec3(-5, 5, 5)</td>
         </tr>
       </table>
   </td>
@@ -1556,7 +1663,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">float Light::mSpotInner</td>
+          <td class="memname">float Light::mSpotInner = 25.0f</td>
         </tr>
       </table>
   </td>
@@ -1578,7 +1685,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">float Light::mSpotOuter</td>
+          <td class="memname">float Light::mSpotOuter = 35.0f</td>
         </tr>
       </table>
   </td>
@@ -1600,7 +1707,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">LightType Light::mType</td>
+          <td class="memname">LightType Light::mType = LightType::POINT</td>
         </tr>
       </table>
   </td>

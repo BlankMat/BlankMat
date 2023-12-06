@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['empty_0',['Empty',['../class_i_container.html#a7fe3b4981c2794348bac6c8196b42ee0',1,'IContainer']]],
+  ['empty_0',['Empty',['../class_i_data_container.html#ae4a0d3d9308d4bccbe7f1858978b28b5',1,'IDataContainer']]],
   ['enable_1',['enable',['../class_i_entity.html#a1abbeac520f7b0f289793ca14b81c9b6',1,'IEntity::Enable()'],['../class_i_g_u_i_window.html#a902ba67beb32a44b30454ac1d7c1378c',1,'IGUIWindow::Enable()']]],
   ['enablealphamap_2',['enableAlphaMap',['../class_state.html#aa79793bb4ec6d385e07b8603df0ec359',1,'State']]],
   ['enableambientmap_3',['enableAmbientMap',['../class_state.html#ae399565b60aa6d42452c8bc148e07640',1,'State']]],

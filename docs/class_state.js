@@ -1,6 +1,7 @@
 var class_state =
 [
     [ "State", "class_state.html#a8233b402b9d7526c70161ff741281bca", null ],
+    [ "ClearActionStack", "class_state.html#acab3ed2a6e2b6ea547d4d09556f5ca5b", null ],
     [ "ClearLoadedMaterials", "class_state.html#a7525a54b3ee929cbc26941f84a728313", null ],
     [ "GetActionStack", "class_state.html#a953af08b96cbb631cd02f2515ebe223a", null ],
     [ "GetConfig", "class_state.html#a7e09bc9635e828e0bebd31fd5f5962e8", null ],
@@ -13,6 +14,7 @@ var class_state =
     [ "SetCurFileName", "class_state.html#a17cd741091534c3f65a3dc817f095709", null ],
     [ "ToggleAlphaMap", "class_state.html#a6e177bb8c0dab02f77fd5c88f6afae03", null ],
     [ "ToggleAmbientMap", "class_state.html#a552daadf25dc248a9143696cc696d50f", null ],
+    [ "ToggleCollapseMeshNodes", "class_state.html#a0814faa313af52192970c6bb6240817f", null ],
     [ "ToggleDefaultMat", "class_state.html#ad327d44702cec89e2f6cb00df257b1af", null ],
     [ "ToggleDiffuseMap", "class_state.html#ab8bc90f58d502bd5442bfcfc97bf9e64", null ],
     [ "ToggleDisplayGrid", "class_state.html#af723a3ae31acf3825012128c3a32238e", null ],
@@ -21,8 +23,8 @@ var class_state =
     [ "ToggleNormalMap", "class_state.html#a009ed55deb096ba9d54218d93186fec2", null ],
     [ "ToggleShadows", "class_state.html#aeb0e1ef0e9c214af8f19cff1f66256ba", null ],
     [ "ToggleSpecularMap", "class_state.html#a26ae217428eaef5e0bcb6f9364e38b3f", null ],
+    [ "collapseMeshNodes", "class_state.html#ae76fe7b3cca01641787f9bfe51714103", null ],
     [ "curShader", "class_state.html#aa35d0ff6cd720a22ba6cabc6ee2030b8", null ],
-    [ "DEBUG_fakeNumber", "class_state.html#af043f3d885d3b60c3465a098edba4d6b", null ],
     [ "defaultMat", "class_state.html#acc8727b7830799cae529c1ee0c793729", null ],
     [ "depthMap", "class_state.html#a5460d08d807c98cf30854b1c951efff6", null ],
     [ "depthMapFBO", "class_state.html#a94ae127b89332741742ee5d287d99b8b", null ],
@@ -44,5 +46,6 @@ var class_state =
     [ "mouseCurX", "class_state.html#a7d7298a62e3234863c005c2458d32e81", null ],
     [ "mouseCurY", "class_state.html#a169fa4e2270c5cad1a9be02f56f5faea", null ],
     [ "mousePrevX", "class_state.html#a59eaed7ce88614eb0717d7cec3b832cd", null ],
-    [ "mousePrevY", "class_state.html#a06ca043b47ade3d1763930e34e39613b", null ]
+    [ "mousePrevY", "class_state.html#a06ca043b47ade3d1763930e34e39613b", null ],
+    [ "shouldRender", "class_state.html#a0ba92f439c36c9525c7c63faf686d3c8", null ]
 ];
