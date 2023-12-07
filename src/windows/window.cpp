@@ -138,14 +138,12 @@ void Window::OpenGUI(GUI gui)
         AddGUI(new GUIMenuBarWindow(mInput, mConfig, true));
         return;
     case GUI::TOOLBAR:
-        AddGUI(new GUIToolbarWindow(mState, mScene, true));
         return;
     case GUI::MATERIAL_BAR:
         return;
     case GUI::TRANSFORM_EDITOR:
         return;
     case GUI::MODEBAR:
-        AddGUI(new GUIToolModeWindow(mState, mScene, true));
         return;
     case GUI::MODEL_EDITOR:
         return;
@@ -164,7 +162,6 @@ void Window::OpenGUI(GUI gui)
         AddGUI(new GUICameraViewer(mState, mScene, true));
         return;
     case GUI::ACTION_LIST:
-        AddGUI(new GUIActionList(mState, mScene, true));
         return;
     case GUI::NONE:
     default:
