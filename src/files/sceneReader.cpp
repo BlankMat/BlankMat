@@ -358,9 +358,14 @@ void SceneReader::ReadScene(Scene* scene, const std::string& path, bool replace)
 	{
 		ReadBlankMatScene(scene, path, replace);
 	}
-	else
+	// Validate extension
+	else if (ext == DAE || ext == OBJ || ext == STL || ext == PLY || ext == FBX || ext == BLEND || ext == GLTF || ext == MAX3DS)
 	{
 		ReadAssimpScene(scene, path, replace);
+	}
+	else
+	{
+		std::cout << "ERROR::READSCENE::INVALID_FORMAT: File format " << ext << " not supported or not recognized." << std::endl;
 	}
 	scene->GetState()->shouldRender = true;
 }

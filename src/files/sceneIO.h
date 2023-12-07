@@ -175,8 +175,9 @@ public:
 	{
 		std::cout << "Ran function Import" << std::endl;
 		std::vector<std::string> selection = pfd::open_file("Import File", mCurDirectory, {
-			"3D Models (.obj)", "*.obj", 
-			"BlankMat Scenes (.blank)", "*.blank"
+			"3D Model (.obj, .dae, .stl, .ply)", "*.obj *.dae *.stl *.ply", 
+			"3D Scene (.fbx, .blend, .gltf, .3ds)", "*.fbx *.blend *.gltf *.3ds",
+			"BlankMat Scene (.blank)", "*.blank"
 		}, pfd::opt::none).result();
 
 		if (!selection.empty())
@@ -192,10 +193,46 @@ public:
 	void Export()
 	{
 		std::cout << "Ran function Export" << std::endl;
-		std::string fileName = pfd::save_file("Export", mCurDirectory, {
-			"Obj (.obj)", "*.obj",
-			"BlankMat Scenes (.blank)", "*.blank"
-		}, pfd::opt::none).result();
+		std::string fileName = "";
+		while (fileName == "")
+		{
+			std::string selection = pfd::save_file("Export", mCurDirectory, {
+				"Wavefront Obj (.obj)", "*.obj",
+				"Collada (.dae)", "*.dae",
+				"Stereolithography (.stl)", "*.stl",
+				"Standard Polygon Library (.ply)", "*.ply",
+				"BlankMat Scene (.blank)", "*.blank"
+			}, pfd::opt::none).result();
+
+			// If the file extension is valid, use the selection
+			std::string ext = GetFileExtension(selection);
+			if (ext == BLANK || ext == OBJ || ext == DAE || ext == STL || ext == PLY)
+			{
+				fileName = selection;
+				break;
+			}
+			// If the file extension isn't valid, prompt the user for a new one
+			else
+			{
+				pfd::button res = pfd::message(
+					"Invalid Extension",
+					"The entered filename does not have a valid extension. The only extensions supported are .blank, .obj, .dae, .stl, and .ply. Please re-enter the filename.",
+					pfd::choice::ok_cancel,
+					pfd::icon::warning
+				).result();
+
+				switch (res)
+				{
+				case pfd::button::ok:
+					// Re-enter file on ok
+					break;
+				case pfd::button::cancel:
+				default:
+					// Exit export on cancel
+					return;
+				}
+			}
+		}
 
 		if (fileName != "")
 		{

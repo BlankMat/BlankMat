@@ -137,6 +137,24 @@ static std::string GetFileExtension(const std::string path)
 }
 
 /// <summary>
+/// Returns the file format of the given path (extension without a period)
+/// </summary>
+/// <param name="path">Path to split</param>
+/// <returns>File format of the path</returns>
+static std::string GetFileFormat(const std::string path)
+{
+    // Don't parse empty paths
+    if (path == "")
+        return "";
+
+    size_t lastPeriod = path.find_last_of('.');
+    if (lastPeriod < path.length())
+        return path.substr(lastPeriod + 1);
+    else
+        return "";
+}
+
+/// <summary>
 /// Splits the given path into its directory, filename, and extension
 /// </summary>
 /// <param name="path">Path to split</param>
@@ -584,6 +602,52 @@ static const glm::vec2 Vec2FromAssimp(const aiVector2D& vec)
 static const glm::vec2 Vec2FromAssimp(const aiVector3D& vec)
 {
 	return glm::vec2(vec.x, vec.y);
+}
+
+/// <summary>
+/// Converts the given glm vec2 to Assimp
+/// </summary>
+/// <param name="vec">Vector 2</param>
+/// <returns>Assimp Vector 2</returns>
+static const aiVector2D Vec2ToAssimp(const glm::vec2& vec)
+{
+    return aiVector2D(vec.x, vec.y);
+}
+
+/// <summary>
+/// Converts the given glm vec3 to Assimp
+/// </summary>
+/// <param name="vec">Vector 3</param>
+/// <returns>Assimp Vector 3</returns>
+static const aiVector3D Vec3ToAssimp(const glm::vec3& vec)
+{
+    return aiVector3D(vec.x, vec.y, vec.z);
+}
+
+/// <summary>
+/// Converts the given glm vec3 color to Assimp
+/// </summary>
+/// <param name="vec">Color 3</param>
+/// <returns>Assimp Color 3</returns>
+static const aiColor3D ColorToAssimp(const glm::vec3& vec)
+{
+    return aiColor3D(vec.x, vec.y, vec.z);
+}
+
+/// <summary>
+/// Converts the given glm matrix to Assimp
+/// </summary>
+/// <param name="mat">Matrix 4</param>
+/// <returns>Assimp Matrix 4x4</returns>
+static const aiMatrix4x4 Mat4ToAssimp(const glm::mat4& mat)
+{
+    // a,b,c,d in assimp is the row, 1,2,3,4 is the column
+    return aiMatrix4x4(
+        mat[0][0], mat[1][0], mat[2][0], mat[3][0], 
+        mat[0][1], mat[1][1], mat[2][1], mat[3][1],
+        mat[0][2], mat[1][2], mat[2][2], mat[3][2],
+        mat[0][3], mat[1][3], mat[2][3], mat[3][3]
+    );
 }
 
 template<typename T>
