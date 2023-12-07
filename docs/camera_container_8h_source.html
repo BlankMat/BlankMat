@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.3</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.1.0</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -101,105 +101,119 @@ $(document).ready(function(){initNavTree('camera_container_8h_source.html',''); 
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;rendering/camera.h&quot;</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;interfaces/iDataContainer.h&quot;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;interfaces/iContainer.h&quot;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;interaction/actionStack.h&quot;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
 <div class="foldopen" id="foldopen00006" data-start="{" data-end="};">
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="class_camera_container.html">    6</a></span><span class="keyword">class </span><a class="code hl_class" href="class_camera_container.html">CameraContainer</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_i_data_container.html">IDataContainer</a>&lt;Camera&gt;</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="class_camera_container.html">    6</a></span><span class="keyword">class </span><a class="code hl_class" href="class_camera_container.html">CameraContainer</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_i_container.html">IContainer</a>&lt;Camera&gt;</div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>{</div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">protected</span>:</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="class_camera_container.html#aa370d575b6b9376081701b616780b5dc">   12</a></span>    <a class="code hl_class" href="class_action_stack.html">ActionStack</a>* <a class="code hl_variable" href="class_camera_container.html#aa370d575b6b9376081701b616780b5dc">mActionStack</a> = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="class_camera_container.html#ab00c3f0920c129062f1643c3c4e2ace0">   18</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_camera_container.html#ab00c3f0920c129062f1643c3c4e2ace0">RenameItem</a>(<a class="code hl_class" href="class_camera.html">Camera</a>* item, <span class="keyword">const</span> std::string&amp; name)<span class="keyword"> override </span>{}</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="foldopen" id="foldopen00025" data-start="{" data-end="}">
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="class_camera_container.html#aa04b10764b8808605ee7edc8a3a57803">   25</a></span>    <span class="keyword">const</span> std::pair&lt;std::string, Camera*&gt; <a class="code hl_function" href="class_camera_container.html#aa04b10764b8808605ee7edc8a3a57803">ReadItem</a>(std::ifstream&amp; file)<span class="keyword"> override</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="comment">// Set up variables to store read information</span></div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        std::string name = <span class="stringliteral">&quot;main&quot;</span>;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <span class="keywordtype">float</span> fov = 45.0f;</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="keywordtype">float</span> nearClip = 0.1f;</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <span class="keywordtype">float</span> farClip = 100.0f;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        glm::vec3 pos = glm::vec3(5.0f, 5.0f, 5.0f);</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        glm::vec3 dir = glm::vec3(-5.0f, -5.0f, -5.0f);</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        glm::vec3 bgColor = glm::vec3(0.3f, 0.4f, 0.4f);</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <span class="keywordtype">float</span> orthSize = 10.0f;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keywordtype">bool</span> isPerspective = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="comment">// Read the node</span></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        std::string line;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="keywordflow">while</span> (std::getline(file, line))</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        {</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>            <span class="comment">// Break when an empty line is encountered</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>            <span class="keywordflow">if</span> (line == <span class="stringliteral">&quot;&quot;</span>)</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            std::vector&lt;std::string&gt; parse;</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            ParseStringByDelim(parse, line, <span class="stringliteral">&quot; &quot;</span>);</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            <span class="comment">// Don&#39;t parse empty lines</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            <span class="keywordflow">if</span> (parse.empty())</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                <span class="keywordflow">break</span>;</div>
+<div class="foldopen" id="foldopen00018" data-start="{" data-end="}">
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="class_camera_container.html#ab00c3f0920c129062f1643c3c4e2ace0">   18</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_camera_container.html#ab00c3f0920c129062f1643c3c4e2ace0">RenameItem</a>(<a class="code hl_class" href="class_camera.html">Camera</a>* item, <span class="keyword">const</span> std::string&amp; name)<span class="keyword"> override</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        item-&gt;<a class="code hl_function" href="class_i_nameable.html#a9595625e7ba1f2de6edd968350bad50e">SetName</a>(name);</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    }</div>
+</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="foldopen" id="foldopen00029" data-start="{" data-end="}">
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="class_camera_container.html#ad9a5d9beac952adb870e7549eb9a780a">   29</a></span>    <span class="keyword">const</span> std::pair&lt;std::string, Camera*&gt; <a class="code hl_function" href="class_camera_container.html#ad9a5d9beac952adb870e7549eb9a780a">ReadItem</a>(<span class="keyword">const</span> std::string&amp; scope, std::ifstream&amp; file)<span class="keyword"> override</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <span class="comment">// Set up variables to store read information</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        std::string name = <span class="stringliteral">&quot;main&quot;</span>;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keywordtype">float</span> fov = 45.0f;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="keywordtype">float</span> nearClip = 0.1f;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        <span class="keywordtype">float</span> farClip = 100.0f;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        glm::vec3 pos = glm::vec3(5.0f, 5.0f, 5.0f);</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        glm::vec3 dir = glm::vec3(-5.0f, -5.0f, -5.0f);</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        glm::vec3 bgColor = glm::vec3(0.3f, 0.4f, 0.4f);</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <span class="keywordtype">float</span> orthSize = 10.0f;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="keywordtype">bool</span> isPerspective = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="comment">// Read the node</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        std::string line;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keywordflow">while</span> (std::getline(file, line))</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        {</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            <span class="comment">// Break when an empty line is encountered</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            <span class="keywordflow">if</span> (line == <span class="stringliteral">&quot;&quot;</span>)</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            std::vector&lt;std::string&gt; parse;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            ParseStringByDelim(parse, line, <span class="stringliteral">&quot; &quot;</span>);</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            <span class="comment">// Parse lines</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;CAMERA&quot;</span>)</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                name = parse[1];</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;fov&quot;</span>)</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>                fov = std::stof(parse[1]);</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;nearclip&quot;</span>)</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>                nearClip = std::stof(parse[1]);</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;farclip&quot;</span>)</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                farClip = std::stof(parse[1]);</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;pos&quot;</span>)</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                pos = ReadVec3FromStrings(parse, 1);</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;dir&quot;</span>)</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                dir = ReadVec3FromStrings(parse, 1);</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;up&quot;</span>)</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>                up = ReadVec3FromStrings(parse, 1);</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;bgcolor&quot;</span>)</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                bgColor = ReadVec3FromStrings(parse, 1);</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;orthsize&quot;</span>)</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>                orthSize = std::stof(parse[1]);</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;perspective&quot;</span>)</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>                isPerspective = (parse[1] == <span class="stringliteral">&quot;1&quot;</span>);</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        }</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="comment">// TODO: Replace Action stack with real action stack</span></div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="keywordflow">return</span> std::pair&lt;std::string, Camera*&gt;(name, <span class="keyword">new</span> <a class="code hl_class" href="class_camera.html">Camera</a>(<a class="code hl_variable" href="class_camera_container.html#aa370d575b6b9376081701b616780b5dc">mActionStack</a>, fov, nearClip, farClip, pos, dir, up, bgColor, orthSize, isPerspective));</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    }</div>
-</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            <span class="comment">// Don&#39;t parse empty lines</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            <span class="keywordflow">if</span> (parse.empty())</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            <span class="comment">// Parse lines</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;CAMERA&quot;</span> &amp;&amp; parse.size() &gt; 1)</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>                name = Scope(parse[1], scope);</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;fov&quot;</span> &amp;&amp; parse.size() &gt; 1)</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                fov = std::stof(parse[1]);</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;nearclip&quot;</span> &amp;&amp; parse.size() &gt; 1)</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                nearClip = std::stof(parse[1]);</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;farclip&quot;</span> &amp;&amp; parse.size() &gt; 1)</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                farClip = std::stof(parse[1]);</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;pos&quot;</span> &amp;&amp; parse.size() &gt; 3)</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>                pos = ReadVec3FromStrings(parse, 1);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;dir&quot;</span> &amp;&amp; parse.size() &gt; 3)</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                dir = ReadVec3FromStrings(parse, 1);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;up&quot;</span> &amp;&amp; parse.size() &gt; 3)</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>                up = ReadVec3FromStrings(parse, 1);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;bgcolor&quot;</span> &amp;&amp; parse.size() &gt; 3)</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>                bgColor = ReadVec3FromStrings(parse, 1);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;orthsize&quot;</span> &amp;&amp; parse.size() &gt; 1)</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>                orthSize = std::stof(parse[1]);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parse[0] == <span class="stringliteral">&quot;perspective&quot;</span> &amp;&amp; parse.size() &gt; 1)</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                isPerspective = (parse[1] == <span class="stringliteral">&quot;1&quot;</span>);</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        }</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="foldopen" id="foldopen00087" data-start="{" data-end="}">
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="class_camera_container.html#a06d5382a2610a4a0870843a43337a949">   87</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_camera_container.html#a06d5382a2610a4a0870843a43337a949">WriteItem</a>(<span class="keyword">const</span> std::string&amp; key, <a class="code hl_class" href="class_camera.html">Camera</a>* item, std::ofstream&amp; file)<span class="keyword"> override</span></div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        file &lt;&lt; <span class="stringliteral">&quot;CAMERA &quot;</span> &lt;&lt; key &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        file &lt;&lt; <span class="stringliteral">&quot;fov &quot;</span> &lt;&lt; item-&gt;<a class="code hl_function" href="class_camera.html#a546c72db434dbb75d73bdb31e2d1a957">GetFOV</a>() &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        file &lt;&lt; <span class="stringliteral">&quot;nearclip &quot;</span> &lt;&lt; item-&gt;<a class="code hl_function" href="class_camera.html#a449c4619eedff89eeee0f0caecb13cd7">GetNearClip</a>() &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        file &lt;&lt; <span class="stringliteral">&quot;farclip &quot;</span> &lt;&lt; item-&gt;<a class="code hl_function" href="class_camera.html#a891edcb265281d67d51ffc977bdbfba6">GetFarClip</a>() &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        file &lt;&lt; <span class="stringliteral">&quot;pos &quot;</span> &lt;&lt; Vec3ToString(item-&gt;<a class="code hl_function" href="class_camera.html#aa03a0c672e6b0ec4be8b7157c5e24bfb">GetPos</a>()) &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        file &lt;&lt; <span class="stringliteral">&quot;dir &quot;</span> &lt;&lt; Vec3ToString(item-&gt;<a class="code hl_function" href="class_camera.html#a3853a88ed19c72112773a495c5608e68">GetDir</a>()) &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        file &lt;&lt; <span class="stringliteral">&quot;up &quot;</span> &lt;&lt; Vec3ToString(item-&gt;<a class="code hl_function" href="class_camera.html#a03a6a270229d0e22f158e146aa49a23b">GetUp</a>()) &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        file &lt;&lt; <span class="stringliteral">&quot;bgcolor &quot;</span> &lt;&lt; Vec3ToString(item-&gt;<a class="code hl_function" href="class_camera.html#afbd5acdf222388351d5fb50ecb69df20">GetBGColor</a>()) &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        file &lt;&lt; <span class="stringliteral">&quot;orthsize &quot;</span> &lt;&lt; item-&gt;<a class="code hl_function" href="class_camera.html#a5561a22b9832da3c4f81165945e33ac9">GetOrthSize</a>() &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        file &lt;&lt; <span class="stringliteral">&quot;perspective &quot;</span> &lt;&lt; (int)item-&gt;<a class="code hl_function" href="class_camera.html#a7cc464b0554464ef6673db2b3d26056d">IsPerspective</a>() &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    }</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <span class="keywordflow">return</span> std::pair&lt;std::string, Camera*&gt;(name, <span class="keyword">new</span> <a class="code hl_class" href="class_camera.html">Camera</a>(<a class="code hl_variable" href="class_camera_container.html#aa370d575b6b9376081701b616780b5dc">mActionStack</a>, UnscopeName(name), UnscopeScope(name), fov, nearClip, farClip, pos, dir, up, bgColor, orthSize, isPerspective));</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    }</div>
 </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="keyword">public</span>:</div>
-<div class="foldopen" id="foldopen00105" data-start="{" data-end="}">
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno"><a class="line" href="class_camera_container.html#a0409b6ff29e7493ee808f24b3d53cf3d">  105</a></span>    <span class="keyword">explicit</span> <a class="code hl_function" href="class_camera_container.html#a0409b6ff29e7493ee808f24b3d53cf3d">CameraContainer</a>(<a class="code hl_class" href="class_action_stack.html">ActionStack</a>* actionStack)</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        : <a class="code hl_variable" href="class_camera_container.html#aa370d575b6b9376081701b616780b5dc">mActionStack</a>(actionStack)</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    {}</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="foldopen" id="foldopen00090" data-start="{" data-end="}">
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno"><a class="line" href="class_camera_container.html#a06d5382a2610a4a0870843a43337a949">   90</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_camera_container.html#a06d5382a2610a4a0870843a43337a949">WriteItem</a>(<span class="keyword">const</span> std::string&amp; key, <a class="code hl_class" href="class_camera.html">Camera</a>* item, std::ofstream&amp; file)<span class="keyword"> override</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        file &lt;&lt; <span class="stringliteral">&quot;CAMERA &quot;</span> &lt;&lt; key &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        file &lt;&lt; <span class="stringliteral">&quot;fov &quot;</span> &lt;&lt; item-&gt;<a class="code hl_function" href="class_camera.html#a546c72db434dbb75d73bdb31e2d1a957">GetFOV</a>() &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        file &lt;&lt; <span class="stringliteral">&quot;nearclip &quot;</span> &lt;&lt; item-&gt;<a class="code hl_function" href="class_camera.html#a449c4619eedff89eeee0f0caecb13cd7">GetNearClip</a>() &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        file &lt;&lt; <span class="stringliteral">&quot;farclip &quot;</span> &lt;&lt; item-&gt;<a class="code hl_function" href="class_camera.html#a891edcb265281d67d51ffc977bdbfba6">GetFarClip</a>() &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        file &lt;&lt; <span class="stringliteral">&quot;pos &quot;</span> &lt;&lt; Vec3ToString(item-&gt;<a class="code hl_function" href="class_camera.html#aa03a0c672e6b0ec4be8b7157c5e24bfb">GetPos</a>()) &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        file &lt;&lt; <span class="stringliteral">&quot;dir &quot;</span> &lt;&lt; Vec3ToString(item-&gt;<a class="code hl_function" href="class_camera.html#a3853a88ed19c72112773a495c5608e68">GetDir</a>()) &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        file &lt;&lt; <span class="stringliteral">&quot;up &quot;</span> &lt;&lt; Vec3ToString(item-&gt;<a class="code hl_function" href="class_camera.html#a03a6a270229d0e22f158e146aa49a23b">GetUp</a>()) &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        file &lt;&lt; <span class="stringliteral">&quot;bgcolor &quot;</span> &lt;&lt; Vec3ToString(item-&gt;<a class="code hl_function" href="class_camera.html#afbd5acdf222388351d5fb50ecb69df20">GetBGColor</a>()) &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        file &lt;&lt; <span class="stringliteral">&quot;orthsize &quot;</span> &lt;&lt; item-&gt;<a class="code hl_function" href="class_camera.html#a5561a22b9832da3c4f81165945e33ac9">GetOrthSize</a>() &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        file &lt;&lt; <span class="stringliteral">&quot;perspective &quot;</span> &lt;&lt; (int)item-&gt;<a class="code hl_function" href="class_camera.html#a7cc464b0554464ef6673db2b3d26056d">IsPerspective</a>() &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    }</div>
 </div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>};</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00109" data-start="{" data-end="}">
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="class_camera_container.html#af0e2ad5abe1d055d4b726e63ff55b0c0">  109</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_camera_container.html#af0e2ad5abe1d055d4b726e63ff55b0c0">IsDeleteable</a>(<a class="code hl_class" href="class_camera.html">Camera</a>* item)</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    {</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        <span class="keywordflow">return</span> (<a class="code hl_function" href="class_i_container.html#a48dd15bedf29600234f210560015a19c">Count</a>() &gt; 1 &amp;&amp; item-&gt;<a class="code hl_function" href="class_i_nameable.html#aa742992bdd45e32ddf31f8b88490e6f4">GetScopedName</a>() != <span class="stringliteral">&quot;main&quot;</span>);</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    }</div>
+</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="foldopen" id="foldopen00118" data-start="{" data-end="}">
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno"><a class="line" href="class_camera_container.html#a0409b6ff29e7493ee808f24b3d53cf3d">  118</a></span>    <span class="keyword">explicit</span> <a class="code hl_function" href="class_camera_container.html#a0409b6ff29e7493ee808f24b3d53cf3d">CameraContainer</a>(<a class="code hl_class" href="class_action_stack.html">ActionStack</a>* actionStack)</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        : <a class="code hl_variable" href="class_camera_container.html#aa370d575b6b9376081701b616780b5dc">mActionStack</a>(actionStack)</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    {</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        <a class="code hl_variable" href="class_i_container.html#ab08485d4b950457d7daf99efb2b53438">mCurSelectedItem</a> = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    }</div>
+</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>};</div>
 </div>
 <div class="ttc" id="aclass_action_stack_html"><div class="ttname"><a href="class_action_stack.html">ActionStack</a></div><div class="ttdoc">Class that keeps track of all commands that have been run. Allows functionality for undo/redo.</div><div class="ttdef"><b>Definition</b> actionStack.h:11</div></div>
 <div class="ttc" id="aclass_camera_container_html"><div class="ttname"><a href="class_camera_container.html">CameraContainer</a></div><div class="ttdef"><b>Definition</b> cameraContainer.h:7</div></div>
-<div class="ttc" id="aclass_camera_container_html_a0409b6ff29e7493ee808f24b3d53cf3d"><div class="ttname"><a href="class_camera_container.html#a0409b6ff29e7493ee808f24b3d53cf3d">CameraContainer::CameraContainer</a></div><div class="ttdeci">CameraContainer(ActionStack *actionStack)</div><div class="ttdoc">Constructs a camera container with the action stack used to track UI variables.</div><div class="ttdef"><b>Definition</b> cameraContainer.h:105</div></div>
-<div class="ttc" id="aclass_camera_container_html_a06d5382a2610a4a0870843a43337a949"><div class="ttname"><a href="class_camera_container.html#a06d5382a2610a4a0870843a43337a949">CameraContainer::WriteItem</a></div><div class="ttdeci">void WriteItem(const std::string &amp;key, Camera *item, std::ofstream &amp;file) override</div><div class="ttdoc">Writes the given item into the output file stream.</div><div class="ttdef"><b>Definition</b> cameraContainer.h:87</div></div>
-<div class="ttc" id="aclass_camera_container_html_aa04b10764b8808605ee7edc8a3a57803"><div class="ttname"><a href="class_camera_container.html#aa04b10764b8808605ee7edc8a3a57803">CameraContainer::ReadItem</a></div><div class="ttdeci">const std::pair&lt; std::string, Camera * &gt; ReadItem(std::ifstream &amp;file) override</div><div class="ttdoc">Reads the next item from the input file stream.</div><div class="ttdef"><b>Definition</b> cameraContainer.h:25</div></div>
+<div class="ttc" id="aclass_camera_container_html_a0409b6ff29e7493ee808f24b3d53cf3d"><div class="ttname"><a href="class_camera_container.html#a0409b6ff29e7493ee808f24b3d53cf3d">CameraContainer::CameraContainer</a></div><div class="ttdeci">CameraContainer(ActionStack *actionStack)</div><div class="ttdoc">Constructs a camera container with the action stack used to track UI variables.</div><div class="ttdef"><b>Definition</b> cameraContainer.h:118</div></div>
+<div class="ttc" id="aclass_camera_container_html_a06d5382a2610a4a0870843a43337a949"><div class="ttname"><a href="class_camera_container.html#a06d5382a2610a4a0870843a43337a949">CameraContainer::WriteItem</a></div><div class="ttdeci">void WriteItem(const std::string &amp;key, Camera *item, std::ofstream &amp;file) override</div><div class="ttdoc">Writes the given item into the output file stream.</div><div class="ttdef"><b>Definition</b> cameraContainer.h:90</div></div>
 <div class="ttc" id="aclass_camera_container_html_aa370d575b6b9376081701b616780b5dc"><div class="ttname"><a href="class_camera_container.html#aa370d575b6b9376081701b616780b5dc">CameraContainer::mActionStack</a></div><div class="ttdeci">ActionStack * mActionStack</div><div class="ttdoc">Action stack used to connect camera to UI.</div><div class="ttdef"><b>Definition</b> cameraContainer.h:12</div></div>
 <div class="ttc" id="aclass_camera_container_html_ab00c3f0920c129062f1643c3c4e2ace0"><div class="ttname"><a href="class_camera_container.html#ab00c3f0920c129062f1643c3c4e2ace0">CameraContainer::RenameItem</a></div><div class="ttdeci">void RenameItem(Camera *item, const std::string &amp;name) override</div><div class="ttdoc">Renames the given item to the given name.</div><div class="ttdef"><b>Definition</b> cameraContainer.h:18</div></div>
+<div class="ttc" id="aclass_camera_container_html_ad9a5d9beac952adb870e7549eb9a780a"><div class="ttname"><a href="class_camera_container.html#ad9a5d9beac952adb870e7549eb9a780a">CameraContainer::ReadItem</a></div><div class="ttdeci">const std::pair&lt; std::string, Camera * &gt; ReadItem(const std::string &amp;scope, std::ifstream &amp;file) override</div><div class="ttdoc">Reads the next item from the input file stream.</div><div class="ttdef"><b>Definition</b> cameraContainer.h:29</div></div>
+<div class="ttc" id="aclass_camera_container_html_af0e2ad5abe1d055d4b726e63ff55b0c0"><div class="ttname"><a href="class_camera_container.html#af0e2ad5abe1d055d4b726e63ff55b0c0">CameraContainer::IsDeleteable</a></div><div class="ttdeci">virtual bool IsDeleteable(Camera *item)</div><div class="ttdoc">Returns whether the given item is deletable (ie. not a default element or internal)</div><div class="ttdef"><b>Definition</b> cameraContainer.h:109</div></div>
 <div class="ttc" id="aclass_camera_html"><div class="ttname"><a href="class_camera.html">Camera</a></div><div class="ttdef"><b>Definition</b> camera.h:9</div></div>
 <div class="ttc" id="aclass_camera_html_a03a6a270229d0e22f158e146aa49a23b"><div class="ttname"><a href="class_camera.html#a03a6a270229d0e22f158e146aa49a23b">Camera::GetUp</a></div><div class="ttdeci">UIVec3 &amp; GetUp()</div><div class="ttdef"><b>Definition</b> camera.h:66</div></div>
 <div class="ttc" id="aclass_camera_html_a3853a88ed19c72112773a495c5608e68"><div class="ttname"><a href="class_camera.html#a3853a88ed19c72112773a495c5608e68">Camera::GetDir</a></div><div class="ttdeci">UIVec3 &amp; GetDir()</div><div class="ttdef"><b>Definition</b> camera.h:64</div></div>
@@ -210,7 +224,11 @@ $(document).ready(function(){initNavTree('camera_container_8h_source.html',''); 
 <div class="ttc" id="aclass_camera_html_a891edcb265281d67d51ffc977bdbfba6"><div class="ttname"><a href="class_camera.html#a891edcb265281d67d51ffc977bdbfba6">Camera::GetFarClip</a></div><div class="ttdeci">UIFloat &amp; GetFarClip()</div><div class="ttdef"><b>Definition</b> camera.h:76</div></div>
 <div class="ttc" id="aclass_camera_html_aa03a0c672e6b0ec4be8b7157c5e24bfb"><div class="ttname"><a href="class_camera.html#aa03a0c672e6b0ec4be8b7157c5e24bfb">Camera::GetPos</a></div><div class="ttdeci">UIVec3 &amp; GetPos()</div><div class="ttdef"><b>Definition</b> camera.h:60</div></div>
 <div class="ttc" id="aclass_camera_html_afbd5acdf222388351d5fb50ecb69df20"><div class="ttname"><a href="class_camera.html#afbd5acdf222388351d5fb50ecb69df20">Camera::GetBGColor</a></div><div class="ttdeci">UIColor &amp; GetBGColor()</div><div class="ttdef"><b>Definition</b> camera.h:72</div></div>
-<div class="ttc" id="aclass_i_data_container_html"><div class="ttname"><a href="class_i_data_container.html">IDataContainer</a></div><div class="ttdoc">Container class for storing key value pairs. Should not be instantiated directly, but should be overr...</div><div class="ttdef"><b>Definition</b> iDataContainer.h:18</div></div>
+<div class="ttc" id="aclass_i_container_html"><div class="ttname"><a href="class_i_container.html">IContainer</a></div><div class="ttdoc">Container class for storing key value pairs. Should not be instantiated directly, but should be overr...</div><div class="ttdef"><b>Definition</b> iContainer.h:18</div></div>
+<div class="ttc" id="aclass_i_container_html_a48dd15bedf29600234f210560015a19c"><div class="ttname"><a href="class_i_container.html#a48dd15bedf29600234f210560015a19c">IContainer&lt; Camera &gt;::Count</a></div><div class="ttdeci">unsigned int Count()</div><div class="ttdoc">Returns the number of elements in the container.</div><div class="ttdef"><b>Definition</b> iContainer.h:173</div></div>
+<div class="ttc" id="aclass_i_container_html_ab08485d4b950457d7daf99efb2b53438"><div class="ttname"><a href="class_i_container.html#ab08485d4b950457d7daf99efb2b53438">IContainer&lt; Camera &gt;::mCurSelectedItem</a></div><div class="ttdeci">Camera * mCurSelectedItem</div><div class="ttdoc">Currently selected item.</div><div class="ttdef"><b>Definition</b> iContainer.h:33</div></div>
+<div class="ttc" id="aclass_i_nameable_html_a9595625e7ba1f2de6edd968350bad50e"><div class="ttname"><a href="class_i_nameable.html#a9595625e7ba1f2de6edd968350bad50e">INameable::SetName</a></div><div class="ttdeci">virtual void SetName(const std::string &amp;name)</div><div class="ttdoc">Sets the name of the object. Note: Does not set the scope variable. If renaming based on raw input,...</div><div class="ttdef"><b>Definition</b> iNameable.h:54</div></div>
+<div class="ttc" id="aclass_i_nameable_html_aa742992bdd45e32ddf31f8b88490e6f4"><div class="ttname"><a href="class_i_nameable.html#aa742992bdd45e32ddf31f8b88490e6f4">INameable::GetScopedName</a></div><div class="ttdeci">std::string GetScopedName()</div><div class="ttdoc">Returns the scoped name of the object.</div><div class="ttdef"><b>Definition</b> iNameable.h:94</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

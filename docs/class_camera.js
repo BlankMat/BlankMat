@@ -1,6 +1,6 @@
 var class_camera =
 [
-    [ "Camera", "class_camera.html#afd2a8b4fed435e68aa554565cb9b1361", null ],
+    [ "Camera", "class_camera.html#ac27ac605b842b51e1420e24ce4fc3b28", null ],
     [ "Camera", "class_camera.html#a6fe17882d68c57e977b8ee415084a284", null ],
     [ "GetBGColor", "class_camera.html#afbd5acdf222388351d5fb50ecb69df20", null ],
     [ "GetDir", "class_camera.html#a3853a88ed19c72112773a495c5608e68", null ],

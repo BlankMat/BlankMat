@@ -1,7 +1,7 @@
 var class_i_entity =
 [
-    [ "IEntity", "class_i_entity.html#a7c34755f748d6b7c9314822ec84973cc", null ],
-    [ "IEntity", "class_i_entity.html#ae1a68f57ab67a30d922d2d0b1d705175", null ],
+    [ "IEntity", "class_i_entity.html#a1be65b29c249fe1eca7f9580056e9bb5", null ],
+    [ "IEntity", "class_i_entity.html#aecf3634d60c73cd70480688073eefd66", null ],
     [ "CalcBasis", "class_i_entity.html#ae5f9babc56657e83dbd44753dcb766c1", null ],
     [ "Cleanup", "class_i_entity.html#ad990478f053057beb7a848225e42a09d", null ],
     [ "Draw", "class_i_entity.html#abf8bfeee61dc8fffd69fad4d1599cd5f", null ],
@@ -12,7 +12,6 @@ var class_i_entity =
     [ "GetFront", "class_i_entity.html#ae2934adf913d885be174247c5086a788", null ],
     [ "GetMaterial", "class_i_entity.html#af129f3b429b487ecbf596f949961ce79", null ],
     [ "GetModelMatrix", "class_i_entity.html#a26009070d050394757424b0f72912996", null ],
-    [ "GetName", "class_i_entity.html#aa4168cb5c971f046fdd0eff754c4d3b9", null ],
     [ "GetNormalModelMatrix", "class_i_entity.html#ae165e831ef881960b1661a64e8ade365", null ],
     [ "GetParentModelMatrix", "class_i_entity.html#a7a43674d206e543084b9a13f280efd66", null ],
     [ "GetPos", "class_i_entity.html#a626c053a2f1fbbdbb6ae7a6fcd094305", null ],
@@ -29,7 +28,6 @@ var class_i_entity =
     [ "Rotate", "class_i_entity.html#adfdffd29d934902f947213ed8f541ede", null ],
     [ "Scale", "class_i_entity.html#a672e2fe17d88f760b4f434eb2c281243", null ],
     [ "SetMaterial", "class_i_entity.html#aa7b9f08861b651b35ef8e3b0dd9db195", null ],
-    [ "SetName", "class_i_entity.html#ade341f0820231b71b32683676b2ef256", null ],
     [ "SetParentModelMatrix", "class_i_entity.html#aaf15ae450b5fea0ca42b35b0b101663b", null ],
     [ "SetPos", "class_i_entity.html#af55af3b2632f4a536ee6bc5ff4698d99", null ],
     [ "SetRot", "class_i_entity.html#ad0259ac28765ac813c0f6a9720776935", null ],
@@ -46,7 +44,6 @@ var class_i_entity =
     [ "mMaterial", "class_i_entity.html#a854806eacfc7477cad34365e946d7c0b", null ],
     [ "mMaterialName", "class_i_entity.html#a6a74825eae0878a191bb9abd8262295d", null ],
     [ "mModelMatrix", "class_i_entity.html#a0ddee8a1dbbafa7940d15d360ef3c906", null ],
-    [ "mName", "class_i_entity.html#a83eda7c0eb837eaf23dd07fdf2e441c0", null ],
     [ "mNormalModelMatrix", "class_i_entity.html#a21880cacb03422931dd4a7031c539a43", null ],
     [ "mParentModelMatrix", "class_i_entity.html#adffcd584762da266382762b8159e1766", null ],
     [ "mPos", "class_i_entity.html#a68a10f45269dc4ae865ac553b0602aa3", null ],

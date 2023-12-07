@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.3</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.1.0</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -168,6 +168,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad327d44702cec89e2f6cb00df257b1af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0814faa313af52192970c6bb6240817f" id="r_a0814faa313af52192970c6bb6240817f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a0814faa313af52192970c6bb6240817f">ToggleCollapseMeshNodes</a> ()</td></tr>
 <tr class="separator:a0814faa313af52192970c6bb6240817f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab96471a71d48973dec11194106436e5a" id="r_ab96471a71d48973dec11194106436e5a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#ab96471a71d48973dec11194106436e5a">ToggleCollapseScope</a> ()</td></tr>
+<tr class="separator:ab96471a71d48973dec11194106436e5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab832ad7519c23166eddf8c71dc732800" id="r_ab832ad7519c23166eddf8c71dc732800"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#ab832ad7519c23166eddf8c71dc732800">ToggleExpandAllNodes</a> ()</td></tr>
+<tr class="separator:ab832ad7519c23166eddf8c71dc732800"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8233b402b9d7526c70161ff741281bca" id="r_a8233b402b9d7526c70161ff741281bca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a8233b402b9d7526c70161ff741281bca">State</a> (<a class="el" href="class_config.html">Config</a> *config)</td></tr>
 <tr class="separator:a8233b402b9d7526c70161ff741281bca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -203,6 +207,10 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a5c7ac31601fefe4860e962651ccf6143"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae76fe7b3cca01641787f9bfe51714103" id="r_ae76fe7b3cca01641787f9bfe51714103"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_u_i_bool.html">UIBool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#ae76fe7b3cca01641787f9bfe51714103">collapseMeshNodes</a></td></tr>
 <tr class="separator:ae76fe7b3cca01641787f9bfe51714103"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41b96f318d56724919e07f8612f7dc86" id="r_a41b96f318d56724919e07f8612f7dc86"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_u_i_bool.html">UIBool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a41b96f318d56724919e07f8612f7dc86">collapseScope</a></td></tr>
+<tr class="separator:a41b96f318d56724919e07f8612f7dc86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a617ef32c8385819f153bf2ba79c639d6" id="r_a617ef32c8385819f153bf2ba79c639d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_u_i_bool.html">UIBool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a617ef32c8385819f153bf2ba79c639d6">expandAllNodes</a></td></tr>
+<tr class="separator:a617ef32c8385819f153bf2ba79c639d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a94ae127b89332741742ee5d287d99b8b" id="r_a94ae127b89332741742ee5d287d99b8b"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a94ae127b89332741742ee5d287d99b8b">depthMapFBO</a> = 0</td></tr>
 <tr class="separator:a94ae127b89332741742ee5d287d99b8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5460d08d807c98cf30854b1c951efff6" id="r_a5460d08d807c98cf30854b1c951efff6"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state.html#a5460d08d807c98cf30854b1c951efff6">depthMap</a> = 0</td></tr>
@@ -604,6 +612,31 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="ab96471a71d48973dec11194106436e5a" name="ab96471a71d48973dec11194106436e5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab96471a71d48973dec11194106436e5a">&#9670;&#160;</a></span>ToggleCollapseScope()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void State::ToggleCollapseScope </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ad327d44702cec89e2f6cb00df257b1af" name="ad327d44702cec89e2f6cb00df257b1af"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad327d44702cec89e2f6cb00df257b1af">&#9670;&#160;</a></span>ToggleDefaultMat()</h2>
 
@@ -690,6 +723,31 @@ Public Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">void State::ToggleDisplayGUI </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab832ad7519c23166eddf8c71dc732800" name="ab832ad7519c23166eddf8c71dc732800"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab832ad7519c23166eddf8c71dc732800">&#9670;&#160;</a></span>ToggleExpandAllNodes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void State::ToggleExpandAllNodes </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -813,6 +871,20 @@ Public Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_u_i_bool.html">UIBool</a> State::collapseMeshNodes</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a41b96f318d56724919e07f8612f7dc86" name="a41b96f318d56724919e07f8612f7dc86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41b96f318d56724919e07f8612f7dc86">&#9670;&#160;</a></span>collapseScope</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_u_i_bool.html">UIBool</a> State::collapseScope</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1037,6 +1109,20 @@ Public Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_u_i_bool.html">UIBool</a> State::enableSpecularMap</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a617ef32c8385819f153bf2ba79c639d6" name="a617ef32c8385819f153bf2ba79c639d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a617ef32c8385819f153bf2ba79c639d6">&#9670;&#160;</a></span>expandAllNodes</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_u_i_bool.html">UIBool</a> State::expandAllNodes</td>
         </tr>
       </table>
 </div><div class="memdoc">

@@ -23,6 +23,7 @@ var class_selection =
     [ "GetTransformHandle", "class_selection.html#a83f537138cbc8fc3362c38400c5a84c2", null ],
     [ "IsFaceSelected", "class_selection.html#a230f3845cccfc540418fa2990a90d0d4", null ],
     [ "IsVertSelected", "class_selection.html#a8481770c80ac0958d3a9fa5f6598572d", null ],
+    [ "Reset", "class_selection.html#a13f9f10b897ac2258403153cc635f025", null ],
     [ "SelectElement", "class_selection.html#ac13f7f4a9ce486a1ec4d6fb4130f86da", null ],
     [ "SelectEntity", "class_selection.html#a5084033a8e96284b00eaf6e2fbef376d", null ],
     [ "SelectFace", "class_selection.html#ac90abf87e6758dffc3dc07529e5e3ea7", null ],

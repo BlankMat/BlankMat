@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.3</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.1.0</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -123,9 +123,9 @@ $(document).ready(function(){initNavTree('p_line_8h_source.html',''); initResiza
 </div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
 <div class="foldopen" id="foldopen00019" data-start="{" data-end="}">
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="class_p_line.html#ac21e3625b686d9cbd3bc552f0c1db3dc">   19</a></span>    <a class="code hl_function" href="class_p_line.html#ac21e3625b686d9cbd3bc552f0c1db3dc">PLine</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> glm::vec3&amp; start, <span class="keyword">const</span> glm::vec3&amp; end, <a class="code hl_class" href="class_material.html">Material</a>* material, <span class="keyword">const</span> <span class="keywordtype">float</span> lineWidth, <span class="keyword">const</span> <span class="keywordtype">bool</span> drawOver = <span class="keyword">true</span>,</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="class_p_line.html#a0fd73a89eb9f66c534972bfd48c26b61">   19</a></span>    <a class="code hl_function" href="class_p_line.html#a0fd73a89eb9f66c534972bfd48c26b61">PLine</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> std::string&amp; scope, <span class="keyword">const</span> glm::vec3&amp; start, <span class="keyword">const</span> glm::vec3&amp; end, <a class="code hl_class" href="class_material.html">Material</a>* material, <span class="keyword">const</span> <span class="keywordtype">float</span> lineWidth, <span class="keyword">const</span> <span class="keywordtype">bool</span> drawOver = <span class="keyword">true</span>,</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <span class="keyword">const</span> glm::vec3&amp; pos = glm::vec3(0.0f), <span class="keyword">const</span> glm::vec3&amp; rot = glm::vec3(0.0f), <span class="keyword">const</span> glm::vec3&amp; scale = glm::vec3(1.0f))</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        : <a class="code hl_class" href="class_i_primitive.html">IPrimitive</a>(name, material, lineWidth, drawOver, pos, rot, scale)</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        : <a class="code hl_class" href="class_i_primitive.html">IPrimitive</a>(name, scope, material, lineWidth, drawOver, pos, rot, scale)</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    {</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <a class="code hl_variable" href="class_i_primitive.html#aa149439d69aff82ac10e8ea0dd78e372">mVertices</a>.push_back(start);</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <a class="code hl_variable" href="class_i_primitive.html#aa149439d69aff82ac10e8ea0dd78e372">mVertices</a>.push_back(end);</div>
@@ -143,8 +143,8 @@ $(document).ready(function(){initNavTree('p_line_8h_source.html',''); initResiza
 <div class="ttc" id="aclass_material_html"><div class="ttname"><a href="class_material.html">Material</a></div><div class="ttdoc">Class that stores all texture and render information for a material.</div><div class="ttdef"><b>Definition</b> material.h:19</div></div>
 <div class="ttc" id="aclass_p_line_html"><div class="ttname"><a href="class_p_line.html">PLine</a></div><div class="ttdef"><b>Definition</b> pLine.h:5</div></div>
 <div class="ttc" id="aclass_p_line_html_a0c55b5996b23c3fd99922a288b5bdfcc"><div class="ttname"><a href="class_p_line.html#a0c55b5996b23c3fd99922a288b5bdfcc">PLine::SetStartPos</a></div><div class="ttdeci">void SetStartPos(const glm::vec3 &amp;start)</div><div class="ttdef"><b>Definition</b> pLine.h:7</div></div>
+<div class="ttc" id="aclass_p_line_html_a0fd73a89eb9f66c534972bfd48c26b61"><div class="ttname"><a href="class_p_line.html#a0fd73a89eb9f66c534972bfd48c26b61">PLine::PLine</a></div><div class="ttdeci">PLine(const std::string &amp;name, const std::string &amp;scope, const glm::vec3 &amp;start, const glm::vec3 &amp;end, Material *material, const float lineWidth, const bool drawOver=true, const glm::vec3 &amp;pos=glm::vec3(0.0f), const glm::vec3 &amp;rot=glm::vec3(0.0f), const glm::vec3 &amp;scale=glm::vec3(1.0f))</div><div class="ttdef"><b>Definition</b> pLine.h:19</div></div>
 <div class="ttc" id="aclass_p_line_html_a33d25fc7143651c0e62ee67779439e20"><div class="ttname"><a href="class_p_line.html#a33d25fc7143651c0e62ee67779439e20">PLine::SetEndPos</a></div><div class="ttdeci">void SetEndPos(const glm::vec3 &amp;end)</div><div class="ttdef"><b>Definition</b> pLine.h:13</div></div>
-<div class="ttc" id="aclass_p_line_html_ac21e3625b686d9cbd3bc552f0c1db3dc"><div class="ttname"><a href="class_p_line.html#ac21e3625b686d9cbd3bc552f0c1db3dc">PLine::PLine</a></div><div class="ttdeci">PLine(const std::string &amp;name, const glm::vec3 &amp;start, const glm::vec3 &amp;end, Material *material, const float lineWidth, const bool drawOver=true, const glm::vec3 &amp;pos=glm::vec3(0.0f), const glm::vec3 &amp;rot=glm::vec3(0.0f), const glm::vec3 &amp;scale=glm::vec3(1.0f))</div><div class="ttdef"><b>Definition</b> pLine.h:19</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

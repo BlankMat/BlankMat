@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['removedselverts_0',['removedSelVerts',['../class_selection.html#a656e5ec5c6455a3881ce9eb0ee28412d',1,'Selection']]]
+  ['shouldrender_0',['shouldRender',['../class_state.html#a0ba92f439c36c9525c7c63faf686d3c8',1,'State']]]
 ];

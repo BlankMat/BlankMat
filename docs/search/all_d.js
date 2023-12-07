@@ -1,16 +1,15 @@
 var searchData=
 [
-  ['path_0',['path',['../struct_texture.html#aa8ba4ade408b0df1fc9b6f605a4efd22',1,'Texture']]],
-  ['pcube_1',['pcube',['../class_p_cube.html',1,'PCube'],['../class_p_cube.html#aeb04a93d626c6cf98350865b7c9bd6b4',1,'PCube::PCube()']]],
-  ['pgrid_2',['pgrid',['../class_p_grid.html',1,'PGrid'],['../class_p_grid.html#a86dcd871e6b1200438bbefe42f6eb63c',1,'PGrid::PGrid()']]],
-  ['phandle_3',['phandle',['../class_p_handle.html',1,'PHandle'],['../class_p_handle.html#a075dcf2abc6ca1f23ec5248eec4ce334',1,'PHandle::PHandle()']]],
-  ['plightcube_4',['plightcube',['../class_p_light_cube.html',1,'PLightCube'],['../class_p_light_cube.html#abe83769f7b2ffa009ef086c40fcf7c2b',1,'PLightCube::PLightCube(const std::string &amp;name, LightType type=LightType::POINT, const glm::vec3 &amp;pos=glm::vec3(1.0f), const glm::vec3 &amp;dir=glm::vec3(-1.0f), const glm::vec3 &amp;color=glm::vec3(1.0f), float kd=1.0f, float ka=0.1f, float ks=0.5f, bool gamma=true, float range=13.0f, float spotInner=25, float spotOuter=35)'],['../class_p_light_cube.html#a4f9af89dc719cb1292c769fbdd4aa986',1,'PLightCube::PLightCube(const std::string &amp;name, float size, LightType type=LightType::POINT, MaterialContainer *materials=nullptr, TextureContainer *textures=nullptr, const glm::vec3 &amp;pos=glm::vec3(-5.0f, 5.0f, 5.0f), const glm::vec3 &amp;dir=glm::vec3(5.0f, 5.0f, 5.0f), const glm::vec3 &amp;color=glm::vec3(1.0f), float kd=1.0f, float ka=0.1f, float ks=0.5f, bool gamma=true, float range=13.0f, float spotInner=25, float spotOuter=35)'],['../class_p_light_cube.html#a3847687661fe123afbb1242a3deb4861',1,'PLightCube::PLightCube(const std::string &amp;name, float size, MaterialContainer *materials, TextureContainer *textures, Config *config)']]],
-  ['pline_5',['pline',['../class_p_line.html',1,'PLine'],['../class_p_line.html#ac21e3625b686d9cbd3bc552f0c1db3dc',1,'PLine::PLine()']]],
-  ['popup_6',['Popup',['../class_g_u_i_window_utils.html#a6ca2e839e98b3f6d2789d0407401d7c0',1,'GUIWindowUtils']]],
-  ['pos_7',['pos',['../struct_vertex.html#a858242dc7b40c034c5e13c589b30cfb4',1,'Vertex']]],
-  ['pplane_8',['pplane',['../class_p_plane.html',1,'PPlane'],['../class_p_plane.html#a452d599c5db20abbbfba8f498f8563de',1,'PPlane::PPlane()']]],
-  ['presskey_9',['PressKey',['../class_input.html#afbd4191945c829cdef4d1bf85fd47ba0',1,'Input']]],
-  ['print_10',['Print',['../class_config.html#a0a63e981401ad2b90c7d12cd1fc1131e',1,'Config']]],
-  ['promptsavechanges_11',['PromptSaveChanges',['../class_scene_i_o.html#ab3591fb3ca14c68d92fcf50f9b36a5a0',1,'SceneIO']]],
-  ['pwirecube_12',['pwirecube',['../class_p_wire_cube.html',1,'PWireCube'],['../class_p_wire_cube.html#ab0004150d4f2d8c42546cda171afd1cd',1,'PWireCube::PWireCube()']]]
+  ['pcube_0',['pcube',['../class_p_cube.html',1,'PCube'],['../class_p_cube.html#a58847ec3ffad5237b8edf9781fe36e16',1,'PCube::PCube()']]],
+  ['pgrid_1',['pgrid',['../class_p_grid.html',1,'PGrid'],['../class_p_grid.html#a63e5d8710758121ca625ebedf4906ad8',1,'PGrid::PGrid()']]],
+  ['phandle_2',['phandle',['../class_p_handle.html',1,'PHandle'],['../class_p_handle.html#adab03ecdc1aec2776b1eeed94da8663e',1,'PHandle::PHandle()']]],
+  ['plightcube_3',['plightcube',['../class_p_light_cube.html',1,'PLightCube'],['../class_p_light_cube.html#a4da00aa8da80dea3b0b1bf7f2426b43e',1,'PLightCube::PLightCube(const std::string &amp;name, const std::string &amp;scope, LightType type=LightType::POINT, const glm::vec3 &amp;pos=glm::vec3(1.0f), const glm::vec3 &amp;dir=glm::vec3(-1.0f), const glm::vec3 &amp;color=glm::vec3(1.0f), float kd=1.0f, float ka=0.1f, float ks=0.5f, bool gamma=true, float range=13.0f, float spotInner=25, float spotOuter=35)'],['../class_p_light_cube.html#a66630ae47050699b029cb5ecb4df6631',1,'PLightCube::PLightCube(float size, const std::string &amp;name, const std::string &amp;scope=&quot;&quot;, LightType type=LightType::POINT, MaterialContainer *materials=nullptr, TextureContainer *textures=nullptr, const glm::vec3 &amp;pos=glm::vec3(-5.0f, 5.0f, 5.0f), const glm::vec3 &amp;dir=glm::vec3(5.0f, 5.0f, 5.0f), const glm::vec3 &amp;color=glm::vec3(1.0f), float kd=1.0f, float ka=0.1f, float ks=0.5f, bool gamma=true, float range=13.0f, float spotInner=25, float spotOuter=35)'],['../class_p_light_cube.html#a9ca7dc9a119fde726c765fbf152f79ca',1,'PLightCube::PLightCube(float size, MaterialContainer *materials, TextureContainer *textures, Config *config)']]],
+  ['pline_4',['pline',['../class_p_line.html',1,'PLine'],['../class_p_line.html#a0fd73a89eb9f66c534972bfd48c26b61',1,'PLine::PLine()']]],
+  ['popup_5',['Popup',['../class_g_u_i_window_utils.html#a6ca2e839e98b3f6d2789d0407401d7c0',1,'GUIWindowUtils']]],
+  ['pos_6',['pos',['../struct_vertex.html#a858242dc7b40c034c5e13c589b30cfb4',1,'Vertex']]],
+  ['pplane_7',['pplane',['../class_p_plane.html',1,'PPlane'],['../class_p_plane.html#aca89f7660904af84576b43df12a5f646',1,'PPlane::PPlane()']]],
+  ['presskey_8',['PressKey',['../class_input.html#afbd4191945c829cdef4d1bf85fd47ba0',1,'Input']]],
+  ['print_9',['Print',['../class_config.html#a0a63e981401ad2b90c7d12cd1fc1131e',1,'Config']]],
+  ['promptsavechanges_10',['PromptSaveChanges',['../class_scene_i_o.html#ab3591fb3ca14c68d92fcf50f9b36a5a0',1,'SceneIO']]],
+  ['pwirecube_11',['pwirecube',['../class_p_wire_cube.html',1,'PWireCube'],['../class_p_wire_cube.html#accadaa69346e205626e18974d0647089',1,'PWireCube::PWireCube()']]]
 ];

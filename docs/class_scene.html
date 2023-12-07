@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.3</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.1.0</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -100,6 +100,16 @@ $(document).ready(function(){initNavTree('class_scene.html',''); initResizable()
   <div class="headertitle"><div class="title">Scene Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+<div class="dynheader">
+Inheritance diagram for Scene:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_scene__inherit__graph.png" border="0" usemap="#a_scene_inherit__map" alt="Inheritance graph"/></div>
+<map name="a_scene_inherit__map" id="a_scene_inherit__map">
+<area shape="rect" title=" " alt="" coords="7,80,65,107"/>
+<area shape="rect" href="class_i_scene.html" title=" " alt="" coords="5,5,67,32"/>
+<area shape="poly" title=" " alt="" coords="39,48,39,80,33,80,33,48"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for Scene:</div>
 <div class="dyncontent">
@@ -224,6 +234,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a888574f4eea5fae0674c1c3431cf9421"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7242d5b0a6a22176e6b0f25402d693a" id="r_ae7242d5b0a6a22176e6b0f25402d693a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#ae7242d5b0a6a22176e6b0f25402d693a">GetDirectory</a> ()</td></tr>
 <tr class="separator:ae7242d5b0a6a22176e6b0f25402d693a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e6138f71128bedd06b75446babe8564" id="r_a1e6138f71128bedd06b75446babe8564"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a1e6138f71128bedd06b75446babe8564">GetCurShader</a> ()</td></tr>
+<tr class="separator:a1e6138f71128bedd06b75446babe8564"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3097e849f01ef67e335edb47136a57da" id="r_a3097e849f01ef67e335edb47136a57da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a3097e849f01ef67e335edb47136a57da">GetRootNode</a> ()</td></tr>
+<tr class="separator:a3097e849f01ef67e335edb47136a57da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e1aab6ab5674a083c97829f0caae535" id="r_a9e1aab6ab5674a083c97829f0caae535"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_shader.html">Shader</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a9e1aab6ab5674a083c97829f0caae535">GetShader</a> (const std::string &amp;name)</td></tr>
 <tr class="separator:a9e1aab6ab5674a083c97829f0caae535"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55c674c704c47aaba89a9585c12ec5a0" id="r_a55c674c704c47aaba89a9585c12ec5a0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_material.html">Material</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a55c674c704c47aaba89a9585c12ec5a0">GetMaterial</a> (const std::string &amp;name)</td></tr>
@@ -232,56 +246,61 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a47d413dd9795963e33d1a5247725911d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52457ca8b8b4bb3b1bf33472edc473c2" id="r_a52457ca8b8b4bb3b1bf33472edc473c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_texture.html">Texture</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a52457ca8b8b4bb3b1bf33472edc473c2">GetTexture</a> (const std::string &amp;name)</td></tr>
 <tr class="separator:a52457ca8b8b4bb3b1bf33472edc473c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ca481fcec0d465286536a51e47dcfdc" id="r_a3ca481fcec0d465286536a51e47dcfdc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_i_entity.html">IEntity</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a3ca481fcec0d465286536a51e47dcfdc">GetEntity</a> (const std::string &amp;name)</td></tr>
-<tr class="separator:a3ca481fcec0d465286536a51e47dcfdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa423f94f52cb2c61609ebb190d6969da" id="r_aa423f94f52cb2c61609ebb190d6969da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_i_entity.html">IEntity</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#aa423f94f52cb2c61609ebb190d6969da">GetTransformHandle</a> ()</td></tr>
 <tr class="separator:aa423f94f52cb2c61609ebb190d6969da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a157b9ed965422a121f7b18c1eed53cb4" id="r_a157b9ed965422a121f7b18c1eed53cb4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_state.html">State</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a157b9ed965422a121f7b18c1eed53cb4">GetState</a> ()</td></tr>
 <tr class="separator:a157b9ed965422a121f7b18c1eed53cb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2254beefbda30f82f96d76ea02e9f70" id="r_ab2254beefbda30f82f96d76ea02e9f70"><td class="memItemLeft" align="right" valign="top">LightingMode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#ab2254beefbda30f82f96d76ea02e9f70">GetLightingMode</a> ()</td></tr>
 <tr class="separator:ab2254beefbda30f82f96d76ea02e9f70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7af04581bac73569c31c63f86f6e2611" id="r_a7af04581bac73569c31c63f86f6e2611"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a7af04581bac73569c31c63f86f6e2611">GetUniqueScope</a> (const std::string &amp;scope)</td></tr>
+<tr class="separator:a7af04581bac73569c31c63f86f6e2611"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a049a3113a5c97858610395b9b0dc74cc" id="r_a049a3113a5c97858610395b9b0dc74cc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a049a3113a5c97858610395b9b0dc74cc">IsScopeActive</a> (const std::string &amp;scope)</td></tr>
+<tr class="separator:a049a3113a5c97858610395b9b0dc74cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a986c32ae096e2a3a1ee34d127d55d5eb" id="r_a986c32ae096e2a3a1ee34d127d55d5eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a986c32ae096e2a3a1ee34d127d55d5eb">AddNode</a> (<a class="el" href="class_node.html">Node</a> *node)</td></tr>
 <tr class="separator:a986c32ae096e2a3a1ee34d127d55d5eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a65ae98fd45cd9a8b7953da8c56c85e" id="r_a0a65ae98fd45cd9a8b7953da8c56c85e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a0a65ae98fd45cd9a8b7953da8c56c85e">AddMesh</a> (<a class="el" href="class_mesh.html">Mesh</a> *mesh, <a class="el" href="class_node.html">Node</a> *parent=nullptr)</td></tr>
-<tr class="separator:a0a65ae98fd45cd9a8b7953da8c56c85e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa527b176d3483c1fa81ebf10a5c4944c" id="r_aa527b176d3483c1fa81ebf10a5c4944c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#aa527b176d3483c1fa81ebf10a5c4944c">AddCamera</a> (const std::string &amp;name, <a class="el" href="class_camera.html">Camera</a> *camera, bool select=false)</td></tr>
-<tr class="separator:aa527b176d3483c1fa81ebf10a5c4944c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad480176d26f06d5ba2c3eb7e4b346d45" id="r_ad480176d26f06d5ba2c3eb7e4b346d45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#ad480176d26f06d5ba2c3eb7e4b346d45">AddLight</a> (const std::string &amp;name, <a class="el" href="class_light.html">Light</a> *light, bool select=false)</td></tr>
-<tr class="separator:ad480176d26f06d5ba2c3eb7e4b346d45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad77a9bb95d43ef6198af42e70cd0c903" id="r_ad77a9bb95d43ef6198af42e70cd0c903"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_mesh.html">Mesh</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#ad77a9bb95d43ef6198af42e70cd0c903">AddMesh</a> (<a class="el" href="class_mesh.html">Mesh</a> *mesh, <a class="el" href="class_node.html">Node</a> *parent=nullptr)</td></tr>
+<tr class="separator:ad77a9bb95d43ef6198af42e70cd0c903"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a048af4e73307d7389e63b004bbaf1d" id="r_a8a048af4e73307d7389e63b004bbaf1d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_camera.html">Camera</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a8a048af4e73307d7389e63b004bbaf1d">AddCamera</a> (const std::string &amp;name, <a class="el" href="class_camera.html">Camera</a> *camera, bool select=false, bool replace=false)</td></tr>
+<tr class="separator:a8a048af4e73307d7389e63b004bbaf1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac366c2074bd28486a6e819d1f2605931" id="r_ac366c2074bd28486a6e819d1f2605931"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_light.html">Light</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#ac366c2074bd28486a6e819d1f2605931">AddLight</a> (const std::string &amp;name, <a class="el" href="class_light.html">Light</a> *light, bool select=false, bool replace=false)</td></tr>
+<tr class="separator:ac366c2074bd28486a6e819d1f2605931"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab15e25232c2163cb9809e660affb4beb" id="r_ab15e25232c2163cb9809e660affb4beb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_texture.html">Texture</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#ab15e25232c2163cb9809e660affb4beb">AddTexture</a> (const std::string &amp;name, <a class="el" href="struct_texture.html">Texture</a> *texture, bool replace=false)</td></tr>
+<tr class="separator:ab15e25232c2163cb9809e660affb4beb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedc261b8cb84d567e783834c860df860" id="r_aedc261b8cb84d567e783834c860df860"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_material.html">Material</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#aedc261b8cb84d567e783834c860df860">AddMaterial</a> (const std::string &amp;name, <a class="el" href="class_material.html">Material</a> *material, bool replace=false)</td></tr>
+<tr class="separator:aedc261b8cb84d567e783834c860df860"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f6b833dee5717acfd8e3cf3843a93c8" id="r_a5f6b833dee5717acfd8e3cf3843a93c8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_shader.html">Shader</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a5f6b833dee5717acfd8e3cf3843a93c8">CreateShader</a> (const std::string &amp;name, bool loadGeom)</td></tr>
 <tr class="separator:a5f6b833dee5717acfd8e3cf3843a93c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca45ca8416d0b5b6dcca48337cfb4561" id="r_aca45ca8416d0b5b6dcca48337cfb4561"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_shader.html">Shader</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#aca45ca8416d0b5b6dcca48337cfb4561">CreateShader</a> (const std::string &amp;name, const std::string &amp;source, bool loadGeom)</td></tr>
 <tr class="separator:aca45ca8416d0b5b6dcca48337cfb4561"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2039b523167cd6bb36a40b61b8276d0a" id="r_a2039b523167cd6bb36a40b61b8276d0a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_shader.html">Shader</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a2039b523167cd6bb36a40b61b8276d0a">CreateShader</a> (const std::string &amp;name, <a class="el" href="class_config.html">Config</a> *config)</td></tr>
 <tr class="separator:a2039b523167cd6bb36a40b61b8276d0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30b37b91a2e3aea285630a362804238d" id="r_a30b37b91a2e3aea285630a362804238d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a30b37b91a2e3aea285630a362804238d">DeleteMesh</a> (<a class="el" href="class_mesh.html">Mesh</a> *mesh)</td></tr>
+<tr class="separator:a30b37b91a2e3aea285630a362804238d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9de3d20a5d003be02c6f9f14d57c9a3" id="r_ab9de3d20a5d003be02c6f9f14d57c9a3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#ab9de3d20a5d003be02c6f9f14d57c9a3">DeleteNode</a> (<a class="el" href="class_node.html">Node</a> *node)</td></tr>
+<tr class="separator:ab9de3d20a5d003be02c6f9f14d57c9a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10b68e2c8627193e305c5ab9b0aa2edd" id="r_a10b68e2c8627193e305c5ab9b0aa2edd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a10b68e2c8627193e305c5ab9b0aa2edd">DeleteSelectable</a> (<a class="el" href="class_i_selectable.html">ISelectable</a> *item)</td></tr>
+<tr class="separator:a10b68e2c8627193e305c5ab9b0aa2edd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae88294ec33c19c1aba4cd74c3653bb95" id="r_ae88294ec33c19c1aba4cd74c3653bb95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#ae88294ec33c19c1aba4cd74c3653bb95">DeleteSelection</a> ()</td></tr>
+<tr class="separator:ae88294ec33c19c1aba4cd74c3653bb95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a06097e4263f1d9a3d540f0294582c6f5" id="r_a06097e4263f1d9a3d540f0294582c6f5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a06097e4263f1d9a3d540f0294582c6f5">UpdateRenderList</a> ()</td></tr>
 <tr class="separator:a06097e4263f1d9a3d540f0294582c6f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62aa63ce9e05664efa303bdd89c01780" id="r_a62aa63ce9e05664efa303bdd89c01780"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a62aa63ce9e05664efa303bdd89c01780">RotateCamera</a> (const glm::vec3 &amp;delta)</td></tr>
 <tr class="separator:a62aa63ce9e05664efa303bdd89c01780"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ebcaacad21ef5bd6351ed51fbc16e07" id="r_a9ebcaacad21ef5bd6351ed51fbc16e07"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a9ebcaacad21ef5bd6351ed51fbc16e07">TranslateCamera</a> (const glm::vec3 &amp;delta)</td></tr>
 <tr class="separator:a9ebcaacad21ef5bd6351ed51fbc16e07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3097e849f01ef67e335edb47136a57da" id="r_a3097e849f01ef67e335edb47136a57da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a3097e849f01ef67e335edb47136a57da">GetRootNode</a> ()</td></tr>
-<tr class="separator:a3097e849f01ef67e335edb47136a57da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a51445a3ad43618cca60f8e660548e888" id="r_a51445a3ad43618cca60f8e660548e888"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a51445a3ad43618cca60f8e660548e888">SetRootNode</a> (<a class="el" href="class_node.html">Node</a> *rootNode)</td></tr>
 <tr class="separator:a51445a3ad43618cca60f8e660548e888"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e6138f71128bedd06b75446babe8564" id="r_a1e6138f71128bedd06b75446babe8564"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a1e6138f71128bedd06b75446babe8564">GetCurShader</a> ()</td></tr>
-<tr class="separator:a1e6138f71128bedd06b75446babe8564"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a327c49c24599c0f0c49c2095b5903752" id="r_a327c49c24599c0f0c49c2095b5903752"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a327c49c24599c0f0c49c2095b5903752">SetCamera</a> (const std::string &amp;camera)</td></tr>
 <tr class="separator:a327c49c24599c0f0c49c2095b5903752"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ad2f35e3393a37affa5d3c36f1fb3a4" id="r_a3ad2f35e3393a37affa5d3c36f1fb3a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a3ad2f35e3393a37affa5d3c36f1fb3a4">SetLight</a> (const std::string &amp;light)</td></tr>
 <tr class="separator:a3ad2f35e3393a37affa5d3c36f1fb3a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3903da83e849169de3a94996273a1364" id="r_a3903da83e849169de3a94996273a1364"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a3903da83e849169de3a94996273a1364">SetName</a> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:a3903da83e849169de3a94996273a1364"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the name of the object. Note: Does not set the scope variable. If renaming based on raw input, use <a class="el" href="class_i_nameable.html#a915041e1c3d9617cabd7054adafc6dc9" title="Renames the object, setting the scope to be the scoped part of the name.">Rename()</a> instead to set the scope.  <br /></td></tr>
 <tr class="separator:a3903da83e849169de3a94996273a1364"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b15901f9b32e19ffc5a7f751e3aaf9f" id="r_a8b15901f9b32e19ffc5a7f751e3aaf9f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a8b15901f9b32e19ffc5a7f751e3aaf9f">SetDirectory</a> (const std::string &amp;dir)</td></tr>
 <tr class="separator:a8b15901f9b32e19ffc5a7f751e3aaf9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c15ce18383c3cabc87a0b9490af36bd" id="r_a4c15ce18383c3cabc87a0b9490af36bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a4c15ce18383c3cabc87a0b9490af36bd">SetLightingMode</a> (LightingMode mode)</td></tr>
 <tr class="separator:a4c15ce18383c3cabc87a0b9490af36bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9eea0d50e2bf1a0b6035aad62106e19" id="r_ab9eea0d50e2bf1a0b6035aad62106e19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_i_entity.html">IEntity</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#ab9eea0d50e2bf1a0b6035aad62106e19">AddEntity</a> (const std::string &amp;shaderName, <a class="el" href="class_i_entity.html">IEntity</a> *entity, bool preRender=false)</td></tr>
-<tr class="separator:ab9eea0d50e2bf1a0b6035aad62106e19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a215bec33f432c3d25f4cba6995d68557" id="r_a215bec33f432c3d25f4cba6995d68557"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_texture.html">Texture</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a215bec33f432c3d25f4cba6995d68557">AddTexture</a> (const std::string &amp;name, <a class="el" href="struct_texture.html">Texture</a> *texture)</td></tr>
-<tr class="separator:a215bec33f432c3d25f4cba6995d68557"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cd049a010fbc753fe546912d597a1fc" id="r_a0cd049a010fbc753fe546912d597a1fc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_material.html">Material</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a0cd049a010fbc753fe546912d597a1fc">AddMaterial</a> (const std::string &amp;name, <a class="el" href="class_material.html">Material</a> *material)</td></tr>
-<tr class="separator:a0cd049a010fbc753fe546912d597a1fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7498d92d1bbbaa759b21666c7680716e" id="r_a7498d92d1bbbaa759b21666c7680716e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a7498d92d1bbbaa759b21666c7680716e">SetEntityMaterial</a> (<a class="el" href="class_i_entity.html">IEntity</a> *entity, <a class="el" href="class_material.html">Material</a> *material)</td></tr>
 <tr class="separator:a7498d92d1bbbaa759b21666c7680716e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a957f020c6694e830686c976313bb30c3" id="r_a957f020c6694e830686c976313bb30c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a957f020c6694e830686c976313bb30c3">LoadMaterials</a> (<a class="el" href="class_config.html">Config</a> *config)</td></tr>
@@ -292,28 +311,52 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae528e43d97e593cf0ea3d0f20c99e3ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47102b9881f81865736e9d38bb7b2f15" id="r_a47102b9881f81865736e9d38bb7b2f15"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a47102b9881f81865736e9d38bb7b2f15">Clear</a> ()</td></tr>
 <tr class="separator:a47102b9881f81865736e9d38bb7b2f15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b6ec62cb9d96c33432e726c07d916ec" id="r_a3b6ec62cb9d96c33432e726c07d916ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a3b6ec62cb9d96c33432e726c07d916ec">ClearRendering</a> ()</td></tr>
+<tr class="separator:a3b6ec62cb9d96c33432e726c07d916ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa84705070059b3c5515fb270c1814154" id="r_aa84705070059b3c5515fb270c1814154"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#aa84705070059b3c5515fb270c1814154">Scene</a> (<a class="el" href="class_state.html">State</a> *state)</td></tr>
 <tr class="separator:aa84705070059b3c5515fb270c1814154"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b8cec2e32546713915f8c6303c951f1" id="r_a3b8cec2e32546713915f8c6303c951f1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a3b8cec2e32546713915f8c6303c951f1">~Scene</a> ()</td></tr>
 <tr class="separator:a3b8cec2e32546713915f8c6303c951f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_i_nameable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_i_nameable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_i_nameable.html">INameable</a></td></tr>
+<tr class="memitem:a915041e1c3d9617cabd7054adafc6dc9 inherit pub_methods_class_i_nameable" id="r_a915041e1c3d9617cabd7054adafc6dc9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_nameable.html#a915041e1c3d9617cabd7054adafc6dc9">Rename</a> (const std::string &amp;newName, bool includeScope=true)</td></tr>
+<tr class="memdesc:a915041e1c3d9617cabd7054adafc6dc9 inherit pub_methods_class_i_nameable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Renames the object, setting the scope to be the scoped part of the name.  <br /></td></tr>
+<tr class="separator:a915041e1c3d9617cabd7054adafc6dc9 inherit pub_methods_class_i_nameable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6caec9a041e0b3a47774ee3258884cef inherit pub_methods_class_i_nameable" id="r_a6caec9a041e0b3a47774ee3258884cef"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_nameable.html#a6caec9a041e0b3a47774ee3258884cef">SetScope</a> (const std::string &amp;scope)</td></tr>
+<tr class="memdesc:a6caec9a041e0b3a47774ee3258884cef inherit pub_methods_class_i_nameable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scope of the object.  <br /></td></tr>
+<tr class="separator:a6caec9a041e0b3a47774ee3258884cef inherit pub_methods_class_i_nameable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad75e517f3f3147599993482cc6626c89 inherit pub_methods_class_i_nameable" id="r_ad75e517f3f3147599993482cc6626c89"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_nameable.html#ad75e517f3f3147599993482cc6626c89">GetUnscopedName</a> ()</td></tr>
+<tr class="memdesc:ad75e517f3f3147599993482cc6626c89 inherit pub_methods_class_i_nameable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the unscoped name of the object.  <br /></td></tr>
+<tr class="separator:ad75e517f3f3147599993482cc6626c89 inherit pub_methods_class_i_nameable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad499d65fe3932091a8d4e9545d2103f7 inherit pub_methods_class_i_nameable" id="r_ad499d65fe3932091a8d4e9545d2103f7"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_nameable.html#ad499d65fe3932091a8d4e9545d2103f7">GetScope</a> ()</td></tr>
+<tr class="memdesc:ad499d65fe3932091a8d4e9545d2103f7 inherit pub_methods_class_i_nameable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the scope of the object.  <br /></td></tr>
+<tr class="separator:ad499d65fe3932091a8d4e9545d2103f7 inherit pub_methods_class_i_nameable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa742992bdd45e32ddf31f8b88490e6f4 inherit pub_methods_class_i_nameable" id="r_aa742992bdd45e32ddf31f8b88490e6f4"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_nameable.html#aa742992bdd45e32ddf31f8b88490e6f4">GetScopedName</a> ()</td></tr>
+<tr class="memdesc:aa742992bdd45e32ddf31f8b88490e6f4 inherit pub_methods_class_i_nameable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the scoped name of the object.  <br /></td></tr>
+<tr class="separator:aa742992bdd45e32ddf31f8b88490e6f4 inherit pub_methods_class_i_nameable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef52fad5aac598159b89c2da738e4d14 inherit pub_methods_class_i_nameable" id="r_aef52fad5aac598159b89c2da738e4d14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_nameable.html#aef52fad5aac598159b89c2da738e4d14">InitName</a> (const std::string &amp;name, const std::string &amp;scope=&quot;&quot;)</td></tr>
+<tr class="memdesc:aef52fad5aac598159b89c2da738e4d14 inherit pub_methods_class_i_nameable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the nameable object with the given name and scope.  <br /></td></tr>
+<tr class="separator:aef52fad5aac598159b89c2da738e4d14 inherit pub_methods_class_i_nameable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a012c5180f1884147cdd787e5eeb233b9 inherit pub_methods_class_i_nameable" id="r_a012c5180f1884147cdd787e5eeb233b9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_nameable.html#a012c5180f1884147cdd787e5eeb233b9">INameable</a> ()</td></tr>
+<tr class="memdesc:a012c5180f1884147cdd787e5eeb233b9 inherit pub_methods_class_i_nameable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a default nameable object without name or scope.  <br /></td></tr>
+<tr class="separator:a012c5180f1884147cdd787e5eeb233b9 inherit pub_methods_class_i_nameable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a40245f6b74f78ed5b619939c30bd5dd0" id="r_a40245f6b74f78ed5b619939c30bd5dd0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_material.html">Material</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a40245f6b74f78ed5b619939c30bd5dd0">LoadMaterial</a> (<a class="el" href="class_config.html">Config</a> *config, const std::string &amp;name)</td></tr>
-<tr class="separator:a40245f6b74f78ed5b619939c30bd5dd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0939d4b9ca7410b2ec8b44e9536fea84" id="r_a0939d4b9ca7410b2ec8b44e9536fea84"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_texture.html">Texture</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a0939d4b9ca7410b2ec8b44e9536fea84">LoadTexture</a> (TextureType type, const std::string &amp;path, const std::string &amp;defaultName)</td></tr>
-<tr class="separator:a0939d4b9ca7410b2ec8b44e9536fea84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19bb8332a7d6e106443e261f8f5ecb70" id="r_a19bb8332a7d6e106443e261f8f5ecb70"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_material.html">Material</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a19bb8332a7d6e106443e261f8f5ecb70">LoadMaterial</a> (<a class="el" href="class_config.html">Config</a> *config, const std::string &amp;name, const std::string &amp;scope)</td></tr>
+<tr class="separator:a19bb8332a7d6e106443e261f8f5ecb70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2dbc1fde6e2132326682531ea94b3062" id="r_a2dbc1fde6e2132326682531ea94b3062"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_texture.html">Texture</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a2dbc1fde6e2132326682531ea94b3062">LoadTexture</a> (TextureType type, const std::string &amp;path, const std::string &amp;scope, const std::string &amp;defaultName)</td></tr>
+<tr class="separator:a2dbc1fde6e2132326682531ea94b3062"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e91f593b4dc72feff47c50eaac11587" id="r_a0e91f593b4dc72feff47c50eaac11587"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a0e91f593b4dc72feff47c50eaac11587">HandleWireframe</a> ()</td></tr>
 <tr class="separator:a0e91f593b4dc72feff47c50eaac11587"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a1e2bc8c57a1609660428b907c97935" id="r_a0a1e2bc8c57a1609660428b907c97935"><td class="memItemLeft" align="right" valign="top">const glm::mat4 &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a0a1e2bc8c57a1609660428b907c97935">GetViewAxisProjection</a> (<a class="el" href="class_window.html">Window</a> *window)</td></tr>
 <tr class="separator:a0a1e2bc8c57a1609660428b907c97935"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25f8766387aa1a08b4f689d866ed07ac" id="r_a25f8766387aa1a08b4f689d866ed07ac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a25f8766387aa1a08b4f689d866ed07ac">DeleteNodeContents</a> (<a class="el" href="class_node.html">Node</a> *node)</td></tr>
+<tr class="separator:a25f8766387aa1a08b4f689d866ed07ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:a5f3cffa742c1adffd25c9c6236286f09" id="r_a5f3cffa742c1adffd25c9c6236286f09"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a5f3cffa742c1adffd25c9c6236286f09">mDirectory</a> = &quot;&quot;</td></tr>
 <tr class="separator:a5f3cffa742c1adffd25c9c6236286f09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3273288ec24841d789203f049dc6c86" id="r_ad3273288ec24841d789203f049dc6c86"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#ad3273288ec24841d789203f049dc6c86">mName</a> = &quot;&quot;</td></tr>
-<tr class="separator:ad3273288ec24841d789203f049dc6c86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a74e9cd925eb456db586ce35194460fe0" id="r_a74e9cd925eb456db586ce35194460fe0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_i_entity.html">IEntity</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a74e9cd925eb456db586ce35194460fe0">mGrid</a> = nullptr</td></tr>
 <tr class="separator:a74e9cd925eb456db586ce35194460fe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55702278a0c369380db8f06b5253ef3f" id="r_a55702278a0c369380db8f06b5253ef3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_i_entity.html">IEntity</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a55702278a0c369380db8f06b5253ef3f">mTransformHandle</a> = nullptr</td></tr>
@@ -338,8 +381,8 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:af735ec31a5e35daaca8ab986ba04d84a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70b747be6d52a3e8a1c6c73fb9f11cfd" id="r_a70b747be6d52a3e8a1c6c73fb9f11cfd"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, <a class="el" href="class_entity_container.html">EntityContainer</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a70b747be6d52a3e8a1c6c73fb9f11cfd">mMeshRenderList</a></td></tr>
 <tr class="separator:a70b747be6d52a3e8a1c6c73fb9f11cfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fe7e95c93b8638d84f3ee0de0599deb" id="r_a6fe7e95c93b8638d84f3ee0de0599deb"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, <a class="el" href="class_entity_container.html">EntityContainer</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a6fe7e95c93b8638d84f3ee0de0599deb">mEntityList</a></td></tr>
-<tr class="separator:a6fe7e95c93b8638d84f3ee0de0599deb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2e6c6ef9f45f7172051fe8bec899c24" id="r_af2e6c6ef9f45f7172051fe8bec899c24"><td class="memItemLeft" align="right" valign="top">std::unordered_set&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#af2e6c6ef9f45f7172051fe8bec899c24">mScopes</a></td></tr>
+<tr class="separator:af2e6c6ef9f45f7172051fe8bec899c24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac0a1f3dfadade9b649deece6b2881aaf" id="r_ac0a1f3dfadade9b649deece6b2881aaf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_texture_container.html">TextureContainer</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#ac0a1f3dfadade9b649deece6b2881aaf">mTextures</a> = nullptr</td></tr>
 <tr class="separator:ac0a1f3dfadade9b649deece6b2881aaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a264902f21847f11722e86c988ebfd2a2" id="r_a264902f21847f11722e86c988ebfd2a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_material_container.html">MaterialContainer</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a264902f21847f11722e86c988ebfd2a2">mMaterials</a> = nullptr</td></tr>
@@ -354,6 +397,13 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a7dc47142df45d5c1c4912bd3f6001abb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77d8e63c633bbb67fddade0c85d0e1e0" id="r_a77d8e63c633bbb67fddade0c85d0e1e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_entity_container.html">EntityContainer</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene.html#a77d8e63c633bbb67fddade0c85d0e1e0">mEntities</a> = nullptr</td></tr>
 <tr class="separator:a77d8e63c633bbb67fddade0c85d0e1e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_i_nameable"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_i_nameable')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_i_nameable.html">INameable</a></td></tr>
+<tr class="memitem:a9b8f787032ea5c57932ffcb5f82c28e0 inherit pro_attribs_class_i_nameable" id="r_a9b8f787032ea5c57932ffcb5f82c28e0"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_nameable.html#a9b8f787032ea5c57932ffcb5f82c28e0">mName</a> = &quot;&quot;</td></tr>
+<tr class="memdesc:a9b8f787032ea5c57932ffcb5f82c28e0 inherit pro_attribs_class_i_nameable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of the object.  <br /></td></tr>
+<tr class="separator:a9b8f787032ea5c57932ffcb5f82c28e0 inherit pro_attribs_class_i_nameable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13ec5493596ed80e080977e1ba4bb02a inherit pro_attribs_class_i_nameable" id="r_a13ec5493596ed80e080977e1ba4bb02a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_nameable.html#a13ec5493596ed80e080977e1ba4bb02a">mScope</a> = &quot;&quot;</td></tr>
+<tr class="memdesc:a13ec5493596ed80e080977e1ba4bb02a inherit pro_attribs_class_i_nameable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scope of the object.  <br /></td></tr>
+<tr class="separator:a13ec5493596ed80e080977e1ba4bb02a inherit pro_attribs_class_i_nameable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-attribs" name="pro-static-attribs"></a>
 Static Protected Attributes</h2></td></tr>
@@ -397,14 +447,14 @@ Static Protected Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aa527b176d3483c1fa81ebf10a5c4944c" name="aa527b176d3483c1fa81ebf10a5c4944c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa527b176d3483c1fa81ebf10a5c4944c">&#9670;&#160;</a></span>AddCamera()</h2>
+<a id="a8a048af4e73307d7389e63b004bbaf1d" name="a8a048af4e73307d7389e63b004bbaf1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a048af4e73307d7389e63b004bbaf1d">&#9670;&#160;</a></span>AddCamera()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Scene::AddCamera </td>
+          <td class="memname"><a class="el" href="class_camera.html">Camera</a> * Scene::AddCamera </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em>, </td>
@@ -419,41 +469,13 @@ Static Protected Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>select</em> = <code>false</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ab9eea0d50e2bf1a0b6035aad62106e19" name="ab9eea0d50e2bf1a0b6035aad62106e19"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab9eea0d50e2bf1a0b6035aad62106e19">&#9670;&#160;</a></span>AddEntity()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_i_entity.html">IEntity</a> * Scene::AddEntity </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>shaderName</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_i_entity.html">IEntity</a> *&#160;</td>
-          <td class="paramname"><em>entity</em>, </td>
+          <td class="paramname"><em>select</em> = <code>false</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>preRender</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>replace</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -465,14 +487,14 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ad480176d26f06d5ba2c3eb7e4b346d45" name="ad480176d26f06d5ba2c3eb7e4b346d45"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad480176d26f06d5ba2c3eb7e4b346d45">&#9670;&#160;</a></span>AddLight()</h2>
+<a id="ac366c2074bd28486a6e819d1f2605931" name="ac366c2074bd28486a6e819d1f2605931"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac366c2074bd28486a6e819d1f2605931">&#9670;&#160;</a></span>AddLight()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Scene::AddLight </td>
+          <td class="memname"><a class="el" href="class_light.html">Light</a> * Scene::AddLight </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em>, </td>
@@ -487,7 +509,13 @@ Static Protected Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>select</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>select</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>replace</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -499,8 +527,8 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a0cd049a010fbc753fe546912d597a1fc" name="a0cd049a010fbc753fe546912d597a1fc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0cd049a010fbc753fe546912d597a1fc">&#9670;&#160;</a></span>AddMaterial()</h2>
+<a id="aedc261b8cb84d567e783834c860df860" name="aedc261b8cb84d567e783834c860df860"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aedc261b8cb84d567e783834c860df860">&#9670;&#160;</a></span>AddMaterial()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -515,7 +543,13 @@ Static Protected Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_material.html">Material</a> *&#160;</td>
-          <td class="paramname"><em>material</em>&#160;</td>
+          <td class="paramname"><em>material</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>replace</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -527,14 +561,14 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a0a65ae98fd45cd9a8b7953da8c56c85e" name="a0a65ae98fd45cd9a8b7953da8c56c85e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a65ae98fd45cd9a8b7953da8c56c85e">&#9670;&#160;</a></span>AddMesh()</h2>
+<a id="ad77a9bb95d43ef6198af42e70cd0c903" name="ad77a9bb95d43ef6198af42e70cd0c903"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad77a9bb95d43ef6198af42e70cd0c903">&#9670;&#160;</a></span>AddMesh()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Scene::AddMesh </td>
+          <td class="memname"><a class="el" href="class_mesh.html">Mesh</a> * Scene::AddMesh </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_mesh.html">Mesh</a> *&#160;</td>
           <td class="paramname"><em>mesh</em>, </td>
@@ -573,8 +607,8 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a215bec33f432c3d25f4cba6995d68557" name="a215bec33f432c3d25f4cba6995d68557"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a215bec33f432c3d25f4cba6995d68557">&#9670;&#160;</a></span>AddTexture()</h2>
+<a id="ab15e25232c2163cb9809e660affb4beb" name="ab15e25232c2163cb9809e660affb4beb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab15e25232c2163cb9809e660affb4beb">&#9670;&#160;</a></span>AddTexture()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -589,7 +623,13 @@ Static Protected Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="struct_texture.html">Texture</a> *&#160;</td>
-          <td class="paramname"><em>texture</em>&#160;</td>
+          <td class="paramname"><em>texture</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>replace</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -609,6 +649,23 @@ Static Protected Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">void Scene::Clear </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3b6ec62cb9d96c33432e726c07d916ec" name="a3b6ec62cb9d96c33432e726c07d916ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b6ec62cb9d96c33432e726c07d916ec">&#9670;&#160;</a></span>ClearRendering()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Scene::ClearRendering </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -702,6 +759,103 @@ Static Protected Attributes</h2></td></tr>
           <td></td>
           <td>)</td>
           <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a30b37b91a2e3aea285630a362804238d" name="a30b37b91a2e3aea285630a362804238d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30b37b91a2e3aea285630a362804238d">&#9670;&#160;</a></span>DeleteMesh()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Scene::DeleteMesh </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_mesh.html">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab9de3d20a5d003be02c6f9f14d57c9a3" name="ab9de3d20a5d003be02c6f9f14d57c9a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9de3d20a5d003be02c6f9f14d57c9a3">&#9670;&#160;</a></span>DeleteNode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Scene::DeleteNode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a25f8766387aa1a08b4f689d866ed07ac" name="a25f8766387aa1a08b4f689d866ed07ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25f8766387aa1a08b4f689d866ed07ac">&#9670;&#160;</a></span>DeleteNodeContents()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Scene::DeleteNodeContents </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a10b68e2c8627193e305c5ab9b0aa2edd" name="a10b68e2c8627193e305c5ab9b0aa2edd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10b68e2c8627193e305c5ab9b0aa2edd">&#9670;&#160;</a></span>DeleteSelectable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Scene::DeleteSelectable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_i_selectable.html">ISelectable</a> *&#160;</td>
+          <td class="paramname"><em>item</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae88294ec33c19c1aba4cd74c3653bb95" name="ae88294ec33c19c1aba4cd74c3653bb95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae88294ec33c19c1aba4cd74c3653bb95">&#9670;&#160;</a></span>DeleteSelection()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Scene::DeleteSelection </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -876,24 +1030,6 @@ Static Protected Attributes</h2></td></tr>
           <td class="memname"><a class="el" href="class_entity_container.html">EntityContainer</a> * Scene::GetEntities </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3ca481fcec0d465286536a51e47dcfdc" name="a3ca481fcec0d465286536a51e47dcfdc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3ca481fcec0d465286536a51e47dcfdc">&#9670;&#160;</a></span>GetEntity()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_i_entity.html">IEntity</a> * Scene::GetEntity </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1160,6 +1296,24 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a7af04581bac73569c31c63f86f6e2611" name="a7af04581bac73569c31c63f86f6e2611"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7af04581bac73569c31c63f86f6e2611">&#9670;&#160;</a></span>GetUniqueScope()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Scene::GetUniqueScope </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>scope</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a0a1e2bc8c57a1609660428b907c97935" name="a0a1e2bc8c57a1609660428b907c97935"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0a1e2bc8c57a1609660428b907c97935">&#9670;&#160;</a></span>GetViewAxisProjection()</h2>
 
@@ -1228,8 +1382,26 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a40245f6b74f78ed5b619939c30bd5dd0" name="a40245f6b74f78ed5b619939c30bd5dd0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a40245f6b74f78ed5b619939c30bd5dd0">&#9670;&#160;</a></span>LoadMaterial()</h2>
+<a id="a049a3113a5c97858610395b9b0dc74cc" name="a049a3113a5c97858610395b9b0dc74cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a049a3113a5c97858610395b9b0dc74cc">&#9670;&#160;</a></span>IsScopeActive()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Scene::IsScopeActive </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>scope</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a19bb8332a7d6e106443e261f8f5ecb70" name="a19bb8332a7d6e106443e261f8f5ecb70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19bb8332a7d6e106443e261f8f5ecb70">&#9670;&#160;</a></span>LoadMaterial()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1247,7 +1419,13 @@ Static Protected Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>scope</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1282,8 +1460,8 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a0939d4b9ca7410b2ec8b44e9536fea84" name="a0939d4b9ca7410b2ec8b44e9536fea84"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0939d4b9ca7410b2ec8b44e9536fea84">&#9670;&#160;</a></span>LoadTexture()</h2>
+<a id="a2dbc1fde6e2132326682531ea94b3062" name="a2dbc1fde6e2132326682531ea94b3062"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2dbc1fde6e2132326682531ea94b3062">&#9670;&#160;</a></span>LoadTexture()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1302,6 +1480,12 @@ Static Protected Attributes</h2></td></tr>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>scope</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1447,6 +1631,9 @@ Static Protected Attributes</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void Scene::SetName </td>
@@ -1456,7 +1643,22 @@ Static Protected Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
+
+<p>Sets the name of the object. Note: Does not set the scope variable. If renaming based on raw input, use <a class="el" href="class_i_nameable.html#a915041e1c3d9617cabd7054adafc6dc9" title="Renames the object, setting the scope to be the scoped part of the name.">Rename()</a> instead to set the scope. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Raw name of the object</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented from <a class="el" href="class_i_nameable.html#a9595625e7ba1f2de6edd968350bad50e">INameable</a>.</p>
 
 </div>
 </div>
@@ -1654,28 +1856,6 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a6fe7e95c93b8638d84f3ee0de0599deb" name="a6fe7e95c93b8638d84f3ee0de0599deb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6fe7e95c93b8638d84f3ee0de0599deb">&#9670;&#160;</a></span>mEntityList</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::unordered_map&lt;std::string, <a class="el" href="class_entity_container.html">EntityContainer</a>*&gt; Scene::mEntityList</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a74e9cd925eb456db586ce35194460fe0" name="a74e9cd925eb456db586ce35194460fe0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a74e9cd925eb456db586ce35194460fe0">&#9670;&#160;</a></span>mGrid</h2>
 
@@ -1808,28 +1988,6 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ad3273288ec24841d789203f049dc6c86" name="ad3273288ec24841d789203f049dc6c86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad3273288ec24841d789203f049dc6c86">&#9670;&#160;</a></span>mName</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string Scene::mName = &quot;&quot;</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a9af48c8d29ba71a6ad52637ae74defe9" name="a9af48c8d29ba71a6ad52637ae74defe9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9af48c8d29ba71a6ad52637ae74defe9">&#9670;&#160;</a></span>mRootNode</h2>
 
@@ -1841,6 +1999,28 @@ Static Protected Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_node.html">Node</a>* Scene::mRootNode = nullptr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af2e6c6ef9f45f7172051fe8bec899c24" name="af2e6c6ef9f45f7172051fe8bec899c24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2e6c6ef9f45f7172051fe8bec899c24">&#9670;&#160;</a></span>mScopes</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_set&lt;std::string&gt; Scene::mScopes</td>
         </tr>
       </table>
   </td>

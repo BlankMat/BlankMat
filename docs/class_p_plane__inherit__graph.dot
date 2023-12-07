@@ -11,4 +11,6 @@ digraph "PPlane"
   Node3 [id="Node000003",label="IEntity",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_i_entity.html",tooltip=" "];
   Node4 -> Node3 [id="edge3_Node000003_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
   Node4 [id="Node000004",label="ISelectable",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_i_selectable.html",tooltip="Interface for all items that can be selected to be viewed in the inspector."];
+  Node5 -> Node4 [id="edge4_Node000004_Node000005",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node5 [id="Node000005",label="INameable",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_i_nameable.html",tooltip="An object that keeps track of its name and scope."];
 }

@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.3</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.1.0</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -94,15 +94,19 @@ $(document).ready(function(){initNavTree('functions_d.html',''); initResizable()
 <div class="textblock">Here is a list of all class members with links to the classes they belong to:</div>
 
 <h3><a id="index_d" name="index_d"></a>- d -</h3><ul>
-<li>d&#160;:&#160;<a class="el" href="class_material.html#a72cb289b8dccb7a08e0b0f7880a92803">Material</a></li>
-<li>Data()&#160;:&#160;<a class="el" href="class_i_data_container.html#a108eb73a81e0d810068294400015f29c">IDataContainer&lt; T &gt;</a></li>
+<li>Data()&#160;:&#160;<a class="el" href="class_i_container.html#abfeb72ac5979c220082e80afc4cd0815">IContainer&lt; T &gt;</a></li>
 <li>defaultMat&#160;:&#160;<a class="el" href="class_state.html#acc8727b7830799cae529c1ee0c793729">State</a></li>
-<li>DeleteNode()&#160;:&#160;<a class="el" href="class_node.html#ad7690989377a01b047a4ae3d98ec94e3">Node</a></li>
+<li>DeleteChild()&#160;:&#160;<a class="el" href="class_node.html#ab25c2fef4792d9513f93dff257cd50ea">Node</a></li>
+<li>DeleteMesh()&#160;:&#160;<a class="el" href="class_node.html#a6cf32082759b2e589e21eff37e6ee4b9">Node</a>, <a class="el" href="class_scene.html#a30b37b91a2e3aea285630a362804238d">Scene</a></li>
+<li>DeleteNode()&#160;:&#160;<a class="el" href="class_node.html#ad7690989377a01b047a4ae3d98ec94e3">Node</a>, <a class="el" href="class_scene.html#ab9de3d20a5d003be02c6f9f14d57c9a3">Scene</a></li>
+<li>DeleteNodeContents()&#160;:&#160;<a class="el" href="class_scene.html#a25f8766387aa1a08b4f689d866ed07ac">Scene</a></li>
+<li>DeleteSelectable()&#160;:&#160;<a class="el" href="class_scene.html#a10b68e2c8627193e305c5ab9b0aa2edd">Scene</a></li>
+<li>DeleteSelection()&#160;:&#160;<a class="el" href="class_scene.html#ae88294ec33c19c1aba4cd74c3653bb95">Scene</a></li>
 <li>depthMap&#160;:&#160;<a class="el" href="class_state.html#a5460d08d807c98cf30854b1c951efff6">State</a></li>
 <li>depthMapFBO&#160;:&#160;<a class="el" href="class_state.html#a94ae127b89332741742ee5d287d99b8b">State</a></li>
 <li>depthMapSize&#160;:&#160;<a class="el" href="class_state.html#afca6fc39e49fcc9e196a990399d841fc">State</a></li>
-<li>Deselect()&#160;:&#160;<a class="el" href="class_i_data_container.html#a31560fb7952997c386ea9f1238990098">IDataContainer&lt; T &gt;</a>, <a class="el" href="class_i_tool.html#aafa684e23770ec0263ad3a60ed3b33aa">ITool</a>, <a class="el" href="class_select_tool.html#a71d99607f5718848ab0586bf8cd069dc">SelectTool</a></li>
-<li>Deselectable()&#160;:&#160;<a class="el" href="class_g_u_i_window_utils.html#a8dd0d4ca7825d3b98968b5a9db008733">GUIWindowUtils</a></li>
+<li>Deselect()&#160;:&#160;<a class="el" href="class_i_container.html#ad84c7aa2688311b202334e2ba6b7f81f">IContainer&lt; T &gt;</a>, <a class="el" href="class_i_tool.html#aafa684e23770ec0263ad3a60ed3b33aa">ITool</a></li>
+<li>Deselectable()&#160;:&#160;<a class="el" href="class_g_u_i_window_utils.html#a2d3ce69a791f06648da47f50e3b4603b">GUIWindowUtils</a></li>
 <li>DeselectElement()&#160;:&#160;<a class="el" href="class_selection.html#a856a517f203a91ac6c21fcb00f1e69c3">Selection</a></li>
 <li>DeselectEntity()&#160;:&#160;<a class="el" href="class_selection.html#a109e973d1c149b651ca0641880d355c1">Selection</a></li>
 <li>DeselectFace()&#160;:&#160;<a class="el" href="class_selection.html#ac98a25e6428a12ac8e9178545685195a">Selection</a></li>
@@ -113,6 +117,7 @@ $(document).ready(function(){initNavTree('functions_d.html',''); initResizable()
 <li>DisableMouseCursor()&#160;:&#160;<a class="el" href="class_input.html#aab442a1859fbd325e8cfabcaadeec7ac">Input</a></li>
 <li>Display()&#160;:&#160;<a class="el" href="class_i_u_i_variable.html#a3554feb277e8ac2c840bc096db8499a4">IUIVariable&lt; T &gt;</a>, <a class="el" href="class_u_i_bool.html#a468456377c750935f5e07b545371cd2b">UIBool</a>, <a class="el" href="class_u_i_color.html#ad312fab2a3c5185eb24353060230d371">UIColor</a>, <a class="el" href="class_u_i_float.html#aea9136ea387aeed8d90ca317abc03ce4">UIFloat</a>, <a class="el" href="class_u_i_int.html#a64facfe79444340816de8a56d15cc425">UIInt</a>, <a class="el" href="class_u_i_string.html#a92a8291def8cfeae1981fb60fb0660c3">UIString</a>, <a class="el" href="class_u_i_vec3.html#a3d1069bf8107b2615741bde079dec837">UIVec3</a></li>
 <li>DisplayCamera()&#160;:&#160;<a class="el" href="class_g_u_i_inspector_window.html#a3c6f95c00286673683063ff7fca3e5f0">GUIInspectorWindow</a></li>
+<li>DisplayDeleteItem()&#160;:&#160;<a class="el" href="class_i_g_u_i_container_window.html#ae399431fd7fbac8fc1a67abe67634603">IGUIContainerWindow&lt; T &gt;</a></li>
 <li>DisplayEntity()&#160;:&#160;<a class="el" href="class_g_u_i_inspector_window.html#aee821bdd1b4ff37da8e46aa00c9afd74">GUIInspectorWindow</a></li>
 <li>DisplayLight()&#160;:&#160;<a class="el" href="class_g_u_i_inspector_window.html#a34c3dca1d1d80dc2355e3f7d157d3e40">GUIInspectorWindow</a></li>
 <li>DisplayListItem()&#160;:&#160;<a class="el" href="class_g_u_i_texture_viewer.html#ac990690defb92114e5952b4cac417e73">GUITextureViewer</a>, <a class="el" href="class_i_g_u_i_container_window.html#ad210584f48d9b2d78c5a2dd4b844ec25">IGUIContainerWindow&lt; T &gt;</a></li>

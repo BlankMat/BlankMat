@@ -5,9 +5,7 @@ digraph "Graphical Class Hierarchy"
   edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
   rankdir="LR";
-  Node0 [id="Node000000",label="IUIVariable\< glm::vec3 \>",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_i_u_i_variable.html",tooltip=" "];
-  Node0 -> Node1 [id="edge63_Node000000_Node000001",dir="back",color="steelblue1",style="solid",tooltip=" "];
-  Node1 [id="Node000001",label="UIColor",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_u_i_color.html",tooltip="A color (vector3) that can be directly displayed and edited in the UI."];
-  Node0 -> Node2 [id="edge64_Node000000_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
-  Node2 [id="Node000002",label="UIVec3",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_u_i_vec3.html",tooltip="A vector3 that can be directly displayed and edited in the UI."];
+  Node0 [id="Node000000",label="IUIVariable\< int \>",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_i_u_i_variable.html",tooltip=" "];
+  Node0 -> Node1 [id="edge66_Node000000_Node000001",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node1 [id="Node000001",label="UIInt",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_u_i_int.html",tooltip="An integer that can be directly displayed and edited in the UI."];
 }

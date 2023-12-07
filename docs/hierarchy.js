@@ -37,41 +37,41 @@ var hierarchy =
       [ "GUIToolbarWindow", "class_g_u_i_toolbar_window.html", null ],
       [ "IGUIContainerWindow< T >", "class_i_g_u_i_container_window.html", null ]
     ] ],
-    [ "INameable", "class_i_nameable.html", null ],
+    [ "INameable", "class_i_nameable.html", [
+      [ "ISelectable", "class_i_selectable.html", [
+        [ "Camera", "class_camera.html", null ],
+        [ "IEntity", "class_i_entity.html", [
+          [ "IPrimitive< Vertex, unsigned int >", "class_i_primitive.html", [
+            [ "Mesh", "class_mesh.html", [
+              [ "VCube", "class_v_cube.html", null ],
+              [ "VPlane", "class_v_plane.html", null ]
+            ] ]
+          ] ],
+          [ "IPrimitive< glm::vec3, glm::uvec3 >", "class_i_primitive.html", [
+            [ "PCube", "class_p_cube.html", null ],
+            [ "PPlane", "class_p_plane.html", null ]
+          ] ],
+          [ "IPrimitive< glm::vec3, glm::uvec2 >", "class_i_primitive.html", [
+            [ "PGrid", "class_p_grid.html", null ]
+          ] ],
+          [ "IPrimitive< glm::vec3, glm::uvec4 >", "class_i_primitive.html", [
+            [ "PLine", "class_p_line.html", null ],
+            [ "PWireCube", "class_p_wire_cube.html", null ]
+          ] ],
+          [ "IPrimitive< V, I >", "class_i_primitive.html", null ],
+          [ "Node", "class_node.html", null ],
+          [ "PHandle", "class_p_handle.html", null ]
+        ] ],
+        [ "Light", "class_light.html", [
+          [ "PLightCube", "class_p_light_cube.html", null ]
+        ] ],
+        [ "Material", "class_material.html", null ],
+        [ "Texture", "struct_texture.html", null ]
+      ] ],
+      [ "Scene", "class_scene.html", null ]
+    ] ],
     [ "Input", "class_input.html", null ],
-    [ "ISelectable", "class_i_selectable.html", [
-      [ "Camera", "class_camera.html", null ],
-      [ "IEntity", "class_i_entity.html", [
-        [ "IPrimitive< Vertex, unsigned int >", "class_i_primitive.html", [
-          [ "Mesh", "class_mesh.html", [
-            [ "VCube", "class_v_cube.html", null ],
-            [ "VPlane", "class_v_plane.html", null ]
-          ] ]
-        ] ],
-        [ "IPrimitive< glm::vec3, glm::uvec3 >", "class_i_primitive.html", [
-          [ "PCube", "class_p_cube.html", null ],
-          [ "PPlane", "class_p_plane.html", null ]
-        ] ],
-        [ "IPrimitive< glm::vec3, glm::uvec2 >", "class_i_primitive.html", [
-          [ "PGrid", "class_p_grid.html", null ]
-        ] ],
-        [ "IPrimitive< glm::vec3, glm::uvec4 >", "class_i_primitive.html", [
-          [ "PLine", "class_p_line.html", null ],
-          [ "PWireCube", "class_p_wire_cube.html", null ]
-        ] ],
-        [ "IPrimitive< V, I >", "class_i_primitive.html", null ],
-        [ "Node", "class_node.html", null ],
-        [ "PHandle", "class_p_handle.html", null ]
-      ] ],
-      [ "Light", "class_light.html", [
-        [ "PLightCube", "class_p_light_cube.html", null ]
-      ] ],
-      [ "Material", "class_material.html", null ],
-      [ "Texture", "struct_texture.html", null ]
-    ] ],
-    [ "ITool", "class_i_tool.html", [
-      [ "SelectTool", "class_select_tool.html", null ]
-    ] ],
+    [ "ITool", "class_i_tool.html", null ],
     [ "IUIVariable< T >", "class_i_u_i_variable.html", null ],
     [ "IUIVariable< bool >", "class_i_u_i_variable.html", [
       [ "UIBool", "class_u_i_bool.html", null ]
@@ -90,31 +90,30 @@ var hierarchy =
       [ "UIString", "class_u_i_string.html", null ]
     ] ],
     [ "IWritable", "class_i_writable.html", [
-      [ "IDataContainer< Camera >", "class_i_data_container.html", [
+      [ "IContainer< Camera >", "class_i_container.html", [
         [ "CameraContainer", "class_camera_container.html", null ]
       ] ],
-      [ "IDataContainer< IEntity >", "class_i_data_container.html", [
+      [ "IContainer< IEntity >", "class_i_container.html", [
         [ "EntityContainer", "class_entity_container.html", null ]
       ] ],
-      [ "IDataContainer< Light >", "class_i_data_container.html", [
+      [ "IContainer< Light >", "class_i_container.html", [
         [ "LightContainer", "class_light_container.html", null ]
       ] ],
-      [ "IDataContainer< Material >", "class_i_data_container.html", [
+      [ "IContainer< Material >", "class_i_container.html", [
         [ "MaterialContainer", "class_material_container.html", null ]
       ] ],
-      [ "IDataContainer< Mesh >", "class_i_data_container.html", [
+      [ "IContainer< Mesh >", "class_i_container.html", [
         [ "MeshContainer", "class_mesh_container.html", null ]
       ] ],
-      [ "IDataContainer< Shader >", "class_i_data_container.html", [
+      [ "IContainer< Shader >", "class_i_container.html", [
         [ "ShaderContainer", "class_shader_container.html", null ]
       ] ],
-      [ "IDataContainer< Texture >", "class_i_data_container.html", [
+      [ "IContainer< Texture >", "class_i_container.html", [
         [ "TextureContainer", "class_texture_container.html", null ]
       ] ],
-      [ "IDataContainer< T >", "class_i_data_container.html", null ],
+      [ "IContainer< T >", "class_i_container.html", null ],
       [ "Node", "class_node.html", null ]
     ] ],
-    [ "Scene", "class_scene.html", null ],
     [ "SceneIO", "class_scene_i_o.html", null ],
     [ "SceneReader", "class_scene_reader.html", null ],
     [ "SceneWriter", "class_scene_writer.html", null ],

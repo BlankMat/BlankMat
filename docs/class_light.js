@@ -1,6 +1,6 @@
 var class_light =
 [
-    [ "Light", "class_light.html#ae17b00a2a401685ede5e8bf8c744949d", null ],
+    [ "Light", "class_light.html#a8d2da1d3d92247b802b7fbdd4e1d8866", null ],
     [ "Light", "class_light.html#a102edf7940ae1fb528fc7e6a1229c98a", null ],
     [ "CalcMatrices", "class_light.html#a3fe1e0520df717eada73eb89abbed27a", null ],
     [ "Draw", "class_light.html#a58b5f98eb4a123aef1ccb8c1d50dcaf3", null ],

@@ -1,11 +1,11 @@
 var struct_texture =
 [
-    [ "Texture", "struct_texture.html#a2083081d0a8d7eb98a8f071b2807232c", null ],
-    [ "Texture", "struct_texture.html#a631bb0faaf1a68d6822254f1a1daed6a", null ],
-    [ "Texture", "struct_texture.html#ab29863262d9246caed5bb7ee8980edca", null ],
+    [ "Texture", "struct_texture.html#aac86f88f4caa40db61a102206769a486", null ],
+    [ "Texture", "struct_texture.html#a05dcea692b799ddc1e2af136f9144a75", null ],
+    [ "Texture", "struct_texture.html#a2564dbf065815a1f94a0ff010fa9e46f", null ],
     [ "IsInternal", "struct_texture.html#a25e2b7e9ee748e611f53d6abea6eaf09", null ],
-    [ "id", "struct_texture.html#aed42161a5c00b6020c85833401da6da6", null ],
-    [ "name", "struct_texture.html#a308bb32725dd45f36e62ba6ff8c9db8d", null ],
-    [ "path", "struct_texture.html#aa8ba4ade408b0df1fc9b6f605a4efd22", null ],
-    [ "type", "struct_texture.html#ad83ed086abaa805a606a5ccd433f505c", null ]
+    [ "mDir", "struct_texture.html#a0443bc3254195db23bf6f47cc3ddb99b", null ],
+    [ "mFile", "struct_texture.html#a14cbbc17f63b64cd9653c06d36f42a5d", null ],
+    [ "mID", "struct_texture.html#a2841a0a211b9e39b2f81fc12dcdebfc6", null ],
+    [ "mType", "struct_texture.html#a83c87507441075597c7e47b9bbfb22d6", null ]
 ];

@@ -6,7 +6,7 @@ digraph "MeshContainer"
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
   Node1 [id="Node000001",label="MeshContainer",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
   Node2 -> Node1 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
-  Node2 [id="Node000002",label="IDataContainer\< Mesh \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_i_data_container.html",tooltip=" "];
+  Node2 [id="Node000002",label="IContainer\< Mesh \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_i_container.html",tooltip=" "];
   Node3 -> Node2 [id="edge2_Node000002_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
   Node3 [id="Node000003",label="IWritable",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_i_writable.html",tooltip=" "];
   Node4 -> Node2 [id="edge3_Node000002_Node000004",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" mCurSelectedItem",fontcolor="grey" ];
@@ -17,10 +17,12 @@ digraph "MeshContainer"
   Node6 [id="Node000006",label="IEntity",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_i_entity.html",tooltip=" "];
   Node7 -> Node6 [id="edge6_Node000006_Node000007",dir="back",color="steelblue1",style="solid",tooltip=" "];
   Node7 [id="Node000007",label="ISelectable",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_i_selectable.html",tooltip="Interface for all items that can be selected to be viewed in the inspector."];
-  Node8 -> Node6 [id="edge7_Node000006_Node000008",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" mMaterial",fontcolor="grey" ];
-  Node8 [id="Node000008",label="Material",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_material.html",tooltip="Class that stores all texture and render information for a material."];
-  Node7 -> Node8 [id="edge8_Node000008_Node000007",dir="back",color="steelblue1",style="solid",tooltip=" "];
-  Node9 -> Node8 [id="edge9_Node000008_Node000009",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" map_bump\nmap_d\nmap_ka\nmap_kd\nmap_ks\nmap_ns",fontcolor="grey" ];
-  Node9 [id="Node000009",label="Texture",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$struct_texture.html",tooltip="A structure that stores a texture file that has been read into the OpenGL context."];
-  Node7 -> Node9 [id="edge10_Node000009_Node000007",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node8 -> Node7 [id="edge7_Node000007_Node000008",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node8 [id="Node000008",label="INameable",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_i_nameable.html",tooltip="An object that keeps track of its name and scope."];
+  Node9 -> Node6 [id="edge8_Node000006_Node000009",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" mMaterial",fontcolor="grey" ];
+  Node9 [id="Node000009",label="Material",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_material.html",tooltip="Class that stores all texture and render information for a material."];
+  Node7 -> Node9 [id="edge9_Node000009_Node000007",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node10 -> Node9 [id="edge10_Node000009_Node000010",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" mMapBump\nmMapD\nmMapKA\nmMapKD\nmMapKS\nmMapNS",fontcolor="grey" ];
+  Node10 [id="Node000010",label="Texture",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$struct_texture.html",tooltip="A structure that stores a texture file that has been read into the OpenGL context."];
+  Node7 -> Node10 [id="edge11_Node000010_Node000007",dir="back",color="steelblue1",style="solid",tooltip=" "];
 }

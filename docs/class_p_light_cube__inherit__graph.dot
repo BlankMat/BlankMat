@@ -9,4 +9,6 @@ digraph "PLightCube"
   Node2 [id="Node000002",label="Light",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_light.html",tooltip=" "];
   Node3 -> Node2 [id="edge2_Node000002_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
   Node3 [id="Node000003",label="ISelectable",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_i_selectable.html",tooltip="Interface for all items that can be selected to be viewed in the inspector."];
+  Node4 -> Node3 [id="edge3_Node000003_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="INameable",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_i_nameable.html",tooltip="An object that keeps track of its name and scope."];
 }

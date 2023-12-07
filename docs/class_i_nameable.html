@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.3</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.1.0</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -95,33 +95,44 @@ $(document).ready(function(){initNavTree('class_i_nameable.html',''); initResiza
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="class_i_nameable-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">INameable Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
+  <div class="headertitle"><div class="title">INameable Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>An object that keeps track of its name and scope.  
  <a href="class_i_nameable.html#details">More...</a></p>
+<div class="dynheader">
+Inheritance diagram for INameable:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_i_nameable__inherit__graph.png" border="0" usemap="#a_i_nameable_inherit__map" alt="Inheritance graph"/></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5682fa64b8a878dd778faa825e587e51" id="r_a5682fa64b8a878dd778faa825e587e51"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_nameable.html#a5682fa64b8a878dd778faa825e587e51">Rename</a> (const std::string &amp;newName)=0</td></tr>
-<tr class="memdesc:a5682fa64b8a878dd778faa825e587e51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Renames the object. Must be implemented by parent class to ensure it maintains uniqueness.  <br /></td></tr>
-<tr class="separator:a5682fa64b8a878dd778faa825e587e51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd8d36b835f8787b8c093fa386ee7127" id="r_abd8d36b835f8787b8c093fa386ee7127"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_nameable.html#abd8d36b835f8787b8c093fa386ee7127">GetName</a> ()</td></tr>
-<tr class="memdesc:abd8d36b835f8787b8c093fa386ee7127"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of the object.  <br /></td></tr>
-<tr class="separator:abd8d36b835f8787b8c093fa386ee7127"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a915041e1c3d9617cabd7054adafc6dc9" id="r_a915041e1c3d9617cabd7054adafc6dc9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_nameable.html#a915041e1c3d9617cabd7054adafc6dc9">Rename</a> (const std::string &amp;newName, bool includeScope=true)</td></tr>
+<tr class="memdesc:a915041e1c3d9617cabd7054adafc6dc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Renames the object, setting the scope to be the scoped part of the name.  <br /></td></tr>
+<tr class="separator:a915041e1c3d9617cabd7054adafc6dc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9595625e7ba1f2de6edd968350bad50e" id="r_a9595625e7ba1f2de6edd968350bad50e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_nameable.html#a9595625e7ba1f2de6edd968350bad50e">SetName</a> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:a9595625e7ba1f2de6edd968350bad50e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the name of the object. Note: Does not set the scope variable. If renaming based on raw input, use <a class="el" href="class_i_nameable.html#a915041e1c3d9617cabd7054adafc6dc9" title="Renames the object, setting the scope to be the scoped part of the name.">Rename()</a> instead to set the scope.  <br /></td></tr>
+<tr class="separator:a9595625e7ba1f2de6edd968350bad50e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6caec9a041e0b3a47774ee3258884cef" id="r_a6caec9a041e0b3a47774ee3258884cef"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_nameable.html#a6caec9a041e0b3a47774ee3258884cef">SetScope</a> (const std::string &amp;scope)</td></tr>
+<tr class="memdesc:a6caec9a041e0b3a47774ee3258884cef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scope of the object.  <br /></td></tr>
+<tr class="separator:a6caec9a041e0b3a47774ee3258884cef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad75e517f3f3147599993482cc6626c89" id="r_ad75e517f3f3147599993482cc6626c89"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_nameable.html#ad75e517f3f3147599993482cc6626c89">GetUnscopedName</a> ()</td></tr>
+<tr class="memdesc:ad75e517f3f3147599993482cc6626c89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the unscoped name of the object.  <br /></td></tr>
+<tr class="separator:ad75e517f3f3147599993482cc6626c89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad499d65fe3932091a8d4e9545d2103f7" id="r_ad499d65fe3932091a8d4e9545d2103f7"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_nameable.html#ad499d65fe3932091a8d4e9545d2103f7">GetScope</a> ()</td></tr>
 <tr class="memdesc:ad499d65fe3932091a8d4e9545d2103f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the scope of the object.  <br /></td></tr>
 <tr class="separator:ad499d65fe3932091a8d4e9545d2103f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa742992bdd45e32ddf31f8b88490e6f4" id="r_aa742992bdd45e32ddf31f8b88490e6f4"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_nameable.html#aa742992bdd45e32ddf31f8b88490e6f4">GetScopedName</a> ()</td></tr>
 <tr class="memdesc:aa742992bdd45e32ddf31f8b88490e6f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the scoped name of the object.  <br /></td></tr>
 <tr class="separator:aa742992bdd45e32ddf31f8b88490e6f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76bad8289415f3c1bc536adbcaac04a7" id="r_a76bad8289415f3c1bc536adbcaac04a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_nameable.html#a76bad8289415f3c1bc536adbcaac04a7">SetScope</a> (const std::string &amp;scope)</td></tr>
-<tr class="memdesc:a76bad8289415f3c1bc536adbcaac04a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scope of the object.  <br /></td></tr>
-<tr class="separator:a76bad8289415f3c1bc536adbcaac04a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a056594c1b3894a36dd2903f856463144" id="r_a056594c1b3894a36dd2903f856463144"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_nameable.html#a056594c1b3894a36dd2903f856463144">INameable</a> (const std::string &amp;name=&quot;&quot;, const std::string &amp;scope=&quot;&quot;)</td></tr>
-<tr class="memdesc:a056594c1b3894a36dd2903f856463144"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a default nameable object with the given name and scope.  <br /></td></tr>
-<tr class="separator:a056594c1b3894a36dd2903f856463144"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef52fad5aac598159b89c2da738e4d14" id="r_aef52fad5aac598159b89c2da738e4d14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_nameable.html#aef52fad5aac598159b89c2da738e4d14">InitName</a> (const std::string &amp;name, const std::string &amp;scope=&quot;&quot;)</td></tr>
+<tr class="memdesc:aef52fad5aac598159b89c2da738e4d14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the nameable object with the given name and scope.  <br /></td></tr>
+<tr class="separator:aef52fad5aac598159b89c2da738e4d14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a012c5180f1884147cdd787e5eeb233b9" id="r_a012c5180f1884147cdd787e5eeb233b9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_nameable.html#a012c5180f1884147cdd787e5eeb233b9">INameable</a> ()</td></tr>
+<tr class="memdesc:a012c5180f1884147cdd787e5eeb233b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a default nameable object without name or scope.  <br /></td></tr>
+<tr class="separator:a012c5180f1884147cdd787e5eeb233b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -135,8 +146,8 @@ Protected Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An object that keeps track of its name and scope. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a056594c1b3894a36dd2903f856463144" name="a056594c1b3894a36dd2903f856463144"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a056594c1b3894a36dd2903f856463144">&#9670;&#160;</a></span>INameable()</h2>
+<a id="a012c5180f1884147cdd787e5eeb233b9" name="a012c5180f1884147cdd787e5eeb233b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a012c5180f1884147cdd787e5eeb233b9">&#9670;&#160;</a></span>INameable()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -147,19 +158,8 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">INameable::INameable </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em> = <code>&quot;&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>scope</em> = <code>&quot;&quot;</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -169,46 +169,11 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Creates a default nameable object with the given name and scope. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>Name of the object</td></tr>
-    <tr><td class="paramname">scope</td><td>Scope of the object (if any)</td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Creates a default nameable object without name or scope. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="abd8d36b835f8787b8c093fa386ee7127" name="abd8d36b835f8787b8c093fa386ee7127"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abd8d36b835f8787b8c093fa386ee7127">&#9670;&#160;</a></span>GetName()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string INameable::GetName </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Returns the name of the object. </p>
-<dl class="section return"><dt>Returns</dt><dd>Name of the object</dd></dl>
-
-</div>
-</div>
 <a id="ad499d65fe3932091a8d4e9545d2103f7" name="ad499d65fe3932091a8d4e9545d2103f7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad499d65fe3932091a8d4e9545d2103f7">&#9670;&#160;</a></span>GetScope()</h2>
 
@@ -265,8 +230,81 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a5682fa64b8a878dd778faa825e587e51" name="a5682fa64b8a878dd778faa825e587e51"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5682fa64b8a878dd778faa825e587e51">&#9670;&#160;</a></span>Rename()</h2>
+<a id="ad75e517f3f3147599993482cc6626c89" name="ad75e517f3f3147599993482cc6626c89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad75e517f3f3147599993482cc6626c89">&#9670;&#160;</a></span>GetUnscopedName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string INameable::GetUnscopedName </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the unscoped name of the object. </p>
+<dl class="section return"><dt>Returns</dt><dd>Name of the object</dd></dl>
+
+</div>
+</div>
+<a id="aef52fad5aac598159b89c2da738e4d14" name="aef52fad5aac598159b89c2da738e4d14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef52fad5aac598159b89c2da738e4d14">&#9670;&#160;</a></span>InitName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void INameable::InitName </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>scope</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initializes the nameable object with the given name and scope. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Name of the object</td></tr>
+    <tr><td class="paramname">scope</td><td>Scope of the object (if any)</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a915041e1c3d9617cabd7054adafc6dc9" name="a915041e1c3d9617cabd7054adafc6dc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a915041e1c3d9617cabd7054adafc6dc9">&#9670;&#160;</a></span>Rename()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -278,29 +316,40 @@ Protected Attributes</h2></td></tr>
           <td class="memname">virtual void INameable::Rename </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>newName</em></td><td>)</td>
+          <td class="paramname"><em>newName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>includeScope</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Renames the object. Must be implemented by parent class to ensure it maintains uniqueness. </p>
+<p>Renames the object, setting the scope to be the scoped part of the name. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">newName</td><td>New name to rename to</td></tr>
+    <tr><td class="paramname">includeScope</td><td>Whether to incldude scope as part of the renaming</td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a76bad8289415f3c1bc536adbcaac04a7" name="a76bad8289415f3c1bc536adbcaac04a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a76bad8289415f3c1bc536adbcaac04a7">&#9670;&#160;</a></span>SetScope()</h2>
+<a id="a9595625e7ba1f2de6edd968350bad50e" name="a9595625e7ba1f2de6edd968350bad50e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9595625e7ba1f2de6edd968350bad50e">&#9670;&#160;</a></span>SetName()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -309,7 +358,43 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void INameable::SetScope </td>
+          <td class="memname">virtual void INameable::SetName </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the name of the object. Note: Does not set the scope variable. If renaming based on raw input, use <a class="el" href="class_i_nameable.html#a915041e1c3d9617cabd7054adafc6dc9" title="Renames the object, setting the scope to be the scoped part of the name.">Rename()</a> instead to set the scope. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Raw name of the object</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented in <a class="el" href="class_scene.html#a3903da83e849169de3a94996273a1364">Scene</a>.</p>
+
+</div>
+</div>
+<a id="a6caec9a041e0b3a47774ee3258884cef" name="a6caec9a041e0b3a47774ee3258884cef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6caec9a041e0b3a47774ee3258884cef">&#9670;&#160;</a></span>SetScope()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void INameable::SetScope </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>scope</em></td><td>)</td>
@@ -318,7 +403,7 @@ Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

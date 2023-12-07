@@ -1,11 +1,13 @@
 var class_i_nameable =
 [
-    [ "INameable", "class_i_nameable.html#a056594c1b3894a36dd2903f856463144", null ],
-    [ "GetName", "class_i_nameable.html#abd8d36b835f8787b8c093fa386ee7127", null ],
+    [ "INameable", "class_i_nameable.html#a012c5180f1884147cdd787e5eeb233b9", null ],
     [ "GetScope", "class_i_nameable.html#ad499d65fe3932091a8d4e9545d2103f7", null ],
     [ "GetScopedName", "class_i_nameable.html#aa742992bdd45e32ddf31f8b88490e6f4", null ],
-    [ "Rename", "class_i_nameable.html#a5682fa64b8a878dd778faa825e587e51", null ],
-    [ "SetScope", "class_i_nameable.html#a76bad8289415f3c1bc536adbcaac04a7", null ],
+    [ "GetUnscopedName", "class_i_nameable.html#ad75e517f3f3147599993482cc6626c89", null ],
+    [ "InitName", "class_i_nameable.html#aef52fad5aac598159b89c2da738e4d14", null ],
+    [ "Rename", "class_i_nameable.html#a915041e1c3d9617cabd7054adafc6dc9", null ],
+    [ "SetName", "class_i_nameable.html#a9595625e7ba1f2de6edd968350bad50e", null ],
+    [ "SetScope", "class_i_nameable.html#a6caec9a041e0b3a47774ee3258884cef", null ],
     [ "mName", "class_i_nameable.html#a9b8f787032ea5c57932ffcb5f82c28e0", null ],
     [ "mScope", "class_i_nameable.html#a13ec5493596ed80e080977e1ba4bb02a", null ]
 ];
