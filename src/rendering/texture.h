@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <stb_image.h>
+#include <stb_image_write.h>
 
 /// <summary>
 /// An enumerator that lists all the allowed texture types
@@ -185,6 +186,44 @@ public:
             stbi_image_free(data);
         }
         return textureID;
+    }
+    
+    /// <summary>
+    /// Moves a copy of the texture from the start directory to the end directory
+    /// </summary>
+    /// <param name="file">Filename to copy</param>
+    /// <param name="fromDir">Start directory</param>
+    /// <param name="toDir">End directory</param>
+    static void CopyTexture(const std::string& file, const std::string& fromDir, const std::string& toDir)
+    {
+        int width;
+        int height;
+        std::string startFile = fromDir + '/' + file;
+        std::string endFile = toDir + '/' + file;
+        int numComponents;
+        unsigned char* data = stbi_load(startFile.c_str(), &width, &height, &numComponents, 0);
+        if (data)
+        {
+            std::string ext = GetFileExtension(file);
+            if (ext == ".jpg")
+            {
+                stbi_write_jpg(endFile.c_str(), width, height, numComponents, data, width * numComponents);
+            }
+            else if (ext == ".png")
+            {
+                stbi_write_png(endFile.c_str(), width, height, numComponents, data, width * numComponents);
+            }
+            else if (ext == ".tga")
+            {
+                stbi_write_tga(endFile.c_str(), width, height, numComponents, data);
+            }
+            stbi_image_free(data);
+        }
+        else
+        {
+            std::cout << "Texture failed to load at path: " << startFile << std::endl;
+            stbi_image_free(data);
+        }
     }
 
     /// <summary>

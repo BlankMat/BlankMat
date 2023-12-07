@@ -118,7 +118,8 @@ find_package(ASSIMP REQUIRED)
 message(STATUS "Found ASSIMP in ${ASSIMP_INCLUDE_DIR}")
 
 # STB_IMAGE
-add_library(STB_IMAGE "external/stb_image.cpp")
+add_library(STB_IMAGE "external/stb_image.cpp"
+	"external/stb_image_write.cpp")
 
 # GLAD
 add_library(GLAD "external/glad.c")

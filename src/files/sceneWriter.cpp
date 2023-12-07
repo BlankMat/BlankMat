@@ -7,7 +7,6 @@
 #include <fstream>
 #include <string>
 #include <thread>
-#include <stb_image.h>
 
 std::string SceneWriter::GetAssimpFormatID(const Assimp::Exporter& exporter, const std::string& path)
 {
@@ -172,7 +171,16 @@ void SceneWriter::ProcessAssimpMaterials(Scene* sourceScene, aiScene*& newScene,
 void SceneWriter::ProcessAssimpTextures(Scene* sourceScene, const std::string& path, std::vector<aiTexture*>& outTextureList)
 {
 	const auto& textures = sourceScene->GetTextures()->Data();
-	stbi_write
+	for (auto iter = textures.begin(); iter != textures.end(); ++iter)
+	{
+		// Dont' write internal or null textures
+		Texture* texture = iter->second;
+		if (texture == nullptr || texture->IsInternal())
+			continue;
+
+		std::string dir = GetDirectory(path);
+		Texture::CopyTexture(texture->mFile, texture->mDir, dir);
+	}
 }
 
 // Recursively processes the meshes in the given node and all its children
@@ -299,6 +307,19 @@ void SceneWriter::SaveBlankMatScene(Scene* scene, const std::string& path)
 		WriteBlankMatItem(scene->GetTextures(), file, "Textures");
 		WriteBlankMatItem(scene->GetCameras(), file, "Cameras");
 		WriteBlankMatItem(scene->GetLights(), file, "Lights");
+
+		// Write textures to save location
+		const auto& textures = scene->GetTextures()->Data();
+		for (auto iter = textures.begin(); iter != textures.end(); ++iter)
+		{
+			// Dont' write internal or null textures
+			Texture* texture = iter->second;
+			if (texture == nullptr || texture->IsInternal())
+				continue;
+
+			std::string dir = GetDirectory(path);
+			Texture::CopyTexture(texture->mFile, texture->mDir, dir);
+		}
 		Timer::Time(startTime, "Saved scene");
 	}
 	catch (std::exception const& e)
