@@ -18,6 +18,8 @@
 #include "windows/guiLightViewer.h"
 #include "windows/guiTextureViewer.h"
 #include "windows/guiMaterialViewer.h"
+#include "windows/guiTexturePicker.h"
+#include "windows/guiMaterialPicker.h"
 
 #include "windows/guiDebugToolsWindow.h"
 #include "windows/guiActionList.h"

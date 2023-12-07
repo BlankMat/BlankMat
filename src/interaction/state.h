@@ -52,6 +52,9 @@ public:
 	std::string curShader = "";
 	Material* defaultMat = nullptr;
 
+	Texture** textureInEdit = nullptr;
+	Material** materialInEdit = nullptr;
+
 	// Loads the given material, unless it's already been loaded this frame
 	void LoadMaterial(Material* material)
 	{

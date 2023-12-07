@@ -14,6 +14,9 @@ protected:
 	std::string mNameInEdit = "";
 	ISelectable* mElementInEdit = nullptr;
 
+	Material* mNewMat = nullptr;
+	Texture* mNewTexture = nullptr;
+
 	const static inline float TEXTURE_SIZE = 256.0f;
 	const static inline std::vector<std::string> TEXTURE_TYPES = { "Diffuse", "Ambient", "Specular", "Normal", "Height", "Alpha" };
 
@@ -86,6 +89,21 @@ protected:
 
 		// Enabled
 		element->Enable(GUIWindowUtils::Checkbox("Enabled", element->IsEnabled()));
+
+		// Material
+		GUIWindowUtils::MaterialSelect("Material", element->GetMaterial(), mNewMat, 5.0f);
+		if (mNewMat != nullptr)
+		{
+			mNewMat = nullptr;
+			mState->materialInEdit = &mNewMat;
+		}
+
+		// Update material
+		if (mState->materialInEdit != nullptr && *mState->materialInEdit != nullptr)
+		{
+			element->SetMaterial(*mState->materialInEdit);
+			mState->materialInEdit = nullptr;
+		}
 	}
 
 	void DisplayNode(Node* element)

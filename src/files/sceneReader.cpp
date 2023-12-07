@@ -261,7 +261,7 @@ void SceneReader::ReadAssimpScene(Scene* scene, const std::string& path, bool re
 
 	// Process model
 	rootNode->AddChild(sceneRootNode);
-	ProcessAssimpNode(filename, scene, sceneRootNode, assimpScene->mRootNode, assimpScene);
+	ProcessAssimpNode(scope, scene, sceneRootNode, assimpScene->mRootNode, assimpScene);
 	rootNode->SetParentModelMatrix(glm::mat4(1.0f));
 
 	Timer::Time(loadStartTime, "Read model from file " + path + " successfully");

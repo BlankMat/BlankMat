@@ -161,6 +161,12 @@ void Window::OpenGUI(GUI gui)
     case GUI::CAMERA_VIEWER:
         AddGUI(new GUICameraViewer(mState, mScene, true));
         return;
+    case GUI::MATERIAL_PICKER:
+        AddGUI(new GUIMaterialPicker(mState, mScene, true));
+        return;
+    case GUI::TEXTURE_PICKER:
+        AddGUI(new GUITexturePicker(mState, mScene, true));
+        return;
     case GUI::ACTION_LIST:
         return;
     case GUI::NONE:
