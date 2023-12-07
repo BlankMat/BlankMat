@@ -91,7 +91,7 @@ protected:
 		element->Enable(GUIWindowUtils::Checkbox("Enabled", element->IsEnabled()));
 
 		// Material
-		GUIWindowUtils::MaterialSelect("Material", element->GetMaterial(), mNewMat, 5.0f);
+		GUIWindowUtils::MaterialSelect("Material: " + element->GetMaterial()->GetScopedName(), element->GetMaterial(), mNewMat, 5.0f);
 		if (mNewMat != nullptr)
 		{
 			mNewMat = nullptr;

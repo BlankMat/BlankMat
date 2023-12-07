@@ -257,7 +257,7 @@ void SceneReader::ReadAssimpScene(Scene* scene, const std::string& path, bool re
 		rootNode = new Node(nullptr, "root", "");
 		scene->SetRootNode(rootNode);
 	}
-	Node* sceneRootNode = new Node(rootNode, scene->GetName(), scope);
+	Node* sceneRootNode = new Node(rootNode, scope, scope);
 
 	// Process model
 	rootNode->AddChild(sceneRootNode);
