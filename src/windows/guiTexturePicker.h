@@ -13,26 +13,21 @@ protected:
 public:
     void Draw() override
     {
-        if (ImGui::Begin("Texture Picker", &mIsEnabled, ImGuiWindowFlags_AlwaysAutoResize))
+        bool enabled = mIsEnabled && mState->isEditingTexture;
+        if (ImGui::Begin("Texture Picker", &enabled, ImGuiWindowFlags_AlwaysAutoResize) && enabled)
         {
-            if (mState->isEditingTexture)
+            // List all textures for choosing
+            const auto& textures = mScene->GetTextures()->Data();
+            for (auto iter = textures.begin(); iter != textures.end(); ++iter)
             {
-                // List all textures for choosing
-                const auto& textures = mScene->GetTextures()->Data();
-                for (auto iter = textures.begin(); iter != textures.end(); ++iter)
-                {
-                    GUIWindowUtils::TextureSelect(iter->first, iter->second, mCurSelectedTexture);
-                }
-
-                // If any texture was chosen, update the requested texture
-                if (mState->isEditingTexture && mCurSelectedTexture != nullptr)
-                {
-                    mState->textureInEdit = mCurSelectedTexture;
-                }
+                GUIWindowUtils::TextureSelect(iter->first, iter->second, mCurSelectedTexture);
             }
-            else
+
+            // If any texture was chosen, update the requested texture
+            if (mState->isEditingTexture && mCurSelectedTexture != nullptr)
             {
-                ImGui::Text("Select texture to edit");
+                mState->textureInEdit = mCurSelectedTexture;
+                mCurSelectedTexture = nullptr;
             }
         }
         ImGui::End();

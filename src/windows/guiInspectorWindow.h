@@ -94,17 +94,16 @@ protected:
 		GUIWindowUtils::MaterialSelect("Material: " + element->GetMaterial()->GetScopedName(), element->GetMaterial(), mNewMat, 5.0f);
 		if (mNewMat != nullptr)
 		{
-			mNewMat = nullptr;
 			mState->isEditingMaterial = true;
-			mState->materialInEdit = nullptr;
 		}
 
 		// Update material
 		if (mState->materialInEdit != nullptr && mState->isEditingMaterial)
 		{
-			element->SetMaterial(mState->materialInEdit);
+			mScene->SetEntityMaterial(element, mState->materialInEdit);
 			mState->materialInEdit = nullptr;
 			mState->isEditingMaterial = false;
+			mNewMat = nullptr;
 		}
 	}
 
