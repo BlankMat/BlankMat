@@ -35,6 +35,8 @@ Install the following dependencies
 ```
 ---
 
+Alternatively, simply run the CMake GUI.
+
 # License
 MIT License
 
