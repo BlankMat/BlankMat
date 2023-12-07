@@ -64,7 +64,7 @@ protected:
 				type = (TextureType)std::stoi(parse[1]);
 		}
 
-		return std::pair<std::string, Texture*>(name, new Texture(UnscopeName(name), UnscopeScope(name), type, dir, filename, false));
+		return std::pair<std::string, Texture*>(name, new Texture(UnscopeName(name), UnscopeScope(name), type, dir, filename, true, false));
 	}
 
 	/// <summary>

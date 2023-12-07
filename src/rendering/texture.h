@@ -136,11 +136,12 @@ public:
     /// <param name="directory">Directory of the texture</param>
     /// <param name="filename">Filename of the texture</param>
     /// <param name="gamma">Whether to gamma correct the texture</param>
+    /// <param name="flip">Whether to flip the texture vertically</param>
     /// <returns>OpenGL index of the texture</returns>
-    static unsigned int TextureFromFile(const std::string& directory, const std::string& filename)
+    static unsigned int TextureFromFile(const std::string& directory, const std::string& filename, bool flip = true)
     {
         int w, h;
-        return TextureFromFile(directory, filename, w, h);
+        return TextureFromFile(directory, filename, w, h, flip);
     }
 
     /// <summary>
@@ -151,9 +152,11 @@ public:
     /// <param name="out_width">Return width of the texture</param>
     /// <param name="out_height">Return height of the texture</param>
     /// <param name="gamma">Whether to gamma correct the texture</param>
+    /// <param name="flip">Whether to flip the texture vertically</param>
     /// <returns>OpenGL index of the texture</returns>
-    static unsigned int TextureFromFile(const std::string& directory, const std::string& filename, int& outWidth, int& outHeight)
+    static unsigned int TextureFromFile(const std::string& directory, const std::string& filename, int& outWidth, int& outHeight, bool flip = true)
     {
+        stbi_set_flip_vertically_on_load(flip);
         std::string fileName = directory + '/' + filename;
         unsigned int textureID;
         glGenTextures(1, &textureID);
@@ -194,8 +197,11 @@ public:
     /// <param name="file">Filename to copy</param>
     /// <param name="fromDir">Start directory</param>
     /// <param name="toDir">End directory</param>
-    static void CopyTexture(const std::string& file, const std::string& fromDir, const std::string& toDir)
+    /// <param name="flip">Whether to flip the texture vertically</param>
+    static void CopyTexture(const std::string& file, const std::string& fromDir, const std::string& toDir, bool flip = true)
     {
+        stbi_set_flip_vertically_on_load(flip);
+        stbi_flip_vertically_on_write(flip);
         int width;
         int height;
         std::string startFile = fromDir + '/' + file;
@@ -243,12 +249,13 @@ public:
     /// <param name="type">Type of the texture</param>
 	/// <param name="dir">Path of the referenced texture file</param>
 	/// <param name="filename">Name of the texture</param>
+    /// <param name="flip">Whether to flip the texture vertically</param>
 	/// <param name="internal">Whether the texture is internal only</param>
-	Texture(const std::string& name, const std::string& scope, TextureType type, const std::string& dir, const std::string& filename, bool internal = false)
+	Texture(const std::string& name, const std::string& scope, TextureType type, const std::string& dir, const std::string& filename, bool flip = true, bool internal = false)
 		: mType(type), mDir(dir), mFile(filename), mIsInternal(internal), ISelectable(SelectableType::TEXTURE)
 	{
         InitName(name, scope);
-        mID = TextureFromFile(dir, filename);
+        mID = TextureFromFile(dir, filename, flip);
 	}
 
     /// <summary>
