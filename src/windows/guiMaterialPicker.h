@@ -13,8 +13,11 @@ protected:
 public:
     void Draw() override
     {
+        if (!mIsEnabled || !mState->isEditingMaterial)
+            return;
+
         bool enabled = mIsEnabled && mState->isEditingMaterial;
-        if (ImGui::Begin("Material Picker", &enabled, ImGuiWindowFlags_AlwaysAutoResize) && enabled)
+        if (ImGui::Begin("Material Picker", &enabled, ImGuiWindowFlags_AlwaysAutoResize))
         {
             // List all textures for choosing
             const auto& materials = mScene->GetMaterials()->Data();

@@ -13,6 +13,9 @@ protected:
 public:
     void Draw() override
     {
+        if (!mIsEnabled || !mState->isEditingTexture)
+            return;
+
         bool enabled = mIsEnabled && mState->isEditingTexture;
         if (ImGui::Begin("Texture Picker", &enabled, ImGuiWindowFlags_AlwaysAutoResize) && enabled)
         {
