@@ -21,7 +21,7 @@ std::string SceneWriter::GetAssimpFormatID(const Assimp::Exporter& exporter, con
 }
 
 // Processes the given mesh
-unsigned int SceneWriter::ProcessAssimpMesh(Mesh* sourceMesh, aiMesh*& newMesh, std::vector<aiMesh*>& outMeshWriteList)
+unsigned int SceneWriter::ProcessAssimpMesh(Mesh* sourceMesh, aiMesh*& newMesh, std::vector<aiMesh*>& outMeshWriteList, std::vector<aiMaterial*>& outMatList)
 {
 	// Gather all vertex info from mesh into vectors
 	std::vector<glm::vec3> vertices;
@@ -58,6 +58,22 @@ unsigned int SceneWriter::ProcessAssimpMesh(Mesh* sourceMesh, aiMesh*& newMesh, 
 
 	newMesh->mFaces = new aiFace[numFaces];
 	newMesh->mNumFaces = numFaces;
+
+	// Get material from the list
+	newMesh->mMaterialIndex = 0;
+	if (sourceMesh->GetMaterial() != nullptr)
+	{
+		for (unsigned int i = 0; i < (unsigned int)outMatList.size(); i++)
+		{
+			aiString name;
+			outMatList[i]->Get(AI_MATKEY_NAME, name);
+			if (name.C_Str() == sourceMesh->GetMaterial()->GetScopedName().c_str())
+			{
+				newMesh->mMaterialIndex = i;
+				break;
+			}
+		}
+	}
 
 	// Fill mesh properties from vertices
 	unsigned int j = 0;
@@ -184,7 +200,7 @@ void SceneWriter::ProcessAssimpTextures(Scene* sourceScene, const std::string& p
 }
 
 // Recursively processes the meshes in the given node and all its children
-void SceneWriter::ProcessAssimpNode(Scene* sourceScene, Node* sourceNode, aiNode*& newNode, aiScene*& newScene, std::vector<aiMesh*>& outMeshWriteList)
+void SceneWriter::ProcessAssimpNode(Scene* sourceScene, Node* sourceNode, aiNode*& newNode, aiScene*& newScene, std::vector<aiMesh*>& outMeshWriteList, std::vector<aiMaterial*>& outMatList)
 {
 	std::cout << " - Writing node " << sourceNode->GetScopedName() << std::endl;
 
@@ -194,7 +210,7 @@ void SceneWriter::ProcessAssimpNode(Scene* sourceScene, Node* sourceNode, aiNode
 	for (unsigned int i = 0; i < meshCount; ++i)
 	{
 		aiMesh* newMesh = new aiMesh();
-		newNode->mMeshes[i] = ProcessAssimpMesh(sourceNode->GetMesh(i), newMesh, outMeshWriteList);
+		newNode->mMeshes[i] = ProcessAssimpMesh(sourceNode->GetMesh(i), newMesh, outMeshWriteList, outMatList);
 	}
 	newNode->mNumMeshes = meshCount;
 
@@ -216,7 +232,7 @@ void SceneWriter::ProcessAssimpNode(Scene* sourceScene, Node* sourceNode, aiNode
 		childNode->mTransformation = Mat4ToAssimp(child->GetSelfModelMatrix());
 		tempChildren[i] = childNode;
 
-		ProcessAssimpNode(sourceScene, child, childNode, newScene, outMeshWriteList);
+		ProcessAssimpNode(sourceScene, child, childNode, newScene, outMeshWriteList, outMatList);
 	}
 	// Add children to node
 	newNode->addChildren(childCount, tempChildren);
@@ -233,7 +249,7 @@ void SceneWriter::GenerateAssimpScene(Scene* sourceScene, aiScene*& newScene, co
 	newScene->mRootNode = new aiNode();
 	ProcessAssimpTextures(sourceScene, path, textureList);
 	ProcessAssimpMaterials(sourceScene, newScene, matList, textureList);
-	ProcessAssimpNode(sourceScene, sourceScene->GetRootNode(), newScene->mRootNode, newScene, meshList);
+	ProcessAssimpNode(sourceScene, sourceScene->GetRootNode(), newScene->mRootNode, newScene, meshList, matList);
 
 	// Write mesh list to scene
 	unsigned int meshCount = (unsigned int)meshList.size();
