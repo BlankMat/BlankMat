@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.2</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.1.0</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -93,7 +93,10 @@ $(document).ready(function(){initNavTree('class_g_u_i_inspector_window.html','')
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pro-static-attribs">Static Protected Attributes</a> &#124;
 <a href="class_g_u_i_inspector_window-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">GUIInspectorWindow Class Reference</div></div>
 </div><!--header-->
@@ -227,12 +230,42 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae878170b0b4e25febd6d86abaaa96634 inherit pub_methods_class_i_g_u_i_window" id="r_ae878170b0b4e25febd6d86abaaa96634"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_g_u_i_window.html#ae878170b0b4e25febd6d86abaaa96634">SetPos</a> (const glm::vec2 &amp;pos)</td></tr>
 <tr class="separator:ae878170b0b4e25febd6d86abaaa96634 inherit pub_methods_class_i_g_u_i_window"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:af0db2dd7c814ab9703779b88c8214c41" id="r_af0db2dd7c814ab9703779b88c8214c41"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_inspector_window.html#af0db2dd7c814ab9703779b88c8214c41">DisplayMesh</a> (<a class="el" href="class_mesh.html">Mesh</a> *element)</td></tr>
+<tr class="separator:af0db2dd7c814ab9703779b88c8214c41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b8cb471946190d5544c389fb9088b86" id="r_a6b8cb471946190d5544c389fb9088b86"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_inspector_window.html#a6b8cb471946190d5544c389fb9088b86">DisplayNode</a> (<a class="el" href="class_node.html">Node</a> *element)</td></tr>
+<tr class="separator:a6b8cb471946190d5544c389fb9088b86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee821bdd1b4ff37da8e46aa00c9afd74" id="r_aee821bdd1b4ff37da8e46aa00c9afd74"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_inspector_window.html#aee821bdd1b4ff37da8e46aa00c9afd74">DisplayEntity</a> (<a class="el" href="class_i_entity.html">IEntity</a> *element)</td></tr>
+<tr class="separator:aee821bdd1b4ff37da8e46aa00c9afd74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34c3dca1d1d80dc2355e3f7d157d3e40" id="r_a34c3dca1d1d80dc2355e3f7d157d3e40"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_inspector_window.html#a34c3dca1d1d80dc2355e3f7d157d3e40">DisplayLight</a> (<a class="el" href="class_light.html">Light</a> *element)</td></tr>
+<tr class="separator:a34c3dca1d1d80dc2355e3f7d157d3e40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c6f95c00286673683063ff7fca3e5f0" id="r_a3c6f95c00286673683063ff7fca3e5f0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_inspector_window.html#a3c6f95c00286673683063ff7fca3e5f0">DisplayCamera</a> (<a class="el" href="class_camera.html">Camera</a> *element)</td></tr>
+<tr class="separator:a3c6f95c00286673683063ff7fca3e5f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9fafefc58d84286f2f535cc67be4f95" id="r_ab9fafefc58d84286f2f535cc67be4f95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_inspector_window.html#ab9fafefc58d84286f2f535cc67be4f95">DisplayTexture</a> (<a class="el" href="struct_texture.html">Texture</a> *element)</td></tr>
+<tr class="separator:ab9fafefc58d84286f2f535cc67be4f95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71b8718939f0b926b6fe68bebece2701" id="r_a71b8718939f0b926b6fe68bebece2701"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_inspector_window.html#a71b8718939f0b926b6fe68bebece2701">DisplayMaterial</a> (<a class="el" href="class_material.html">Material</a> *element)</td></tr>
+<tr class="separator:a71b8718939f0b926b6fe68bebece2701"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-methods" name="pro-static-methods"></a>
+Static Protected Member Functions</h2></td></tr>
+<tr class="memitem:a525ac17b950614508f1aa3b74693c81a" id="r_a525ac17b950614508f1aa3b74693c81a"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_inspector_window.html#a525ac17b950614508f1aa3b74693c81a">InputName</a> (const std::string &amp;label, const std::string &amp;prevValue, std::string &amp;curValue, <a class="el" href="class_node.html">Node</a> *node, ImGuiInputTextFlags flags=ImGuiInputTextFlags_None)</td></tr>
+<tr class="separator:a525ac17b950614508f1aa3b74693c81a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a326feb212317de35f28602026f6167dc" id="r_a326feb212317de35f28602026f6167dc"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_inspector_window.html#a326feb212317de35f28602026f6167dc">RenameItem</a> (const std::string &amp;label, <a class="el" href="class_i_container.html">IContainer</a>&lt; <a class="el" href="class_i_selectable.html">ISelectable</a> &gt; *container, <a class="el" href="class_i_selectable.html">ISelectable</a> *element, std::string &amp;name)</td></tr>
+<tr class="separator:a326feb212317de35f28602026f6167dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:a957b0e70eb77d5b3aa12013b8b5e4407" id="r_a957b0e70eb77d5b3aa12013b8b5e4407"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_state.html">State</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_inspector_window.html#a957b0e70eb77d5b3aa12013b8b5e4407">mState</a> = nullptr</td></tr>
 <tr class="separator:a957b0e70eb77d5b3aa12013b8b5e4407"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f48f0270bf8d31edf61b12cc4cded82" id="r_a3f48f0270bf8d31edf61b12cc4cded82"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_scene.html">Scene</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_inspector_window.html#a3f48f0270bf8d31edf61b12cc4cded82">mScene</a> = nullptr</td></tr>
 <tr class="separator:a3f48f0270bf8d31edf61b12cc4cded82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cd98497ee0d3b3ea44493c3844dca57" id="r_a0cd98497ee0d3b3ea44493c3844dca57"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_inspector_window.html#a0cd98497ee0d3b3ea44493c3844dca57">mSelColor</a> = &quot;&quot;</td></tr>
+<tr class="separator:a0cd98497ee0d3b3ea44493c3844dca57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8261d9f9bab20558d47701013a151225" id="r_a8261d9f9bab20558d47701013a151225"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_inspector_window.html#a8261d9f9bab20558d47701013a151225">mNameInEdit</a> = &quot;&quot;</td></tr>
+<tr class="separator:a8261d9f9bab20558d47701013a151225"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fc2b6a6b9565490e5b3e111111e03ae" id="r_a7fc2b6a6b9565490e5b3e111111e03ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_i_selectable.html">ISelectable</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_inspector_window.html#a7fc2b6a6b9565490e5b3e111111e03ae">mElementInEdit</a> = nullptr</td></tr>
+<tr class="separator:a7fc2b6a6b9565490e5b3e111111e03ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_i_g_u_i_window"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_i_g_u_i_window')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_i_g_u_i_window.html">IGUIWindow</a></td></tr>
 <tr class="memitem:aa6673bf3196758afd8acc3df9fc8df26 inherit pro_attribs_class_i_g_u_i_window" id="r_aa6673bf3196758afd8acc3df9fc8df26"><td class="memItemLeft" align="right" valign="top">GUI&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_g_u_i_window.html#aa6673bf3196758afd8acc3df9fc8df26">mType</a> = GUI::NONE</td></tr>
 <tr class="separator:aa6673bf3196758afd8acc3df9fc8df26 inherit pro_attribs_class_i_g_u_i_window"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -242,6 +275,13 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a785902964a3dc979caaae845dc724f7e inherit pro_attribs_class_i_g_u_i_window"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99aabf88516b9b3c4b14adc870ba7156 inherit pro_attribs_class_i_g_u_i_window" id="r_a99aabf88516b9b3c4b14adc870ba7156"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_g_u_i_window.html#a99aabf88516b9b3c4b14adc870ba7156">mIsEnabled</a> = true</td></tr>
 <tr class="separator:a99aabf88516b9b3c4b14adc870ba7156 inherit pro_attribs_class_i_g_u_i_window"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-attribs" name="pro-static-attribs"></a>
+Static Protected Attributes</h2></td></tr>
+<tr class="memitem:a422208b4294ac5a35583c1852edeec60" id="r_a422208b4294ac5a35583c1852edeec60"><td class="memItemLeft" align="right" valign="top">static const float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_inspector_window.html#a422208b4294ac5a35583c1852edeec60">TEXTURE_SIZE</a> = 256.0f</td></tr>
+<tr class="separator:a422208b4294ac5a35583c1852edeec60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95d2111dfb539c906fa85a24e6d2005a" id="r_a95d2111dfb539c906fa85a24e6d2005a"><td class="memItemLeft" align="right" valign="top">static const std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_inspector_window.html#a95d2111dfb539c906fa85a24e6d2005a">TEXTURE_TYPES</a> = { &quot;Diffuse&quot;, &quot;Ambient&quot;, &quot;Specular&quot;, &quot;Normal&quot;, &quot;Height&quot;, &quot;Alpha&quot; }</td></tr>
+<tr class="separator:a95d2111dfb539c906fa85a24e6d2005a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a9979ed14f562610869f2ea19782a7a74" name="a9979ed14f562610869f2ea19782a7a74"></a>
@@ -287,6 +327,188 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a3c6f95c00286673683063ff7fca3e5f0" name="a3c6f95c00286673683063ff7fca3e5f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c6f95c00286673683063ff7fca3e5f0">&#9670;&#160;</a></span>DisplayCamera()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GUIInspectorWindow::DisplayCamera </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_camera.html">Camera</a> *&#160;</td>
+          <td class="paramname"><em>element</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aee821bdd1b4ff37da8e46aa00c9afd74" name="aee821bdd1b4ff37da8e46aa00c9afd74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee821bdd1b4ff37da8e46aa00c9afd74">&#9670;&#160;</a></span>DisplayEntity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GUIInspectorWindow::DisplayEntity </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_i_entity.html">IEntity</a> *&#160;</td>
+          <td class="paramname"><em>element</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a34c3dca1d1d80dc2355e3f7d157d3e40" name="a34c3dca1d1d80dc2355e3f7d157d3e40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34c3dca1d1d80dc2355e3f7d157d3e40">&#9670;&#160;</a></span>DisplayLight()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GUIInspectorWindow::DisplayLight </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_light.html">Light</a> *&#160;</td>
+          <td class="paramname"><em>element</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a71b8718939f0b926b6fe68bebece2701" name="a71b8718939f0b926b6fe68bebece2701"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71b8718939f0b926b6fe68bebece2701">&#9670;&#160;</a></span>DisplayMaterial()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GUIInspectorWindow::DisplayMaterial </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_material.html">Material</a> *&#160;</td>
+          <td class="paramname"><em>element</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af0db2dd7c814ab9703779b88c8214c41" name="af0db2dd7c814ab9703779b88c8214c41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0db2dd7c814ab9703779b88c8214c41">&#9670;&#160;</a></span>DisplayMesh()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GUIInspectorWindow::DisplayMesh </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_mesh.html">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>element</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6b8cb471946190d5544c389fb9088b86" name="a6b8cb471946190d5544c389fb9088b86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b8cb471946190d5544c389fb9088b86">&#9670;&#160;</a></span>DisplayNode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GUIInspectorWindow::DisplayNode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>element</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab9fafefc58d84286f2f535cc67be4f95" name="ab9fafefc58d84286f2f535cc67be4f95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9fafefc58d84286f2f535cc67be4f95">&#9670;&#160;</a></span>DisplayTexture()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GUIInspectorWindow::DisplayTexture </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_texture.html">Texture</a> *&#160;</td>
+          <td class="paramname"><em>element</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ad7cde95da203cb73637fb7a967eaa7ad" name="ad7cde95da203cb73637fb7a967eaa7ad"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad7cde95da203cb73637fb7a967eaa7ad">&#9670;&#160;</a></span>Draw()</h2>
 
@@ -314,7 +536,153 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a525ac17b950614508f1aa3b74693c81a" name="a525ac17b950614508f1aa3b74693c81a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a525ac17b950614508f1aa3b74693c81a">&#9670;&#160;</a></span>InputName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool GUIInspectorWindow::InputName </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>label</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>prevValue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramname"><em>curValue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>node</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ImGuiInputTextFlags&#160;</td>
+          <td class="paramname"><em>flags</em> = <code>ImGuiInputTextFlags_None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a326feb212317de35f28602026f6167dc" name="a326feb212317de35f28602026f6167dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a326feb212317de35f28602026f6167dc">&#9670;&#160;</a></span>RenameItem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool GUIInspectorWindow::RenameItem </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>label</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_i_container.html">IContainer</a>&lt; <a class="el" href="class_i_selectable.html">ISelectable</a> &gt; *&#160;</td>
+          <td class="paramname"><em>container</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_i_selectable.html">ISelectable</a> *&#160;</td>
+          <td class="paramname"><em>element</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a7fc2b6a6b9565490e5b3e111111e03ae" name="a7fc2b6a6b9565490e5b3e111111e03ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7fc2b6a6b9565490e5b3e111111e03ae">&#9670;&#160;</a></span>mElementInEdit</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_i_selectable.html">ISelectable</a>* GUIInspectorWindow::mElementInEdit = nullptr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8261d9f9bab20558d47701013a151225" name="a8261d9f9bab20558d47701013a151225"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8261d9f9bab20558d47701013a151225">&#9670;&#160;</a></span>mNameInEdit</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string GUIInspectorWindow::mNameInEdit = &quot;&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a3f48f0270bf8d31edf61b12cc4cded82" name="a3f48f0270bf8d31edf61b12cc4cded82"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3f48f0270bf8d31edf61b12cc4cded82">&#9670;&#160;</a></span>mScene</h2>
 
@@ -326,6 +694,28 @@ Protected Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_scene.html">Scene</a>* GUIInspectorWindow::mScene = nullptr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0cd98497ee0d3b3ea44493c3844dca57" name="a0cd98497ee0d3b3ea44493c3844dca57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cd98497ee0d3b3ea44493c3844dca57">&#9670;&#160;</a></span>mSelColor</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string GUIInspectorWindow::mSelColor = &quot;&quot;</td>
         </tr>
       </table>
   </td>
@@ -353,6 +743,50 @@ Protected Attributes</h2></td></tr>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a422208b4294ac5a35583c1852edeec60" name="a422208b4294ac5a35583c1852edeec60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a422208b4294ac5a35583c1852edeec60">&#9670;&#160;</a></span>TEXTURE_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const float GUIInspectorWindow::TEXTURE_SIZE = 256.0f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a95d2111dfb539c906fa85a24e6d2005a" name="a95d2111dfb539c906fa85a24e6d2005a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95d2111dfb539c906fa85a24e6d2005a">&#9670;&#160;</a></span>TEXTURE_TYPES</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;std::string&gt; GUIInspectorWindow::TEXTURE_TYPES = { &quot;Diffuse&quot;, &quot;Ambient&quot;, &quot;Specular&quot;, &quot;Normal&quot;, &quot;Height&quot;, &quot;Alpha&quot; }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

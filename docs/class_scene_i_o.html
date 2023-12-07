@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.2</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.1.0</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -97,29 +97,46 @@ $(document).ready(function(){initNavTree('class_scene_i_o.html',''); initResizab
   <div class="headertitle"><div class="title">SceneIO Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Class that handles all scene input and output operations by opening popups to select files and passing all read/write operations to the appropriate classes.  
+ <a href="class_scene_i_o.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aabde8fbb13b6247a0ed99c33d35e2dc1" id="r_aabde8fbb13b6247a0ed99c33d35e2dc1"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene_i_o.html#aabde8fbb13b6247a0ed99c33d35e2dc1">GetFullPath</a> () const</td></tr>
+<tr class="memdesc:aabde8fbb13b6247a0ed99c33d35e2dc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the full path of the currently open savefile.  <br /></td></tr>
 <tr class="separator:aabde8fbb13b6247a0ed99c33d35e2dc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07415d9a9180d1b7df929159ff20f7e8" id="r_a07415d9a9180d1b7df929159ff20f7e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene_i_o.html#a07415d9a9180d1b7df929159ff20f7e8">SaveScene</a> ()</td></tr>
+<tr class="memdesc:a07415d9a9180d1b7df929159ff20f7e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves the scene to a .blank file.  <br /></td></tr>
 <tr class="separator:a07415d9a9180d1b7df929159ff20f7e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8df6ff2991049d1f55c183ffbedac940" id="r_a8df6ff2991049d1f55c183ffbedac940"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene_i_o.html#a8df6ff2991049d1f55c183ffbedac940">SaveSceneAs</a> ()</td></tr>
+<tr class="memdesc:a8df6ff2991049d1f55c183ffbedac940"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves the scene to a .blank file of the chosen name.  <br /></td></tr>
 <tr class="separator:a8df6ff2991049d1f55c183ffbedac940"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ede88e0144d0085c692643fc4445c7c" id="r_a9ede88e0144d0085c692643fc4445c7c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene_i_o.html#a9ede88e0144d0085c692643fc4445c7c">SaveSceneIncrement</a> ()</td></tr>
+<tr class="memdesc:a9ede88e0144d0085c692643fc4445c7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves the scene to a .blank file, incrementing the name of the previously saved scene.  <br /></td></tr>
 <tr class="separator:a9ede88e0144d0085c692643fc4445c7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3bbb7bbf35db1784c11dc69536bd1a77" id="r_a3bbb7bbf35db1784c11dc69536bd1a77"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene_i_o.html#a3bbb7bbf35db1784c11dc69536bd1a77">OpenScene</a> ()</td></tr>
+<tr class="memdesc:a3bbb7bbf35db1784c11dc69536bd1a77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens the chosen .blank scene file.  <br /></td></tr>
 <tr class="separator:a3bbb7bbf35db1784c11dc69536bd1a77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70ea22ec68abeecc980985d84e5fd0c2" id="r_a70ea22ec68abeecc980985d84e5fd0c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene_i_o.html#a70ea22ec68abeecc980985d84e5fd0c2">NewScene</a> ()</td></tr>
+<tr class="memdesc:a70ea22ec68abeecc980985d84e5fd0c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new empty .blank scene.  <br /></td></tr>
 <tr class="separator:a70ea22ec68abeecc980985d84e5fd0c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acab793c3f5b273da65335600ea2ba4fb" id="r_acab793c3f5b273da65335600ea2ba4fb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene_i_o.html#acab793c3f5b273da65335600ea2ba4fb">Import</a> ()</td></tr>
+<tr class="memdesc:acab793c3f5b273da65335600ea2ba4fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imports any 3D scene or model, including .blank.  <br /></td></tr>
 <tr class="separator:acab793c3f5b273da65335600ea2ba4fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a611da9dcf67d113100685d54276aae00" id="r_a611da9dcf67d113100685d54276aae00"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene_i_o.html#a611da9dcf67d113100685d54276aae00">Export</a> ()</td></tr>
+<tr class="memdesc:a611da9dcf67d113100685d54276aae00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exports the selected node to any 3D scene, including .blank.  <br /></td></tr>
 <tr class="separator:a611da9dcf67d113100685d54276aae00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3591fb3ca14c68d92fcf50f9b36a5a0" id="r_ab3591fb3ca14c68d92fcf50f9b36a5a0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene_i_o.html#ab3591fb3ca14c68d92fcf50f9b36a5a0">PromptSaveChanges</a> (GLFWwindow *window, <a class="el" href="class_state.html">State</a> *state)</td></tr>
+<tr class="memdesc:ab3591fb3ca14c68d92fcf50f9b36a5a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prompts to save changes if there are any unsaved changes.  <br /></td></tr>
+<tr class="separator:ab3591fb3ca14c68d92fcf50f9b36a5a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af7773c68b5523097a24ee5df9a3fec08" id="r_af7773c68b5523097a24ee5df9a3fec08"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene_i_o.html#af7773c68b5523097a24ee5df9a3fec08">SceneIO</a> (<a class="el" href="class_state.html">State</a> *state, <a class="el" href="class_scene.html">Scene</a> *scene, GLFWwindow *window)</td></tr>
+<tr class="memdesc:af7773c68b5523097a24ee5df9a3fec08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new scene reader/writer.  <br /></td></tr>
 <tr class="separator:af7773c68b5523097a24ee5df9a3fec08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Class that handles all scene input and output operations by opening popups to select files and passing all read/write operations to the appropriate classes. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="af7773c68b5523097a24ee5df9a3fec08" name="af7773c68b5523097a24ee5df9a3fec08"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af7773c68b5523097a24ee5df9a3fec08">&#9670;&#160;</a></span>SceneIO()</h2>
 
@@ -160,6 +177,16 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Creates a new scene reader/writer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>Global state of the application</td></tr>
+    <tr><td class="paramname">scene</td><td>Current scene</td></tr>
+    <tr><td class="paramname">window</td><td>Current window</td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -186,6 +213,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Exports the selected node to any 3D scene, including .blank. </p>
+
 </div>
 </div>
 <a id="aabde8fbb13b6247a0ed99c33d35e2dc1" name="aabde8fbb13b6247a0ed99c33d35e2dc1"></a>
@@ -210,6 +239,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Returns the full path of the currently open savefile. </p>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
 </div>
 </div>
@@ -236,6 +268,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Imports any 3D scene or model, including .blank. </p>
+
 </div>
 </div>
 <a id="a70ea22ec68abeecc980985d84e5fd0c2" name="a70ea22ec68abeecc980985d84e5fd0c2"></a>
@@ -260,6 +294,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates a new empty .blank scene. </p>
 
 </div>
 </div>
@@ -286,6 +322,54 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Opens the chosen .blank scene file. </p>
+
+</div>
+</div>
+<a id="ab3591fb3ca14c68d92fcf50f9b36a5a0" name="ab3591fb3ca14c68d92fcf50f9b36a5a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3591fb3ca14c68d92fcf50f9b36a5a0">&#9670;&#160;</a></span>PromptSaveChanges()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SceneIO::PromptSaveChanges </td>
+          <td>(</td>
+          <td class="paramtype">GLFWwindow *&#160;</td>
+          <td class="paramname"><em>window</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_state.html">State</a> *&#160;</td>
+          <td class="paramname"><em>state</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Prompts to save changes if there are any unsaved changes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">window</td><td>The current window of the app</td></tr>
+    <tr><td class="paramname">state</td><td>Global state of the app</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether to continue with the prompting operation</dd></dl>
+
 </div>
 </div>
 <a id="a07415d9a9180d1b7df929159ff20f7e8" name="a07415d9a9180d1b7df929159ff20f7e8"></a>
@@ -310,6 +394,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Saves the scene to a .blank file. </p>
 
 </div>
 </div>
@@ -336,6 +422,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Saves the scene to a .blank file of the chosen name. </p>
+
 </div>
 </div>
 <a id="a9ede88e0144d0085c692643fc4445c7c" name="a9ede88e0144d0085c692643fc4445c7c"></a>
@@ -360,6 +448,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Saves the scene to a .blank file, incrementing the name of the previously saved scene. </p>
 
 </div>
 </div>

@@ -1,6 +1,6 @@
 #pragma once
 #include "glIncludes.h"
-#include "interfaces/iTool.h"
+#include "interfaces/iSelectable.h"
 #include <vector>
 #include <iostream>
 #include <set>
@@ -17,26 +17,21 @@ class Material;
 class Selection
 {
 private:
-	glm::vec3 mPivot;
+	glm::vec3 mPivot = glm::vec3(0.0f);
 	std::set<unsigned int> mSelVertices;
 	std::set<unsigned int> mSelFaces;
-	Mesh* mSelMesh;
-	IEntity* mSelEntity;
-	Material* mSelMat;
-	IEntity* mSelTransformHandle;
+	Mesh* mSelMesh = nullptr;
+	IEntity* mSelEntity = nullptr;
+	Material* mSelMaterial = nullptr;
+	IEntity* mSelTransformHandle = nullptr;
+	ISelectable* mSelElement = nullptr;
 
-	Tool mSelTool;
-	SelMode mSelMode;
-	std::vector<ITool*> mTools;
+	Tool mSelTool = Tool::SELECT;
+	SelMode mSelMode = SelMode::MESH;
 
 public:
 	std::set<unsigned int> newSelVerts;
 	std::set<unsigned int> removedSelVerts;
-
-	/// <summary>
-	/// Storage container for information on all selections
-	/// </summary>
-	Selection();
 
 	// Returns the entire selection as a selection of vertices
 	void GetSelectedVerts(std::vector<unsigned int>& _verts);
@@ -52,7 +47,9 @@ public:
 	// Selects the given entity
 	void SelectEntity(IEntity* entity);
 	// Selects the given material
-	void SelectMat(Material* material);
+	void SelectMaterial(Material* material);
+	// Selects the given selectable element
+	void SelectElement(ISelectable* element);
 	// Deselects the face with the given ID
 	void DeselectFace(unsigned int _id);
 	// Deselects the vertex with the given ID
@@ -63,6 +60,8 @@ public:
 	void DeselectMesh();
 	// Deselects the currently selected material
 	void DeselectMat();
+	// Deselects the currently selected element
+	void DeselectElement();
 
 	// Clears the vertex selection
 	void ClearVertSel();
@@ -90,9 +89,11 @@ public:
 	// Returns the selected entity
 	IEntity* GetSelectedEntity();
 	// Returns the selected material
-	Material* GetSelectedMat();
+	Material* GetSelectedMaterial();
 	// Returns the transform handle
 	IEntity* GetTransformHandle();
+	// Returns the currently selected element
+	ISelectable* GetSelectedElement();
 	// Returns whether the given vertex is selected
 	bool IsVertSelected(unsigned int _id);
 	// Returns whether the given face is selected
@@ -105,6 +106,9 @@ public:
 	void SetTransformHandle(IEntity* transformHandle);
 	// Updates the transform handle's status
 	void UpdateTransformHandle();
+
+	// Resets the selection
+	void Reset();
 
 	/// <summary>
 	/// Returns the nearest mesh to the clicked position
@@ -132,4 +136,9 @@ public:
 	/// <param name="v">V coordinate onscreen</param>
 	/// <returns>Selected face index, or -1 if none was found</returns>
 	static int GetNearestFace(Scene* scene, float u, float v);
+
+	/// <summary>
+	/// Storage container for information on all selections
+	/// </summary>
+	Selection();
 };

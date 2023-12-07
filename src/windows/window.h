@@ -1,15 +1,31 @@
 #pragma once
 #include "glIncludes.h"
-#include "iGUIWindow.h"
+#include "interfaces/iGUIWindow.h"
 #include "interaction/input.h"
 #include "files/config.h"
 #include "files/fileSystem.h"
 #include "files/sceneIO.h"
-#include "tools/state.h"
+#include "interaction/state.h"
 #include "rendering/scene.h"
+
+#include "windows/guiMenuBarWindow.h"
+#include "windows/guiHierarchyWindow.h"
+#include "windows/guiInspectorWindow.h"
+#include "windows/guiToolbarWindow.h"
+#include "windows/guiToolModeWindow.h"
+
+#include "windows/guiCameraViewer.h"
+#include "windows/guiLightViewer.h"
+#include "windows/guiTextureViewer.h"
+#include "windows/guiMaterialViewer.h"
+
+#include "windows/guiDebugToolsWindow.h"
+#include "windows/guiActionList.h"
+
 #include <iostream>
 #include <unordered_map>
 #include <string>
+#include <stb_image.h>
 
 class Window {
 private:
@@ -20,6 +36,7 @@ private:
 
 	GLFWwindow* mWindow = nullptr;
 	ImGuiIO* mIO = nullptr;
+	Config* mConfig = nullptr;
 	Input* mInput = nullptr;
 	SceneIO* mSceneIO = nullptr;
 	Scene* mScene = nullptr;
@@ -85,8 +102,18 @@ public:
 
 	// Adds the given GUI window
 	void AddGUI(IGUIWindow* gui);
+
 	// Gets the GUI with the given type
 	IGUIWindow* GetGUI(GUI type);
+
+	// Returns whether the given type of GUI is open
+	bool IsGUIOpen(GUI type);
+
+	// Opens the given GUI if it is not open yet
+	void OpenGUI(GUI gui);
+
+	// Opens all defined GUIs
+	void LoadGUIs();
 
 	// Updates the window title to match the current state of the application
 	void UpdateWindowTitle(const std::string& fileName, bool isSaved);

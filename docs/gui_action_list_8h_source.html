@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.2</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.1.0</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -100,10 +100,10 @@ $(document).ready(function(){initNavTree('gui_action_list_8h_source.html',''); i
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;windows/iGUIWindow.h&quot;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;interfaces/iGUIWindow.h&quot;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;windows/guiWindowUtils.h&quot;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;rendering/scene.h&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;tools/state.h&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;interaction/state.h&quot;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;interaction/selection.h&quot;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;interaction/actionStack.h&quot;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
@@ -133,7 +133,7 @@ $(document).ready(function(){initNavTree('gui_action_list_8h_source.html',''); i
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>                <span class="comment">// List all actions</span></div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>                <span class="keywordflow">while</span> (tempAction != <span class="keyword">nullptr</span> &amp;&amp; tempAction-&gt;<a class="code hl_function" href="struct_action_node.html#acab086e96ec49acb994afa494e3b581a">HasPrev</a>())</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>                {</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>                    <a class="code hl_function" href="class_g_u_i_window_utils.html#afbf0f9f93f04f85309e967f2fad1abfd">GUIWindowUtils::Selectable</a>(tempAction-&gt;<a class="code hl_function" href="struct_action_node.html#a32c92c8056c84f46fe31a72f62fa377a">GetName</a>(), curAction, tempAction);</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>                    <a class="code hl_function" href="class_g_u_i_window_utils.html#ad3a7197c45572b831c7bb73f5fcf2d22">GUIWindowUtils::Selectable</a>(tempAction-&gt;<a class="code hl_function" href="struct_action_node.html#a32c92c8056c84f46fe31a72f62fa377a">GetName</a>(), curAction, tempAction);</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>                    tempAction = tempAction-&gt;<a class="code hl_variable" href="struct_action_node.html#a894a74b7608aad24fa225bf30acdac9b">mPrevNode</a>;</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>                }</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>            }</div>
@@ -163,13 +163,13 @@ $(document).ready(function(){initNavTree('gui_action_list_8h_source.html',''); i
 <div class="ttc" id="aclass_g_u_i_action_list_html"><div class="ttname"><a href="class_g_u_i_action_list.html">GUIActionList</a></div><div class="ttdef"><b>Definition</b> guiActionList.h:10</div></div>
 <div class="ttc" id="aclass_g_u_i_action_list_html_a8cc392f0e6cd240583e857688f99a299"><div class="ttname"><a href="class_g_u_i_action_list.html#a8cc392f0e6cd240583e857688f99a299">GUIActionList::Draw</a></div><div class="ttdeci">void Draw() override</div><div class="ttdef"><b>Definition</b> guiActionList.h:15</div></div>
 <div class="ttc" id="aclass_g_u_i_action_list_html_acaab7aaa18cd62dfc0aef76d702acb32"><div class="ttname"><a href="class_g_u_i_action_list.html#acaab7aaa18cd62dfc0aef76d702acb32">GUIActionList::GUIActionList</a></div><div class="ttdeci">GUIActionList(State *state, Scene *scene, bool isEnabled)</div><div class="ttdef"><b>Definition</b> guiActionList.h:45</div></div>
-<div class="ttc" id="aclass_g_u_i_window_utils_html_afbf0f9f93f04f85309e967f2fad1abfd"><div class="ttname"><a href="class_g_u_i_window_utils.html#afbf0f9f93f04f85309e967f2fad1abfd">GUIWindowUtils::Selectable</a></div><div class="ttdeci">static bool Selectable(const std::string &amp;label, T &amp;selValue, T thisValue)</div><div class="ttdef"><b>Definition</b> guiWindowUtils.h:30</div></div>
-<div class="ttc" id="aclass_i_g_u_i_window_html"><div class="ttname"><a href="class_i_g_u_i_window.html">IGUIWindow</a></div><div class="ttdef"><b>Definition</b> iGUIWindow.h:28</div></div>
-<div class="ttc" id="aclass_i_g_u_i_window_html_a99aabf88516b9b3c4b14adc870ba7156"><div class="ttname"><a href="class_i_g_u_i_window.html#a99aabf88516b9b3c4b14adc870ba7156">IGUIWindow::mIsEnabled</a></div><div class="ttdeci">bool mIsEnabled</div><div class="ttdef"><b>Definition</b> iGUIWindow.h:33</div></div>
-<div class="ttc" id="aclass_i_g_u_i_window_html_aa6673bf3196758afd8acc3df9fc8df26"><div class="ttname"><a href="class_i_g_u_i_window.html#aa6673bf3196758afd8acc3df9fc8df26">IGUIWindow::mType</a></div><div class="ttdeci">GUI mType</div><div class="ttdef"><b>Definition</b> iGUIWindow.h:30</div></div>
-<div class="ttc" id="aclass_scene_html"><div class="ttname"><a href="class_scene.html">Scene</a></div><div class="ttdef"><b>Definition</b> scene.h:27</div></div>
+<div class="ttc" id="aclass_g_u_i_window_utils_html_ad3a7197c45572b831c7bb73f5fcf2d22"><div class="ttname"><a href="class_g_u_i_window_utils.html#ad3a7197c45572b831c7bb73f5fcf2d22">GUIWindowUtils::Selectable</a></div><div class="ttdeci">static bool Selectable(const std::string &amp;label, T &amp;selValue, T thisValue, bool *wasPressed=nullptr, const glm::vec2 &amp;size=glm::vec2(0.0f))</div><div class="ttdef"><b>Definition</b> guiWindowUtils.h:126</div></div>
+<div class="ttc" id="aclass_i_g_u_i_window_html"><div class="ttname"><a href="class_i_g_u_i_window.html">IGUIWindow</a></div><div class="ttdef"><b>Definition</b> iGUIWindow.h:30</div></div>
+<div class="ttc" id="aclass_i_g_u_i_window_html_a99aabf88516b9b3c4b14adc870ba7156"><div class="ttname"><a href="class_i_g_u_i_window.html#a99aabf88516b9b3c4b14adc870ba7156">IGUIWindow::mIsEnabled</a></div><div class="ttdeci">bool mIsEnabled</div><div class="ttdef"><b>Definition</b> iGUIWindow.h:35</div></div>
+<div class="ttc" id="aclass_i_g_u_i_window_html_aa6673bf3196758afd8acc3df9fc8df26"><div class="ttname"><a href="class_i_g_u_i_window.html#aa6673bf3196758afd8acc3df9fc8df26">IGUIWindow::mType</a></div><div class="ttdeci">GUI mType</div><div class="ttdef"><b>Definition</b> iGUIWindow.h:32</div></div>
+<div class="ttc" id="aclass_scene_html"><div class="ttname"><a href="class_scene.html">Scene</a></div><div class="ttdef"><b>Definition</b> scene.h:37</div></div>
 <div class="ttc" id="aclass_state_html"><div class="ttname"><a href="class_state.html">State</a></div><div class="ttdef"><b>Definition</b> state.h:11</div></div>
-<div class="ttc" id="aclass_state_html_a953af08b96cbb631cd02f2515ebe223a"><div class="ttname"><a href="class_state.html#a953af08b96cbb631cd02f2515ebe223a">State::GetActionStack</a></div><div class="ttdeci">ActionStack * GetActionStack() const</div><div class="ttdef"><b>Definition</b> state.h:93</div></div>
+<div class="ttc" id="aclass_state_html_a953af08b96cbb631cd02f2515ebe223a"><div class="ttname"><a href="class_state.html#a953af08b96cbb631cd02f2515ebe223a">State::GetActionStack</a></div><div class="ttdeci">ActionStack * GetActionStack() const</div><div class="ttdef"><b>Definition</b> state.h:96</div></div>
 <div class="ttc" id="astruct_action_node_html"><div class="ttname"><a href="struct_action_node.html">ActionNode</a></div><div class="ttdoc">Doubly linked node that stores the do and undo command of an action.</div><div class="ttdef"><b>Definition</b> actionNode.h:8</div></div>
 <div class="ttc" id="astruct_action_node_html_a32c92c8056c84f46fe31a72f62fa377a"><div class="ttname"><a href="struct_action_node.html#a32c92c8056c84f46fe31a72f62fa377a">ActionNode::GetName</a></div><div class="ttdeci">std::string GetName() const</div><div class="ttdoc">Returns the name of the command.</div><div class="ttdef"><b>Definition</b> actionNode.h:94</div></div>
 <div class="ttc" id="astruct_action_node_html_a894a74b7608aad24fa225bf30acdac9b"><div class="ttname"><a href="struct_action_node.html#a894a74b7608aad24fa225bf30acdac9b">ActionNode::mPrevNode</a></div><div class="ttdeci">ActionNode * mPrevNode</div><div class="ttdoc">The previous node of the action.</div><div class="ttdef"><b>Definition</b> actionNode.h:12</div></div>

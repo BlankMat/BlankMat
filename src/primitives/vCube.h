@@ -4,9 +4,9 @@
 class VCube : public Mesh
 {
 public:
-	VCube(const std::string& name, const float size, Material* material,
+	VCube(const std::string& name, const std::string& scope, const float size, Material* material,
 		const glm::vec3& pos = glm::vec3(0.0f), const glm::vec3& rot = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f))
-		: Mesh(name, material)
+		: Mesh(name, scope, material)
 	{
 		float h = size * 0.5f;
 

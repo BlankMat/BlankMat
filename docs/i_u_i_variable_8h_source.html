@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.2</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.1.0</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -161,50 +161,43 @@ $(document).ready(function(){initNavTree('i_u_i_variable_8h_source.html',''); in
 </div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
 <div class="foldopen" id="foldopen00099" data-start="{" data-end="}">
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="class_i_u_i_variable.html#aae14d3504346ff8cb80ad1a22e085dff">   99</a></span>    T* <a class="code hl_function" href="class_i_u_i_variable.html#aae14d3504346ff8cb80ad1a22e085dff">operator&amp;</a>()</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    {</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        <span class="keywordflow">return</span> &amp;<a class="code hl_variable" href="class_i_u_i_variable.html#a29fe27ef1408cca5489ca516fa126876">mValue</a>;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="class_i_u_i_variable.html#afce7d71edf4d562acf5e80693d396342">   99</a></span>    std::string <a class="code hl_function" href="class_i_u_i_variable.html#afce7d71edf4d562acf5e80693d396342">Name</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="class_i_u_i_variable.html#acb6853d3921a731427b208fcaebad0f2">mName</a>;</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    }</div>
 </div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
-<div class="foldopen" id="foldopen00108" data-start="{" data-end="}">
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno"><a class="line" href="class_i_u_i_variable.html#afce7d71edf4d562acf5e80693d396342">  108</a></span>    std::string <a class="code hl_function" href="class_i_u_i_variable.html#afce7d71edf4d562acf5e80693d396342">Name</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="class_i_u_i_variable.html#acb6853d3921a731427b208fcaebad0f2">mName</a>;</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    }</div>
+<div class="foldopen" id="foldopen00109" data-start="{" data-end="}">
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="class_i_u_i_variable.html#a2d3ff6a180deb58af0d1476323240bdd">  109</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_i_u_i_variable.html#a2d3ff6a180deb58af0d1476323240bdd">Set</a>(<span class="keyword">const</span> T&amp; newValue)</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    {</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        <span class="comment">// Don&#39;t change the value if nothing changed</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="class_i_u_i_variable.html#a29fe27ef1408cca5489ca516fa126876">mValue</a> == newValue)</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        <span class="comment">// If the value changed, notify the action stack</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="class_i_u_i_variable.html#ae30ba6251d50d88037b75a60ebf9f470">mActionStack</a> != <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            <a class="code hl_variable" href="class_i_u_i_variable.html#ae30ba6251d50d88037b75a60ebf9f470">mActionStack</a>-&gt;<a class="code hl_function" href="class_action_stack.html#a9a5f8a7944f799adec86b4940d309111">Execute</a>(<span class="keyword">new</span> <a class="code hl_class" href="class_change_value_command.html">ChangeValueCommand&lt;T&gt;</a>(&amp;<a class="code hl_variable" href="class_i_u_i_variable.html#a29fe27ef1408cca5489ca516fa126876">mValue</a>, newValue, <a class="code hl_variable" href="class_i_u_i_variable.html#a4e9ce52351117cc04467cf6fd8487900">mSetCallback</a>));</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        <span class="comment">// Trigger the callback function if it exists</span></div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="class_i_u_i_variable.html#a4e9ce52351117cc04467cf6fd8487900">mSetCallback</a> != <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>            <a class="code hl_variable" href="class_i_u_i_variable.html#a4e9ce52351117cc04467cf6fd8487900">mSetCallback</a>();</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        <span class="comment">// Update the value of the variable</span></div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        <a class="code hl_variable" href="class_i_u_i_variable.html#a29fe27ef1408cca5489ca516fa126876">mValue</a> = newValue;</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    }</div>
 </div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
-<div class="foldopen" id="foldopen00118" data-start="{" data-end="}">
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno"><a class="line" href="class_i_u_i_variable.html#a2d3ff6a180deb58af0d1476323240bdd">  118</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_i_u_i_variable.html#a2d3ff6a180deb58af0d1476323240bdd">Set</a>(<span class="keyword">const</span> T&amp; newValue)</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    {</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        <span class="comment">// Don&#39;t change the value if nothing changed</span></div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="class_i_u_i_variable.html#a29fe27ef1408cca5489ca516fa126876">mValue</a> == newValue)</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>            <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        <span class="comment">// If the value changed, notify the action stack</span></div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="class_i_u_i_variable.html#ae30ba6251d50d88037b75a60ebf9f470">mActionStack</a> != <span class="keyword">nullptr</span>)</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>            <a class="code hl_variable" href="class_i_u_i_variable.html#ae30ba6251d50d88037b75a60ebf9f470">mActionStack</a>-&gt;<a class="code hl_function" href="class_action_stack.html#a9a5f8a7944f799adec86b4940d309111">Execute</a>(<span class="keyword">new</span> <a class="code hl_class" href="class_change_value_command.html">ChangeValueCommand&lt;T&gt;</a>(&amp;<a class="code hl_variable" href="class_i_u_i_variable.html#a29fe27ef1408cca5489ca516fa126876">mValue</a>, newValue, <a class="code hl_variable" href="class_i_u_i_variable.html#a4e9ce52351117cc04467cf6fd8487900">mSetCallback</a>));</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>        <span class="comment">// Trigger the callback function if it exists</span></div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="class_i_u_i_variable.html#a4e9ce52351117cc04467cf6fd8487900">mSetCallback</a> != <span class="keyword">nullptr</span>)</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>            <a class="code hl_variable" href="class_i_u_i_variable.html#a4e9ce52351117cc04467cf6fd8487900">mSetCallback</a>();</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>        <span class="comment">// Update the value of the variable</span></div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        <a class="code hl_variable" href="class_i_u_i_variable.html#a29fe27ef1408cca5489ca516fa126876">mValue</a> = newValue;</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    }</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
+<div class="foldopen" id="foldopen00131" data-start="{" data-end="}">
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno"><a class="line" href="class_i_u_i_variable.html#a82742ff77e4ea789446636a8c8a1d82c">  131</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_i_u_i_variable.html#a82742ff77e4ea789446636a8c8a1d82c">SetNoUpdate</a>(<span class="keyword">const</span> T&amp; newValue)</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    {</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        <span class="comment">// Don&#39;t change the value if nothing changed</span></div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="class_i_u_i_variable.html#a29fe27ef1408cca5489ca516fa126876">mValue</a> == newValue)</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        <a class="code hl_variable" href="class_i_u_i_variable.html#a29fe27ef1408cca5489ca516fa126876">mValue</a> = newValue;</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    }</div>
 </div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
-<div class="foldopen" id="foldopen00140" data-start="{" data-end="}">
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno"><a class="line" href="class_i_u_i_variable.html#a82742ff77e4ea789446636a8c8a1d82c">  140</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_i_u_i_variable.html#a82742ff77e4ea789446636a8c8a1d82c">SetNoUpdate</a>(<span class="keyword">const</span> T&amp; newValue)</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    {</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        <span class="comment">// Don&#39;t change the value if nothing changed</span></div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="class_i_u_i_variable.html#a29fe27ef1408cca5489ca516fa126876">mValue</a> == newValue)</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>            <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        <a class="code hl_variable" href="class_i_u_i_variable.html#a29fe27ef1408cca5489ca516fa126876">mValue</a> = newValue;</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    }</div>
-</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>};</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>};</div>
 </div>
 <div class="ttc" id="aclass_action_stack_html"><div class="ttname"><a href="class_action_stack.html">ActionStack</a></div><div class="ttdoc">Class that keeps track of all commands that have been run. Allows functionality for undo/redo.</div><div class="ttdef"><b>Definition</b> actionStack.h:11</div></div>
 <div class="ttc" id="aclass_action_stack_html_a9a5f8a7944f799adec86b4940d309111"><div class="ttname"><a href="class_action_stack.html#a9a5f8a7944f799adec86b4940d309111">ActionStack::Execute</a></div><div class="ttdeci">void Execute(ICommand *command)</div><div class="ttdoc">Executes the given command, emplacing it as the most recent item in the stack.</div><div class="ttdef"><b>Definition</b> actionStack.h:246</div></div>
@@ -212,18 +205,17 @@ $(document).ready(function(){initNavTree('i_u_i_variable_8h_source.html',''); in
 <div class="ttc" id="aclass_i_u_i_variable_html"><div class="ttname"><a href="class_i_u_i_variable.html">IUIVariable</a></div><div class="ttdoc">Class to store a variable that can be edited in the UI. This class sends a Command to the ActionStack...</div><div class="ttdef"><b>Definition</b> iUIVariable.h:12</div></div>
 <div class="ttc" id="aclass_i_u_i_variable_html_a020c25bbf7e9c7214a0618effaa7807e"><div class="ttname"><a href="class_i_u_i_variable.html#a020c25bbf7e9c7214a0618effaa7807e">IUIVariable::operator*</a></div><div class="ttdeci">T &amp; operator*()</div><div class="ttdoc">Returns a reference to the value stored in this variable.</div><div class="ttdef"><b>Definition</b> iUIVariable.h:81</div></div>
 <div class="ttc" id="aclass_i_u_i_variable_html_a29fe27ef1408cca5489ca516fa126876"><div class="ttname"><a href="class_i_u_i_variable.html#a29fe27ef1408cca5489ca516fa126876">IUIVariable::mValue</a></div><div class="ttdeci">T mValue</div><div class="ttdoc">Value of the variable.</div><div class="ttdef"><b>Definition</b> iUIVariable.h:22</div></div>
-<div class="ttc" id="aclass_i_u_i_variable_html_a2d3ff6a180deb58af0d1476323240bdd"><div class="ttname"><a href="class_i_u_i_variable.html#a2d3ff6a180deb58af0d1476323240bdd">IUIVariable::Set</a></div><div class="ttdeci">void Set(const T &amp;newValue)</div><div class="ttdoc">Sets the value of the variable to the new value only if it is different. Sends a Command to the actio...</div><div class="ttdef"><b>Definition</b> iUIVariable.h:118</div></div>
+<div class="ttc" id="aclass_i_u_i_variable_html_a2d3ff6a180deb58af0d1476323240bdd"><div class="ttname"><a href="class_i_u_i_variable.html#a2d3ff6a180deb58af0d1476323240bdd">IUIVariable::Set</a></div><div class="ttdeci">void Set(const T &amp;newValue)</div><div class="ttdoc">Sets the value of the variable to the new value only if it is different. Sends a Command to the actio...</div><div class="ttdef"><b>Definition</b> iUIVariable.h:109</div></div>
 <div class="ttc" id="aclass_i_u_i_variable_html_a3554feb277e8ac2c840bc096db8499a4"><div class="ttname"><a href="class_i_u_i_variable.html#a3554feb277e8ac2c840bc096db8499a4">IUIVariable::Display</a></div><div class="ttdeci">virtual void Display()=0</div><div class="ttdoc">Displays the variable as an editable field in the UI. Each variable type needs to handle this differe...</div></div>
 <div class="ttc" id="aclass_i_u_i_variable_html_a387692ecfb11aed819919aa91e0fe5c5"><div class="ttname"><a href="class_i_u_i_variable.html#a387692ecfb11aed819919aa91e0fe5c5">IUIVariable::GetRef</a></div><div class="ttdeci">T * GetRef() const</div><div class="ttdoc">Returns a reference to the value stored in this variable. This is unsafe, but is necessary for Comman...</div><div class="ttdef"><b>Definition</b> iUIVariable.h:64</div></div>
 <div class="ttc" id="aclass_i_u_i_variable_html_a4e9ce52351117cc04467cf6fd8487900"><div class="ttname"><a href="class_i_u_i_variable.html#a4e9ce52351117cc04467cf6fd8487900">IUIVariable::mSetCallback</a></div><div class="ttdeci">std::function&lt; void()&gt; mSetCallback</div><div class="ttdoc">Callback function that runs whenever set is modified.</div><div class="ttdef"><b>Definition</b> iUIVariable.h:32</div></div>
 <div class="ttc" id="aclass_i_u_i_variable_html_a655a52ea5b9c9b663d2990d7979a52fe"><div class="ttname"><a href="class_i_u_i_variable.html#a655a52ea5b9c9b663d2990d7979a52fe">IUIVariable::Equals</a></div><div class="ttdeci">bool Equals(const T &amp;value) const</div><div class="ttdoc">Returns whether the value is equal to the given value.</div><div class="ttdef"><b>Definition</b> iUIVariable.h:45</div></div>
-<div class="ttc" id="aclass_i_u_i_variable_html_a82742ff77e4ea789446636a8c8a1d82c"><div class="ttname"><a href="class_i_u_i_variable.html#a82742ff77e4ea789446636a8c8a1d82c">IUIVariable::SetNoUpdate</a></div><div class="ttdeci">void SetNoUpdate(const T &amp;newValue)</div><div class="ttdoc">Sets the value of the variable to the new value without creating a command.</div><div class="ttdef"><b>Definition</b> iUIVariable.h:140</div></div>
+<div class="ttc" id="aclass_i_u_i_variable_html_a82742ff77e4ea789446636a8c8a1d82c"><div class="ttname"><a href="class_i_u_i_variable.html#a82742ff77e4ea789446636a8c8a1d82c">IUIVariable::SetNoUpdate</a></div><div class="ttdeci">void SetNoUpdate(const T &amp;newValue)</div><div class="ttdoc">Sets the value of the variable to the new value without creating a command.</div><div class="ttdef"><b>Definition</b> iUIVariable.h:131</div></div>
 <div class="ttc" id="aclass_i_u_i_variable_html_aa06f28b38029b8efdc5222c410e318a9"><div class="ttname"><a href="class_i_u_i_variable.html#aa06f28b38029b8efdc5222c410e318a9">IUIVariable::operator-&gt;</a></div><div class="ttdeci">T * operator-&gt;()</div><div class="ttdoc">Returns a reference to the value stored in this variable.</div><div class="ttdef"><b>Definition</b> iUIVariable.h:90</div></div>
-<div class="ttc" id="aclass_i_u_i_variable_html_aae14d3504346ff8cb80ad1a22e085dff"><div class="ttname"><a href="class_i_u_i_variable.html#aae14d3504346ff8cb80ad1a22e085dff">IUIVariable::operator&amp;</a></div><div class="ttdeci">T * operator&amp;()</div><div class="ttdoc">Returns a reference to the value stored in this variable.</div><div class="ttdef"><b>Definition</b> iUIVariable.h:99</div></div>
 <div class="ttc" id="aclass_i_u_i_variable_html_abe4eed33c236fb7796fd5016a5e55780"><div class="ttname"><a href="class_i_u_i_variable.html#abe4eed33c236fb7796fd5016a5e55780">IUIVariable::Get</a></div><div class="ttdeci">T Get() const</div><div class="ttdoc">Returns the current value of this variable.</div><div class="ttdef"><b>Definition</b> iUIVariable.h:54</div></div>
 <div class="ttc" id="aclass_i_u_i_variable_html_acb6853d3921a731427b208fcaebad0f2"><div class="ttname"><a href="class_i_u_i_variable.html#acb6853d3921a731427b208fcaebad0f2">IUIVariable::mName</a></div><div class="ttdeci">std::string mName</div><div class="ttdoc">Name of the variable.</div><div class="ttdef"><b>Definition</b> iUIVariable.h:17</div></div>
 <div class="ttc" id="aclass_i_u_i_variable_html_ae30ba6251d50d88037b75a60ebf9f470"><div class="ttname"><a href="class_i_u_i_variable.html#ae30ba6251d50d88037b75a60ebf9f470">IUIVariable::mActionStack</a></div><div class="ttdeci">ActionStack * mActionStack</div><div class="ttdoc">Reference to the global action stack.</div><div class="ttdef"><b>Definition</b> iUIVariable.h:27</div></div>
-<div class="ttc" id="aclass_i_u_i_variable_html_afce7d71edf4d562acf5e80693d396342"><div class="ttname"><a href="class_i_u_i_variable.html#afce7d71edf4d562acf5e80693d396342">IUIVariable::Name</a></div><div class="ttdeci">std::string Name() const</div><div class="ttdoc">Returns the name of the variable.</div><div class="ttdef"><b>Definition</b> iUIVariable.h:108</div></div>
+<div class="ttc" id="aclass_i_u_i_variable_html_afce7d71edf4d562acf5e80693d396342"><div class="ttname"><a href="class_i_u_i_variable.html#afce7d71edf4d562acf5e80693d396342">IUIVariable::Name</a></div><div class="ttdeci">std::string Name() const</div><div class="ttdoc">Returns the name of the variable.</div><div class="ttdef"><b>Definition</b> iUIVariable.h:99</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

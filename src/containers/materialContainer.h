@@ -7,6 +7,15 @@ class MaterialContainer : public IContainer<Material>
 {
 protected:
 	/// <summary>
+	/// Renames the given item to the given name
+	/// </summary>
+	/// <param name="item">Item to rename</param>
+	void RenameItem(Material* item, const std::string& name) override
+	{
+		item->SetName(name);
+	}
+
+	/// <summary>
 	/// Returns whether the item should be skipped or not
 	/// </summary>
 	/// <param name="item">Item to consider</param>
@@ -15,12 +24,14 @@ protected:
 	{
 		return item->IsInternal();
 	} 
+
 	/// <summary>
 	/// Reads the next item from the input file stream
 	/// </summary>
+	/// <param name="scope">Scope to read item in</param>
 	/// <param name="file">File to read</param>
 	/// <returns>Newly constructed item from file</returns>
-	const std::pair<std::string, Material*> ReadItem(std::ifstream& file) override
+	const std::pair<std::string, Material*> ReadItem(const std::string& scope, std::ifstream& file) override
 	{
 		// Set up variables to store read information
 		std::string name = "default";
@@ -55,39 +66,39 @@ protected:
 				break;
 
 			// Parse lines
-			if (parse[0] == "MATERIAL")
-				name = parse[1];
-			else if (parse[0] == "kd")
+			if (parse[0] == "MATERIAL" && parse.size() > 1)
+				name = Scope(parse[1], scope);
+			else if (parse[0] == "kd" && parse.size() > 3)
 				kd = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "ka")
+			else if (parse[0] == "ka" && parse.size() > 3)
 				ka = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "ks")
+			else if (parse[0] == "ks" && parse.size() > 3)
 				ks = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "ke")
+			else if (parse[0] == "ke" && parse.size() > 3)
 				ke = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "ns")
+			else if (parse[0] == "ns" && parse.size() > 1)
 				ns = std::stof(parse[1]);
-			else if (parse[0] == "ni")
+			else if (parse[0] == "ni" && parse.size() > 1)
 				ni = std::stof(parse[1]);
-			else if (parse[0] == "d")
+			else if (parse[0] == "d" && parse.size() > 1)
 				d = std::stof(parse[1]);
-			else if (parse[0] == "illum")
+			else if (parse[0] == "illum" && parse.size() > 1)
 				illum = std::stoi(parse[1]);
-			else if (parse[0] == "map_kd")
+			else if (parse[0] == "map_kd" && parse.size() > 1)
 				map_kd = parse[1];
-			else if (parse[0] == "map_ka")
+			else if (parse[0] == "map_ka" && parse.size() > 1)
 				map_ka = parse[1];
-			else if (parse[0] == "map_ks")
+			else if (parse[0] == "map_ks" && parse.size() > 1)
 				map_ks = parse[1];
-			else if (parse[0] == "map_bump")
+			else if (parse[0] == "map_bump" && parse.size() > 1)
 				map_bump = parse[1];
-			else if (parse[0] == "map_ns")
+			else if (parse[0] == "map_ns" && parse.size() > 1)
 				map_ns = parse[1];
-			else if (parse[0] == "map_d")
+			else if (parse[0] == "map_d" && parse.size() > 1)
 				map_d = parse[1];
 		}
 
-		return std::pair<std::string, Material*>(name, new Material(name, map_kd, map_ka, map_ks, map_bump, map_ns, map_d, ka, kd, ks, ns, ni, d, ke, illum));
+		return std::pair<std::string, Material*>(name, new Material(UnscopeName(name), UnscopeScope(name), map_kd, map_ka, map_ks, map_bump, map_ns, map_d, ka, kd, ks, ns, ni, d, ke, illum));
 	}
 
 	/// <summary>
@@ -99,39 +110,40 @@ protected:
 	void WriteItem(const std::string& key, Material* item, std::ofstream& file) override
 	{
 		file << "MATERIAL " << key << std::endl;
-		file << "kd " << Vec3ToString(item->kd) << std::endl;
-		file << "ka " << Vec3ToString(item->ka) << std::endl;
-		file << "ks " << Vec3ToString(item->ks) << std::endl;
-		file << "ke " << Vec3ToString(item->ke) << std::endl;
-		file << "ns " << item->ns << std::endl;
-		file << "ni " << item->ni << std::endl;
-		file << "d " << item->d << std::endl;
-		file << "illum " << item->illum << std::endl;
+		file << "kd " << Vec3ToString(item->mKD) << std::endl;
+		file << "ka " << Vec3ToString(item->mKA) << std::endl;
+		file << "ks " << Vec3ToString(item->mKS) << std::endl;
+		file << "ke " << Vec3ToString(item->mKE) << std::endl;
+		file << "ns " << item->mNS << std::endl;
+		file << "ni " << item->mNI << std::endl;
+		file << "d " << item->mD << std::endl;
+		file << "illum " << item->mIllum << std::endl;
 
 		// Write textures only if they are used
-		if (item->map_kd != nullptr)
-			file << "map_kd " << item->map_kd->name << std::endl;
-		if (item->map_ka != nullptr)
-			file << "map_ka " << item->map_ka->name << std::endl;
-		if (item->map_ks != nullptr)
-			file << "map_ks " << item->map_ks->name << std::endl;
-		if (item->map_bump != nullptr)
-			file << "map_bump " << item->map_bump->name << std::endl;
-		if (item->map_ns != nullptr)
-			file << "map_ns " << item->map_ns->name << std::endl;
-		if (item->map_d != nullptr)
-			file << "map_d " << item->map_d->name << std::endl;
+		if (item->mMapKD != nullptr)
+			file << "map_kd " << item->mMapKD->GetScopedName() << std::endl;
+		if (item->mMapKA != nullptr)
+			file << "map_ka " << item->mMapKA->GetScopedName() << std::endl;
+		if (item->mMapKS != nullptr)
+			file << "map_ks " << item->mMapKS->GetScopedName() << std::endl;
+		if (item->mMapBump != nullptr)
+			file << "map_bump " << item->mMapBump->GetScopedName() << std::endl;
+		if (item->mMapNS != nullptr)
+			file << "map_ns " << item->mMapNS->GetScopedName() << std::endl;
+		if (item->mMapD != nullptr)
+			file << "map_d " << item->mMapD->GetScopedName() << std::endl;
 	}
 
 public:
 	/// <summary>
-	/// Adds the material to the container, or if it already exists, updates the item to the given one
+	/// Adds the material to the container
 	/// </summary>
 	/// <param name="item">The item to store</param>
+	/// <param name="replace">Whether to replace the existing item if this is a duplicate</param>
 	/// <returns>The element stored in the container</returns>
-	Material* AddMaterial(Material* item)
+	Material* AddMaterial(Material* item, bool replace = false)
 	{
-		return Add(item->name, item);
+		return Add(item->GetScopedName(), item, replace);
 	}
 
 	/// <summary>
@@ -141,6 +153,16 @@ public:
 	Material* GetDefault()
 	{
 		return GetItem("default");
+	}
+
+	/// <summary>
+	/// Returns whether the given item is deletable (ie. not a default element or internal)
+	/// </summary>
+	/// <param name="item">Item to consider</param>
+	/// <returns>Whether the item can be deleted safely</returns>
+	virtual bool IsDeleteable(Material* item)
+	{
+		return (Count() > 1 && !SkipItem(item));
 	}
 
 	/// <summary>
@@ -159,6 +181,6 @@ public:
 	/// <param name="textures">Texture container with default textures</param>
 	explicit MaterialContainer(TextureContainer* textures)
 	{
-		Add("default", new Material(textures));
+		mCurSelectedItem = Add("default", new Material(textures), true);
 	}
 };

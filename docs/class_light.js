@@ -1,6 +1,6 @@
 var class_light =
 [
-    [ "Light", "class_light.html#ae17b00a2a401685ede5e8bf8c744949d", null ],
+    [ "Light", "class_light.html#a8d2da1d3d92247b802b7fbdd4e1d8866", null ],
     [ "Light", "class_light.html#a102edf7940ae1fb528fc7e6a1229c98a", null ],
     [ "CalcMatrices", "class_light.html#a3fe1e0520df717eada73eb89abbed27a", null ],
     [ "Draw", "class_light.html#a58b5f98eb4a123aef1ccb8c1d50dcaf3", null ],
@@ -17,6 +17,8 @@ var class_light =
     [ "GetSpotInnerRadius", "class_light.html#a7081c89669fdd5a3d4735db90b85bbc1", null ],
     [ "GetSpotOuterRadius", "class_light.html#aa5219551f661e9effb18d808c0b365ff", null ],
     [ "GetType", "class_light.html#aacc425b195c1db3d95f55728dd74dca5", null ],
+    [ "IsCube", "class_light.html#a56b5071e4a615c919fce053ba1d695c5", null ],
+    [ "LoadMaterials", "class_light.html#a9e89edad8ae8013e5f40758342f82c06", null ],
     [ "SetBaseColor", "class_light.html#a9a8423679ea1bca136a70cfe8784d2bf", null ],
     [ "SetColor", "class_light.html#a47c2dfc851310bbd1e20baa0d5792eaa", null ],
     [ "SetDir", "class_light.html#ac844e7961547f58797602110590b1f32", null ],
@@ -38,6 +40,7 @@ var class_light =
     [ "mDir", "class_light.html#a176f81f9b66ca6fdb4d154b5ecb4821e", null ],
     [ "mFarPlane", "class_light.html#a284717a92d0101cc41cd43e1df29746f", null ],
     [ "mGamma", "class_light.html#a86425bb98f561f42308f89959032e899", null ],
+    [ "mIsCube", "class_light.html#a248d2b48bcd449843359907851570cb4", null ],
     [ "mKA", "class_light.html#ad9dc9284c0df89318e02b9a29001e55e", null ],
     [ "mKD", "class_light.html#ae39e5dda3caffa0221215f4b52a9c2db", null ],
     [ "mKS", "class_light.html#a71f391054e598d1aab7d948dbba3e574", null ],

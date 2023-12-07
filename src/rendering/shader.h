@@ -1,5 +1,6 @@
 #pragma once
 #include "glIncludes.h"
+#include "blankMatConfig.h"
 #include "files/fileSystem.h"
 #include <string>
 #include <fstream>

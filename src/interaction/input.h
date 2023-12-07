@@ -1,7 +1,7 @@
 #pragma once
 #include "glIncludes.h"
 #include "files/config.h"
-#include "tools/state.h"
+#include "interaction/state.h"
 #include "interfaces/iCommand.h"
 #include <unordered_map>
 #include <unordered_set>
@@ -16,9 +16,9 @@ private:
 	State* mState = nullptr;
 	MouseInputMode mMouseInputMode = MouseInputMode::DEFAULT;
 
-	float mMouseRotSpeed = 0.1f;
-	float mMouseZoomSpeed = 0.1f;
-	float mMouseMoveSpeed = 0.1f;
+	float mMouseRotSpeed = 0.15f;
+	float mMouseZoomSpeed = 0.5f;
+	float mMouseMoveSpeed = 0.3f;
 
 	std::function<void(const glm::vec3& delta)> mMouseRotFunc = nullptr;
 	std::function<void(const glm::vec3& delta)> mMouseZoomFunc = nullptr;
@@ -95,7 +95,7 @@ public:
 
 		// Trigger hotkey
 		std::string hotkey = GetModCode(mods) + keyCode;
-		if (mHotkeys.find(hotkey) != mHotkeys.end())
+		if (mHotkeys.contains(hotkey))
 			RunCommand(mHotkeys[hotkey]);
 		return true;
 	}
@@ -115,7 +115,7 @@ public:
 
 		// Trigger reverse hotkey if it exists
 		std::string hotkey = GetModCode(mods) + keyCode;
-		if (mHotkeys.find(hotkey) != mHotkeys.end())
+		if (mHotkeys.contains(hotkey))
 			RunCommand(mHotkeys[hotkey] + "_RELEASE");
 		return true;
 	}
@@ -127,7 +127,7 @@ public:
 	/// <returns>Whether the key is pressed</returns>
 	bool IsKeyPressed(const std::string& keyCode) const
 	{
-		return mKeysPressed.find(keyCode) != mKeysPressed.end();
+		return mKeysPressed.contains(keyCode);
 	}
 
 	/// <summary>
@@ -137,7 +137,7 @@ public:
 	void RunCommand(const std::string& command)
 	{
 		std::cout << "Ran command " << command << std::endl;
-		if (mCommands.find(command) != mCommands.end())
+		if (mCommands.contains(command))
 			mState->GetActionStack()->Execute(mCommands[command]);
 	}
 
@@ -149,7 +149,7 @@ public:
 	void AddCommand(const std::string& name, ICommand* command)
 	{
 		// If the command already exists, replace it
-		if (mCommands.find(name) != mCommands.end())
+		if (mCommands.contains(name))
 			mCommands[name] = command;
 		else
 			mCommands.emplace(name, command);

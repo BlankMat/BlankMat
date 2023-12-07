@@ -1,75 +1,34 @@
 #pragma once
-#include "timer.h"
+#include "blankMatConfig.h"
 #include "rendering/scene.h"
+#include <assimp/scene.h>
 #include <iostream>
 #include <fstream>
-#include <thread>
 
 class SceneWriter
 {
 private:
-	static void WriteBlankMatItem(IWritable* item, std::ofstream& file, const std::string& label)
-	{
-		double startTime = Timer::Start();
-		file << "# " << label << std::endl;
-		item->Write(file);
-		file << std::endl;
-		Timer::Time(startTime, "Wrote " + label);
-	}
+	static std::string GetAssimpFormatID(const Assimp::Exporter& exporter, const std::string& path);
 
-	static void SaveAssimpScene(Scene* scene, const std::string& path)
-	{
-		double startTime = Timer::Start();
-		std::cout << "Saving scene to file " << path << std::endl;
-		std::ofstream file(path);
-		try
-		{
-			Timer::Time(startTime, "Saved scene");
-		}
-		catch (std::exception const& e)
-		{
-			std::cout << "ERROR::EXPORTSCENE::WRITE " << e.what() << std::endl;
-		}
-		file.close();
-	}
+	// Processes the given mesh
+	static unsigned int ProcessAssimpMesh(Mesh* sourceMesh, aiMesh*& newMesh, std::vector<aiMesh*>& outMeshWriteList, std::vector<aiMaterial*>& outMatList);
 
-	static void SaveBlankMatScene(Scene* scene, const std::string& path)
-	{
-		double startTime = Timer::Start();
-		std::cout << "Saving scene to file " << path << std::endl;
-		std::ofstream file(path);
-		try
-		{
-			WriteBlankMatItem(scene->GetRootNode(), file, "Nodes");
-			WriteBlankMatItem(scene->GetMeshes(), file, "Meshes");
-			WriteBlankMatItem(scene->GetMaterials(), file, "Materials");
-			WriteBlankMatItem(scene->GetTextures(), file, "Textures");
-			WriteBlankMatItem(scene->GetCameras(), file, "Cameras");
-			WriteBlankMatItem(scene->GetLights(), file, "Lights");
-			Timer::Time(startTime, "Saved scene");
-		}
-		catch (std::exception const& e)
-		{
-			std::cout << "ERROR::SAVESCENE::WRITE " << e.what() << std::endl;
-		}
-		file.close();
-	}
+	// Processes all materials of the scene
+	static void ProcessAssimpMaterials(Scene* sourceScene, aiScene*& newScene, std::vector<aiMaterial*>& outMatList, std::vector<aiTexture*>& outTextureList);
+
+	// Processes all textures of the scene
+	static void ProcessAssimpTextures(Scene* sourceScene, const std::string& path, std::vector<aiTexture*>& outTextureList);
+
+	// Recursively processes the meshes in the given node and all its children
+	static void ProcessAssimpNode(Scene* sourceScene, Node* sourceNode, aiNode*& newNode, aiScene*& newScene, std::vector<aiMesh*>& outMeshWriteList, std::vector<aiMaterial*>& outMatList);
+
+	static void GenerateAssimpScene(Scene* scene, aiScene*& assimpScene, const std::string& path);
+
+	static void SaveAssimpScene(Scene* scene, const std::string& path);
+
+	static void WriteBlankMatItem(IWritable* item, std::ofstream& file, const std::string& label);
+
+	static void SaveBlankMatScene(Scene* scene, const std::string& path);
 public:
-	static void SaveScene(Scene* scene, const std::string& path)
-	{
-		// Get extension
-		size_t lastPeriod = path.find_last_of('.');
-		std::string ext = "";
-		if (lastPeriod < path.length())
-			ext = path.substr(lastPeriod);
-
-		if (ext == ".blank")
-		{
-			SaveBlankMatScene(scene, path);
-		}
-		else
-		{
-			SaveAssimpScene(scene, path);
-		}
-	}
+	static void SaveScene(Scene* scene, const std::string& path);
 };

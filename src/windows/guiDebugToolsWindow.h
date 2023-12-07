@@ -1,11 +1,11 @@
 #pragma once
 #include "utils.h"
-#include "windows/iGUIWindow.h"
+#include "interfaces/iGUIWindow.h"
 #include "windows/guiWindowUtils.h"
 #include "interaction/selection.h"
 #include "rendering/scene.h"
 #include "rendering/camera.h"
-#include "tools/state.h"
+#include "interaction/state.h"
 #include <map>
 
 /// <summary>
@@ -59,33 +59,7 @@ public:
 			mState->enableShadows.Display();
 			mState->enableGrid.Display();
 			mState->drawByMaterial.Display();
-			mState->DEBUG_fakeNumber.Display();
-
-			// Input debug
-			ImGui::Separator();
-			ImGui::Text("Input");
-			ImGui::InputInt("Current X", &mState->mouseCurX);
-			ImGui::InputInt("Current Y", &mState->mouseCurY);
-			ImGui::InputInt("Previous X", &mState->mousePrevX);
-			ImGui::InputInt("Previous Y", &mState->mousePrevY);
-
-			// Camera settings
-			ImGui::Separator();
-			ImGui::Text("Camera Settings");
-			Camera* cam = mScene->GetCamera();
-			if (cam != nullptr)
-			{
-				cam->GetPos().Display();
-				cam->GetTarget().Display();
-				cam->GetPivot().Display();
-				cam->GetOrthSize().Display();
-				cam->GetFOV().Display();
-				cam->GetNearClip().Display();
-				cam->GetFarClip().Display();
-				cam->IsPerspective().Display();
-				cam->IsWireframe().Display();
-				cam->IsRotatingAroundPivot().Display();
-			}
+			mState->collapseMeshNodes.Display();
 
 			// Debug settings
 			ImGui::Separator();

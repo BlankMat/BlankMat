@@ -48,21 +48,21 @@ public:
 
 	void DrawShadows(Shader* shader, State* state) override {}
 
-	PHandle(const std::string& name, float len, float lineWidth, bool drawOver, MaterialContainer* materials, TextureContainer* textures,
+	PHandle(const std::string& name, const std::string& scope, float len, float lineWidth, bool drawOver, MaterialContainer* materials, TextureContainer* textures,
 		const glm::vec3& pos = glm::vec3(0.0f), const glm::vec3& rot = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f),
 		const glm::vec3& allColor = glm::vec3(1, 1, 0),
 		const glm::vec3& xColor = glm::vec3(1,0,0), const glm::vec3& yColor = glm::vec3(0,1,0), const glm::vec3& zColor = glm::vec3(0,0,1))
-		: IEntity(name, nullptr, drawOver, pos, rot, scale)
+		: IEntity(name, scope, nullptr, drawOver, pos, rot, scale)
 	{
-		Material* xMat = materials->AddMaterial(new Material("internal_handleX", xColor, textures, true));
-		Material* yMat = materials->AddMaterial(new Material("internal_handleY", yColor, textures, true));
-		Material* zMat = materials->AddMaterial(new Material("internal_handleZ", zColor, textures, true));
-		Material* allMat = materials->AddMaterial(new Material("internal_handleAll", allColor, textures, true));
+		Material* xMat = materials->AddMaterial(new Material("internal_handleX", "", textures, xColor, true), true);
+		Material* yMat = materials->AddMaterial(new Material("internal_handleY", "", textures, yColor, true), true);
+		Material* zMat = materials->AddMaterial(new Material("internal_handleZ", "", textures, zColor, true), true);
+		Material* allMat = materials->AddMaterial(new Material("internal_handleAll", "", textures, allColor, true), true);
 
-		mXHandle = new PLine(name + "x", glm::vec3(len * 0.05f, 0, 0), glm::vec3(len, 0, 0), xMat, lineWidth, drawOver);
-		mYHandle = new PLine(name + "y", glm::vec3(0, len * 0.05f, 0), glm::vec3(0, len, 0), yMat, lineWidth, drawOver);
-		mZHandle = new PLine(name + "z", glm::vec3(0, 0, len * 0.05f), glm::vec3(0, 0, len), zMat, lineWidth, drawOver);
-		mAllHandle = new PWireCube(name + "all", len * 0.1f, allMat, lineWidth * 0.5f, drawOver);
+		mXHandle = new PLine(name + "x", scope, glm::vec3(len * 0.05f, 0, 0), glm::vec3(len, 0, 0), xMat, lineWidth, drawOver);
+		mYHandle = new PLine(name + "y", scope, glm::vec3(0, len * 0.05f, 0), glm::vec3(0, len, 0), yMat, lineWidth, drawOver);
+		mZHandle = new PLine(name + "z", scope, glm::vec3(0, 0, len * 0.05f), glm::vec3(0, 0, len), zMat, lineWidth, drawOver);
+		mAllHandle = new PWireCube(name + "all", scope, len * 0.1f, allMat, lineWidth * 0.5f, drawOver);
 
 		mXHeld = false;
 		mYHeld = false;

@@ -3,7 +3,7 @@
 // Opens a OpenGL window with the given name
 // -----------------------------------------
 Window::Window(int width, int height, const std::string& name, Config* config)
-    : mWidth(width), mHeight(height), mName(name)
+    : mWidth(width), mHeight(height), mName(name), mConfig(config)
 {
     // State must be initialized first, since it is needed for other init
     mState = new State(config);
@@ -34,6 +34,9 @@ Window::Window(int width, int height, const std::string& name, Config* config)
     // Once the window is setup, initialize IO and file operations
     mInput = new Input(mIO, mState, config);
     mSceneIO = new SceneIO(mState, mScene, mWindow);
+
+    // After IO is setup, load GUIs
+    LoadGUIs();
 }
 
 // Draws all GUIs
@@ -82,7 +85,7 @@ void Window::DrawGUI(State* state)
 // Adds the given GUI window
 void Window::AddGUI(IGUIWindow* gui)
 {
-    if (mGUIList.find(gui->GetType()) != mGUIList.end())
+    if (IsGUIOpen(gui->GetType()))
     {
         std::cout << "ERROR::WINDOW::EXISTS GUI with type " << gui->GetName() << " already exists." << std::endl;
         return;
@@ -93,12 +96,102 @@ void Window::AddGUI(IGUIWindow* gui)
 // Gets the GUI with the given type
 IGUIWindow* Window::GetGUI(GUI type)
 {
-    if (mGUIList.find(type) == mGUIList.end())
+    if (!IsGUIOpen(type))
     {
         std::cout << "ERROR::WINDOW::NULL GUI with type " << (int)type << " is not open." << std::endl;
         return nullptr;
     }
     return mGUIList[type];
+}
+
+// Returns whether the given type of GUI is open
+bool Window::IsGUIOpen(GUI type)
+{
+    return mGUIList.contains(type);
+}
+
+// Opens the given GUI if it is not open yet
+void Window::OpenGUI(GUI gui)
+{
+    // If the GUI already exists, just enable it
+    if (IsGUIOpen(gui))
+    {
+        IGUIWindow* guiWindow = GetGUI(gui);
+        if (guiWindow != nullptr)
+            guiWindow->Enable();
+        return;
+    }
+
+    // If the GUI does not exist, add it
+    switch (gui)
+    {
+    case GUI::DEBUG_TOOLS:
+        AddGUI(new GUIDebugToolsWindow(mState, mScene, true));
+        return;
+    case GUI::HIERARCHY:
+        AddGUI(new GUIHierarchyWindow(mState, mScene, true));
+        return;
+    case GUI::INSPECTOR:
+        AddGUI(new GUIInspectorWindow(mState, mScene, true));
+        return;
+    case GUI::MENU_BAR:
+        AddGUI(new GUIMenuBarWindow(mInput, mConfig, true));
+        return;
+    case GUI::TOOLBAR:
+        AddGUI(new GUIToolbarWindow(mState, mScene, true));
+        return;
+    case GUI::MATERIAL_BAR:
+        return;
+    case GUI::TRANSFORM_EDITOR:
+        return;
+    case GUI::MODEBAR:
+        AddGUI(new GUIToolModeWindow(mState, mScene, true));
+        return;
+    case GUI::MODEL_EDITOR:
+        return;
+    case GUI::UV_EDITOR:
+        return;
+    case GUI::MATERIAL_VIEWER:
+        AddGUI(new GUIMaterialViewer(mState, mScene, true));
+        return;
+    case GUI::TEXTURE_VIEWER:
+        AddGUI(new GUITextureViewer(mState, mScene, true));
+        return;
+    case GUI::LIGHT_VIEWER:
+        AddGUI(new GUILightViewer(mState, mScene, true));
+        return;
+    case GUI::CAMERA_VIEWER:
+        AddGUI(new GUICameraViewer(mState, mScene, true));
+        return;
+    case GUI::ACTION_LIST:
+        AddGUI(new GUIActionList(mState, mScene, true));
+        return;
+    case GUI::NONE:
+    default:
+        return;
+    }
+}
+
+// Opens all defined GUIs
+void Window::LoadGUIs()
+{
+    OpenGUI(GUI::DEBUG_TOOLS);
+    OpenGUI(GUI::HIERARCHY);
+    OpenGUI(GUI::INSPECTOR);
+    OpenGUI(GUI::MENU_BAR);
+    OpenGUI(GUI::TOOLBAR);
+    OpenGUI(GUI::MATERIAL_BAR);
+    OpenGUI(GUI::TRANSFORM_EDITOR);
+    OpenGUI(GUI::MODEBAR);
+    OpenGUI(GUI::MODEL_EDITOR);
+    OpenGUI(GUI::MATERIAL_EDITOR);
+    OpenGUI(GUI::TEXTURE_EDITOR);
+    OpenGUI(GUI::UV_EDITOR);
+    OpenGUI(GUI::MATERIAL_VIEWER);
+    OpenGUI(GUI::TEXTURE_VIEWER);
+    OpenGUI(GUI::LIGHT_VIEWER);
+    OpenGUI(GUI::CAMERA_VIEWER);
+    OpenGUI(GUI::ACTION_LIST);
 }
 
 // Updates the window title to match the current state of the application

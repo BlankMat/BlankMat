@@ -4,8 +4,8 @@
 #include "interfaces/iWritable.h"
 #include <iostream>
 #include <fstream>
-#include <string>
 #include <unordered_map>
+#include <string>
 
 /// <summary>
 /// Container class for storing key value pairs. 
@@ -43,11 +43,18 @@ protected:
 	}
 
 	/// <summary>
+	/// Renames the given item to the given name
+	/// </summary>
+	/// <param name="item">Item to rename</param>
+	virtual void RenameItem(T* item, const std::string& name) = 0;
+
+	/// <summary>
 	/// Reads the next item from the input file stream
 	/// </summary>
+	/// <param name="scope">Scope to read item in</param>
 	/// <param name="file">File to read</param>
 	/// <returns>Newly constructed item from file</returns>
-	virtual const std::pair<std::string, T*> ReadItem(std::ifstream& file) = 0;
+	virtual const std::pair<std::string, T*> ReadItem(const std::string& scope, std::ifstream& file) = 0;
 
 	/// <summary>
 	/// Writes the given item into the output file stream
@@ -60,9 +67,10 @@ public:
 	/// <summary>
 	/// Reads this container from the file
 	/// </summary>
+	/// <param name="scope">Scope to read in</param>
 	/// <param name="file">File to read from</param>
 	/// <param name="clear">Whether to overwrite the contents of the item</param>
-	void Read(std::ifstream& file, bool clear) override
+	void Read(const std::string& scope, std::ifstream& file, bool clear) override
 	{
 		if (clear)
 			Clear();
@@ -82,14 +90,14 @@ public:
 				continue;
 
 			// Look for number of items
-			if (parse[0] == "items")
+			if (parse[0] == "items" && parse.size() > 1)
 			{
 				int numItems = std::stoi(parse[1]);
 				for (int i = 0; i < numItems; i++)
 				{
-					auto newItem = ReadItem(file);
+					auto newItem = ReadItem(scope, file);
 					if (newItem.first != "" && newItem.second != nullptr)
-						Add(newItem.first, newItem.second);
+						Add(Scope(newItem.first, scope), newItem.second, false);
 				}
 
 				// Once the correct number of items has been read, the container is over
@@ -111,7 +119,7 @@ public:
 			if (SkipItem(iter->second))
 				continue;
 
-			file << std::endl; 
+			file << std::endl;
 			WriteItem(iter->first, iter->second, file);
 		}
 	}
@@ -177,6 +185,22 @@ public:
 	}
 
 	/// <summary>
+	/// Returns a unique name, incrementing the existing name until it is unique
+	/// </summary>
+	/// <param name="name">Starting name</param>
+	/// <param name="scope">Namespace of the item</param>
+	/// <returns>New unique name</returns>
+	virtual std::string GetUniqueName(const std::string& name)
+	{
+		std::string uniqueName = name;
+		while (mData.contains(uniqueName))
+		{
+			uniqueName = IncrementName(uniqueName, 1);
+		}
+		return uniqueName;
+	}
+
+	/// <summary>
 	/// Selects the given item. Does nothing if the item is not part of the container.
 	/// </summary>
 	/// <param name="name">Name of item to select</param>
@@ -191,6 +215,16 @@ public:
 			return true;
 		}
 		return false;
+	}
+
+	/// <summary>
+	/// Returns whether the given item is deletable (ie. not a default element or internal)
+	/// </summary>
+	/// <param name="name">Item to consider</param>
+	/// <returns>Whether the item can be deleted safely</returns>
+	virtual bool IsDeleteable(T* item)
+	{
+		return true;
 	}
 
 	/// <summary>
@@ -242,18 +276,37 @@ public:
 	/// </summary>
 	/// <param name="name">Name of the item</param>
 	/// <param name="item">The item to store</param>
+	/// <param name="replace">Whether to replace duplicate items (true) or rename the incoming item (false)</param>
+	/// <param name="select">Whether to select the item after adding it</param>
 	/// <returns>The element stored in the container</returns>
-	virtual T* Add(const std::string& name, T* item)
+	virtual T* Add(const std::string& name, T* item, bool replace, bool select = false)
 	{
-		if (mData.find(name) == mData.end())
+		// If the item is new, add it
+		if (!mData.contains(name))
 			mData.emplace(name, item);
-		else
+		// If the item isn't new, replace the existing item
+		else if (replace)
 			mData[name] = item;
+		// If the item isn't new and shouldn't be replaced, rename the item
+		else
+			mData.emplace(GetUniqueName(name), item);
 
 		// If the item added was the first item, select it
-		if (mData.size() == 1)
+		if (select || mData.size() == 1)
 			Select(name);
 		return item;
+	}
+
+	/// <summary>
+	/// Attempts to delete the given item. Does nothing if the item is not deleteable or is null.
+	/// </summary>
+	/// <param name="item">Item to try to delete</param>
+	/// <returns>Whether the item was deleted or not</returns>
+	virtual bool TryDelete(T* item)
+	{
+		if (item == nullptr || !IsDeleteable(item))
+			return false;
+		return Remove(item);
 	}
 
 	/// <summary>
@@ -263,7 +316,7 @@ public:
 	/// <returns>Whether the item was removed or not</returns>
 	virtual bool Remove(const std::string& name)
 	{
-		if (mData.find(name) != mData.end())
+		if (mData.contains(name))
 		{
 			mData.erase(name);
 			return true;
@@ -296,19 +349,9 @@ public:
 	/// <returns>Item</returns>
 	virtual T* GetItem(const std::string& name)
 	{
-		if (mData.find(name) != mData.end())
+		if (mData.contains(name))
 			return mData[name];
 		return nullptr;
-	}
-
-	/// <summary>
-	/// Returns whether the container contains an item with the given name
-	/// </summary>
-	/// <param name="name">Name of the item</param>
-	/// <returns>Whether the item exists</returns>
-	virtual bool Contains(const std::string& name)
-	{
-		return (mData.find(name) != mData.end());
 	}
 
 	/// <summary>
@@ -322,6 +365,39 @@ public:
 			if (iter->second == item)
 				return iter->first;
 		return "";
+	}
+
+	/// <summary>
+	/// Returns whether the container contains an item with the given name
+	/// </summary>
+	/// <param name="name">Name of the item</param>
+	/// <returns>Whether the item exists</returns>
+	virtual bool Contains(const std::string& name)
+	{
+		return mData.contains(name);
+	}
+
+	/// <summary>
+	/// Renames the given item to the new name, or the new name with appended numbers
+	/// </summary>
+	/// <param name="name">Name of the item to rename</param>
+	/// <param name="newName">Name to rename to</param>
+	/// <returns>Whether the item was renamed</returns>
+	virtual bool Rename(const std::string& name, const std::string& newName)
+	{
+		// Don't rename an item that doesn't exist
+		if (!Contains(name))
+			return false;
+
+		// Validate name
+		std::string itemName = GetUniqueName(newName);
+
+		// Rename item and replace it into the data
+		T* item = mData[name];
+		RenameItem(item, itemName);
+		mData.erase(name);
+		mData.emplace(itemName, item);
+		return true;
 	}
 
 	/// <summary>

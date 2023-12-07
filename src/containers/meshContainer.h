@@ -7,6 +7,15 @@ class MeshContainer : public IContainer<Mesh>
 {
 protected:
 	/// <summary>
+	/// Renames the given item to the given name
+	/// </summary>
+	/// <param name="item">Item to rename</param>
+	void RenameItem(Mesh* item, const std::string& name) override
+	{
+		item->SetName(name);
+	}
+
+	/// <summary>
 	/// Reads the vertices for the current mesh in the input file
 	/// </summary>
 	/// <param name="outVerts">Indices list to add to</param>
@@ -27,12 +36,16 @@ protected:
 			if (parse.empty())
 				break;
 
-			// Parse lines
-			glm::vec3 pos = ReadVec3FromStrings(parse, 1);
-			glm::vec3 normal = ReadVec3FromStrings(parse, 4);
-			glm::vec3 tangent = ReadVec3FromStrings(parse, 7);
-			glm::vec2 texCoords = ReadVec2FromStrings(parse, 10);
-			outVerts.push_back(Vertex(pos, normal, texCoords, tangent));
+			// Don't parse incomplete lines
+			if (parse.size() > 11)
+			{
+				// Parse lines
+				glm::vec3 pos = ReadVec3FromStrings(parse, 1);
+				glm::vec3 normal = ReadVec3FromStrings(parse, 4);
+				glm::vec3 tangent = ReadVec3FromStrings(parse, 7);
+				glm::vec2 texCoords = ReadVec2FromStrings(parse, 10);
+				outVerts.push_back(Vertex(pos, normal, texCoords, tangent));
+			}
 		}
 	}
 
@@ -66,9 +79,10 @@ protected:
 	/// <summary>
 	/// Reads the next item from the input file stream
 	/// </summary>
+	/// <param name="scope">Scope to read item in</param>
 	/// <param name="file">File to read</param>
 	/// <returns>Newly constructed item from file</returns>
-	const std::pair<std::string, Mesh*> ReadItem(std::ifstream& file) override
+	const std::pair<std::string, Mesh*> ReadItem(const std::string& scope, std::ifstream& file) override
 	{
 		// Set up variables to store read information
 		std::string name = "default";
@@ -96,17 +110,17 @@ protected:
 				break;
 
 			// Parse lines
-			if (parse[0] == "MESH")
-				name = parse[1];
-			else if (parse[0] == "pos")
+			if (parse[0] == "MESH" && parse.size() > 1)
+				name = Scope(parse[1], scope);
+			else if (parse[0] == "pos" && parse.size() > 3)
 				pos = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "rot")
+			else if (parse[0] == "rot" && parse.size() > 3)
 				rot = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "scale")
+			else if (parse[0] == "scale" && parse.size() > 3)
 				scale = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "material")
+			else if (parse[0] == "material" && parse.size() > 1)
 				material = parse[1];
-			else if (parse[0] == "enabled")
+			else if (parse[0] == "enabled" && parse.size() > 1)
 				enabled = (parse[1] == "1");
 			else if (parse[0] == "vertices")
 				ReadVertices(vertices, file);
@@ -118,7 +132,7 @@ protected:
 		}
 
 		// Combine information into a new mesh
-		Mesh* tempMesh = new Mesh(name, vertices, indices, material);
+		Mesh* tempMesh = new Mesh(UnscopeName(name), UnscopeScope(name), vertices, indices, material);
 		tempMesh->SetPos(pos);
 		tempMesh->SetRot(rot);
 		tempMesh->SetScale(scale);
@@ -138,7 +152,8 @@ protected:
 		file << "pos " << Vec3ToString(item->GetPos()) << std::endl;
 		file << "rot " << Vec3ToString(item->GetRot()) << std::endl;
 		file << "scale " << Vec3ToString(item->GetScale()) << std::endl;
-		file << "material " << (item->GetMaterial() != nullptr ? item->GetMaterial()->name : "none") << std::endl;
+		if (item->GetMaterial() != nullptr)
+			file << "material " << item->GetMaterial()->GetScopedName() << std::endl;
 		file << "enabled " << (int)item->IsEnabled() << std::endl;
 
 		// Write all vertices
