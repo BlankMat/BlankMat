@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.2</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.1.0</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -123,27 +123,8 @@ $(document).ready(function(){initNavTree('gl_includes_8h_source.html',''); initR
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &lt;glm/gtx/quaternion.hpp&gt;</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include &lt;glm/gtx/rotate_vector.hpp&gt;</span></div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &lt;stb_image.h&gt;</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">constexpr</span> <span class="keywordtype">float</span> PI = 3.141592f;</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">constexpr</span> <span class="keywordtype">float</span> HALF_PI = 1.57079f;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">constexpr</span> <span class="keyword">auto</span> GRID_OBJ = <span class="stringliteral">&quot;grid&quot;</span>;</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">constexpr</span> <span class="keyword">auto</span> BG_PLANE_OBJ = <span class="stringliteral">&quot;bgPlane&quot;</span>;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keyword">constexpr</span> <span class="keyword">auto</span> TRANSFORM_HANDLE = <span class="stringliteral">&quot;transformHandle&quot;</span>;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">constexpr</span> <span class="keyword">auto</span> CAMERA_AXIS_HANDLE = <span class="stringliteral">&quot;cameraAxisHandle&quot;</span>;</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keyword">constexpr</span> <span class="keyword">auto</span> TEXTURE_DIR = <span class="stringliteral">&quot;resources/textures/&quot;</span>;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="keyword">constexpr</span> <span class="keyword">auto</span> FONT_DIR = <span class="stringliteral">&quot;resources/fonts/&quot;</span>;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="keyword">constexpr</span> <span class="keyword">auto</span> MODELS_DIR = <span class="stringliteral">&quot;resources/models/&quot;</span>;</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keyword">constexpr</span> <span class="keyword">auto</span> SHADER_DIR = <span class="stringliteral">&quot;resources/shaders/&quot;</span>;</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="keyword">constexpr</span> <span class="keyword">auto</span> CONFIG_JSON = <span class="stringliteral">&quot;configs/config.json&quot;</span>;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keyword">constexpr</span> <span class="keyword">auto</span> HOTKEYS_JSON = <span class="stringliteral">&quot;configs/hotkeys.json&quot;</span>;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="keyword">constexpr</span> <span class="keyword">auto</span> MATS_JSON = <span class="stringliteral">&quot;configs/materials.json&quot;</span>;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="keyword">constexpr</span> <span class="keyword">auto</span> SHADERS_JSON = <span class="stringliteral">&quot;configs/shaders.json&quot;</span>;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="keyword">constexpr</span> <span class="keyword">auto</span> APP_NAME = <span class="stringliteral">&quot;BlankMat&quot;</span>;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="keyword">constexpr</span> <span class="keyword">auto</span> ICON = <span class="stringliteral">&quot;icon256.png&quot;</span>;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">constexpr</span> <span class="keywordtype">float</span> PI = 3.141592f;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">constexpr</span> <span class="keywordtype">float</span> HALF_PI = 1.57079f;</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -4,13 +4,15 @@
 class PGrid : public IPrimitive<glm::vec3, glm::uvec2>
 {
 public:
-    PGrid(const std::string& name, int gridSize, float unitSize, Material* material, float lineWidth, bool drawOver = true,
+    PGrid(const std::string& name, const std::string& scope, int gridSize, float unitSize, Material* material, float lineWidth, bool drawOver = true,
         const glm::vec3& pos = glm::vec3(0.0f), const glm::vec3& rot = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f))
-        : IPrimitive(name, material, lineWidth, drawOver, pos, rot, scale)
+        : IPrimitive(name, scope, material, lineWidth, drawOver, pos, rot, scale)
     {
         // Generate x lines for grid
-        for (int x = -gridSize; x <= gridSize; x++) {
-            for (int z = -gridSize; z <= gridSize; z++) {
+        for (int x = -gridSize; x <= gridSize; x++)
+        {
+            for (int z = -gridSize; z <= gridSize; z++)
+            {
                 mVertices.push_back(unitSize * glm::vec3(x, 0, z));
 
                 // Calculate indices

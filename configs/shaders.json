@@ -1,6 +1,22 @@
 {
-  "default": {
-    "file": "defaultShader",
+  "unlit": {
+    "file": "unlit",
+    "hasGeomShader": false
+  },
+  "lit": {
+    "file": "lit",
+    "hasGeomShader": false
+  },
+  "textured": {
+    "file": "textured",
+    "hasGeomShader": false
+  },
+  "flat": {
+    "file": "flat",
+    "hasGeomShader": false
+  },
+  "wireframe": {
+    "file": "wireframe",
     "hasGeomShader": false
   },
   "pbr": {
@@ -33,10 +49,6 @@
   },
   "shadowMap": {
     "file": "shadowMappingDepth",
-    "hasGeomShader": false
-  },
-  "flat": {
-    "file": "flatShader",
     "hasGeomShader": false
   }
 }

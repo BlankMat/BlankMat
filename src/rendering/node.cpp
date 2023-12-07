@@ -1,7 +1,7 @@
 #include "node.h"
 
 // Recursively reads all nodes from the given file
-Node* Node::ReadRecurse(std::ifstream& file, Node* parent)
+Node* Node::ReadRecurse(const std::string& scope, std::ifstream& file, Node* parent)
 {
 	// Construct empty node
 	Node* node;
@@ -29,41 +29,41 @@ Node* Node::ReadRecurse(std::ifstream& file, Node* parent)
 			break;
 
 		// Parse lines
-		if (parse[0] == "NODE")
+		if (parse[0] == "NODE" && parse.size() > 1)
 		{
-			node->SetName(parse[1]);
+			node->Rename(Scope(parse[1], scope), true);
 		}
-		else if (parse[0] == "pos")
+		else if (parse[0] == "pos" && parse.size() > 3)
 		{
 			node->SetPos(ReadVec3FromStrings(parse, 1));
 		}
-		else if (parse[0] == "rot")
+		else if (parse[0] == "rot" && parse.size() > 3)
 		{
 			node->SetRot(ReadVec3FromStrings(parse, 1));
 		}
-		else if (parse[0] == "scale")
+		else if (parse[0] == "scale" && parse.size() > 3)
 		{
 			node->SetScale(ReadVec3FromStrings(parse, 1));
 		}
-		else if (parse[0] == "enabled")
+		else if (parse[0] == "enabled" && parse.size() > 1)
 		{
 			node->Enable(parse[1] == "1");
 		}
-		else if (parse[0] == "meshes")
+		else if (parse[0] == "meshes" && parse.size() > 1)
 		{
 			int numMeshes = std::stoi(parse[1]);
 			for (int i = 0; i < numMeshes; i++)
 			{
 				std::string meshName;
 				std::getline(file, meshName);
-				node->AddMeshName(TrimWhitespace(meshName));
+				node->AddMeshName(Scope(TrimWhitespace(meshName), scope));
 			}
 		}
-		else if (parse[0] == "children")
+		else if (parse[0] == "children" && parse.size() > 1)
 		{
 			int numChildren = std::stoi(parse[1]);
 			for (int i = 0; i < numChildren; i++)
-				node->AddChild(ReadRecurse(file, node));
+				node->AddChild(ReadRecurse(scope, file, node));
 		}
 	}
 	return node;
@@ -72,7 +72,7 @@ Node* Node::ReadRecurse(std::ifstream& file, Node* parent)
 // Recursively writes all nodes into the given file
 void Node::WriteRecurse(std::ofstream& file, Node* node, unsigned int depth)
 {
-	file << GetPadding(depth) << "NODE " << node->mName << std::endl;
+	file << GetPadding(depth) << "NODE " << node->GetScopedName() << std::endl;
 	file << GetPadding(depth) << "pos " << Vec3ToString(node->GetPos()) << std::endl;
 	file << GetPadding(depth) << "rot " << Vec3ToString(node->GetRot()) << std::endl;
 	file << GetPadding(depth) << "scale " << Vec3ToString(node->GetScale()) << std::endl;
@@ -82,7 +82,7 @@ void Node::WriteRecurse(std::ofstream& file, Node* node, unsigned int depth)
 	file << GetPadding(depth) << "meshes " << node->MeshCount() << std::endl;
 	for (unsigned int i = 0; i < node->MeshCount(); i++)
 		if (node->mMeshes[i] != nullptr)
-			file << GetPadding(depth + 1) << node->mMeshes[i]->GetName() << std::endl;
+			file << GetPadding(depth + 1) << node->mMeshes[i]->GetScopedName() << std::endl;
 
 	// Write all child nodes
 	file << GetPadding(depth) << "children " << node->ChildCount() << std::endl;
@@ -94,12 +94,12 @@ void Node::WriteRecurse(std::ofstream& file, Node* node, unsigned int depth)
 }
 
 // Reads child nodes for this node from the file
-void Node::Read(std::ifstream& file, bool clear)
+void Node::Read(const std::string& scope, std::ifstream& file, bool clear)
 {
 	if (clear)
 		Clear();
 	// Replace this node with the new one
-	ReadRecurse(file, nullptr);
+	ReadRecurse(scope, file, nullptr);
 }
 
 // Writes this node to the file
@@ -108,10 +108,13 @@ void Node::Write(std::ofstream& file)
 	WriteRecurse(file, this, 0);
 }
 
-// Returns the number of elements that can be written
+// Returns the number of elements that will be written
 unsigned int Node::WriteCount()
 {
-	return (unsigned int)mChildren.size();
+	unsigned int count = (unsigned int)mChildren.size();
+	for (unsigned int i = 0; i < mChildren.size(); i++)
+		count += mChildren[i]->WriteCount();
+	return count;
 }
 
 // Returns the number of child nodes
@@ -213,6 +216,8 @@ Node* Node::FindNode(const std::string& name)
 	// If this node is the node that is being looked for, return it
 	if (mName == name)
 		return this;
+
+	// If this node isn't being searched for, search the children
 	for (unsigned int i = 0; i < (unsigned int)mChildren.size(); i++)
 	{
 		// Don't check null nodes
@@ -224,6 +229,8 @@ Node* Node::FindNode(const std::string& name)
 		if (res != nullptr)
 			return res;
 	}
+
+	// If the node is not found, return nothing
 	return nullptr;
 }
 
@@ -237,7 +244,7 @@ Mesh* Node::FindMesh(const std::string& name)
 		if (mMeshes[i] == nullptr)
 			continue;
 		// If the node is found, return it
-		if (mMeshes[i]->GetName() == name)
+		if (mMeshes[i]->GetScopedName() == name)
 			return mMeshes[i];
 	}
 
@@ -262,7 +269,7 @@ int Node::GetMeshIndex(Mesh* mesh)
 	for (unsigned int i = 0; i < (unsigned int)mMeshes.size(); i++)
 	{
 		if (mMeshes[i] != nullptr)
-			if (mMeshes[i]->GetName() == mesh->GetName())
+			if (mMeshes[i]->GetScopedName() == mesh->GetScopedName())
 				return i;
 	}
 	return -1;
@@ -317,7 +324,7 @@ void Node::UpdateEnabledStatus()
 // Adds the name of the mesh to the node, so that the mesh can later be obtained from a mesh container
 void Node::AddMeshName(const std::string& name)
 {
-	if (mUnloadedMeshes.find(name) != mUnloadedMeshes.end())
+	if (mUnloadedMeshes.contains(name))
 	{
 		std::cout << "WARNING::NODE::EXISTS Node already has the given mesh" << std::endl;
 		return;
@@ -401,11 +408,26 @@ bool Node::MoveChild(const std::string& child, Node* other)
 	return true;
 }
 
+// Attempts to delete the given node. Does nothing if the node is root or is null.
+bool Node::TryDelete(Node* node)
+{
+	// Do not delete null or root nodes
+	if (node == nullptr || node->IsRootNode())
+		return false;
+
+	// Delete the node
+	if (node->mParent != nullptr)
+		return node->mParent->DeleteChild(node);
+
+	// If the node does not have a parent, it cannot be deleted
+	return false;
+}
+
 // Removes the node with the given name along with its children. Returns whether the deletion happened
 bool Node::DeleteNode(const std::string& name)
 {
 	// Do not delete the node itself
-	if (mName == name)
+	if (IsRootNode() && mName == name)
 	{
 		std::cout << "ERROR::NODE::ROOT Attempted to delete root node." << std::endl;
 		return false;
@@ -417,8 +439,50 @@ bool Node::DeleteNode(const std::string& name)
 		return false;
 
 	// Delete the node
-	node->Clear();
-	return true;
+	if (node->mParent != nullptr)
+		return node->mParent->DeleteChild(node);
+
+	// If the node does not have a parent, it cannot be deleted
+	return false;
+}
+
+// Removes the given mesh from the node that holds it
+bool Node::DeleteMesh(const std::string& name)
+{
+	// If the mesh is a child of this node, delete it and return
+	for (unsigned int i = 0; i < mMeshes.size(); i++)
+	{
+		if (mMeshes[i] != nullptr && mMeshes[i]->GetScopedName() == name)
+		{
+			mMeshes.erase(mMeshes.begin() + i);
+			return true;
+		}
+	}
+
+	// Search all child nodes for the mesh
+	for (unsigned int i = 0; i < mChildren.size(); i++)
+		if (mChildren[i] != nullptr && mChildren[i]->DeleteMesh(name))
+			return true;
+
+	// If the mesh was not found, return false
+	return false;
+}
+
+// Deletes the given child node if it is a direct child of this node
+bool Node::DeleteChild(Node* node)
+{
+	for (unsigned int i = 0; i < mChildren.size(); i++)
+	{
+		if (mChildren[i] != nullptr && mChildren[i]->GetScopedName() == node->GetScopedName())
+		{
+			node->Clear();
+			mChildren.erase(mChildren.begin() + i);
+			delete node;
+			return true;
+		}
+	}
+
+	return false;
 }
 
 // Recursively deletes this node's children
@@ -457,21 +521,15 @@ bool Node::IsRootNode()
 
 // Creates a default node under the given parent
 Node::Node(Node* parent)
-	: mParent(parent)
-{
-	mName = "null";
-	mPos = glm::vec3(0.0f);
-	mRot = glm::vec3(0.0f);
-	mScale = glm::vec3(1.0f);
-	mParentModelMatrix = (parent != nullptr) ? parent->GetModelMatrix() : glm::mat4(1.0f);
-}
-
+	: Node(parent, "null", "", glm::vec3(0.0f), glm::vec3(0.0f), glm::vec3(1.0f))
+{}
 
 // Creates a scene node with the given parent and name
-Node::Node(Node* parent, const std::string& name, const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scale)
+Node::Node(Node* parent, const std::string& name, const std::string& scope, const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scale)
 	: mParent(parent)
 {
-	mName = name;
+	mSelectableType = SelectableType::NODE;
+	InitName(name, scope);
 	mPos = pos;
 	mRot = rot;
 	mScale = scale;

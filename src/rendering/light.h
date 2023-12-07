@@ -1,26 +1,30 @@
 #pragma once
 #include "glIncludes.h"
 #include "files/config.h"
-#include "shader.h"
-#include "material.h"
+#include "rendering/shader.h"
+#include "rendering/material.h"
+#include "interfaces/iSelectable.h"
+#include "containers/textureContainer.h"
+#include "containers/materialContainer.h"
 
 enum class LightType { POINT = 0, DIR = 1, SPOT = 2 };
 
-class Light
+class Light : public ISelectable
 {
 protected:
-	glm::vec3 mColor;
-	glm::vec3 mBaseColor;
-	glm::vec3 mOffset;
-	glm::vec3 mDir;
-	glm::vec3 mPos;
-	LightType mType;
+	glm::vec3 mColor = glm::vec3(1.0f);
+	glm::vec3 mBaseColor = glm::vec3(1.0f);
+	glm::vec3 mOffset = glm::vec3(0.0f);
+	glm::vec3 mDir = glm::vec3(5, -5, -5);
+	glm::vec3 mPos = glm::vec3(-5, 5, 5);
+	LightType mType = LightType::POINT;
+	bool mIsCube = false;
 
 	// Light intensity info
-	float mKD;
-	float mKA;
-	float mKS;
-	bool mGamma;
+	float mKD = 1.0f;
+	float mKA = 0.1f;
+	float mKS = 1.0f;
+	bool mGamma = false;
 
 	// Point light variables
 	float mPointC;
@@ -29,8 +33,8 @@ protected:
 	float mLightRange;
 
 	// Spotlight variables
-	float mSpotInner;
-	float mSpotOuter;
+	float mSpotInner = 25.0f;
+	float mSpotOuter = 35.0f;
 
 	// Shadow mapping variables
 	glm::mat4 mLightSpace;
@@ -81,6 +85,7 @@ public:
 		}
 	}
 
+	bool IsCube() { return mIsCube; }
 	LightType GetType() { return mType; }
 	glm::vec3 GetColor() { return mColor; }
 	glm::vec3 GetBaseColor() { return mBaseColor; }
@@ -138,19 +143,24 @@ public:
 		CalcMatrices();
 	}
 
-	Light(LightType type = LightType::POINT, const glm::vec3& pos = glm::vec3(1.0f), const glm::vec3& dir = glm::vec3(-1.0f), 
+
+	virtual void LoadMaterials(MaterialContainer* materials, TextureContainer* textures) 
+	{}
+
+	Light(const std::string& name = "default", const std::string& scope = "", LightType type = LightType::POINT, const glm::vec3& pos = glm::vec3(1.0f), const glm::vec3& dir = glm::vec3(-1.0f),
 		const glm::vec3& color = glm::vec3(1.0f), float kd = 1.0f, float ka = 0.1f, float ks = 0.5f, bool gamma = true, 
 		float range = 13.0f, float spotInner = 25, float spotOuter = 35)
 		: mType(type), mColor(color), mBaseColor(color), mDir(dir), mPos(pos), mKD(kd), mKA(ka), mKS(ks), mOffset(pos), mGamma(gamma), 
-		mSpotInner(spotInner), mSpotOuter(spotOuter)
+		mSpotInner(spotInner), mSpotOuter(spotOuter), ISelectable(SelectableType::LIGHT)
 	{
+		InitName(name, scope);
 		mLightSize = 10.0f;
 		SetRange(range);
 		CalcMatrices();
 	}
 
 	Light(Config* config)
-		: Light(static_cast<LightType>(config->GetInt("type")), config->GetVec("pos"), config->GetVec("dir"), 
+		: Light(config->GetString("name"), "", static_cast<LightType>(config->GetInt("type")), config->GetVec("pos"), config->GetVec("dir"),
 			config->GetVec("color"), config->GetFloat("diffuse"), config->GetFloat("ambient"), config->GetFloat("specular"), 
 			config->GetBool("gamma"), config->GetFloat("range"), config->GetFloat("spotInnerRadius"), config->GetFloat("spotOuterRadius")) {}
 };

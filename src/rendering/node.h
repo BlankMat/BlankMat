@@ -40,10 +40,11 @@ protected:
 	/// <summary>
 	/// Recursively reads all nodes from the given file
 	/// </summary>
+	/// <param name="scope">Scope to read in</param>
 	/// <param name="file">File to read</param>
 	/// <param name="parent">Parent node</param>
 	/// <returns>Node that was stored in the file</returns>
-	Node* ReadRecurse(std::ifstream& file, Node* parent);
+	Node* ReadRecurse(const std::string& scope, std::ifstream& file, Node* parent);
 
 	/// <summary>
 	/// Recursively writes all nodes into the given file
@@ -57,9 +58,10 @@ public:
 	/// <summary>
 	/// Reads child nodes for this node from the file
 	/// </summary>
+	/// <param name="scope">Scope to read in</param>
 	/// <param name="file">File to read from</param>
 	/// <param name="clear">Whether to overwrite the contents of the item</param>
-	void Read(std::ifstream& file, bool clear) override;
+	void Read(const std::string& scope, std::ifstream& file, bool clear) override;
 
 	/// <summary>
 	/// Writes this node to the file
@@ -221,11 +223,32 @@ public:
 	bool MoveChild(const std::string& child, Node* other);
 
 	/// <summary>
+	/// Attempts to delete the given node. Does nothing if the node is root or is null.
+	/// </summary>
+	/// <param name="node">Node to delete</param>
+	/// <returns>Whether the item was deleted or not</returns>
+	bool TryDelete(Node* node);
+
+	/// <summary>
 	/// Removes the node with the given name along with its children
 	/// </summary>
 	/// <param name="name">Name of child node to delete</param>
 	/// <returns>Whether the deletion happened or not</returns>
 	bool DeleteNode(const std::string& name);
+
+	/// <summary>
+	/// Removes the given mesh from the node that holds it
+	/// </summary>
+	/// <param name="name">Name of the mesh</param>
+	/// <returns>Whether the mesh was found and removed</returns>
+	bool DeleteMesh(const std::string& name);
+
+	/// <summary>
+	/// Deletes the given child node if it is a direct child of this node
+	/// </summary>
+	/// <param name="node">Node to delete</param>
+	/// <returns>Whether deletion was successful</returns>
+	bool DeleteChild(Node* node);
 
 	/// <summary>
 	/// Creates a default node under the given parent
@@ -238,8 +261,9 @@ public:
 	/// </summary>
 	/// <param name="parent">Parent node or nullptr</param>
 	/// <param name="name">Name of this node</param>
+	/// <param name="scope">Scope of this node</param>
 	/// <param name="pos">Position of the node</param>
 	/// <param name="rot">Rotation of the node</param>
 	/// <param name="scale">Scale of the node</param>
-	Node(Node* parent, const std::string& name, const glm::vec3& pos = glm::vec3(0.0f), const glm::vec3& rot = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f));
+	Node(Node* parent, const std::string& name, const std::string& scope, const glm::vec3& pos = glm::vec3(0.0f), const glm::vec3& rot = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f));
 };

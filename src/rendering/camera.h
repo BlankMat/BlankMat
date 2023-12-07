@@ -1,10 +1,11 @@
 #pragma once
 #include "glIncludes.h"
 #include "utils.h"
+#include "interfaces/iSelectable.h"
 #include "files/config.h"
 #include "windows/guiVariableTypes.h"
 
-class Camera
+class Camera : public ISelectable
 {
 private:
     UIFloat mFOV;
@@ -22,7 +23,6 @@ private:
 
     UIFloat mOrthSize;
     UIBool mIsPerspective;
-    UIBool mIsWireframe;
     UIBool mRotateAroundPivot;
 
     UIColor mBGColor;
@@ -80,8 +80,6 @@ public:
     UIFloat& GetFOV() { return mFOV; }
     // Returns whether the camera is in perspective
     UIBool& IsPerspective() { return mIsPerspective; }
-    // Returns whether the camera is in wireframe
-    UIBool& IsWireframe() { return mIsWireframe; }
     // Returns whether the camera is rotating around the pivot
     UIBool& IsRotatingAroundPivot() { return mRotateAroundPivot; }
 
@@ -109,15 +107,6 @@ public:
         mRecalcProjection = true;
     }
 
-    // Sets the camera to be/not be wireframe
-    void SetWireframe(bool isWireframe)
-    {
-        if (mIsWireframe.Equals(isWireframe))
-            return;
-        mIsWireframe.Set(isWireframe);
-        TriggerRecalcWireframe();
-    }
-
     // Returns the view matrix of the camera
     const glm::mat4& GetView()
     {
@@ -129,7 +118,7 @@ public:
         }
         return mView;
     }
-    
+
     // Returns the camera's rotation matrix
     const glm::mat4& GetRotationMatrix()
     {
@@ -140,7 +129,7 @@ public:
         }
         return mRotation;
     }
-    
+
     // Returns the projection matrix of the camera
     const glm::mat4& GetProjection(float aspect)
     {
@@ -151,12 +140,12 @@ public:
             glm::mat4 projection = glm::mat4(1.0f);
 
             // Perspective projection
-            if (mIsPerspective) 
+            if (mIsPerspective)
             {
                 projection = glm::perspective(glm::radians(+mFOV), aspect, +mNearClip, +mFarClip);
             }
             // Orthographic projection
-            else 
+            else
             {
                 projection = glm::ortho(-mOrthSize * aspect, +mOrthSize * aspect, -mOrthSize, +mOrthSize, +mNearClip, +mFarClip);
             }
@@ -209,34 +198,12 @@ public:
     // Triggers a recalculation of the rotation matrix on the next frame
     void TriggerRecalcRotation() { mRecalcRotation = true; }
 
-    // Enables or disables wireframe
-    void TriggerRecalcWireframe()
-    {
-        if (mIsWireframe) {
-            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-            // Disable culling
-            glDisable(GL_CULL_FACE);
-            glDisable(GL_DEPTH_TEST);
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        }
-        else {
-            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-            // Enable culling
-            glEnable(GL_CULL_FACE);
-
-            // Enable depth buffer
-            glEnable(GL_DEPTH_TEST);
-            glDepthFunc(GL_LESS);
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        }
-    }
-
     /// <summary>
     /// Constructs a camera from the given parameters.
     /// </summary>
     /// <param name="actionStack">Global action stack</param>
+    /// <param name="name">Name of the camera</param>
+    /// <param name="scope">Scope of the camera</param>
     /// <param name="fov">Field of View of perspective camera</param>
     /// <param name="nearClip">Near clip plane</param>
     /// <param name="farClip">Far clip plane</param>
@@ -246,11 +213,12 @@ public:
     /// <param name="color">Background color displayed by the camera</param>
     /// <param name="orthSize">Orthogonal size of orth camera</param>
     /// <param name="isPerspective">Whether the camera is in perspective or orthogonal view mode</param>
-    /// <param name="isWireframe">Whether the camera is rendering in wireframe or not</param>
-    Camera(ActionStack* actionStack, float fov, float nearClip, float farClip, 
-        const glm::vec3& pos, const glm::vec3& dir, const glm::vec3& up, const glm::vec3& color, 
-        float orthSize = 10.0f, bool isPerspective = true, bool isWireframe = false)
+    Camera(ActionStack* actionStack, const std::string& name = "", const std::string& scope = "", float fov = 45.0f, float nearClip = 0.1f, float farClip = 100.0f,
+        const glm::vec3& pos = glm::vec3(5, 5, 5), const glm::vec3& dir = glm::vec3(-5, -5, -5), const glm::vec3& up = glm::vec3(0.0f, 1.0f, 0.0f),
+        const glm::vec3& color = glm::vec3(0.3f, 0.4f, 0.4f), float orthSize = 10.0f, bool isPerspective = true)
+        : ISelectable(SelectableType::CAMERA)
     {
+        InitName(name, scope);
         mFOV = UIFloat("FOV", fov, actionStack, [this]() { TriggerRecalcProjection(); });
         mNearClip = UIFloat("Near Clip", nearClip, actionStack, [this]() { TriggerRecalcProjection(); });
         mFarClip = UIFloat("Far Clip", farClip, actionStack, [this]() { TriggerRecalcProjection(); });
@@ -262,12 +230,10 @@ public:
         mTarget = UIVec3("Target", pos + dir, actionStack, [this]() { TriggerRecalcView(); });
         mOrthSize = UIFloat("Size", orthSize, actionStack, [this]() { TriggerRecalcProjection(); });
         mIsPerspective = UIBool("Perspective", isPerspective, actionStack, [this]() { TriggerRecalcProjection(); });
-        mIsWireframe = UIBool("Wireframe", isWireframe, actionStack, [this]() { TriggerRecalcView(); });
         mRotateAroundPivot = UIBool("Lock Rotation", false, actionStack);
         mBGColor = UIColor("Background", color, actionStack);
 
         LookAt(mPivot);
-        TriggerRecalcWireframe();
     }
 
     /// <summary>
@@ -276,8 +242,8 @@ public:
     /// <param name="actionStack">Global action stack</param>
     /// <param name="config">Config to build camera from</param>
     Camera(ActionStack* actionStack, Config* config)
-        : Camera(actionStack, config->GetFloat("fov"), config->GetFloat("nearClip"), config->GetFloat("farClip"),
-            config->GetVec("pos"), config->GetVec("dir"), config->GetVec("up"), config->GetVec("bgColor"), 
-            config->GetFloat("size"), config->GetBool("perspective"), config->GetBool("wireframe"))
+        : Camera(actionStack, config->GetString("name"), "", config->GetFloat("fov"), config->GetFloat("nearClip"), config->GetFloat("farClip"),
+            config->GetVec("pos"), config->GetVec("dir"), config->GetVec("up"), config->GetVec("bgColor"),
+            config->GetFloat("size"), config->GetBool("perspective"))
     {}
 };

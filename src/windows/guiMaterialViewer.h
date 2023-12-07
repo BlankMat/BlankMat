@@ -1,68 +1,56 @@
 #pragma once
-#include "windows/iGUIWindow.h"
-#include "windows/guiWindowUtils.h"
-#include "rendering/scene.h"
-#include "interaction/selection.h"
-#include "tools/state.h"
+#include "interfaces/iGUIContainerWindow.h"
 
-class GUIMaterialViewer : public IGUIWindow
+class GUIMaterialViewer : public IGUIContainerWindow<Material>
 {
 private:
-	State* mState = nullptr;
-	Scene* mScene = nullptr;
-public:
-	void Draw() override
+	void AddNewItem(const std::string& name) override
 	{
-		if (!mIsEnabled)
-			return;
-
-		if (ImGui::Begin("Material Viewer", &mIsEnabled, ImGuiWindowFlags_AlwaysAutoResize))
-		{
-			IEntity* sel = mState->GetSel()->GetSelectedEntity();
-			MaterialContainer* materialList = mScene->GetMaterials();
-			if (sel != nullptr && sel->GetMaterial() != nullptr)
-			{
-				const auto& mats = materialList->Data();
-				Material* selMat = sel->GetMaterial();
-				// Draw all materials
-				float size = ImGui::GetTextLineHeight();
-				float spacing = 5.0f;
-				for (auto iter = mats.begin(); iter != mats.end(); ++iter)
-				{
-					// Skip the material if it is for internal use only
-					if (iter->second->IsInternal())
-						continue;
-
-					ImVec2 pos = ImGui::GetCursorScreenPos();
-					GUIWindowUtils::DrawColor(iter->second->kd, pos, size);
-					pos.x += size + spacing;
-					GUIWindowUtils::DrawColor(iter->second->ka, pos, size);
-					pos.x += size + spacing;
-					GUIWindowUtils::DrawColor(iter->second->ks, pos, size);
-					ImGui::Dummy(ImVec2((size + spacing)*3, size));
-					ImGui::SameLine();
-
-					GUIWindowUtils::Selectable(iter->first, selMat, iter->second);
-				}
-
-				// If the selected material changed, update sel
-				if (selMat != sel->GetMaterial())
-				{
-					mScene->SetEntityMaterial(sel, selMat);
-				}
-			}
-			else
-			{
-				ImGui::Text("No selection.");
-			}
-		}
-		ImGui::End();
+		mState->GetSel()->SelectElement(mScene->AddMaterial(name, new Material(name, "", mScene->GetTextures())));
 	}
 
-	GUIMaterialViewer(State* state, Scene* scene, bool isEnabled)
-		: mState(state), mScene(scene)
+	IContainer<Material>* GetContainer() override
 	{
+		return mScene->GetMaterials();
+	}
+
+	bool ShouldDisplayItem(Material* item) override
+	{
+		if (item->IsInternal() && item->GetScopedName() != "default")
+			return false;
+		return true;
+	}
+
+	void DisplaySelectedItem() override
+	{
+		Material* selection = mScene->GetMaterials()->GetSelectedItem();
+		if (selection != nullptr)
+			return;
+
+		ImGui::Text("No material selected");
+	}
+
+	void SelectItem(Material* selection) override
+	{
+		mState->GetSel()->SelectElement(selection);
+	}
+
+	bool DisplayListItem(const std::string& name, Material* item, Material*& selection) override
+	{
+		if (!ShouldDisplayItem(item))
+			return false;
+
+		return GUIWindowUtils::MaterialSelect(name, item, selection, 5.0f);
+	}
+public:
+	GUIMaterialViewer(State* state, Scene* scene, bool isEnabled)
+	{
+		mState = state;
+		mScene = scene;
 		mType = GUI::MATERIAL_VIEWER;
 		mIsEnabled = isEnabled;
+		mMustSelect = false;
+		mWindowName = "Material Viewer";
+		mItemName = "Material";
 	}
 };

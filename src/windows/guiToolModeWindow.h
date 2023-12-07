@@ -1,15 +1,15 @@
 #pragma once
 #include "glIncludes.h"
-#include "tools/state.h"
+#include "blankMatConfig.h"
+#include "interaction/state.h"
 #include "files/fileSystem.h"
 #include "rendering/scene.h"
-#include "windows/iGUIWindow.h"
+#include "interfaces/iGUIWindow.h"
 #include "interaction/selection.h"
 #include <vector>
 #include <iostream>
 #include <string>
-
-constexpr auto MODES_DIR = "resources/icons/modeIcons";
+#include <stb_image.h>
 
 class GUIToolModeWindow : public IGUIWindow
 {
@@ -62,9 +62,7 @@ public:
         {
             std::string fileName = mModeFileNames[(int)mode];
             //std::string fullFilePath = TOOLSDIR + std::string("/")+ fileName;
-            int widthDim = 0;
-            int heightDim = 0;
-            unsigned int textureID = Texture::TextureFromFile(FileSystem::GetPath(MODES_DIR), fileName, widthDim, heightDim, false);
+            unsigned int textureID = Texture::TextureFromFile(FileSystem::GetPath(MODE_ICON_DIR), fileName);
             mTextureIDs.push_back(textureID);
         }
         stbi_set_flip_vertically_on_load(state->flipTextures);

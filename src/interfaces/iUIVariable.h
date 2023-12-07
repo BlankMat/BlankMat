@@ -67,7 +67,7 @@ public:
 	}
 
 	/// <summary>
-	/// Implicitly converts this variable to its internal value
+	/// Explicitly converts this variable to its internal value
 	/// </summary>
 	operator T()
 	{
@@ -88,15 +88,6 @@ public:
 	/// </summary>
 	/// <returns>Reference of the value of the variable</returns>
 	T* operator->()
-	{
-		return &mValue;
-	}
-
-	/// <summary>
-	/// Returns a reference to the value stored in this variable
-	/// </summary>
-	/// <returns>Reference of the value of the variable</returns>
-	T* operator&()
 	{
 		return &mValue;
 	}

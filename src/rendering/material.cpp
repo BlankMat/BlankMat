@@ -1,5 +1,5 @@
 #include "material.h"
-#include "tools/state.h"
+#include "interaction/state.h"
 
 // Returns whether the material is for internal use only or not.
 bool Material::IsInternal()
@@ -8,24 +8,24 @@ bool Material::IsInternal()
 }
 
 // Updates the given shader with this material's properties
-unsigned int Material::UpdateShader(Shader* _shader)
+unsigned int Material::UpdateShader(Shader* shader)
 {
-    _shader->SetVec3("material.diffuse", mCurKD);
-    _shader->SetVec3("material.ambient", mCurKA);
-    _shader->SetVec3("material.specular", mCurKS);
-    _shader->SetVec3("material.emissive", mCurKE);
-    _shader->SetFloat("material.shininess", ns);
-    _shader->SetFloat("material.refraction", ni);
-    _shader->SetFloat("material.alpha", d);
-    _shader->SetInt("material.mode", illum);
-    _shader->SetBool("useShadows", mShadowsEnabled);
+    shader->SetVec3("material.diffuse", mCurKD);
+    shader->SetVec3("material.ambient", mCurKA);
+    shader->SetVec3("material.specular", mCurKS);
+    shader->SetVec3("material.emissive", mCurKE);
+    shader->SetFloat("material.shininess", mNS);
+    shader->SetFloat("material.refraction", mNI);
+    shader->SetFloat("material.alpha", mD);
+    shader->SetInt("material.mode", mIllum);
+    shader->SetBool("useShadows", mShadowsEnabled);
 
     for (unsigned int i = 0; i < mCurTextures.size(); i++)
     {
         // Activate proper texture unit before binding
         glActiveTexture(GL_TEXTURE0 + i);
-        _shader->SetInt(mCurTextureNames[i], i);
-        glBindTexture(GL_TEXTURE_2D, mCurTextures[i]->id);
+        shader->SetInt(mCurTextureNames[i], i);
+        glBindTexture(GL_TEXTURE_2D, mCurTextures[i]->mID);
     }
     glActiveTexture(GL_TEXTURE0);
 
@@ -33,15 +33,15 @@ unsigned int Material::UpdateShader(Shader* _shader)
 }
 
 // Loads the textures of this material into the OpenGL context
-void Material::LoadShaderTextures(State* _state, Material* _defaultMat)
+void Material::LoadShaderTextures(State* state, Material* defaultMat)
 {
     // If the state has the map enabled, and the texture is not the default texture, use the texture
-    bool useDiffuse = (map_kd != nullptr && map_kd->id != _defaultMat->map_kd->id) && (_state == nullptr || _state->enableDiffuseMap);
-    bool useAmbient = (map_ka != nullptr && map_ka->id != _defaultMat->map_ka->id) && (_state == nullptr || _state->enableAmbientMap);
-    bool useSpecular = (map_ks != nullptr && map_ks->id != _defaultMat->map_ks->id) && (_state == nullptr || _state->enableSpecularMap);
-    bool useNormal = (map_bump != nullptr && map_bump->id != _defaultMat->map_bump->id) && (_state == nullptr || _state->enableNormalMap);
-    bool useHeight = (map_ns != nullptr && map_ns->id != _defaultMat->map_ns->id) && (_state == nullptr || _state->enableHeightMap);
-    bool useAlpha = (map_d != nullptr && map_d->id != _defaultMat->map_d->id) && (_state == nullptr || _state->enableAlphaMap);
+    bool useDiffuse = (mMapKD != nullptr && mMapKD->mID != defaultMat->mMapKD->mID) && (state == nullptr || state->enableDiffuseMap);
+    bool useAmbient = (mMapKA != nullptr && mMapKA->mID != defaultMat->mMapKA->mID) && (state == nullptr || state->enableAmbientMap);
+    bool useSpecular = (mMapKS != nullptr && mMapKS->mID != defaultMat->mMapKS->mID) && (state == nullptr || state->enableSpecularMap);
+    bool useNormal = (mMapBump != nullptr && mMapBump->mID != defaultMat->mMapBump->mID) && (state == nullptr || state->enableNormalMap);
+    bool useHeight = (mMapNS != nullptr && mMapNS->mID != defaultMat->mMapNS->mID) && (state == nullptr || state->enableHeightMap);
+    bool useAlpha = (mMapD != nullptr && mMapD->mID != defaultMat->mMapD->mID) && (state == nullptr || state->enableAlphaMap);
 
     // Bind all textures
     unsigned int diffuseNum = 1;
@@ -57,35 +57,35 @@ void Material::LoadShaderTextures(State* _state, Material* _defaultMat)
     {
         // Retrieve texture number (the N in texture_diffuseN)
         std::string number;
-        TextureType type = mTextures[i]->type;
-        switch (mTextures[i]->type)
+        TextureType type = mTextures[i]->mType;
+        switch (mTextures[i]->mType)
         {
         case TextureType::DIFFUSE:
             number = std::to_string(diffuseNum++);
-            mCurTextures.push_back(useDiffuse ? mTextures[i] : _defaultMat->map_kd);
-            mCurKD = (useDiffuse ? glm::vec3(1.0f) : kd);
+            mCurTextures.push_back(useDiffuse ? mTextures[i] : defaultMat->mMapKD);
+            mCurKD = (useDiffuse ? glm::vec3(1.0f) : mKD);
             break;
         case TextureType::AMBIENT:
             number = std::to_string(ambientNum++);
-            mCurTextures.push_back(useAmbient ? mTextures[i] : _defaultMat->map_ka);
-            mCurKA = (useAmbient ? glm::vec3(1.0f) : ka);
+            mCurTextures.push_back(useAmbient ? mTextures[i] : defaultMat->mMapKA);
+            mCurKA = (useAmbient ? glm::vec3(1.0f) : mKA);
             break;
         case TextureType::SPECULAR:
             number = std::to_string(specularNum++);
-            mCurTextures.push_back(useSpecular ? mTextures[i] : _defaultMat->map_ks);
-            mCurKS = (useSpecular ? glm::vec3(1.0f) : ks);
+            mCurTextures.push_back(useSpecular ? mTextures[i] : defaultMat->mMapKS);
+            mCurKS = (useSpecular ? glm::vec3(1.0f) : mKS);
             break;
         case TextureType::NORMAL:
             number = std::to_string(normalNum++);
-            mCurTextures.push_back(useNormal ? mTextures[i] : _defaultMat->map_bump);
+            mCurTextures.push_back(useNormal ? mTextures[i] : defaultMat->mMapBump);
             break;
         case TextureType::HEIGHT:
             number = std::to_string(heightNum++);
-            mCurTextures.push_back(useHeight ? mTextures[i] : _defaultMat->map_ns);
+            mCurTextures.push_back(useHeight ? mTextures[i] : defaultMat->mMapNS);
             break;
         case TextureType::ALPHA:
             number = std::to_string(alphaNum++);
-            mCurTextures.push_back(useAlpha ? mTextures[i] : _defaultMat->map_d);
+            mCurTextures.push_back(useAlpha ? mTextures[i] : defaultMat->mMapD);
             break;
         default:
             break;
@@ -95,48 +95,49 @@ void Material::LoadShaderTextures(State* _state, Material* _defaultMat)
         mCurTextureNames.push_back("material." + Texture::TextureToTypeString(type) + number);
     }
 
-    mShadowsEnabled = (_state == nullptr || _state->enableShadows);
+    mShadowsEnabled = (state == nullptr || state->enableShadows);
 }
 
 // Loads the textures of the material from the scene's texture list
-void Material::LoadMaterialTextures(TextureContainer* _textures)
+void Material::LoadMaterialTextures(TextureContainer* textures)
 {
     // Create textures for material
-    map_kd = _textures->GetItem(mTargetMapKD);
-    map_ka = _textures->GetItem(mTargetMapKA);
-    map_ks = _textures->GetItem(mTargetMapKS);
-    map_bump = _textures->GetItem(mTargetMapBump);
-    map_ns = _textures->GetItem(mTargetMapNS);
-    map_d = _textures->GetItem(mTargetMapD);
+    mMapKD = textures->GetItem(mTargetMapKD);
+    mMapKA = textures->GetItem(mTargetMapKA);
+    mMapKS = textures->GetItem(mTargetMapKS);
+    mMapBump = textures->GetItem(mTargetMapBump);
+    mMapNS = textures->GetItem(mTargetMapNS);
+    mMapD = textures->GetItem(mTargetMapD);
 
     // Push textures to render list
-    mTextures.push_back(map_kd);
-    mTextures.push_back(map_ka);
-    mTextures.push_back(map_ks);
-    mTextures.push_back(map_bump);
-    mTextures.push_back(map_ns);
-    mTextures.push_back(map_d);
+    mTextures.push_back(mMapKD);
+    mTextures.push_back(mMapKA);
+    mTextures.push_back(mMapKS);
+    mTextures.push_back(mMapBump);
+    mTextures.push_back(mMapNS);
+    mTextures.push_back(mMapD);
 }
 
 // Constructs the default material
-Material::Material(TextureContainer* _textures)
+Material::Material(TextureContainer* textures)
+    : ISelectable(SelectableType::MATERIAL)
 {
     // Initialize to default material values
-    name = "default";
-    kd = glm::vec3(0.6f);
-    ka = glm::vec3(0.0f);
-    ks = glm::vec3(1.0f);
-    ke = glm::vec3(0.0f);
-    ns = 8.0f;
-    ni = 0.0f;
-    d = 1.0f;
-    illum = 2;
+    InitName("default", "");
+    mKD = glm::vec3(0.6f);
+    mKA = glm::vec3(0.0f);
+    mKS = glm::vec3(1.0f);
+    mKE = glm::vec3(0.0f);
+    mNS = 8.0f;
+    mNI = 0.0f;
+    mD = 1.0f;
+    mIllum = 2;
 
     // Setup current draw call
-    mCurKD = kd;
-    mCurKA = ka;
-    mCurKS = ks;
-    mCurKE = ke;
+    mCurKD = mKD;
+    mCurKA = mKA;
+    mCurKS = mKS;
+    mCurKE = mKE;
     mIsInternal = true;
     mShadowsEnabled = true;
 
@@ -147,30 +148,28 @@ Material::Material(TextureContainer* _textures)
     mTargetMapBump = "default_normal";
     mTargetMapNS = "default_height";
     mTargetMapD = "default_alpha";
-    LoadMaterialTextures(_textures);
+    LoadMaterialTextures(textures);
 }
 
 // Constructs a material out of a single color (diffuse)
-Material::Material(const std::string& _name, const glm::vec3& _color, TextureContainer* _textures, bool _internal)
-    : mIsInternal(_internal)
+Material::Material(const std::string& name, const std::string& scope, TextureContainer* textures, const glm::vec3& color, bool internal)
+    : mIsInternal(internal), ISelectable(SelectableType::MATERIAL)
 {
-    if (name == "")
-        name = "Color" + Vec3ToHex(_color);
-    name = _name;
-    kd = _color;
-    ka = glm::vec3(0.0f);
-    ks = glm::vec3(1.0f);
-    ke = glm::vec3(0.0f);
-    ns = 8.0f;
-    ni = 0.0f;
-    d = 1.0f;
-    illum = 2;
+    InitName((name != "" ? name : "Color" + Vec3ToHex(color)), scope);
+    mKD = color;
+    mKA = glm::vec3(0.0f);
+    mKS = glm::vec3(1.0f);
+    mKE = glm::vec3(0.0f);
+    mNS = 8.0f;
+    mNI = 0.0f;
+    mD = 1.0f;
+    mIllum = 2;
 
     // Setup current draw call
-    mCurKD = kd;
-    mCurKA = ka;
-    mCurKS = ks;
-    mCurKE = ke;
+    mCurKD = mKD;
+    mCurKA = mKA;
+    mCurKS = mKS;
+    mCurKE = mKE;
     mShadowsEnabled = true;
 
     // Load default textures
@@ -180,124 +179,126 @@ Material::Material(const std::string& _name, const glm::vec3& _color, TextureCon
     mTargetMapBump = "default_normal";
     mTargetMapNS = "default_height";
     mTargetMapD = "default_alpha";
-    LoadMaterialTextures(_textures);
+    LoadMaterialTextures(textures);
 }
 
 // Constructs a material out of a config file and preloaded textures
-Material::Material(const std::string& _name, Config* _config, Texture* _map_kd, Texture* _map_ka, Texture* _map_ks,
-    Texture* _map_bump, Texture* _map_ns, Texture* _map_d)
+Material::Material(const std::string& name, const std::string& scope, Config* config, 
+    Texture* map_kd, Texture* map_ka, Texture* map_ks, Texture* map_bump, Texture* map_ns, Texture* map_d)
+    : ISelectable(SelectableType::MATERIAL)
 {
-    name = _name;
-
+    InitName(name, scope);
     // Load values from config
-    kd = _config->GetVec("kd");
-    ka = _config->GetVec("ka");
-    ks = _config->GetVec("ks");
-    ke = _config->GetVec("ke");
-    ns = _config->GetFloat("ns");
-    ni = _config->GetFloat("ni");
-    d = _config->GetFloat("d");
-    illum = _config->GetInt("illum");
+    mKD = config->GetVec("kd");
+    mKA = config->GetVec("ka");
+    mKS = config->GetVec("ks");
+    mKE = config->GetVec("ke");
+    mNS = config->GetFloat("ns");
+    mNI = config->GetFloat("ni");
+    mD = config->GetFloat("d");
+    mIllum = config->GetInt("illum");
 
     // Load textures from pointers
-    map_kd = _map_kd;
-    map_ka = _map_ka;
-    map_ks = _map_ks;
-    map_bump = _map_bump;
-    map_ns = _map_ns;
-    map_d = _map_d;
+    mMapKD = map_kd;
+    mMapKA = map_ka;
+    mMapKS = map_ks;
+    mMapBump = map_bump;
+    mMapNS = map_ns;
+    mMapD = map_d;
 
     // Push textures to list
-    mTextures.push_back(map_kd);
-    mTextures.push_back(map_ka);
-    mTextures.push_back(map_ks);
-    mTextures.push_back(map_bump);
-    mTextures.push_back(map_ns);
-    mTextures.push_back(map_d);
+    mTextures.push_back(mMapKD);
+    mTextures.push_back(mMapKA);
+    mTextures.push_back(mMapKS);
+    mTextures.push_back(mMapBump);
+    mTextures.push_back(mMapNS);
+    mTextures.push_back(mMapD);
 
-    mCurKD = kd;
-    mCurKA = ka;
-    mCurKS = ks;
-    mCurKE = ke;
+    mCurKD = mKD;
+    mCurKA = mKA;
+    mCurKS = mKS;
+    mCurKE = mKE;
     mShadowsEnabled = true;
     mIsInternal = false;
 }
 
 // Constructs a material out of preloaded textures
-Material::Material(const std::string& _name, Texture* _map_kd, Texture* _map_ka, Texture* _map_ks,
-    Texture* _map_bump, Texture* _map_ns, Texture* _map_d,
-    const glm::vec3& _ka, const glm::vec3& _kd, const glm::vec3& _ks,
-    float _ns, float _ni, float _d, const glm::vec3& _ke, int _illum)
-    : name(_name), ka(_ka), kd(_kd), ks(_ks), ns(_ns), ni(_ni), d(_d), ke(_ke), illum(_illum)
+Material::Material(const std::string& name, const std::string& scope,
+    Texture* map_kd, Texture* map_ka, Texture* map_ks, Texture* map_bump, Texture* map_ns, Texture* map_d,
+    const glm::vec3& ka, const glm::vec3& kd, const glm::vec3& ks, float ns, float ni, float d, const glm::vec3& ke, int illum)
+    : mKA(ka), mKD(kd), mKS(ks), mNS(ns), mNI(ni), mD(d), mKE(ke), mIllum(illum), ISelectable(SelectableType::MATERIAL)
 {
-    map_kd = _map_kd;
-    map_ka = _map_ka;
-    map_ks = _map_ks;
-    map_bump = _map_bump;
-    map_ns = _map_ns;
-    map_d = _map_d;
+    InitName(name, scope);
+    mMapKD = map_kd;
+    mMapKA = map_ka;
+    mMapKS = map_ks;
+    mMapBump = map_bump;
+    mMapNS = map_ns;
+    mMapD = map_d;
 
-    mTextures.push_back(map_kd);
-    mTextures.push_back(map_ka);
-    mTextures.push_back(map_ks);
-    mTextures.push_back(map_bump);
-    mTextures.push_back(map_ns);
-    mTextures.push_back(map_d);
+    mTextures.push_back(mMapKD);
+    mTextures.push_back(mMapKA);
+    mTextures.push_back(mMapKS);
+    mTextures.push_back(mMapBump);
+    mTextures.push_back(mMapNS);
+    mTextures.push_back(mMapD);
 
-    mCurKD = kd;
-    mCurKA = ka;
-    mCurKS = ks;
-    mCurKE = ke;
+    mCurKD = mKD;
+    mCurKA = mKA;
+    mCurKS = mKS;
+    mCurKE = mKE;
     mShadowsEnabled = true;
     mIsInternal = false;
 }
 
 // Construcst a material out of lists of preloaded textures
-Material::Material(const std::string& _name, 
-    const std::vector<Texture*>& _map_kd, const std::vector<Texture*>& _map_ka, const std::vector<Texture*>& _map_ks,
-    const std::vector<Texture*>& _map_bump, const std::vector<Texture*>& _map_ns, const std::vector<Texture*>& _map_d,
-    const glm::vec3& _ka, const glm::vec3& _kd, const glm::vec3& _ks,
-    float _ns, float _ni, float _d, const glm::vec3& _ke, int _illum)
-    : name(_name), ka(_ka), kd(_kd), ks(_ks), ns(_ns), ni(_ni), d(_d), ke(_ke), illum(_illum)
+Material::Material(const std::string& name, const std::string& scope,
+    const std::vector<Texture*>& map_kd, const std::vector<Texture*>& map_ka, const std::vector<Texture*>& map_ks,
+    const std::vector<Texture*>& map_bump, const std::vector<Texture*>& map_ns, const std::vector<Texture*>& map_d,
+    const glm::vec3& ka, const glm::vec3& kd, const glm::vec3& ks,
+    float ns, float ni, float d, const glm::vec3& ke, int illum)
+    : mKA(ka), mKD(kd), mKS(ks), mNS(ns), mNI(ni), mD(d), mKE(ke), mIllum(illum), ISelectable(SelectableType::MATERIAL)
 {
-    map_kd = _map_kd[0];
-    map_ka = _map_ka[0];
-    map_ks = _map_ks[0];
-    map_bump = _map_bump[0];
-    map_ns = _map_ns[0];
-    map_d = _map_d[0];
+    InitName(name, scope);
+    mMapKD = map_kd[0];
+    mMapKA = map_ka[0];
+    mMapKS = map_ks[0];
+    mMapBump = map_bump[0];
+    mMapNS = map_ns[0];
+    mMapD = map_d[0];
 
-    mTextures.insert(mTextures.end(), _map_kd.begin(), _map_kd.end());
-    mTextures.insert(mTextures.end(), _map_ka.begin(), _map_ka.end());
-    mTextures.insert(mTextures.end(), _map_ks.begin(), _map_ks.end());
-    mTextures.insert(mTextures.end(), _map_bump.begin(), _map_bump.end());
-    mTextures.insert(mTextures.end(), _map_ns.begin(), _map_ns.end());
-    mTextures.insert(mTextures.end(), _map_d.begin(), _map_d.end());
+    mTextures.insert(mTextures.end(), map_kd.begin(), map_kd.end());
+    mTextures.insert(mTextures.end(), map_ka.begin(), map_ka.end());
+    mTextures.insert(mTextures.end(), map_ks.begin(), map_ks.end());
+    mTextures.insert(mTextures.end(), map_bump.begin(), map_bump.end());
+    mTextures.insert(mTextures.end(), map_ns.begin(), map_ns.end());
+    mTextures.insert(mTextures.end(), map_d.begin(), map_d.end());
 
-    mCurKD = kd;
-    mCurKA = ka;
-    mCurKS = ks;
-    mCurKE = ke;
+    mCurKD = mKD;
+    mCurKA = mKA;
+    mCurKS = mKS;
+    mCurKE = mKE;
     mShadowsEnabled = true;
     mIsInternal = false;
 }
 
-Material::Material(const std::string& _name, const std::string& _map_kd, const std::string& _map_ka, const std::string& _map_ks,
-    const std::string& _map_bump, const std::string& _map_ns, const std::string& _map_d,
-    const glm::vec3& _ka, const glm::vec3& _kd, const glm::vec3& _ks,
-    float _ns, float _ni, float _d, const glm::vec3& _ke, int _illum)
-    : name(_name), ka(_ka), kd(_kd), ks(_ks), ns(_ns), ni(_ni), d(_d), ke(_ke), illum(_illum)
+Material::Material(const std::string& name, const std::string& scope, const std::string& map_kd, const std::string& map_ka, const std::string& map_ks,
+    const std::string& map_bump, const std::string& map_ns, const std::string& map_d,
+    const glm::vec3& ka, const glm::vec3& kd, const glm::vec3& ks,
+    float ns, float ni, float d, const glm::vec3& ke, int illum)
+    : mKA(ka), mKD(kd), mKS(ks), mNS(ns), mNI(ni), mD(d), mKE(ke), mIllum(illum), ISelectable(SelectableType::MATERIAL)
 {
-    mTargetMapKD = _map_kd;
-    mTargetMapKA = _map_ka;
-    mTargetMapKS = _map_ks;
-    mTargetMapBump = _map_bump;
-    mTargetMapNS = _map_ns;
-    mTargetMapD = _map_d;
+    InitName(name, scope);
+    mTargetMapKD = map_kd;
+    mTargetMapKA = map_ka;
+    mTargetMapKS = map_ks;
+    mTargetMapBump = map_bump;
+    mTargetMapNS = map_ns;
+    mTargetMapD = map_d;
 
-    mCurKD = kd;
-    mCurKA = ka;
-    mCurKS = ks;
-    mCurKE = ke;
+    mCurKD = mKD;
+    mCurKA = mKA;
+    mCurKS = mKS;
+    mCurKE = mKE;
     mShadowsEnabled = true;
 }

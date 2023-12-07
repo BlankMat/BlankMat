@@ -88,6 +88,98 @@ static const glm::vec4 RotateAround(const glm::vec4& aPointToRotate, const glm::
 }
 
 /// <summary>
+/// Returns the directory portion of the given path
+/// </summary>
+/// <param name="path">Path to split</param>
+/// <returns>Directory of the path</returns>
+static std::string GetDirectory(const std::string path)
+{
+    // Don't parse empty paths
+    if (path == "")
+        return "";
+
+    size_t lastSlash = path.find_last_of("/\\") + 1;
+    return path.substr(0, lastSlash);
+}
+
+/// <summary>
+/// Returns the filename of the given path
+/// </summary>
+/// <param name="path">Path to split</param>
+/// <returns>Filename of the path</returns>
+static std::string GetFileName(const std::string path)
+{
+    // Don't parse empty paths
+    if (path == "")
+        return "";
+
+    size_t lastSlash = path.find_last_of("/\\") + 1;
+    size_t lastPeriod = path.find_last_of('.');
+    return path.substr(lastSlash, lastPeriod - lastSlash);
+}
+
+/// <summary>
+/// Returns the file extension of the given path
+/// </summary>
+/// <param name="path">Path to split</param>
+/// <returns>Extension of the path</returns>
+static std::string GetFileExtension(const std::string path)
+{
+    // Don't parse empty paths
+    if (path == "")
+        return "";
+
+    size_t lastPeriod = path.find_last_of('.');
+    if (lastPeriod < path.length())
+        return path.substr(lastPeriod);
+    else
+        return "";
+}
+
+/// <summary>
+/// Returns the file format of the given path (extension without a period)
+/// </summary>
+/// <param name="path">Path to split</param>
+/// <returns>File format of the path</returns>
+static std::string GetFileFormat(const std::string path)
+{
+    // Don't parse empty paths
+    if (path == "")
+        return "";
+
+    size_t lastPeriod = path.find_last_of('.');
+    if (lastPeriod < path.length())
+        return path.substr(lastPeriod + 1);
+    else
+        return "";
+}
+
+/// <summary>
+/// Splits the given path into its directory, filename, and extension
+/// </summary>
+/// <param name="path">Path to split</param>
+/// <param name="dir">Directory</param>
+/// <param name="name">Filename</param>
+/// <param name="ext">Extension</param>
+static void SplitPath(const std::string path, std::string& dir, std::string& name, std::string& ext)
+{
+    // Don't parse empty paths
+    if (path == "")
+        return;
+
+    size_t lastSlash = path.find_last_of("/\\") + 1;
+    size_t lastPeriod = path.find_last_of('.');
+
+    dir = path.substr(0, lastSlash);
+    name = path.substr(lastSlash, lastPeriod - lastSlash);
+
+    if (lastPeriod < path.length())
+        ext = path.substr(lastPeriod);
+    else
+        ext = "";
+}
+
+/// <summary>
 /// Returns whether the given file exists
 /// </summary>
 /// <param name="name">Name of the file</param>
@@ -163,16 +255,85 @@ static const void ParseStringByDelim(std::vector<std::string>& out, const std::s
 }
 
 /// <summary>
-/// Returns whitespace padding of the given depth
+/// Creates a padded string of length depth that repeats the given pad
 /// </summary>
-/// <param name="depth">Number of spaces</param>
-/// <returns>Whitespace string of size depth</returns>
-static const std::string GetPadding(unsigned int depth)
+/// <param name="depth">Number of times to repeat the pad</param>
+/// <param name="pad">Character to pad</param>
+/// <returns>String of size depth * pad.length</returns>
+static const std::string GetPadding(unsigned int depth, const std::string& pad = " ")
 {
     std::ostringstream ss;
     for (unsigned int i = 0; i < depth; i++)
-        ss << " ";
+        ss << pad;
     return ss.str();
+}
+
+/// <summary>
+/// Returns whether the name is part of a scope or not
+/// </summary>
+/// <param name="name">Name</param>
+/// <returns>Whether the name is part of a scope</returns>
+static bool IsScoped(const std::string& name)
+{
+    return (name.find("::") < name.length());
+}
+
+/// <summary>
+/// Scopes the name to the given scope (scope::name)
+/// </summary>
+/// <param name="name">Name to scope</param>
+/// <param name="scope">Scope to move to</param>
+/// <returns>scope::name</returns>
+static std::string Scope(const std::string& name, const std::string& scope)
+{
+    if (scope != "")
+        return scope + "::" + name;
+    return name;
+}
+
+/// <summary>
+/// Removes the scope, if any, from the name (scope::name)
+/// </summary>
+/// <param name="name">Scoped name</param>
+/// <returns>Name without the scope</returns>
+static std::string UnscopeName(const std::string& name)
+{
+    size_t scopeIndex = name.find("::");
+    if (scopeIndex >= name.length())
+        return name;
+    return name.substr(scopeIndex + 2);
+}
+
+/// <summary>
+/// Removes the scope, if any, from the name (scope::name)
+/// </summary>
+/// <param name="name">Scoped name</param>
+/// <returns>Scope without the name</returns>
+static std::string UnscopeScope(const std::string& name)
+{
+    size_t scopeIndex = name.find("::");
+    if (scopeIndex >= name.length())
+        return name;
+    return name.substr(0, scopeIndex);
+}
+
+/// <summary>
+/// Increments the name by 1, adding padded numbers to the end
+/// </summary>
+/// <param name="name">Name to increment</param>
+/// <param name="padLen">Length of the padding after the underscore</param>
+/// <returns>Incremented name</returns>
+static std::string IncrementName(const std::string& name, int padLen = 3)
+{
+    size_t numIndex = name.find_last_not_of("0123456789");
+    std::string endNums = name.substr(numIndex + 1);
+
+    // If the name does not end in numbers, pad it with zeros
+    if (endNums.length() <= 0)
+        return name + "_" + GetPadding(padLen, "0");
+
+    // If the name ends in numbers, increment the number by one
+    return name.substr(0, numIndex + 1) + IntToString(std::stoi(endNums) + 1, endNums.length());
 }
 
 /// <summary>
@@ -182,10 +343,10 @@ static const std::string GetPadding(unsigned int depth)
 /// <param name="strings">List of strings to read</param>
 /// <param name="offset">Offset to start reading strings from</param>
 /// <returns>vec2 constructed from the given strings</returns>
-static const glm::vec2 ReadVec2FromStrings(const std::vector<std::string>& strings, int offset)
+static const glm::vec2 ReadVec2FromStrings(const std::vector<std::string>& strings, size_t offset)
 {
     // Avoid errors
-    if ((int)strings.size() >= 2 + offset)
+    if (strings.size() >= 2U + offset)
         return glm::vec2(std::stof(strings[offset]), std::stof(strings[1 + offset]));
     else
         return glm::vec2();
@@ -198,10 +359,10 @@ static const glm::vec2 ReadVec2FromStrings(const std::vector<std::string>& strin
 /// <param name="strings">List of strings to read</param>
 /// <param name="offset">Offset to start reading strings from</param>
 /// <returns>vec3 constructed from the given strings</returns>
-static const glm::vec3 ReadVec3FromStrings(const std::vector<std::string>& strings, int offset)
+static const glm::vec3 ReadVec3FromStrings(const std::vector<std::string>& strings, size_t offset)
 {
     // Avoid errors
-    if ((int)strings.size() >= 3 + offset)
+    if (strings.size() >= 3U + offset)
         return glm::vec3(std::stof(strings[offset]), std::stof(strings[1 + offset]), std::stof(strings[2 + offset]));
     else
         return glm::vec3();
@@ -441,6 +602,52 @@ static const glm::vec2 Vec2FromAssimp(const aiVector2D& vec)
 static const glm::vec2 Vec2FromAssimp(const aiVector3D& vec)
 {
 	return glm::vec2(vec.x, vec.y);
+}
+
+/// <summary>
+/// Converts the given glm vec2 to Assimp
+/// </summary>
+/// <param name="vec">Vector 2</param>
+/// <returns>Assimp Vector 2</returns>
+static const aiVector2D Vec2ToAssimp(const glm::vec2& vec)
+{
+    return aiVector2D(vec.x, vec.y);
+}
+
+/// <summary>
+/// Converts the given glm vec3 to Assimp
+/// </summary>
+/// <param name="vec">Vector 3</param>
+/// <returns>Assimp Vector 3</returns>
+static const aiVector3D Vec3ToAssimp(const glm::vec3& vec)
+{
+    return aiVector3D(vec.x, vec.y, vec.z);
+}
+
+/// <summary>
+/// Converts the given glm vec3 color to Assimp
+/// </summary>
+/// <param name="vec">Color 3</param>
+/// <returns>Assimp Color 3</returns>
+static const aiColor3D ColorToAssimp(const glm::vec3& vec)
+{
+    return aiColor3D(vec.x, vec.y, vec.z);
+}
+
+/// <summary>
+/// Converts the given glm matrix to Assimp
+/// </summary>
+/// <param name="mat">Matrix 4</param>
+/// <returns>Assimp Matrix 4x4</returns>
+static const aiMatrix4x4 Mat4ToAssimp(const glm::mat4& mat)
+{
+    // a,b,c,d in assimp is the row, 1,2,3,4 is the column
+    return aiMatrix4x4(
+        mat[0][0], mat[1][0], mat[2][0], mat[3][0], 
+        mat[0][1], mat[1][1], mat[2][1], mat[3][1],
+        mat[0][2], mat[1][2], mat[2][2], mat[3][2],
+        mat[0][3], mat[1][3], mat[2][3], mat[3][3]
+    );
 }
 
 template<typename T>

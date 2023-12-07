@@ -26,7 +26,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="icon64.png"/></td>
   <td id="projectalign">
-   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.0.2</span>
+   <div id="projectname">BlankMat<span id="projectnumber">&#160;0.1.0</span>
    </div>
    <div id="projectbrief">Free open-source 3D texture creation application</div>
   </td>
@@ -93,6 +93,7 @@ $(document).ready(function(){initNavTree('class_g_u_i_window_utils.html',''); in
 <div class="header">
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="class_g_u_i_window_utils-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">GUIWindowUtils Class Reference</div></div>
 </div><!--header-->
@@ -102,32 +103,60 @@ $(document).ready(function(){initNavTree('class_g_u_i_window_utils.html',''); in
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a6ca2e839e98b3f6d2789d0407401d7c0" id="r_a6ca2e839e98b3f6d2789d0407401d7c0"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#a6ca2e839e98b3f6d2789d0407401d7c0">Popup</a> (const std::string &amp;label, bool &amp;showPopup)</td></tr>
 <tr class="separator:a6ca2e839e98b3f6d2789d0407401d7c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbf0f9f93f04f85309e967f2fad1abfd" id="r_afbf0f9f93f04f85309e967f2fad1abfd"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:afbf0f9f93f04f85309e967f2fad1abfd"><td class="memTemplItemLeft" align="right" valign="top">static bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#afbf0f9f93f04f85309e967f2fad1abfd">Selectable</a> (const std::string &amp;label, T &amp;selValue, T thisValue)</td></tr>
-<tr class="separator:afbf0f9f93f04f85309e967f2fad1abfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6c2718609fb2710abcb59914d8acadd" id="r_ad6c2718609fb2710abcb59914d8acadd"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ad6c2718609fb2710abcb59914d8acadd"><td class="memTemplItemLeft" align="right" valign="top">static bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#ad6c2718609fb2710abcb59914d8acadd">Deselectable</a> (const std::string &amp;label, T *&amp;selValue, T *thisValue)</td></tr>
-<tr class="separator:ad6c2718609fb2710abcb59914d8acadd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a535f8b49e59d393065f4486b99a3d0c1" id="r_a535f8b49e59d393065f4486b99a3d0c1"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#a535f8b49e59d393065f4486b99a3d0c1">Dropdown</a> (const std::string &amp;label, int &amp;index, const std::vector&lt; std::string &gt; &amp;options)</td></tr>
+<tr class="separator:a535f8b49e59d393065f4486b99a3d0c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a126de292c17c6fbe01845c2f62ab6209" id="r_a126de292c17c6fbe01845c2f62ab6209"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#a126de292c17c6fbe01845c2f62ab6209">ColorEdit</a> (const std::string &amp;label, glm::vec3 &amp;color, std::string &amp;selColor, float spacing)</td></tr>
+<tr class="separator:a126de292c17c6fbe01845c2f62ab6209"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae664c280f8ab768571b72881193003ad" id="r_ae664c280f8ab768571b72881193003ad"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#ae664c280f8ab768571b72881193003ad">TextureEdit</a> (<a class="el" href="struct_texture.html">Texture</a> *texture)</td></tr>
+<tr class="separator:ae664c280f8ab768571b72881193003ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3f4e2d1ec27cad0cf953b361ddd726f" id="r_ab3f4e2d1ec27cad0cf953b361ddd726f"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#ab3f4e2d1ec27cad0cf953b361ddd726f">TextureSelect</a> (const std::string &amp;name, <a class="el" href="struct_texture.html">Texture</a> *texture, <a class="el" href="struct_texture.html">Texture</a> *&amp;selection)</td></tr>
+<tr class="separator:ab3f4e2d1ec27cad0cf953b361ddd726f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f1d5c485acdd7f987fdefd02659d4ec" id="r_a9f1d5c485acdd7f987fdefd02659d4ec"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#a9f1d5c485acdd7f987fdefd02659d4ec">MaterialSelect</a> (const std::string &amp;name, <a class="el" href="class_material.html">Material</a> *material, <a class="el" href="class_material.html">Material</a> *&amp;selection, float spacing)</td></tr>
+<tr class="separator:a9f1d5c485acdd7f987fdefd02659d4ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d8a61cb034b481a828d3be399d05c08" id="r_a5d8a61cb034b481a828d3be399d05c08"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#a5d8a61cb034b481a828d3be399d05c08">Image</a> (unsigned int textureID, const glm::vec2 &amp;size, const glm::vec3 &amp;borderColor=glm::vec3(0, 0, 0), float borderAlpha=1.0f)</td></tr>
+<tr class="separator:a5d8a61cb034b481a828d3be399d05c08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae798fcc230b66eb6cfecc8fd5ababe69" id="r_ae798fcc230b66eb6cfecc8fd5ababe69"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#ae798fcc230b66eb6cfecc8fd5ababe69">Image</a> (unsigned int textureID, float size, const glm::vec3 &amp;borderColor=glm::vec3(0, 0, 0), float borderAlpha=1.0f)</td></tr>
+<tr class="separator:ae798fcc230b66eb6cfecc8fd5ababe69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31a6f534475c772649961346cfcc4221" id="r_a31a6f534475c772649961346cfcc4221"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#a31a6f534475c772649961346cfcc4221">ImageButton</a> (unsigned int textureID, const glm::vec2 &amp;size, const glm::vec3 &amp;tintColor=glm::vec3(0, 0, 0), float tintAlpha=1.0f)</td></tr>
+<tr class="separator:a31a6f534475c772649961346cfcc4221"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2b781ae8c9c27daf4c2fe2a7f76de9c" id="r_ad2b781ae8c9c27daf4c2fe2a7f76de9c"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#ad2b781ae8c9c27daf4c2fe2a7f76de9c">ImageButton</a> (unsigned int textureID, float size, const glm::vec3 &amp;tintColor=glm::vec3(0, 0, 0), float tintAlpha=1.0f)</td></tr>
+<tr class="separator:ad2b781ae8c9c27daf4c2fe2a7f76de9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3a7197c45572b831c7bb73f5fcf2d22" id="r_ad3a7197c45572b831c7bb73f5fcf2d22"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ad3a7197c45572b831c7bb73f5fcf2d22"><td class="memTemplItemLeft" align="right" valign="top">static bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#ad3a7197c45572b831c7bb73f5fcf2d22">Selectable</a> (const std::string &amp;label, T &amp;selValue, T thisValue, bool *wasPressed=nullptr, const glm::vec2 &amp;size=glm::vec2(0.0f))</td></tr>
+<tr class="separator:ad3a7197c45572b831c7bb73f5fcf2d22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d3ce69a791f06648da47f50e3b4603b" id="r_a2d3ce69a791f06648da47f50e3b4603b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a2d3ce69a791f06648da47f50e3b4603b"><td class="memTemplItemLeft" align="right" valign="top">static bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#a2d3ce69a791f06648da47f50e3b4603b">Deselectable</a> (const std::string &amp;label, T *&amp;selValue, T *thisValue, bool *wasPressed=nullptr, const glm::vec2 &amp;size=glm::vec2(0.0f))</td></tr>
+<tr class="separator:a2d3ce69a791f06648da47f50e3b4603b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05f5f1885de559e899b0976ced6613b8" id="r_a05f5f1885de559e899b0976ced6613b8"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#a05f5f1885de559e899b0976ced6613b8">Deselectable</a> (const std::string &amp;label, std::string &amp;selValue, std::string thisValue)</td></tr>
 <tr class="separator:a05f5f1885de559e899b0976ced6613b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaeb75317b9219ebabd24fe7ffe702aa9" id="r_aaeb75317b9219ebabd24fe7ffe702aa9"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#aaeb75317b9219ebabd24fe7ffe702aa9">Checkbox</a> (const std::string &amp;label, bool value)</td></tr>
 <tr class="separator:aaeb75317b9219ebabd24fe7ffe702aa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa774c9c595d334076b50b845af019313" id="r_aa774c9c595d334076b50b845af019313"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#aa774c9c595d334076b50b845af019313">InputText</a> (const std::string &amp;label, std::string value)</td></tr>
-<tr class="separator:aa774c9c595d334076b50b845af019313"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08ea0044f11267cfb6ea635c7cdb8891" id="r_a08ea0044f11267cfb6ea635c7cdb8891"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#a08ea0044f11267cfb6ea635c7cdb8891">InputInt</a> (const std::string &amp;label, int value)</td></tr>
-<tr class="separator:a08ea0044f11267cfb6ea635c7cdb8891"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ca71414036dea15721bb445de254a61" id="r_a6ca71414036dea15721bb445de254a61"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#a6ca71414036dea15721bb445de254a61">InputFloat</a> (const std::string &amp;label, float value)</td></tr>
-<tr class="separator:a6ca71414036dea15721bb445de254a61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1749b7eb2691148ba623ce3568a2cc29" id="r_a1749b7eb2691148ba623ce3568a2cc29"><td class="memItemLeft" align="right" valign="top">static glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#a1749b7eb2691148ba623ce3568a2cc29">InputVec3</a> (const std::string &amp;label, glm::vec3 value)</td></tr>
-<tr class="separator:a1749b7eb2691148ba623ce3568a2cc29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a19cd13f7ffe9e4b7fec86e6a01b9b868" id="r_a19cd13f7ffe9e4b7fec86e6a01b9b868"><td class="memItemLeft" align="right" valign="top">static glm::mat3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#a19cd13f7ffe9e4b7fec86e6a01b9b868">InputMat3</a> (const std::string &amp;label, const glm::mat3 &amp;value)</td></tr>
-<tr class="separator:a19cd13f7ffe9e4b7fec86e6a01b9b868"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac587cd9f867a97fa6bb29628c1fa293a" id="r_ac587cd9f867a97fa6bb29628c1fa293a"><td class="memItemLeft" align="right" valign="top">static glm::mat4&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#ac587cd9f867a97fa6bb29628c1fa293a">InputMat4</a> (const std::string &amp;label, const glm::mat4 &amp;value)</td></tr>
-<tr class="separator:ac587cd9f867a97fa6bb29628c1fa293a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8ea1d2cf408dc74cabc0ac30d53c2fc" id="r_ab8ea1d2cf408dc74cabc0ac30d53c2fc"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ab8ea1d2cf408dc74cabc0ac30d53c2fc"><td class="memTemplItemLeft" align="right" valign="top">static bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#ab8ea1d2cf408dc74cabc0ac30d53c2fc">InputName</a> (const std::string &amp;label, const std::string &amp;prevValue, std::string &amp;curValue, <a class="el" href="class_i_container.html">IContainer</a>&lt; T &gt; *container, ImGuiInputTextFlags flags=ImGuiInputTextFlags_None)</td></tr>
+<tr class="separator:ab8ea1d2cf408dc74cabc0ac30d53c2fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0f911cf0aff5ee338a07444ec83a5b7" id="r_ab0f911cf0aff5ee338a07444ec83a5b7"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#ab0f911cf0aff5ee338a07444ec83a5b7">InputText</a> (const std::string &amp;label, std::string value, bool *enterPressed=nullptr, ImGuiInputTextFlags flags=ImGuiInputTextFlags_None)</td></tr>
+<tr class="separator:ab0f911cf0aff5ee338a07444ec83a5b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae85f5c901fe1a991895e6b80fa2bba5f" id="r_ae85f5c901fe1a991895e6b80fa2bba5f"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#ae85f5c901fe1a991895e6b80fa2bba5f">InputInt</a> (const std::string &amp;label, int value, ImGuiInputTextFlags flags=ImGuiInputTextFlags_None)</td></tr>
+<tr class="separator:ae85f5c901fe1a991895e6b80fa2bba5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55cf2c954ba12b2ea9b41c5943ca26f3" id="r_a55cf2c954ba12b2ea9b41c5943ca26f3"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#a55cf2c954ba12b2ea9b41c5943ca26f3">InputFloat</a> (const std::string &amp;label, float value, ImGuiInputTextFlags flags=ImGuiInputTextFlags_None)</td></tr>
+<tr class="separator:a55cf2c954ba12b2ea9b41c5943ca26f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58f31707056084e912d1c05d8a2bc9c5" id="r_a58f31707056084e912d1c05d8a2bc9c5"><td class="memItemLeft" align="right" valign="top">static glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#a58f31707056084e912d1c05d8a2bc9c5">InputVec3</a> (const std::string &amp;label, glm::vec3 value, ImGuiInputTextFlags flags=ImGuiInputTextFlags_None)</td></tr>
+<tr class="separator:a58f31707056084e912d1c05d8a2bc9c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafaed92f7efdee45c5e9ef3f917958e1" id="r_aafaed92f7efdee45c5e9ef3f917958e1"><td class="memItemLeft" align="right" valign="top">static glm::mat3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#aafaed92f7efdee45c5e9ef3f917958e1">InputMat3</a> (const std::string &amp;label, const glm::mat3 &amp;value, ImGuiInputTextFlags flags=ImGuiInputTextFlags_None)</td></tr>
+<tr class="separator:aafaed92f7efdee45c5e9ef3f917958e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62ec62043496dbab3dc92eb8f5ceb514" id="r_a62ec62043496dbab3dc92eb8f5ceb514"><td class="memItemLeft" align="right" valign="top">static glm::mat4&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#a62ec62043496dbab3dc92eb8f5ceb514">InputMat4</a> (const std::string &amp;label, const glm::mat4 &amp;value, ImGuiInputTextFlags flags=ImGuiInputTextFlags_None)</td></tr>
+<tr class="separator:a62ec62043496dbab3dc92eb8f5ceb514"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c68b9bbbbe5a63c0934b20cf484bc30" id="r_a3c68b9bbbbe5a63c0934b20cf484bc30"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#a3c68b9bbbbe5a63c0934b20cf484bc30">DrawColor</a> (const glm::vec3 &amp;color, ImVec2 pos, float size)</td></tr>
 <tr class="separator:a3c68b9bbbbe5a63c0934b20cf484bc30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9787d0710623d0227ad44409be492b1" id="r_ae9787d0710623d0227ad44409be492b1"><td class="memItemLeft" align="right" valign="top">static glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#ae9787d0710623d0227ad44409be492b1">ColorPicker</a> (const std::string &amp;label, const glm::vec3 &amp;value)</td></tr>
 <tr class="separator:ae9787d0710623d0227ad44409be492b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:af006a69ffbb76b7acdf7c466018b7957" id="r_af006a69ffbb76b7acdf7c466018b7957"><td class="memItemLeft" align="right" valign="top">static const float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#af006a69ffbb76b7acdf7c466018b7957">TEXTURE_SIZE</a> = 256.0f</td></tr>
+<tr class="separator:af006a69ffbb76b7acdf7c466018b7957"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b981a95063007b2a0ad73570822d5b6" id="r_a8b981a95063007b2a0ad73570822d5b6"><td class="memItemLeft" align="right" valign="top">static const std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_u_i_window_utils.html#a8b981a95063007b2a0ad73570822d5b6">TEXTURE_TYPES</a> = { &quot;Diffuse&quot;, &quot;Ambient&quot;, &quot;Specular&quot;, &quot;Normal&quot;, &quot;Height&quot;, &quot;Alpha&quot; }</td></tr>
+<tr class="separator:a8b981a95063007b2a0ad73570822d5b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="aaeb75317b9219ebabd24fe7ffe702aa9" name="aaeb75317b9219ebabd24fe7ffe702aa9"></a>
@@ -150,6 +179,54 @@ Static Public Member Functions</h2></td></tr>
           <td></td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a126de292c17c6fbe01845c2f62ab6209" name="a126de292c17c6fbe01845c2f62ab6209"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a126de292c17c6fbe01845c2f62ab6209">&#9670;&#160;</a></span>ColorEdit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GUIWindowUtils::ColorEdit </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>label</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">glm::vec3 &amp;&#160;</td>
+          <td class="paramname"><em>color</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramname"><em>selColor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>spacing</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -244,8 +321,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ad6c2718609fb2710abcb59914d8acadd" name="ad6c2718609fb2710abcb59914d8acadd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad6c2718609fb2710abcb59914d8acadd">&#9670;&#160;</a></span>Deselectable() <span class="overload">[2/2]</span></h2>
+<a id="a2d3ce69a791f06648da47f50e3b4603b" name="a2d3ce69a791f06648da47f50e3b4603b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d3ce69a791f06648da47f50e3b4603b">&#9670;&#160;</a></span>Deselectable() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -271,7 +348,19 @@ template&lt;typename T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">T *&#160;</td>
-          <td class="paramname"><em>thisValue</em>&#160;</td>
+          <td class="paramname"><em>thisValue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool *&#160;</td>
+          <td class="paramname"><em>wasPressed</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const glm::vec2 &amp;&#160;</td>
+          <td class="paramname"><em>size</em> = <code>glm::vec2(0.0f)</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -330,8 +419,242 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a6ca71414036dea15721bb445de254a61" name="a6ca71414036dea15721bb445de254a61"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ca71414036dea15721bb445de254a61">&#9670;&#160;</a></span>InputFloat()</h2>
+<a id="a535f8b49e59d393065f4486b99a3d0c1" name="a535f8b49e59d393065f4486b99a3d0c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a535f8b49e59d393065f4486b99a3d0c1">&#9670;&#160;</a></span>Dropdown()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int GUIWindowUtils::Dropdown </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>label</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>options</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5d8a61cb034b481a828d3be399d05c08" name="a5d8a61cb034b481a828d3be399d05c08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d8a61cb034b481a828d3be399d05c08">&#9670;&#160;</a></span>Image() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GUIWindowUtils::Image </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>textureID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const glm::vec2 &amp;&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const glm::vec3 &amp;&#160;</td>
+          <td class="paramname"><em>borderColor</em> = <code>glm::vec3(0,&#160;0,&#160;0)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>borderAlpha</em> = <code>1.0f</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae798fcc230b66eb6cfecc8fd5ababe69" name="ae798fcc230b66eb6cfecc8fd5ababe69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae798fcc230b66eb6cfecc8fd5ababe69">&#9670;&#160;</a></span>Image() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GUIWindowUtils::Image </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>textureID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const glm::vec3 &amp;&#160;</td>
+          <td class="paramname"><em>borderColor</em> = <code>glm::vec3(0,&#160;0,&#160;0)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>borderAlpha</em> = <code>1.0f</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a31a6f534475c772649961346cfcc4221" name="a31a6f534475c772649961346cfcc4221"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31a6f534475c772649961346cfcc4221">&#9670;&#160;</a></span>ImageButton() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool GUIWindowUtils::ImageButton </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>textureID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const glm::vec2 &amp;&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const glm::vec3 &amp;&#160;</td>
+          <td class="paramname"><em>tintColor</em> = <code>glm::vec3(0,&#160;0,&#160;0)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>tintAlpha</em> = <code>1.0f</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad2b781ae8c9c27daf4c2fe2a7f76de9c" name="ad2b781ae8c9c27daf4c2fe2a7f76de9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2b781ae8c9c27daf4c2fe2a7f76de9c">&#9670;&#160;</a></span>ImageButton() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool GUIWindowUtils::ImageButton </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>textureID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const glm::vec3 &amp;&#160;</td>
+          <td class="paramname"><em>tintColor</em> = <code>glm::vec3(0,&#160;0,&#160;0)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>tintAlpha</em> = <code>1.0f</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a55cf2c954ba12b2ea9b41c5943ca26f3" name="a55cf2c954ba12b2ea9b41c5943ca26f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55cf2c954ba12b2ea9b41c5943ca26f3">&#9670;&#160;</a></span>InputFloat()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -349,7 +672,13 @@ template&lt;typename T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ImGuiInputTextFlags&#160;</td>
+          <td class="paramname"><em>flags</em> = <code>ImGuiInputTextFlags_None</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -366,8 +695,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a08ea0044f11267cfb6ea635c7cdb8891" name="a08ea0044f11267cfb6ea635c7cdb8891"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a08ea0044f11267cfb6ea635c7cdb8891">&#9670;&#160;</a></span>InputInt()</h2>
+<a id="ae85f5c901fe1a991895e6b80fa2bba5f" name="ae85f5c901fe1a991895e6b80fa2bba5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae85f5c901fe1a991895e6b80fa2bba5f">&#9670;&#160;</a></span>InputInt()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -385,7 +714,13 @@ template&lt;typename T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ImGuiInputTextFlags&#160;</td>
+          <td class="paramname"><em>flags</em> = <code>ImGuiInputTextFlags_None</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -402,8 +737,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a19cd13f7ffe9e4b7fec86e6a01b9b868" name="a19cd13f7ffe9e4b7fec86e6a01b9b868"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a19cd13f7ffe9e4b7fec86e6a01b9b868">&#9670;&#160;</a></span>InputMat3()</h2>
+<a id="aafaed92f7efdee45c5e9ef3f917958e1" name="aafaed92f7efdee45c5e9ef3f917958e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aafaed92f7efdee45c5e9ef3f917958e1">&#9670;&#160;</a></span>InputMat3()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -421,7 +756,13 @@ template&lt;typename T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const glm::mat3 &amp;&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ImGuiInputTextFlags&#160;</td>
+          <td class="paramname"><em>flags</em> = <code>ImGuiInputTextFlags_None</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -438,8 +779,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="ac587cd9f867a97fa6bb29628c1fa293a" name="ac587cd9f867a97fa6bb29628c1fa293a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac587cd9f867a97fa6bb29628c1fa293a">&#9670;&#160;</a></span>InputMat4()</h2>
+<a id="a62ec62043496dbab3dc92eb8f5ceb514" name="a62ec62043496dbab3dc92eb8f5ceb514"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62ec62043496dbab3dc92eb8f5ceb514">&#9670;&#160;</a></span>InputMat4()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -457,7 +798,13 @@ template&lt;typename T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const glm::mat4 &amp;&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ImGuiInputTextFlags&#160;</td>
+          <td class="paramname"><em>flags</em> = <code>ImGuiInputTextFlags_None</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -474,8 +821,64 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="aa774c9c595d334076b50b845af019313" name="aa774c9c595d334076b50b845af019313"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa774c9c595d334076b50b845af019313">&#9670;&#160;</a></span>InputText()</h2>
+<a id="ab8ea1d2cf408dc74cabc0ac30d53c2fc" name="ab8ea1d2cf408dc74cabc0ac30d53c2fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8ea1d2cf408dc74cabc0ac30d53c2fc">&#9670;&#160;</a></span>InputName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool GUIWindowUtils::InputName </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>label</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>prevValue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramname"><em>curValue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_i_container.html">IContainer</a>&lt; T &gt; *&#160;</td>
+          <td class="paramname"><em>container</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ImGuiInputTextFlags&#160;</td>
+          <td class="paramname"><em>flags</em> = <code>ImGuiInputTextFlags_None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab0f911cf0aff5ee338a07444ec83a5b7" name="ab0f911cf0aff5ee338a07444ec83a5b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0f911cf0aff5ee338a07444ec83a5b7">&#9670;&#160;</a></span>InputText()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -493,7 +896,19 @@ template&lt;typename T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool *&#160;</td>
+          <td class="paramname"><em>enterPressed</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ImGuiInputTextFlags&#160;</td>
+          <td class="paramname"><em>flags</em> = <code>ImGuiInputTextFlags_None</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -510,8 +925,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a1749b7eb2691148ba623ce3568a2cc29" name="a1749b7eb2691148ba623ce3568a2cc29"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1749b7eb2691148ba623ce3568a2cc29">&#9670;&#160;</a></span>InputVec3()</h2>
+<a id="a58f31707056084e912d1c05d8a2bc9c5" name="a58f31707056084e912d1c05d8a2bc9c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58f31707056084e912d1c05d8a2bc9c5">&#9670;&#160;</a></span>InputVec3()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -529,7 +944,61 @@ template&lt;typename T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">glm::vec3&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ImGuiInputTextFlags&#160;</td>
+          <td class="paramname"><em>flags</em> = <code>ImGuiInputTextFlags_None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9f1d5c485acdd7f987fdefd02659d4ec" name="a9f1d5c485acdd7f987fdefd02659d4ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f1d5c485acdd7f987fdefd02659d4ec">&#9670;&#160;</a></span>MaterialSelect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool GUIWindowUtils::MaterialSelect </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_material.html">Material</a> *&#160;</td>
+          <td class="paramname"><em>material</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_material.html">Material</a> *&amp;&#160;</td>
+          <td class="paramname"><em>selection</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>spacing</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -582,8 +1051,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="afbf0f9f93f04f85309e967f2fad1abfd" name="afbf0f9f93f04f85309e967f2fad1abfd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afbf0f9f93f04f85309e967f2fad1abfd">&#9670;&#160;</a></span>Selectable()</h2>
+<a id="ad3a7197c45572b831c7bb73f5fcf2d22" name="ad3a7197c45572b831c7bb73f5fcf2d22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3a7197c45572b831c7bb73f5fcf2d22">&#9670;&#160;</a></span>Selectable()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -609,12 +1078,137 @@ template&lt;typename T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>thisValue</em>&#160;</td>
+          <td class="paramname"><em>thisValue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool *&#160;</td>
+          <td class="paramname"><em>wasPressed</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const glm::vec2 &amp;&#160;</td>
+          <td class="paramname"><em>size</em> = <code>glm::vec2(0.0f)</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
           <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae664c280f8ab768571b72881193003ad" name="ae664c280f8ab768571b72881193003ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae664c280f8ab768571b72881193003ad">&#9670;&#160;</a></span>TextureEdit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GUIWindowUtils::TextureEdit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_texture.html">Texture</a> *&#160;</td>
+          <td class="paramname"><em>texture</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab3f4e2d1ec27cad0cf953b361ddd726f" name="ab3f4e2d1ec27cad0cf953b361ddd726f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3f4e2d1ec27cad0cf953b361ddd726f">&#9670;&#160;</a></span>TextureSelect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool GUIWindowUtils::TextureSelect </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_texture.html">Texture</a> *&#160;</td>
+          <td class="paramname"><em>texture</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_texture.html">Texture</a> *&amp;&#160;</td>
+          <td class="paramname"><em>selection</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="af006a69ffbb76b7acdf7c466018b7957" name="af006a69ffbb76b7acdf7c466018b7957"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af006a69ffbb76b7acdf7c466018b7957">&#9670;&#160;</a></span>TEXTURE_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const float GUIWindowUtils::TEXTURE_SIZE = 256.0f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8b981a95063007b2a0ad73570822d5b6" name="a8b981a95063007b2a0ad73570822d5b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b981a95063007b2a0ad73570822d5b6">&#9670;&#160;</a></span>TEXTURE_TYPES</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;std::string&gt; GUIWindowUtils::TEXTURE_TYPES = { &quot;Diffuse&quot;, &quot;Ambient&quot;, &quot;Specular&quot;, &quot;Normal&quot;, &quot;Height&quot;, &quot;Alpha&quot; }</td>
         </tr>
       </table>
   </td>

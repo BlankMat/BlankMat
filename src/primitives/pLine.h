@@ -16,9 +16,9 @@ public:
             mVertices[1] = end;
     }
 
-    PLine(const std::string& name, const glm::vec3& start, const glm::vec3& end, Material* material, const float lineWidth, const bool drawOver = true,
+    PLine(const std::string& name, const std::string& scope, const glm::vec3& start, const glm::vec3& end, Material* material, const float lineWidth, const bool drawOver = true,
         const glm::vec3& pos = glm::vec3(0.0f), const glm::vec3& rot = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f))
-        : IPrimitive(name, material, lineWidth, drawOver, pos, rot, scale)
+        : IPrimitive(name, scope, material, lineWidth, drawOver, pos, rot, scale)
     {
         mVertices.push_back(start);
         mVertices.push_back(end);

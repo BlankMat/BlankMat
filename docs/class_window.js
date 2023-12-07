@@ -13,6 +13,9 @@ var class_window =
     [ "GetState", "class_window.html#a8bbb10a5af24821e3611287109117b2b", null ],
     [ "GetWidth", "class_window.html#a451bdfeab37afce97712f23f5c2492aa", null ],
     [ "GetWindow", "class_window.html#ad7e49197526473b23c01ecc9cd2292d2", null ],
+    [ "IsGUIOpen", "class_window.html#ab229f315b17c33148aafcfda7e6a785e", null ],
+    [ "LoadGUIs", "class_window.html#aca03e640d0ac00dfbc0c102de0e4f551", null ],
+    [ "OpenGUI", "class_window.html#a8fee7022c4e57eb126c92eeb01db805a", null ],
     [ "Quit", "class_window.html#a57d28573876dd89be70cd78b9302f461", null ],
     [ "ResetViewport", "class_window.html#af5a7899f142f4fdc2cd46bea6ccf366e", null ],
     [ "UpdateWindowTitle", "class_window.html#a3d228854818c6cb4880ce330b9fd623c", null ]

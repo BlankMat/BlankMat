@@ -1,6 +1,8 @@
 var class_i_primitive =
 [
-    [ "IPrimitive", "class_i_primitive.html#ab335048e9ae043806e3d820ed1379f38", null ],
+    [ "IPrimitive", "class_i_primitive.html#aed238bd90f048df91e7b4a802f8bec81", null ],
+    [ "IPrimitive", "class_i_primitive.html#adad89f49c971a4b0b03f5f03500cab77", null ],
+    [ "~IPrimitive", "class_i_primitive.html#a15d7c1e7c27d0dd2b27a33231680b017", null ],
     [ "Draw", "class_i_primitive.html#a61d1f4ed08f434cab1f4d39b6868b629", null ],
     [ "DrawShadows", "class_i_primitive.html#af341b16664ea4d63b3025d7ac332389c", null ],
     [ "GenBuffers", "class_i_primitive.html#a384a6be932d94ddb889989cd7478a00f", null ],

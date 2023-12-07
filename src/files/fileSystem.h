@@ -18,7 +18,7 @@ public:
 private:
     static Builder GetPathBuilder()
     {
-        if (ROOT_DIR != "")
+        if (strcmp(ROOT_DIR, ""))
             return &FileSystem::GetPathRelativeRoot;
         else
             return &FileSystem::GetPathRelativeBinary;

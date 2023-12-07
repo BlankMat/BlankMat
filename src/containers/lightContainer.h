@@ -1,16 +1,29 @@
 #pragma once
 #include "rendering/light.h"
+#include "primitives/pLightCube.h"
 #include "interfaces/iContainer.h"
+#include "containers/materialContainer.h"
+#include "containers/textureContainer.h"
 
 class LightContainer : public IContainer<Light>
 {
 protected:
 	/// <summary>
+	/// Renames the given item to the given name
+	/// </summary>
+	/// <param name="item">Item to rename</param>
+	void RenameItem(Light* item, const std::string& name) override
+	{
+		item->SetName(name);
+	}
+
+	/// <summary>
 	/// Reads the next item from the input file stream
 	/// </summary>
+	/// <param name="scope">Scope to read item in</param>
 	/// <param name="file">File to read</param>
 	/// <returns>Newly constructed item from file</returns>
-	const std::pair<std::string, Light*> ReadItem(std::ifstream& file) override
+	const std::pair<std::string, Light*> ReadItem(const std::string& scope, std::ifstream& file) override
 	{
 		// Set up variables to store read information
 		std::string name = "global";
@@ -22,6 +35,7 @@ protected:
 		float ka = 0.1f;
 		float ks = 1.0f;
 		bool gamma = false;
+		bool cube = false;
 		float range = 30.0f;
 		float spotInner = 25.0f;
 		float spotOuter = 35.0f;
@@ -42,33 +56,39 @@ protected:
 				break;
 
 			// Parse lines
-			if (parse[0] == "LIGHT")
-				name = parse[1];
-			if (parse[0] == "type")
+			if (parse[0] == "LIGHT" && parse.size() > 1)
+				name = Scope(parse[1], scope);
+			if (parse[0] == "type" && parse.size() > 1)
 				type = (LightType)std::stoi(parse[1]);
-			else if (parse[0] == "pos")
+			if (parse[0] == "cube" && parse.size() > 1)
+				cube = (parse[1] == "1");
+			else if (parse[0] == "pos" && parse.size() > 3)
 				pos = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "dir")
+			else if (parse[0] == "dir" && parse.size() > 3)
 				dir = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "color")
+			else if (parse[0] == "color" && parse.size() > 3)
 				color = ReadVec3FromStrings(parse, 1);
-			else if (parse[0] == "kd")
+			else if (parse[0] == "kd" && parse.size() > 1)
 				kd = std::stof(parse[1]);
-			else if (parse[0] == "ka")
+			else if (parse[0] == "ka" && parse.size() > 1)
 				ka = std::stof(parse[1]);
-			else if (parse[0] == "ks")
+			else if (parse[0] == "ks" && parse.size() > 1)
 				ks = std::stof(parse[1]);
-			else if (parse[0] == "gamma")
+			else if (parse[0] == "gamma" && parse.size() > 1)
 				gamma = (parse[1] == "1");
-			else if (parse[0] == "range")
+			else if (parse[0] == "range" && parse.size() > 1)
 				range = std::stof(parse[1]);
-			else if (parse[0] == "spotouter")
+			else if (parse[0] == "spotouter" && parse.size() > 1)
 				spotOuter = std::stof(parse[1]);
-			else if (parse[0] == "spotinner")
+			else if (parse[0] == "spotinner" && parse.size() > 1)
 				spotInner = std::stof(parse[1]);
 		}
 
-		return std::pair<std::string, Light*>(name, new Light(type, pos, dir, color, kd, ka, ks, gamma, range, spotInner, spotOuter));
+		// If the light stored was a lightcube, construct that instead
+		if (cube)
+			return std::pair<std::string, Light*>(name, new PLightCube(UnscopeName(name), UnscopeScope(name), type, pos, dir, color, kd, ka, ks, gamma, range, spotInner, spotOuter));
+		else
+			return std::pair<std::string, Light*>(name, new Light(UnscopeName(name), UnscopeScope(name), type, pos, dir, color, kd, ka, ks, gamma, range, spotInner, spotOuter));
 	}
 
 	/// <summary>
@@ -81,6 +101,7 @@ protected:
 	{
 		file << "LIGHT " << key << std::endl;
 		file << "type " << (int)item->GetType() << std::endl;
+		file << "cube " << (int)item->IsCube() << std::endl;
 		file << "pos " << Vec3ToString(item->GetPos()) << std::endl;
 		file << "dir " << Vec3ToString(item->GetDir()) << std::endl;
 		file << "color " << Vec3ToString(item->GetColor()) << std::endl;
@@ -93,6 +114,27 @@ protected:
 		file << "spotouter " << item->GetSpotOuterRadius() << std::endl;
 	}
 public:
+	/// <summary>
+	/// Returns whether the given item is deletable (ie. not a default element or internal)
+	/// </summary>
+	/// <param name="item">Item to consider</param>
+	/// <returns>Whether the item can be deleted safely</returns>
+	virtual bool IsDeleteable(Light* item)
+	{
+		return (Count() > 1 && item->GetScopedName() != "global");
+	}
+
+	/// <summary>
+	/// Loads all materials of lights, if they have any
+	/// </summary>
+	/// <param name="materials">Material list</param>
+	/// <param name="textures">Texture list</param>
+	void LoadMaterials(MaterialContainer* materials, TextureContainer* textures)
+	{
+		for (auto iter = mData.begin(); iter != mData.end(); ++iter)
+			iter->second->LoadMaterials(materials, textures);
+	}
+
 	/// <summary>
 	/// Draws all lights that are renderable
 	/// </summary>

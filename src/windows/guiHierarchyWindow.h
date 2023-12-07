@@ -1,7 +1,7 @@
 #pragma once
-#include "iGUIWindow.h"
+#include "interfaces/iGUIWindow.h"
 #include "guiWindowUtils.h"
-#include "tools/state.h"
+#include "interaction/state.h"
 #include "rendering/scene.h"
 #include <set>
 
@@ -15,12 +15,16 @@ protected:
     // Render one row of the hierarchy
     void RenderSelectable(IEntity*& selEntity, IEntity* curEntity, const std::string& depthMarker)
     {
+        // Don't render null entities
+        if (curEntity == nullptr)
+            return;
+
         // Add checkbox for enabling or disabling elements
-        curEntity->Enable(
-            GUIWindowUtils::Checkbox("##entity" + curEntity->GetName(), curEntity->IsEnabled()));
+        std::string name = (mState->collapseScope) ? curEntity->GetUnscopedName() : curEntity->GetScopedName();
+        curEntity->Enable(GUIWindowUtils::Checkbox("##entity" + curEntity->GetScopedName(), curEntity->IsEnabled()));
         ImGui::SameLine();
 
-        GUIWindowUtils::Deselectable(depthMarker + curEntity->GetName(), selEntity, curEntity);
+        GUIWindowUtils::Deselectable(depthMarker + name + "##" + curEntity->GetScopedName(), selEntity, curEntity);
     }
 
     // Recursively renders the node and its children
@@ -35,10 +39,17 @@ protected:
         for (int k = 0; k < depth; k++)
             depthMarker += "  ";
 
+        // If the node only holds a single mesh, render the mesh instead of the node
+        if (mState->collapseMeshNodes && node->ChildCount() == 0 && node->MeshCount() == 1)
+        {
+            RenderSelectable(selEntity, node->GetMesh(0), depthMarker + "+  ");
+            return;
+        }
+
         // Mark this node
         bool isSelected = (IEntity::GetNameNullSafe(node) == IEntity::GetNameNullSafe(selEntity));
-        bool isExpanded = (mExpandedNodes.find(node) != mExpandedNodes.end());
-        char* nodeMarker = isExpanded ? "v  " : ">  ";
+        bool isExpanded = mExpandedNodes.contains(node) || mState->expandAllNodes;
+        const char* nodeMarker = isExpanded ? "v  " : ">  ";
         RenderSelectable(selEntity, node, depthMarker + nodeMarker);
 
         // Toggle node expanded status on right click
@@ -48,7 +59,7 @@ protected:
                 mExpandedNodes.erase(node);
             else
                 mExpandedNodes.insert(node);
-            isExpanded = (mExpandedNodes.find(node) != mExpandedNodes.end());
+            isExpanded = mExpandedNodes.contains(node);
         }
 
         // If the node is not expanded, skip it
@@ -71,20 +82,51 @@ protected:
             RenderNode(selEntity, node->GetChild(i), depth + 1);
         }
     }
+
+    void RenderNodeBase(IEntity*& selEntity, Node* node)
+    {
+        // Render all meshes of the node
+        for (unsigned int j = 0; j < node->MeshCount(); j++)
+        {
+            // Get mesh
+            IEntity* mesh = node->GetMesh(j);
+            if (mesh == nullptr)
+                continue;
+            RenderSelectable(selEntity, mesh, "+  ");
+        }
+        // Render all child nodes of the node
+        for (unsigned int i = 0; i < node->ChildCount(); i++)
+            RenderNode(selEntity, node->GetChild(i), 0);
+    }
 public:
     void Draw() override
     {
         if (!mIsEnabled)
             return;
 
-        if (ImGui::Begin("Hierarchy", &mIsEnabled, ImGuiWindowFlags_AlwaysAutoResize))
+        if (ImGui::Begin("Hierarchy", &mIsEnabled, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar))
         {
+            if (ImGui::BeginMenuBar())
+            {
+                if (ImGui::BeginMenu("Options"))
+                {
+                    if (ImGui::MenuItem("Collapse Mesh Nodes"))
+                        mState->ToggleCollapseMeshNodes();
+                    if (ImGui::MenuItem("Collapse Scope"))
+                        mState->ToggleCollapseScope();
+                    if (ImGui::MenuItem("Expand All"))
+                        mState->ToggleExpandAllNodes();
+                    ImGui::EndMenu();
+                }
+                ImGui::EndMenuBar();
+            }
+
             Node* root = mScene->GetRootNode();
             IEntity* selEntity = mState->GetSel()->GetSelectedEntity();
             if (ImGui::BeginListBox("##HierarchyRoot"))
             {
                 IEntity* prevSel = selEntity;
-                RenderNode(selEntity, root, 0);
+                RenderNodeBase(selEntity, root);
                 if (prevSel != selEntity)
                     mState->GetSel()->SelectEntity(selEntity);
                 ImGui::EndListBox();

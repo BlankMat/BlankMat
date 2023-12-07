@@ -1,11 +1,13 @@
 #pragma once
 #include "glIncludes.h"
+#include "interfaces/iSelectable.h"
 #include "rendering/shader.h"
 #include "rendering/material.h"
 #include "containers/materialContainer.h"
-#include "tools/state.h"
+#include "interaction/state.h"
 
-class IEntity {
+class IEntity : public ISelectable
+{
 protected:
 	unsigned int mVAO = 0;
 	unsigned int mVBO = 0;
@@ -22,7 +24,6 @@ protected:
 	bool mIsEnabled = true;
 	bool mIsEnabledSelf = true;
 	bool mIsEnabledParent = true;
-	std::string mName = "";
 
 	Material* mMaterial = nullptr;
 	std::string mMaterialName = "";
@@ -73,8 +74,6 @@ public:
 	virtual const glm::vec3 GetScale() { return mScale; }
 	// Gets the material of the object
 	virtual Material* GetMaterial() { return mMaterial; }
-	// Returns the name of the object
-	virtual const std::string GetName() { return mName; }
 
 	// Returns the up vector of the object
 	const glm::vec3 GetUp() { return mUp; }
@@ -149,14 +148,22 @@ public:
 	}
 
 	// Sets the material of the object
-	virtual void SetMaterial(Material* material) { mMaterial = material; }
-	// Sets the name of the object
-	void SetName(const std::string& name) { mName = name; }
+	virtual void SetMaterial(Material* material)
+	{
+		mMaterial = material;
+	}
 
 	// Returns whether the object is enabled
-	bool IsEnabled() { return mIsEnabledSelf; }
+	bool IsEnabled()
+	{
+		return mIsEnabledSelf;
+	}
+
 	// Returns whether the object is enabled in hierarchy
-	bool IsEnabledInHierarchy() { return mIsEnabled; }
+	bool IsEnabledInHierarchy()
+	{
+		return mIsEnabled;
+	}
 
 	// Enables or disables the object
 	void Enable(bool shouldEnable = true)
@@ -220,18 +227,22 @@ public:
 	}
 
 	//
-	IEntity(const std::string& name = "", Material* material = nullptr, bool drawOver = false,
+	IEntity(const std::string& name = "", const std::string& scope = "", Material* material = nullptr, bool drawOver = false,
 		const glm::vec3& pos = glm::vec3(0.0f), const glm::vec3& rot = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f))
-		: mName(name), mMaterial(material), mDrawOver(drawOver), mPos(pos), mRot(rot), mScale(scale)
+		: mMaterial(material), mDrawOver(drawOver), mPos(pos), mRot(rot), mScale(scale)
 	{
+		InitName(name, scope);
+		mSelectableType = SelectableType::ENTITY;
 		CalcBasis();
 	}
 
 	//
-	IEntity(const std::string& name, const std::string& material, bool drawOver = false,
+	IEntity(const std::string& name, const std::string& scope, const std::string& material, bool drawOver = false,
 		const glm::vec3& pos = glm::vec3(0.0f), const glm::vec3& rot = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f))
-		: mName(name), mMaterialName(material), mDrawOver(drawOver), mPos(pos), mRot(rot), mScale(scale)
+		: mMaterialName(material), mDrawOver(drawOver), mPos(pos), mRot(rot), mScale(scale)
 	{
+		InitName(name, scope);
+		mSelectableType = SelectableType::ENTITY;
 		CalcBasis();
 	}
 
@@ -243,5 +254,8 @@ public:
 	}
 
 	// Returns the name of the entity, or "null" if nullptr
-	static const std::string GetNameNullSafe(IEntity* entity) { return (entity != nullptr) ? entity->GetName() : "null"; }
+	static const std::string GetNameNullSafe(IEntity* entity)
+	{
+		return (entity != nullptr) ? entity->GetScopedName() : "null";
+	}
 };

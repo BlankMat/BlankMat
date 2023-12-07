@@ -4,9 +4,9 @@
 class PPlane : public IPrimitive<glm::vec3, glm::uvec3>
 {
 public:
-    PPlane(const std::string& name, const float size, const bool doubleSided, Material* material, const bool drawOver,
+    PPlane(const std::string& name, const std::string& scope, const float size, const bool doubleSided, Material* material, const bool drawOver,
         const glm::vec3& pos = glm::vec3(0.0f), const glm::vec3& rot = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f))
-        : IPrimitive(name, material, 0.0f, drawOver, pos, rot, scale)
+        : IPrimitive(name, scope, material, 0.0f, drawOver, pos, rot, scale)
     {
         // Generate verts of plane
         float h = size * 0.5f;

@@ -10,25 +10,14 @@ out VS_OUT {
     vec3 Normal;
 } vs_out;
 
-struct Light {
-    vec3 position;
-
-    vec3 ambient;
-    vec3 diffuse;
-    vec3 specular;
-};
-
 uniform mat4 MVP;
 uniform mat4 Model;
 uniform mat3 NormalModel;
-
-uniform Light light;
-uniform vec3 viewPos;
 
 void main()
 {
 	vs_out.FragPos = vec3(Model * vec4(aPos, 1.0));
 	vs_out.TexCoords = aTexCoords;
-	vs_out.Normal = aNorm;
+	vs_out.Normal = NormalModel * aNorm;
 	gl_Position = MVP * vec4(aPos, 1.0);
 }

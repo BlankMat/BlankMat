@@ -20,14 +20,23 @@
 #include "containers/entityContainer.h"
 #include "containers/meshContainer.h"
 #include <unordered_map>
+#include <unordered_set>
+
+enum class LightingMode
+{
+	UNLIT = 0,
+	FLAT,
+	LIT,
+	TEXTURED,
+	WIREFRAME
+};
 
 class Window;
 
-class Scene
+class Scene : public INameable
 {
 protected:
 	std::string mDirectory = "";
-	std::string mName = "";
 
 	IEntity* mGrid = nullptr;
 	IEntity* mTransformHandle = nullptr;
@@ -42,9 +51,11 @@ protected:
 	Shader* mShader = nullptr;
 	Node* mRootNode = nullptr;
 	State* mState = nullptr;
+	LightingMode mMode = LightingMode::FLAT;
+	static const inline float WIREFRAME_LINE = 0.5f;
 
 	std::unordered_map<std::string, EntityContainer*> mMeshRenderList;
-	std::unordered_map<std::string, EntityContainer*> mEntityList;
+	std::unordered_set<std::string> mScopes;
 	
 	TextureContainer* mTextures = nullptr;
 	MaterialContainer* mMaterials = nullptr;
@@ -55,13 +66,19 @@ protected:
 	EntityContainer* mEntities = nullptr;
 
 	// Loads the material of the given config. Must be bottom-level config
-	Material* LoadMaterial(Config* config, const std::string& name);
+	Material* LoadMaterial(Config* config, const std::string& name, const std::string& scope);
 
 	// Loads the given texture or returns the existing one
-	Texture* LoadTexture(TextureType type, const std::string& path, const std::string& defaultName);
+	Texture* LoadTexture(TextureType type, const std::string& path, const std::string& scope, const std::string& defaultName);
+
+	// Enables or disables wireframe
+	void HandleWireframe();
 
 	// Returns the projection matrix of the view axis handle
 	const glm::mat4& GetViewAxisProjection(Window* window);
+
+	// Recursively deletes the contents of the node (children and meshes)
+	void DeleteNodeContents(Node* node);
 public:
 	// Renders the current scene
 	void Draw(Window* window, Shader* shader);
@@ -114,6 +131,12 @@ public:
 	// Returns the scene's directory
 	std::string GetDirectory();
 
+	// Returns the current shader
+	const std::string GetCurShader();
+
+	// Returns the root node
+	Node* GetRootNode();
+
 	// Returns the shader with the given name
 	Shader* GetShader(const std::string& name);
 
@@ -126,26 +149,38 @@ public:
 	// Returns the material with the given name
 	Texture* GetTexture(const std::string& name);
 
-	// Returns the entity with the given name
-	IEntity* GetEntity(const std::string& name);
-
 	// Returns the transform handle
 	IEntity* GetTransformHandle();
 
 	// Returns the state of the application
 	State* GetState();
 
+	// Returns the lighting mode of the application
+	LightingMode GetLightingMode();
+
+	// Returns a unique scope, using the given name as the starting point
+	std::string GetUniqueScope(const std::string& scope);
+
+	// Returns whether the given scope is active in the scene
+	bool IsScopeActive(const std::string& scope);
+
 	// Adds the given node to the scene
 	void AddNode(Node* node);
 
 	// Adds the given mesh to the scene as child of the given node
-	void AddMesh(Mesh* mesh, Node* parent = nullptr);
+	Mesh* AddMesh(Mesh* mesh, Node* parent = nullptr);
 
 	// Adds the given camera to the scene
-	void AddCamera(const std::string& name, Camera* camera, bool select = false);
+	Camera* AddCamera(const std::string& name, Camera* camera, bool select = false, bool replace = false);
 
 	// Adds the given light to the scene
-	void AddLight(const std::string& name, Light* light, bool select = false);
+	Light* AddLight(const std::string& name, Light* light, bool select = false, bool replace = false);
+
+	// Adds a texture to the scene's texture list
+	Texture* AddTexture(const std::string& name, Texture* texture, bool replace = false);
+
+	// Adds a material to the scene's material list
+	Material* AddMaterial(const std::string& name, Material* material, bool replace = false);
 
 	// Creates a shader for the scene with the given name from the source file of the given name
 	Shader* CreateShader(const std::string& name, bool loadGeom);
@@ -156,6 +191,18 @@ public:
 	// Creates a shader for the scene with the given name, loading it from a config
 	Shader* CreateShader(const std::string& name, Config* config);
 
+	// Deletes the given mesh
+	void DeleteMesh(Mesh* mesh);
+
+	// Deletes the given node
+	void DeleteNode(Node* node);
+
+	// Delete the given item
+	void DeleteSelectable(ISelectable* item);
+
+	// Deletes the current selection
+	void DeleteSelection();
+
 	// Updates the scene's material render list
 	void UpdateRenderList();
 	
@@ -165,14 +212,8 @@ public:
 	// Translates the current camera by the given delta
 	void TranslateCamera(const glm::vec3& delta);
 
-	// Returns the root node
-	Node* GetRootNode();
-	
 	// Sets the root node
 	void SetRootNode(Node* rootNode);
-
-	// Returns the current shader
-	const std::string GetCurShader();
 
 	// Sets the scene's camera to the given camera
 	void SetCamera(const std::string& camera);
@@ -186,14 +227,8 @@ public:
 	// Sets the scene's directory
 	void SetDirectory(const std::string& dir);
 
-	// Adds an entity to the scene's render list
-	IEntity* AddEntity(const std::string& shaderName, IEntity* entity, bool preRender = false);
-
-	// Adds a texture to the scene's texture list
-	Texture* AddTexture(const std::string& name, Texture* texture);
-
-	// Adds a material to the scene's material list
-	Material* AddMaterial(const std::string& name, Material* material);
+	// Sets the lighting mode of the scene
+	void SetLightingMode(LightingMode mode);
 
 	// Sets the material of the given entity
 	void SetEntityMaterial(IEntity* entity, Material* material);
@@ -209,6 +244,9 @@ public:
 
 	// Clears the scene completely
 	void Clear();
+
+	// Clears all items that would render
+	void ClearRendering();
 
 	// Constructs the scene, getting everything ready for manual setting
 	Scene(State* state);
