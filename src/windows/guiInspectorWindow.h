@@ -95,14 +95,16 @@ protected:
 		if (mNewMat != nullptr)
 		{
 			mNewMat = nullptr;
-			mState->materialInEdit = &mNewMat;
+			mState->isEditingMaterial = true;
+			mState->materialInEdit = nullptr;
 		}
 
 		// Update material
-		if (mState->materialInEdit != nullptr && *mState->materialInEdit != nullptr)
+		if (mState->materialInEdit != nullptr && mState->isEditingMaterial)
 		{
-			element->SetMaterial(*mState->materialInEdit);
+			element->SetMaterial(mState->materialInEdit);
 			mState->materialInEdit = nullptr;
+			mState->isEditingMaterial = false;
 		}
 	}
 

@@ -13,24 +13,29 @@ protected:
 public:
     void Draw() override
     {
-        bool enabled = mIsEnabled && mState->materialInEdit != nullptr;
-        if (ImGui::Begin("Material Picker", &enabled, ImGuiWindowFlags_AlwaysAutoResize))
+        if (ImGui::Begin("Material Picker", &mIsEnabled, ImGuiWindowFlags_AlwaysAutoResize))
         {
-            // List all textures for choosing
-            const auto& materials = mScene->GetMaterials()->Data();
-            for (auto iter = materials.begin(); iter != materials.end(); ++iter)
+            if (mState->isEditingMaterial)
             {
-                GUIWindowUtils::MaterialSelect(iter->first, iter->second, mCurSelectedMaterial, 5.0f);
-            }
+                // List all textures for choosing
+                const auto& materials = mScene->GetMaterials()->Data();
+                for (auto iter = materials.begin(); iter != materials.end(); ++iter)
+                {
+                    GUIWindowUtils::MaterialSelect(iter->first, iter->second, mCurSelectedMaterial, 5.0f);
+                }
 
-            // If any material was chosen, update the requested material
-            if (mState->materialInEdit != nullptr && mCurSelectedMaterial != nullptr)
+                // If any material was chosen, update the requested material
+                if (mState->isEditingMaterial && mCurSelectedMaterial != nullptr)
+                {
+                    mState->materialInEdit = mCurSelectedMaterial;
+                }
+            }
+            else
             {
-                *mState->materialInEdit = mCurSelectedMaterial;
-                mCurSelectedMaterial = nullptr;
-                mState->materialInEdit = nullptr;
+                ImGui::Text("Select material to edit");
             }
         }
+        ImGui::End();
     }
 
     GUIMaterialPicker(State* state, Scene* scene, bool isEnabled)

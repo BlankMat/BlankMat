@@ -13,24 +13,29 @@ protected:
 public:
     void Draw() override
     {
-        bool enabled = mIsEnabled && mState->textureInEdit != nullptr;
-        if (ImGui::Begin("Texture Picker", &enabled, ImGuiWindowFlags_AlwaysAutoResize))
+        if (ImGui::Begin("Texture Picker", &mIsEnabled, ImGuiWindowFlags_AlwaysAutoResize))
         {
-            // List all textures for choosing
-            const auto& textures = mScene->GetTextures()->Data();
-            for (auto iter = textures.begin(); iter != textures.end(); ++iter)
+            if (mState->isEditingTexture)
             {
-                GUIWindowUtils::TextureSelect(iter->first, iter->second, mCurSelectedTexture);
-            }
+                // List all textures for choosing
+                const auto& textures = mScene->GetTextures()->Data();
+                for (auto iter = textures.begin(); iter != textures.end(); ++iter)
+                {
+                    GUIWindowUtils::TextureSelect(iter->first, iter->second, mCurSelectedTexture);
+                }
 
-            // If any texture was chosen, update the requested texture
-            if (mState->textureInEdit != nullptr && mCurSelectedTexture != nullptr)
+                // If any texture was chosen, update the requested texture
+                if (mState->isEditingTexture && mCurSelectedTexture != nullptr)
+                {
+                    mState->textureInEdit = mCurSelectedTexture;
+                }
+            }
+            else
             {
-                *mState->textureInEdit = mCurSelectedTexture;
-                mCurSelectedTexture = nullptr;
-                mState->textureInEdit = nullptr;
+                ImGui::Text("Select texture to edit");
             }
         }
+        ImGui::End();
     }
 
     GUITexturePicker(State* state, Scene* scene, bool isEnabled)
