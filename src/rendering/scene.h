@@ -230,6 +230,9 @@ public:
 	// Sets the lighting mode of the scene
 	void SetLightingMode(LightingMode mode);
 
+	// Sets the material of the given node
+	void SetNodeMaterial(Node* node, Material* material);
+
 	// Sets the material of the given entity
 	void SetEntityMaterial(IEntity* entity, Material* material);
 

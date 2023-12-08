@@ -13,11 +13,10 @@ protected:
 public:
     void Draw() override
     {
-        if (!mIsEnabled || !mState->isEditingMaterial)
+        if (!mIsEnabled || !mState->GetSel()->IsSelectingMaterial())
             return;
 
-        bool enabled = mIsEnabled && mState->isEditingMaterial;
-        if (ImGui::Begin("Material Picker", &enabled, ImGuiWindowFlags_AlwaysAutoResize))
+        if (ImGui::Begin("Material Picker", &mIsEnabled, ImGuiWindowFlags_AlwaysAutoResize))
         {
             // List all textures for choosing
             const auto& materials = mScene->GetMaterials()->Data();
@@ -29,9 +28,9 @@ public:
             }
 
             // If any material was chosen, update the requested material
-            if (mState->isEditingMaterial && mCurSelectedMaterial != nullptr)
+            if (mCurSelectedMaterial != nullptr)
             {
-                mState->materialInEdit = mCurSelectedMaterial;
+                mState->GetSel()->SetMaterialInSelect(mCurSelectedMaterial);
                 mCurSelectedMaterial = nullptr;
             }
         }

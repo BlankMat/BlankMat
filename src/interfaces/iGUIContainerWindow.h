@@ -38,11 +38,9 @@ protected:
         {
             return ImGui::Selectable((" - ##RemoveItem" + name).c_str(), false, ImGuiSelectableFlags_None, size);
         }
-        else
+        else 
         {
-            //ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f, 0.0f, 0.0f, 0.1f));
-            ImGui::Selectable(("##DontRemoveItem" + name).c_str(), false, ImGuiSelectableFlags_Disabled, size);
-            //ImGui::PopStyleColor();
+            ImGui::Selectable((".##DontRemoveItem" + name).c_str(), false, ImGuiSelectableFlags_Disabled, size);
             return false;
         }
     }

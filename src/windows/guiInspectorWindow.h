@@ -16,6 +16,7 @@ protected:
 
 	Material* mNewMat = nullptr;
 	Texture* mNewTexture = nullptr;
+	TextureType mNewTextureType = TextureType::DIFFUSE;
 
 	const static inline float TEXTURE_SIZE = 256.0f;
 	const static inline std::vector<std::string> TEXTURE_TYPES = { "Diffuse", "Ambient", "Specular", "Normal", "Height", "Alpha" };
@@ -91,18 +92,18 @@ protected:
 		element->Enable(GUIWindowUtils::Checkbox("Enabled", element->IsEnabled()));
 
 		// Material
-		GUIWindowUtils::MaterialSelect("Material: " + element->GetMaterial()->GetScopedName(), element->GetMaterial(), mNewMat, 5.0f);
-		if (mNewMat != nullptr)
+		std::string matName = (element->GetMaterial() != nullptr ? element->GetMaterial()->GetScopedName() : "none");
+		if (GUIWindowUtils::MaterialSelect("Material: " + matName, element->GetMaterial(), mNewMat, 5.0f))
 		{
-			mState->isEditingMaterial = true;
+			mState->GetSel()->SetIsSelectingMaterial(true);
 		}
 
 		// Update material
-		if (mState->materialInEdit != nullptr && mState->isEditingMaterial)
+		if (mState->GetSel()->GetMaterialInSelect() != nullptr && mState->GetSel()->IsSelectingMaterial())
 		{
-			mScene->SetEntityMaterial(element, mState->materialInEdit);
-			mState->materialInEdit = nullptr;
-			mState->isEditingMaterial = false;
+			mScene->SetEntityMaterial(element, mState->GetSel()->GetMaterialInSelect());
+			mState->GetSel()->SetMaterialInSelect(nullptr);
+			mState->GetSel()->SetIsSelectingMaterial(false);
 			mNewMat = nullptr;
 		}
 	}
@@ -130,6 +131,22 @@ protected:
 
 		// Enabled
 		element->Enable(GUIWindowUtils::Checkbox("Enabled", element->IsEnabled()));
+
+		// Material
+		std::string matName = (element->GetMaterial() != nullptr ? element->GetMaterial()->GetScopedName() : "none");
+		if (GUIWindowUtils::MaterialSelect("Material: " + matName, element->GetMaterial(), mNewMat, 5.0f))
+		{
+			mState->GetSel()->SetIsSelectingMaterial(true);
+		}
+
+		// Update material
+		if (mState->GetSel()->GetMaterialInSelect() != nullptr && mState->GetSel()->IsSelectingMaterial())
+		{
+			mScene->SetNodeMaterial(element, mState->GetSel()->GetMaterialInSelect());
+			mState->GetSel()->SetMaterialInSelect(nullptr);
+			mState->GetSel()->SetIsSelectingMaterial(false);
+			mNewMat = nullptr;
+		}
 	}
 
 	void DisplayEntity(IEntity* element)
@@ -270,17 +287,53 @@ protected:
 		element->mD = GUIWindowUtils::InputFloat("Alpha", element->mD);
 		element->mIllum = GUIWindowUtils::InputInt("Illumination Mode", element->mIllum);
 
-		Texture* selTexture = mScene->GetTextures()->GetSelectedItem();
-		GUIWindowUtils::TextureSelect("Diffuse", element->mMapKD, selTexture);
-		GUIWindowUtils::TextureSelect("Ambient", element->mMapKA, selTexture);
-		GUIWindowUtils::TextureSelect("Specular", element->mMapKS, selTexture);
-		GUIWindowUtils::TextureSelect("Normal", element->mMapBump, selTexture);
-		GUIWindowUtils::TextureSelect("Height", element->mMapNS, selTexture);
-		GUIWindowUtils::TextureSelect("Alpha", element->mMapD, selTexture);
-
-		if (selTexture != mScene->GetTextures()->GetSelectedItem())
+		if (GUIWindowUtils::TextureSelect("Diffuse", element->mMapKD, mNewTexture))
+			mNewTextureType = TextureType::DIFFUSE;
+		if (GUIWindowUtils::TextureSelect("Ambient", element->mMapKA, mNewTexture))
+			mNewTextureType = TextureType::AMBIENT;
+		if (GUIWindowUtils::TextureSelect("Specular", element->mMapKS, mNewTexture))
+			mNewTextureType = TextureType::SPECULAR;
+		if (GUIWindowUtils::TextureSelect("Normal", element->mMapBump, mNewTexture))
+			mNewTextureType = TextureType::NORMAL;
+		if (GUIWindowUtils::TextureSelect("Height", element->mMapNS, mNewTexture))
+			mNewTextureType = TextureType::HEIGHT;
+		if (GUIWindowUtils::TextureSelect("Alpha", element->mMapD, mNewTexture))
+			mNewTextureType = TextureType::ALPHA;
+		
+		if (mNewTexture != nullptr)
 		{
-			mScene->GetTextures()->Select(selTexture);
+			mState->GetSel()->SetIsSelectingTexture(true);
+		}
+
+		// Update material
+		if (mState->GetSel()->GetTextureInSelect() != nullptr && mState->GetSel()->IsSelectingTexture())
+		{
+			switch (mNewTextureType)
+			{
+			case TextureType::DIFFUSE:
+				element->mMapKD = mState->GetSel()->GetTextureInSelect();
+				break;
+			case TextureType::AMBIENT:
+				element->mMapKA = mState->GetSel()->GetTextureInSelect();
+				break;
+			case TextureType::SPECULAR:
+				element->mMapKS = mState->GetSel()->GetTextureInSelect();
+				break;
+			case TextureType::NORMAL:
+				element->mMapBump = mState->GetSel()->GetTextureInSelect();
+				break;
+			case TextureType::HEIGHT:
+				element->mMapNS = mState->GetSel()->GetTextureInSelect();
+				break;
+			case TextureType::ALPHA:
+				element->mMapD = mState->GetSel()->GetTextureInSelect();
+				break;
+			default:
+				break;
+			}
+			mState->GetSel()->SetTextureInSelect(nullptr);
+			mState->GetSel()->SetIsSelectingTexture(false);
+			mNewTexture = nullptr;
 		}
 	}
 

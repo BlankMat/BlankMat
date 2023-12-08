@@ -3,6 +3,61 @@
 #include "rendering/mesh.h"
 #include "rendering/scene.h"
 
+// Set the texture selecting mode
+void Selection::SetIsSelectingTexture(bool isSelecting)
+{
+	mIsSelectingTexture = isSelecting;
+}
+
+// Set the material selecting mode
+void Selection::SetIsSelectingMaterial(bool isSelecting)
+{
+	mIsSelectingMaterial = isSelecting;
+}
+
+// Returns whether texture selecting mode is on
+bool Selection::IsSelectingTexture()
+{
+	return mIsSelectingTexture;
+}
+
+// Returns whether material selecting mode is on
+bool Selection::IsSelectingMaterial()
+{
+	return mIsSelectingMaterial;
+}
+
+// Sets the texture to select
+void Selection::SetTextureInSelect(Texture* texture)
+{
+	mTextureInSelect = texture;
+}
+
+// Sets the material to select
+void Selection::SetMaterialInSelect(Material* material)
+{
+	mMaterialInSelect = material;
+}
+
+// Returns the texture being selected
+Texture* Selection::GetTextureInSelect()
+{
+	return mTextureInSelect;
+}
+
+// Returns the material being selected
+Material* Selection::GetMaterialInSelect()
+{
+	return mMaterialInSelect;
+}
+
+// Disables all active selection modes
+void Selection::DisableSelectionModes()
+{
+	mIsSelectingMaterial = false;
+	mIsSelectingTexture = false;
+}
+
 // Returns the entire selection as a selection of vertices
 void Selection::GetSelectedVerts(std::vector<unsigned int>& _verts)
 {
@@ -93,6 +148,7 @@ void Selection::SelectMaterial(Material* material)
 // Selects the given selectable element
 void Selection::SelectElement(ISelectable* element)
 {
+	DisableSelectionModes();
 	mSelElement = element;
 	std::cout << "Selected element [" << (element != nullptr ? (int)element->GetSelectableType() : -1) << "].\n";
 }
@@ -118,6 +174,7 @@ void Selection::DeselectEntity()
 		return;
 
 	mSelEntity = nullptr;
+	DisableSelectionModes();
 	UpdateTransformHandle();
 	std::cout << "Deselected entity.\n";
 }
@@ -129,6 +186,7 @@ void Selection::DeselectMesh()
 		return;
 
 	mSelMesh = nullptr;
+	DisableSelectionModes();
 	std::cout << "Deselected mesh.\n";
 }
 
@@ -139,6 +197,7 @@ void Selection::DeselectMat()
 		return;
 
 	mSelMaterial = nullptr;
+	DisableSelectionModes();
 	std::cout << "Delected material\n";
 }
 
@@ -149,20 +208,40 @@ void Selection::DeselectElement()
 		return;
 
 	mSelElement = nullptr;
+	DisableSelectionModes();
 	std::cout << "Deselected element\n";
 }
 
 // Clears the vertex selection
-void Selection::ClearVertSel() { mSelVertices.clear(); }
+void Selection::ClearVertSel()
+{
+	mSelVertices.clear();
+}
+
 // Clears the face selection
-void Selection::ClearFaceSel() { mSelFaces.clear(); }
+void Selection::ClearFaceSel()
+{
+	mSelFaces.clear();
+}
+
 // Clears the entire selection
-void Selection::ClearSelection() { ClearFaceSel(); ClearVertSel(); }
+void Selection::ClearSelection()
+{
+	ClearFaceSel();
+	ClearVertSel();
+}
 
 // Sets the selection pivot
-void Selection::SetSelectionPivot(glm::vec3 _pivot) { mPivot = _pivot; }
+void Selection::SetSelectionPivot(glm::vec3 _pivot)
+{
+	mPivot = _pivot;
+}
+
 // Returns the selection pivot
-glm::vec3 Selection::GetSelectionPivot() { return mPivot; }
+glm::vec3 Selection::GetSelectionPivot()
+{
+	return mPivot;
+}
 
 // Calculates the selection pivot
 void Selection::CalcSelPivot()

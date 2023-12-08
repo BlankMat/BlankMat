@@ -1,6 +1,7 @@
 #pragma once
 #include "glIncludes.h"
 #include "interfaces/iSelectable.h"
+#include "rendering/texture.h"
 #include <vector>
 #include <iostream>
 #include <set>
@@ -29,6 +30,12 @@ private:
 	Tool mSelTool = Tool::SELECT;
 	SelMode mSelMode = SelMode::MESH;
 
+	// Editing variables
+	bool mIsSelectingTexture = false;
+	bool mIsSelectingMaterial = false;
+	Texture* mTextureInSelect = nullptr;
+	Material* mMaterialInSelect = nullptr;
+
 public:
 	std::set<unsigned int> newSelVerts;
 	std::set<unsigned int> removedSelVerts;
@@ -37,6 +44,29 @@ public:
 	void GetSelectedVerts(std::vector<unsigned int>& _verts);
 	// Returns the entire selection as a selection of vertices
 	void GetSelectedVerts(std::set<unsigned int>& _verts);
+
+	// Set the texture selecting mode
+	void SetIsSelectingTexture(bool isSelecting);
+	// Set the material selecting mode
+	void SetIsSelectingMaterial(bool isSelecting);
+
+	// Returns whether texture selecting mode is on
+	bool IsSelectingTexture();
+	// Returns whether material selecting mode is on
+	bool IsSelectingMaterial();
+
+	// Sets the texture to select
+	void SetTextureInSelect(Texture* texture);
+	// Sets the material to select
+	void SetMaterialInSelect(Material* material);
+
+	// Returns the texture being selected
+	Texture* GetTextureInSelect();
+	// Returns the material being selected
+	Material* GetMaterialInSelect();
+
+	// Disables all active selection modes
+	void DisableSelectionModes();
 
 	// Selects the face with the given ID
 	void SelectFace(unsigned int _id, bool _deselect = false);

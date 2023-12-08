@@ -618,6 +618,19 @@ void Scene::SetLightingMode(LightingMode mode)
 	HandleWireframe();
 }
 
+// Sets the material of the given node
+void Scene::SetNodeMaterial(Node* node, Material* material)
+{
+	node->SetMaterial(material);
+	for (unsigned int i = 0; i < node->ChildCount(); i++)
+		if (node->GetChild(i) != nullptr)
+			SetNodeMaterial(node->GetChild(i), material);
+
+	for (unsigned int i = 0; i < node->MeshCount(); i++)
+		if (node->GetMesh(i) != nullptr)
+			SetEntityMaterial(node->GetMesh(i), material);
+}
+
 // Sets the material of the given entity
 void Scene::SetEntityMaterial(IEntity* entity, Material* material)
 {

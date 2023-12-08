@@ -67,10 +67,7 @@ public:
 
 	static bool TextureSelect(const std::string& name, Texture* texture, Texture*& selection)
 	{
-		if (texture == nullptr)
-			return false;
-
-		GUIWindowUtils::Image(texture->mID, ImGui::GetTextLineHeight());
+		GUIWindowUtils::Image((texture != nullptr ? texture->mID : 0), ImGui::GetTextLineHeight());
 		ImGui::SameLine();
 
 		bool wasPressed = false;
@@ -80,16 +77,13 @@ public:
 
 	static bool MaterialSelect(const std::string& name, Material* material, Material*& selection, float spacing)
 	{
-		if (material == nullptr)
-			return false;
-
 		float size = ImGui::GetTextLineHeight();
 		ImVec2 pos = ImGui::GetCursorScreenPos();
-		GUIWindowUtils::DrawColor(material->mKD, pos, size);
+		GUIWindowUtils::DrawColor((material != nullptr ? material->mKD : glm::vec3(0.0f)), pos, size);
 		pos.x += size + spacing;
-		GUIWindowUtils::DrawColor(material->mKA, pos, size);
+		GUIWindowUtils::DrawColor((material != nullptr ? material->mKA : glm::vec3(0.0f)), pos, size);
 		pos.x += size + spacing;
-		GUIWindowUtils::DrawColor(material->mKS, pos, size);
+		GUIWindowUtils::DrawColor((material != nullptr ? material->mKS : glm::vec3(0.0f)), pos, size);
 		ImGui::Dummy(ImVec2((size + spacing) * 3, size));
 		ImGui::SameLine();
 
