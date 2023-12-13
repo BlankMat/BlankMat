@@ -47,6 +47,10 @@
     "file": "phongFlatShader",
     "hasGeomShader": false
   },
+  "gouraud": {
+    "file": "gouraudShader",
+    "hasGeomShader": false
+  },
   "shadowMap": {
     "file": "shadowMappingDepth",
     "hasGeomShader": false
